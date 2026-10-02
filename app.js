@@ -1,4 +1,7 @@
-const DATA = window.CATALOG_DATA || [];
+const RAW_DATA = window.CATALOG_DATA;
+const DATA = Array.isArray(RAW_DATA)
+  ? RAW_DATA.filter(x => x && typeof x === 'object' && typeof x.name === 'string')
+  : [];
 const PAGE_SIZE = 3;
 let page=1,view='grid',selectedArea='',selectedType='',selectedStatus='';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -7,6 +10,17 @@ const norm=s=>String(s??'').toLowerCase()
   .replace(/doesn't/g,'does not').replace(/don't/g,'do not')
   .normalize('NFKD').replace(/[^\w\s@.+/-]/g,' ').replace(/\s+/g,' ').trim();
 
+
+function safeUrl(raw){
+  try{
+    const url=new URL(String(raw||''),window.location.href);
+    if(url.origin===window.location.origin)return url.href;
+    if(url.protocol==='https:')return url.href;
+    return '';
+  }catch{
+    return '';
+  }
+}
 function skillFor(x){
   if(x.type==='Quick Command'||x.type==='Runbook'||x.type==='Reference') return 'Beginner';
   if(x.type==='Workflow'||x.type==='Automation'||x.access==='Destructive') return 'Advanced';
@@ -69,7 +83,8 @@ function cardHTML(x,index){
   const [label,pill,cardclass]=safety(x);
   const related=(x.related||[]).length?row('Related',x.related.join(' · ')):'';
   const code=x.code?`<details class="showps"><summary>&gt;_ &nbsp; Show PowerShell</summary><pre>${esc(x.code)}</pre><div class="actions"><button class="btn copy-code">Copy command</button></div></details>`:'';
-  const acts=(x.file||x.url)?`<div class="actions">${x.file?'<button class="btn copy-file">Copy file name</button>':''}${x.url?`<a class="btn" href="${esc(x.url)}" target="_blank" rel="noreferrer">Open reference</a>`:''}</div>`:'';
+  const safeRef=safeUrl(x.url);
+  const acts=(x.file||safeRef)?`<div class="actions">${x.file?'<button class="btn copy-file">Copy file name</button>':''}${safeRef?`<a class="btn" href="${esc(safeRef)}" target="_blank" rel="noopener noreferrer">Open reference</a>`:''}</div>`:'';
   return `<article class="card ${cardclass}"><div class="cardtop"><span class="number">${String(index+1).padStart(2,'0')}</span><span class="statuspill ${pill}">${esc(label)}</span></div><div class="cardbody"><div class="cardicon">${iconFor(x)}</div><div><h3>${esc(displayTitle(x))}</h3></div></div><div class="details">${row('Works with',x.platform)}${row('Needs',cleanNeeds(x.requires))}${row('You provide',inputFor(x))}${row('You get',x.output)}${x.file?row('File',x.file):''}${related}<div class="meta">${esc(x.type)} · ${esc(x.area)}${x.subarea?' · '+esc(x.subarea):''}${x.status!=='Ready'?' · '+esc(x.status):''}</div></div>${code}${acts}</article>`;
 }
 function getRows(){
@@ -92,13 +107,13 @@ function render(){
   const start=(page-1)*PAGE_SIZE,shown=rows.slice(start,start+PAGE_SIZE),grid=document.getElementById('grid');
   grid.className='grid'+(view==='list'?' list':'');grid.innerHTML=shown.map((x,i)=>cardHTML(x,start+i)).join('');
   document.getElementById('resultsLine').textContent=`Showing ${rows.length?start+1:0}-${Math.min(start+PAGE_SIZE,rows.length)} of ${rows.length} results`;
-  document.getElementById('empty').style.display=rows.length?'none':'block';
+  document.getElementById('empty').classList.toggle('hidden',rows.length>0);
   grid.querySelectorAll('.card').forEach((c,i)=>{const x=shown[i],cb=c.querySelector('.copy-code'),fb=c.querySelector('.copy-file');if(cb)cb.onclick=()=>copyText(x.code,cb);if(fb)fb.onclick=()=>copyText(x.file,fb)});
   const pg=document.getElementById('pager');pg.innerHTML='';
   if(pages>1){
     const mk=(txt,disabled,fn,active=false)=>{const b=document.createElement('button');b.className='pagebtn'+(active?' active':'');b.textContent=txt;b.disabled=disabled;b.onclick=fn;pg.appendChild(b)};
     mk('‹',page===1,()=>{page--;render()});let nums=[];for(let n=1;n<=pages;n++){if(n===1||n===pages||Math.abs(n-page)<=2)nums.push(n)}
-    let prev=0;nums.forEach(n=>{if(prev&&n-prev>1){const s=document.createElement('span');s.textContent='…';s.style.color='#6ea5b5';s.style.padding='5px 2px';pg.appendChild(s)}mk(n,false,()=>{page=n;render()},n===page);prev=n});mk('›',page===pages,()=>{page++;render()});
+    let prev=0;nums.forEach(n=>{if(prev&&n-prev>1){const s=document.createElement('span');s.className='pager-ellipsis';s.textContent='…';pg.appendChild(s)}mk(n,false,()=>{page=n;render()},n===page);prev=n});mk('›',page===pages,()=>{page++;render()});
   }
 }
 function reset(){page=1;render()}

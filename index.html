@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <title>PWSH Operations Catalog — Full Draft</title>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -46,10 +48,10 @@
       <button class="chip" data-q="reset password">Reset password</button><button class="chip" data-q="MFA">MFA</button><button class="chip" data-q="forwarding">Forwarding</button><button class="chip" data-q="sign-in">Sign-ins</button><button class="chip" data-q="DNS">DNS</button><button class="chip" data-q="offboard">Offboarding</button>
     </div></div></div></div>
     <div class="panel"><h2>▤ &nbsp; Run Types</h2><div class="how">
-      <div class="howrow"><span class="dot read"></span><span class="tag" style="color:#62ffb2">Safe Check · No Changes</span></div>
-      <div class="howrow"><span class="dot change"></span><span class="tag" style="color:#ff8ddd">Makes Changes</span></div>
-      <div class="howrow"><span class="dot workflow"></span><span class="tag" style="color:#70b6ff">Workflow · Multi-Step</span></div>
-      <div class="howrow"><span class="dot tool"></span><span class="tag" style="color:#c7a9ff">Tool · Reusable</span></div>
+      <div class="howrow"><span class="dot read"></span><span class="tag run-safe-text">Safe Check · No Changes</span></div>
+      <div class="howrow"><span class="dot change"></span><span class="tag run-change-text">Makes Changes</span></div>
+      <div class="howrow"><span class="dot workflow"></span><span class="tag run-workflow-text">Workflow · Multi-Step</span></div>
+      <div class="howrow"><span class="dot tool"></span><span class="tag run-tool-text">Tool · Reusable</span></div>
     </div></div>
   </section>
 
