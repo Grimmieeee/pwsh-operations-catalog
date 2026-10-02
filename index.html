@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PWSH Operations Catalog — Full Draft</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="mobile-topbar"><button id="mobileMenuBtn" class="mobile-iconbtn">☰</button><div class="mobile-brand">PWSH · FIX CATALOG</div><button id="mobileSearchFocus" class="mobile-iconbtn">⌕</button></div>
+<div id="mobileOverlay" class="mobile-overlay"></div>
+<div class="app">
+<aside class="sidebar">
+  <div class="brandrow"><div class="terminalmark">&gt;_</div><div class="brand">PWSH<br>Operations<br>Catalog</div></div>
+  <div class="tagline">Find the fix first.<br>PowerShell details second.</div>
+  <button class="navbtn active" data-area="">Everything</button>
+  <button class="navbtn" data-area="Identity">Identity</button>
+  <button class="navbtn" data-area="Groups">Groups</button>
+  <button class="navbtn" data-area="Mailbox">Mailbox</button>
+  <button class="navbtn" data-area="Security / IR">Security / IR</button>
+  <button class="navbtn" data-area="Reporting / Audit">Reporting / Audit</button>
+  <button class="navbtn" data-area="Network">Network</button>
+  <button class="navbtn" data-area="Endpoint">Endpoint</button>
+  <button class="navbtn" data-area="Utilities">Utilities</button>
+  <div class="divider"></div><div class="navtitle">BROWSE BY TYPE</div>
+  <button class="navbtn" data-type="Quick Command">Quick Commands</button>
+  <button class="navbtn" data-type="Script">Scripts</button>
+  <button class="navbtn" data-type="Tool">Tools</button>
+  <button class="navbtn" data-type="Workflow">Workflows</button>
+  <button class="navbtn" data-type="Automation">Automation</button>
+  <button class="navbtn" data-type="Runbook">Runbooks</button>
+  <button class="navbtn" data-type="Reference">References</button>
+  <button class="navbtn" data-status="Candidate">Ideas to Add</button>
+</aside>
+
+<main class="main">
+  <section class="hero"><h1>PowerShell Fix Catalog</h1><div class="retro-scene"><div class="sun"></div><div class="mountains"></div><div class="horizon"></div><div class="gridlines"></div></div></section>
+  <section class="searchband">
+    <div class="searchrow"><div class="searchbox"><span>⌕</span><input id="search" class="search" placeholder="What are you trying to do?"></div><button id="searchBtn" class="searchbtn">Search</button></div>
+    <button id="mobileFilterToggle" class="mobile-filter-toggle"><span>Filters</span><span id="mobileFilterState">Show</span></button>
+    <div class="filterrow"><select id="categoryFilter" class="filter"><option value="">All Categories</option></select><select id="platformFilter" class="filter"><option value="">All Environments</option></select><select id="skillFilter" class="filter"><option value="">All Skill Levels</option></select></div>
+  </section>
+
+  <section class="mid">
+    <div class="panel"><div class="startgrid"><div class="bot">&gt;_</div><div><h2>Common Fixes</h2><div class="chips">
+      <button class="chip" data-q="reset password">Reset password</button><button class="chip" data-q="MFA">MFA</button><button class="chip" data-q="forwarding">Forwarding</button><button class="chip" data-q="sign-in">Sign-ins</button><button class="chip" data-q="DNS">DNS</button><button class="chip" data-q="offboard">Offboarding</button>
+    </div></div></div></div>
+    <div class="panel"><h2>▤ &nbsp; Run Types</h2><div class="how">
+      <div class="howrow"><span class="dot read"></span><span class="tag" style="color:#62ffb2">Safe Check · No Changes</span></div>
+      <div class="howrow"><span class="dot change"></span><span class="tag" style="color:#ff8ddd">Makes Changes</span></div>
+      <div class="howrow"><span class="dot workflow"></span><span class="tag" style="color:#70b6ff">Workflow · Multi-Step</span></div>
+      <div class="howrow"><span class="dot tool"></span><span class="tag" style="color:#c7a9ff">Tool · Reusable</span></div>
+    </div></div>
+  </section>
+
+  <div class="toolbar"><div><strong id="resultsLine">Showing 0 results</strong></div><div class="righttools"><div class="sortbox"><span>Sort by:</span><select id="sort"><option value="relevance">Best match</option><option value="name">Name A-Z</option><option value="type">Type</option><option value="area">Category</option></select></div><button id="gridView" class="viewbtn active" title="Grid view">▦</button><button id="listView" class="viewbtn" title="List view">☷</button></div></div>
+  <section class="gridwrap"><div id="grid" class="grid"></div><div id="empty" class="empty">No matching catalog entries. Try a plain-language goal like “account hacked,” “email forwarding,” “locked out,” or “computer slow.”</div><div id="pager" class="pager"></div></section>
+</main>
+</div>
+
+<nav class="mobile-bottomnav">
+  <button class="mobile-navbtn active" data-mobile-area=""><span>⌂</span>Everything</button>
+  <button class="mobile-navbtn" data-mobile-area="Identity"><span>○</span>Identity</button>
+  <button class="mobile-navbtn" data-mobile-area="Mailbox"><span>✉</span>Mailbox</button>
+  <button class="mobile-navbtn" data-mobile-area="Security / IR"><span>◇</span>Security</button>
+  <button id="mobileMoreBtn" class="mobile-navbtn"><span>☰</span>More</button>
+</nav>
+
+<script src="catalog-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
