@@ -224,9 +224,13 @@ function displayTitle(x) {
 }
 
 function row(label, value) {
-  return value
-    ? `<div class="detail-row"><div class="detail-label">${esc(label)}</div><div class="detail-value">${esc(value)}</div></div>`
-    : '';
+  if (!value) return '';
+  const rendered = String(value).startsWith('<span class="status-text ') ? String(value) : esc(value);
+  return `<div class="detail-row"><div class="detail-label">${esc(label)}</div><div class="detail-value">${rendered}</div></div>`;
+}
+
+function summaryFor(x) {
+  return x.output || x.notes || subareaLabel(x.subarea || x.area) || x.type || 'PowerShell operation';
 }
 
 function resultHTML(x) {
@@ -235,15 +239,15 @@ function resultHTML(x) {
     <article class="result-row">
       <button class="result-open" type="button" data-open-index="${x._catalogIndex}">
         <div class="fix-cell">
-          <div class="result-icon">${esc(iconFor(x))}</div>
+          <div class="fix-marker">&gt;</div>
           <div class="fix-copy">
             <h2>${esc(displayTitle(x))}</h2>
-            <div class="fix-sub">${esc(subareaLabel(x.subarea || x.area))}</div>
+            <div class="fix-sub">${esc(summaryFor(x))}</div>
           </div>
         </div>
         <div class="result-col environment-col">${esc(x.platform || 'PowerShell')}</div>
         <div class="result-col type-col">${esc(x.type || '')}</div>
-        <div class="result-col safety-col"><span class="statuspill ${pill}">${esc(label)}</span></div>
+        <div class="result-col safety-col"><span class="status-text ${pill}">${esc(label)}</span></div>
         <div class="result-arrow" aria-hidden="true">›</div>
       </button>
     </article>`;
@@ -380,50 +384,64 @@ function openDrawer(index) {
 
   const [label, pill] = safety(x);
   const safeRef = safeUrl(x.url);
-  const related = (x.related || []).length ? row('Related', x.related.join(' · ')) : '';
-  const code = x.code
-    ? `<div class="drawer-section">
-         <div class="drawer-section-label">POWERSHELL</div>
-         <pre class="drawer-code">${esc(x.code)}</pre>
-         <button class="drawer-action copy-code" type="button">Copy command</button>
-       </div>`
+  const sourcePath = String(x.file || '').trim();
+  const sourceLabel = sourcePath || String(x.source || '').trim() || 'Inline command';
+  const connect = connectionFor(x);
+  const input = inputFor(x);
+  const output = x.output || x.notes || '';
+  const related = (x.related || []).length ? x.related.join(' · ') : '';
+
+  const codePanel = x.code
+    ? `
+      <div id="sourcePanel" class="source-panel hidden">
+        <div class="drawer-section-label">POWERSHELL</div>
+        <pre class="drawer-code">${esc(x.code)}</pre>
+        <button class="drawer-action copy-code" type="button">Copy command</button>
+      </div>`
     : '';
 
   document.getElementById('drawerContent').innerHTML = `
-    <div class="drawer-heading">
-      <div class="drawer-icon">${esc(iconFor(x))}</div>
-      <div>
-        <span class="statuspill ${pill}">${esc(label)}</span>
-        <h2>${esc(displayTitle(x))}</h2>
-        <div class="drawer-meta">${esc(x.type)} · ${esc(x.area)}${x.subarea ? ` · ${esc(subareaLabel(x.subarea))}` : ''}</div>
-      </div>
+    <div class="result-title-block">
+      <div class="result-kicker">${esc(x.type)} / ${esc(x.area)}</div>
+      <h2>${esc(displayTitle(x))}</h2>
+      <div class="result-subtitle">${esc(subareaLabel(x.subarea || x.area))}</div>
     </div>
 
-    ${x.notes ? `<p class="drawer-summary">${esc(x.notes)}</p>` : ''}
-
-    <div class="drawer-details">
-      ${row('Works with', x.platform)}
-      ${row('Connect', connectionFor(x))}
-      ${row('You provide', inputFor(x))}
-      ${row('You get', x.output)}
-      ${x.file ? row('File', x.file) : ''}
-      ${related}
+    <div class="rmm-summary">
+      ${row('STATUS', `<span class="status-text ${pill}">${esc(label)}</span>`)}
+      ${row('SOURCE', sourceLabel)}
+      ${row('WORKS WITH', x.platform)}
+      ${row('CONNECT', connect)}
+      ${row('INPUT', input)}
+      ${row('OUTPUT', output)}
+      ${row('RELATED', related)}
     </div>
 
-    ${code}
+    <div class="drawer-actions primary-actions">
+      ${x.code ? '<button class="drawer-action source-toggle" type="button">View PowerShell</button>' : ''}
+      ${sourcePath ? '<button class="drawer-action copy-file" type="button">Copy path</button>' : ''}
+      ${safeRef ? `<a class="drawer-action" href="${esc(safeRef)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>` : ''}
+    </div>
 
-    ${(x.file || safeRef) ? `
-      <div class="drawer-actions">
-        ${x.file ? '<button class="drawer-action copy-file" type="button">Copy file name</button>' : ''}
-        ${safeRef ? `<a class="drawer-action" href="${esc(safeRef)}" target="_blank" rel="noopener noreferrer">Open reference ↗</a>` : ''}
-      </div>` : ''}
+    ${codePanel}
   `;
 
   const drawerContent = document.getElementById('drawerContent');
+  const toggle = drawerContent.querySelector('.source-toggle');
+  const sourcePanel = drawerContent.querySelector('#sourcePanel');
   const copyCode = drawerContent.querySelector('.copy-code');
   const copyFile = drawerContent.querySelector('.copy-file');
+
+  if (toggle && sourcePanel) {
+    toggle.onclick = () => {
+      const opening = sourcePanel.classList.contains('hidden');
+      sourcePanel.classList.toggle('hidden');
+      toggle.textContent = opening ? 'Hide PowerShell' : 'View PowerShell';
+    };
+  }
+
   if (copyCode) copyCode.onclick = () => copyText(x.code, copyCode);
-  if (copyFile) copyFile.onclick = () => copyText(x.file, copyFile);
+  if (copyFile) copyFile.onclick = () => copyText(sourcePath, copyFile);
 
   document.body.classList.add('drawer-open');
   document.getElementById('detailDrawer').setAttribute('aria-hidden', 'false');
