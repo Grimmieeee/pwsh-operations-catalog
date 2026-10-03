@@ -28,9 +28,22 @@ const norm = s => String(s ?? '')
   .trim();
 
 function safeUrl(raw) {
+  const value = String(raw || '').trim();
+  if (!value || value === '#' || value === '/') return '';
+
   try {
-    const url = new URL(String(raw || ''), window.location.href);
-    if (url.origin === window.location.origin) return url.href;
+    const url = new URL(value, window.location.href);
+
+    if (url.origin === window.location.origin) {
+      const current = new URL(window.location.href);
+      const samePage =
+        url.pathname === current.pathname &&
+        !url.search &&
+        !url.hash;
+
+      return samePage ? '' : url.href;
+    }
+
     if (url.protocol === 'https:') return url.href;
     return '';
   } catch {
@@ -99,6 +112,27 @@ function cleanNeeds(s) {
     .trim();
 }
 
+function connectionFor(x) {
+  const req = String(x.requires || '').trim();
+  const platform = String(x.platform || '');
+
+  const explicit = req.match(/Connect:\s*(.+?)(?=\s*\|\s*Requires:|$)/i);
+  if (explicit) return explicit[1].trim();
+
+  const importModule = req.match(/Import-Module\s+[A-Za-z0-9_.-]+/i);
+  if (importModule) return importModule[0];
+
+  if (/Connect-IPPSSession/i.test(req)) return 'Connect-IPPSSession';
+  if (/Connect-ExchangeOnline/i.test(req)) return 'Connect-ExchangeOnline';
+  if (/Connect-MgGraph/i.test(req)) return 'Connect-MgGraph';
+
+  if (/Exchange Online/i.test(platform)) return 'Connect-ExchangeOnline';
+  if (/Microsoft Graph|\bGraph\b/i.test(platform)) return 'Connect-MgGraph';
+  if (/Active Directory/i.test(platform)) return 'Import-Module ActiveDirectory';
+
+  return '';
+}
+
 function subareaLabel(raw) {
   return String(raw || '')
     .replace(/^Active Directory - /i, 'AD · ')
@@ -146,12 +180,27 @@ function searchScore(x, q) {
   return score;
 }
 
+function searchTokens(q) {
+  const stop = new Set(['a','an','and','are','for','i','in','is','it','me','my','of','on','the','to','with']);
+  return norm(q).split(' ').filter(token => token && !stop.has(token));
+}
+
+function searchableWords(x) {
+  return norm([
+    x.name, x.type, x.area, x.subarea, x.platform, x.access, x.status,
+    x.file, x.notes, x.keywords, x.source, (x.related || []).join(' ')
+  ].join(' ')).split(' ').filter(Boolean);
+}
+
 function searchMatches(x, q) {
-  const nq = norm(q);
-  if (!nq) return true;
-  const tokens = nq.split(' ').filter(Boolean);
-  const blob = searchBlob(x);
-  const matched = tokens.filter(token => blob.includes(token)).length;
+  const tokens = searchTokens(q);
+  if (!tokens.length) return true;
+
+  const words = searchableWords(x);
+  const matched = tokens.filter(token =>
+    words.some(word => word === token || word.startsWith(token))
+  ).length;
+
   const minimum = tokens.length <= 2 ? 1 : Math.ceil(tokens.length * 0.6);
   return matched >= minimum;
 }
@@ -354,7 +403,7 @@ function openDrawer(index) {
 
     <div class="drawer-details">
       ${row('Works with', x.platform)}
-      ${row('Needs', cleanNeeds(x.requires))}
+      ${row('Connect', connectionFor(x))}
       ${row('You provide', inputFor(x))}
       ${row('You get', x.output)}
       ${x.file ? row('File', x.file) : ''}
