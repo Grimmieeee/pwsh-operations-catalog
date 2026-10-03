@@ -5,9 +5,10 @@ const DATA = Array.isArray(RAW_DATA)
       .map((x, i) => ({ ...x, _catalogIndex: i }))
   : [];
 
-const VISIBLE_STEP = 12;
+const VISIBLE_STEP = 18;
 let visibleCount = VISIBLE_STEP;
 let selectedArea = '';
+let selectedSubarea = '';
 let selectedStatus = '';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
@@ -56,12 +57,12 @@ addOptions('platformFilter', uniq('platform'));
 addOptions('accessFilter', uniq('access'));
 
 function safety(x) {
-  if (x.access === 'Read-only') return ['Safe check', 'safe-pill', 'safe-card'];
-  if (x.access === 'Change') return ['Makes changes', 'change-pill', 'change-card'];
-  if (x.access === 'Destructive') return ['Destructive', 'bad-pill', 'danger-card'];
-  if (x.type === 'Workflow' || x.type === 'Runbook') return ['Workflow', 'workflow-pill', 'workflow-card'];
-  if (x.type === 'Automation') return ['Automation', 'auto-pill', 'automation-card'];
-  return [x.type || 'Info', 'tool-pill', 'tool-card'];
+  if (x.access === 'Read-only') return ['Safe check', 'safe-pill'];
+  if (x.access === 'Change') return ['Makes changes', 'change-pill'];
+  if (x.access === 'Destructive') return ['Destructive', 'bad-pill'];
+  if (x.type === 'Workflow' || x.type === 'Runbook') return ['Workflow', 'workflow-pill'];
+  if (x.type === 'Automation') return ['Automation', 'auto-pill'];
+  return [x.type || 'Info', 'tool-pill'];
 }
 
 function iconFor(x) {
@@ -96,6 +97,15 @@ function cleanNeeds(s) {
     .replace(/^Requires:\s*/i, '')
     .replace(/\s*\|\s*Connect:.*/i, '')
     .trim();
+}
+
+function subareaLabel(raw) {
+  return String(raw || '')
+    .replace(/^Active Directory - /i, 'AD · ')
+    .replace(/^Exchange Online - /i, 'EXO · ')
+    .replace(/^Local Windows - /i, 'Windows · ')
+    .replace(/^Graph - /i, 'Graph · ')
+    .replace(/^RMM /i, 'RMM · ');
 }
 
 function searchBlob(x) {
@@ -164,10 +174,6 @@ function displayTitle(x) {
   return exact[x.name] || x.name;
 }
 
-function summaryFor(x) {
-  return x.output || x.notes || x.subarea || `${x.type} for ${x.area}`;
-}
-
 function row(label, value) {
   return value
     ? `<div class="detail-row"><div class="detail-label">${esc(label)}</div><div class="detail-value">${esc(value)}</div></div>`
@@ -175,23 +181,20 @@ function row(label, value) {
 }
 
 function resultHTML(x) {
-  const [label, pill, cardClass] = safety(x);
+  const [label, pill] = safety(x);
   return `
-    <article class="result-card ${cardClass}">
+    <article class="result-row">
       <button class="result-open" type="button" data-open-index="${x._catalogIndex}">
-        <div class="result-icon">${esc(iconFor(x))}</div>
-        <div class="result-main">
-          <div class="result-title-row">
+        <div class="fix-cell">
+          <div class="result-icon">${esc(iconFor(x))}</div>
+          <div class="fix-copy">
             <h2>${esc(displayTitle(x))}</h2>
-            <span class="statuspill ${pill}">${esc(label)}</span>
-          </div>
-          <p class="result-summary">${esc(summaryFor(x))}</p>
-          <div class="result-meta">
-            <span>${esc(x.platform || 'PowerShell')}</span>
-            <span>${esc(x.type)}</span>
-            <span>${esc(x.area)}</span>
+            <div class="fix-sub">${esc(subareaLabel(x.subarea || x.area))}</div>
           </div>
         </div>
+        <div class="result-col environment-col">${esc(x.platform || 'PowerShell')}</div>
+        <div class="result-col type-col">${esc(x.type || '')}</div>
+        <div class="result-col safety-col"><span class="statuspill ${pill}">${esc(label)}</span></div>
         <div class="result-arrow" aria-hidden="true">›</div>
       </button>
     </article>`;
@@ -205,6 +208,7 @@ function getRows() {
 
   let rows = DATA.filter(x => {
     if (selectedArea && x.area !== selectedArea) return false;
+    if (selectedSubarea && x.subarea !== selectedSubarea) return false;
     if (selectedStatus && x.status !== selectedStatus) return false;
     if (type && x.type !== type) return false;
     if (platform && x.platform !== platform) return false;
@@ -230,6 +234,7 @@ function getRows() {
 
 function contextText() {
   if (selectedStatus === 'Candidate') return 'Ideas to Add';
+  if (selectedSubarea) return subareaLabel(selectedSubarea);
   if (selectedArea) return selectedArea;
   return 'Everything';
 }
@@ -245,13 +250,53 @@ function renderCounts() {
   });
 }
 
+function renderSubareas() {
+  const section = document.getElementById('subareaSection');
+  const nav = document.getElementById('subareaNav');
+
+  if (!selectedArea || selectedStatus) {
+    section.classList.add('hidden');
+    nav.innerHTML = '';
+    return;
+  }
+
+  const counts = new Map();
+  DATA.filter(x => x.area === selectedArea && x.subarea).forEach(x => {
+    counts.set(x.subarea, (counts.get(x.subarea) || 0) + 1);
+  });
+
+  const items = [...counts.entries()].sort((a, b) =>
+    b[1] - a[1] || subareaLabel(a[0]).localeCompare(subareaLabel(b[0]))
+  );
+
+  nav.innerHTML = [
+    `<button class="subnavbtn ${selectedSubarea ? '' : 'active'}" data-subarea=""><span>All ${esc(selectedArea)}</span><span>${DATA.filter(x => x.area === selectedArea).length}</span></button>`,
+    ...items.map(([raw, count]) =>
+      `<button class="subnavbtn ${selectedSubarea === raw ? 'active' : ''}" data-subarea="${esc(raw)}"><span>${esc(subareaLabel(raw))}</span><span>${count}</span></button>`
+    )
+  ].join('');
+
+  nav.querySelectorAll('[data-subarea]').forEach(btn => {
+    btn.onclick = () => {
+      selectedSubarea = btn.dataset.subarea || '';
+      visibleCount = VISIBLE_STEP;
+      renderSubareas();
+      render();
+    };
+  });
+
+  section.classList.remove('hidden');
+}
+
 function render() {
   const rows = getRows();
   const shown = rows.slice(0, visibleCount);
   const list = document.getElementById('resultsList');
+  const context = contextText();
 
   list.innerHTML = shown.map(resultHTML).join('');
-  document.getElementById('contextLine').textContent = contextText();
+  document.getElementById('contextLine').textContent = context;
+  document.getElementById('currentAreaLabel').textContent = context.toUpperCase();
   document.getElementById('resultsLine').textContent =
     rows.length ? `Showing ${shown.length} of ${rows.length} results` : '0 results';
 
@@ -301,7 +346,7 @@ function openDrawer(index) {
       <div>
         <span class="statuspill ${pill}">${esc(label)}</span>
         <h2>${esc(displayTitle(x))}</h2>
-        <div class="drawer-meta">${esc(x.type)} · ${esc(x.area)}${x.subarea ? ` · ${esc(x.subarea)}` : ''}</div>
+        <div class="drawer-meta">${esc(x.type)} · ${esc(x.area)}${x.subarea ? ` · ${esc(subareaLabel(x.subarea))}` : ''}</div>
       </div>
     </div>
 
@@ -347,17 +392,20 @@ function setActiveNav(target) {
 
 function selectArea(area, sourceButton = null) {
   selectedArea = area || '';
+  selectedSubarea = '';
   selectedStatus = '';
   const target = sourceButton || [...document.querySelectorAll('.navbtn[data-area]')]
     .find(btn => (btn.dataset.area || '') === selectedArea);
   setActiveNav(target);
   setMobileNav(selectedArea);
+  renderSubareas();
   closeMobileMenu();
   resetResults();
 }
 
 function clearAll() {
   selectedArea = '';
+  selectedSubarea = '';
   selectedStatus = '';
   document.getElementById('search').value = '';
   document.getElementById('typeFilter').value = '';
@@ -366,6 +414,7 @@ function clearAll() {
   document.getElementById('sort').value = 'relevance';
   setActiveNav(document.querySelector('.navbtn[data-area=""]'));
   setMobileNav('');
+  renderSubareas();
   resetResults();
 }
 
@@ -399,9 +448,11 @@ document.querySelectorAll('.navbtn[data-area]').forEach(btn => {
 document.querySelectorAll('.navbtn[data-status]').forEach(btn => {
   btn.onclick = () => {
     selectedArea = '';
+    selectedSubarea = '';
     selectedStatus = btn.dataset.status || '';
     setActiveNav(btn);
     setMobileNav('');
+    renderSubareas();
     closeMobileMenu();
     resetResults();
   };
@@ -411,9 +462,11 @@ document.querySelectorAll('.chip').forEach(btn => {
   btn.onclick = () => {
     document.getElementById('search').value = btn.dataset.q || '';
     selectedArea = '';
+    selectedSubarea = '';
     selectedStatus = '';
     setActiveNav(document.querySelector('.navbtn[data-area=""]'));
     setMobileNav('');
+    renderSubareas();
     resetResults();
   };
 });
@@ -455,4 +508,5 @@ document.addEventListener('keydown', event => {
 });
 
 renderCounts();
+renderSubareas();
 render();
