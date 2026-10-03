@@ -15,7 +15,7 @@
 <div class="workspace">
   <aside class="sidebar" aria-label="Catalog navigation">
     <div class="sidebar-main">
-      <div class="sidebar-kicker">PWSH // CATALOG</div>
+      <div class="sidebar-kicker">PWSH // LIBRARY</div>
 
       <div class="sidebar-label">AREAS</div>
       <button class="navbtn active" data-area=""><span>Everything</span><span class="navcount" data-count-area="">0</span></button>
@@ -38,9 +38,7 @@
       <button class="navbtn navbtn-muted" data-status="Candidate"><span>Ideas to Add</span><span class="navcount" data-count-status="Candidate">0</span></button>
     </div>
 
-    <div class="sidebar-signature">
-      <span>B U R N S I D //</span>
-    </div>
+    <div class="sidebar-signature">B U R N S I D //</div>
   </aside>
 
   <main class="main">
@@ -51,8 +49,10 @@
     </header>
 
     <section class="search-zone">
+      <div class="stage-label">INPUT</div>
+
       <div class="searchbox">
-        <span class="search-icon">⌕</span>
+        <span class="prompt-mark">&gt;</span>
         <input id="search" class="search" type="search" autocomplete="off" spellcheck="false" placeholder="What are you trying to do?">
         <button id="clearSearch" class="clear-search hidden" type="button" aria-label="Clear search">×</button>
       </div>
@@ -85,6 +85,7 @@
     <section class="results-section">
       <div class="results-header">
         <div>
+          <div class="stage-label">ACTION</div>
           <div id="contextLine" class="context-line">Everything</div>
           <strong id="resultsLine">Showing 0 results</strong>
         </div>
@@ -94,7 +95,7 @@
         <div>FIX</div>
         <div>ENVIRONMENT</div>
         <div>TYPE</div>
-        <div>SAFETY</div>
+        <div>STATUS</div>
         <div></div>
       </div>
 
@@ -107,7 +108,7 @@
 
 <aside id="detailDrawer" class="detail-drawer" aria-hidden="true" aria-label="Catalog item details">
   <div class="drawer-top">
-    <div class="drawer-label">DETAIL</div>
+    <div class="drawer-label">RESULT</div>
     <button id="closeDrawer" class="drawer-close" type="button" aria-label="Close details">×</button>
   </div>
   <div id="drawerContent" class="drawer-content"></div>
