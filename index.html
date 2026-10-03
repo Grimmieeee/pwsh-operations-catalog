@@ -5,63 +5,118 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
-<title>PWSH Operations Catalog — Full Draft</title>
+<title>PWSH Operations Catalog</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="mobile-topbar"><button id="mobileMenuBtn" class="mobile-iconbtn">☰</button><div class="mobile-brand">PWSH · FIX CATALOG</div><button id="mobileSearchFocus" class="mobile-iconbtn">⌕</button></div>
 <div id="mobileOverlay" class="mobile-overlay"></div>
-<div class="app">
-<aside class="sidebar">
-  <div class="brandrow"><div class="terminalmark">&gt;_</div><div class="brand">PWSH<br>Operations<br>Catalog</div></div>
-  <div class="tagline">Find the fix first.<br>PowerShell details second.</div>
-  <button class="navbtn active" data-area="">Everything</button>
-  <button class="navbtn" data-area="Identity">Identity</button>
-  <button class="navbtn" data-area="Groups">Groups</button>
-  <button class="navbtn" data-area="Mailbox">Mailbox</button>
-  <button class="navbtn" data-area="Security / IR">Security / IR</button>
-  <button class="navbtn" data-area="Reporting / Audit">Reporting / Audit</button>
-  <button class="navbtn" data-area="Network">Network</button>
-  <button class="navbtn" data-area="Endpoint">Endpoint</button>
-  <button class="navbtn" data-area="Utilities">Utilities</button>
-  <div class="divider"></div><div class="navtitle">BROWSE BY TYPE</div>
-  <button class="navbtn" data-type="Quick Command">Quick Commands</button>
-  <button class="navbtn" data-type="Script">Scripts</button>
-  <button class="navbtn" data-type="Tool">Tools</button>
-  <button class="navbtn" data-type="Workflow">Workflows</button>
-  <button class="navbtn" data-type="Automation">Automation</button>
-  <button class="navbtn" data-type="Runbook">Runbooks</button>
-  <button class="navbtn" data-type="Reference">References</button>
-  <button class="navbtn" data-status="Candidate">Ideas to Add</button>
-</aside>
+<div id="drawerOverlay" class="drawer-overlay"></div>
 
-<main class="main">
-  <section class="hero"><h1>PowerShell Fix Catalog</h1><div class="retro-scene"><div class="sun"></div><div class="mountains"></div><div class="horizon"></div><div class="gridlines"></div></div></section>
-  <section class="searchband">
-    <div class="searchrow"><div class="searchbox"><span>⌕</span><input id="search" class="search" placeholder="What are you trying to do?"></div><button id="searchBtn" class="searchbtn">Search</button></div>
-    <button id="mobileFilterToggle" class="mobile-filter-toggle"><span>Filters</span><span id="mobileFilterState">Show</span></button>
-    <div class="filterrow"><select id="categoryFilter" class="filter"><option value="">All Categories</option></select><select id="platformFilter" class="filter"><option value="">All Environments</option></select><select id="skillFilter" class="filter"><option value="">All Skill Levels</option></select></div>
-  </section>
+<div class="workspace">
+  <aside class="sidebar" aria-label="Catalog navigation">
+    <div class="sidebar-main">
+      <div class="sidebar-kicker">PWSH // LIBRARY</div>
 
-  <section class="mid">
-    <div class="panel"><div class="startgrid"><div class="bot">&gt;_</div><div><h2>Common Fixes</h2><div class="chips">
-      <button class="chip" data-q="reset password">Reset password</button><button class="chip" data-q="MFA">MFA</button><button class="chip" data-q="forwarding">Forwarding</button><button class="chip" data-q="sign-in">Sign-ins</button><button class="chip" data-q="DNS">DNS</button><button class="chip" data-q="offboard">Offboarding</button>
-    </div></div></div></div>
-    <div class="panel"><h2>▤ &nbsp; Run Types</h2><div class="how">
-      <div class="howrow"><span class="dot read"></span><span class="tag run-safe-text">Safe Check · No Changes</span></div>
-      <div class="howrow"><span class="dot change"></span><span class="tag run-change-text">Makes Changes</span></div>
-      <div class="howrow"><span class="dot workflow"></span><span class="tag run-workflow-text">Workflow · Multi-Step</span></div>
-      <div class="howrow"><span class="dot tool"></span><span class="tag run-tool-text">Tool · Reusable</span></div>
-    </div></div>
-  </section>
+      <div class="sidebar-label">AREAS</div>
+      <button class="navbtn active" data-area=""><span>Everything</span><span class="navcount" data-count-area="">0</span></button>
+      <button class="navbtn" data-area="Identity"><span>Identity</span><span class="navcount" data-count-area="Identity">0</span></button>
+      <button class="navbtn" data-area="Groups"><span>Groups</span><span class="navcount" data-count-area="Groups">0</span></button>
+      <button class="navbtn" data-area="Mailbox"><span>Mailbox</span><span class="navcount" data-count-area="Mailbox">0</span></button>
+      <button class="navbtn" data-area="Security / IR"><span>Security / IR</span><span class="navcount" data-count-area="Security / IR">0</span></button>
+      <button class="navbtn" data-area="Reporting / Audit"><span>Reporting / Audit</span><span class="navcount" data-count-area="Reporting / Audit">0</span></button>
+      <button class="navbtn" data-area="Network"><span>Network</span><span class="navcount" data-count-area="Network">0</span></button>
+      <button class="navbtn" data-area="Endpoint"><span>Endpoint</span><span class="navcount" data-count-area="Endpoint">0</span></button>
+      <button class="navbtn" data-area="Utilities"><span>Utilities</span><span class="navcount" data-count-area="Utilities">0</span></button>
 
-  <div class="toolbar"><div><strong id="resultsLine">Showing 0 results</strong></div><div class="righttools"><div class="sortbox"><span>Sort by:</span><select id="sort"><option value="relevance">Best match</option><option value="name">Name A-Z</option><option value="type">Type</option><option value="area">Category</option></select></div><button id="gridView" class="viewbtn active" title="Grid view">▦</button><button id="listView" class="viewbtn" title="List view">☷</button></div></div>
-  <section class="gridwrap"><div id="grid" class="grid"></div><div id="empty" class="empty">No matching catalog entries. Try a plain-language goal like “account hacked,” “email forwarding,” “locked out,” or “computer slow.”</div><div id="pager" class="pager"></div></section>
-</main>
+      <div id="subareaSection" class="subarea-section hidden">
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">IN THIS AREA</div>
+        <div id="subareaNav" class="subarea-nav"></div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+      <button class="navbtn navbtn-muted" data-status="Candidate"><span>Ideas to Add</span><span class="navcount" data-count-status="Candidate">0</span></button>
+    </div>
+
+    <div class="sidebar-signature">B U R N S I D //</div>
+  </aside>
+
+  <main class="main">
+    <header class="workspace-head">
+      <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Open navigation">☰</button>
+      <div class="workspace-label"><span class="workspace-prefix">CATALOG /</span> <span id="currentAreaLabel">EVERYTHING</span></div>
+      <div id="catalogCount" class="catalog-count">0 entries</div>
+    </header>
+
+    <section class="search-zone">
+      <div class="stage-label">INPUT</div>
+
+      <div class="searchbox">
+        <span class="prompt-mark">&gt;</span>
+        <input id="search" class="search" type="search" autocomplete="off" spellcheck="false" placeholder="What are you trying to do?">
+        <button id="clearSearch" class="clear-search hidden" type="button" aria-label="Clear search">×</button>
+      </div>
+
+      <div class="quick-row" aria-label="Common fixes">
+        <button class="chip" data-q="reset password">Reset password</button>
+        <button class="chip" data-q="MFA">MFA</button>
+        <button class="chip" data-q="forwarding">Forwarding</button>
+        <button class="chip" data-q="sign-in">Sign-ins</button>
+        <button class="chip" data-q="DNS">DNS</button>
+        <button class="chip" data-q="offboard">Offboarding</button>
+      </div>
+
+      <button id="mobileFilterToggle" class="mobile-filter-toggle" type="button"><span>Filters</span><span id="mobileFilterState">Show</span></button>
+
+      <div class="filterbar">
+        <select id="typeFilter" class="filter"><option value="">All Types</option></select>
+        <select id="platformFilter" class="filter"><option value="">All Environments</option></select>
+        <select id="accessFilter" class="filter"><option value="">All Safety Levels</option></select>
+        <select id="sort" class="filter">
+          <option value="relevance">Best match</option>
+          <option value="name">Name A-Z</option>
+          <option value="type">Type</option>
+          <option value="area">Category</option>
+        </select>
+        <button id="resetFilters" class="reset-btn" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <div class="results-header">
+        <div>
+          <div class="stage-label">ACTION</div>
+          <div id="contextLine" class="context-line">Everything</div>
+          <strong id="resultsLine">Showing 0 results</strong>
+        </div>
+      </div>
+
+      <div class="result-table-head" aria-hidden="true">
+        <div>FIX</div>
+        <div>ENVIRONMENT</div>
+        <div>TYPE</div>
+        <div>STATUS</div>
+        <div></div>
+      </div>
+
+      <div id="resultsList" class="results-list"></div>
+      <div id="empty" class="empty">No matching entries. Try fewer words or a broader area.</div>
+      <div class="load-wrap"><button id="loadMore" class="load-more hidden" type="button">Load more</button></div>
+    </section>
+  </main>
 </div>
 
-<nav class="mobile-bottomnav">
-  <button class="mobile-navbtn active" data-mobile-area=""><span>⌂</span>Everything</button>
+<aside id="detailDrawer" class="detail-drawer" aria-hidden="true" aria-label="Catalog item details">
+  <div class="drawer-top">
+    <div class="drawer-label">RESULT</div>
+    <button id="closeDrawer" class="drawer-close" type="button" aria-label="Close details">×</button>
+  </div>
+  <div id="drawerContent" class="drawer-content"></div>
+  <div class="drawer-signature">B U R N S I D //</div>
+</aside>
+
+<nav class="mobile-bottomnav" aria-label="Quick catalog navigation">
+  <button class="mobile-navbtn active" data-mobile-area=""><span>⌂</span>All</button>
   <button class="mobile-navbtn" data-mobile-area="Identity"><span>○</span>Identity</button>
   <button class="mobile-navbtn" data-mobile-area="Mailbox"><span>✉</span>Mailbox</button>
   <button class="mobile-navbtn" data-mobile-area="Security / IR"><span>◇</span>Security</button>
