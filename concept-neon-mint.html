@@ -46,17 +46,16 @@ button{cursor:pointer}
 }
 .brand{padding:27px 20px 23px}
 .brand-main{
-  position:relative;display:inline-block;font-family:var(--display);font-size:31px;
-  font-weight:200;letter-spacing:.19em;line-height:.9;color:#f2faf7;
+  position:relative;display:inline-flex;align-items:baseline;gap:.08em;
+  font-family:var(--display);font-size:19px;line-height:1;color:#f2faf7;
+  white-space:nowrap;
 }
 .brand-main::after{
-  content:"";position:absolute;left:1px;right:-1px;bottom:-9px;height:3px;background:var(--mint);
+  content:"";position:absolute;left:0;right:0;bottom:-11px;height:3px;background:var(--mint);
 }
-.brand-box{
-  display:inline-block;margin-top:17px;padding:5px 9px 5px 11px;border:2px solid var(--mint);
-  color:var(--mint-soft);font-family:var(--display);font-size:10px;font-weight:600;
-  letter-spacing:.34em;line-height:1;text-transform:uppercase;
-}
+.brand-field{font-weight:600;letter-spacing:.19em}
+.brand-slash{font-weight:400;letter-spacing:.08em;color:var(--mint)}
+.brand-kit{font-weight:200;letter-spacing:.22em;color:#d9e8e3}
 .nav{padding:7px 11px 24px}
 .nav button{
   width:100%;display:flex;justify-content:space-between;align-items:center;
@@ -213,8 +212,7 @@ body.open .drawer{transform:translateX(0)}
   <aside class="sidebar">
     <div>
       <div class="brand">
-        <div class="brand-main">PWSH</div><br>
-        <div class="brand-box">Library</div>
+        <div class="brand-main"><span class="brand-field">F I E L D</span><span class="brand-slash"> // </span><span class="brand-kit">K I T</span></div>
       </div>
       <nav class="nav">
         <button class="active"><span>Full Library</span><span class="count">287</span></button>
