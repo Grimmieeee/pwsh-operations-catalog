@@ -213,11 +213,22 @@ button{cursor:pointer}
   overflow:hidden;
   text-overflow:ellipsis;
 }
+.result-flags{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:9px;
+  min-width:0;
+}
 .result-tag{
   color:#6d8f98;
   font-size:9.5px;
+  font-weight:900;
+  letter-spacing:.05em;
   white-space:nowrap;
 }
+.result-multi{color:#62b8c8}
+.result-tenant{color:#a88adf}
 .result-change{color:var(--yellow)}
 .result-danger{color:var(--red)}
 .result-arrow{
@@ -535,7 +546,7 @@ button{cursor:pointer}
   .search-box{min-height:50px}
   .catalog{padding:10px 10px 60px}
   .result{grid-template-columns:minmax(0,1fr) auto}
-  .result-meta,.result-tag{display:none}
+  .result-meta,.result-flags{display:none}
   .drawer{
     width:100vw;
     min-width:0;
