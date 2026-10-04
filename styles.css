@@ -50,7 +50,7 @@ button{cursor:pointer}
 .brand{
   padding:24px 20px 21px;
   color:#c4e7eb;
-  font:900 16px/1.2 var(--mono);
+  font:800 16px/1.2 var(--mono);
   letter-spacing:.14em;
 }
 .area-nav{padding:5px 11px 22px}
@@ -67,7 +67,7 @@ button{cursor:pointer}
   padding:11px 10px;
   text-align:left;
   font-size:15px;
-  font-weight:600;
+  font-weight:500;
 }
 .area-button:hover{background:var(--panel);color:#d9edf0}
 .area-button.active{
@@ -238,7 +238,7 @@ button{cursor:pointer}
   color:#e5edf0;
   font-family:var(--display);
   font-size:16px;
-  font-weight:700;
+  font-weight:600;
   line-height:1.2;
   white-space:nowrap;
   overflow:hidden;
@@ -297,7 +297,7 @@ button{cursor:pointer}
   color:#edf2f3;
   font-family:var(--display);
   font-size:29px;
-  font-weight:700;
+  font-weight:600;
   letter-spacing:-.01em;
 }
 .about-block p{
@@ -396,7 +396,7 @@ button{cursor:pointer}
   color:#eef3f4;
   font-family:var(--display);
   font-size:31px;
-  font-weight:700;
+  font-weight:600;
   line-height:1.16;
   letter-spacing:-.015em;
 }
