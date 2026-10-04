@@ -19,7 +19,8 @@
       platform:"Exchange Online",
       access:"Change",
       requires:"Connect: Connect-ExchangeOnline",
-      code:'Add-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -AccessRights Editor',
+      code:'$AccessRights = "Reviewer" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -AccessRights $AccessRights',
+      options:{label:"ACCESS LEVEL",values:["Reviewer","Editor"]},
       keywords:"calendar permissions mailbox folder editor reviewer"
     },
     {
@@ -47,12 +48,13 @@
       keywords:"contacts permissions mailbox folder access"
     },
     {
-      name:"Add Contacts Permission - Editor",
+      name:"Add Contacts Permission",
       platform:"Exchange Online",
       access:"Change",
       requires:"Connect: Connect-ExchangeOnline",
-      code:'Add-MailboxFolderPermission -Identity "owner@domain.com:\\Contacts" -User "user@domain.com" -AccessRights Editor',
-      keywords:"contacts permissions mailbox folder editor"
+      code:'$AccessRights = "Reviewer" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity "owner@domain.com:\\Contacts" -User "user@domain.com" -AccessRights $AccessRights',
+      options:{label:"ACCESS LEVEL",values:["Reviewer","Editor"]},
+      keywords:"contacts permissions mailbox folder editor reviewer"
     },
     {
       name:"Show Send-To Restrictions / authOrig",
@@ -387,7 +389,9 @@
   const rawItems = RAW.filter(item =>
     item &&
     item.status !== "Candidate" &&
-    item.status !== "External Reference"
+    item.status !== "External Reference" &&
+    item.type !== "Runbook" &&
+    item.type !== "Reference"
   );
 
   const allSource = [...rawItems, ...EXTRA_STANDALONE];
@@ -433,6 +437,7 @@
     if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC Risk Exposure Snapshot";
     if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC Eradicate";
     if (/^Show Inbox Rules$/i.test(name) && /IncludeHidden/i.test(item.code || "")) return "Show Inbox Rules - Hidden";
+    if (/Mailitemsaccessed/i.test(name)) return name.replace(/Mailitemsaccessed/ig,"Mail Items Accessed");
 
     return name;
   }
@@ -692,6 +697,12 @@
         .filter(x => x.score > 0)
         .sort((a,b) => b.score - a.score || a.item.displayName.localeCompare(b.item.displayName))
         .map(x => x.item);
+    } else if (state.area === "Everything") {
+      list.sort((a,b) =>
+        areaRank(a.logicalArea) - areaRank(b.logicalArea) ||
+        groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
+        a.displayName.localeCompare(b.displayName)
+      );
     } else {
       list.sort((a,b) =>
         groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
@@ -700,6 +711,12 @@
     }
 
     return list;
+  }
+
+  function areaRank(area){
+    const order = ["Identity","Mailbox","Incident Response","RMM","Utility","Standalone"];
+    const idx = order.indexOf(area);
+    return idx === -1 ? 99 : idx;
   }
 
   function groupRank(area, group){
@@ -724,13 +741,13 @@
   }
 
   function resultMarkup(item, index){
-    const file = item.type === "Quick Command" ? "" : (item.file || "");
+    const meta = item.type === "Quick Command"
+      ? (item.group || "")
+      : (item.file || item.group || "");
     return `
       <button class="result" type="button" data-open-index="${index}">
-        <span>
-          <span class="result-name">${esc(item.displayName)}</span>
-          ${file ? `<span class="result-file">${esc(file)}</span>` : ""}
-        </span>
+        <span class="result-name">${esc(item.displayName)}</span>
+        <span class="result-meta">${esc(meta)}</span>
         ${accessTag(item)}
         <span class="result-arrow">›</span>
       </button>
@@ -761,7 +778,9 @@
     } else {
       const grouped = new Map();
       for (const item of list){
-        const key = item.group || "General";
+        const key = state.area === "Everything"
+          ? item.logicalArea
+          : (item.group || "General");
         if (!grouped.has(key)) grouped.set(key,[]);
         grouped.get(key).push(item);
       }
@@ -769,7 +788,7 @@
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
         <section class="group">
           <div class="group-title">${esc(group.toUpperCase())}</div>
-          ${items.map((item,i) => resultMarkup(item, i)).join("")}
+          ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
       `).join("");
     }
@@ -828,6 +847,16 @@
     `;
   }
 
+  function optionMarkup(item){
+    if (!item.options || !Array.isArray(item.options.values) || !item.options.values.length) return "";
+    return `
+      <div class="option-line">
+        <span class="option-label">${esc(item.options.label || "OPTIONS")}</span>
+        <span class="option-values">${item.options.values.map(esc).join(" / ")}</span>
+      </div>
+    `;
+  }
+
   function shortNote(item){
     if (item.type === "Quick Command") return "";
     const note = String(item.notes || "").trim();
@@ -880,6 +909,7 @@
 
       ${connectMarkup(item)}
       ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
+      ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${checksMarkup(item)}
       ${shortNote(item)}
@@ -1070,7 +1100,7 @@
     }
   });
 
-  menuBtn?.addEventListener("click",() => document.body.classList.add("nav-open"));
+  menuBtn?.addEventListener("click",() => document.body.classList.toggle("nav-open"));
   navOverlay.addEventListener("click",closeNav);
 
   renderNav();
