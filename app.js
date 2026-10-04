@@ -906,6 +906,11 @@
     return "Identity";
   }
 
+  const SCOPE_OVERRIDES = [
+    {scope:"Tenant Wide", match:/Quarterly Account Cleanup|Inactive User Review|Disabled User Group Debt|Disabled User Mailbox Debt|Distribution Group Inventory|Teams and M365 Group Owners|Transport Rules Audit|Shared Mailbox Sign-in Audit/i},
+    {scope:"Multi User", match:/Create Dynamic License Group|Distribution Group Members|^Group Members$/i}
+  ];
+
   function primaryBucket(item){
     if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Incident Response") return "Incident Response";
@@ -913,6 +918,10 @@
     if (item.logicalArea === "Utility") return "Utility";
 
     const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
+    const override = SCOPE_OVERRIDES.find(x => x.match.test(item.displayName || item.name || ""));
+    if (override) return override.scope;
+
+    if (/^\s*tenant\b/i.test(String(item.input || ""))) return "Tenant Wide";
     if (/\btenant\b|tenant-wide|transport rules|shared mailbox sign-in/i.test(combined)) return "Tenant Wide";
 
     if (item.group === "Tenant") return "Tenant Wide";
@@ -1064,10 +1073,16 @@
       ? `SEARCH / ${state.area.toUpperCase()}`
       : state.area === "Everything" ? "FULL LIBRARY" : state.area.toUpperCase();
 
-    if (state.area === "Everything" && !queryActive){
+    if (!queryActive && state.area === "Everything"){
       const buckets = [...new Set(list.map(primaryBucket))];
       jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + buckets.map(bucket =>
         `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(bucket.toUpperCase())}</button>`
+      ).join("");
+      jumpBar.classList.remove("hidden");
+    } else if (!queryActive && ["Single User","Multi User","Tenant Wide"].includes(state.area)){
+      const sections = [...new Set(list.map(scopeSubgroup))];
+      jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + sections.map(section =>
+        `<button class="jump-link" type="button" data-jump="${esc(bucketId(section))}">${esc(section.toUpperCase())}</button>`
       ).join("");
       jumpBar.classList.remove("hidden");
     } else {
@@ -1098,7 +1113,7 @@
       }
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
-        <section class="group" id="${state.area === "Everything" ? esc(bucketId(group)) : ""}">
+        <section class="group" id="${(state.area === "Everything" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
           <div class="group-title">${esc(group.toUpperCase())}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
