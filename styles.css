@@ -63,9 +63,9 @@ button{cursor:pointer}
   border-radius:2px;
   background:transparent;
   color:#789fa8;
-  padding:10px 10px;
+  padding:11px 10px;
   text-align:left;
-  font-size:13.5px;
+  font-size:14.5px;
   font-weight:650;
 }
 .area-button:hover{background:var(--panel);color:#d9edf0}
@@ -124,7 +124,7 @@ button{cursor:pointer}
 }
 .search-box{
   width:100%;
-  min-height:62px;
+  min-height:66px;
   display:flex;
   align-items:center;
   gap:11px;
@@ -146,7 +146,7 @@ button{cursor:pointer}
   outline:0;
   background:transparent;
   color:#eef8f9;
-  font-size:17.5px;
+  font-size:19px;
   font-weight:500;
 }
 .search-box input::placeholder{color:#52727b}
@@ -208,10 +208,10 @@ button{cursor:pointer}
 }
 .group-title{
   margin-top:4px;
-  padding:21px 10px 10px 12px;
+  padding:22px 10px 11px 12px;
   border-left:2px solid #2c6f7f;
   color:#94c2ca;
-  font:900 10.5px/1.2 var(--mono);
+  font:900 11.5px/1.2 var(--mono);
   letter-spacing:.15em;
 }
 .result{
@@ -232,7 +232,7 @@ button{cursor:pointer}
 .result-name{
   min-width:0;
   color:#e1eef0;
-  font-size:14px;
+  font-size:15.5px;
   font-weight:650;
   white-space:nowrap;
   overflow:hidden;
@@ -240,8 +240,9 @@ button{cursor:pointer}
 }
 .result-meta{
   min-width:0;
-  color:#6f8e96;
-  font:700 10px/1.3 var(--mono);
+  color:#78a2aa;
+  font:700 11.5px/1.35 var(--mono);
+  opacity:.78;
   text-align:right;
   white-space:nowrap;
   overflow:hidden;
@@ -369,7 +370,7 @@ button{cursor:pointer}
   color:#7ea8b1;
 }
 .icon-button:hover{border-color:var(--cyan);color:#fff}
-.drawer-body{padding:26px 24px 60px}
+.drawer-body{padding:28px 26px 64px}
 
 .item-head{
   padding-bottom:16px;
@@ -382,10 +383,10 @@ button{cursor:pointer}
   text-transform:uppercase;
 }
 .item-title{
-  margin:7px 0 0;
+  margin:8px 0 0;
   color:#e5f1f3;
-  font-size:26px;
-  line-height:1.22;
+  font-size:29px;
+  line-height:1.2;
 }
 .access-state{
   margin-top:10px;
@@ -423,7 +424,7 @@ button{cursor:pointer}
 .connect-line code{
   min-width:0;
   color:#bde8ed;
-  font:11.5px/1.55 var(--mono);
+  font:12.5px/1.55 var(--mono);
   overflow-wrap:anywhere;
 }
 .copy-mini{
@@ -494,10 +495,10 @@ button{cursor:pointer}
   border-top:1px solid var(--line2);
 }
 .check-item{
-  padding:9px 1px;
+  padding:10px 1px;
   border-bottom:1px solid var(--line2);
   color:#abc8cd;
-  font-size:12px;
+  font-size:13px;
   line-height:1.45;
 }
 .check-item::before{
@@ -512,7 +513,7 @@ button{cursor:pointer}
 
 .note-block{
   color:#8ba8ae;
-  font-size:12px;
+  font-size:13px;
   line-height:1.6;
 }
 .option-line{
