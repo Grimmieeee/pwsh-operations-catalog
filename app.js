@@ -786,7 +786,7 @@
     if (/Remove/i.test(title)) return "Removes the selected access or configuration.";
     if (/Add/i.test(title)) return "Adds or changes access.";
     if (/Update|Upgrade/i.test(title)) return "Installs or applies updates.";
-    return "Makes changes.";
+    return "";
   }
 
   function buildItem(source){
@@ -1226,7 +1226,7 @@
   }
 
   function shortNote(item){
-    if (item.type === "Quick Command" || item.facts?.items?.length) return "";
+    if (item.type === "Quick Command") return "";
     const note = String(item.notes || "").trim();
     if (!note) return "";
     return `<div class="note-block">${esc(note)}</div>`;
