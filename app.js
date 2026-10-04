@@ -911,14 +911,14 @@
     if (item.logicalArea === "RMM") return "RMM";
     if (item.logicalArea === "Utility") return "Utility";
 
-    if (item.group === "Multi User") return "Multi User";
+    const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
+    if (/\btenant\b|tenant-wide|transport rules|shared mailbox sign-in/i.test(combined)) return "Tenant Wide";
+
     if (item.group === "Tenant") return "Tenant Wide";
+    if (item.group === "Multi User") return "Multi User";
     if (item.group === "Single User") return "Single User";
 
-    const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
-    if (/\btenant\b|tenant-wide/i.test(combined)) return "Tenant Wide";
     if (/\bbulk\b|\bmulti[- ]?user\b|one or more|multiple users|all users/i.test(combined)) return "Multi User";
-
     if (item.logicalArea === "Identity" || item.logicalArea === "Mailbox") return "Single User";
     return "Utility";
   }
