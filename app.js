@@ -1,579 +1,1078 @@
-const RAW_DATA = window.CATALOG_DATA;
-const DATA = Array.isArray(RAW_DATA)
-  ? RAW_DATA
-      .filter(x => x && typeof x === 'object' && typeof x.name === 'string')
-      .map((x, i) => ({ ...x, _catalogIndex: i }))
-  : [];
+(() => {
+  "use strict";
 
-const VISIBLE_STEP = 18;
-let visibleCount = VISIBLE_STEP;
-let selectedArea = '';
-let selectedSubarea = '';
-let selectedStatus = '';
+  const RAW = Array.isArray(window.CATALOG_DATA) ? window.CATALOG_DATA : [];
 
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
-  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
-}[c]));
+  const AREAS = [
+    "Everything",
+    "Identity",
+    "Mailbox",
+    "Incident Response",
+    "RMM",
+    "Utility",
+    "Standalone"
+  ];
 
-const norm = s => String(s ?? '')
-  .toLowerCase()
-  .replace(/can't/g, 'cannot')
-  .replace(/won't/g, 'will not')
-  .replace(/isn't/g, 'is not')
-  .replace(/doesn't/g, 'does not')
-  .replace(/don't/g, 'do not')
-  .normalize('NFKD')
-  .replace(/[^\w\s@.+/-]/g, ' ')
-  .replace(/\s+/g, ' ')
-  .trim();
+  const EXTRA_STANDALONE = [
+    {
+      name:"Add Calendar Permission",
+      platform:"Exchange Online",
+      access:"Change",
+      requires:"Connect: Connect-ExchangeOnline",
+      code:'Add-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -AccessRights Editor',
+      keywords:"calendar permissions mailbox folder editor reviewer"
+    },
+    {
+      name:"Remove Calendar Permission",
+      platform:"Exchange Online",
+      access:"Change",
+      requires:"Connect: Connect-ExchangeOnline",
+      code:'Remove-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -Confirm:$false',
+      keywords:"calendar permissions mailbox folder remove access"
+    },
+    {
+      name:"Show Calendar Permissions",
+      platform:"Exchange Online",
+      access:"Read-only",
+      requires:"Connect: Connect-ExchangeOnline",
+      code:'Get-MailboxFolderPermission -Identity "user@domain.com:\\Calendar"',
+      keywords:"calendar permissions mailbox folder access"
+    },
+    {
+      name:"Show Contacts Permissions",
+      platform:"Exchange Online",
+      access:"Read-only",
+      requires:"Connect: Connect-ExchangeOnline",
+      code:'Get-MailboxFolderPermission -Identity "user@domain.com:\\Contacts"',
+      keywords:"contacts permissions mailbox folder access"
+    },
+    {
+      name:"Add Contacts Permission - Editor",
+      platform:"Exchange Online",
+      access:"Change",
+      requires:"Connect: Connect-ExchangeOnline",
+      code:'Add-MailboxFolderPermission -Identity "owner@domain.com:\\Contacts" -User "user@domain.com" -AccessRights Editor',
+      keywords:"contacts permissions mailbox folder editor"
+    },
+    {
+      name:"Show Send-To Restrictions / authOrig",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:"Get-ADGroup 'GroupName' -Properties authOrig | Select-Object -ExpandProperty authOrig",
+      keywords:"distro distribution list sender restriction authorig allowed senders"
+    },
+    {
+      name:"Show Account Enabled",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:'Get-ADUser "username" -Properties Enabled | Select-Object SamAccountName,Enabled',
+      keywords:"account enabled disabled ad user status"
+    },
+    {
+      name:"Show User Principal Name",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:'Get-ADUser -Identity "username" -Properties UserPrincipalName | Select-Object UserPrincipalName',
+      keywords:"upn principal name ad user"
+    },
+    {
+      name:"Show Password Last Set",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:'Get-ADUser -Identity "username" -Properties PasswordLastSet | Select-Object Name,PasswordLastSet',
+      keywords:"password last set age changed ad"
+    },
+    {
+      name:"Show Distinguished Name",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:'Get-ADUser -Identity "username" | Select-Object DistinguishedName',
+      keywords:"dn distinguished name ad user"
+    },
+    {
+      name:"Show Default Domain Password Policy",
+      platform:"Active Directory",
+      access:"Read-only",
+      requires:"Connect: Import-Module ActiveDirectory",
+      code:"Get-ADDefaultDomainPasswordPolicy",
+      keywords:"password policy domain age complexity lockout"
+    },
+    {
+      name:"Force Group Policy Update",
+      platform:"Local Windows",
+      access:"Change",
+      code:"gpupdate /force",
+      keywords:"gpo group policy refresh update"
+    },
+    {
+      name:"Show Group Policy Result",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"gpresult /r",
+      keywords:"gpo group policy applied result"
+    },
+    {
+      name:"Disable Hibernation",
+      platform:"Local Windows",
+      access:"Change",
+      code:"powercfg.exe /hibernate off",
+      keywords:"hibernate hibernation disk storage cleanup"
+    },
+    {
+      name:"Show Domain Account Details",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"net user username /domain",
+      keywords:"domain user account details net user"
+    },
+    {
+      name:"Create Local User",
+      platform:"Local Windows",
+      access:"Change",
+      code:"net user username /add",
+      keywords:"new local user create account"
+    },
+    {
+      name:"Delete Local User",
+      platform:"Local Windows",
+      access:"Destructive",
+      code:"net user username /delete",
+      keywords:"delete local user remove account"
+    },
+    {
+      name:"Set Local User Password",
+      platform:"Local Windows",
+      access:"Change",
+      code:'net user "username" "temporary password"',
+      keywords:"local password reset account"
+    },
+    {
+      name:"Enable Local Account",
+      platform:"Local Windows",
+      access:"Change",
+      code:'net user "username" /active:yes',
+      keywords:"unlock enable local account"
+    },
+    {
+      name:"Open Local Users and Groups",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"lusrmgr.msc",
+      keywords:"local users groups gui"
+    },
+    {
+      name:"Show Logged-On Users",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"quser",
+      keywords:"logged in logged on sessions users"
+    },
+    {
+      name:"Disable Network Adapter",
+      platform:"Local Windows",
+      access:"Change",
+      code:'netsh interface set interface "Wi-Fi" admin=disabled',
+      keywords:"network adapter disable wifi isolate"
+    },
+    {
+      name:"Restart Network Adapter",
+      platform:"Local Windows",
+      access:"Change",
+      code:'Restart-NetAdapter -Name "Wi-Fi"',
+      keywords:"network adapter restart nic"
+    },
+    {
+      name:"Isolate Device - Disable Enabled Adapters",
+      platform:"Local Windows",
+      access:"Change",
+      code:'Get-NetAdapter | Where-Object Status -eq "Up" | Disable-NetAdapter -Confirm:$false',
+      keywords:"isolate device network adapters disable incident response"
+    },
+    {
+      name:"Reboot Computer",
+      platform:"Local Windows",
+      access:"Change",
+      code:"shutdown /r /t 0",
+      keywords:"restart reboot computer workstation"
+    },
+    {
+      name:"Resync Windows Time",
+      platform:"Local Windows",
+      access:"Change",
+      code:"w32tm /resync /force",
+      keywords:"time sync clock w32tm"
+    },
+    {
+      name:"Open Windows Update",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"start ms-settings:windowsupdate-action",
+      keywords:"windows update settings patches"
+    },
+    {
+      name:"Show Wi-Fi Interface",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"netsh wlan show interfaces",
+      keywords:"wifi wireless wlan interface ssid"
+    },
+    {
+      name:"Delete Wi-Fi Profile",
+      platform:"Local Windows",
+      access:"Change",
+      code:'netsh wlan delete profile name="ProfileName"',
+      keywords:"wifi wireless wlan profile forget"
+    },
+    {
+      name:"DISM Analyze Component Store",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"DISM /Online /Cleanup-Image /AnalyzeComponentStore",
+      keywords:"dism component store cleanup storage health"
+    },
+    {
+      name:"DISM Component Store Cleanup",
+      platform:"Local Windows",
+      access:"Change",
+      code:"DISM /Online /Cleanup-Image /StartComponentCleanup",
+      keywords:"dism component store cleanup storage"
+    },
+    {
+      name:"DISM Restore Health",
+      platform:"Local Windows",
+      access:"Change",
+      code:"DISM /Online /Cleanup-Image /RestoreHealth",
+      keywords:"dism repair image health windows"
+    },
+    {
+      name:"Launch Disk Cleanup",
+      platform:"Local Windows",
+      access:"Change",
+      code:"cleanmgr.exe",
+      keywords:"disk cleanup storage temp files"
+    },
+    {
+      name:"Defragment Volume",
+      platform:"Local Windows",
+      access:"Change",
+      code:"Optimize-Volume -DriveLetter C -Defrag -Verbose",
+      keywords:"defrag optimize volume disk"
+    },
+    {
+      name:"Show Available WinGet Updates",
+      platform:"WinGet",
+      access:"Read-only",
+      code:"winget upgrade --accept-source-agreements",
+      keywords:"winget available updates packages software"
+    },
+    {
+      name:"Update All Eligible WinGet Packages",
+      platform:"WinGet",
+      access:"Change",
+      code:"winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+      keywords:"winget update all packages software"
+    },
+    {
+      name:"Show WinGet Package Information",
+      platform:"WinGet",
+      access:"Read-only",
+      code:"winget show --id <Package.Id>",
+      keywords:"winget package info version"
+    },
+    {
+      name:"Update Specific WinGet Package",
+      platform:"WinGet",
+      access:"Change",
+      code:"winget upgrade --id <Package.Id> --accept-source-agreements --accept-package-agreements",
+      keywords:"winget update specific package"
+    },
+    {
+      name:"Update WinGet Sources",
+      platform:"WinGet",
+      access:"Change",
+      code:"winget source update",
+      keywords:"winget source refresh update"
+    },
+    {
+      name:"Show PowerShell Version",
+      platform:"PowerShell",
+      access:"Read-only",
+      code:"$PSVersionTable.PSVersion",
+      keywords:"powershell version ps7 terminal health"
+    },
+    {
+      name:"Show Execution Policies",
+      platform:"PowerShell",
+      access:"Read-only",
+      code:"Get-ExecutionPolicy -List",
+      keywords:"execution policy powershell terminal health"
+    },
+    {
+      name:"Set Current User Execution Policy - RemoteSigned",
+      platform:"PowerShell",
+      access:"Change",
+      code:"Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
+      keywords:"execution policy remotesigned powershell"
+    },
+    {
+      name:"Show Installed Microsoft Graph Module Version",
+      platform:"PowerShell",
+      access:"Read-only",
+      code:'Get-Module Microsoft.Graph.Authentication -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path',
+      keywords:"graph module installed version terminal health"
+    },
+    {
+      name:"Show Installed ExchangeOnlineManagement Version",
+      platform:"PowerShell",
+      access:"Read-only",
+      code:'Get-Module ExchangeOnlineManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path',
+      keywords:"exchange exo module installed version terminal health"
+    },
+    {
+      name:"Show Graph Context",
+      platform:"Microsoft Graph",
+      access:"Read-only",
+      code:"Get-MgContext",
+      keywords:"graph session context scopes tenant account auth"
+    },
+    {
+      name:"Show Exchange Connection",
+      platform:"Exchange Online",
+      access:"Read-only",
+      code:"Get-ConnectionInformation",
+      keywords:"exchange exo connection session auth"
+    },
+    {
+      name:"Disconnect Microsoft Graph",
+      platform:"Microsoft Graph",
+      access:"Change",
+      code:"Disconnect-MgGraph",
+      keywords:"graph disconnect session reset auth"
+    },
+    {
+      name:"Disconnect Exchange Online",
+      platform:"Exchange Online",
+      access:"Change",
+      code:"Disconnect-ExchangeOnline -Confirm:$false",
+      keywords:"exchange exo disconnect session reset auth"
+    },
+    {
+      name:"Show Code-Signing Certificates",
+      platform:"PowerShell",
+      access:"Read-only",
+      code:"Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert | Select-Object Subject,Thumbprint,NotAfter",
+      keywords:"code signing certificate signature terminal health"
+    }
+  ].map((x, i) => ({
+    ...x,
+    type:"Quick Command",
+    area:"Standalone",
+    subarea:"",
+    status:"Ready",
+    source:"Standalone",
+    input:"",
+    output:"",
+    file:"",
+    related:[],
+    notes:"",
+    url:"",
+    _order:10000 + i
+  }));
 
-function safeUrl(raw) {
-  const value = String(raw || '').trim();
-  if (!value || value === '#' || value === '/') return '';
+  const rawItems = RAW.filter(item =>
+    item &&
+    item.status !== "Candidate" &&
+    item.status !== "External Reference"
+  );
 
-  try {
-    const url = new URL(value, window.location.href);
+  const allSource = [...rawItems, ...EXTRA_STANDALONE];
 
-    if (url.origin === window.location.origin) {
-      const current = new URL(window.location.href);
-      const samePage =
-        url.pathname === current.pathname &&
-        !url.search &&
-        !url.hash;
+  const esc = value => String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-      return samePage ? '' : url.href;
+  const norm = value => String(value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g," ")
+    .trim();
+
+  const words = value => norm(value).split(/\s+/).filter(Boolean);
+
+  function isRmm(item){
+    return /\brmm\b|datto/i.test([
+      item.name,item.subarea,item.platform,item.source,item.file
+    ].join(" "));
+  }
+
+  function logicalArea(item){
+    if (/user profile backup/i.test(item.name || "")) return "Identity";
+    if (isRmm(item)) return "RMM";
+    if (item.type === "Quick Command" || item.area === "Standalone") return "Standalone";
+    if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
+    if (/mailbox/i.test(item.area || "")) return "Mailbox";
+    if (/identity|groups|reporting\s*\/\s*audit/i.test(item.area || "")) return "Identity";
+    if (/utilities|endpoint|network/i.test(item.area || "")) return "Utility";
+    return "Utility";
+  }
+
+  function displayName(item){
+    let name = String(item.name || item.file || "Untitled").trim();
+    name = name.replace(/^1[-_ ]+/i,"").replace(/^2[-_ ]+/i,"");
+    name = name.replace(/-CHR\b/ig,"").replace(/\s{2,}/g," ").trim();
+
+    if (/^Show Password Last Changed And Age$/i.test(name)) return "Show Password Age";
+    if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
+    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC Risk Exposure Snapshot";
+    if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC Eradicate";
+    if (/^Show Inbox Rules$/i.test(name) && /IncludeHidden/i.test(item.code || "")) return "Show Inbox Rules - Hidden";
+
+    return name;
+  }
+
+  function groupFor(item, area){
+    const name = displayName(item);
+    const file = item.file || "";
+    const combined = [name,file,item.subarea,item.platform,item.code].join(" ");
+
+    if (area === "Standalone"){
+      if (/winget/i.test(combined)) return "WinGet";
+      if (/PowerShell|execution policy|code-signing|terminal/i.test(combined) &&
+          !/Microsoft Graph|Exchange Online/i.test(item.platform || "")) return "Terminal";
+      if (/Exchange Online/i.test(item.platform || "")) return "Exchange";
+      if (/Microsoft Graph/i.test(item.platform || "")) return "Graph";
+      if (/Active Directory/i.test(item.platform || "")) return "Active Directory";
+      if (/network|dns|tcp|ping|tracert|route|wifi|wlan|netadapter|winsock|ipconfig|firewall/i.test(combined)) return "Network";
+      return "Windows";
     }
 
-    if (url.protocol === 'https:') return url.href;
-    return '';
-  } catch {
-    return '';
-  }
-}
+    if (area === "Identity"){
+      if (/^1[-_]/i.test(file) || /^1[-_]/i.test(item.name || "")) return "Single User";
+      if (/^2[-_]/i.test(file) || /^2[-_]/i.test(item.name || "")) return "Multi User";
+      if (/tenant/i.test(combined)) return "Tenant";
+      return "General";
+    }
 
-function uniq(key) {
-  return [...new Set(DATA.map(x => x[key]).filter(Boolean))].sort();
-}
+    if (area === "Mailbox"){
+      if (/^1[-_]/i.test(file) || /^1[-_]/i.test(item.name || "")) return "Single User";
+      if (/^2[-_]/i.test(file) || /^2[-_]/i.test(item.name || "")) return "Multi User";
+      return "General";
+    }
 
-function addOptions(id, values) {
-  const el = document.getElementById(id);
-  values.forEach(value => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = value;
-    el.appendChild(option);
-  });
-}
+    if (area === "Incident Response"){
+      if (/risk exposure|account compromise|bec|revoke active sessions/i.test(name)) return "Primary";
+      if (/investigat|timeline|token|threat|trace|exfil|email search/i.test(combined)) return "Investigation";
+      if (/recover|response|eradicate/i.test(name)) return "Response";
+      return "General";
+    }
 
-addOptions('typeFilter', uniq('type'));
-addOptions('platformFilter', uniq('platform'));
-addOptions('accessFilter', uniq('access'));
+    if (area === "RMM"){
+      if (/onboard|offboard|lifecycle/i.test(combined)) return "User Lifecycle";
+      if (/group/i.test(combined)) return "Groups";
+      if (/bec|incident|risk|revoke/i.test(combined)) return "BEC";
+      return "General";
+    }
 
-function safety(x) {
-  if (x.access === 'Read-only') return ['Safe check', 'safe-pill'];
-  if (x.access === 'Change') return ['Makes changes', 'change-pill'];
-  if (x.access === 'Destructive') return ['Destructive', 'bad-pill'];
-  if (x.type === 'Workflow' || x.type === 'Runbook') return ['Workflow', 'workflow-pill'];
-  if (x.type === 'Automation') return ['Automation', 'auto-pill'];
-  return [x.type || 'Info', 'tool-pill'];
-}
-
-function iconFor(x) {
-  const n = norm(`${x.name} ${x.area} ${x.subarea}`);
-  if (n.includes('password')) return '⌕';
-  if (n.includes('mfa') || n.includes('auth')) return '◇';
-  if (n.includes('mail') || n.includes('inbox') || n.includes('forward')) return '✉';
-  if (n.includes('dns') || n.includes('network')) return '◎';
-  if (n.includes('group')) return '◉';
-  if (n.includes('printer') || n.includes('endpoint') || n.includes('computer')) return '▣';
-  if (n.includes('security') || n.includes('risk') || n.includes('compromise')) return '◇';
-  return '>_';
-}
-
-function inputFor(x) {
-  if (x.input) return x.input;
-  const c = x.code || '';
-  if (/user@domain\.com/i.test(c)) return 'User UPN';
-  if (/"username"/i.test(c)) return 'Username';
-  if (/group@domain\.com|GROUP-OBJECT-ID|Group Name/i.test(c)) return 'Group name or ID';
-  if (/server01/i.test(c)) return 'Hostname';
-  if (/example\.com/i.test(c)) return 'Hostname or domain';
-  if (/THUMBPRINT/i.test(c)) return 'Certificate thumbprint';
-  if (/Rule Name/i.test(c)) return 'Rule name';
-  if (/SEARCH-NAME/i.test(c)) return 'Search name';
-  if (/1\.2\.3\.4|8\.8\.8\.8/i.test(c)) return 'IP address';
-  return '';
-}
-
-function cleanNeeds(s) {
-  return String(s || '')
-    .replace(/^Requires:\s*/i, '')
-    .replace(/\s*\|\s*Connect:.*/i, '')
-    .trim();
-}
-
-function connectionFor(x) {
-  const req = String(x.requires || '').trim();
-  const platform = String(x.platform || '');
-
-  const explicit = req.match(/Connect:\s*(.+?)(?=\s*\|\s*Requires:|$)/i);
-  if (explicit) return explicit[1].trim();
-
-  const importModule = req.match(/Import-Module\s+[A-Za-z0-9_.-]+/i);
-  if (importModule) return importModule[0];
-
-  if (/Connect-IPPSSession/i.test(req)) return 'Connect-IPPSSession';
-  if (/Connect-ExchangeOnline/i.test(req)) return 'Connect-ExchangeOnline';
-  if (/Connect-MgGraph/i.test(req)) return 'Connect-MgGraph';
-
-  if (/Exchange Online/i.test(platform)) return 'Connect-ExchangeOnline';
-  if (/Microsoft Graph|\bGraph\b/i.test(platform)) return 'Connect-MgGraph';
-  if (/Active Directory/i.test(platform)) return 'Import-Module ActiveDirectory';
-
-  return '';
-}
-
-function subareaLabel(raw) {
-  return String(raw || '')
-    .replace(/^Active Directory - /i, 'AD · ')
-    .replace(/^Exchange Online - /i, 'EXO · ')
-    .replace(/^Local Windows - /i, 'Windows · ')
-    .replace(/^Graph - /i, 'Graph · ')
-    .replace(/^RMM /i, 'RMM · ');
-}
-
-function searchBlob(x) {
-  return norm([
-    x.name, x.type, x.area, x.subarea, x.platform, x.access, x.status,
-    x.file, x.notes, x.keywords, x.source, (x.related || []).join(' '), x.code
-  ].join(' '));
-}
-
-function searchScore(x, q) {
-  if (!q) return 0;
-  const nq = norm(q);
-  const tokens = nq.split(' ').filter(Boolean);
-  const name = norm(x.name);
-  const keys = norm(x.keywords);
-  const area = norm(`${x.area} ${x.subarea}`);
-  const file = norm(x.file);
-  const blob = searchBlob(x);
-
-  let score = 0;
-  if (name === nq) score += 180;
-  if (name.startsWith(nq)) score += 120;
-  if (name.includes(nq)) score += 90;
-  if (keys.includes(nq)) score += 70;
-  if (area.includes(nq)) score += 45;
-  if (file.includes(nq)) score += 35;
-
-  for (const token of tokens) {
-    if (name.includes(token)) score += 30;
-    else if (keys.includes(token)) score += 22;
-    else if (area.includes(token)) score += 14;
-    else if (file.includes(token)) score += 10;
-    else if (blob.includes(token)) score += 5;
+    if (/winget/i.test(combined)) return "WinGet";
+    if (/profile|field-kit|jumpbox|session|powershell/i.test(combined)) return "Terminal / Field-Kit";
+    return "General";
   }
 
-  if (x.status === 'Ready') score += 4;
-  if (x.type === 'Quick Command') score += 2;
-  return score;
-}
+  function connectCommands(item){
+    const req = String(item.requires || "");
+    const found = [];
 
-function searchTokens(q) {
-  const stop = new Set(['a','an','and','are','for','i','in','is','it','me','my','of','on','the','to','with']);
-  return norm(q).split(' ').filter(token => token && !stop.has(token));
-}
+    for (const match of req.matchAll(/Connect:\s*([^|]+)/gi)){
+      const value = match[1].trim();
+      if (value && !found.includes(value)) found.push(value);
+    }
 
-function searchableWords(x) {
-  return norm([
-    x.name, x.type, x.area, x.subarea, x.platform, x.access, x.status,
-    x.file, x.notes, x.keywords, x.source, (x.related || []).join(' ')
-  ].join(' ')).split(' ').filter(Boolean);
-}
+    const platform = String(item.platform || "");
+    const code = String(item.code || "");
 
-function searchMatches(x, q) {
-  const tokens = searchTokens(q);
-  if (!tokens.length) return true;
+    if (!found.length){
+      if (/Microsoft Graph/i.test(platform) || /\bMg[A-Z]/.test(code)) found.push("Connect-MgGraph");
+      if (/Exchange Online/i.test(platform) || /Get-Mailbox|Set-Mailbox|Get-InboxRule|MailboxFolderPermission/.test(code)) found.push("Connect-ExchangeOnline");
+      if (/Active Directory/i.test(platform) || /\b(?:Get|Set|Enable|Disable|Remove|Add)-AD/.test(code)) found.push("Import-Module ActiveDirectory");
+    }
 
-  const words = searchableWords(x);
-  const matched = tokens.filter(token =>
-    words.some(word => word === token || word.startsWith(token))
-  ).length;
+    return [...new Set(found)];
+  }
 
-  const minimum = tokens.length <= 2 ? 1 : Math.ceil(tokens.length * 0.6);
-  return matched >= minimum;
-}
+  const RISK_CHECKS = [
+    "Account status",
+    "Account source",
+    "Password age",
+    "MFA methods",
+    "Interactive sign-in",
+    "Non-interactive sign-in",
+    "Recent sign-ins",
+    "Failed sign-ins",
+    "Privileged roles",
+    "Conditional Access",
+    "Visible inbox rules",
+    "Hidden inbox rules",
+    "Forwarding",
+    "Full Access",
+    "Send As",
+    "Send on Behalf",
+    "OAuth grants",
+    "POP / IMAP / SMTP AUTH"
+  ];
 
-function displayTitle(x) {
-  const exact = {
-    'Get User': 'User Details',
-    'Get User By Upn': 'User Details by UPN',
-    'Reset Password': 'Reset User Password',
-    'Delete User': 'Delete User Account',
-    'Disable User': 'Disable User Account',
-    'Enable User': 'Enable User Account',
-    'Unlock User': 'Unlock User Account',
-    'Show Password Expiry': 'Password Expiry',
-    'Show All Authentication Methods For One User': 'User Authentication Methods',
-    'Show Registration Status For One User': 'User MFA Registration',
-    'Recipient': 'Trace Mail to Recipient',
-    'Sender': 'Trace Mail from Sender'
+  function checklistFor(item){
+    const title = displayName(item);
+    if (/M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
+      return RISK_CHECKS;
+    }
+
+    if (/M365 User Quick View/i.test(title)){
+      return ["Account state","Password age","MFA","Groups","Mailbox state"];
+    }
+
+    return [];
+  }
+
+  function workflowFor(item, area){
+    if (area !== "Incident Response") return null;
+
+    const title = displayName(item);
+    if (!/BEC|Account Compromise|Risk Exposure|Eradicate|Recover|Revoke Active Sessions/i.test(title)) return null;
+
+    const steps = [
+      {n:"1",name:"Risk Exposure Snapshot"},
+      {n:"2",name:"Eradicate"},
+      {n:"3",name:"Recover"},
+      {n:"",name:"Revoke Active Sessions",standalone:true}
+    ];
+
+    let current = "";
+    if (/Risk Exposure|Discovery/i.test(title)) current = "1";
+    else if (/Eradicate|Execution/i.test(title)) current = "2";
+    else if (/Recover/i.test(title)) current = "3";
+    else if (/Revoke Active Sessions/i.test(title)) current = "standalone";
+
+    return {
+      note:"RUN IN ORDER — Complete each numbered step before moving to the next. Items marked STANDALONE may be run independently.",
+      current,
+      steps
+    };
+  }
+
+  function changeNote(item){
+    const access = String(item.access || "");
+    if (!/change|destructive|mixed/i.test(access)) return "";
+
+    const title = displayName(item);
+    if (/Add Calendar Permission/i.test(title)) return "Changes calendar folder permissions.";
+    if (/Remove Calendar Permission/i.test(title)) return "Removes calendar folder permissions.";
+    if (/Revoke Active Sessions/i.test(title)) return "Revokes active Microsoft 365 sessions.";
+    if (/Disable Sign-In/i.test(title)) return "Disables user sign-in.";
+    if (/Enable Sign-In|Re-Enable/i.test(title)) return "Enables user sign-in.";
+    if (/Reset Password/i.test(title)) return "Resets the user password.";
+    if (/Delete/i.test(title)) return "Deletes or removes the selected object.";
+    if (/Remove/i.test(title)) return "Removes the selected access or configuration.";
+    if (/Add/i.test(title)) return "Adds or changes access.";
+    if (/Update|Upgrade/i.test(title)) return "Installs or applies updates.";
+    return "Makes changes.";
+  }
+
+  function buildItem(source){
+    const area = logicalArea(source);
+    return {
+      ...source,
+      logicalArea:area,
+      group:groupFor(source, area),
+      displayName:displayName(source),
+      connect:connectCommands(source),
+      checks:checklistFor(source),
+      workflow:workflowFor(source, area),
+      changeNote:changeNote(source)
+    };
+  }
+
+  function scoreQuality(item){
+    let score = 0;
+    if (item.file) score += 3;
+    if (item.code) score += 2;
+    if (item.notes) score += 1;
+    if (item.requires) score += 1;
+    return score;
+  }
+
+  const byKey = new Map();
+  for (const source of allSource){
+    const item = buildItem(source);
+    const key = norm(item.logicalArea + " " + item.displayName);
+    const existing = byKey.get(key);
+    if (!existing || scoreQuality(item) > scoreQuality(existing)) byKey.set(key,item);
+  }
+
+  const ITEMS = [...byKey.values()];
+
+  const state = {
+    area:"Everything",
+    query:"",
+    selected:null
   };
-  return exact[x.name] || x.name;
-}
 
-function row(label, value) {
-  if (!value) return '';
-  const rendered = String(value).startsWith('<span class="status-text ') ? String(value) : esc(value);
-  return `<div class="detail-row"><div class="detail-label">${esc(label)}</div><div class="detail-value">${rendered}</div></div>`;
-}
+  const areaNav = document.getElementById("areaNav");
+  const crumb = document.getElementById("crumb");
+  const entryCount = document.getElementById("entryCount");
+  const search = document.getElementById("search");
+  const clearSearch = document.getElementById("clearSearch");
+  const contextBar = document.getElementById("contextBar");
+  const results = document.getElementById("results");
+  const empty = document.getElementById("empty");
+  const drawer = document.getElementById("drawer");
+  const drawerBody = document.getElementById("drawerBody");
+  const closeDrawer = document.getElementById("closeDrawer");
+  const drawerOverlay = document.getElementById("drawerOverlay");
+  const menuBtn = document.getElementById("menuBtn");
+  const navOverlay = document.getElementById("navOverlay");
 
-function summaryFor(x) {
-  return x.output || x.notes || subareaLabel(x.subarea || x.area) || x.type || 'PowerShell operation';
-}
+  function countArea(area){
+    return area === "Everything" ? ITEMS.length : ITEMS.filter(x => x.logicalArea === area).length;
+  }
 
-function resultHTML(x) {
-  const [label, pill] = safety(x);
-  return `
-    <article class="result-row">
-      <button class="result-open" type="button" data-open-index="${x._catalogIndex}">
-        <div class="fix-cell">
-          <div class="fix-marker">&gt;</div>
-          <div class="fix-copy">
-            <h2>${esc(displayTitle(x))}</h2>
-            <div class="fix-sub">${esc(summaryFor(x))}</div>
-          </div>
-        </div>
-        <div class="result-col environment-col">${esc(x.platform || 'PowerShell')}</div>
-        <div class="result-col type-col">${esc(x.type || '')}</div>
-        <div class="result-col safety-col"><span class="status-text ${pill}">${esc(label)}</span></div>
-        <div class="result-arrow" aria-hidden="true">›</div>
+  function renderNav(){
+    areaNav.innerHTML = AREAS.map(area => `
+      <button class="area-button ${state.area === area ? "active" : ""}" data-area="${esc(area)}" type="button">
+        <span>${esc(area)}</span>
+        <span class="area-count">${countArea(area)}</span>
       </button>
-    </article>`;
-}
-
-function getRows() {
-  const q = document.getElementById('search').value.trim();
-  const type = document.getElementById('typeFilter').value;
-  const platform = document.getElementById('platformFilter').value;
-  const access = document.getElementById('accessFilter').value;
-
-  let rows = DATA.filter(x => {
-    if (selectedArea && x.area !== selectedArea) return false;
-    if (selectedSubarea && x.subarea !== selectedSubarea) return false;
-    if (selectedStatus && x.status !== selectedStatus) return false;
-    if (type && x.type !== type) return false;
-    if (platform && x.platform !== platform) return false;
-    if (access && x.access !== access) return false;
-    return searchMatches(x, q);
-  });
-
-  const sort = document.getElementById('sort').value;
-  if (sort === 'relevance' && q) {
-    rows.sort((a, b) => searchScore(b, q) - searchScore(a, q) || a._order - b._order);
-  } else if (sort === 'name') {
-    rows.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sort === 'type') {
-    rows.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
-  } else if (sort === 'area') {
-    rows.sort((a, b) => a.area.localeCompare(b.area) || a.name.localeCompare(b.name));
-  } else {
-    rows.sort((a, b) => a._order - b._order);
+    `).join("");
   }
 
-  return rows;
-}
+  function searchScore(item, query){
+    if (!query) return 1;
+    const q = words(query);
+    if (!q.length) return 1;
 
-function contextText() {
-  if (selectedStatus === 'Candidate') return 'Ideas to Add';
-  if (selectedSubarea) return subareaLabel(selectedSubarea);
-  if (selectedArea) return selectedArea;
-  return 'Everything';
-}
+    const strong = words([
+      item.displayName,
+      item.file,
+      item.group,
+      item.logicalArea,
+      item.keywords
+    ].join(" "));
 
-function renderCounts() {
-  document.getElementById('catalogCount').textContent = `${DATA.length} entries`;
-  document.querySelectorAll('[data-count-area]').forEach(el => {
-    const area = el.dataset.countArea || '';
-    el.textContent = area ? DATA.filter(x => x.area === area).length : DATA.length;
-  });
-  document.querySelectorAll('[data-count-status]').forEach(el => {
-    el.textContent = DATA.filter(x => x.status === el.dataset.countStatus).length;
-  });
-}
+    const weak = words([
+      item.platform,
+      item.notes,
+      item.output,
+      item.subarea
+    ].join(" "));
 
-function renderSubareas() {
-  const section = document.getElementById('subareaSection');
-  const nav = document.getElementById('subareaNav');
+    let score = 0;
+    for (const token of q){
+      if (strong.some(w => w === token)) score += 7;
+      else if (strong.some(w => w.startsWith(token))) score += 5;
+      else if (weak.some(w => w === token)) score += 3;
+      else if (weak.some(w => w.startsWith(token))) score += 1;
+    }
 
-  if (!selectedArea || selectedStatus) {
-    section.classList.add('hidden');
-    nav.innerHTML = '';
-    return;
+    return score;
   }
 
-  const counts = new Map();
-  DATA.filter(x => x.area === selectedArea && x.subarea).forEach(x => {
-    counts.set(x.subarea, (counts.get(x.subarea) || 0) + 1);
-  });
+  function filteredItems(){
+    let list = ITEMS.filter(item => state.area === "Everything" || item.logicalArea === state.area);
+    const q = state.query.trim();
 
-  const items = [...counts.entries()].sort((a, b) =>
-    b[1] - a[1] || subareaLabel(a[0]).localeCompare(subareaLabel(b[0]))
-  );
+    if (q){
+      list = list
+        .map(item => ({item,score:searchScore(item,q)}))
+        .filter(x => x.score > 0)
+        .sort((a,b) => b.score - a.score || a.item.displayName.localeCompare(b.item.displayName))
+        .map(x => x.item);
+    } else {
+      list.sort((a,b) =>
+        groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
+        a.displayName.localeCompare(b.displayName)
+      );
+    }
 
-  nav.innerHTML = [
-    `<button class="subnavbtn ${selectedSubarea ? '' : 'active'}" data-subarea=""><span>All ${esc(selectedArea)}</span><span>${DATA.filter(x => x.area === selectedArea).length}</span></button>`,
-    ...items.map(([raw, count]) =>
-      `<button class="subnavbtn ${selectedSubarea === raw ? 'active' : ''}" data-subarea="${esc(raw)}"><span>${esc(subareaLabel(raw))}</span><span>${count}</span></button>`
-    )
-  ].join('');
+    return list;
+  }
 
-  nav.querySelectorAll('[data-subarea]').forEach(btn => {
-    btn.onclick = () => {
-      selectedSubarea = btn.dataset.subarea || '';
-      visibleCount = VISIBLE_STEP;
-      renderSubareas();
-      render();
+  function groupRank(area, group){
+    const orders = {
+      "Identity":["Single User","Multi User","Tenant","General"],
+      "Mailbox":["Single User","Multi User","General"],
+      "Incident Response":["Primary","Investigation","Response","General"],
+      "RMM":["User Lifecycle","Groups","BEC","General"],
+      "Utility":["WinGet","Terminal / Field-Kit","General"],
+      "Standalone":["Exchange","Graph","Active Directory","Windows","Network","WinGet","Terminal"]
     };
-  });
+    const list = orders[area] || [];
+    const idx = list.indexOf(group);
+    return idx === -1 ? 99 : idx;
+  }
 
-  section.classList.remove('hidden');
-}
+  function accessTag(item){
+    const access = String(item.access || "").toLowerCase();
+    if (access.includes("destructive")) return '<span class="result-tag result-danger">DESTRUCTIVE</span>';
+    if (access.includes("change") || access.includes("mixed")) return '<span class="result-tag result-change">CHANGE</span>';
+    return "";
+  }
 
-function render() {
-  const rows = getRows();
-  const shown = rows.slice(0, visibleCount);
-  const list = document.getElementById('resultsList');
-  const context = contextText();
+  function resultMarkup(item, index){
+    const file = item.type === "Quick Command" ? "" : (item.file || "");
+    return `
+      <button class="result" type="button" data-open-index="${index}">
+        <span>
+          <span class="result-name">${esc(item.displayName)}</span>
+          ${file ? `<span class="result-file">${esc(file)}</span>` : ""}
+        </span>
+        ${accessTag(item)}
+        <span class="result-arrow">›</span>
+      </button>
+    `;
+  }
 
-  list.innerHTML = shown.map(resultHTML).join('');
-  document.getElementById('contextLine').textContent = context;
-  document.getElementById('currentAreaLabel').textContent = context.toUpperCase();
-  document.getElementById('resultsLine').textContent =
-    rows.length ? `Showing ${shown.length} of ${rows.length} results` : '0 results';
+  function renderResults(){
+    const list = filteredItems();
+    const queryActive = Boolean(state.query.trim());
 
-  document.getElementById('empty').classList.toggle('hidden', rows.length > 0);
-  document.getElementById('loadMore').classList.toggle('hidden', shown.length >= rows.length);
-  document.getElementById('clearSearch').classList.toggle(
-    'hidden',
-    !document.getElementById('search').value
-  );
+    crumb.textContent = state.area.toUpperCase();
+    entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
+    clearSearch.classList.toggle("hidden", !state.query);
+    contextBar.textContent = queryActive
+      ? `SEARCH / ${state.area.toUpperCase()}`
+      : state.area === "Everything" ? "LIBRARY" : state.area.toUpperCase();
 
-  list.querySelectorAll('[data-open-index]').forEach(btn => {
-    btn.onclick = () => openDrawer(Number(btn.dataset.openIndex));
-  });
-}
+    if (!list.length){
+      results.innerHTML = "";
+      empty.classList.remove("hidden");
+      return;
+    }
 
-function resetResults() {
-  visibleCount = VISIBLE_STEP;
-  render();
-}
+    empty.classList.add("hidden");
 
-function copyText(text, button) {
-  navigator.clipboard.writeText(text).then(() => {
+    if (queryActive){
+      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
+    } else {
+      const grouped = new Map();
+      for (const item of list){
+        const key = item.group || "General";
+        if (!grouped.has(key)) grouped.set(key,[]);
+        grouped.get(key).push(item);
+      }
+
+      results.innerHTML = [...grouped.entries()].map(([group,items]) => `
+        <section class="group">
+          <div class="group-title">${esc(group.toUpperCase())}</div>
+          ${items.map((item,i) => resultMarkup(item, i)).join("")}
+        </section>
+      `).join("");
+    }
+
+    const visible = list;
+    results.querySelectorAll("[data-open-index]").forEach((btn, idx) => {
+      btn.addEventListener("click", () => openItem(visible[idx]));
+    });
+  }
+
+  function connectMarkup(item){
+    if (!item.connect.length) return "";
+    return `
+      <section class="connect-block">
+        <div class="section-label">CONNECT</div>
+        ${item.connect.map(cmd => `
+          <div class="connect-line">
+            <code>${esc(cmd)}</code>
+            <button class="copy-mini" type="button" data-copy="${esc(cmd)}">COPY</button>
+          </div>
+        `).join("")}
+      </section>
+    `;
+  }
+
+  function workflowMarkup(workflow){
+    if (!workflow) return "";
+    return `
+      <section class="workflow-block">
+        <div class="workflow-note">${esc(workflow.note)}</div>
+        <div class="sequence">
+          ${workflow.steps.map(step => {
+            const isCurrent = workflow.current === step.n || (step.standalone && workflow.current === "standalone");
+            return `
+              <div class="sequence-row ${isCurrent ? "sequence-current" : ""}">
+                <span class="sequence-number">${esc(step.n)}</span>
+                <span>${esc(step.name)}</span>
+                <span class="sequence-standalone">${step.standalone ? "STANDALONE" : ""}</span>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function checksMarkup(item){
+    if (!item.checks.length) return "";
+    return `
+      <section class="check-block">
+        <div class="section-label">CHECKS</div>
+        <div class="check-list">
+          ${item.checks.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function shortNote(item){
+    if (item.type === "Quick Command") return "";
+    const note = String(item.notes || "").trim();
+    if (!note) return "";
+    return `<div class="note-block">${esc(note)}</div>`;
+  }
+
+  function sourceButton(item){
+    if (item.type === "Quick Command") return "";
+    if (!item.file && !item.code && !item.publishedPath) return "";
+    return '<button id="showSource" class="action primary" type="button">POWERSHELL</button>';
+  }
+
+  function referenceButtons(item){
+    const name = String(item.name || "");
+    const file = String(item.file || "");
+    const type = String(item.type || "");
+    const buttons = [];
+
+    if (/runbook/i.test(type + " " + name + " " + file) && item.url){
+      buttons.push(`<a class="action" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">RUNBOOK</a>`);
+    }
+    if (/readme/i.test(file) && item.url){
+      buttons.push(`<a class="action" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">README</a>`);
+    }
+    return buttons.join("");
+  }
+
+  function standaloneCommandMarkup(item){
+    if (item.type !== "Quick Command" || !item.code) return "";
+    return `
+      <section class="command-block">
+        <div class="section-label">COMMAND</div>
+        <pre class="command">${esc(item.code)}</pre>
+        <div class="source-actions">
+          <button class="action primary" type="button" data-copy-source>COPY COMMAND</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function openItem(item){
+    state.selected = item;
+
+    drawerBody.innerHTML = `
+      <section class="item-head">
+        <div class="item-context">${esc(item.logicalArea)} / ${esc(item.group)}</div>
+        <h2 class="item-title">${esc(item.displayName)}</h2>
+      </section>
+
+      ${connectMarkup(item)}
+      ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
+      ${workflowMarkup(item.workflow)}
+      ${checksMarkup(item)}
+      ${shortNote(item)}
+      ${standaloneCommandMarkup(item)}
+
+      <div class="actions">
+        ${sourceButton(item)}
+        ${referenceButtons(item)}
+      </div>
+
+      <div id="sourceMount"></div>
+    `;
+
+    bindDrawerActions(item);
+    document.body.classList.add("drawer-open");
+    drawer.setAttribute("aria-hidden","false");
+  }
+
+  function bindDrawerActions(item){
+    drawerBody.querySelectorAll("[data-copy]").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        await copyText(btn.getAttribute("data-copy") || "");
+        flashButton(btn,"COPIED");
+      });
+    });
+
+    const copySource = drawerBody.querySelector("[data-copy-source]");
+    if (copySource){
+      copySource.addEventListener("click", async () => {
+        await copyText(item.code || "");
+        flashButton(copySource,"COPIED");
+      });
+    }
+
+    const showSource = document.getElementById("showSource");
+    if (showSource){
+      showSource.addEventListener("click", () => toggleSource(item,showSource));
+    }
+  }
+
+  async function resolveSource(item){
+    if (item.publishedPath){
+      const response = await fetch(item.publishedPath,{cache:"no-store"});
+      if (!response.ok) throw new Error("Source could not be loaded.");
+      return await response.text();
+    }
+    if (item.code) return item.code;
+    return "";
+  }
+
+  async function toggleSource(item, button){
+    const mount = document.getElementById("sourceMount");
+    if (!mount) return;
+
+    if (mount.dataset.open === "1"){
+      mount.innerHTML = "";
+      mount.dataset.open = "0";
+      button.textContent = "POWERSHELL";
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "LOADING";
+
+    try{
+      const source = await resolveSource(item);
+      if (!source){
+        mount.innerHTML = `
+          <section class="source-block">
+            <div class="section-label">POWERSHELL</div>
+            <div class="source-note">
+              The source file is not published in this preview yet. The UI is wired for same-origin source loading once an approved copy is added to the public catalog.
+            </div>
+          </section>
+        `;
+      } else {
+        mount.innerHTML = `
+          <section class="source-block">
+            <div class="section-label">POWERSHELL</div>
+            <pre class="command">${esc(source)}</pre>
+            <div class="source-actions">
+              <button id="copyScript" class="action primary" type="button">COPY SCRIPT</button>
+              ${item.file && /\.ps1$/i.test(item.file) ? '<button id="saveScript" class="action" type="button">SAVE .PS1</button>' : ""}
+            </div>
+          </section>
+        `;
+
+        document.getElementById("copyScript")?.addEventListener("click", async e => {
+          await copyText(source);
+          flashButton(e.currentTarget,"COPIED");
+        });
+
+        document.getElementById("saveScript")?.addEventListener("click", () => {
+          saveText(source, safeFilename(item.file || item.displayName + ".ps1"));
+        });
+      }
+
+      mount.dataset.open = "1";
+      button.textContent = "HIDE POWERSHELL";
+    } catch (error){
+      mount.innerHTML = `
+        <section class="source-block">
+          <div class="source-note">${esc(error.message || "Source could not be loaded.")}</div>
+        </section>
+      `;
+      mount.dataset.open = "1";
+      button.textContent = "POWERSHELL";
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  function safeFilename(value){
+    const base = String(value).split(/[\\/]/).pop() || "script.ps1";
+    return base.replace(/[^a-z0-9._-]/gi,"-");
+  }
+
+  function saveText(source, filename){
+    const blob = new Blob([source],{type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function copyText(text){
+    if (navigator.clipboard?.writeText){
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+
+  function flashButton(button,label){
     const old = button.textContent;
-    button.textContent = 'Copied';
-    setTimeout(() => { button.textContent = old; }, 900);
-  });
-}
-
-function openDrawer(index) {
-  const x = DATA[index];
-  if (!x) return;
-
-  const [label, pill] = safety(x);
-  const safeRef = safeUrl(x.url);
-  const sourcePath = String(x.file || '').trim();
-  const sourceLabel = sourcePath || String(x.source || '').trim() || 'Inline command';
-  const connect = connectionFor(x);
-  const input = inputFor(x);
-  const output = x.output || x.notes || '';
-  const related = (x.related || []).length ? x.related.join(' · ') : '';
-
-  const codePanel = x.code
-    ? `
-      <div id="sourcePanel" class="source-panel hidden">
-        <div class="drawer-section-label">POWERSHELL</div>
-        <pre class="drawer-code">${esc(x.code)}</pre>
-        <button class="drawer-action copy-code" type="button">Copy command</button>
-      </div>`
-    : '';
-
-  document.getElementById('drawerContent').innerHTML = `
-    <div class="result-title-block">
-      <div class="result-kicker">${esc(x.type)} / ${esc(x.area)}</div>
-      <h2>${esc(displayTitle(x))}</h2>
-      <div class="result-subtitle">${esc(subareaLabel(x.subarea || x.area))}</div>
-    </div>
-
-    <div class="rmm-summary">
-      ${row('STATUS', `<span class="status-text ${pill}">${esc(label)}</span>`)}
-      ${row('SOURCE', sourceLabel)}
-      ${row('WORKS WITH', x.platform)}
-      ${row('CONNECT', connect)}
-      ${row('INPUT', input)}
-      ${row('OUTPUT', output)}
-      ${row('RELATED', related)}
-    </div>
-
-    <div class="drawer-actions primary-actions">
-      ${x.code ? '<button class="drawer-action source-toggle" type="button">View PowerShell</button>' : ''}
-      ${sourcePath ? '<button class="drawer-action copy-file" type="button">Copy path</button>' : ''}
-      ${safeRef ? `<a class="drawer-action" href="${esc(safeRef)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>` : ''}
-    </div>
-
-    ${codePanel}
-  `;
-
-  const drawerContent = document.getElementById('drawerContent');
-  const toggle = drawerContent.querySelector('.source-toggle');
-  const sourcePanel = drawerContent.querySelector('#sourcePanel');
-  const copyCode = drawerContent.querySelector('.copy-code');
-  const copyFile = drawerContent.querySelector('.copy-file');
-
-  if (toggle && sourcePanel) {
-    toggle.onclick = () => {
-      const opening = sourcePanel.classList.contains('hidden');
-      sourcePanel.classList.toggle('hidden');
-      toggle.textContent = opening ? 'Hide PowerShell' : 'View PowerShell';
-    };
+    button.textContent = label;
+    window.setTimeout(() => { button.textContent = old; },900);
   }
 
-  if (copyCode) copyCode.onclick = () => copyText(x.code, copyCode);
-  if (copyFile) copyFile.onclick = () => copyText(sourcePath, copyFile);
-
-  document.body.classList.add('drawer-open');
-  document.getElementById('detailDrawer').setAttribute('aria-hidden', 'false');
-}
-
-function closeDrawer() {
-  document.body.classList.remove('drawer-open');
-  document.getElementById('detailDrawer').setAttribute('aria-hidden', 'true');
-}
-
-function setActiveNav(target) {
-  document.querySelectorAll('.navbtn').forEach(btn => btn.classList.remove('active'));
-  if (target) target.classList.add('active');
-}
-
-function selectArea(area, sourceButton = null) {
-  selectedArea = area || '';
-  selectedSubarea = '';
-  selectedStatus = '';
-  const target = sourceButton || [...document.querySelectorAll('.navbtn[data-area]')]
-    .find(btn => (btn.dataset.area || '') === selectedArea);
-  setActiveNav(target);
-  setMobileNav(selectedArea);
-  renderSubareas();
-  closeMobileMenu();
-  resetResults();
-}
-
-function clearAll() {
-  selectedArea = '';
-  selectedSubarea = '';
-  selectedStatus = '';
-  document.getElementById('search').value = '';
-  document.getElementById('typeFilter').value = '';
-  document.getElementById('platformFilter').value = '';
-  document.getElementById('accessFilter').value = '';
-  document.getElementById('sort').value = 'relevance';
-  setActiveNav(document.querySelector('.navbtn[data-area=""]'));
-  setMobileNav('');
-  renderSubareas();
-  resetResults();
-}
-
-function setMobileNav(area) {
-  document.querySelectorAll('.mobile-navbtn[data-mobile-area]').forEach(btn => {
-    btn.classList.toggle('active', (btn.dataset.mobileArea || '') === area);
-  });
-}
-
-function closeMobileMenu() {
-  document.body.classList.remove('menu-open');
-}
-
-document.getElementById('search').addEventListener('input', resetResults);
-document.getElementById('clearSearch').onclick = () => {
-  document.getElementById('search').value = '';
-  document.getElementById('search').focus();
-  resetResults();
-};
-
-['typeFilter', 'platformFilter', 'accessFilter', 'sort'].forEach(id => {
-  document.getElementById(id).onchange = resetResults;
-});
-
-document.getElementById('resetFilters').onclick = clearAll;
-
-document.querySelectorAll('.navbtn[data-area]').forEach(btn => {
-  btn.onclick = () => selectArea(btn.dataset.area || '', btn);
-});
-
-document.querySelectorAll('.navbtn[data-status]').forEach(btn => {
-  btn.onclick = () => {
-    selectedArea = '';
-    selectedSubarea = '';
-    selectedStatus = btn.dataset.status || '';
-    setActiveNav(btn);
-    setMobileNav('');
-    renderSubareas();
-    closeMobileMenu();
-    resetResults();
-  };
-});
-
-document.querySelectorAll('.chip').forEach(btn => {
-  btn.onclick = () => {
-    document.getElementById('search').value = btn.dataset.q || '';
-    selectedArea = '';
-    selectedSubarea = '';
-    selectedStatus = '';
-    setActiveNav(document.querySelector('.navbtn[data-area=""]'));
-    setMobileNav('');
-    renderSubareas();
-    resetResults();
-  };
-});
-
-document.getElementById('loadMore').onclick = () => {
-  visibleCount += VISIBLE_STEP;
-  render();
-};
-
-document.getElementById('closeDrawer').onclick = closeDrawer;
-document.getElementById('drawerOverlay').onclick = closeDrawer;
-
-document.getElementById('mobileMenuBtn').onclick = () => {
-  document.body.classList.toggle('menu-open');
-};
-document.getElementById('mobileMoreBtn').onclick = () => {
-  document.body.classList.add('menu-open');
-};
-document.getElementById('mobileOverlay').onclick = closeMobileMenu;
-
-document.getElementById('mobileFilterToggle').onclick = () => {
-  document.querySelector('.search-zone').classList.toggle('filters-open');
-  document.getElementById('mobileFilterState').textContent =
-    document.querySelector('.search-zone').classList.contains('filters-open') ? 'Hide' : 'Show';
-};
-
-document.querySelectorAll('.mobile-navbtn[data-mobile-area]').forEach(btn => {
-  btn.onclick = () => {
-    selectArea(btn.dataset.mobileArea || '');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    closeDrawer();
-    closeMobileMenu();
+  function closeItem(){
+    document.body.classList.remove("drawer-open");
+    drawer.setAttribute("aria-hidden","true");
+    state.selected = null;
   }
-});
 
-renderCounts();
-renderSubareas();
-render();
+  function closeNav(){
+    document.body.classList.remove("nav-open");
+  }
+
+  areaNav.addEventListener("click", event => {
+    const btn = event.target.closest("[data-area]");
+    if (!btn) return;
+    state.area = btn.getAttribute("data-area") || "Everything";
+    renderNav();
+    renderResults();
+    closeNav();
+  });
+
+  search.addEventListener("input", () => {
+    state.query = search.value;
+    renderResults();
+  });
+
+  clearSearch.addEventListener("click", () => {
+    search.value = "";
+    state.query = "";
+    search.focus();
+    renderResults();
+  });
+
+  closeDrawer.addEventListener("click",closeItem);
+  drawerOverlay.addEventListener("click",closeItem);
+  document.addEventListener("keydown",event => {
+    if (event.key === "Escape"){
+      closeItem();
+      closeNav();
+    }
+  });
+
+  menuBtn?.addEventListener("click",() => document.body.classList.add("nav-open"));
+  navOverlay.addEventListener("click",closeNav);
+
+  renderNav();
+  renderResults();
+})();
