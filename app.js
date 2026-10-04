@@ -1056,6 +1056,22 @@
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
           </div>
           <p>Review the selected item before execution.</p>
+
+          <div class="type-test">
+            <div class="type-test-title">TYPE TEST</div>
+            <div class="type-sample">
+              <div class="type-name">BAHNSCHRIFT</div>
+              <div class="type-face type-bahnschrift">Single User · Mailbox Security Snapshot<span class="type-mono-note">paired with Cascadia Mono for commands and metadata</span></div>
+            </div>
+            <div class="type-sample">
+              <div class="type-name">SEGOE UI VARIABLE</div>
+              <div class="type-face type-segoe">Single User · Mailbox Security Snapshot<span class="type-mono-note">paired with Cascadia Mono for commands and metadata</span></div>
+            </div>
+            <div class="type-sample">
+              <div class="type-name">APTOS</div>
+              <div class="type-face type-aptos">Single User · Mailbox Security Snapshot<span class="type-mono-note">paired with Cascadia Mono for commands and metadata</span></div>
+            </div>
+          </div>
         </section>
       `;
       return;
