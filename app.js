@@ -388,15 +388,113 @@
     _order:10000 + i
   }));
 
+  const EXTRA_RMM = [
+    {
+      name:"M365 User Quick View",
+      type:"Tool",
+      area:"RMM",
+      subarea:"Identity",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Read-only",
+      status:"Ready",
+      source:"RMM",
+      file:"M365-USER-QUICK-VIEW-v1.2-CHR.ps1",
+      keywords:"rmm datto m365 user quick view identity mailbox mfa"
+    },
+    {
+      name:"RMM Group Management",
+      type:"Tool",
+      area:"RMM",
+      subarea:"Access",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Change",
+      status:"Ready",
+      source:"RMM",
+      file:"RMM-GROUP-MANAGEMENT-v0.5.ps1",
+      keywords:"rmm datto access groups membership"
+    },
+    {
+      name:"RMM User Group Review",
+      type:"Tool",
+      area:"RMM",
+      subarea:"Access",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Read-only",
+      status:"Ready",
+      source:"RMM",
+      file:"RMM-USER-GROUP-REVIEW-v1.0.ps1",
+      keywords:"rmm datto access groups membership review"
+    },
+    {
+      name:"RMM User Onboarding Summary",
+      type:"Automation",
+      area:"RMM",
+      subarea:"On / Offboarding",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Read-only",
+      status:"Ready",
+      source:"RMM",
+      file:"RMM-USER-ONBOARDING-SUMMARY-v1.1.ps1",
+      keywords:"rmm datto onboarding user summary"
+    },
+    {
+      name:"RMM User Offboarding Summary",
+      type:"Automation",
+      area:"RMM",
+      subarea:"On / Offboarding",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Read-only",
+      status:"Ready",
+      source:"RMM",
+      file:"RMM-USER-OFFBOARDING-SUMMARY-v1.0.ps1",
+      keywords:"rmm datto offboarding user summary"
+    },
+    {
+      name:"RMM BEC Risk Exposure Snapshot",
+      type:"Tool",
+      area:"RMM",
+      subarea:"Security",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Read-only",
+      status:"Ready",
+      source:"RMM",
+      file:"BEC-IR-M365-RISK-EXPOSURE-SNAPSHOT-v0.32-CHR.ps1",
+      keywords:"rmm datto bec risk exposure security"
+    },
+    {
+      name:"RMM BEC Revoke Active Sessions",
+      type:"Tool",
+      area:"RMM",
+      subarea:"Security",
+      platform:"Datto RMM + Microsoft 365",
+      access:"Change",
+      status:"Ready",
+      source:"RMM",
+      file:"BEC-IR-REVOKE-ACTIVE-SESSIONS-v2.0-CHR.ps1",
+      keywords:"rmm datto bec active sessions security"
+    }
+  ].map((x, i) => ({
+    ...x,
+    requires:"",
+    input:"",
+    output:"",
+    code:"",
+    related:[],
+    notes:"",
+    url:"",
+    _order:20000 + i
+  }));
+
   const rawItems = RAW.filter(item =>
     item &&
     item.status !== "Candidate" &&
     item.status !== "External Reference" &&
     item.type !== "Runbook" &&
-    item.type !== "Reference"
+    item.type !== "Reference" &&
+    !isRmm(item)
   );
 
-  const allSource = [...rawItems, ...EXTRA_STANDALONE];
+  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE];
 
   const esc = value => String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -481,10 +579,12 @@
     }
 
     if (area === "RMM"){
-      if (/onboard|offboard|lifecycle/i.test(combined)) return "User Lifecycle";
-      if (/group/i.test(combined)) return "Groups";
-      if (/bec|incident|risk|revoke/i.test(combined)) return "BEC";
-      return "General";
+      if (/onboard|offboard/i.test(combined)) return "On / Offboarding";
+      if (/group|membership|license|access/i.test(combined)) return "Access";
+      if (/bec|incident|risk|security/i.test(combined)) return "Security";
+      if (/audit|review|report/i.test(combined)) return "Audit";
+      if (/mailbox|forward|inbox/i.test(combined)) return "Mailbox";
+      return "Identity";
     }
 
     if (/winget/i.test(combined)) return "WinGet";
@@ -875,7 +975,7 @@
       "Identity":["Single User","Multi User","Tenant","General"],
       "Mailbox":["Single User","Multi User","General"],
       "Incident Response":["Primary","Investigation","Response","General"],
-      "RMM":["User Lifecycle","Groups","BEC","General"],
+      "RMM":["Access","Audit","Identity","On / Offboarding","Mailbox","Security"],
       "Utility":["WinGet","Terminal / Field-Kit","General"],
       "Standalone":["Exchange","Graph","Active Directory","Windows","Network","WinGet","Terminal"]
     };
