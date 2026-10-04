@@ -1056,6 +1056,9 @@
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
           </div>
           <p>Review the selected item before execution.</p>
+          <div class="actions">
+            <a class="action primary" href="concept-neon-mint.html">OPEN NEON MINT CONCEPT</a>
+          </div>
         </section>
       `;
       return;
