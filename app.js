@@ -831,11 +831,21 @@
     return idx === -1 ? 99 : idx;
   }
 
+  function scopeTag(item){
+    if (item.group === "Multi User") return '<span class="result-tag result-multi">MULTI</span>';
+    if (item.group === "Tenant") return '<span class="result-tag result-tenant">TENANT</span>';
+    return "";
+  }
+
   function accessTag(item){
     const access = String(item.access || "").toLowerCase();
     if (access.includes("destructive")) return '<span class="result-tag result-danger">DESTRUCTIVE</span>';
     if (access.includes("change") || access.includes("mixed")) return '<span class="result-tag result-change">CHANGE</span>';
     return "";
+  }
+
+  function rowTags(item){
+    return [scopeTag(item), accessTag(item)].filter(Boolean).join("");
   }
 
   function resultMarkup(item, index){
@@ -846,7 +856,7 @@
       <button class="result" type="button" data-open-index="${index}">
         <span class="result-name">${esc(item.displayName)}</span>
         <span class="result-meta">${esc(meta)}</span>
-        ${accessTag(item)}
+        <span class="result-flags">${rowTags(item)}</span>
         <span class="result-arrow">›</span>
       </button>
     `;
