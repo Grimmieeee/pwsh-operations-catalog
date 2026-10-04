@@ -901,3 +901,72 @@ body{font-family:var(--ui);font-size:16px}
   .masthead-line-2{font-size:8.5px}
   .item-title{font-size:28px}
 }
+
+
+/* FIELD KIT CARD ALIGNMENT — approved reference */
+.drawer{
+  background:#101617;
+  border-left-color:#385149;
+}
+.drawer-head{
+  background:#0f1517;
+  border-bottom-color:#46504d;
+}
+.drawer-label{
+  color:#00f0b5;
+}
+.item-context{
+  color:#00f0b5;
+}
+.item-title-main{
+  color:#eef3f1;
+}
+.item-title-accent{
+  color:#72cbb8;
+}
+.item-title::after{
+  background:#00f0b5;
+}
+.access-read{color:#00f0b5}
+.section-label{
+  color:#00f0b5;
+}
+.connect-line{
+  border-color:#53615c;
+  background:#0b1113;
+}
+.connect-line code{
+  color:#eef3f1;
+}
+.copy-mini{
+  color:#00f0b5;
+}
+.check-list{
+  border-top-color:#5a625f;
+}
+.check-item{
+  color:#d7e0dd;
+  border-bottom-color:#5a625f;
+}
+.check-item::before{
+  color:#00f0b5;
+}
+.note-block{
+  color:#d1dbd8;
+  line-height:1.65;
+}
+.change-note{
+  margin-top:18px;
+  padding:9px 0 9px 12px;
+  border-left:2px solid var(--yellow);
+  background:transparent;
+  color:#d7c77f;
+}
+.action,
+.action.primary{
+  border-color:#53615c;
+  color:#7ff2d2;
+}
+.source-note{
+  color:#c2ceca;
+}
