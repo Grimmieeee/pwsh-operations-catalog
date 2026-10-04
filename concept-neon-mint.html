@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>PWSH // Library — Neon Mint Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0e10;
+  --bg:#101517;
+  --sidebar:#0c1113;
+  --charcoal:#282d32;
+  --charcoal-2:#20262a;
+  --panel:#151b1e;
+  --panel-hi:#1b2226;
+  --mint:#00f0b5;
+  --mint-soft:#91ffe1;
+  --mint-dim:#4ebf9f;
+  --text:#eef7f4;
+  --body:#adc0ba;
+  --muted:#71847e;
+  --faint:#4e615b;
+  --line:#27343a;
+  --line-soft:#1e2a2f;
+  --yellow:#f1ca5d;
+  --red:#ff7d86;
+  --display:"Raleway","Segoe UI Variable Display","Segoe UI",sans-serif;
+  --ui:"Source Sans 3","Segoe UI Variable Text","Segoe UI",sans-serif;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+body{font-family:var(--ui);font-size:16px}
+button,input{font:inherit}
+button{cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.sidebar{
+  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  justify-content:space-between;border-right:1px solid var(--line);
+  background:linear-gradient(180deg,#0b1012 0%,#0d1214 100%);
+}
+.brand{padding:27px 20px 23px}
+.brand-main{
+  position:relative;display:inline-block;font-family:var(--display);font-size:31px;
+  font-weight:200;letter-spacing:.19em;line-height:.9;color:#f2faf7;
+}
+.brand-main::after{
+  content:"";position:absolute;left:1px;right:-1px;bottom:-9px;height:3px;background:var(--mint);
+}
+.brand-box{
+  display:inline-block;margin-top:17px;padding:5px 9px 5px 11px;border:2px solid var(--mint);
+  color:var(--mint-soft);font-family:var(--display);font-size:10px;font-weight:600;
+  letter-spacing:.34em;line-height:1;text-transform:uppercase;
+}
+.nav{padding:7px 11px 24px}
+.nav button{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  gap:12px;border:0;background:transparent;color:#8ea09b;padding:11px 10px;
+  text-align:left;border-radius:3px;font-family:var(--ui);font-size:15.5px;font-weight:500;
+}
+.nav button:hover{color:#dceae6;background:#131b1e}
+.nav button.active{
+  color:#f3fbf8;background:linear-gradient(90deg,rgba(0,240,181,.10),rgba(0,240,181,.025));
+  box-shadow:inset 2px 0 0 var(--mint);
+}
+.count{color:#536862;font:700 10px/1 var(--mono)}
+.nav button.active .count{color:var(--mint)}
+.nav-sep{height:1px;background:var(--line-soft);margin:14px 0 9px}
+.signature{
+  padding:20px 20px 24px;border-top:1px solid var(--line-soft);
+  font-family:var(--display);font-weight:500;font-size:11px;letter-spacing:.48em;color:var(--mint);
+}
+.workspace{min-width:0;background:linear-gradient(180deg,#0f1416 0%,#111719 100%)}
+.topbar{
+  height:54px;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:0 22px;border-bottom:1px solid var(--line);background:#0d1214;
+}
+.crumb{
+  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.23em;
+  text-transform:uppercase;color:#b8cbc5;
+}
+.total{font:700 10px/1 var(--mono);color:#668079}
+.search-wrap{padding:19px 22px 18px;background:#101618;border-bottom:1px solid var(--line)}
+.search{
+  min-height:68px;display:flex;align-items:center;gap:12px;padding:0 16px;
+  border:1px solid #365149;background:#111a1c;transition:.18s ease;
+}
+.search:focus-within{
+  border-color:var(--mint);box-shadow:0 0 0 1px rgba(0,240,181,.08),0 0 28px rgba(0,240,181,.06)
+}
+.prompt{color:var(--mint);font-family:var(--display);font-size:24px;font-weight:400}
+.search input{
+  flex:1;min-width:0;border:0;outline:0;background:transparent;color:#f3faf7;
+  font-family:var(--ui);font-size:20px;font-weight:500;
+}
+.search input::placeholder{color:#637a73}
+.catalog{padding:16px 22px 80px}
+.jump{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:8px 0 13px;border-bottom:1px solid var(--line)}
+.jump-label{margin-right:6px;color:#657d76;font:700 10px/1 var(--mono);letter-spacing:.13em}
+.jump button{
+  border:1px solid #385149;background:#11191b;color:#91aaa3;padding:7px 10px;
+  font-family:var(--display);font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+}
+.jump button:hover{color:var(--mint-soft);border-color:var(--mint)}
+.section{margin-top:5px}
+.section-title{
+  display:flex;align-items:center;gap:13px;padding:22px 10px 14px 14px;border-bottom:1px solid var(--line);
+  font-family:var(--display);text-transform:uppercase;letter-spacing:.24em;
+}
+.section-title::before{content:"";width:3px;height:28px;background:var(--mint)}
+.section-thin{font-size:14px;font-weight:300;color:#9db0aa}
+.section-bold{font-size:14px;font-weight:700;color:var(--mint-soft)}
+.row{
+  width:100%;min-height:59px;display:grid;grid-template-columns:minmax(250px,1fr) minmax(210px,.7fr) auto 16px;
+  align-items:center;gap:12px;padding:10px;border:0;border-bottom:1px solid var(--line-soft);
+  background:transparent;color:inherit;text-align:left;
+}
+.row:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
+.row-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e8f1ee}
+.row-file{
+  color:#637873;opacity:.72;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font:700 10.8px/1.35 var(--mono);
+}
+.flag{font:800 9px/1 var(--mono);letter-spacing:.06em}
+.change{color:var(--yellow)}
+.danger{color:var(--red)}
+.arrow{color:#3b5e55;font-size:16px}
+.row:hover .arrow{color:var(--mint)}
+.drawer-shade{
+  position:fixed;inset:0;background:rgba(0,0,0,.58);opacity:0;pointer-events:none;
+  transition:.17s ease;z-index:20;
+}
+.drawer{
+  position:fixed;right:0;top:0;width:min(44vw,760px);min-width:600px;height:100vh;z-index:21;
+  transform:translateX(102%);transition:.2s ease;background:#111719;border-left:1px solid #385149;
+  overflow:auto;box-shadow:-30px 0 80px rgba(0,0,0,.28);
+}
+body.open .drawer-shade{opacity:1;pointer-events:auto}
+body.open .drawer{transform:translateX(0)}
+.drawer-head{
+  position:sticky;top:0;z-index:3;height:54px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;border-bottom:1px solid var(--line);background:#101618;
+}
+.drawer-label{font-family:var(--display);font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--mint)}
+.close{
+  width:32px;height:32px;border:1px solid #3b514b;background:transparent;color:#8fa59f;font-size:18px;
+}
+.close:hover{border-color:var(--mint);color:var(--mint-soft)}
+.drawer-body{padding:29px 28px 60px}
+.path{
+  margin-bottom:13px;color:#86a09a;font-family:var(--display);font-size:11px;font-weight:600;
+  letter-spacing:.20em;text-transform:uppercase;
+}
+.hero-title{
+  position:relative;display:inline-block;margin:0;color:#f4fbf8;font-family:var(--display);
+  font-size:38px;font-weight:300;line-height:1.08;letter-spacing:.01em;
+}
+.hero-title strong{font-weight:700;color:#fff}
+.hero-title::after{
+  content:"";display:block;width:72px;height:3px;background:var(--mint);margin-top:14px;
+}
+.state{
+  margin-top:16px;font:800 10px/1 var(--mono);letter-spacing:.08em;color:var(--mint);
+}
+.detail-section{margin-top:24px}
+.detail-label{
+  margin-bottom:10px;color:#91aaa3;font-family:var(--display);font-size:10px;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;
+}
+.connect-line{
+  display:flex;justify-content:space-between;gap:12px;padding:12px 13px;border:1px solid #31443f;
+  background:#0c1214;color:#c8d9d4;font:12px/1.5 var(--mono);
+}
+.copy{border:0;background:transparent;color:var(--mint);font:800 9px/1 var(--mono)}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line-soft)}
+.check{
+  padding:11px 2px;border-bottom:1px solid var(--line-soft);color:#aabdb7;font-size:13.5px;line-height:1.4;
+}
+.check::before{content:"[✓]";margin-right:8px;color:var(--mint);font-family:var(--mono)}
+.note{margin-top:20px;color:#91a69f;font-size:14px;line-height:1.65;max-width:620px}
+.action{
+  margin-top:21px;border:1px solid #3b5950;background:transparent;color:var(--mint-soft);
+  padding:11px 14px;font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+}
+.action:hover{border-color:var(--mint);background:rgba(0,240,181,.045)}
+.palette{
+  margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.swatch{min-height:72px;padding:12px;border:1px solid var(--line)}
+.swatch.mint{background:var(--mint);color:#0a1411}
+.swatch.charcoal{background:var(--charcoal);color:#f3faf7}
+.swatch-name{font-family:var(--display);font-size:15px;font-weight:700}
+.swatch-code{margin-top:4px;font:700 9px/1 var(--mono);opacity:.68}
+@media(max-width:900px){
+  .shell{grid-template-columns:215px minmax(0,1fr)}
+  .drawer{width:70vw;min-width:0}
+  .row{grid-template-columns:minmax(0,1fr) auto}
+  .row-file{display:none}
+}
+@media(max-width:680px){
+  .shell{display:block}.sidebar{display:none}.catalog,.search-wrap{padding-left:12px;padding-right:12px}
+  .drawer{width:100vw}.checks{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <div class="brand-main">PWSH</div><br>
+        <div class="brand-box">Library</div>
+      </div>
+      <nav class="nav">
+        <button class="active"><span>Full Library</span><span class="count">287</span></button>
+        <button><span>Single User</span><span class="count">12</span></button>
+        <button><span>Multi User</span><span class="count">15</span></button>
+        <button><span>Tenant Wide</span><span class="count">17</span></button>
+        <button><span>Incident Response</span><span class="count">14</span></button>
+        <button><span>RMM</span><span class="count">7</span></button>
+        <button><span>Utility</span><span class="count">18</span></button>
+        <button><span>Standalone</span><span class="count">204</span></button>
+        <div class="nav-sep"></div>
+        <button><span>About</span></button>
+      </nav>
+    </div>
+    <div class="signature">B U R N S I D //</div>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="crumb">Full Library</div>
+      <div class="total">287 ITEMS</div>
+    </header>
+
+    <section class="search-wrap">
+      <label class="search"><span class="prompt">&gt;</span><input placeholder="Find a script or command"></label>
+    </section>
+
+    <section class="catalog">
+      <div class="jump">
+        <span class="jump-label">JUMP TO</span>
+        <button>Single User</button><button>Multi User</button><button>Tenant Wide</button>
+        <button>Incident Response</button><button>RMM</button><button>Utility</button><button>Standalone</button>
+      </div>
+
+      <section class="section">
+        <div class="section-title"><span class="section-thin">Single</span><span class="section-bold">User</span></div>
+
+        <button class="row" data-title="Enforce Per-user|MFA" data-path="Single User / Security" data-state="MAKES CHANGES">
+          <span class="row-name">Enforce Per-user MFA</span>
+          <span class="row-file">INVOKE-ENFORCE-PER-USER-MFA_DEFAULT.ps1</span>
+          <span class="flag change">CHANGE</span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="Mailbox Security|Snapshot" data-path="Single User / Mailbox" data-state="READ ONLY">
+          <span class="row-name">Mailbox Security Snapshot</span>
+          <span class="row-file">get-user-mailbox-snapshot.ps1</span>
+          <span class="flag"></span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="Mailbox Forwarding|Check" data-path="Single User / Mailbox" data-state="READ ONLY">
+          <span class="row-name">Mailbox Forwarding Check</span>
+          <span class="row-file">GET-MAILBOX-FORWARDING.ps1</span>
+          <span class="flag"></span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="Pre-delete User|Check" data-path="Single User / On / Offboarding" data-state="READ ONLY">
+          <span class="row-name">Pre-delete User Check</span>
+          <span class="row-file">GET-USER-PREDELETE-CHECK_FIXED.ps1</span>
+          <span class="flag"></span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="Restore Moved|Email" data-path="Single User / Mailbox" data-state="MAKES CHANGES">
+          <span class="row-name">Restore Moved Email</span>
+          <span class="row-file">ir-recovery-restore-emails.ps1</span>
+          <span class="flag change">CHANGE</span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="User Group|Cleanup" data-path="Single User / Access" data-state="MAKES CHANGES">
+          <span class="row-name">User Group Cleanup</span>
+          <span class="row-file">get-user-groups-read-write.ps1</span>
+          <span class="flag change">CHANGE</span><span class="arrow">›</span>
+        </button>
+
+        <button class="row" data-title="User Group|Memberships" data-path="Single User / Access" data-state="READ ONLY">
+          <span class="row-name">User Group Memberships</span>
+          <span class="row-file">get-user-groups-read-only.ps1</span>
+          <span class="flag"></span><span class="arrow">›</span>
+        </button>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span class="section-thin">Multi</span><span class="section-bold">User</span></div>
+
+        <button class="row" data-title="Bulk Assign|Licenses" data-path="Multi User / Access" data-state="MAKES CHANGES">
+          <span class="row-name">Bulk Assign Licenses</span>
+          <span class="row-file">user-license-provision-bulk-clean.ps1</span>
+          <span class="flag change">CHANGE</span><span class="arrow">›</span>
+        </button>
+        <button class="row" data-title="Bulk Delete User|Accounts" data-path="Multi User / On / Offboarding" data-state="DESTRUCTIVE">
+          <span class="row-name">Bulk Delete User Accounts</span>
+          <span class="row-file">bulk-invoke-account-deletion.ps1</span>
+          <span class="flag danger">DESTRUCTIVE</span><span class="arrow">›</span>
+        </button>
+      </section>
+    </section>
+  </main>
+</div>
+
+<div class="drawer-shade" id="shade"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head"><span class="drawer-label">Selected</span><button class="close" id="close">×</button></div>
+  <div class="drawer-body">
+    <div class="path" id="path">Single User / Mailbox</div>
+    <h1 class="hero-title" id="title"><span>Mailbox Security</span> <strong>Snapshot</strong></h1>
+    <div class="state" id="state">READ ONLY</div>
+
+    <div class="detail-section">
+      <div class="detail-label">Connect</div>
+      <div class="connect-line"><code>Connect-ExchangeOnline</code><button class="copy">COPY</button></div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Checks</div>
+      <div class="checks">
+        <div class="check">Forwarding status</div>
+        <div class="check">Inbox rules</div>
+        <div class="check">Mailbox permissions</div>
+        <div class="check">Delegated access</div>
+        <div class="check">Send As / Send on Behalf</div>
+        <div class="check">Exposure indicators</div>
+      </div>
+    </div>
+
+    <p class="note">Reviews the selected user's mailbox state and surfaces the details that change the next decision without burying the operator in metadata.</p>
+    <button class="action">PowerShell</button>
+
+    <div class="palette">
+      <div class="swatch mint"><div class="swatch-name">NEON MINT</div><div class="swatch-code">#00F0B5</div></div>
+      <div class="swatch charcoal"><div class="swatch-name">CHARCOAL GRAY</div><div class="swatch-code">#282D32</div></div>
+    </div>
+  </div>
+</aside>
+
+<script>
+const rows=[...document.querySelectorAll(".row")];
+const close=document.getElementById("close");
+const shade=document.getElementById("shade");
+const title=document.getElementById("title");
+const path=document.getElementById("path");
+const state=document.getElementById("state");
+
+function openRow(row){
+  const parts=(row.dataset.title||"Selected|Item").split("|");
+  title.innerHTML="<span>"+parts[0]+"</span> <strong>"+(parts[1]||"")+"</strong>";
+  path.textContent=row.dataset.path||"";
+  state.textContent=row.dataset.state||"READ ONLY";
+  state.style.color=row.dataset.state==="READ ONLY"?"var(--mint)":row.dataset.state==="DESTRUCTIVE"?"var(--red)":"var(--yellow)";
+  document.body.classList.add("open");
+}
+rows.forEach(r=>r.addEventListener("click",()=>openRow(r)));
+close.addEventListener("click",()=>document.body.classList.remove("open"));
+shade.addEventListener("click",()=>document.body.classList.remove("open"));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("open")});
+</script>
+</body>
+</html>
