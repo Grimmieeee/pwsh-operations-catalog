@@ -896,11 +896,10 @@
     const text = [item.displayName,item.name,item.file,item.subarea].join(" ");
 
     if (/onboard|offboard|pre[- ]?delete|disable(?:\s+user)?\s+accounts|delete(?:\s+user)?\s+accounts/i.test(text)) return "On / Offboarding";
-    if (/reporting\s*\/\s*audit/i.test(area)) return "Audit";
     if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening/i.test(text)) return "Security";
     if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
+    if (/reporting\s*\/\s*audit/i.test(area) || /audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
     if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
-    if (/audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
     return "Identity";
   }
 
