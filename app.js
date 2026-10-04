@@ -1017,6 +1017,28 @@
     return accessTag(item);
   }
 
+  function groupTitleMarkup(group){
+    const value = String(group || "").trim();
+    const scoped = /^(Single User|Multi User|Tenant Wide)$/i.test(value);
+    if (scoped){
+      const parts = value.split(/\s+/);
+      const first = parts.shift() || "";
+      const rest = parts.join(" ");
+      return '<span class="group-title-accent">' + esc(first.toUpperCase()) + '</span>' +
+        (rest ? '<span class="group-title-muted">' + esc(rest.toUpperCase()) + '</span>' : "");
+    }
+    return '<span class="group-title-accent">' + esc(value.toUpperCase()) + '</span>';
+  }
+
+  function itemTitleMarkup(value){
+    const parts = String(value || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "";
+    if (parts.length === 1) return '<strong class="item-title-accent">' + esc(parts[0]) + '</strong>';
+    const accent = parts.pop();
+    return '<span class="item-title-main">' + esc(parts.join(" ")) + '</span> ' +
+      '<strong class="item-title-accent">' + esc(accent) + '</strong>';
+  }
+
   function resultMarkup(item, index){
     const meta = item.type === "Quick Command"
       ? (item.group || "")
@@ -1039,14 +1061,14 @@
       crumb.textContent = "ABOUT";
       entryCount.textContent = "";
       clearSearch.classList.toggle("hidden", !state.query);
-      contextBar.textContent = "PWSH // LIBRARY";
+      contextBar.textContent = "FIELD // KIT";
       jumpBar.innerHTML = "";
       jumpBar.classList.add("hidden");
       empty.classList.add("hidden");
       results.innerHTML = `
         <section class="about-block">
           <div class="about-kicker">ABOUT</div>
-          <h2>PWSH // LIBRARY</h2>
+          <h2>FIELD // KIT</h2>
           <p>A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
           <p>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>. Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</p>
           <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
@@ -1056,9 +1078,7 @@
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
           </div>
           <p>Review the selected item before execution.</p>
-          <div class="actions">
-            <a class="action primary" href="concept-neon-mint.html">OPEN NEON MINT CONCEPT</a>
-          </div>
+
         </section>
       `;
       return;
@@ -1115,7 +1135,7 @@
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
         <section class="group" id="${(state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
-          <div class="group-title">${esc(group.toUpperCase())}</div>
+          <div class="group-title">${groupTitleMarkup(group)}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
       `).join("");
@@ -1252,7 +1272,7 @@
     drawerBody.innerHTML = `
       <section class="item-head">
         <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
-        <h2 class="item-title">${esc(item.displayName)}</h2>
+        <h2 class="item-title">${itemTitleMarkup(item.displayName)}</h2>
         ${accessMarkup(item)}
       </section>
 
