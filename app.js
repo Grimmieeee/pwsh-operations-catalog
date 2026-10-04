@@ -4,7 +4,7 @@
   const RAW = Array.isArray(window.CATALOG_DATA) ? window.CATALOG_DATA : [];
 
   const AREAS = [
-    "Everything",
+    "Full Library",
     "Single User",
     "Multi User",
     "Tenant Wide",
@@ -823,7 +823,7 @@
   const ITEMS = [...byKey.values()];
 
   const state = {
-    area:"Everything",
+    area:"Full Library",
     query:"",
     selected:null
   };
@@ -846,7 +846,7 @@
   const navOverlay = document.getElementById("navOverlay");
 
   function countArea(area){
-    if (area === "Everything") return ITEMS.length;
+    if (area === "Full Library") return ITEMS.length;
     if (area === "About") return "";
     return ITEMS.filter(x => primaryBucket(x) === area).length;
   }
@@ -950,7 +950,7 @@
   }
 
   function filteredItems(){
-    let list = ITEMS.filter(item => state.area === "Everything" || primaryBucket(item) === state.area);
+    let list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
     const q = state.query.trim();
 
     if (q){
@@ -959,7 +959,7 @@
         .filter(x => x.score > 0)
         .sort((a,b) => b.score - a.score || a.item.displayName.localeCompare(b.item.displayName))
         .map(x => x.item);
-    } else if (state.area === "Everything") {
+    } else if (state.area === "Full Library") {
       list.sort((a,b) =>
         bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b)) ||
         a.displayName.localeCompare(b.displayName)
@@ -1066,11 +1066,12 @@
     crumb.textContent = state.area.toUpperCase();
     entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
     clearSearch.classList.toggle("hidden", !state.query);
+    contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
     contextBar.textContent = queryActive
       ? `SEARCH / ${state.area.toUpperCase()}`
-      : state.area === "Everything" ? "FULL LIBRARY" : state.area.toUpperCase();
+      : state.area.toUpperCase();
 
-    if (!queryActive && state.area === "Everything"){
+    if (!queryActive && state.area === "Full Library"){
       const buckets = [...new Set(list.map(primaryBucket))];
       jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + buckets.map(bucket =>
         `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(bucket.toUpperCase())}</button>`
@@ -1100,7 +1101,7 @@
     } else {
       const grouped = new Map();
       for (const item of list){
-        const key = state.area === "Everything"
+        const key = state.area === "Full Library"
           ? primaryBucket(item)
           : (["Single User","Multi User","Tenant Wide"].includes(state.area)
               ? scopeSubgroup(item)
@@ -1110,7 +1111,7 @@
       }
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
-        <section class="group" id="${(state.area === "Everything" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
+        <section class="group" id="${(state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
           <div class="group-title">${esc(group.toUpperCase())}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
@@ -1247,7 +1248,7 @@
 
     drawerBody.innerHTML = `
       <section class="item-head">
-        <div class="item-context">${esc(item.logicalArea)} / ${esc(item.group)}</div>
+        <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
         <h2 class="item-title">${esc(item.displayName)}</h2>
         ${accessMarkup(item)}
       </section>
@@ -1418,7 +1419,7 @@
   areaNav.addEventListener("click", event => {
     const btn = event.target.closest("[data-area]");
     if (!btn) return;
-    state.area = btn.getAttribute("data-area") || "Everything";
+    state.area = btn.getAttribute("data-area") || "Full Library";
     renderNav();
     renderResults();
     closeNav();
