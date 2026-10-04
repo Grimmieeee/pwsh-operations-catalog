@@ -50,9 +50,7 @@ button{cursor:pointer}
   font-family:var(--display);font-size:19px;line-height:1;color:#f2faf7;
   white-space:nowrap;
 }
-.brand-main::after{
-  content:"";position:absolute;left:0;right:0;bottom:-11px;height:3px;background:var(--mint);
-}
+.brand-main::after{display:none}
 .brand-field{font-weight:600;letter-spacing:.19em}
 .brand-slash{font-weight:400;letter-spacing:.08em;color:var(--mint)}
 .brand-kit{font-weight:200;letter-spacing:.22em;color:#d9e8e3}
@@ -76,12 +74,18 @@ button{cursor:pointer}
 }
 .workspace{min-width:0;background:linear-gradient(180deg,#0f1416 0%,#111719 100%)}
 .topbar{
-  height:54px;display:flex;align-items:center;justify-content:space-between;
+  height:72px;display:flex;align-items:center;justify-content:space-between;
   gap:16px;padding:0 22px;border-bottom:1px solid var(--line);background:#0d1214;
 }
-.crumb{
-  font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.23em;
-  text-transform:uppercase;color:#b8cbc5;
+.masthead-note{display:flex;flex-direction:column;gap:4px}
+.masthead-line{
+  display:block;font-family:var(--display);text-transform:uppercase;line-height:1;
+}
+.masthead-line-1{
+  color:#dce9e5;font-size:12px;font-weight:500;letter-spacing:.24em;
+}
+.masthead-line-2{
+  color:var(--mint);font-size:10px;font-weight:300;letter-spacing:.34em;
 }
 .total{font:700 10px/1 var(--mono);color:#668079}
 .search-wrap{padding:19px 22px 18px;background:#101618;border-bottom:1px solid var(--line)}
@@ -122,7 +126,7 @@ button{cursor:pointer}
 .row:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
 .row-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e8f1ee}
 .row-file{
-  color:#637873;opacity:.72;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:#52645f;opacity:.70;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font:700 10.8px/1.35 var(--mono);
 }
 .flag{font:800 9px/1 var(--mono);letter-spacing:.06em}
@@ -232,7 +236,10 @@ body.open .drawer{transform:translateX(0)}
 
   <main class="workspace">
     <header class="topbar">
-      <div class="crumb">Full Library</div>
+      <div class="masthead-note">
+        <span class="masthead-line masthead-line-1">A working reference.</span>
+        <span class="masthead-line masthead-line-2">Use responsibly.</span>
+      </div>
       <div class="total">287 ITEMS</div>
     </header>
 
