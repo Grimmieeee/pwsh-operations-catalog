@@ -893,16 +893,13 @@
 
   function scopeSubgroup(item){
     const area = String(item.area || "");
-    const text = [item.displayName,item.name,item.file,item.subarea,item.keywords].join(" ");
+    const text = [item.displayName,item.name,item.file,item.subarea].join(" ");
 
-    if (/onboard|offboard|lifecycle|disable accounts|delete accounts/i.test(text)) return "On / Offboarding";
-    if (/shared mailbox sign-in|\bIR[-_ ]|incident response/i.test(text)) return "Security";
-    if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts/i.test(text)) return "Mailbox";
-    if (/mfa|conditional access|oauth|secure score|sign[- ]?in|device code|service principal|app registration|guest consent|security hardening/i.test(text)) return "Security";
+    if (/onboard|offboard|pre[- ]?delete|disable accounts|delete accounts/i.test(text)) return "On / Offboarding";
+    if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest consent|security hardening/i.test(text)) return "Security";
+    if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
     if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
-    if (/identity snapshot|user snapshot|account status|account source|password age|password last|distinguished name|principal name/i.test(text)) return "Identity";
-    if (/audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
-    if (/^Groups$/i.test(area)) return "Access";
+    if (/reporting\s*\/\s*audit/i.test(area) || /audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
     return "Identity";
   }
 
@@ -922,7 +919,7 @@
     if (override) return override.scope;
 
     if (/^\s*tenant\b/i.test(String(item.input || ""))) return "Tenant Wide";
-    if (/\btenant\b|tenant-wide|transport rules|shared mailbox sign-in/i.test(combined)) return "Tenant Wide";
+    if (/^tenant[-_ ]/i.test(String(item.file || item.name || "")) || /^tenant\b/i.test(String(item.displayName || ""))) return "Tenant Wide";
 
     if (item.group === "Tenant") return "Tenant Wide";
     if (item.group === "Multi User") return "Multi User";
