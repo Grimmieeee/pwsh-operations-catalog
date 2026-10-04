@@ -344,17 +344,33 @@ button{cursor:pointer}
 }
 .type-face{
   color:#d9e8eb;
-  font-size:18px;
+  font-size:19px;
+  font-weight:650;
   line-height:1.35;
+}
+.type-nav{
+  display:block;
+  margin-bottom:6px;
+  color:#84aab2;
+  font-size:13px;
+  font-weight:650;
 }
 .type-bahnschrift{font-family:Bahnschrift,"Segoe UI",sans-serif}
 .type-segoe{font-family:"Segoe UI Variable Text","Segoe UI",sans-serif}
+.type-noto{font-family:"Noto Sans","Segoe UI",sans-serif}
+.type-inter{font-family:Inter,"Segoe UI",sans-serif}
+.type-helvetica{font-family:"Helvetica Neue",Arial,"Segoe UI",sans-serif}
 .type-aptos{font-family:Aptos,"Segoe UI",sans-serif}
 .type-mono-note{
   display:block;
-  margin-top:4px;
+  margin-top:5px;
   color:#6f8c95;
   font:700 10px/1.35 "Cascadia Mono","Cascadia Code",Consolas,monospace;
+}
+.type-test-note{
+  margin-top:14px;
+  color:#5f7d85;
+  font:700 9.5px/1.5 var(--mono);
 }
 
 .overlay{
