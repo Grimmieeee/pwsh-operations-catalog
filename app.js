@@ -5,12 +5,14 @@
 
   const AREAS = [
     "Everything",
-    "Identity",
-    "Mailbox",
+    "Single User",
+    "Multi User",
+    "Tenant Wide",
     "Incident Response",
     "RMM",
     "Utility",
-    "Standalone"
+    "Standalone",
+    "About"
   ];
 
   const EXTRA_STANDALONE = [
@@ -743,7 +745,9 @@
   const navOverlay = document.getElementById("navOverlay");
 
   function countArea(area){
-    return area === "Everything" ? ITEMS.length : ITEMS.filter(x => x.logicalArea === area).length;
+    if (area === "Everything") return ITEMS.length;
+    if (area === "About") return "";
+    return ITEMS.filter(x => primaryBucket(x) === area).length;
   }
 
   function renderNav(){
@@ -786,6 +790,19 @@
     return score;
   }
 
+  function scopeSubgroup(item){
+    const area = String(item.area || "");
+    const text = [item.displayName,item.name,item.file,item.subarea,item.keywords].join(" ");
+
+    if (/onboard|offboard|lifecycle/i.test(text)) return "On / Offboarding";
+    if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts/i.test(text)) return "Mailbox";
+    if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
+    if (/audit|review|report|snapshot|stale|cleanup/i.test(text)) return "Audit";
+    if (/mfa|conditional access|oauth|secure score|sign[- ]?in|device code|service principal|app registration/i.test(text)) return "Security";
+    if (/^Groups$/i.test(area)) return "Access";
+    return "Identity";
+  }
+
   function primaryBucket(item){
     if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Incident Response") return "Incident Response";
@@ -815,7 +832,7 @@
   }
 
   function filteredItems(){
-    let list = ITEMS.filter(item => state.area === "Everything" || item.logicalArea === state.area);
+    let list = ITEMS.filter(item => state.area === "Everything" || primaryBucket(item) === state.area);
     const q = state.query.trim();
 
     if (q){
@@ -827,6 +844,12 @@
     } else if (state.area === "Everything") {
       list.sort((a,b) =>
         bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b)) ||
+        a.displayName.localeCompare(b.displayName)
+      );
+    } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)) {
+      const order = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
+      list.sort((a,b) =>
+        order.indexOf(scopeSubgroup(a)) - order.indexOf(scopeSubgroup(b)) ||
         a.displayName.localeCompare(b.displayName)
       );
     } else {
@@ -859,13 +882,6 @@
     return idx === -1 ? 99 : idx;
   }
 
-  function scopeTag(item){
-    const bucket = primaryBucket(item);
-    if (bucket === "Multi User") return '<span class="result-tag result-multi">MULTI</span>';
-    if (bucket === "Tenant Wide") return '<span class="result-tag result-tenant">TENANT</span>';
-    return "";
-  }
-
   function accessTag(item){
     const access = String(item.access || "").toLowerCase();
     if (access.includes("destructive")) return '<span class="result-tag result-danger">DESTRUCTIVE</span>';
@@ -874,7 +890,7 @@
   }
 
   function rowTags(item){
-    return [scopeTag(item), accessTag(item)].filter(Boolean).join("");
+    return accessTag(item);
   }
 
   function resultMarkup(item, index){
@@ -892,8 +908,35 @@
   }
 
   function renderResults(){
-    const list = filteredItems();
     const queryActive = Boolean(state.query.trim());
+
+    if (state.area === "About"){
+      crumb.textContent = "ABOUT";
+      entryCount.textContent = "";
+      clearSearch.classList.toggle("hidden", !state.query);
+      contextBar.textContent = "PWSH // LIBRARY";
+      jumpBar.innerHTML = "";
+      jumpBar.classList.add("hidden");
+      empty.classList.add("hidden");
+      results.innerHTML = `
+        <section class="about-block">
+          <div class="about-kicker">ABOUT</div>
+          <h2>PWSH // LIBRARY</h2>
+          <p>A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
+          <p>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>. Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</p>
+          <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
+          <div class="about-key">
+            <span class="access-read">READ ONLY</span><span>reviews information</span>
+            <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
+            <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
+          </div>
+          <p>Review the selected item before execution.</p>
+        </section>
+      `;
+      return;
+    }
+
+    const list = filteredItems();
 
     crumb.textContent = state.area.toUpperCase();
     entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
@@ -928,7 +971,9 @@
       for (const item of list){
         const key = state.area === "Everything"
           ? primaryBucket(item)
-          : (item.group || "General");
+          : (["Single User","Multi User","Tenant Wide"].includes(state.area)
+              ? scopeSubgroup(item)
+              : (item.group || "General"));
         if (!grouped.has(key)) grouped.set(key,[]);
         grouped.get(key).push(item);
       }
