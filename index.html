@@ -3,125 +3,54 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
-<title>PWSH Operations Catalog</title>
+<title>PWSH Library</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="mobileOverlay" class="mobile-overlay"></div>
-<div id="drawerOverlay" class="drawer-overlay"></div>
+<div id="navOverlay" class="overlay"></div>
+<div id="drawerOverlay" class="overlay drawer-overlay"></div>
 
-<div class="workspace">
-  <aside class="sidebar" aria-label="Catalog navigation">
-    <div class="sidebar-main">
-      <div class="sidebar-kicker">PWSH // LIBRARY</div>
-
-      <div class="sidebar-label">AREAS</div>
-      <button class="navbtn active" data-area=""><span>Everything</span><span class="navcount" data-count-area="">0</span></button>
-      <button class="navbtn" data-area="Identity"><span>Identity</span><span class="navcount" data-count-area="Identity">0</span></button>
-      <button class="navbtn" data-area="Groups"><span>Groups</span><span class="navcount" data-count-area="Groups">0</span></button>
-      <button class="navbtn" data-area="Mailbox"><span>Mailbox</span><span class="navcount" data-count-area="Mailbox">0</span></button>
-      <button class="navbtn" data-area="Security / IR"><span>Security / IR</span><span class="navcount" data-count-area="Security / IR">0</span></button>
-      <button class="navbtn" data-area="Reporting / Audit"><span>Reporting / Audit</span><span class="navcount" data-count-area="Reporting / Audit">0</span></button>
-      <button class="navbtn" data-area="Network"><span>Network</span><span class="navcount" data-count-area="Network">0</span></button>
-      <button class="navbtn" data-area="Endpoint"><span>Endpoint</span><span class="navcount" data-count-area="Endpoint">0</span></button>
-      <button class="navbtn" data-area="Utilities"><span>Utilities</span><span class="navcount" data-count-area="Utilities">0</span></button>
-
-      <div id="subareaSection" class="subarea-section hidden">
-        <div class="sidebar-divider"></div>
-        <div class="sidebar-label">IN THIS AREA</div>
-        <div id="subareaNav" class="subarea-nav"></div>
-      </div>
-
-      <div class="sidebar-divider"></div>
-      <button class="navbtn navbtn-muted" data-status="Candidate"><span>Ideas to Add</span><span class="navcount" data-count-status="Candidate">0</span></button>
+<div class="shell">
+  <aside class="sidebar" aria-label="Library navigation">
+    <div>
+      <div class="brand">PWSH // LIBRARY</div>
+      <nav id="areaNav" class="area-nav"></nav>
     </div>
-
-    <div class="sidebar-signature">B U R N S I D //</div>
+    <div class="signature">B U R N S I D //</div>
   </aside>
 
-  <main class="main">
-    <header class="workspace-head">
-      <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Open navigation">☰</button>
-      <div class="workspace-label"><span class="workspace-prefix">CATALOG /</span> <span id="currentAreaLabel">EVERYTHING</span></div>
-      <div id="catalogCount" class="catalog-count">0 entries</div>
+  <main class="workspace">
+    <header class="topbar">
+      <button id="menuBtn" class="icon-button mobile-only" type="button" aria-label="Open navigation">☰</button>
+      <div id="crumb" class="crumb">EVERYTHING</div>
+      <div id="entryCount" class="entry-count">0</div>
     </header>
 
-    <section class="search-zone">
-      <div class="stage-label">INPUT</div>
-
-      <div class="searchbox">
-        <span class="prompt-mark">&gt;</span>
-        <input id="search" class="search" type="search" autocomplete="off" spellcheck="false" placeholder="What are you trying to do?">
-        <button id="clearSearch" class="clear-search hidden" type="button" aria-label="Clear search">×</button>
-      </div>
-
-      <div class="quick-row" aria-label="Common fixes">
-        <button class="chip" data-q="reset password">Reset password</button>
-        <button class="chip" data-q="MFA">MFA</button>
-        <button class="chip" data-q="forwarding">Forwarding</button>
-        <button class="chip" data-q="sign-in">Sign-ins</button>
-        <button class="chip" data-q="DNS">DNS</button>
-        <button class="chip" data-q="offboard">Offboarding</button>
-      </div>
-
-      <button id="mobileFilterToggle" class="mobile-filter-toggle" type="button"><span>Filters</span><span id="mobileFilterState">Show</span></button>
-
-      <div class="filterbar">
-        <select id="typeFilter" class="filter"><option value="">All Types</option></select>
-        <select id="platformFilter" class="filter"><option value="">All Environments</option></select>
-        <select id="accessFilter" class="filter"><option value="">All Safety Levels</option></select>
-        <select id="sort" class="filter">
-          <option value="relevance">Best match</option>
-          <option value="name">Name A-Z</option>
-          <option value="type">Type</option>
-          <option value="area">Category</option>
-        </select>
-        <button id="resetFilters" class="reset-btn" type="button">Reset</button>
-      </div>
+    <section class="search-wrap">
+      <label class="search-box">
+        <span>&gt;</span>
+        <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Find a script or command">
+        <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
+      </label>
     </section>
 
-    <section class="results-section">
-      <div class="results-header">
-        <div>
-          <div class="stage-label">ACTION</div>
-          <div id="contextLine" class="context-line">Everything</div>
-          <strong id="resultsLine">Showing 0 results</strong>
-        </div>
-      </div>
-
-      <div class="result-table-head" aria-hidden="true">
-        <div>FIX</div>
-        <div>ENVIRONMENT</div>
-        <div>TYPE</div>
-        <div>STATUS</div>
-        <div></div>
-      </div>
-
-      <div id="resultsList" class="results-list"></div>
-      <div id="empty" class="empty">No matching entries. Try fewer words or a broader area.</div>
-      <div class="load-wrap"><button id="loadMore" class="load-more hidden" type="button">Load more</button></div>
+    <section class="catalog">
+      <div id="contextBar" class="context-bar"></div>
+      <div id="results" class="results"></div>
+      <div id="empty" class="empty hidden">No matches.</div>
     </section>
   </main>
 </div>
 
-<aside id="detailDrawer" class="detail-drawer" aria-hidden="true" aria-label="Catalog item details">
-  <div class="drawer-top">
-    <div class="drawer-label">RESULT</div>
-    <button id="closeDrawer" class="drawer-close" type="button" aria-label="Close details">×</button>
+<aside id="drawer" class="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="drawer-label">SELECTED</div>
+    <button id="closeDrawer" class="icon-button" type="button" aria-label="Close">×</button>
   </div>
-  <div id="drawerContent" class="drawer-content"></div>
-  <div class="drawer-signature">B U R N S I D //</div>
+  <div id="drawerBody" class="drawer-body"></div>
 </aside>
-
-<nav class="mobile-bottomnav" aria-label="Quick catalog navigation">
-  <button class="mobile-navbtn active" data-mobile-area=""><span>⌂</span>All</button>
-  <button class="mobile-navbtn" data-mobile-area="Identity"><span>○</span>Identity</button>
-  <button class="mobile-navbtn" data-mobile-area="Mailbox"><span>✉</span>Mailbox</button>
-  <button class="mobile-navbtn" data-mobile-area="Security / IR"><span>◇</span>Security</button>
-  <button id="mobileMoreBtn" class="mobile-navbtn"><span>☰</span>More</button>
-</nav>
 
 <script src="catalog-data.js"></script>
 <script src="app.js"></script>
