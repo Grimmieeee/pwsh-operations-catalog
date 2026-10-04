@@ -490,7 +490,100 @@
     return "General";
   }
 
+
+  const CURATED = [
+    {
+      match:/tenant-device-code-exposure|Device Code Exposure Audit/i,
+      connect:['Connect-MgGraph -Scopes "Policy.Read.ConditionalAccess","AuditLog.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Conditional Access device-code blocking","Recent device-code sign-ins","Device-code exposure indicators"]
+    },
+    {
+      match:/tenant-app-registrations|App Registration Audit/i,
+      connect:['Connect-MgGraph -Scopes "Application.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["App registrations","Expired / expiring secrets","Expired / expiring certificates","Risky application permissions","Application owners"]
+    },
+    {
+      match:/tenant-cap-gaps|Conditional Access Gaps/i,
+      connect:['Connect-MgGraph -Scopes "Policy.Read.ConditionalAccess","Directory.Read.All","User.Read.All"'],
+      label:"CHECKS",
+      facts:["Disabled policies","Report-only policies","User / group exclusions","Device-code gaps","Location conditions","Weak coverage indicators"]
+    },
+    {
+      match:/tenant-mfa-security|MFA Security Audit/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","Directory.Read.All","Reports.Read.All","UserAuthenticationMethod.Read.All"'],
+      label:"CHECKS",
+      facts:["MFA registration","MFA capability","Registered methods","Phishing-resistant methods","No-MFA users","Weak-only MFA","Conditional Access coverage when requested"]
+    },
+    {
+      match:/tenant-secure-score|Secure Score Snapshot/i,
+      connect:['Connect-MgGraph -Scopes "SecurityEvents.Read.All","SecurityActions.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Current Secure Score","Maximum score","Enabled control scores","Previous snapshot comparison when supplied"]
+    },
+    {
+      match:/tenant-signin-anomalies|Sign-in Anomalies Audit/i,
+      connect:['Connect-MgGraph -Scopes "AuditLog.Read.All","User.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Recent sign-ins","Foreign successful sign-ins","Country changes","Device-code activity","New-IP non-interactive success"]
+    },
+    {
+      match:/tenant-service-principal-owners|Service Principal Owners Audit/i,
+      connect:['Connect-MgGraph -Scopes "Application.Read.All","Directory.Read.All","User.Read.All"'],
+      label:"CHECKS",
+      facts:["Service principals","Service-principal owners","User-owned service principals","Service principals with no owners"]
+    },
+    {
+      match:/shared-mailbox-signin|Shared Mailbox Sign-in Audit/i,
+      connect:['Connect-ExchangeOnline','Connect-MgGraph -Scopes "AuditLog.Read.All","User.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Shared mailboxes","Recent shared-mailbox sign-ins","Successful direct sign-ins"]
+    },
+    {
+      match:/transport-rules|Transport Rules Audit/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Tenant transport rules","BCC actions","Redirect actions","Forwarding actions","Delete / quarantine actions","External-recipient actions"]
+    },
+    {
+      match:/GET-USER-MAILBOX-SNAPSHOT|Mailbox Security Snapshot/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Mailbox state","Inbox rules","Forwarding","Full Access","Send As"]
+    },
+    {
+      match:/GET-MAILBOX-PERMISSIONS|Mailbox Permissions Review|Mailbox Forwarding and Permission Audit/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Forwarding","Mailbox delegates","Inbox rules","Full Access","Send As"]
+    },
+    {
+      match:/GET-WINGET-UPDATES|Winget Updates/i,
+      label:"DOES",
+      facts:["Shows available upgrades","Confirms before changes","Updates normally eligible packages","Shows remaining upgrades"]
+    },
+    {
+      match:/GET-TERMINAL-READINESS-CHECK|Terminal Readiness Check/i,
+      label:"CHECKS",
+      facts:["PowerShell version","Execution policy","Jumpbox folders","Code-signing certificate","Script signatures","Cloud modules","Graph / Exchange sessions","Core files"]
+    },
+    {
+      match:/INVOKE-SESSION-RESET|Session Reset/i,
+      label:"DOES",
+      facts:["Disconnects Exchange Online","Disconnects Microsoft Graph","Removes Exchange-related PSSessions","Clears PowerShell error buffer","Optionally resets session password","Optionally launches PowerShell 7"]
+    }
+  ];
+
+  function curatedMeta(item){
+    const key = [displayName(item),item.file,item.name].join(" ");
+    return CURATED.find(entry => entry.match.test(key)) || null;
+  }
+
   function connectCommands(item){
+    const curated = curatedMeta(item);
+    if (curated?.connect?.length) return [...curated.connect];
+
     const req = String(item.requires || "");
     const found = [];
 
@@ -532,17 +625,22 @@
     "POP / IMAP / SMTP AUTH"
   ];
 
-  function checklistFor(item){
+  function factBlockFor(item){
+    const curated = curatedMeta(item);
+    if (curated?.facts?.length){
+      return {label:curated.label || "CHECKS",items:[...curated.facts]};
+    }
+
     const title = displayName(item);
     if (/M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
-      return RISK_CHECKS;
+      return {label:"CHECKS",items:[...RISK_CHECKS]};
     }
 
     if (/M365 User Quick View/i.test(title)){
-      return ["Account state","Password age","MFA","Groups","Mailbox state"];
+      return {label:"CHECKS",items:["Account state","Password age","MFA","Groups","Mailbox state"]};
     }
 
-    return [];
+    return null;
   }
 
   function workflowFor(item, area){
@@ -597,7 +695,7 @@
       group:groupFor(source, area),
       displayName:displayName(source),
       connect:connectCommands(source),
-      checks:checklistFor(source),
+      facts:factBlockFor(source),
       workflow:workflowFor(source, area),
       changeNote:changeNote(source)
     };
@@ -835,16 +933,29 @@
     `;
   }
 
-  function checksMarkup(item){
-    if (!item.checks.length) return "";
+  function factsMarkup(item){
+    if (!item.facts?.items?.length) return "";
+    const label = item.facts.label || "CHECKS";
+    const doesClass = label === "DOES" ? " does-list" : "";
     return `
       <section class="check-block">
-        <div class="section-label">CHECKS</div>
-        <div class="check-list">
-          ${item.checks.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
+        <div class="section-label">${esc(label)}</div>
+        <div class="check-list${doesClass}">
+          ${item.facts.items.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
         </div>
       </section>
     `;
+  }
+
+  function accessMarkup(item){
+    const access = String(item.access || "").toLowerCase();
+    if (access.includes("destructive")) {
+      return '<div class="access-state access-danger">DESTRUCTIVE</div>';
+    }
+    if (access.includes("change") || access.includes("mixed")) {
+      return '<div class="access-state access-change">MAKES CHANGES</div>';
+    }
+    return '<div class="access-state access-read">READ ONLY</div>';
   }
 
   function optionMarkup(item){
@@ -858,7 +969,7 @@
   }
 
   function shortNote(item){
-    if (item.type === "Quick Command") return "";
+    if (item.type === "Quick Command" || item.facts?.items?.length) return "";
     const note = String(item.notes || "").trim();
     if (!note) return "";
     return `<div class="note-block">${esc(note)}</div>`;
@@ -905,13 +1016,14 @@
       <section class="item-head">
         <div class="item-context">${esc(item.logicalArea)} / ${esc(item.group)}</div>
         <h2 class="item-title">${esc(item.displayName)}</h2>
+        ${accessMarkup(item)}
       </section>
 
       ${connectMarkup(item)}
       ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
-      ${checksMarkup(item)}
+      ${factsMarkup(item)}
       ${shortNote(item)}
       ${standaloneCommandMarkup(item)}
 
