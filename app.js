@@ -1056,67 +1056,6 @@
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
           </div>
           <p>Review the selected item before execution.</p>
-
-          <div class="type-test">
-            <div class="type-test-title">TYPE TEST</div>
-            <a class="action primary" href="type-test.html">OPEN CATALOG TYPE TEST</a>
-
-            <div class="type-sample">
-              <div class="type-name">SEGOE UI VARIABLE</div>
-              <div class="type-face type-segoe">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-sample">
-              <div class="type-name">NOTO SANS</div>
-              <div class="type-face type-noto">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-sample">
-              <div class="type-name">INTER</div>
-              <div class="type-face type-inter">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-sample">
-              <div class="type-name">HELVETICA / ARIAL</div>
-              <div class="type-face type-helvetica">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-sample">
-              <div class="type-name">APTOS</div>
-              <div class="type-face type-aptos">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-sample">
-              <div class="type-name">BAHNSCHRIFT</div>
-              <div class="type-face type-bahnschrift">
-                <span class="type-nav">Single User&nbsp;&nbsp; Multi User&nbsp;&nbsp; Tenant Wide</span>
-                Mailbox Security Snapshot
-                <span class="type-mono-note">get-user-mailbox-snapshot.ps1 &nbsp; READ ONLY</span>
-              </div>
-            </div>
-
-            <div class="type-test-note">Noto Sans and Inter use the local installed font when available; otherwise your browser falls back to the system UI face.</div>
-          </div>
         </section>
       `;
       return;
