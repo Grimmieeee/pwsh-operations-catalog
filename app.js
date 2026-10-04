@@ -1059,6 +1059,7 @@
 
           <div class="type-test">
             <div class="type-test-title">TYPE TEST</div>
+            <a class="action primary" href="type-test.html">OPEN CATALOG TYPE TEST</a>
 
             <div class="type-sample">
               <div class="type-name">SEGOE UI VARIABLE</div>
