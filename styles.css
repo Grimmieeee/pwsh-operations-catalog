@@ -12,8 +12,8 @@
   --pink:#df4aa8;
   --yellow:#d8bb61;
   --red:#ef7480;
-  --display:"Playfair Display",Georgia,serif;
-  --ui:"Source Sans 3","Segoe UI",sans-serif;
+  --display:"Segoe UI Variable Display","Segoe UI Variable Text","Segoe UI",sans-serif;
+  --ui:"Segoe UI Variable Text","Segoe UI",sans-serif;
   --mono:"Cascadia Mono","Cascadia Code",Consolas,"Liberation Mono",monospace;
 }
 
@@ -237,8 +237,8 @@ button{cursor:pointer}
   min-width:0;
   color:#e5edf0;
   font-family:var(--display);
-  font-size:17px;
-  font-weight:600;
+  font-size:16px;
+  font-weight:700;
   line-height:1.2;
   white-space:nowrap;
   overflow:hidden;
@@ -296,9 +296,9 @@ button{cursor:pointer}
   margin:0 0 18px;
   color:#edf2f3;
   font-family:var(--display);
-  font-size:31px;
+  font-size:29px;
   font-weight:700;
-  letter-spacing:0;
+  letter-spacing:-.01em;
 }
 .about-block p{
   max-width:760px;
@@ -395,10 +395,10 @@ button{cursor:pointer}
   margin:9px 0 0;
   color:#eef3f4;
   font-family:var(--display);
-  font-size:34px;
+  font-size:31px;
   font-weight:700;
-  line-height:1.13;
-  letter-spacing:-.01em;
+  line-height:1.16;
+  letter-spacing:-.015em;
 }
 .access-state{
   margin-top:11px;
