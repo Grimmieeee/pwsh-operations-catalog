@@ -304,6 +304,15 @@ button{cursor:pointer}
   font-size:21px;
   line-height:1.22;
 }
+.access-state{
+  margin-top:10px;
+  font-size:8.5px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.access-read{color:var(--green)}
+.access-change{color:var(--yellow)}
+.access-danger{color:var(--red)}
 
 .connect-block,
 .workflow-block,
@@ -413,6 +422,10 @@ button{cursor:pointer}
   content:"[✓]";
   margin-right:7px;
   color:var(--green);
+}
+.does-list .check-item::before{
+  content:"•";
+  color:var(--cyan);
 }
 
 .note-block{
