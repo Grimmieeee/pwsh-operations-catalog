@@ -895,7 +895,8 @@
     const area = String(item.area || "");
     const text = [item.displayName,item.name,item.file,item.subarea,item.keywords].join(" ");
 
-    if (/onboard|offboard|lifecycle/i.test(text)) return "On / Offboarding";
+    if (/onboard|offboard|lifecycle|disable accounts|delete accounts/i.test(text)) return "On / Offboarding";
+    if (/shared mailbox sign-in|\bIR[-_ ]|incident response/i.test(text)) return "Security";
     if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts/i.test(text)) return "Mailbox";
     if (/mfa|conditional access|oauth|secure score|sign[- ]?in|device code|service principal|app registration|guest consent|security hardening/i.test(text)) return "Security";
     if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
@@ -933,6 +934,15 @@
     return "section-" + norm(bucket).replace(/\s+/g,"-");
   }
 
+  function irRank(item){
+    const name = displayName(item);
+    if (/Risk Exposure Snapshot|Discovery/i.test(name)) return 1;
+    if (/Eradicate|Execution/i.test(name)) return 2;
+    if (/Recover/i.test(name)) return 3;
+    if (/Revoke Active Sessions/i.test(name)) return 4;
+    return 50;
+  }
+
   function filteredItems(){
     let list = ITEMS.filter(item => state.area === "Everything" || primaryBucket(item) === state.area);
     const q = state.query.trim();
@@ -952,6 +962,12 @@
       const order = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
       list.sort((a,b) =>
         order.indexOf(scopeSubgroup(a)) - order.indexOf(scopeSubgroup(b)) ||
+        a.displayName.localeCompare(b.displayName)
+      );
+    } else if (state.area === "Incident Response") {
+      list.sort((a,b) =>
+        groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
+        irRank(a) - irRank(b) ||
         a.displayName.localeCompare(b.displayName)
       );
     } else {
