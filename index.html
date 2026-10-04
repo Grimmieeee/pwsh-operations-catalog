@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
-<title>PWSH Library</title>
+<title>FIELD // KIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,7 +18,13 @@
 <div class="shell">
   <aside class="sidebar" aria-label="Library navigation">
     <div>
-      <div class="brand">PWSH // LIBRARY</div>
+      <div class="brand">
+        <div class="brand-main">
+          <span class="brand-field">F I E L D</span>
+          <span class="brand-slash">&nbsp;//&nbsp;</span>
+          <span class="brand-kit">K I T</span>
+        </div>
+      </div>
       <nav id="areaNav" class="area-nav"></nav>
     </div>
     <div class="signature">B U R N S I D //</div>
@@ -24,7 +33,11 @@
   <main class="workspace">
     <header class="topbar">
       <button id="menuBtn" class="icon-button menu-button" type="button" aria-label="Open navigation">☰</button>
-      <div id="crumb" class="crumb">EVERYTHING</div>
+      <div class="masthead-note">
+        <span class="masthead-line masthead-line-1">A working reference.</span>
+        <span class="masthead-line masthead-line-2">Use responsibly.</span>
+      </div>
+      <div id="crumb" class="crumb hidden">FULL LIBRARY</div>
       <div id="entryCount" class="entry-count">0</div>
     </header>
 
