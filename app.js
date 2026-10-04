@@ -661,6 +661,16 @@
       facts:["Forwarding","Mailbox delegates","Inbox rules","Full Access","Send As"]
     },
     {
+      match:/INVOKE-ENFORCE-PER-USER-MFA_DEFAULT|Enforce Per-user MFA/i,
+      label:"DOES",
+      facts:[
+        "Targets one user",
+        "Enforces per-user MFA",
+        "Uses the preferred authentication flow",
+        "Requires appropriate tenant admin rights"
+      ]
+    },
+    {
       match:/GET-WINGET-UPDATES|Winget Updates/i,
       label:"DOES",
       facts:["Shows available upgrades","Confirms before changes","Updates normally eligible packages","Shows remaining upgrades"]
