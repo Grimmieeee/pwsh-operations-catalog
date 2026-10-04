@@ -732,6 +732,7 @@
   const crumb = document.getElementById("crumb");
   const entryCount = document.getElementById("entryCount");
   const search = document.getElementById("search");
+  const searchWrap = document.querySelector(".search-wrap");
   const clearSearch = document.getElementById("clearSearch");
   const contextBar = document.getElementById("contextBar");
   const jumpBar = document.getElementById("jumpBar");
@@ -752,7 +753,7 @@
 
   function renderNav(){
     areaNav.innerHTML = AREAS.map(area => `
-      <button class="area-button ${state.area === area ? "active" : ""}" data-area="${esc(area)}" type="button">
+      <button class="area-button ${area === "About" ? "about-nav" : ""} ${state.area === area ? "active" : ""}" data-area="${esc(area)}" type="button">
         <span>${esc(area)}</span>
         <span class="area-count">${countArea(area)}</span>
       </button>
@@ -796,9 +797,10 @@
 
     if (/onboard|offboard|lifecycle/i.test(text)) return "On / Offboarding";
     if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts/i.test(text)) return "Mailbox";
+    if (/mfa|conditional access|oauth|secure score|sign[- ]?in|device code|service principal|app registration|guest consent|security hardening/i.test(text)) return "Security";
     if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
-    if (/audit|review|report|snapshot|stale|cleanup/i.test(text)) return "Audit";
-    if (/mfa|conditional access|oauth|secure score|sign[- ]?in|device code|service principal|app registration/i.test(text)) return "Security";
+    if (/identity snapshot|user snapshot|account status|account source|password age|password last|distinguished name|principal name/i.test(text)) return "Identity";
+    if (/audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
     if (/^Groups$/i.test(area)) return "Access";
     return "Identity";
   }
@@ -909,6 +911,7 @@
 
   function renderResults(){
     const queryActive = Boolean(state.query.trim());
+    searchWrap?.classList.toggle("hidden", state.area === "About");
 
     if (state.area === "About"){
       crumb.textContent = "ABOUT";
