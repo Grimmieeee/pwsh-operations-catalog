@@ -732,6 +732,7 @@
   const search = document.getElementById("search");
   const clearSearch = document.getElementById("clearSearch");
   const contextBar = document.getElementById("contextBar");
+  const jumpBar = document.getElementById("jumpBar");
   const results = document.getElementById("results");
   const empty = document.getElementById("empty");
   const drawer = document.getElementById("drawer");
@@ -785,6 +786,34 @@
     return score;
   }
 
+  function primaryBucket(item){
+    if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
+    if (item.logicalArea === "Incident Response") return "Incident Response";
+    if (item.logicalArea === "RMM") return "RMM";
+    if (item.logicalArea === "Utility") return "Utility";
+
+    if (item.group === "Multi User") return "Multi User";
+    if (item.group === "Tenant") return "Tenant Wide";
+    if (item.group === "Single User") return "Single User";
+
+    const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
+    if (/\btenant\b|tenant-wide/i.test(combined)) return "Tenant Wide";
+    if (/\bbulk\b|\bmulti[- ]?user\b|one or more|multiple users|all users/i.test(combined)) return "Multi User";
+
+    if (item.logicalArea === "Identity" || item.logicalArea === "Mailbox") return "Single User";
+    return "Utility";
+  }
+
+  function bucketRank(bucket){
+    const order = ["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone"];
+    const idx = order.indexOf(bucket);
+    return idx === -1 ? 99 : idx;
+  }
+
+  function bucketId(bucket){
+    return "section-" + norm(bucket).replace(/\s+/g,"-");
+  }
+
   function filteredItems(){
     let list = ITEMS.filter(item => state.area === "Everything" || item.logicalArea === state.area);
     const q = state.query.trim();
@@ -797,8 +826,7 @@
         .map(x => x.item);
     } else if (state.area === "Everything") {
       list.sort((a,b) =>
-        areaRank(a.logicalArea) - areaRank(b.logicalArea) ||
-        groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
+        bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b)) ||
         a.displayName.localeCompare(b.displayName)
       );
     } else {
@@ -832,8 +860,9 @@
   }
 
   function scopeTag(item){
-    if (item.group === "Multi User") return '<span class="result-tag result-multi">MULTI</span>';
-    if (item.group === "Tenant") return '<span class="result-tag result-tenant">TENANT</span>';
+    const bucket = primaryBucket(item);
+    if (bucket === "Multi User") return '<span class="result-tag result-multi">MULTI</span>';
+    if (bucket === "Tenant Wide") return '<span class="result-tag result-tenant">TENANT</span>';
     return "";
   }
 
@@ -871,7 +900,18 @@
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.textContent = queryActive
       ? `SEARCH / ${state.area.toUpperCase()}`
-      : state.area === "Everything" ? "LIBRARY" : state.area.toUpperCase();
+      : state.area === "Everything" ? "FULL LIBRARY" : state.area.toUpperCase();
+
+    if (state.area === "Everything" && !queryActive){
+      const buckets = [...new Set(list.map(primaryBucket))];
+      jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + buckets.map(bucket =>
+        `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(bucket.toUpperCase())}</button>`
+      ).join("");
+      jumpBar.classList.remove("hidden");
+    } else {
+      jumpBar.innerHTML = "";
+      jumpBar.classList.add("hidden");
+    }
 
     if (!list.length){
       results.innerHTML = "";
@@ -887,14 +927,14 @@
       const grouped = new Map();
       for (const item of list){
         const key = state.area === "Everything"
-          ? item.logicalArea
+          ? primaryBucket(item)
           : (item.group || "General");
         if (!grouped.has(key)) grouped.set(key,[]);
         grouped.get(key).push(item);
       }
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
-        <section class="group">
+        <section class="group" id="${state.area === "Everything" ? esc(bucketId(group)) : ""}">
           <div class="group-title">${esc(group.toUpperCase())}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
@@ -904,6 +944,13 @@
     const visible = list;
     results.querySelectorAll("[data-open-index]").forEach((btn, idx) => {
       btn.addEventListener("click", () => openItem(visible[idx]));
+    });
+
+    jumpBar.querySelectorAll("[data-jump]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = document.getElementById(btn.getAttribute("data-jump"));
+        target?.scrollIntoView({behavior:"smooth",block:"start"});
+      });
     });
   }
 
