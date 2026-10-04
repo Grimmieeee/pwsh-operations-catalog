@@ -27,7 +27,6 @@ body{
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.mobile-only{display:none}
 
 .shell{
   min-height:100vh;
@@ -121,7 +120,7 @@ button{cursor:pointer}
   background:#060b11;
 }
 .search-box{
-  width:min(100%,1100px);
+  width:100%;
   min-height:50px;
   display:flex;
   align-items:center;
@@ -183,7 +182,7 @@ button{cursor:pointer}
   width:100%;
   min-height:50px;
   display:grid;
-  grid-template-columns:minmax(0,1fr) auto auto;
+  grid-template-columns:minmax(260px,1fr) minmax(170px,.62fr) auto 16px;
   align-items:center;
   gap:12px;
   border:0;
@@ -203,10 +202,11 @@ button{cursor:pointer}
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.result-file{
-  margin-top:3px;
+.result-meta{
+  min-width:0;
   color:#4f6d75;
   font-size:8.5px;
+  text-align:right;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -245,8 +245,8 @@ button{cursor:pointer}
   z-index:90;
   top:0;
   right:0;
-  width:min(47vw,820px);
-  min-width:560px;
+  width:min(40vw,700px);
+  min-width:520px;
   height:100vh;
   overflow:auto;
   transform:translateX(102%);
@@ -420,6 +420,24 @@ button{cursor:pointer}
   font-size:9.5px;
   line-height:1.5;
 }
+.option-line{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:8px 0;
+  border-top:1px solid var(--line2);
+  border-bottom:1px solid var(--line2);
+  color:#9bbbc1;
+  font-size:9px;
+}
+.option-label{
+  color:#52727b;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.option-values{color:#c4dde1}
+.menu-button{display:none}
 .command{
   margin:0;
   max-height:390px;
@@ -479,11 +497,11 @@ button{cursor:pointer}
 
 @media(max-width:940px){
   .shell{grid-template-columns:185px minmax(0,1fr)}
-  .drawer{width:min(58vw,760px)}
+  .drawer{width:min(52vw,680px)}
 }
 
 @media(max-width:760px){
-  .mobile-only{display:grid}
+  .menu-button{display:grid}
   .shell{display:block}
   .sidebar{
     position:fixed;
@@ -502,7 +520,7 @@ button{cursor:pointer}
   .search-box{min-height:46px}
   .catalog{padding:10px 10px 60px}
   .result{grid-template-columns:minmax(0,1fr) auto}
-  .result-tag{display:none}
+  .result-meta,.result-tag{display:none}
   .drawer{
     width:100vw;
     min-width:0;
