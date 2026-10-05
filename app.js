@@ -961,11 +961,16 @@
 
   function filteredItems(){
     const q = state.query.trim();
-    // Search is intentionally global. Navigation scopes browsing, but typing a
-    // query searches the entire merged FIELD // KIT index.
-    let list = q
-      ? [...ITEMS]
-      : ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
+    const scopeSearchAreas = new Set(["Single User","Multi User","Tenant Wide"]);
+
+    // When searching from Single/Multi/Tenant, search across all three scopes.
+    // Other sections (IR, RMM, Utility, Standalone) remain scoped to themselves.
+    let list;
+    if (q && scopeSearchAreas.has(state.area)){
+      list = ITEMS.filter(item => scopeSearchAreas.has(primaryBucket(item)));
+    } else {
+      list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
+    }
 
     if (q){
       list = list
@@ -1105,7 +1110,9 @@
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
     contextBar.textContent = queryActive
-      ? "SEARCH / FULL LIBRARY"
+      ? (["Single User","Multi User","Tenant Wide"].includes(state.area)
+          ? "SEARCH / USER + TENANT"
+          : `SEARCH / ${state.area.toUpperCase()}`)
       : state.area.toUpperCase();
 
     if (!queryActive && state.area === "Full Library"){
