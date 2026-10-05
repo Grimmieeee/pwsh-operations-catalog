@@ -1071,24 +1071,36 @@
       crumb.textContent = "ABOUT";
       entryCount.textContent = "";
       clearSearch.classList.toggle("hidden", !state.query);
-      contextBar.textContent = "FIELD // KIT";
+      contextBar.textContent = "";
+      contextBar.classList.add("hidden");
       jumpBar.innerHTML = "";
       jumpBar.classList.add("hidden");
       empty.classList.add("hidden");
       results.innerHTML = `
         <section class="about-block">
           <div class="about-kicker">ABOUT</div>
-          <h2>FIELD // KIT</h2>
-          <p>A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
+
+          <h2 class="about-title">
+            <span class="about-field">F I E L D</span>
+            <span class="about-slash">//</span>
+            <span class="about-kit">K I T</span>
+          </h2>
+
+          <div class="about-rule"></div>
+
+          <p class="about-lede">A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
+
           <p>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>. Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</p>
+
           <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
+
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
             <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
           </div>
-          <p>Review the selected item before execution.</p>
 
+          <p class="about-foot">Review the selected item before execution.</p>
         </section>
       `;
       return;
