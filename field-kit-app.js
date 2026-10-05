@@ -12,6 +12,7 @@
     "RMM",
     "Utility",
     "Standalone",
+    "Tools",
     "About"
   ];
 
@@ -404,6 +405,138 @@
     _order:10000 + i
   }));
 
+  const EXTRA_TOOLS = [
+    {
+      name:"Connection Patterns",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Reference",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"connection-patterns.md",
+      publishedPath:"tools/connection-patterns.md",
+      notes:"Reusable Graph, Exchange Online, and hybrid connection guidance without environment-specific identifiers.",
+      keywords:"tools docs markdown connection graph exchange exo hybrid authentication reference",
+      toolFacts:["Session reuse","Tenant validation","Least-privilege connections","Hybrid source-of-truth guidance"]
+    },
+    {
+      name:"Lessons Learned",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Reference",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"lessons-learned.md",
+      publishedPath:"tools/lessons-learned.md",
+      notes:"Small reusable rules captured from recurring PowerShell, authentication, hybrid, output, and publishing failures.",
+      keywords:"tools docs markdown lessons gotchas failures reference",
+      toolFacts:["PowerShell gotchas","Authentication lessons","Hybrid identity lessons","Publishing hygiene"]
+    },
+    {
+      name:"PowerShell Standards",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Standards",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"powershell-standards.md",
+      publishedPath:"tools/powershell-standards.md",
+      notes:"Primary public-safe build and alignment baseline for interactive FIELD // KIT PowerShell tools.",
+      keywords:"tools docs markdown powershell standards build alignment coding style",
+      toolFacts:["Compatibility","Authentication","Change safety","Output","Security","Validation"]
+    },
+    {
+      name:"Publishing Checklist",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Standards",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"publishing-checklist.md",
+      publishedPath:"tools/publishing-checklist.md",
+      notes:"Final public-release gate for source, secrets, proprietary context, operational behavior, and catalog metadata.",
+      keywords:"tools docs markdown publishing checklist secrets proprietary public release",
+      toolFacts:["Secret scan","Environment scan","Operational review","Catalog review"]
+    },
+    {
+      name:"Script Review Checklist",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Standards",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"script-review-checklist.md",
+      publishedPath:"tools/script-review-checklist.md",
+      notes:"Reusable pre-approval review covering syntax, structure, authentication, data handling, safety, output, and publication.",
+      keywords:"tools docs markdown script review checklist validation parser",
+      toolFacts:["Syntax","Structure","Authentication","Data handling","Changes","Security"]
+    },
+    {
+      name:"Reusable Skills",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Templates",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"skills.md",
+      publishedPath:"tools/skills.md",
+      notes:"Repeatable workflows for building, reviewing, aligning, troubleshooting, publishing, and handing off FIELD // KIT work.",
+      keywords:"tools docs markdown skills workflow reusable build review troubleshoot",
+      toolFacts:["Build","Review","Align","Troubleshoot","Publish","Handoff"]
+    },
+    {
+      name:"Script Template Guide",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Templates",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"script-template-guide.md",
+      publishedPath:"tools/script-template-guide.md",
+      notes:"Structural guide for single-objective tools, multi-section reviews, and connected workflows.",
+      keywords:"tools docs markdown script template guide scaffold structure",
+      toolFacts:["Recommended order","Three interaction levels","Prompting rules","Reuse guidance"]
+    },
+    {
+      name:"Session Handoff Template",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Templates",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"session-handoff-template.md",
+      publishedPath:"tools/session-handoff-template.md",
+      notes:"Compact project handoff template for decisions, current state, validation, limitations, and next actions.",
+      keywords:"tools docs markdown handoff template session context continuity",
+      toolFacts:["Current state","Locked decisions","Validation","Known limitations","Next actions"]
+    }
+  ].map((x, i) => ({
+    ...x,
+    requires:"",
+    input:"",
+    output:"",
+    code:"",
+    related:[],
+    url:"",
+    _order:30000 + i
+  }));
+
   const EXTRA_RMM = [
     {
       name:"M365 User Quick View",
@@ -518,7 +651,7 @@
     !isRmm(item)
   );
 
-  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE];
+  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE, ...EXTRA_TOOLS];
 
   const esc = value => String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -541,6 +674,7 @@
   }
 
   function logicalArea(item){
+    if (item.area === "Tools") return "Tools";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
     if (isRmm(item)) return "RMM";
     if (item.type === "Quick Command" || item.area === "Standalone") return "Standalone";
@@ -570,6 +704,10 @@
     const name = displayName(item);
     const file = item.file || "";
     const combined = [name,file,item.subarea,item.platform,item.code].join(" ");
+
+    if (area === "Tools"){
+      return item.subarea || "Reference";
+    }
 
     if (area === "Standalone"){
       if (/winget/i.test(combined)) return "WinGet";
@@ -770,6 +908,10 @@
   ];
 
   function factBlockFor(item){
+    if (Array.isArray(item.toolFacts) && item.toolFacts.length){
+      return {label:"INCLUDES",items:[...item.toolFacts]};
+    }
+
     const curated = curatedMeta(item);
     if (curated?.facts?.length){
       return {label:curated.label || "CHECKS",items:[...curated.facts]};
@@ -955,6 +1097,7 @@
     if (item.logicalArea === "Incident Response") return "Incident Response";
     if (item.logicalArea === "RMM") return "RMM";
     if (item.logicalArea === "Utility") return "Utility";
+    if (item.logicalArea === "Tools") return "Tools";
 
     const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
     const override = SCOPE_OVERRIDES.find(x => x.match.test(item.displayName || item.name || ""));
@@ -973,7 +1116,7 @@
   }
 
   function bucketRank(bucket){
-    const order = ["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone"];
+    const order = ["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone","Tools"];
     const idx = order.indexOf(bucket);
     return idx === -1 ? 99 : idx;
   }
@@ -1029,7 +1172,7 @@
   }
 
   function areaRank(area){
-    const order = ["Identity","Mailbox","Incident Response","RMM","Utility","Standalone"];
+    const order = ["Identity","Mailbox","Incident Response","RMM","Utility","Standalone","Tools"];
     const idx = order.indexOf(area);
     return idx === -1 ? 99 : idx;
   }
@@ -1041,7 +1184,8 @@
       "Incident Response":["Primary","Investigation","Response","General"],
       "RMM":["Access","Audit","Identity","On / Offboarding","Mailbox","Security"],
       "Utility":["WinGet","Terminal / Field-Kit","General"],
-      "Standalone":["Exchange","Graph","Active Directory","Windows","Network","WinGet","Terminal"]
+      "Standalone":["Exchange","Graph","Active Directory","Windows","Network","WinGet","Terminal"],
+      "Tools":["Reference","Standards","Templates"]
     };
     const list = orders[area] || [];
     const idx = list.indexOf(group);
@@ -1051,7 +1195,7 @@
   function accessTag(item){
     const access = String(item.access || "").toLowerCase();
     if (access.includes("destructive")) return '<span class="result-tag result-danger">DESTRUCTIVE</span>';
-    if (access.includes("change") || access.includes("mixed")) return '<span class="result-tag result-change">CHANGE</span>';
+    if (access.includes("change") || access.includes("mixed")) return '<span class="result-tag result-change">MAKES CHANGES</span>';
     return "";
   }
 
@@ -1293,7 +1437,8 @@
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
     if (!item.file && !item.code && !item.publishedPath) return "";
-    return '<button id="showSource" class="action primary" type="button">POWERSHELL</button>';
+    const label = /\.md$/i.test(String(item.file || "")) ? "MARKDOWN" : "POWERSHELL";
+    return '<button id="showSource" class="action primary" type="button">' + label + '</button>';
   }
 
   function referenceButtons(item){
@@ -1403,10 +1548,14 @@
     const mount = document.getElementById("sourceMount");
     if (!mount) return;
 
+    const isMarkdown = /\.md$/i.test(String(item.file || ""));
+    const sourceLabel = isMarkdown ? "MARKDOWN" : "POWERSHELL";
+    const copyLabel = isMarkdown ? "COPY MARKDOWN" : "COPY SCRIPT";
+
     if (mount.dataset.open === "1"){
       mount.innerHTML = "";
       mount.dataset.open = "0";
-      button.textContent = "POWERSHELL";
+      button.textContent = sourceLabel;
       return;
     }
 
@@ -1418,7 +1567,7 @@
       if (!source){
         mount.innerHTML = `
           <section class="source-block">
-            <div class="section-label">POWERSHELL</div>
+            <div class="section-label">${sourceLabel}</div>
             <div class="source-note">
               The source file is not published in this preview yet. The UI is wired for same-origin source loading once an approved copy is added to the public catalog.
             </div>
@@ -1427,11 +1576,13 @@
       } else {
         mount.innerHTML = `
           <section class="source-block">
-            <div class="section-label">POWERSHELL</div>
+            <div class="section-label">${sourceLabel}</div>
             <pre class="command">${esc(source)}</pre>
             <div class="source-actions">
-              <button id="copyScript" class="action primary" type="button">COPY SCRIPT</button>
-              ${item.file && /\.ps1$/i.test(item.file) ? '<button id="saveScript" class="action" type="button">SAVE .PS1</button>' : ""}
+              <button id="copyScript" class="action primary" type="button">${copyLabel}</button>
+              ${item.file && /\.(ps1|md)$/i.test(item.file)
+                ? '<button id="saveScript" class="action" type="button">SAVE ' + (isMarkdown ? '.MD' : '.PS1') + '</button>'
+                : ""}
             </div>
           </section>
         `;
@@ -1455,7 +1606,7 @@
         </section>
       `;
       mount.dataset.open = "1";
-      button.textContent = "POWERSHELL";
+      button.textContent = sourceLabel;
     } finally {
       button.disabled = false;
     }
@@ -1511,7 +1662,7 @@
 
   function runFrameworkAudit(){
     const issues = [];
-    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone"]);
+    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone","Tools"]);
     const allowedPurpose = new Set(["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]);
     const seen = new Set();
 
