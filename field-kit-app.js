@@ -366,6 +366,22 @@
       keywords:"exchange exo disconnect session reset auth"
     },
     {
+      name:"Show Activity From One IP",
+      platform:"Microsoft Graph",
+      access:"Read-only",
+      requires:'Connect: Connect-MgGraph -Scopes "AuditLog.Read.All","User.Read.All"',
+      code:'$Ip = "1.2.3.4"\nGet-MgAuditLogSignIn -Filter "ipAddress eq \'$Ip\'" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N="Status";E={if($_.Status.ErrorCode -eq 0){"Success"}else{"Failed"}}}',
+      keywords:"graph sign in signin ip address activity audit login"
+    },
+    {
+      name:"Look Up ISP And Location",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:'$Ip = "8.8.8.8"\nInvoke-RestMethod "https://ipinfo.io/$Ip/json" |\n  Select-Object ip,city,region,country,org',
+      notes:"Uses the external ipinfo.io lookup service.",
+      keywords:"ip isp geolocation location network lookup internet"
+    },
+    {
       name:"Show Code-Signing Certificates",
       platform:"PowerShell",
       access:"Read-only",
@@ -485,12 +501,20 @@
     _order:20000 + i
   }));
 
+  const SPLIT_COMMAND_ARTIFACTS = new Set([
+    "Show Activity From One Ip",
+    '$Ip = "1.2.3.4"',
+    "Look Up Isp And Location",
+    '$Ip = "8.8.8.8"'
+  ]);
+
   const rawItems = RAW.filter(item =>
     item &&
     item.status !== "Candidate" &&
     item.status !== "External Reference" &&
     item.type !== "Runbook" &&
     item.type !== "Reference" &&
+    !SPLIT_COMMAND_ARTIFACTS.has(String(item.name || "")) &&
     !isRmm(item)
   );
 
@@ -652,7 +676,15 @@
       match:/GET-USER-MAILBOX-SNAPSHOT|Mailbox Security Snapshot/i,
       connect:['Connect-ExchangeOnline'],
       label:"CHECKS",
-      facts:["Mailbox state","Inbox rules","Forwarding","Full Access","Send As"]
+      facts:[
+        "Forwarding status",
+        "Inbox rules",
+        "Mailbox permissions",
+        "Delegated access",
+        "Send As / Send on Behalf",
+        "Exposure indicators"
+      ],
+      note:"Reviews the selected user's mailbox state and surfaces the details that change the next decision without burying the operator in metadata."
     },
     {
       match:/GET-MAILBOX-PERMISSIONS|Mailbox Permissions Review|Mailbox Forwarding and Permission Audit/i,
@@ -1252,7 +1284,8 @@
 
   function shortNote(item){
     if (item.type === "Quick Command") return "";
-    const note = String(item.notes || "").trim();
+    const curated = curatedMeta(item);
+    const note = String(curated?.note || item.notes || "").trim();
     if (!note) return "";
     return `<div class="note-block">${esc(note)}</div>`;
   }
@@ -1476,6 +1509,77 @@
     document.body.classList.remove("nav-open");
   }
 
+  function runFrameworkAudit(){
+    const issues = [];
+    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone"]);
+    const allowedPurpose = new Set(["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]);
+    const seen = new Set();
+
+    for (const item of ITEMS){
+      const bucket = primaryBucket(item);
+      const key = norm(bucket + " " + item.displayName);
+
+      if (!item.displayName) issues.push("Missing display name.");
+      if (!allowedBuckets.has(bucket)) issues.push("Unknown bucket: " + bucket + " / " + item.displayName);
+      if (seen.has(key)) issues.push("Duplicate card: " + bucket + " / " + item.displayName);
+      seen.add(key);
+
+      if (["Single User","Multi User","Tenant Wide"].includes(bucket) && !allowedPurpose.has(scopeSubgroup(item))){
+        issues.push("Unknown purpose: " + bucket + " / " + item.displayName);
+      }
+
+      if (item.type === "Quick Command" && !String(item.code || "").trim()){
+        issues.push("Quick Command has no code: " + item.displayName);
+      }
+
+      if (item.publishedPath && (/^(?:https?:)?\/\//i.test(item.publishedPath) || /\.\./.test(item.publishedPath))){
+        issues.push("Unsafe publishedPath: " + item.displayName);
+      }
+    }
+
+    const alphaCheck = (items, label) => {
+      for (let i = 1; i < items.length; i++){
+        if (items[i - 1].displayName.localeCompare(items[i].displayName) > 0){
+          issues.push("A-Z order failed: " + label + " / " + items[i - 1].displayName + " > " + items[i].displayName);
+          return;
+        }
+      }
+    };
+
+    for (const scope of ["Single User","Multi User","Tenant Wide"]){
+      for (const purpose of ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]){
+        const subset = ITEMS
+          .filter(item => primaryBucket(item) === scope && scopeSubgroup(item) === purpose)
+          .slice()
+          .sort((a,b) => a.displayName.localeCompare(b.displayName));
+        alphaCheck(subset, scope + " / " + purpose);
+      }
+    }
+
+    for (const area of ["RMM","Utility","Standalone"]){
+      const groups = [...new Set(ITEMS.filter(item => primaryBucket(item) === area).map(item => item.group || "General"))];
+      for (const group of groups){
+        const subset = ITEMS
+          .filter(item => primaryBucket(item) === area && (item.group || "General") === group)
+          .slice()
+          .sort((a,b) => a.displayName.localeCompare(b.displayName));
+        alphaCheck(subset, area + " / " + group);
+      }
+    }
+
+    const result = {
+      ok: issues.length === 0,
+      itemCount: ITEMS.length,
+      issues
+    };
+
+    window.FIELD_KIT_AUDIT = result;
+    if (result.ok) console.info("[FIELD // KIT] Framework audit passed:", result.itemCount, "items");
+    else console.error("[FIELD // KIT] Framework audit failed:", issues);
+
+    return result;
+  }
+
   areaNav.addEventListener("click", event => {
     const btn = event.target.closest("[data-area]");
     if (!btn) return;
@@ -1509,6 +1613,7 @@
   menuBtn?.addEventListener("click",() => document.body.classList.toggle("nav-open"));
   navOverlay.addEventListener("click",closeNav);
 
+  runFrameworkAudit();
   renderNav();
   renderResults();
 })();
