@@ -1273,6 +1273,8 @@
 
           <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
 
+          <p>Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
+
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
             <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
@@ -1598,7 +1600,7 @@
       }
 
       mount.dataset.open = "1";
-      button.textContent = "HIDE POWERSHELL";
+      button.textContent = "HIDE " + sourceLabel;
     } catch (error){
       mount.innerHTML = `
         <section class="source-block">
@@ -1707,7 +1709,7 @@
       }
     }
 
-    for (const area of ["RMM","Utility","Standalone"]){
+    for (const area of ["RMM","Utility","Standalone","Tools"]){
       const groups = [...new Set(ITEMS.filter(item => primaryBucket(item) === area).map(item => item.group || "General"))];
       for (const group of groups){
         const subset = ITEMS
