@@ -246,9 +246,9 @@ button{cursor:pointer}
 }
 .result-meta{
   min-width:0;
-  color:#789fa8;
+  color:#9bbfc5;
   font:700 11.5px/1.35 var(--mono);
-  opacity:.56;
+  opacity:.82;
   text-align:right;
   white-space:nowrap;
   overflow:hidden;
@@ -274,7 +274,7 @@ button{cursor:pointer}
   font-size:17px;
 }
 .result:hover .result-arrow{color:var(--cyan)}
-.result:hover .result-meta{opacity:.76}
+.result:hover .result-meta{opacity:1;color:#c3dadd}
 .empty{
   padding:50px 10px;
   color:#617f88;
