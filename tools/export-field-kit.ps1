@@ -46,7 +46,7 @@ try {
         throw ('Expected branch "{0}" but current branch is "{1}".' -f $ExpectedBranch,$branch)
     }
 
-    $dirty = Invoke-Git -Arguments @('-C',$repoRoot,'status','--porcelain')
+    $dirty = @(Invoke-Git -Arguments @('-C',$repoRoot,'status','--porcelain'))
     if ($dirty.Count -gt 0) {
         throw 'Working tree has uncommitted changes. Commit or stash them before creating a locked backup.'
     }
@@ -57,7 +57,7 @@ try {
         Invoke-Git -Arguments @('-C',$repoRoot,'pull','--ff-only','origin',$branch) | Out-Null
     }
 
-    $dirty = Invoke-Git -Arguments @('-C',$repoRoot,'status','--porcelain')
+    $dirty = @(Invoke-Git -Arguments @('-C',$repoRoot,'status','--porcelain'))
     if ($dirty.Count -gt 0) {
         throw 'Working tree changed during update. Backup stopped.'
     }
