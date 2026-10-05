@@ -422,6 +422,21 @@
       toolFacts:["Session reuse","Tenant validation","Least-privilege connections","Hybrid source-of-truth guidance"]
     },
     {
+      name:"FIELD // KIT Backup Exporter",
+      type:"Script",
+      area:"Tools",
+      subarea:"Templates",
+      platform:"PowerShell",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"export-field-kit.ps1",
+      publishedPath:"tools/export-field-kit.ps1",
+      notes:"Creates a clean, versioned local backup from the exact tracked repository state and refreshes FIELD-KIT-LATEST.zip.",
+      keywords:"tools backup export zip archive latest manifest sha256 git repository",
+      toolFacts:["Clean working-tree gate","Fast-forward-only update","Versioned ZIP","Latest ZIP","SHA256 manifest"]
+    },
+    {
       name:"FIELD // KIT Build Standard",
       type:"Documentation",
       area:"Tools",
