@@ -422,6 +422,21 @@
       toolFacts:["Session reuse","Tenant validation","Least-privilege connections","Hybrid source-of-truth guidance"]
     },
     {
+      name:"FIELD // KIT Build Standard",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Standards",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"field-kit-build-standard.md",
+      publishedPath:"tools/field-kit-build-standard.md",
+      notes:"Locked baseline for FIELD // KIT visual design, navigation, sorting, card behavior, source publication, and release validation.",
+      keywords:"tools docs markdown field kit build standard design framework locked baseline",
+      toolFacts:["Visual system","Navigation","Sorting","Card contract","Source behavior","Release checklist"]
+    },
+    {
       name:"Lessons Learned",
       type:"Documentation",
       area:"Tools",
