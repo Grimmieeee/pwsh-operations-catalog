@@ -1,5 +1,5 @@
 param(
-    [string]$DestinationRoot = (Join-Path ([Environment]::GetFolderPath('UserProfile')) 'Downloads\FIELD-KIT-Backups'),
+    [string]$DestinationRoot,
     [string]$ExpectedBranch = 'v1-repo-ui',
     [switch]$SkipPull
 )
@@ -32,6 +32,11 @@ try {
     }
 
     $repoRoot = Split-Path -Parent $PSScriptRoot
+
+    if ([string]::IsNullOrWhiteSpace($DestinationRoot)) {
+        $projectRoot = Split-Path -Parent $repoRoot
+        $DestinationRoot = Join-Path $projectRoot 'Backups'
+    }
 
     if (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.git'))) {
         throw ('Repository root could not be resolved from: {0}' -f $repoRoot)
