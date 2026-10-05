@@ -68,9 +68,19 @@ button{cursor:pointer}
 .count{color:#536862;font:700 10px/1 var(--mono)}
 .nav button.active .count{color:var(--mint)}
 .nav-sep{height:1px;background:var(--line-soft);margin:14px 0 9px}
+.sidebar-footer{
+  border-top:0;
+}
 .signature{
-  padding:20px 20px 24px;border-top:1px solid var(--line-soft);
+  padding:16px 20px 14px;
   font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.48em;color:var(--mint);
+}
+.signature-divider{
+  height:1px;background:var(--line-soft);
+}
+.signature-est{
+  padding:14px 20px 18px;
+  font-family:var(--display);font-weight:300;font-size:9.5px;letter-spacing:.38em;color:#536862;
 }
 .workspace{min-width:0;background:linear-gradient(180deg,#0f1416 0%,#111719 100%)}
 .topbar{
@@ -657,7 +667,11 @@ body.open .drawer{transform:translateX(0)}
       </div>
       <nav id="areaNav" class="nav area-nav"></nav>
     </div>
-    <div class="signature">B U R N S I D //</div>
+    <div class="sidebar-footer">
+      <div class="signature">B U R N S I D //</div>
+      <div class="signature-divider"></div>
+      <div class="signature-est">E S T. &nbsp;2 0 2 6</div>
+    </div>
   </aside>
 
   <main class="workspace">
