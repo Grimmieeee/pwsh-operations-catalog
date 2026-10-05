@@ -960,8 +960,12 @@
   }
 
   function filteredItems(){
-    let list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
     const q = state.query.trim();
+    // Search is intentionally global. Navigation scopes browsing, but typing a
+    // query searches the entire merged FIELD // KIT index.
+    let list = q
+      ? [...ITEMS]
+      : ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
 
     if (q){
       list = list
@@ -1101,7 +1105,7 @@
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
     contextBar.textContent = queryActive
-      ? `SEARCH / ${state.area.toUpperCase()}`
+      ? "SEARCH / FULL LIBRARY"
       : state.area.toUpperCase();
 
     if (!queryActive && state.area === "Full Library"){
