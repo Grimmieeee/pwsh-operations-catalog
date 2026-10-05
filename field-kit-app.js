@@ -1090,7 +1090,10 @@
 
           <p class="about-lede">A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
 
-          <p>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>. Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</p>
+          <p class="about-scope">
+            <span>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>.</span>
+            <span>Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</span>
+          </p>
 
           <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
 
