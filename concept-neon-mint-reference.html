@@ -484,6 +484,109 @@ body.open .drawer{transform:translateX(0)}
   .item-title{font-size:28px}
 }
 
+
+/* FIELD // KIT — ABOUT PAGE */
+.about-block{
+  max-width:860px;
+  padding:42px 10px 72px;
+}
+.about-kicker{
+  margin-bottom:15px;
+  color:var(--mint);
+  font-family:var(--display);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+}
+.about-title{
+  display:flex;
+  align-items:baseline;
+  gap:0;
+  margin:0;
+  color:#f2faf7;
+  font-family:var(--display);
+  font-size:38px;
+  line-height:1;
+  letter-spacing:0;
+}
+.about-field{
+  font-weight:600;
+  letter-spacing:.19em;
+}
+.about-slash{
+  margin:0 .30em;
+  color:var(--mint);
+  font-weight:400;
+  letter-spacing:.08em;
+}
+.about-kit{
+  color:#d9e8e3;
+  font-weight:200;
+  letter-spacing:.22em;
+}
+.about-rule{
+  width:72px;
+  height:3px;
+  margin:18px 0 28px;
+  background:var(--mint);
+}
+.about-block p{
+  max-width:800px;
+  margin:0 0 22px;
+  color:#aebdb9;
+  font-size:14px;
+  line-height:1.72;
+}
+.about-block .about-lede{
+  color:#d4dfdc;
+  font-size:15px;
+}
+.about-block strong{
+  color:#dce8e4;
+  font-weight:600;
+}
+.about-key{
+  display:grid;
+  grid-template-columns:130px minmax(0,1fr);
+  gap:0;
+  max-width:650px;
+  margin:30px 0 26px;
+  padding:0;
+  border-top:1px solid #46544f;
+  border-bottom:1px solid #46544f;
+}
+.about-key span{
+  padding:10px 0;
+  border-bottom:1px solid var(--line-soft);
+  color:#aebdb9;
+  font-size:11px;
+  line-height:1.35;
+}
+.about-key span:nth-last-child(-n+2){
+  border-bottom:0;
+}
+.about-key span:nth-child(odd){
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.05em;
+}
+.about-key .access-read{color:var(--mint)}
+.about-key .access-change{color:var(--yellow)}
+.about-key .access-danger{color:var(--red)}
+.about-foot{
+  margin-top:28px!important;
+  color:#71847e!important;
+  font-size:12.5px!important;
+}
+@media(max-width:680px){
+  .about-title{font-size:30px}
+  .about-key{grid-template-columns:1fr}
+  .about-key span:nth-child(odd){padding-bottom:4px;border-bottom:0}
+  .about-key span:nth-child(even){padding-top:0}
+}
+
 </style>
 </head>
 <body>
