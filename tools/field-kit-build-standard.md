@@ -343,6 +343,8 @@ Canonical helper:
 
 Default backup location:
 
-`%USERPROFILE%\Downloads\FIELD-KIT-Backups`
+`<FIELD-KIT project root>\Backups`
+
+The exporter derives the backup folder from the repository location, so moving the FIELD-KIT parent folder keeps the backup workflow valid.
 
 The ZIP is a recovery/export snapshot. It is not a replacement for the repository.
