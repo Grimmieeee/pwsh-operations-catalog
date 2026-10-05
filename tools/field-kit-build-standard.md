@@ -317,3 +317,32 @@ Before publishing a new build:
 - [ ] Tools docs are current;
 - [ ] secret/proprietary-content scan passes;
 - [ ] runtime framework audit passes.
+
+
+## 17. Local backup / recovery
+
+The checked-out Git repository is the working source of truth.
+
+Do not replace the working repository with a ZIP archive.
+
+Backup model:
+
+- working source stays in the Git clone;
+- backup ZIPs live outside the repository;
+- backups are created only from a clean working tree;
+- update with a fast-forward-only pull before archiving;
+- archive the exact tracked contents of HEAD;
+- exclude .git history and untracked/local-only files from the portable ZIP;
+- preserve timestamped backups;
+- refresh FIELD-KIT-LATEST.zip on each successful run;
+- write a manifest containing branch, commit, tracked-file count, and SHA256.
+
+Canonical helper:
+
+`tools/export-field-kit.ps1`
+
+Default backup location:
+
+`%USERPROFILE%\Downloads\FIELD-KIT-Backups`
+
+The ZIP is a recovery/export snapshot. It is not a replacement for the repository.
