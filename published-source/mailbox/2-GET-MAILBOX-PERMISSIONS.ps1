@@ -76,15 +76,18 @@ function Get-ShortError {
 function Ensure-Module {
     param([string]$Name)
 
-    $module = Get-Module -ListAvailable -Name $Name |
-        Sort-Object Version -Descending |
-        Select-Object -First 1
+    if (-not (Get-Module -ListAvailable -Name $Name)) {
+        Write-Info "Installing $Name..."
 
-    if (-not $module) {
-        throw "$Name is required but is not installed. Install it first with: Install-Module $Name -Scope CurrentUser"
+        Install-Module `
+            -Name $Name `
+            -Scope CurrentUser `
+            -Force `
+            -AllowClobber `
+            -ErrorAction Stop
     }
 
-    Import-Module $module.Path -Force -ErrorAction Stop
+    Import-Module $Name -ErrorAction Stop
 }
 
 function Test-AnyMailbox {
