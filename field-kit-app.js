@@ -1363,7 +1363,7 @@
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
             <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
-            <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects</span>
+            <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects; shown with MAKES CHANGES</span>
           </div>
 
           <p class="about-foot">Review the selected item before execution.</p>
@@ -1496,13 +1496,19 @@
 
   function accessMarkup(item){
     const access = String(item.access || "").toLowerCase();
+
     if (access.includes("destructive")) {
-      return '<div class="access-state access-danger">DESTRUCTIVE</div>';
+      return '<div class="access-state">' +
+        '<span class="access-tag access-change">MAKES CHANGES</span>' +
+        '<span class="access-tag access-danger">DESTRUCTIVE</span>' +
+        '</div>';
     }
+
     if (access.includes("change") || access.includes("mixed")) {
-      return '<div class="access-state access-change">MAKES CHANGES</div>';
+      return '<div class="access-state"><span class="access-tag access-change">MAKES CHANGES</span></div>';
     }
-    return '<div class="access-state access-read">READ ONLY</div>';
+
+    return '<div class="access-state"><span class="access-tag access-read">READ ONLY</span></div>';
   }
 
   function optionMarkup(item){
