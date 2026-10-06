@@ -21,6 +21,7 @@ What are we building or fixing?
 - Navigation:
 - Sorting:
 - Risk labels:
+- List-row context (module / scope / risk):
 - Card structure:
 - Source publication rules:
 - Compatibility target:
@@ -38,9 +39,11 @@ What are we building or fixing?
 - [ ] Navigation
 - [ ] Sorting
 - [ ] Card rendering
+- [ ] Module / scope / risk badge contract
 - [ ] Mobile layout
 - [ ] Copy/save actions
 - [ ] Source loading
+- [ ] Published-source integrity
 - [ ] Secret / proprietary-content scan
 
 ## Known limitations
