@@ -11,6 +11,8 @@ Small rules worth keeping because they prevent recurring failures.
 - Single-quoted strings do not interpolate variables.
 - Do not rely on a successful command when the next step requires verifying returned state.
 - Do not hard-code operator export paths.
+- A downloaded script should not silently depend on the repository/current working directory.
+- Right-click > Run with PowerShell is a distinct launch model worth testing for public interactive scripts.
 
 ## Authentication
 
@@ -41,3 +43,7 @@ Small rules worth keeping because they prevent recurring failures.
 - Tenant names, server names, private paths, app IDs, certificate identities, protected-group names, and allowlists should not leak into public examples.
 - Sanitize comments and sample values, not only executable code.
 - Publish only source that has been reviewed as a standalone public artifact.
+- Publishing is not a refactor step; preserve known-working executable logic.
+- Keep the user's working/original script untouched and publish from an approved copy.
+- If sanitization changes executable behavior, re-review that file as a new revision.
+- Verify published-source matches the exact file that was approved.
