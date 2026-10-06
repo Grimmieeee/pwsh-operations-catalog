@@ -18,6 +18,9 @@ Use this before approving a new script or publishing an updated one.
 - [ ] Top-level failure handling is present where practical.
 - [ ] The script remains reviewable on both success and failure.
 - [ ] RMM / unattended scripts do not pause for keyboard input.
+- [ ] Interactive downloaded scripts do not depend on the repository working directory.
+- [ ] Related local files resolve from $PSScriptRoot when applicable.
+- [ ] File Explorer > Run with PowerShell is tested when that launch model is intended.
 
 ## Authentication
 
@@ -63,9 +66,13 @@ Use this before approving a new script or publishing an updated one.
 
 ## Publication
 
+- [ ] The user's working/original script was not modified merely for catalog alignment.
 - [ ] Script source has been approved for public release.
 - [ ] Comments and sample values are sanitized.
 - [ ] No client-specific identifiers remain.
 - [ ] No internal repository paths remain.
 - [ ] No private certificate, app-registration, or automation identifiers remain.
-- [ ] Catalog name, filename, risk flag, and card description match the script.
+- [ ] Catalog name, filename, primary module/platform, scope, risk flag, and card description match the script.
+- [ ] Destructive items are represented as MAKES CHANGES + DESTRUCTIVE.
+- [ ] The published-source copy matches the reviewed approved file.
+- [ ] Any executable change made during sanitization was re-reviewed as a new revision.
