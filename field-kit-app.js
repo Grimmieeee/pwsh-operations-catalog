@@ -1427,19 +1427,18 @@
 
   function filteredItems(){
     const q = state.query.trim();
-    const scopeSearchAreas = new Set(["Single User","Multi User","Tenant Wide"]);
 
-    // Search across the three user/tenant scope sections as one working set.
-    // IR, RMM, Utility, Standalone, and Tools remain scoped to themselves.
+    // Search is global. The selected navigation area controls browsing only;
+    // once a query is entered, every catalog section participates.
     let list;
-    if (q && scopeSearchAreas.has(state.area)){
-      list = ITEMS.filter(item => scopeSearchAreas.has(primaryBucket(item)));
+    if (q){
+      list = ITEMS.slice();
     } else {
       list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
-    }
 
-    if (state.area === "Standalone" && state.standaloneGroup){
-      list = list.filter(item => (item.group || "General") === state.standaloneGroup);
+      if (state.area === "Standalone" && state.standaloneGroup){
+        list = list.filter(item => (item.group || "General") === state.standaloneGroup);
+      }
     }
 
     if (q){
@@ -1625,6 +1624,8 @@
 
           <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
 
+          <p>The search bar searches the full catalog regardless of the section currently selected. Jump links move between groups within the current browse view.</p>
+
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
             <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
@@ -1648,23 +1649,38 @@
       : areaLabel(state.area).toUpperCase();
 
     contextBar.textContent = queryActive
-      ? (["Single User","Multi User","Tenant Wide"].includes(state.area)
-          ? "SEARCH / SINGLE + MULTI + TENANT"
-          : `SEARCH / ${standaloneContext}`)
+      ? "SEARCH / ALL SECTIONS"
       : standaloneContext;
 
-    if (!queryActive && state.area === "Full Library"){
-      const buckets = [...new Set(list.map(primaryBucket))];
-      jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + buckets.map(bucket =>
-        `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(areaLabel(bucket).toUpperCase())}</button>`
-      ).join("");
-      jumpBar.classList.remove("hidden");
-    } else if (!queryActive && ["Single User","Multi User","Tenant Wide"].includes(state.area)){
-      const sections = [...new Set(list.map(scopeSubgroup))];
-      jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + sections.map(section =>
-        `<button class="jump-link" type="button" data-jump="${esc(bucketId(section))}">${esc(section.toUpperCase())}</button>`
-      ).join("");
-      jumpBar.classList.remove("hidden");
+    if (!queryActive){
+      let sections;
+
+      if (state.area === "Full Library"){
+        sections = [...new Set(list.map(primaryBucket))].map(value => ({
+          value,
+          label:areaLabel(value)
+        }));
+      } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)){
+        sections = [...new Set(list.map(scopeSubgroup))].map(value => ({
+          value,
+          label:value
+        }));
+      } else {
+        sections = [...new Set(list.map(item => item.group || "General"))].map(value => ({
+          value,
+          label:value
+        }));
+      }
+
+      if (sections.length > 1){
+        jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + sections.map(section =>
+          `<button class="jump-link" type="button" data-jump="${esc(bucketId(section.value))}">${esc(section.label.toUpperCase())}</button>`
+        ).join("");
+        jumpBar.classList.remove("hidden");
+      } else {
+        jumpBar.innerHTML = "";
+        jumpBar.classList.add("hidden");
+      }
     } else {
       jumpBar.innerHTML = "";
       jumpBar.classList.add("hidden");
@@ -1693,7 +1709,7 @@
       }
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
-        <section class="group" id="${(state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
+        <section class="group" id="${esc(bucketId(group))}">
           <div class="group-title">${groupTitleMarkup(state.area === "Full Library" ? areaLabel(group) : group)}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
