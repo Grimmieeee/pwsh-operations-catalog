@@ -8,7 +8,7 @@ Inputs:
 
 - objective;
 - target scope;
-- read-only / change / destructive classification;
+- READ ONLY / MAKES CHANGES / DESTRUCTIVE classification;
 - required services;
 - expected output.
 
@@ -31,6 +31,8 @@ Process:
 4. Parse before and after edits.
 5. Confirm permissions, confirmations, error paths, and output.
 6. Preserve working behavior unless the change is intentional.
+7. Do not use catalog alignment as a reason to rewrite known-working logic.
+8. When preparing public source, work from a copy and leave the user's working/original file unchanged.
 
 ## Align a script to the standard
 
@@ -41,6 +43,7 @@ Process:
 5. Reuse validated sessions.
 6. Replace environment-specific assumptions with discovery or runtime input.
 7. Keep compatibility requirements intact.
+8. Validate direct-download / Explorer launch behavior when that execution model applies.
 
 ## Troubleshoot authentication
 
@@ -56,12 +59,15 @@ Process:
 
 1. Verify display name.
 2. Verify scope and purpose.
-3. Verify READ ONLY / MAKES CHANGES / DESTRUCTIVE state.
-4. Verify connect command.
-5. Build a checklist from actual script behavior.
-6. Keep the description decision-focused.
-7. Approve source separately from metadata.
-8. Confirm COPY / SAVE behavior.
+3. Verify primary module/platform.
+4. Verify READ ONLY / MAKES CHANGES / DESTRUCTIVE state.
+5. Represent destructive work as MAKES CHANGES + DESTRUCTIVE.
+6. Verify connect command.
+7. Build a checklist from actual script behavior.
+8. Keep the description decision-focused.
+9. Approve source separately from metadata.
+10. Verify the published copy matches the reviewed approved file.
+11. Confirm COPY / SAVE behavior.
 
 ## Create a handoff
 
