@@ -280,10 +280,12 @@ Before publishing script source:
 6. scan for secrets;
 7. scan for proprietary/environment-specific identifiers;
 8. sanitize comments and sample values only when required;
-9. re-review any file whose executable logic changed during sanitization;
-10. confirm card metadata matches the real script;
-11. publish an approved same-origin copy;
-12. verify the published copy is identical to the reviewed approved source.
+9. remove internal Authenticode signature blocks from the public copy when they expose an environment-specific signing identity;
+10. preserve executable logic when signature-only sanitization is sufficient;
+11. re-review any file whose executable logic changed during sanitization;
+12. confirm card metadata matches the real script;
+13. publish an approved same-origin copy;
+14. verify the published copy is identical to the reviewed approved source.
 
 Do not modify the user's working/original script merely to fit catalog style.
 
