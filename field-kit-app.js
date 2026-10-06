@@ -1233,9 +1233,17 @@
 
   function accessTag(item){
     const access = String(item.access || "").toLowerCase();
-    if (access.includes("destructive")) return '<span class="result-tag result-danger">DESTRUCTIVE</span>';
-    if (access.includes("change") || access.includes("mixed")) return '<span class="result-tag result-change">MAKES CHANGES</span>';
-    return "";
+
+    if (access.includes("destructive")){
+      return '<span class="result-tag result-change">MAKES CHANGES</span>' +
+        '<span class="result-tag result-danger">DESTRUCTIVE</span>';
+    }
+
+    if (access.includes("change") || access.includes("mixed")){
+      return '<span class="result-tag result-change">MAKES CHANGES</span>';
+    }
+
+    return '<span class="result-tag result-read">READ ONLY</span>';
   }
 
   function moduleLabel(item){
@@ -1261,22 +1269,25 @@
     if (/Local Windows|Windows/i.test(platform)) return "WINDOWS";
     if (/Datto|RMM/i.test(text) || item.logicalArea === "RMM") return "RMM";
     if (/Markdown|Documentation/i.test([platform,item.type].join(" "))) return "DOCS";
-    return String(item.group || item.logicalArea || "").toUpperCase();
+    if (/Microsoft 365\s*\/\s*Entra/i.test(platform)) return "M365 / ENTRA";
+    if (/Microsoft 365/i.test(platform)) return "M365";
+    if (/Entra/i.test(platform)) return "ENTRA";
+    return "";
   }
 
   function scopeTag(item){
     const bucket = primaryBucket(item);
     const labels = {
-      "Single User":"SINGLE",
-      "Multi User":"MULTI",
-      "Tenant Wide":"TENANT"
+      "Single User":"SINGLE USER",
+      "Multi User":"MULTI USER",
+      "Tenant Wide":"TENANT WIDE"
     };
     const label = labels[bucket];
     return label ? '<span class="result-tag result-scope">' + label + '</span>' : "";
   }
 
-  function rowTags(item, showScope){
-    return (showScope ? scopeTag(item) : "") + accessTag(item);
+  function rowTags(item){
+    return scopeTag(item) + accessTag(item);
   }
 
   function groupTitleMarkup(group){
@@ -1301,13 +1312,13 @@
       '<strong class="item-title-accent">' + esc(accent) + '</strong>';
   }
 
-  function resultMarkup(item, index, showScope = false){
+  function resultMarkup(item, index){
     const meta = moduleLabel(item);
     return `
       <button class="result" type="button" data-open-index="${index}">
         <span class="result-name">${esc(item.displayName)}</span>
-        <span class="result-meta">${esc(meta)}</span>
-        <span class="result-flags">${rowTags(item,showScope)}</span>
+        <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
+        <span class="result-flags">${rowTags(item)}</span>
         <span class="result-arrow">›</span>
       </button>
     `;
@@ -1399,8 +1410,7 @@
     empty.classList.add("hidden");
 
     if (queryActive){
-      const showScope = state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area);
-      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i,showScope)).join("") + "</div>";
+      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
     } else {
       const grouped = new Map();
       for (const item of list){
