@@ -383,6 +383,198 @@
       keywords:"ip isp geolocation location network lookup internet"
     },
     {
+      name:"AD Group Memberships",
+      platform:"Active Directory",
+      access:"Read-only",
+      code:'Get-ADPrincipalGroupMembership -Identity "username" | Select-Object Name',
+      useFor:"See which Active Directory groups a user belongs to.",
+      keywords:"ad active directory groups membership user memberof"
+    },
+    {
+      name:"AD Group Members",
+      platform:"Active Directory",
+      access:"Read-only",
+      code:'Get-ADGroupMember -Identity "GroupName" | Select-Object Name,SamAccountName,ObjectClass',
+      useFor:"See who or what is a member of an Active Directory group.",
+      keywords:"ad active directory group members membership"
+    },
+    {
+      name:"Connect Exchange Online",
+      platform:"Exchange Online",
+      access:"Read-only",
+      code:"Connect-ExchangeOnline",
+      useFor:"Start an Exchange Online PowerShell session.",
+      keywords:"exchange exo connect session"
+    },
+    {
+      name:"Install Exchange Online Module",
+      platform:"PowerShell",
+      access:"Change",
+      code:"Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force -AllowClobber",
+      useFor:"Install or refresh the Exchange Online PowerShell module for the current user.",
+      keywords:"exchange exo install module setup powershell"
+    },
+    {
+      name:"Install Microsoft Graph Module",
+      platform:"PowerShell",
+      access:"Change",
+      code:"Install-Module -Name Microsoft.Graph -Scope CurrentUser -Force -AllowClobber",
+      useFor:"Install or refresh the Microsoft Graph PowerShell module for the current user.",
+      keywords:"graph install module setup powershell"
+    },
+    {
+      name:"Show Hidden Inbox Rules",
+      platform:"Exchange Online",
+      access:"Read-only",
+      code:'Get-InboxRule -Mailbox "user@domain.com" -IncludeHidden',
+      useFor:"Check visible and hidden inbox rules when mail is being moved, deleted, forwarded, or redirected unexpectedly.",
+      keywords:"exchange inbox rules hidden forwarding mailbox suspicious email"
+    },
+    {
+      name:"Delete All Inbox Rules",
+      platform:"Exchange Online",
+      access:"Destructive",
+      code:'Get-InboxRule -Mailbox "user@domain.com" -IncludeHidden | Remove-InboxRule -Confirm:$true',
+      useFor:"Remove all visible and hidden inbox rules after reviewing the target mailbox.",
+      keywords:"exchange inbox rules hidden delete remove cleanup mailbox"
+    },
+    {
+      name:"IP Configuration (ipconfig)",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"ipconfig /all",
+      useFor:"Check IP address, gateway, DHCP, DNS, and adapter configuration.",
+      keywords:"windows cli cmd ipconfig ip gateway dhcp dns adapter network"
+    },
+    {
+      name:"Flush DNS",
+      platform:"Local Windows",
+      access:"Change",
+      code:"ipconfig /flushdns",
+      useFor:"Clear the local DNS resolver cache after a DNS change or bad/stale resolution.",
+      keywords:"windows cli cmd ipconfig flushdns dns cache network"
+    },
+    {
+      name:"DNS Lookup",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"nslookup example.com",
+      useFor:"Verify DNS resolution and see which resolver is answering.",
+      keywords:"windows cli cmd nslookup dns resolve hostname network"
+    },
+    {
+      name:"Continuous Ping",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"ping -t example.com",
+      useFor:"Watch reachability and latency continuously while reproducing an intermittent issue.",
+      keywords:"windows cli cmd ping continuous latency packet loss network"
+    },
+    {
+      name:"Traceroute",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"tracert example.com",
+      useFor:"See where traffic stops or latency increases between the workstation and a destination.",
+      keywords:"windows cli cmd tracert traceroute path hops latency network"
+    },
+    {
+      name:"Path Ping",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"pathping example.com",
+      useFor:"Measure packet loss and latency across the route to a destination.",
+      keywords:"windows cli cmd pathping packet loss latency route network"
+    },
+    {
+      name:"Routing Table (route print)",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"route print",
+      useFor:"Check gateways and routes when multiple adapters, VPNs, or wrong-path issues are suspected.",
+      keywords:"windows cli cmd route print routing gateway vpn network"
+    },
+    {
+      name:"ARP Cache",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"arp -a",
+      useFor:"Check local IP-to-MAC mappings when troubleshooting duplicate IPs or LAN reachability.",
+      keywords:"windows cli cmd arp mac duplicate ip lan network"
+    },
+    {
+      name:"TCP Connections (netstat)",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"netstat -ano",
+      useFor:"See listening and active TCP connections with owning process IDs.",
+      keywords:"windows cli cmd netstat tcp ports sockets pid connections network"
+    },
+    {
+      name:"Port 443 Connections",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"netstat -ano | findstr :443",
+      useFor:"Quickly isolate HTTPS connections and listeners using TCP 443.",
+      keywords:"windows cli cmd netstat findstr 443 https port tcp network"
+    },
+    {
+      name:"Local Account Details",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"net user username",
+      useFor:"Check local account status, password age, group context, and logon details.",
+      keywords:"windows cli cmd net user local account details"
+    },
+    {
+      name:"Windows Time Status",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"w32tm /query /status",
+      useFor:"Check current Windows Time synchronization state and source details.",
+      keywords:"windows cli cmd w32tm time sync clock ntp"
+    },
+    {
+      name:"Windows Time Source",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"w32tm /query /source",
+      useFor:"Confirm which time source the workstation is using.",
+      keywords:"windows cli cmd w32tm time source ntp domain"
+    },
+    {
+      name:"WinHTTP Proxy",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"netsh winhttp show proxy",
+      useFor:"Check system-level proxy settings when browsers work but applications or services cannot reach the internet.",
+      keywords:"windows cli cmd netsh winhttp proxy internet app connectivity"
+    },
+    {
+      name:"Domain Trust Check",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"Test-ComputerSecureChannel -Verbose",
+      useFor:"Verify the workstation secure channel to the Active Directory domain.",
+      keywords:"windows powershell domain trust secure channel active directory"
+    },
+    {
+      name:"Printer Check",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"Get-Printer | Select-Object Name,DriverName,PortName,PrinterStatus",
+      useFor:"Review installed printers, drivers, ports, and current printer status.",
+      keywords:"windows powershell printer print driver port queue"
+    },
+    {
+      name:"Open Storage Settings",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"start ms-settings:storagesense",
+      useFor:"Open Windows Storage settings for disk cleanup and storage review.",
+      keywords:"windows cli storage cleanup disk settings temp files"
+    },
+    {
       name:"Show Code-Signing Certificates",
       platform:"PowerShell",
       access:"Read-only",
@@ -400,7 +592,8 @@
     output:"",
     file:"",
     related:[],
-    notes:"",
+    notes:x.notes || "",
+    useFor:x.useFor || "",
     url:"",
     _order:10000 + i
   }));
@@ -724,6 +917,10 @@
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
     if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC Risk Exposure Snapshot";
     if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC Eradicate";
+    if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
+    if (/^Map Service Desk Kit$/i.test(name)) return "Folder Inventory";
+    if (/^Reset PowerShell Sessions$/i.test(name)) return "M365 Session Reset";
+    if (/^Winget Updates$/i.test(name)) return "Windows App Updates";
     if (/^Show Inbox Rules$/i.test(name) && /IncludeHidden/i.test(item.code || "")) return "Show Inbox Rules - Hidden";
     if (/Mailitemsaccessed/i.test(name)) return name.replace(/Mailitemsaccessed/ig,"Mail Items Accessed");
 
@@ -746,8 +943,8 @@
       if (/Exchange Online/i.test(item.platform || "")) return "Exchange";
       if (/Microsoft Graph/i.test(item.platform || "")) return "Graph";
       if (/Active Directory/i.test(item.platform || "")) return "Active Directory";
-      if (/network|dns|tcp|ping|tracert|route|wifi|wlan|netadapter|winsock|ipconfig|firewall/i.test(combined)) return "Network";
-      return "Windows";
+      if (/network|dns|tcp|ping|tracert|pathping|route|wifi|wlan|netadapter|winsock|ipconfig|nslookup|netstat|\barp\b|firewall|proxy/i.test(combined)) return "Network CLI";
+      return "Windows CLI";
     }
 
     if (area === "Identity"){
@@ -1223,7 +1420,7 @@
       "Incident Response":["Primary","Investigation","Response","General"],
       "RMM":["Access","Audit","Identity","On / Offboarding","Mailbox","Security"],
       "Utility":["WinGet","Terminal / Field-Kit","General"],
-      "Standalone":["Exchange","Graph","Active Directory","Windows","Network","WinGet","Terminal"],
+      "Standalone":["Exchange","Graph","Active Directory","Windows CLI","Network CLI","WinGet","Terminal"],
       "Tools":["Reference","Standards","Templates"]
     };
     const list = orders[area] || [];
@@ -1521,6 +1718,18 @@
     `;
   }
 
+  function useForMarkup(item){
+    if (item.type !== "Quick Command") return "";
+    const value = String(item.useFor || "").trim();
+    if (!value) return "";
+    return `
+      <section class="note-block">
+        <div class="section-label">USE FOR</div>
+        <div>${esc(value)}</div>
+      </section>
+    `;
+  }
+
   function shortNote(item){
     if (item.type === "Quick Command") return "";
     const curated = curatedMeta(item);
@@ -1579,6 +1788,7 @@
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
+      ${useForMarkup(item)}
       ${shortNote(item)}
       ${standaloneCommandMarkup(item)}
 
