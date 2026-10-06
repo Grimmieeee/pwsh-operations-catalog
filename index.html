@@ -383,10 +383,17 @@ body.open .drawer{transform:translateX(0)}
 .item-title::after{
   content:"";display:block;width:72px;height:3px;background:var(--mint);margin-top:14px;
 }
-.access-state{margin-top:16px;font:800 10px/1 var(--mono);letter-spacing:.08em}
-.access-read{color:var(--mint)}
-.access-change{color:var(--yellow)}
-.access-danger{color:var(--red)}
+.access-state{
+  margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+}
+.access-tag{
+  display:inline-flex;align-items:center;min-height:24px;padding:5px 8px;
+  border:1px solid #3d564f;background:#11191b;
+  font:800 10px/1 var(--mono);letter-spacing:.07em;white-space:nowrap;
+}
+.access-read{color:#9ed7c8;border-color:#426a5f}
+.access-change{color:var(--yellow);border-color:#776536}
+.access-danger{color:var(--red);border-color:#784149}
 
 .connect-block,.workflow-block,.check-block,.command-block,.source-block,.note-block{margin-top:24px}
 .section-label{
