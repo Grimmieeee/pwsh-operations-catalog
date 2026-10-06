@@ -9,6 +9,9 @@ Run this before making a script, document, or workflow publicly available.
 - [ ] The filename is clear and stable.
 - [ ] Comments do not expose internal context.
 - [ ] Example values are generic.
+- [ ] Publication did not modify the user's working/original script.
+- [ ] The public copy is the exact version that was reviewed and approved.
+- [ ] Any executable change made during sanitization was treated as a new revision and reviewed again.
 
 ## Secret scan
 
@@ -49,14 +52,20 @@ Remove or replace:
 - [ ] Error paths are reviewable.
 - [ ] Data gaps are not presented as clean.
 - [ ] Export behavior is safe.
+- [ ] The script does not rely on an unstated repository/current-directory assumption.
+- [ ] File Explorer > Run with PowerShell works when that is the intended launch model.
+- [ ] Missing modules, permissions, or prerequisites fail with an actionable message.
 
 ## Catalog review
 
 - [ ] Display name matches the actual task.
 - [ ] Scope is correct.
 - [ ] Purpose/category is correct.
+- [ ] Primary module/platform is correct.
+- [ ] Risk state is correct: READ ONLY, MAKES CHANGES, or MAKES CHANGES + DESTRUCTIVE.
 - [ ] Filename is correct.
 - [ ] Card checklist reflects real behavior.
 - [ ] Connect command is accurate.
 - [ ] Source loads from an approved same-origin path.
+- [ ] Published source matches the reviewed approved file.
 - [ ] COPY and SAVE actions work.
