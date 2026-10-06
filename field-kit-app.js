@@ -1165,8 +1165,17 @@
   }
 
   function filteredItems(){
-    let list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
     const q = state.query.trim();
+    const scopeSearchAreas = new Set(["Single User","Multi User","Tenant Wide"]);
+
+    // Search across the three user/tenant scope sections as one working set.
+    // IR, RMM, Utility, Standalone, and Tools remain scoped to themselves.
+    let list;
+    if (q && scopeSearchAreas.has(state.area)){
+      list = ITEMS.filter(item => scopeSearchAreas.has(primaryBucket(item)));
+    } else {
+      list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
+    }
 
     if (q){
       list = list
@@ -1324,7 +1333,9 @@
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
     contextBar.textContent = queryActive
-      ? `SEARCH / ${state.area.toUpperCase()}`
+      ? (["Single User","Multi User","Tenant Wide"].includes(state.area)
+          ? "SEARCH / SINGLE + MULTI + TENANT"
+          : `SEARCH / ${state.area.toUpperCase()}`)
       : state.area.toUpperCase();
 
     if (!queryActive && state.area === "Full Library"){
