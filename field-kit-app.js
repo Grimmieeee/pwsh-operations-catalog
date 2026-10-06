@@ -1352,7 +1352,9 @@
       item.platform,
       item.notes,
       item.output,
-      item.subarea
+      item.subarea,
+      item.useFor,
+      item.code
     ].join(" "));
 
     let score = 0;
