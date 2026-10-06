@@ -69,19 +69,18 @@ function Ensure-Module {
         [string]$Command
     )
 
-    if (Get-Command $Command -ErrorAction SilentlyContinue) {
-        return
+    if (-not (Get-Module -ListAvailable -Name $Name)) {
+        Write-Info "Installing $Name..."
+
+        Install-Module `
+            -Name $Name `
+            -Scope CurrentUser `
+            -Force `
+            -AllowClobber `
+            -ErrorAction Stop
     }
 
-    $module = Get-Module -ListAvailable -Name $Name |
-        Sort-Object Version -Descending |
-        Select-Object -First 1
-
-    if (-not $module) {
-        throw "$Name is required but is not installed. Install it first with: Install-Module $Name -Scope CurrentUser"
-    }
-
-    Import-Module $module.Path -Force -ErrorAction Stop
+    Import-Module $Name -ErrorAction Stop
 
     if (-not (Get-Command $Command -ErrorAction SilentlyContinue)) {
         throw "$Name loaded, but $Command is unavailable."
