@@ -16,6 +16,16 @@
     "About"
   ];
 
+  const STANDALONE_GROUPS = [
+    "Exchange",
+    "Graph",
+    "Active Directory",
+    "Windows CLI",
+    "Network CLI",
+    "WinGet",
+    "Terminal"
+  ];
+
   const EXTRA_STANDALONE = [
     {
       name:"Add Calendar Permission",
@@ -1237,6 +1247,7 @@
 
   const state = {
     area:"Full Library",
+    standaloneGroup:"",
     query:"",
     selected:null
   };
@@ -1264,13 +1275,42 @@
     return ITEMS.filter(x => primaryBucket(x) === area).length;
   }
 
+  function countStandaloneGroup(group){
+    return ITEMS.filter(item => primaryBucket(item) === "Standalone" && (item.group || "General") === group).length;
+  }
+
   function renderNav(){
-    areaNav.innerHTML = AREAS.map(area => `
-      <button class="area-button ${area === "About" ? "about-nav" : ""} ${state.area === area ? "active" : ""}" data-area="${esc(area)}" type="button">
-        <span>${esc(area)}</span>
-        <span class="area-count">${countArea(area)}</span>
-      </button>
-    `).join("");
+    areaNav.innerHTML = AREAS.map(area => {
+      const active = state.area === area;
+      const isStandalone = area === "Standalone";
+
+      const parent = `
+        <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(active) : "false"}">
+          <span class="area-label">${esc(area)}${isStandalone ? '<span class="nav-caret">▾</span>' : ""}</span>
+          <span class="area-count">${countArea(area)}</span>
+        </button>
+      `;
+
+      if (!isStandalone || !active) return parent;
+
+      const groups = STANDALONE_GROUPS
+        .map(group => ({group,count:countStandaloneGroup(group)}))
+        .filter(entry => entry.count > 0);
+
+      const allActive = !state.standaloneGroup;
+      const children = [
+        `<button class="area-sub-button ${allActive ? "active" : ""}" data-standalone-group="" type="button">
+            <span>All Commands</span><span class="area-count">${countArea("Standalone")}</span>
+          </button>`,
+        ...groups.map(({group,count}) => `
+          <button class="area-sub-button ${state.standaloneGroup === group ? "active" : ""}" data-standalone-group="${esc(group)}" type="button">
+            <span>${esc(group)}</span><span class="area-count">${count}</span>
+          </button>
+        `)
+      ].join("");
+
+      return parent + `<div class="area-subnav">${children}</div>`;
+    }).join("");
   }
 
   function searchScore(item, query){
@@ -1374,6 +1414,10 @@
       list = ITEMS.filter(item => scopeSearchAreas.has(primaryBucket(item)));
     } else {
       list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
+    }
+
+    if (state.area === "Standalone" && state.standaloneGroup){
+      list = list.filter(item => (item.group || "General") === state.standaloneGroup);
     }
 
     if (q){
@@ -1577,11 +1621,15 @@
     entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
+    const standaloneContext = state.area === "Standalone" && state.standaloneGroup
+      ? `STANDALONE / ${state.standaloneGroup.toUpperCase()}`
+      : state.area.toUpperCase();
+
     contextBar.textContent = queryActive
       ? (["Single User","Multi User","Tenant Wide"].includes(state.area)
           ? "SEARCH / SINGLE + MULTI + TENANT"
-          : `SEARCH / ${state.area.toUpperCase()}`)
-      : state.area.toUpperCase();
+          : `SEARCH / ${standaloneContext}`)
+      : standaloneContext;
 
     if (!queryActive && state.area === "Full Library"){
       const buckets = [...new Set(list.map(primaryBucket))];
@@ -2039,9 +2087,21 @@
   }
 
   areaNav.addEventListener("click", event => {
+    const subgroup = event.target.closest("[data-standalone-group]");
+    if (subgroup){
+      state.area = "Standalone";
+      state.standaloneGroup = subgroup.getAttribute("data-standalone-group") || "";
+      renderNav();
+      renderResults();
+      closeNav();
+      return;
+    }
+
     const btn = event.target.closest("[data-area]");
     if (!btn) return;
+
     state.area = btn.getAttribute("data-area") || "Full Library";
+    state.standaloneGroup = "";
     renderNav();
     renderResults();
     closeNav();
