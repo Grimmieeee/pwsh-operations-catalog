@@ -1090,6 +1090,8 @@
   }
 
   function connectCommands(item){
+    if (/^Connect Exchange Online$/i.test(displayName(item))) return [];
+
     const curated = curatedMeta(item);
     if (curated?.connect?.length) return [...curated.connect];
 
