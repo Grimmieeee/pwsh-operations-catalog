@@ -41,9 +41,13 @@ button{cursor:pointer}
 .shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
 .sidebar{
   position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
-  justify-content:space-between;border-right:1px solid var(--line);
+  justify-content:space-between;overflow:hidden;border-right:1px solid var(--line);
   background:linear-gradient(180deg,#0b1012 0%,#0d1214 100%);
 }
+.sidebar>div:first-child{
+  flex:1;min-height:0;display:flex;flex-direction:column;
+}
+.brand{flex:0 0 auto;}
 .brand{padding:27px 20px 23px}
 .brand-main{
   position:relative;display:inline-flex;align-items:baseline;gap:0;
@@ -69,7 +73,7 @@ button{cursor:pointer}
 .nav button.active .count{color:var(--mint)}
 .nav-sep{height:1px;background:var(--line-soft);margin:14px 0 9px}
 .sidebar-footer{
-  border-top:0;
+  flex:0 0 auto;border-top:0;
 }
 .signature{
   padding:18px 20px 22px;
@@ -232,7 +236,17 @@ body.open .drawer{transform:translateX(0)}
 .drawer-open .drawer-overlay{opacity:1;pointer-events:auto}
 .drawer-open .drawer{transform:translateX(0)}
 
-.area-nav{padding:7px 11px 24px}
+.area-nav{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:7px 11px 24px;
+  scrollbar-width:thin;scrollbar-color:#2b4941 transparent;
+}
+.area-nav::-webkit-scrollbar{width:7px}
+.area-nav::-webkit-scrollbar-track{background:transparent}
+.area-nav::-webkit-scrollbar-thumb{
+  background:#263f38;border-radius:8px;
+}
+.area-nav::-webkit-scrollbar-thumb:hover{background:#36594f}
 .nav-primary{margin-bottom:18px}
 .nav-section-label{
   margin:17px 10px 5px;color:#4f655f;
