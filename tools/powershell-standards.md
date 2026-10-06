@@ -21,6 +21,8 @@ A practical baseline for interactive PowerShell tools in FIELD // KIT.
 - Use full parameter names in production code.
 - Prefer explicit error handling around network, Graph, Exchange, file, and destructive operations.
 - Use $PSScriptRoot for related local files.
+- Do not depend on the caller's current working directory unless that dependency is explicit and validated.
+- Public interactive .ps1 files should support Windows PowerShell 5.1 and File Explorer > Run with PowerShell unless the catalog card clearly states a different requirement.
 
 ## Launch behavior
 
@@ -30,7 +32,10 @@ Interactive scripts should:
 - prompt only for input that is actually required;
 - use a top-level try/catch/finally where practical;
 - remain open long enough for the operator to review the result;
+- provide a clean completion prompt when an Explorer-launched PowerShell host would otherwise close immediately;
 - avoid host-closing exit behavior unless the execution model requires exit codes.
+
+A downloaded script should not require being launched from the repository root unless that requirement is explicit and necessary.
 
 Non-interactive automation is a separate execution model. Do not apply pause-at-end behavior to unattended jobs.
 
@@ -90,6 +95,15 @@ For destructive or high-impact actions:
 - Treat external data as untrusted input.
 - Use the least privilege required for the task.
 
+## Publication integrity
+
+- Treat a known-working script as evidence, not raw material for stylistic rewriting.
+- Do not change executable logic merely to align formatting or catalog presentation.
+- Keep the user's working/original file untouched when preparing a public copy.
+- If sanitization changes executable behavior, restart operational review and testing for that revised file.
+- Publish the exact reviewed copy and verify the published-source copy still matches it.
+- Prefer holding a script from publication over making an unvalidated "cleanup" change.
+
 ## Validation
 
 Before a script is considered ready:
@@ -102,3 +116,5 @@ Before a script is considered ready:
 6. Review output for data gaps and false-clean states.
 7. Review for secrets and environment-specific information.
 8. Test the actual operator workflow.
+9. When intended for direct download, test the standalone file outside the repository working directory.
+10. When intended for interactive Windows use, test File Explorer > Run with PowerShell or an equivalent fresh Windows PowerShell 5.1 host.
