@@ -1238,8 +1238,45 @@
     return "";
   }
 
-  function rowTags(item){
-    return accessTag(item);
+  function moduleLabel(item){
+    const platform = String(item.platform || "");
+    const connect = Array.isArray(item.connect) ? item.connect.join(" ") : "";
+    const requires = String(item.requires || "");
+    const code = String(item.code || "");
+    const text = [platform,connect,requires,code].join(" ");
+
+    const hasGraph = /Microsoft Graph|Connect-MgGraph|Microsoft\.Graph|\b(?:Get|Set|New|Remove|Update)-Mg[A-Z]/i.test(text);
+    const hasExchange = /Exchange Online|Connect-ExchangeOnline|ExchangeOnlineManagement|\b(?:Get|Set|Add|Remove|New)-(?:Mailbox|Recipient|DistributionGroup|InboxRule|TransportRule)|MailboxFolderPermission/i.test(text);
+    const hasAD = /Active Directory|Import-Module ActiveDirectory|\b(?:Get|Set|Add|Remove|Enable|Disable|Unlock)-AD[A-Z]/i.test(text);
+
+    if (hasGraph && hasExchange && hasAD) return "GRAPH + EXO + AD";
+    if (hasGraph && hasExchange) return "GRAPH + EXO";
+    if (hasGraph && hasAD) return "GRAPH + AD";
+    if (hasExchange && hasAD) return "EXO + AD";
+    if (hasGraph) return "GRAPH";
+    if (hasExchange) return "EXCHANGE";
+    if (hasAD) return "ACTIVE DIRECTORY";
+    if (/WinGet/i.test(text)) return "WINGET";
+    if (/PowerShell/i.test(platform)) return "POWERSHELL";
+    if (/Local Windows|Windows/i.test(platform)) return "WINDOWS";
+    if (/Datto|RMM/i.test(text) || item.logicalArea === "RMM") return "RMM";
+    if (/Markdown|Documentation/i.test([platform,item.type].join(" "))) return "DOCS";
+    return String(item.group || item.logicalArea || "").toUpperCase();
+  }
+
+  function scopeTag(item){
+    const bucket = primaryBucket(item);
+    const labels = {
+      "Single User":"SINGLE",
+      "Multi User":"MULTI",
+      "Tenant Wide":"TENANT"
+    };
+    const label = labels[bucket];
+    return label ? '<span class="result-tag result-scope">' + label + '</span>' : "";
+  }
+
+  function rowTags(item, showScope){
+    return (showScope ? scopeTag(item) : "") + accessTag(item);
   }
 
   function groupTitleMarkup(group){
@@ -1264,15 +1301,13 @@
       '<strong class="item-title-accent">' + esc(accent) + '</strong>';
   }
 
-  function resultMarkup(item, index){
-    const meta = item.type === "Quick Command"
-      ? (item.group || "")
-      : (item.file || item.group || "");
+  function resultMarkup(item, index, showScope = false){
+    const meta = moduleLabel(item);
     return `
       <button class="result" type="button" data-open-index="${index}">
         <span class="result-name">${esc(item.displayName)}</span>
         <span class="result-meta">${esc(meta)}</span>
-        <span class="result-flags">${rowTags(item)}</span>
+        <span class="result-flags">${rowTags(item,showScope)}</span>
         <span class="result-arrow">›</span>
       </button>
     `;
@@ -1364,7 +1399,8 @@
     empty.classList.add("hidden");
 
     if (queryActive){
-      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
+      const showScope = state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area);
+      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i,showScope)).join("") + "</div>";
     } else {
       const grouped = new Map();
       for (const item of list){
