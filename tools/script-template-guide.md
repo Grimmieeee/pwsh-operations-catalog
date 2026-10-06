@@ -16,6 +16,7 @@ Use this as the structural starting point for a new interactive script.
 10. Change/action summary when applicable.
 11. Optional export.
 12. Clean completion / pause behavior for interactive tools.
+13. Standalone-launch check when the script is intended for direct download.
 
 ## Level 1 — single objective
 
@@ -58,6 +59,17 @@ Include:
 - recovery or escalation gates;
 - operator confirmation before consequential changes.
 
+## Launch assumptions
+
+For public interactive scripts:
+
+- assume the operator may download the .ps1 and use File Explorer > Run with PowerShell;
+- support Windows PowerShell 5.1 unless a different runtime is explicit;
+- do not assume the repository root is the current directory;
+- resolve companion files from $PSScriptRoot;
+- keep the result visible long enough to review;
+- do not add pause behavior to unattended/RMM execution.
+
 ## Prompting
 
 Prompt only for values that cannot be discovered safely.
@@ -82,4 +94,5 @@ When creating a related script:
 - reuse the interaction pattern;
 - reuse naming and output conventions;
 - do not copy stale permissions or authentication blocks without validating them;
-- keep shared behavior consistent without forcing every tool into the same size.
+- keep shared behavior consistent without forcing every tool into the same size;
+- do not rewrite known-working executable logic solely to make related scripts look alike.
