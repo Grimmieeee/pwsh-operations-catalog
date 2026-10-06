@@ -61,10 +61,8 @@ Rules:
 Sidebar signature block:
 
 B U R N S I D //
---------------------------------
-E S T.  2 0 2 6
 
-Keep the signature quiet, mint, and secondary to the product mark.
+Keep the signature quiet, mint, and secondary to the product mark. Do not add an EST / year line.
 
 Masthead line:
 
@@ -121,13 +119,19 @@ Use exactly:
 - MAKES CHANGES
 - DESTRUCTIVE
 
-The list-row flag and selected-card flag must use the same wording.
-
 Meaning:
 
-- READ ONLY: reviews information.
+- READ ONLY: reviews information and does not intentionally modify state.
 - MAKES CHANGES: modifies configuration, state, or access.
 - DESTRUCTIVE: can remove data, access, objects, or other difficult-to-reverse state.
+
+Display contract:
+
+- READ ONLY is shown explicitly.
+- MAKES CHANGES is shown explicitly.
+- DESTRUCTIVE is shown together with MAKES CHANGES because destructive work is also change-making.
+- The main-list row and selected card must use the same wording and combined state.
+- Risk labels use restrained outline badges; yellow remains the change warning and red remains the destructive warning.
 
 Do not use abbreviated CHANGE labels.
 
@@ -136,17 +140,21 @@ Do not use abbreviated CHANGE labels.
 Each row should prioritize:
 
 1. display name;
-2. filename / source name;
-3. risk flag when applicable;
-4. navigation arrow.
+2. primary module / platform;
+3. primary scope when applicable;
+4. risk state;
+5. navigation arrow.
 
-Filename treatment:
+Context treatment:
 
-- monospace;
-- visible but deliberately dimmer than the display name;
-- large enough to scan without competing with the title.
+- module/platform examples: EXCHANGE, GRAPH, ACTIVE DIRECTORY, GRAPH + EXO;
+- scope examples: SINGLE USER, MULTI USER, TENANT WIDE;
+- context badges are informational, not separate click targets;
+- neutral badges stay deliberately subdued and brighten with row hover;
+- risk badges retain their warning color;
+- do not expose a metadata wall.
 
-Rows should remain dense enough for fast scanning.
+Rows should remain dense enough for fast scanning while giving a new operator enough context to understand what the item targets, what it uses, and what it can do.
 
 ## 8. Selected card contract
 
@@ -246,13 +254,21 @@ Keep About concise. It is orientation, not a manual.
 
 Search is primary discovery.
 
-Search should include useful hidden aliases/metadata, but the UI should display only decision-relevant information.
+Behavior:
+
+- Full Library searches the complete catalog.
+- Searching from Single User, Multi User, or Tenant Wide searches across all three scope buckets as one working set.
+- Incident Response, RMM, Utility, Standalone, and Tools searches stay scoped to their selected area.
+- Flattened search results must retain useful scope context through the scope badge.
+- Search may use hidden aliases/metadata for matching, but the UI should display only decision-relevant information.
 
 Avoid a metadata wall.
 
 ## 13. Publication boundary
 
-Private repository/source remains canonical until a script is explicitly approved for public release.
+Private/original source remains canonical until a script is explicitly approved for public release.
+
+Publishing is not a refactor step.
 
 Before publishing script source:
 
@@ -263,9 +279,15 @@ Before publishing script source:
 5. review destructive actions;
 6. scan for secrets;
 7. scan for proprietary/environment-specific identifiers;
-8. sanitize comments and sample values;
-9. confirm card metadata matches the real script;
-10. publish an approved same-origin copy.
+8. sanitize comments and sample values only when required;
+9. re-review any file whose executable logic changed during sanitization;
+10. confirm card metadata matches the real script;
+11. publish an approved same-origin copy;
+12. verify the published copy is identical to the reviewed approved source.
+
+Do not modify the user's working/original script merely to fit catalog style.
+
+If a functional script needs generalization, portability work, or behavior changes, treat that as a separate revision and validation cycle before publication.
 
 Never bulk-publish private source without review.
 
@@ -305,19 +327,22 @@ Before publishing a new build:
 - [ ] non-sequential sections A-Z;
 - [ ] Incident Response sequence correct;
 - [ ] search works;
+- [ ] Single / Multi / Tenant cross-scope search works;
 - [ ] drawer opens/closes correctly;
-- [ ] risk flags match card behavior;
+- [ ] module/platform badges are accurate;
+- [ ] scope badges are accurate;
+- [ ] READ ONLY / MAKES CHANGES / DESTRUCTIVE badges match actual behavior;
+- [ ] destructive items show both MAKES CHANGES and DESTRUCTIVE in list and selected card;
 - [ ] CHECKS / DOES / INCLUDES render consistently;
-- [ ] filenames remain readable and subdued;
 - [ ] POWERSHELL / MARKDOWN source controls work;
 - [ ] COPY works;
 - [ ] SAVE works;
 - [ ] same-origin source loading works;
+- [ ] published source matches the reviewed approved file;
 - [ ] About is current;
 - [ ] Tools docs are current;
 - [ ] secret/proprietary-content scan passes;
 - [ ] runtime framework audit passes.
-
 
 ## 17. Local backup / recovery
 
@@ -337,9 +362,11 @@ Backup model:
 - refresh FIELD-KIT-LATEST.zip on each successful run;
 - write a manifest containing branch, commit, tracked-file count, and SHA256.
 
-Canonical helper:
+Canonical maintainer helper:
 
 `tools/export-field-kit.ps1`
+
+This is repository maintenance tooling. Do not surface it as a public catalog download unless it is deliberately generalized and independently reviewed for that execution model.
 
 Default backup location:
 
