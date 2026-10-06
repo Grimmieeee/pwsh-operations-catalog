@@ -1269,6 +1269,12 @@
   const menuBtn = document.getElementById("menuBtn");
   const navOverlay = document.getElementById("navOverlay");
 
+  function areaLabel(area){
+    if (area === "Standalone") return "Quick Commands";
+    if (area === "Utility") return "Utilities";
+    return area;
+  }
+
   function countArea(area){
     if (area === "Full Library") return ITEMS.length;
     if (area === "About") return "";
@@ -1279,38 +1285,54 @@
     return ITEMS.filter(item => primaryBucket(item) === "Standalone" && (item.group || "General") === group).length;
   }
 
-  function renderNav(){
-    areaNav.innerHTML = AREAS.map(area => {
-      const active = state.area === area;
-      const isStandalone = area === "Standalone";
+  function navButton(area){
+    const active = state.area === area;
+    const isStandalone = area === "Standalone";
+    const label = areaLabel(area);
 
-      const parent = `
-        <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(active) : "false"}">
-          <span class="area-label">${esc(area)}${isStandalone ? '<span class="nav-caret">▾</span>' : ""}</span>
-          <span class="area-count">${countArea(area)}</span>
+    const parent = `
+      <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(active) : "false"}">
+        <span class="area-label">${esc(label)}${isStandalone ? '<span class="nav-caret">▾</span>' : ""}</span>
+        <span class="area-count">${countArea(area)}</span>
+      </button>
+    `;
+
+    if (!isStandalone || !active) return parent;
+
+    const groups = STANDALONE_GROUPS
+      .map(group => ({group,count:countStandaloneGroup(group)}))
+      .filter(entry => entry.count > 0);
+
+    const allActive = !state.standaloneGroup;
+    const children = [
+      `<button class="area-sub-button ${allActive ? "active" : ""}" data-standalone-group="" type="button">
+          <span>All Commands</span><span class="area-count">${countArea("Standalone")}</span>
+        </button>`,
+      ...groups.map(({group,count}) => `
+        <button class="area-sub-button ${state.standaloneGroup === group ? "active" : ""}" data-standalone-group="${esc(group)}" type="button">
+          <span>${esc(group)}</span><span class="area-count">${count}</span>
         </button>
-      `;
+      `)
+    ].join("");
 
-      if (!isStandalone || !active) return parent;
+    return parent + `<div class="area-subnav">${children}</div>`;
+  }
 
-      const groups = STANDALONE_GROUPS
-        .map(group => ({group,count:countStandaloneGroup(group)}))
-        .filter(entry => entry.count > 0);
+  function navSection(label, areas){
+    return `
+      <div class="nav-section-label">${esc(label)}</div>
+      ${areas.map(navButton).join("")}
+    `;
+  }
 
-      const allActive = !state.standaloneGroup;
-      const children = [
-        `<button class="area-sub-button ${allActive ? "active" : ""}" data-standalone-group="" type="button">
-            <span>All Commands</span><span class="area-count">${countArea("Standalone")}</span>
-          </button>`,
-        ...groups.map(({group,count}) => `
-          <button class="area-sub-button ${state.standaloneGroup === group ? "active" : ""}" data-standalone-group="${esc(group)}" type="button">
-            <span>${esc(group)}</span><span class="area-count">${count}</span>
-          </button>
-        `)
-      ].join("");
-
-      return parent + `<div class="area-subnav">${children}</div>`;
-    }).join("");
+  function renderNav(){
+    areaNav.innerHTML = [
+      '<div class="nav-primary">' + navButton("Full Library") + '</div>',
+      navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
+      navSection("Operations", ["Incident Response","RMM","Utility","Standalone"]),
+      navSection("Reference", ["Tools"]),
+      '<div class="nav-bottom">' + navButton("About") + '</div>'
+    ].join("");
   }
 
   function searchScore(item, query){
@@ -1601,7 +1623,7 @@
 
           <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
 
-          <p>Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
+          <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
 
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
@@ -1617,13 +1639,13 @@
 
     const list = filteredItems();
 
-    crumb.textContent = state.area.toUpperCase();
+    crumb.textContent = areaLabel(state.area).toUpperCase();
     entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
     const standaloneContext = state.area === "Standalone" && state.standaloneGroup
-      ? `STANDALONE / ${state.standaloneGroup.toUpperCase()}`
-      : state.area.toUpperCase();
+      ? `QUICK COMMANDS / ${state.standaloneGroup.toUpperCase()}`
+      : areaLabel(state.area).toUpperCase();
 
     contextBar.textContent = queryActive
       ? (["Single User","Multi User","Tenant Wide"].includes(state.area)
@@ -1634,7 +1656,7 @@
     if (!queryActive && state.area === "Full Library"){
       const buckets = [...new Set(list.map(primaryBucket))];
       jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + buckets.map(bucket =>
-        `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(bucket.toUpperCase())}</button>`
+        `<button class="jump-link" type="button" data-jump="${esc(bucketId(bucket))}">${esc(areaLabel(bucket).toUpperCase())}</button>`
       ).join("");
       jumpBar.classList.remove("hidden");
     } else if (!queryActive && ["Single User","Multi User","Tenant Wide"].includes(state.area)){
@@ -1672,7 +1694,7 @@
 
       results.innerHTML = [...grouped.entries()].map(([group,items]) => `
         <section class="group" id="${(state.area === "Full Library" || ["Single User","Multi User","Tenant Wide"].includes(state.area)) ? esc(bucketId(group)) : ""}">
-          <div class="group-title">${groupTitleMarkup(group)}</div>
+          <div class="group-title">${groupTitleMarkup(state.area === "Full Library" ? areaLabel(group) : group)}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
         </section>
       `).join("");
