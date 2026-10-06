@@ -72,15 +72,8 @@ button{cursor:pointer}
   border-top:0;
 }
 .signature{
-  padding:16px 20px 14px;
+  padding:18px 20px 22px;
   font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.48em;color:var(--mint);
-}
-.signature-divider{
-  height:1px;background:var(--line-soft);
-}
-.signature-est{
-  padding:14px 20px 18px;
-  font-family:var(--display);font-weight:300;font-size:9.5px;letter-spacing:.38em;color:#536862;
 }
 .workspace{min-width:0;background:linear-gradient(180deg,#0f1416 0%,#111719 100%)}
 .topbar{
@@ -278,6 +271,10 @@ body.open .drawer{transform:translateX(0)}
   font-family:var(--ui);font-size:20px;font-weight:500;
 }
 .search-box input::placeholder{color:#637a73}
+.search-box input[type="search"]::-webkit-search-cancel-button{
+  -webkit-appearance:none;appearance:none;display:none;
+}
+.search-box input[type="search"]::-ms-clear{display:none;width:0;height:0}
 .clear-button{
   width:30px;height:30px;border:0;background:transparent;color:#637a73;font-size:18px;
 }
@@ -321,10 +318,10 @@ body.open .drawer{transform:translateX(0)}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#aebbb7}
 .result:hover .result-name{color:#d7e2de}
 .result-meta{
-  min-width:0;color:#4a5c57;opacity:.56;text-align:right;white-space:nowrap;
+  min-width:0;color:#91aaa3;opacity:1;text-align:right;white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis;font:700 11.6px/1.35 var(--mono);
 }
-.result:hover .result-meta{opacity:.72}
+.result:hover .result-meta{color:#c3dadd}
 .result-flags{display:flex;align-items:center;justify-content:flex-end;gap:9px}
 .result-tag{font:800 11px/1 var(--mono);letter-spacing:.07em;white-space:nowrap}
 .result-change{color:var(--yellow)}
@@ -669,8 +666,6 @@ body.open .drawer{transform:translateX(0)}
     </div>
     <div class="sidebar-footer">
       <div class="signature">B U R N S I D //</div>
-      <div class="signature-divider"></div>
-      <div class="signature-est">E S T. &nbsp;2 0 2 6</div>
     </div>
   </aside>
 
