@@ -3412,13 +3412,14 @@ window.CATALOG_DATA = [
     "requires": "ExchangeOnlineManagement",
     "input": "Distribution group",
     "output": "Members",
-    "file": "get-distro-members-lookup.ps1",
+    "file": "2-GET-DISTRO-MEMBERS.ps1",
     "code": "",
     "related": [],
     "notes": "Shows who belongs to a distribution group.",
     "keywords": "distribution list dl members recipients who receives email group membership access group member",
     "url": "",
-    "_order": 170
+    "_order": 170,
+    "publishedPath": "published-source/mailbox/2-GET-DISTRO-MEMBERS.ps1"
   },
   {
     "name": "Group Members",
@@ -3773,16 +3774,17 @@ window.CATALOG_DATA = [
     "access": "Change",
     "status": "Ready",
     "source": "Service Desk baseline / Help Center",
-    "requires": "Mail.ReadWrite",
+    "requires": "Mail.ReadWrite.Shared",
     "input": "Mailbox + source/target folders",
     "output": "Recovered messages",
-    "file": "ir-recovery-restore-emails.ps1",
+    "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
     "code": "",
     "related": [],
     "notes": "Moves messages back from attacker-hidden or incorrect folders.",
     "keywords": "restore moved hidden email rss deleted items recover messages inbox outlook email mail",
     "url": "",
-    "_order": 188
+    "_order": 188,
+    "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1"
   },
   {
     "name": "BEC / Account Compromise Discovery",
@@ -4129,7 +4131,8 @@ window.CATALOG_DATA = [
     "notes": "Finds shared mailboxes with direct sign-in exposure.",
     "keywords": "shared mailbox signin direct login audit risk login logon signin cannot login suspicious login failed login login logon sign-in cannot login suspicious login outlook email mail",
     "url": "",
-    "_order": 205
+    "_order": 205,
+    "publishedPath": "published-source/tenant/shared-mailbox-signin-audit-clean.ps1"
   },
   {
     "name": "App Registration Audit",
