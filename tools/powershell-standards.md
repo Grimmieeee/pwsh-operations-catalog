@@ -12,6 +12,7 @@ A practical baseline for interactive PowerShell tools in FIELD // KIT.
 - Keep PowerShell 7 compatibility where practical.
 - Avoid unnecessary menus, splash screens, animation, and decorative noise.
 - Do not hide changes from the operator.
+- READ ONLY describes target/service behavior. If a script may install or repair local prerequisites, disclose that separately rather than presenting the local setup as part of the target action.
 
 ## Compatibility
 
