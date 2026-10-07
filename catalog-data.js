@@ -3578,18 +3578,18 @@ window.CATALOG_DATA = [
     "status": "Ready",
     "source": "Service Desk baseline / Help Center",
     "requires": "ExchangeOnlineManagement",
-    "input": "Mailbox UPN",
+    "input": "One or more mailbox UPNs",
     "output": "Delegated access",
     "file": "GET-MAILBOX-PERMISSIONS.ps1",
     "publishedPath": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews delegated mailbox access such as Full Access and Send As.",
-    "keywords": "mailbox permissions delegate full access send as who can access mailbox outlook email mail",
+    "notes": "Read-only review of forwarding, Full Access, Send As, Send on Behalf, and inbox rules for one or more mailboxes.",
+    "keywords": "mailbox permissions delegates forwarding inbox rules full access send as send on behalf one or more mailboxes exchange",
     "url": "",
     "_order": 178,
     "summary": "NO",
-    "objective": "Shows who can access a mailbox and how."
+    "objective": "Reviews forwarding, delegates, and inbox rules for one or more mailboxes."
   },
   {
     "name": "Bulk Mailbox Permissions Review",
@@ -3598,7 +3598,7 @@ window.CATALOG_DATA = [
     "subarea": "Permissions",
     "platform": "Exchange Online",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Candidate",
     "source": "Service Desk deployment inventory",
     "requires": "ExchangeOnlineManagement",
     "input": "Mailbox list",
@@ -3609,7 +3609,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews delegated mailbox access for multiple mailboxes.",
     "keywords": "bulk mailbox permissions audit full access send as delegates csv outlook email mail",
     "url": "",
-    "_order": 179
+    "_order": 179,
+    "auditNote": "Covered by the reviewed Mailbox Permissions Review, which already supports one or more mailbox UPNs."
   },
   {
     "name": "Mailbox Security Snapshot",
@@ -3664,7 +3665,7 @@ window.CATALOG_DATA = [
     "subarea": "Permissions",
     "platform": "Exchange Online",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Candidate",
     "source": "Field-Kit scripts index",
     "requires": "ExchangeOnlineManagement",
     "input": "Mailbox UPN",
@@ -3675,7 +3676,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews transport rules and delegated access for one user.",
     "keywords": "mailbox access audit full access send as send on behalf transport rule outlook email mail",
     "url": "",
-    "_order": 182
+    "_order": 182,
+    "auditNote": "Legacy overlapping mailbox-access card; source is not part of the current canonical Service Desk baseline."
   },
   {
     "name": "Bulk Mailbox Access Audit",
@@ -3684,7 +3686,7 @@ window.CATALOG_DATA = [
     "subarea": "Permissions",
     "platform": "Exchange Online",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Candidate",
     "source": "Field-Kit scripts index",
     "requires": "ExchangeOnlineManagement",
     "input": "UPN list",
@@ -3695,7 +3697,8 @@ window.CATALOG_DATA = [
     "notes": "Runs mailbox access review across a UPN list.",
     "keywords": "bulk mailbox audit permissions transport rules csv outlook email mail",
     "url": "",
-    "_order": 183
+    "_order": 183,
+    "auditNote": "Legacy overlapping bulk mailbox-access card; source is not part of the current canonical Service Desk baseline."
   },
   {
     "name": "Bulk Mailbox Forwarding and Permissions Audit",
@@ -3704,7 +3707,7 @@ window.CATALOG_DATA = [
     "subarea": "Security Review",
     "platform": "Graph + Exchange Online",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Candidate",
     "source": "Field-Kit scripts index",
     "requires": "Graph + Exchange read access",
     "input": "UPN list",
@@ -3715,7 +3718,8 @@ window.CATALOG_DATA = [
     "notes": "Checks Full Access, Send As, Send on Behalf, forwarding, and inbox-rule forwarding for many users.",
     "keywords": "bulk mailbox forwarding permissions full access send as send on behalf inbox rule multi user exchange",
     "url": "",
-    "_order": 184
+    "_order": 184,
+    "auditNote": "Potential successor for bulk mailbox review because it adds summary and CSV, but it needs a separate behavior/error-handling review before publication."
   },
   {
     "name": "Shared Mailbox Membership Review",
