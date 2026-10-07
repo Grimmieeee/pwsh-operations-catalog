@@ -28,6 +28,16 @@ The rule is simple: similarity alone is not enough to remove a tool. A duplicate
 | resolve-names-to-upns.ps1 | HOLD | Appears alongside bulk-resolve-upns.ps1 in the same Verify-Status folder. Source comparison still needed. | Preserve only if it resolves edge cases the bulk resolver does not. |
 | 2-INVOKE-DISABLE-ACCOUNTS(2).ps1 | REPLACEMENT | Newer account-disable implementation than the current catalog source. | Better authority handling, validation, session revoke, sync state, verified CSV, and ticket-note output. |
 
+## Focused Extraction Backlog
+
+These are good single-use jobs discovered inside broader or older tools. They are intentionally not public yet because the useful behavior should be rebuilt or extracted cleanly rather than exposing the legacy wrapper.
+
+- User Security Snapshot — one-user overview of identity state, MFA methods, admin roles, group memberships, and recent sign-ins. The old bare-bones snapshot proves the job is useful, but it needs a current public revision.
+- Tenant Security Snapshot — fast high-level tenant overview of users, stale accounts, Conditional Access policy state, admin-role counts, and OAuth grant count. Useful as an overview even though deeper focused audits now exist.
+- Room & Resource Access Review — extract room/equipment mailbox Full Access, BookInPolicy, and ResourceDelegate logic from group-access-audit-bulk-clean.ps1.
+- Tenant Mailbox Access Audit — extract tenant-wide mailbox forwarding, Full Access, and Send As review from tenant-user-access-audit-clean.ps1.
+- Disabled User Access Cleanup — evaluate the useful removal logic in jumpbox-disabled-mailbox-access.ps1 against current Offboarding before deciding whether this deserves its own guarded workflow.
+
 ## Promoted From Leftovers
 
 These started as outliers or older focused scripts, survived behavior review, and now have a defensible public job.
