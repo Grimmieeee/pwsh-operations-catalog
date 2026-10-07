@@ -4235,10 +4235,12 @@ window.CATALOG_DATA = [
     "file": "tenant-cap-gaps-audit-clean.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews Conditional Access coverage gaps and exclusions.",
-    "keywords": "conditional access cap gaps exclusions disabled report only",
+    "notes": "Deeper Conditional Access gap review covering disabled/report-only policies, exclusions, device-code gaps, location conditions, and weak coverage indicators.",
+    "keywords": "conditional access gaps exclusions report only disabled policy device code location weak coverage entra",
     "url": "",
-    "_order": 207
+    "_order": 207,
+    "objective": "Finds Conditional Access policies and exclusions that may leave users, locations, or authentication paths weakly covered.",
+    "csv": "YES"
   },
   {
     "name": "Device Code Exposure Audit",
@@ -4399,10 +4401,12 @@ window.CATALOG_DATA = [
     "file": "tenant-transport-rules-audit-clean.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews tenant transport/mail-flow rules for risk.",
-    "keywords": "transport rule transport rules mail flow rule mail flow rules forwarding redirect audit exchange",
+    "notes": "Tenant-wide Exchange transport-rule review for risky mail-flow actions that can survive mailbox-level remediation.",
+    "keywords": "transport rules mail flow forwarding redirect bcc delete quarantine external recipient exchange",
     "url": "",
-    "_order": 214
+    "_order": 214,
+    "objective": "Finds transport rules that redirect, forward, BCC, delete, quarantine, or route mail to external recipients.",
+    "csv": "YES"
   },
   {
     "name": "Join Computer to Domain",
