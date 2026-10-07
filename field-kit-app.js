@@ -2008,17 +2008,14 @@
 
   function csvCapability(item){
     const explicit = String(item.csv || "").trim();
-    if (explicit) return explicit;
 
-    const input = [item.input,item.notes,item.file,item.code].join(" ");
+    // Only surface CSV when the tool actually produces CSV output.
+    if (/EXPORT/i.test(explicit)) return "YES";
+
     const output = [item.output,item.notes,item.code].join(" ");
-    const hasInput = /\bcsv\b|\.csv\b|Import-Csv/i.test(input);
     const hasExport = /Export-Csv|ConvertTo-Csv|export.*csv|csv\s*\/\s*report|output.*csv/i.test(output);
 
-    if (hasInput && hasExport) return "YES — INPUT + EXPORT";
-    if (hasInput) return "YES — INPUT";
-    if (hasExport) return "YES — EXPORT";
-    return "NO";
+    return hasExport ? "YES" : "";
   }
 
   function summaryCapability(item){
