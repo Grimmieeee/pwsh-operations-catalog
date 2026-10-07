@@ -3155,12 +3155,12 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews stale users, inactive access, licensing, groups, and mailbox debt.",
-    "keywords": "quarterly cleanup stale inactive accounts hygiene lifecycle review",
+    "notes": "Periodic read-only tenant hygiene review covering stale enabled users, active admin-role counts, ownerless cloud-manageable groups, and external mailbox forwarding.",
+    "keywords": "quarterly cleanup tenant hygiene stale enabled users admin roles ownerless groups external forwarding review",
     "url": "",
     "_order": 157,
     "summary": "NO",
-    "objective": "Finds accounts and access that may need cleanup during a quarterly review."
+    "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant."
   },
   {
     "name": "Inactive User Review",
@@ -3177,10 +3177,11 @@ window.CATALOG_DATA = [
     "file": "get-inactive-user-accounts.ps1",
     "code": "",
     "related": [],
-    "notes": "Finds stale or inactive user accounts for cleanup review.",
-    "keywords": "stale user inactive enabled account no recent sign in dormant cleanup",
+    "notes": "Focused read-only review of inactive or stale enabled user accounts.",
+    "keywords": "inactive user stale enabled account sign in age dormant cleanup review",
     "url": "",
-    "_order": 158
+    "_order": 158,
+    "objective": "Finds enabled accounts that may be stale based on sign-in age."
   },
   {
     "name": "Disabled User Group Debt",
@@ -3197,10 +3198,11 @@ window.CATALOG_DATA = [
     "file": "get-inactive-group-debt.ps1",
     "code": "",
     "related": [],
-    "notes": "Finds disabled or inactive users that still retain group access.",
-    "keywords": "disabled user group membership debt leftover access offboarding membership access group member",
+    "notes": "Focused read-only review of lingering group membership on inactive or disabled users.",
+    "keywords": "disabled inactive user group memberships lingering access offboarding debt",
     "url": "",
-    "_order": 159
+    "_order": 159,
+    "objective": "Finds inactive or disabled users that still have group memberships."
   },
   {
     "name": "Disabled User Mailbox Access Review",
@@ -3217,10 +3219,11 @@ window.CATALOG_DATA = [
     "file": "get-inactive-mailbox-debt.ps1",
     "code": "",
     "related": [],
-    "notes": "Finds disabled or inactive users with remaining mailbox access or delivery paths.",
-    "keywords": "disabled user mailbox access review forwarding delegates lingering permissions offboarding exchange",
+    "notes": "Focused read-only review of lingering mailbox access or delivery paths for inactive or disabled users.",
+    "keywords": "disabled inactive user mailbox access forwarding delegates lingering offboarding",
     "url": "",
-    "_order": 160
+    "_order": 160,
+    "objective": "Finds inactive or disabled users that still have mailbox access concerns."
   },
   {
     "name": "User Onboarding",
@@ -3240,7 +3243,8 @@ window.CATALOG_DATA = [
     "notes": "Guided onboarding for one user using approved access/reference information.",
     "keywords": "new hire new user onboard onboarding provision access clone template reference user new hire new user setup provision access",
     "url": "",
-    "_order": 161
+    "_order": 161,
+    "objective": "Guides approved setup and access provisioning for one new user."
   },
   {
     "name": "User Offboarding",
@@ -3260,7 +3264,8 @@ window.CATALOG_DATA = [
     "notes": "Guided offboarding for one user, including access removal and session cleanup.",
     "keywords": "termination employee leaving offboard disable revoke sessions remove access termination employee leaving remove access disable user",
     "url": "",
-    "_order": 162
+    "_order": 162,
+    "objective": "Guides approved access removal and session cleanup for one departing user."
   },
   {
     "name": "Bulk Disable User Accounts",
@@ -3277,10 +3282,12 @@ window.CATALOG_DATA = [
     "file": "user-account-disable-bulk-clean.ps1",
     "code": "",
     "related": [],
-    "notes": "Disables users from TXT/CSV and can optionally revoke sessions.",
-    "keywords": "bulk disable users soft delete terminate accounts csv txt revoke sessions",
+    "notes": "Bulk disable workflow with optional session revocation and Entra Connect sync. A newer implementation is under review before public-source replacement.",
+    "keywords": "bulk disable users txt csv active directory synced entra cloud only revoke sessions delta sync",
     "url": "",
-    "_order": 163
+    "_order": 163,
+    "objective": "Disables users from a TXT/CSV list, using Active Directory for synced users and Entra ID for cloud-only users.",
+    "csv": "YES"
   },
   {
     "name": "Bulk Delete User Accounts",
@@ -3297,10 +3304,11 @@ window.CATALOG_DATA = [
     "file": "bulk-invoke-account-deletion.ps1",
     "code": "",
     "related": [],
-    "notes": "Bulk account removal for explicitly approved cleanup.",
-    "keywords": "bulk delete accounts remove users destructive cleanup csv",
+    "notes": "Destructive bulk AD user deletion workflow for explicitly approved cleanup.",
+    "keywords": "bulk delete users active directory ad destructive permanent approved cleanup",
     "url": "",
-    "_order": 164
+    "_order": 164,
+    "objective": "Permanently deletes approved Active Directory user objects from a bulk list after guarded confirmation."
   },
   {
     "name": "Bulk Assign Licenses",
@@ -3417,13 +3425,13 @@ window.CATALOG_DATA = [
     "file": "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
     "code": "",
     "related": [],
-    "notes": "Shows who belongs to a distribution group.",
-    "keywords": "distribution list dl members recipients who receives email group membership access group member",
+    "notes": "Focused Exchange Online lookup for one distribution group and its members.",
+    "keywords": "distribution group distribution list dl one group members recipients who receives mail exchange",
     "url": "",
     "_order": 170,
     "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
     "summary": "NO",
-    "objective": "Shows who belongs to a distribution group."
+    "objective": "Focused Exchange-only lookup showing who belongs to one distribution group."
   },
   {
     "name": "Group Members",
@@ -3441,12 +3449,12 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/identity/GET-GROUP-MEMBERS.ps1",
     "code": "",
     "related": [],
-    "notes": "Shows members of a selected group.",
-    "keywords": "group members membership who is in group access membership access group member",
+    "notes": "General one-group lookup across Exchange Online distribution groups, Entra ID, and Active Directory.",
+    "keywords": "one group members exchange distribution group entra active directory ad membership lookup",
     "url": "",
     "_order": 171,
     "summary": "NO",
-    "objective": "Shows who belongs to a Microsoft 365 or Entra group."
+    "objective": "Shows members of one group, checking Exchange distribution groups, Entra groups, then Active Directory groups."
   },
   {
     "name": "Bulk Group Members Review",
@@ -3463,10 +3471,11 @@ window.CATALOG_DATA = [
     "file": "get-group-members-lookup-bulk.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews membership for multiple groups from input.",
-    "keywords": "bulk group member audit multiple groups csv txt membership membership access group member",
+    "notes": "Read-only membership review for multiple groups from TXT/CSV input.",
+    "keywords": "multiple groups bulk group members review txt csv membership lookup",
     "url": "",
-    "_order": 172
+    "_order": 172,
+    "objective": "Shows the members of each group in a TXT/CSV input list."
   },
   {
     "name": "User Group Memberships",
@@ -3483,13 +3492,14 @@ window.CATALOG_DATA = [
     "file": "get-user-groups-read-only.ps1",
     "code": "",
     "related": [],
-    "notes": "Shows a user's direct AD and Entra group memberships.",
-    "keywords": "what groups user belongs to membership access review offboard membership access group member",
+    "notes": "User-centric read-only review of direct AD and Entra group memberships.",
+    "keywords": "one user groups memberships active directory ad entra memberof access review",
     "url": "",
-    "_order": 173
+    "_order": 173,
+    "objective": "Shows which direct Active Directory and Entra groups one user belongs to."
   },
   {
-    "name": "User Group Cleanup",
+    "name": "User Group Membership Cleanup",
     "type": "Workflow",
     "area": "Groups",
     "subarea": "User Access",
@@ -3503,10 +3513,11 @@ window.CATALOG_DATA = [
     "file": "get-user-groups-read-write.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews a user's groups and allows selected membership removal.",
-    "keywords": "remove user from groups cleanup membership offboarding access membership access group member",
+    "notes": "User-centric review and guarded removal of selected group memberships.",
+    "keywords": "one user group membership cleanup remove selected groups offboarding access",
     "url": "",
-    "_order": 174
+    "_order": 174,
+    "objective": "Shows one user's group memberships and lets you remove selected removable memberships after confirmation."
   },
   {
     "name": "Bulk Group Membership Removal",
@@ -3523,10 +3534,11 @@ window.CATALOG_DATA = [
     "file": "user-group-removal-bulk-clean.ps1",
     "code": "",
     "related": [],
-    "notes": "Removes approved memberships for many users or groups.",
-    "keywords": "bulk remove group membership cleanup csv offboarding membership access group member",
+    "notes": "Bulk group membership removal for approved cleanup across multiple users or groups.",
+    "keywords": "bulk group membership removal multiple users groups approved cleanup csv",
     "url": "",
-    "_order": 175
+    "_order": 175,
+    "objective": "Removes approved group memberships across a bulk input set."
   },
   {
     "name": "Create Dynamic License Group",
@@ -3544,9 +3556,10 @@ window.CATALOG_DATA = [
     "code": "",
     "related": [],
     "notes": "Creates an Entra dynamic security group for license-based membership.",
-    "keywords": "dynamic group license licensing create entra security group membership access group member licensing sku subscription",
+    "keywords": "entra dynamic security group create membership rule licensing license",
     "url": "",
-    "_order": 176
+    "_order": 176,
+    "objective": "Creates one Entra dynamic security group using the membership rule you provide."
   },
   {
     "name": "Teams and M365 Group Owners",
@@ -3563,10 +3576,11 @@ window.CATALOG_DATA = [
     "file": "1-GET-TEAMS-GROUP-OWNERS_GRAPH-EXO.ps1",
     "code": "",
     "related": [],
-    "notes": "Reviews Teams and Microsoft 365 groups and resolves their owners.",
-    "keywords": "teams owners group owners ownerless groups microsoft 365 owners membership access group member",
+    "notes": "Tenant-wide read-only owner review across major Microsoft 365 and Entra group types.",
+    "keywords": "teams microsoft 365 m365 security dynamic mail enabled distribution group owners ownerless",
     "url": "",
-    "_order": 177
+    "_order": 177,
+    "objective": "Shows owners across Teams, Microsoft 365, security, mail-enabled, dynamic, and distribution groups."
   },
   {
     "name": "Mailbox Permissions Review",
@@ -3756,10 +3770,11 @@ window.CATALOG_DATA = [
     "file": "distro-group-members.ps1",
     "code": "",
     "related": [],
-    "notes": "Lists distribution groups, members, account status, and nested-group flags.",
-    "keywords": "distribution groups all groups members nested dl inventory outlook email mail membership access group member",
+    "notes": "Tenant-wide distribution group inventory with membership and nesting context.",
+    "keywords": "tenant distribution groups inventory all groups members nested account status exchange",
     "url": "",
-    "_order": 186
+    "_order": 186,
+    "objective": "Lists all distribution groups with members, account status, and nested-group flags."
   },
   {
     "name": "Litigation Hold in Bulk",
@@ -4775,12 +4790,12 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/identity/GET-USER-PREDELETE-CHECK.ps1",
     "code": "",
     "related": [],
-    "notes": "Checks cloud-side behavior/relationships before removing an AD user object.",
-    "keywords": "predelete pre delete user check groups mailbox before deleting ad object",
+    "notes": "Read-only dependency review before deleting an on-premises AD user object; does not prove third-party or local-system dependencies are safe.",
+    "keywords": "pre delete user dependency check ad groups mailbox delegates ownership enterprise app roles licenses retention hold",
     "url": "",
     "_order": 233,
     "summary": "NO",
-    "objective": "Shows a user's mailbox, groups, and access before the account is removed."
+    "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed."
   },
   {
     "name": "Enforce Per-user MFA",
@@ -4809,7 +4824,7 @@ window.CATALOG_DATA = [
     "subarea": "RMM Lifecycle",
     "platform": "Datto RMM + Graph + Active Directory",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Private",
     "source": "RMM identity automation",
     "requires": "RMM site variables + TARGET_UPN",
     "input": "Target UPN",
@@ -4829,7 +4844,7 @@ window.CATALOG_DATA = [
     "subarea": "RMM Lifecycle",
     "platform": "Datto RMM + Graph + Active Directory",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Private",
     "source": "RMM identity automation",
     "requires": "RMM site variables + TARGET_UPN",
     "input": "Target UPN",
@@ -4849,7 +4864,7 @@ window.CATALOG_DATA = [
     "subarea": "RMM",
     "platform": "Datto RMM + Graph + Active Directory",
     "access": "Read-only",
-    "status": "Ready",
+    "status": "Private",
     "source": "Later Field-Kit inventory",
     "requires": "RMM identity variables",
     "input": "Target UPN",
