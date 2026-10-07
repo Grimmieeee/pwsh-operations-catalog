@@ -2020,7 +2020,26 @@
 
   function summaryCapability(item){
     const explicit = String(item.summary || "").trim();
-    return explicit || "NO";
+    return /^YES/i.test(explicit) ? "YES" : "";
+  }
+
+  function requirementInfo(item){
+    const value = String(item.requires || "").trim();
+    if (!value) return "";
+    if (/^(?:none|n\/a|powerShell\s*5\.1\+?)$/i.test(value)) return "";
+    if (/^optional\b/i.test(value)) return "";
+    return value;
+  }
+
+  function inputInfo(item){
+    const value = String(item.input || "").trim();
+    if (!value) return "";
+
+    const bucket = primaryBucket(item);
+    if (bucket === "Single User" && /^user$/i.test(value)) return "";
+    if (bucket === "Tenant Wide" && /^tenant$/i.test(value)) return "";
+
+    return value;
   }
 
   function runInfoMarkup(item){
@@ -2029,8 +2048,8 @@
     const rows = [
       ["CSV",csvCapability(item)],
       ["SUMMARY",summaryCapability(item)],
-      ["REQUIRES",item.requires],
-      ["INPUT",item.input]
+      ["REQUIRES",requirementInfo(item)],
+      ["INPUT",inputInfo(item)]
     ].filter(([,value]) => String(value || "").trim());
 
     if (!rows.length) return "";
