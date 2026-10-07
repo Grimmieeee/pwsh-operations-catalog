@@ -1,5 +1,5 @@
 <#
-tenant-licensing-audit-clean.ps1
+GET-TENANT-LICENSING-AUDIT.ps1
 
 Read-only tenant licensing audit.
 
@@ -177,17 +177,6 @@ function Graph-Get {
         return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
     } catch {
         return $null
-    }
-}
-
-function Graph-Delete {
-    param([string]$Uri)
-
-    try {
-        Invoke-MgGraphRequest -Method DELETE -Uri $Uri -ErrorAction Stop | Out-Null
-        return $true
-    } catch {
-        return $false
     }
 }
 
