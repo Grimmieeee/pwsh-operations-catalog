@@ -2005,11 +2005,27 @@
     return `<div class="note-block">${esc(note)}</div>`;
   }
 
+  function csvCapability(item){
+    const explicit = String(item.csv || "").trim();
+    if (explicit) return explicit;
+
+    const input = [item.input,item.notes,item.file,item.code].join(" ");
+    const output = [item.output,item.notes,item.code].join(" ");
+    const hasInput = /\bcsv\b|\.csv\b|Import-Csv/i.test(input);
+    const hasExport = /Export-Csv|ConvertTo-Csv|export.*csv|csv\s*\/\s*report|output.*csv/i.test(output);
+
+    if (hasInput && hasExport) return "YES — INPUT + EXPORT";
+    if (hasInput) return "YES — INPUT";
+    if (hasExport) return "YES — EXPORT";
+    return "NO";
+  }
+
   function runInfoMarkup(item){
     if (item.type === "Quick Command") return "";
 
     const rows = [
       ["FILE",item.file],
+      ["CSV",csvCapability(item)],
       ["REQUIRES",item.requires],
       ["INPUT",item.input],
       ["OUTPUT",item.output]
@@ -2024,7 +2040,7 @@
           ${rows.map(([label,value]) => `
             <div class="run-info-row">
               <span class="run-info-label">${esc(label)}</span>
-              <span class="run-info-value">${esc(value)}</span>
+              <span class="run-info-value ${label === "CSV" && /^YES/i.test(String(value)) ? "run-info-yes" : ""}">${esc(value)}</span>
             </div>
           `).join("")}
         </div>
