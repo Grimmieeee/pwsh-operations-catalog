@@ -1561,8 +1561,8 @@
     const text = [item.displayName,item.name,item.file,item.subarea].join(" ");
 
     if (/onboard|offboard|pre[- ]?delete|disable(?:\s+user)?\s+accounts|delete(?:\s+user)?\s+accounts/i.test(text)) return "On / Offboarding";
-    if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening/i.test(text)) return "Security";
-    if (/mailbox|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
+    if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
+    if (/mailbox|room|equipment|resource access|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
     if (/reporting\s*\/\s*audit/i.test(area) || /audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
     if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
     return "Identity";
@@ -1623,7 +1623,7 @@
     /distribution group|\bgroup\b|membership|member|owner/i,
     /role|permission grant|oauth|consent|app registration|service principal/i,
     /mailbox summary|mailbox protocol|smtp auth|\bpop\b|\bimap\b/i,
-    /mailbox permission|full access|send as|send on behalf|delegate/i,
+    /mailbox permission|full access|send as|send on behalf|delegate|\broom\b|equipment|resource access/i,
     /mailbox forwarding|forwarding|forward address/i,
     /inbox rule|mailbox rule/i,
     /transport rule|mail flow rule/i,
