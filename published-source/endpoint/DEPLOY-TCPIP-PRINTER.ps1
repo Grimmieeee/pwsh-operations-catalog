@@ -1,5 +1,5 @@
 <#
-endpoint-printer-deployment-clean.ps1
+DEPLOY-TCPIP-PRINTER.ps1
 
 Endpoint printer deployment helper.
 
