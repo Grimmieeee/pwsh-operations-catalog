@@ -1432,8 +1432,11 @@
     if (/wi[- ]?fi|\bwlan\b|wireless/i.test(text)){
       tags.push("wifi","wireless","wlan");
     }
-    if (/inbox rule|forwarding|forward address|redirect/i.test(text)){
-      tags.push("forwarding","forward","inbox","rules");
+    if (/inbox rule|mailbox rule/i.test(text)){
+      tags.push("inbox","rules");
+    }
+    if (/forwarding|forward address|redirect/i.test(text)){
+      tags.push("forwarding","forward","redirect");
     }
     if (/permission|delegate|delegation|full access|send as|send on behalf/i.test(text)){
       tags.push("permissions","permission","delegate","delegation");
@@ -1508,10 +1511,15 @@
 
     let score = 0;
     for (const token of q){
-      if (strong.some(w => w === token)) score += 7;
-      else if (strong.some(w => w.startsWith(token))) score += 5;
-      else if (weak.some(w => w === token)) score += 3;
-      else if (weak.some(w => w.startsWith(token))) score += 1;
+      let matched = false;
+
+      if (strong.some(w => w === token)) { score += 7; matched = true; }
+      else if (strong.some(w => w.startsWith(token))) { score += 5; matched = true; }
+      else if (weak.some(w => w === token)) { score += 3; matched = true; }
+      else if (weak.some(w => w.startsWith(token))) { score += 1; matched = true; }
+
+      // Multi-word searches narrow results: every term must match.
+      if (!matched) return 0;
     }
 
     return score;
