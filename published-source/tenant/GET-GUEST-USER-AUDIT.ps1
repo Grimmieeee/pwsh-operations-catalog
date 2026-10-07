@@ -1,11 +1,11 @@
 <#
-tenant-guest-audit-clean.ps1
+GET-GUEST-USER-AUDIT.ps1
 
 Read-only guest user audit.
 
 Purpose:
 - Reviews guest accounts
-- Flags stale guests, disabled guests, unaccepted invitations, and guest admin roles where visible
+- Flags stale guests, disabled guests, unaccepted invitations, and guests with no recorded sign-in
 - Optional CSV export only when approved
 #>
 
@@ -179,17 +179,6 @@ function Graph-Get {
         return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
     } catch {
         return $null
-    }
-}
-
-function Graph-Delete {
-    param([string]$Uri)
-
-    try {
-        Invoke-MgGraphRequest -Method DELETE -Uri $Uri -ErrorAction Stop | Out-Null
-        return $true
-    } catch {
-        return $false
     }
 }
 
