@@ -1424,26 +1424,106 @@
     ].join("");
   }
 
+  function searchConcepts(item){
+    const facts = factBlockFor(item)?.items || [];
+    const text = [
+      item.displayName,
+      item.name,
+      item.file,
+      item.group,
+      item.logicalArea,
+      item.keywords,
+      item.platform,
+      item.notes,
+      item.output,
+      item.subarea,
+      item.useFor,
+      item.code,
+      facts.join(" ")
+    ].join(" ");
+
+    const tags = [];
+
+    if (/\bmfa\b|\b2fa\b|multi[- ]?factor|authenticator|authentication methods?|registration status/i.test(text)){
+      tags.push("mfa","2fa","multifactor");
+    }
+    if (/password|\bpwd\b|credential/i.test(text)){
+      tags.push("password","pwd");
+    }
+    if (/wi[- ]?fi|\bwlan\b|wireless/i.test(text)){
+      tags.push("wifi","wireless","wlan");
+    }
+    if (/inbox rule|forwarding|forward address|redirect/i.test(text)){
+      tags.push("forwarding","forward","inbox","rules");
+    }
+    if (/permission|delegate|delegation|full access|send as|send on behalf/i.test(text)){
+      tags.push("permissions","permission","delegate","delegation");
+    }
+    if (/sign[- ]?in|logon|login/i.test(text)){
+      tags.push("login","logon","signin");
+    }
+    if (/entra|azure ad|\baad\b/i.test(text)){
+      tags.push("entra","azuread","aad");
+    }
+    if (/exchange online|\bexo\b|mailbox/i.test(text)){
+      tags.push("exchange","exo");
+    }
+    if (/microsoft graph|connect-mggraph|invoke-mggraph|\bmg[a-z]+/i.test(text)){
+      tags.push("graph");
+    }
+    if (/bitlocker|manage-bde|encryption/i.test(text)){
+      tags.push("bitlocker","encryption");
+    }
+    if (/defender|antivirus|microsoft defender|\bmde\b/i.test(text)){
+      tags.push("defender","antivirus");
+    }
+    if (/printer|printing|spooler|print job/i.test(text)){
+      tags.push("printer","printing");
+    }
+    if (/proxy|winhttp/i.test(text)){
+      tags.push("proxy");
+    }
+    if (/\bdns\b|nslookup|resolver|resolution/i.test(text)){
+      tags.push("dns");
+    }
+    if (/network|ipconfig|ping|tracert|pathping|route print|arp -a|netstat|netadapter|tcp/i.test(text)){
+      tags.push("network");
+    }
+
+    return [...new Set(tags)].join(" ");
+  }
+
   function searchScore(item, query){
     if (!query) return 1;
     const q = words(query);
     if (!q.length) return 1;
+
+    const facts = factBlockFor(item)?.items || [];
+    const connect = Array.isArray(item.connect) ? item.connect : [];
+    const optionValues = Array.isArray(item.options?.values) ? item.options.values : [];
 
     const strong = words([
       item.displayName,
       item.file,
       item.group,
       item.logicalArea,
-      item.keywords
+      item.keywords,
+      searchConcepts(item)
     ].join(" "));
 
     const weak = words([
       item.platform,
       item.notes,
       item.output,
+      item.input,
+      item.requires,
       item.subarea,
       item.useFor,
-      item.code
+      item.code,
+      item.changeNote,
+      connect.join(" "),
+      optionValues.join(" "),
+      facts.join(" ")
     ].join(" "));
 
     let score = 0;
@@ -1925,6 +2005,33 @@
     return `<div class="note-block">${esc(note)}</div>`;
   }
 
+  function runInfoMarkup(item){
+    if (item.type === "Quick Command") return "";
+
+    const rows = [
+      ["FILE",item.file],
+      ["REQUIRES",item.requires],
+      ["INPUT",item.input],
+      ["OUTPUT",item.output]
+    ].filter(([,value]) => String(value || "").trim());
+
+    if (!rows.length) return "";
+
+    return `
+      <section class="run-info-block">
+        <div class="section-label">RUN INFO</div>
+        <div class="run-info-grid">
+          ${rows.map(([label,value]) => `
+            <div class="run-info-row">
+              <span class="run-info-label">${esc(label)}</span>
+              <span class="run-info-value">${esc(value)}</span>
+            </div>
+          `).join("")}
+        </div>
+      </section>
+    `;
+  }
+
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
     if (!item.file && !item.code && !item.publishedPath) return "";
@@ -1984,19 +2091,9 @@
         ${referenceButtons(item)}
       </div>
 
-      <div id="sourceMount"></div>
+      ${runInfoMarkup(item)}
 
-      <div class="palette" data-field-kit-palette>
-        <div class="swatch mint">
-          <div class="swatch-name">NEON MINT</div>
-          <div class="swatch-code">#00F0B5</div>
-        </div>
-        <div class="swatch charcoal">
-          <div class="swatch-name">CHARCOAL GRAY</div>
-          <div class="swatch-code">#282D32</div>
-        </div>
-      </div>
-      <!-- FIELD_KIT_PALETTE -->
+      <div id="sourceMount"></div>
     `;
 
     bindDrawerActions(item);
