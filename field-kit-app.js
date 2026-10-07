@@ -1337,6 +1337,7 @@
   const state = {
     area:"Full Library",
     standaloneGroup:"",
+    standaloneOpen:false,
     query:"",
     selected:null
   };
@@ -1379,14 +1380,16 @@
     const isStandalone = area === "Standalone";
     const label = areaLabel(area);
 
+    const expanded = isStandalone && active && state.standaloneOpen;
+
     const parent = `
-      <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(active) : "false"}">
+      <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(expanded) : "false"}">
         <span class="area-label">${esc(label)}${isStandalone ? '<span class="nav-caret">▾</span>' : ""}</span>
         <span class="area-count">${countArea(area)}</span>
       </button>
     `;
 
-    if (!isStandalone || !active) return parent;
+    if (!expanded) return parent;
 
     const groups = STANDALONE_GROUPS
       .map(group => ({group,count:countStandaloneGroup(group)}))
@@ -2365,6 +2368,7 @@
     if (subgroup){
       state.area = "Standalone";
       state.standaloneGroup = subgroup.getAttribute("data-standalone-group") || "";
+      state.standaloneOpen = true;
       renderNav();
       renderResults();
       closeNav();
@@ -2374,8 +2378,27 @@
     const btn = event.target.closest("[data-area]");
     if (!btn) return;
 
-    state.area = btn.getAttribute("data-area") || "Full Library";
+    const nextArea = btn.getAttribute("data-area") || "Full Library";
+
+    if (nextArea === "Standalone"){
+      if (state.area === "Standalone"){
+        state.standaloneOpen = !state.standaloneOpen;
+        renderNav();
+        return;
+      }
+
+      state.area = "Standalone";
+      state.standaloneGroup = "";
+      state.standaloneOpen = true;
+      renderNav();
+      renderResults();
+      closeNav();
+      return;
+    }
+
+    state.area = nextArea;
     state.standaloneGroup = "";
+    state.standaloneOpen = false;
     renderNav();
     renderResults();
     closeNav();
