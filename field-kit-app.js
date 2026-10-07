@@ -1583,6 +1583,69 @@
     return 50;
   }
 
+  const TOPIC_FAMILIES = [
+    /\baccount\b|\buser\b|identity|profile|manager/i,
+    /password|credential/i,
+    /\bmfa\b|2fa|authenticator|authentication method|registration status/i,
+    /sign[- ]?in|login|logon|session|token|kerberos/i,
+    /license|licensing|sku/i,
+    /distribution group|\bgroup\b|membership|member|owner/i,
+    /role|permission grant|oauth|consent|app registration|service principal/i,
+    /mailbox summary|mailbox protocol|smtp auth|\bpop\b|\bimap\b/i,
+    /mailbox permission|full access|send as|send on behalf|delegate/i,
+    /mailbox forwarding|forwarding|forward address/i,
+    /inbox rule|mailbox rule/i,
+    /transport rule|mail flow rule/i,
+    /message trace/i,
+    /calendar/i,
+    /contacts/i,
+    /litigation hold|retention|hold/i,
+    /shared mailbox/i,
+    /bitlocker|encryption|recovery protector/i,
+    /printer|print job|spooler/i,
+    /windows update|hotfix|winget|package update/i,
+    /disk|storage|free space|volume/i,
+    /process|cpu|memory consumer/i,
+    /service status|startup type|\bservice\b/i,
+    /scheduled task/i,
+    /hostname|computer model|serial|uptime|os build|system info/i,
+    /dns|nslookup|resolver/i,
+    /ping|traceroute|tracert|pathping|reachability|latency|packet loss/i,
+    /route|routing|gateway|arp/i,
+    /adapter|ip configuration|ipconfig|tcp|netstat|port/i,
+    /wi[- ]?fi|wireless|wlan/i,
+    /vpn|proxy|winhttp/i,
+    /firewall/i,
+    /powershell|execution policy|module|terminal/i
+  ];
+
+  function topicRank(item){
+    const text = [
+      item.displayName,
+      item.name,
+      item.subarea,
+      item.file
+    ].join(" ");
+
+    const index = TOPIC_FAMILIES.findIndex(pattern => pattern.test(text));
+    return index === -1 ? 999 : index;
+  }
+
+  function actionRank(item){
+    const access = String(item.access || "").toLowerCase();
+    if (access.includes("destructive")) return 3;
+    if (access.includes("change") || access.includes("mixed")) return 2;
+    if (access.includes("read-only") || access.includes("read only") || access.includes("readonly")) return 1;
+    return 4;
+  }
+
+  function semanticCompare(a,b){
+    return topicRank(a) - topicRank(b) ||
+      actionRank(a) - actionRank(b) ||
+      a.displayName.localeCompare(b.displayName) ||
+      (a._order || 0) - (b._order || 0);
+  }
+
   function filteredItems(){
     const q = state.query.trim();
 
@@ -1610,26 +1673,35 @@
         .sort((a,b) => b.score - a.score || a.item.displayName.localeCompare(b.item.displayName))
         .map(x => x.item);
     } else if (state.area === "Full Library") {
-      list.sort((a,b) =>
-        bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b)) ||
-        a.displayName.localeCompare(b.displayName)
-      );
+      const purposeOrder = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
+      list.sort((a,b) => {
+        const bucketDiff = bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b));
+        if (bucketDiff) return bucketDiff;
+
+        const bucket = primaryBucket(a);
+        if (["Single User","Multi User","Tenant Wide"].includes(bucket)){
+          const purposeDiff = purposeOrder.indexOf(scopeSubgroup(a)) - purposeOrder.indexOf(scopeSubgroup(b));
+          if (purposeDiff) return purposeDiff;
+        }
+
+        return semanticCompare(a,b);
+      });
     } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)) {
       const order = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
       list.sort((a,b) =>
         order.indexOf(scopeSubgroup(a)) - order.indexOf(scopeSubgroup(b)) ||
-        a.displayName.localeCompare(b.displayName)
+        semanticCompare(a,b)
       );
     } else if (state.area === "Incident Response") {
       list.sort((a,b) =>
         groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
         irRank(a) - irRank(b) ||
-        a.displayName.localeCompare(b.displayName)
+        semanticCompare(a,b)
       );
     } else {
       list.sort((a,b) =>
         groupRank(a.logicalArea,a.group) - groupRank(b.logicalArea,b.group) ||
-        a.displayName.localeCompare(b.displayName)
+        semanticCompare(a,b)
       );
     }
 
@@ -1789,7 +1861,7 @@
             <span>Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</span>
           </p>
 
-          <p>Items are sorted A–Z within each section. Incident Response workflows stay in required execution order.</p>
+          <p>Related items are grouped together within each section, with read-only checks before change actions where practical. Incident Response workflows stay in required execution order.</p>
 
           <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
 
