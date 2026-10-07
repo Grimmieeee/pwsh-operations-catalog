@@ -2046,7 +2046,7 @@
     if (item.type === "Quick Command") return "";
 
     const rows = [
-      ["REQUISITES",requirementInfo(item)],
+      ["REQUIRES",requirementInfo(item)],
       ["INPUT",inputInfo(item)],
       ["SUMMARY",summaryCapability(item)],
       ["CSV",csvCapability(item)]
