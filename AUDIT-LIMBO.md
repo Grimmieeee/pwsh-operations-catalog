@@ -19,24 +19,18 @@ The rule is simple: similarity alone is not enough to remove a tool. A duplicate
 | Mailbox Access Audit | HOLD | Older overlapping mailbox-access card; source is not part of the current canonical baseline. | Review only if a missing access edge case is found. |
 | Bulk Mailbox Access Audit | HOLD | Older bulk mailbox-access card overlapping the current reviewed mailbox tools. | Review only if it contains coverage the current tool lacks. |
 | Bulk Mailbox Forwarding and Permissions Audit | SALVAGE | Broad bulk audit with CSV and summary output, but uses permissive error handling and needs behavior review before replacing anything. | Bulk TXT/CSV input, forwarding + delegate + risky inbox-rule review, export. |
-| group-access-audit-bulk-clean.ps1 | SALVAGE | Useful but mixes groups, rooms, equipment mailboxes, mailbox delegates, and calendar booking delegates in one workflow. | Potential future Exchange Access Review, or split room/resource access logic into a focused tool. |
-| tenant-user-access-audit-clean.ps1 | SALVAGE | Broad tenant audit overlaps focused disabled-user group debt and mailbox-access reviews. Uses permissive error handling and incomplete mailbox permission coverage. | Possible future consolidated Tenant Access Debt Audit after hardening. |
+| group-access-audit-bulk-clean.ps1 | ARCHIVE | The useful room/equipment access logic was extracted into a focused public review; the mixed wrapper no longer has a public job. | Preserved in Room & Resource Access Review. |
+| tenant-user-access-audit-clean.ps1 | ARCHIVE | Its tenant-wide mailbox access job was extracted cleanly, while disabled-user group debt is already covered by focused lifecycle review. | Preserved in Tenant Mailbox Access Audit and existing disabled-user debt tools. |
 | tenant-conditional-access-audit-clean.ps1 | ARCHIVE | Simpler Conditional Access listing/gap audit appears superseded by tenant-cap-gaps-audit-clean.ps1, which adds deeper exclusion/device-code/location/coverage checks. | Revisit only if the simpler output is materially easier to use. |
 | tenant-multifactor-audit-clean.ps1 | ARCHIVE | Earlier MFA registration audit is substantially covered by the newer MFA Security Audit with method-strength classification and optional CA context. | Keep only for behavior archaeology unless an edge case is found. |
 | group-members-audit-bulk-clean.ps1 | HOLD | Entra-only bulk group member audit overlaps the current Bulk Group Members Review. | Compare CSV/reporting behavior and direct-member edge cases before deciding which implementation survives. |
-| jumpbox-disabled-mailbox-access.ps1 | SALVAGE | Older single-user disabled-account cleanup tool combines mailbox permissions, distribution-list context, and optional removal. Too broad/legacy to publish as-is. | Possible source for a focused Disabled User Access Cleanup workflow or improvements to Offboarding. |
+| jumpbox-disabled-mailbox-access.ps1 | ARCHIVE | The useful mailbox-rights cleanup was rebuilt with disabled-account verification, visible scan failures, an explicit plan, and typed confirmation. | Preserved in Disabled User Mailbox Access Cleanup. |
 | resolve-names-to-upns.ps1 | HOLD | Appears alongside bulk-resolve-upns.ps1 in the same Verify-Status folder. Source comparison still needed. | Preserve only if it resolves edge cases the bulk resolver does not. |
 | 2-INVOKE-DISABLE-ACCOUNTS(2).ps1 | REPLACEMENT | Newer account-disable implementation than the current catalog source. | Better authority handling, validation, session revoke, sync state, verified CSV, and ticket-note output. |
 
 ## Focused Extraction Backlog
 
-These are good single-use jobs discovered inside broader or older tools. They are intentionally not public yet because the useful behavior should be rebuilt or extracted cleanly rather than exposing the legacy wrapper.
-
-- User Security Snapshot — one-user overview of identity state, MFA methods, admin roles, group memberships, and recent sign-ins. The old bare-bones snapshot proves the job is useful, but it needs a current public revision.
-- Tenant Security Snapshot — fast high-level tenant overview of users, stale accounts, Conditional Access policy state, admin-role counts, and OAuth grant count. Useful as an overview even though deeper focused audits now exist.
-- Room & Resource Access Review — extract room/equipment mailbox Full Access, BookInPolicy, and ResourceDelegate logic from group-access-audit-bulk-clean.ps1.
-- Tenant Mailbox Access Audit — extract tenant-wide mailbox forwarding, Full Access, and Send As review from tenant-user-access-audit-clean.ps1.
-- Disabled User Access Cleanup — evaluate the useful removal logic in jumpbox-disabled-mailbox-access.ps1 against current Offboarding before deciding whether this deserves its own guarded workflow.
+No current items. The five focused jobs from the previous backlog were rebuilt as public tools in this round.
 
 ## Promoted From Leftovers
 
@@ -50,6 +44,11 @@ These started as outliers or older focused scripts, survived behavior review, an
 - Join Computer to Domain — focused endpoint join workflow with pre-flight checks and typed confirmation.
 - Deploy Printer — focused direct TCP/IP printer deployment.
 - Back Up User Profile — focused local profile-folder backup with dated destination and log.
+- User Security Snapshot — read-only one-user overview of identity state, password age, MFA methods, active admin roles, direct groups, and recent sign-ins.
+- Tenant Security Snapshot — fast read-only tenant overview of users, stale enabled accounts, Conditional Access state, admin-role counts, and delegated OAuth grants.
+- Room & Resource Access Review — focused room/equipment mailbox Full Access, booking-policy, and resource-delegate review.
+- Tenant Mailbox Access Audit — tenant-wide forwarding, Full Access, Send As, and Send on Behalf review with query failures kept visible.
+- Disabled User Mailbox Access Cleanup — guarded post-offboarding cleanup that verifies the account is disabled and requires typed confirmation before removing discovered Full Access or Send As rights.
 
 ## Historical / Archive Lineage
 
