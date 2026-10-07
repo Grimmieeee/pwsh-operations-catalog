@@ -942,6 +942,7 @@
     item &&
     item.status !== "Candidate" &&
     item.status !== "External Reference" &&
+    item.status !== "Private" &&
     item.type !== "Runbook" &&
     item.type !== "Reference" &&
     !SPLIT_COMMAND_ARTIFACTS.has(String(item.name || "")) &&
@@ -1050,6 +1051,15 @@
       return "Identity";
     }
 
+    if (area === "Utility"){
+      if (/sensitive data|sanit|publish/i.test(combined)) return "Publishing";
+      if (/m365|microsoft 365|graph|exchange|session/i.test(combined)) return "Microsoft 365";
+      if (/folder inventory|repository|repo|tree|file map/i.test(combined)) return "Repository";
+      if (/readiness|workstation|terminal|powershell/i.test(combined)) return "Workstation";
+      if (/winget|windows app updates/i.test(combined)) return "WinGet";
+      return "General";
+    }
+
     if (/winget/i.test(combined)) return "WinGet";
     if (/profile|field-kit|jumpbox|session|powershell/i.test(combined)) return "Terminal / Field-Kit";
     return "General";
@@ -1142,19 +1152,34 @@
       ]
     },
     {
-      match:/GET-WINGET-UPDATES|Winget Updates/i,
+      match:/UPDATE-WINDOWS-APPS|Windows App Updates/i,
       label:"DOES",
-      facts:["Shows available upgrades","Confirms before changes","Updates normally eligible packages","Shows remaining upgrades"]
+      facts:["Shows available WinGet upgrades","Supports review-only mode","Confirms before changes","Updates normally eligible packages","Shows remaining upgrades"]
     },
     {
-      match:/GET-TERMINAL-READINESS-CHECK|Terminal Readiness Check/i,
+      match:/TEST-POWERSHELL-READINESS|PowerShell Readiness Check/i,
       label:"CHECKS",
-      facts:["PowerShell version","Execution policy","Jumpbox folders","Code-signing certificate","Script signatures","Cloud modules","Graph / Exchange sessions","Core files"]
+      facts:["PowerShell version","Execution policy","Elevation state","Git and WinGet","PowerShellGet / PSGallery","Graph and Exchange modules","Optional Active Directory module","Active M365 sessions"]
     },
     {
-      match:/INVOKE-SESSION-RESET|Session Reset/i,
+      match:/RESET-M365-SESSION|M365 Session Reset/i,
       label:"DOES",
-      facts:["Disconnects Exchange Online","Disconnects Microsoft Graph","Removes Exchange-related PSSessions","Clears PowerShell error buffer","Optionally resets session password","Optionally launches PowerShell 7"]
+      facts:["Disconnects Exchange Online","Disconnects Microsoft Graph","Removes legacy Exchange PSSessions","Clears the local PowerShell error buffer","Optionally launches a fresh PowerShell 7 window"]
+    },
+    {
+      match:/GET-FOLDER-INVENTORY|Folder Inventory/i,
+      label:"CHECKS",
+      facts:["Folder tree","File map","Per-folder counts","PowerShell script types","Authenticode signature state","Git branch and working-tree status"]
+    },
+    {
+      match:/INSTALL-M365-MODULES|M365 Module Setup/i,
+      label:"DOES",
+      facts:["Installs Microsoft Graph","Installs ExchangeOnlineManagement","Supports Graph / Exchange / Both selection","Uses CurrentUser scope","Does not connect to a tenant"]
+    },
+    {
+      match:/TEST-SENSITIVE-DATA|Sensitive Data Check/i,
+      label:"CHECKS",
+      facts:["Secret-like literals","Private-key / token material","Tenant or app GUIDs","Email addresses / UPNs","URLs and local paths","UNC paths","Authenticode blocks","Optional custom terms"]
     }
   ];
 
@@ -1552,7 +1577,7 @@
       "Mailbox":["Single User","Multi User","General"],
       "Incident Response":["Primary","Investigation","Response","General"],
       "RMM":["Access","Audit","Identity","On / Offboarding","Mailbox","Security"],
-      "Utility":["WinGet","Terminal / Field-Kit","General"],
+      "Utility":["Workstation","Microsoft 365","Repository","Publishing","WinGet","General"],
       "Standalone":["Exchange","Graph","Active Directory","Windows CLI","Network CLI","WinGet","Terminal"],
       "Tools":["Reference","Standards","Templates"]
     };
