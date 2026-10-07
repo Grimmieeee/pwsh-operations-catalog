@@ -585,6 +585,70 @@
       keywords:"windows cli storage cleanup disk settings temp files"
     },
     {
+      name:"Identity and Privileges",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"whoami /all",
+      useFor:"Show the current user, SID, group memberships, token privileges, and elevation context.",
+      keywords:"windows cli whoami identity groups privileges sid admin elevation token"
+    },
+    {
+      name:"Entra Join Status",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"dsregcmd /status",
+      useFor:"Check Entra join, domain join, device registration, PRT, and SSO state.",
+      keywords:"windows cli dsregcmd entra azure ad join prt sso device registration hybrid join"
+    },
+    {
+      name:"Mapped Drives",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"net use",
+      useFor:"Review mapped drives and active SMB connections for the current user.",
+      keywords:"windows cli net use mapped drive smb share network drive"
+    },
+    {
+      name:"Network Profile",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"Get-NetConnectionProfile",
+      useFor:"Check whether Windows sees the current network as Domain, Private, or Public.",
+      keywords:"windows powershell network profile domain private public firewall connection"
+    },
+    {
+      name:"Defender Status",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"Get-MpComputerStatus | Select-Object AMServiceEnabled,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanEndTime,FullScanEndTime",
+      useFor:"Quickly verify Microsoft Defender service, real-time protection, signatures, and recent scan state.",
+      keywords:"windows powershell defender antivirus real time protection signature scan security endpoint"
+    },
+    {
+      name:"Print Jobs",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:'Get-Printer | ForEach-Object { Get-PrintJob -PrinterName $_.Name -ErrorAction SilentlyContinue }',
+      useFor:"Find queued or stuck print jobs across installed printers.",
+      keywords:"windows powershell printer print jobs queue stuck printing"
+    },
+    {
+      name:"Spooler Status",
+      platform:"Local Windows",
+      access:"Read-only",
+      code:"Get-Service Spooler",
+      useFor:"Check whether the Windows Print Spooler service is running.",
+      keywords:"windows powershell printer spooler service printing"
+    },
+    {
+      name:"Connect Microsoft Graph",
+      platform:"Microsoft Graph",
+      access:"Read-only",
+      code:"Connect-MgGraph",
+      useFor:"Start an interactive Microsoft Graph PowerShell session before running Graph commands.",
+      keywords:"graph connect session authentication microsoft graph powershell"
+    },
+    {
       name:"Show Code-Signing Certificates",
       platform:"PowerShell",
       access:"Read-only",
