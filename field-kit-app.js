@@ -1598,7 +1598,11 @@
       return '<span class="result-tag result-change">MAKES CHANGES</span>';
     }
 
-    return '<span class="result-tag result-read">READ ONLY</span>';
+    if (access.includes("read-only") || access.includes("read only") || access.includes("readonly")){
+      return '<span class="result-tag result-read">READ ONLY</span>';
+    }
+
+    return '<span class="result-tag result-change">REVIEW ACCESS</span>';
   }
 
   function moduleLabel(item){
@@ -1884,7 +1888,11 @@
       return '<div class="access-state"><span class="access-tag access-change">MAKES CHANGES</span></div>';
     }
 
-    return '<div class="access-state"><span class="access-tag access-read">READ ONLY</span></div>';
+    if (access.includes("read-only") || access.includes("read only") || access.includes("readonly")) {
+      return '<div class="access-state"><span class="access-tag access-read">READ ONLY</span></div>';
+    }
+
+    return '<div class="access-state"><span class="access-tag access-change">REVIEW ACCESS</span></div>';
   }
 
   function optionMarkup(item){
