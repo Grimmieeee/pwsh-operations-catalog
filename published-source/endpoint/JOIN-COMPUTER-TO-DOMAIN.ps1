@@ -1,5 +1,5 @@
 <#
-endpoint-domain-join-clean.ps1
+JOIN-COMPUTER-TO-DOMAIN.ps1
 
 Endpoint domain join helper.
 
