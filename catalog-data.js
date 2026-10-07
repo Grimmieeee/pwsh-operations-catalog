@@ -3159,7 +3159,9 @@ window.CATALOG_DATA = [
     "keywords": "quarterly cleanup stale inactive accounts hygiene lifecycle review",
     "url": "",
     "_order": 157,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Finds accounts and access that may need cleanup during a quarterly review."
   },
   {
     "name": "Inactive User Review",
@@ -3424,7 +3426,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 170,
     "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows who belongs to a distribution group."
   },
   {
     "name": "Group Members",
@@ -3446,7 +3450,9 @@ window.CATALOG_DATA = [
     "keywords": "group members membership who is in group access membership access group member",
     "url": "",
     "_order": 171,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows who belongs to a Microsoft 365 or Entra group."
   },
   {
     "name": "Bulk Group Members Review",
@@ -3588,7 +3594,9 @@ window.CATALOG_DATA = [
     "keywords": "mailbox permissions delegate full access send as who can access mailbox outlook email mail",
     "url": "",
     "_order": 178,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows who can access a mailbox and how."
   },
   {
     "name": "Bulk Mailbox Permissions Review",
@@ -3630,7 +3638,9 @@ window.CATALOG_DATA = [
     "keywords": "mailbox snapshot forwarding rules hidden rules permissions legacy auth compromised mailbox outlook email mail",
     "url": "",
     "_order": 180,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation."
   },
   {
     "name": "Mailbox Forwarding Check",
@@ -3652,7 +3662,9 @@ window.CATALOG_DATA = [
     "keywords": "mail forwarding email going somewhere else redirect forwarding smtp email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
     "url": "",
     "_order": 181,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows whether a mailbox is forwarding mail and where it goes."
   },
   {
     "name": "Mailbox Access Audit",
@@ -3795,7 +3807,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 188,
     "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Moves email back to the mailbox location you choose after an incident."
   },
   {
     "name": "BEC / Account Compromise Discovery",
@@ -3877,7 +3891,9 @@ window.CATALOG_DATA = [
     "keywords": "exfil exfiltration files download sharepoint onedrive anonymous link data theft security incident suspicious hacked investigation",
     "url": "",
     "_order": 192,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Looks for unusual file activity that could indicate data was copied or taken."
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -3899,7 +3915,9 @@ window.CATALOG_DATA = [
     "keywords": "suspicious ip attacker ip who else affected tenant ip trace ual security incident suspicious hacked investigation",
     "url": "",
     "_order": 193,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Finds tenant activity tied to an IP address."
   },
   {
     "name": "Tenant Email Search",
@@ -3921,7 +3939,9 @@ window.CATALOG_DATA = [
     "keywords": "phishing email search sender recipient source ip who received suspicious message security incident suspicious hacked investigation",
     "url": "",
     "_order": 194,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Searches the tenant for email tied to an address, sender, subject, or other indicator."
   },
   {
     "name": "Threat Intel IP Check",
@@ -3943,7 +3963,9 @@ window.CATALOG_DATA = [
     "keywords": "ip reputation virustotal abuseipdb threat intel malicious ip security incident suspicious hacked investigation",
     "url": "",
     "_order": 195,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Checks an IP address for threat indicators and related tenant activity."
   },
   {
     "name": "Incident Timeline Builder",
@@ -3965,7 +3987,9 @@ window.CATALOG_DATA = [
     "keywords": "incident timeline chronology report close note reconstruct events security incident suspicious hacked investigation",
     "url": "",
     "_order": 196,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Builds a simple incident timeline from collected events."
   },
   {
     "name": "JWT Token Decode",
@@ -3987,7 +4011,9 @@ window.CATALOG_DATA = [
     "keywords": "jwt token decode claims aud issuer scopes auth methods no network security incident suspicious hacked investigation",
     "url": "",
     "_order": 197,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Decodes a JWT locally so you can inspect its claims."
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -4009,7 +4035,9 @@ window.CATALOG_DATA = [
     "keywords": "token replay aitm adversary in the middle stolen token mfa suspicious sign in security incident suspicious hacked investigation",
     "url": "",
     "_order": 198,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack."
   },
   {
     "name": "Tenant Security Hardening",
@@ -4151,7 +4179,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 205,
     "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Shows whether shared mailboxes are being signed into directly."
   },
   {
     "name": "App Registration Audit",
@@ -4173,7 +4203,9 @@ window.CATALOG_DATA = [
     "keywords": "app registrations applications secrets certificates owners audit",
     "url": "",
     "_order": 206,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners."
   },
   {
     "name": "Conditional Access Gaps",
@@ -4215,7 +4247,9 @@ window.CATALOG_DATA = [
     "keywords": "device code flow authentication exposure phishing",
     "url": "",
     "_order": 208,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently."
   },
   {
     "name": "Guest App Consent Audit",
@@ -4237,7 +4271,9 @@ window.CATALOG_DATA = [
     "keywords": "guest users app consent oauth external access",
     "url": "",
     "_order": 209,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Finds guest app consent and access that may need review."
   },
   {
     "name": "MFA Security Audit",
@@ -4259,7 +4295,9 @@ window.CATALOG_DATA = [
     "keywords": "mfa coverage gaps authentication methods stale admins 2fa multifactor authenticator security info phone method authentication method",
     "url": "",
     "_order": 210,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Shows where MFA coverage or registered methods may leave gaps."
   },
   {
     "name": "Secure Score Snapshot",
@@ -4281,7 +4319,9 @@ window.CATALOG_DATA = [
     "keywords": "secure score security score posture snapshot",
     "url": "",
     "_order": 211,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it."
   },
   {
     "name": "Service Principal Owners Audit",
@@ -4303,7 +4343,9 @@ window.CATALOG_DATA = [
     "keywords": "service principal owners enterprise apps ownerless apps",
     "url": "",
     "_order": 212,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Finds service principals with missing or unclear owners."
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4325,7 +4367,9 @@ window.CATALOG_DATA = [
     "keywords": "signin anomalies suspicious login risky sign in impossible travel login logon signin cannot login suspicious login failed login login logon sign-in cannot login suspicious login",
     "url": "",
     "_order": 213,
-    "csv": "YES — EXPORT"
+    "csv": "YES — EXPORT",
+    "summary": "NO",
+    "objective": "Surfaces unusual sign-ins that deserve a closer look."
   },
   {
     "name": "Transport Rules Audit",
@@ -4427,7 +4471,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 218,
     "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Checks whether this computer is ready to run the PowerShell tools."
   },
   {
     "name": "Folder Inventory",
@@ -4449,7 +4495,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 219,
     "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Maps a folder or repo so you can quickly see what is in it and what may need review."
   },
   {
     "name": "M365 Module Setup",
@@ -4471,7 +4519,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 220,
     "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose."
   },
   {
     "name": "Sensitive Data Check",
@@ -4493,7 +4543,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 221,
     "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Finds obvious secrets or internal details before you publish or share files."
   },
   {
     "name": "Hybrid Smoke Test",
@@ -4535,7 +4587,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 223,
     "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Disconnects Graph and Exchange and clears local PowerShell session state."
   },
   {
     "name": "Sign Folder Scripts",
@@ -4699,7 +4753,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 231,
     "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows available app updates and installs them after confirmation."
   },
   {
     "name": "PowerShell Script Template",
@@ -4741,7 +4797,9 @@ window.CATALOG_DATA = [
     "keywords": "predelete pre delete user check groups mailbox before deleting ad object",
     "url": "",
     "_order": 233,
-    "csv": "NO"
+    "csv": "NO",
+    "summary": "NO",
+    "objective": "Shows a user's mailbox, groups, and access before the account is removed."
   },
   {
     "name": "Enforce Per-user MFA",
