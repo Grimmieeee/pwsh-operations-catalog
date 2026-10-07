@@ -3158,7 +3158,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews stale users, inactive access, licensing, groups, and mailbox debt.",
     "keywords": "quarterly cleanup stale inactive accounts hygiene lifecycle review",
     "url": "",
-    "_order": 157
+    "_order": 157,
+    "csv": "NO"
   },
   {
     "name": "Inactive User Review",
@@ -3278,7 +3279,8 @@ window.CATALOG_DATA = [
     "notes": "Disables users from TXT/CSV and can optionally revoke sessions.",
     "keywords": "bulk disable users soft delete terminate accounts csv txt revoke sessions",
     "url": "",
-    "_order": 163
+    "_order": 163,
+    "csv": "YES — INPUT"
   },
   {
     "name": "Bulk Delete User Accounts",
@@ -3358,7 +3360,8 @@ window.CATALOG_DATA = [
     "notes": "Resolves names or email-like input to user principal names.",
     "keywords": "resolve upn names email identify user csv txt lookup",
     "url": "",
-    "_order": 167
+    "_order": 167,
+    "csv": "YES — INPUT"
   },
   {
     "name": "Verify Account Status in Bulk",
@@ -3378,7 +3381,8 @@ window.CATALOG_DATA = [
     "notes": "Checks enabled state, sign-in activity, and license context for many users.",
     "keywords": "bulk account status enabled disabled last sign in stale licenses verify",
     "url": "",
-    "_order": 168
+    "_order": 168,
+    "csv": "YES — INPUT"
   },
   {
     "name": "Find Accounts by Name",
@@ -3419,7 +3423,8 @@ window.CATALOG_DATA = [
     "keywords": "distribution list dl members recipients who receives email group membership access group member",
     "url": "",
     "_order": 170,
-    "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1"
+    "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+    "csv": "NO"
   },
   {
     "name": "Group Members",
@@ -3440,7 +3445,8 @@ window.CATALOG_DATA = [
     "notes": "Shows members of a selected group.",
     "keywords": "group members membership who is in group access membership access group member",
     "url": "",
-    "_order": 171
+    "_order": 171,
+    "csv": "NO"
   },
   {
     "name": "Bulk Group Members Review",
@@ -3581,7 +3587,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews delegated mailbox access such as Full Access and Send As.",
     "keywords": "mailbox permissions delegate full access send as who can access mailbox outlook email mail",
     "url": "",
-    "_order": 178
+    "_order": 178,
+    "csv": "NO"
   },
   {
     "name": "Bulk Mailbox Permissions Review",
@@ -3622,7 +3629,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews forwarding, inbox rules, permissions, and legacy protocol state.",
     "keywords": "mailbox snapshot forwarding rules hidden rules permissions legacy auth compromised mailbox outlook email mail",
     "url": "",
-    "_order": 180
+    "_order": 180,
+    "csv": "NO"
   },
   {
     "name": "Mailbox Forwarding Check",
@@ -3643,7 +3651,8 @@ window.CATALOG_DATA = [
     "notes": "Checks mailbox-level forwarding for one user.",
     "keywords": "mail forwarding email going somewhere else redirect forwarding smtp email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
     "url": "",
-    "_order": 181
+    "_order": 181,
+    "csv": "NO"
   },
   {
     "name": "Mailbox Access Audit",
@@ -3683,7 +3692,8 @@ window.CATALOG_DATA = [
     "notes": "Runs mailbox access review across a UPN list.",
     "keywords": "bulk mailbox audit permissions transport rules csv outlook email mail",
     "url": "",
-    "_order": 183
+    "_order": 183,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Mailbox Forwarding and Permission Audit",
@@ -3784,7 +3794,8 @@ window.CATALOG_DATA = [
     "keywords": "restore moved hidden email rss deleted items recover messages inbox outlook email mail",
     "url": "",
     "_order": 188,
-    "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1"
+    "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
+    "csv": "NO"
   },
   {
     "name": "BEC / Account Compromise Discovery",
@@ -3865,7 +3876,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews SharePoint/OneDrive activity for possible download, sharing, or exfiltration behavior.",
     "keywords": "exfil exfiltration files download sharepoint onedrive anonymous link data theft security incident suspicious hacked investigation",
     "url": "",
-    "_order": 192
+    "_order": 192,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -3886,7 +3898,8 @@ window.CATALOG_DATA = [
     "notes": "Pivots on a source IP across tenant audit activity.",
     "keywords": "suspicious ip attacker ip who else affected tenant ip trace ual security incident suspicious hacked investigation",
     "url": "",
-    "_order": 193
+    "_order": 193,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Tenant Email Search",
@@ -3907,7 +3920,8 @@ window.CATALOG_DATA = [
     "notes": "Searches tenant message trace by sender, recipient, source IP, or combination.",
     "keywords": "phishing email search sender recipient source ip who received suspicious message security incident suspicious hacked investigation",
     "url": "",
-    "_order": 194
+    "_order": 194,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Threat Intel IP Check",
@@ -3928,7 +3942,8 @@ window.CATALOG_DATA = [
     "notes": "Adds reputation context to suspicious IP addresses.",
     "keywords": "ip reputation virustotal abuseipdb threat intel malicious ip security incident suspicious hacked investigation",
     "url": "",
-    "_order": 195
+    "_order": 195,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Incident Timeline Builder",
@@ -3949,7 +3964,8 @@ window.CATALOG_DATA = [
     "notes": "Builds a simple chronology from IR notes, logs, JSON, or manual entries.",
     "keywords": "incident timeline chronology report close note reconstruct events security incident suspicious hacked investigation",
     "url": "",
-    "_order": 196
+    "_order": 196,
+    "csv": "NO"
   },
   {
     "name": "JWT Token Decode",
@@ -3970,7 +3986,8 @@ window.CATALOG_DATA = [
     "notes": "Decodes JWT header/payload locally for claim inspection.",
     "keywords": "jwt token decode claims aud issuer scopes auth methods no network security incident suspicious hacked investigation",
     "url": "",
-    "_order": 197
+    "_order": 197,
+    "csv": "NO"
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -3991,7 +4008,8 @@ window.CATALOG_DATA = [
     "notes": "Looks for suspicious sign-in patterns consistent with token replay/AiTM.",
     "keywords": "token replay aitm adversary in the middle stolen token mfa suspicious sign in security incident suspicious hacked investigation",
     "url": "",
-    "_order": 198
+    "_order": 198,
+    "csv": "NO"
   },
   {
     "name": "Tenant Security Hardening",
@@ -4132,7 +4150,8 @@ window.CATALOG_DATA = [
     "keywords": "shared mailbox signin direct login audit risk login logon signin cannot login suspicious login failed login login logon sign-in cannot login suspicious login outlook email mail",
     "url": "",
     "_order": 205,
-    "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1"
+    "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+    "csv": "YES — EXPORT"
   },
   {
     "name": "App Registration Audit",
@@ -4153,7 +4172,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews app registrations and related security posture.",
     "keywords": "app registrations applications secrets certificates owners audit",
     "url": "",
-    "_order": 206
+    "_order": 206,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Conditional Access Gaps",
@@ -4194,7 +4214,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews device-code authentication exposure.",
     "keywords": "device code flow authentication exposure phishing",
     "url": "",
-    "_order": 208
+    "_order": 208,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Guest App Consent Audit",
@@ -4215,7 +4236,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews guest/application consent exposure.",
     "keywords": "guest users app consent oauth external access",
     "url": "",
-    "_order": 209
+    "_order": 209,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "MFA Security Audit",
@@ -4236,7 +4258,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews MFA coverage and security gaps.",
     "keywords": "mfa coverage gaps authentication methods stale admins 2fa multifactor authenticator security info phone method authentication method",
     "url": "",
-    "_order": 210
+    "_order": 210,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Secure Score Snapshot",
@@ -4257,7 +4280,8 @@ window.CATALOG_DATA = [
     "notes": "Captures Microsoft Secure Score posture.",
     "keywords": "secure score security score posture snapshot",
     "url": "",
-    "_order": 211
+    "_order": 211,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Service Principal Owners Audit",
@@ -4278,7 +4302,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews enterprise/service principal ownership.",
     "keywords": "service principal owners enterprise apps ownerless apps",
     "url": "",
-    "_order": 212
+    "_order": 212,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4299,7 +4324,8 @@ window.CATALOG_DATA = [
     "notes": "Reviews suspicious or anomalous tenant sign-ins.",
     "keywords": "signin anomalies suspicious login risky sign in impossible travel login logon signin cannot login suspicious login failed login login logon sign-in cannot login suspicious login",
     "url": "",
-    "_order": 213
+    "_order": 213,
+    "csv": "YES — EXPORT"
   },
   {
     "name": "Transport Rules Audit",
@@ -4400,7 +4426,8 @@ window.CATALOG_DATA = [
     "keywords": "powershell readiness preflight workstation terminal git winget graph exchange exo module execution policy admin",
     "url": "",
     "_order": 218,
-    "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1"
+    "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
+    "csv": "NO"
   },
   {
     "name": "Folder Inventory",
@@ -4421,7 +4448,8 @@ window.CATALOG_DATA = [
     "keywords": "folder inventory repo repository tree files map signatures git status powershell scripts",
     "url": "",
     "_order": 219,
-    "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1"
+    "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
+    "csv": "NO"
   },
   {
     "name": "M365 Module Setup",
@@ -4442,7 +4470,8 @@ window.CATALOG_DATA = [
     "keywords": "m365 module setup install graph exchange exo powershell currentuser psgallery",
     "url": "",
     "_order": 220,
-    "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1"
+    "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
+    "csv": "NO"
   },
   {
     "name": "Sensitive Data Check",
@@ -4463,7 +4492,8 @@ window.CATALOG_DATA = [
     "keywords": "sensitive data check sanitize sanitization public publish source secrets credentials tenant app id guid email url path signature",
     "url": "",
     "_order": 221,
-    "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1"
+    "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
+    "csv": "NO"
   },
   {
     "name": "Hybrid Smoke Test",
@@ -4504,7 +4534,8 @@ window.CATALOG_DATA = [
     "keywords": "m365 session reset disconnect graph exchange exo powershell clean shell auth",
     "url": "",
     "_order": 223,
-    "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1"
+    "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
+    "csv": "NO"
   },
   {
     "name": "Sign Folder Scripts",
@@ -4604,7 +4635,8 @@ window.CATALOG_DATA = [
     "notes": "Merges related CSV output files.",
     "keywords": "csv combine merge reports spreadsheet output files jumpbox powershell helper setup",
     "url": "",
-    "_order": 228
+    "_order": 228,
+    "csv": "YES — INPUT"
   },
   {
     "name": "Send Bulk Graph Email",
@@ -4624,7 +4656,8 @@ window.CATALOG_DATA = [
     "notes": "Sends plain-text mail from a CSV/UPN list through Graph.",
     "keywords": "bulk email send graph csv mail users message jumpbox powershell helper setup",
     "url": "",
-    "_order": 229
+    "_order": 229,
+    "csv": "YES — INPUT"
   },
   {
     "name": "Show Folder Tree",
@@ -4665,7 +4698,8 @@ window.CATALOG_DATA = [
     "keywords": "windows app updates winget upgrade software packages review update",
     "url": "",
     "_order": 231,
-    "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1"
+    "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
+    "csv": "NO"
   },
   {
     "name": "PowerShell Script Template",
@@ -4706,7 +4740,8 @@ window.CATALOG_DATA = [
     "notes": "Checks cloud-side behavior/relationships before removing an AD user object.",
     "keywords": "predelete pre delete user check groups mailbox before deleting ad object",
     "url": "",
-    "_order": 233
+    "_order": 233,
+    "csv": "NO"
   },
   {
     "name": "Enforce Per-user MFA",
