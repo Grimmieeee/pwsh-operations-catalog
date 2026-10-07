@@ -1981,24 +1981,29 @@
     `;
   }
 
+  function objectiveMarkup(item){
+    if (item.type === "Quick Command") return "";
+    const objective = String(item.objective || "").trim();
+    if (!objective) return "";
+
+    return `
+      <section class="objective-block">
+        <div class="section-label">OBJECTIVE</div>
+        <div class="objective-copy">${esc(objective)}</div>
+      </section>
+    `;
+  }
+
   function shortNote(item){
     if (item.type === "Quick Command") return "";
     const curated = curatedMeta(item);
-    const note = String(item.objective || curated?.note || item.notes || "").trim();
+    const note = String(curated?.note || item.notes || "").trim();
     if (!note) return "";
     return `<div class="note-block">${esc(note)}</div>`;
   }
 
   function csvCapability(item){
-    const explicit = String(item.csv || "").trim();
-
-    // Only surface CSV when the tool actually produces CSV output.
-    if (/EXPORT/i.test(explicit)) return "YES";
-
-    const output = [item.output,item.notes,item.code].join(" ");
-    const hasExport = /Export-Csv|ConvertTo-Csv|export.*csv|csv\s*\/\s*report|output.*csv/i.test(output);
-
-    return hasExport ? "YES" : "";
+    return /^YES$/i.test(String(item.csv || "").trim()) ? "YES" : "";
   }
 
   function summaryCapability(item){
@@ -2100,13 +2105,14 @@
         ${accessMarkup(item)}
       </section>
 
-      ${connectMarkup(item)}
+      ${objectiveMarkup(item)}
       ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
       ${useForMarkup(item)}
       ${shortNote(item)}
+      ${connectMarkup(item)}
       ${standaloneCommandMarkup(item)}
 
       <div class="actions">
