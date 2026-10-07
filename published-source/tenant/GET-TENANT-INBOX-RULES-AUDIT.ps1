@@ -1,5 +1,5 @@
 <#
-tenant-mail-rules-audit-clean.ps1
+GET-TENANT-INBOX-RULES-AUDIT.ps1
 
 Read-only tenant mailbox inbox rules audit.
 
