@@ -1697,6 +1697,10 @@
   }
 
   function scopeTag(item){
+    // Scope is already obvious while browsing grouped sections.
+    // Only show it when global search mixes scopes together.
+    if (!state.query.trim()) return "";
+
     const bucket = primaryBucket(item);
     const labels = {
       "Single User":"SINGLE USER",
