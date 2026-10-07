@@ -1539,7 +1539,7 @@
 
   const SCOPE_OVERRIDES = [
     {scope:"Tenant Wide", match:/Quarterly Account Cleanup|Inactive User Review|Disabled User Group Debt|Disabled User Mailbox Debt|Distribution Group Inventory|Teams and M365 Group Owners|Transport Rules Audit|Shared Mailbox Sign-in Audit/i},
-    {scope:"Multi User", match:/Create Dynamic License Group|Distribution Group Members|^Group Members$/i}
+    {scope:"Multi User", match:/Create Dynamic License Group|Distribution Group Members|^Group Members$|Mailbox Permissions Review/i}
   ];
 
   function primaryBucket(item){
