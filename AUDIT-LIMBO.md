@@ -21,17 +21,25 @@ The rule is simple: similarity alone is not enough to remove a tool. A duplicate
 | Bulk Mailbox Forwarding and Permissions Audit | SALVAGE | Broad bulk audit with CSV and summary output, but uses permissive error handling and needs behavior review before replacing anything. | Bulk TXT/CSV input, forwarding + delegate + risky inbox-rule review, export. |
 | group-access-audit-bulk-clean.ps1 | SALVAGE | Useful but mixes groups, rooms, equipment mailboxes, mailbox delegates, and calendar booking delegates in one workflow. | Potential future Exchange Access Review, or split room/resource access logic into a focused tool. |
 | tenant-user-access-audit-clean.ps1 | SALVAGE | Broad tenant audit overlaps focused disabled-user group debt and mailbox-access reviews. Uses permissive error handling and incomplete mailbox permission coverage. | Possible future consolidated Tenant Access Debt Audit after hardening. |
-| tenant-admin-roles-audit-clean.ps1 | SALVAGE | Not currently public. Distinct from Quarterly Account Cleanup because it reviews individual active admin-role assignments with user status, hybrid state, and sign-in context. | Potential focused Admin Role Audit. |
-| tenant-oauth-audit-clean.ps1 | SALVAGE | Not currently public. Reviews delegated OAuth grants and risky scopes; not the same job as app-registration or guest-consent review. | Potential OAuth Consent Audit after source-hardening review. |
-| tenant-guest-audit-clean.ps1 | SALVAGE | Not currently public. Reviews stale/disabled guests, unaccepted invitations, and guest admin-role exposure. | Potential Guest User Hygiene Audit. |
-| tenant-licensing-audit-clean.ps1 | SALVAGE | Not currently public. Reviews tenant SKUs plus disabled licensed users and unlicensed enabled users. | Potential Tenant Licensing Audit; complements rather than duplicates license assignment/removal tools. |
 | tenant-conditional-access-audit-clean.ps1 | ARCHIVE | Simpler Conditional Access listing/gap audit appears superseded by tenant-cap-gaps-audit-clean.ps1, which adds deeper exclusion/device-code/location/coverage checks. | Revisit only if the simpler output is materially easier to use. |
 | tenant-multifactor-audit-clean.ps1 | ARCHIVE | Earlier MFA registration audit is substantially covered by the newer MFA Security Audit with method-strength classification and optional CA context. | Keep only for behavior archaeology unless an edge case is found. |
-| tenant-mail-rules-audit-clean.ps1 | SALVAGE | Not currently public. Tenant-wide inbox-rule review with suspicious-only mode and optional shared-mailbox coverage is a distinct job from transport-rule auditing. | Potential Tenant Inbox Rules Audit after hardening and overlap review with mailbox/IR tools. |
 | group-members-audit-bulk-clean.ps1 | HOLD | Entra-only bulk group member audit overlaps the current Bulk Group Members Review. | Compare CSV/reporting behavior and direct-member edge cases before deciding which implementation survives. |
 | jumpbox-disabled-mailbox-access.ps1 | SALVAGE | Older single-user disabled-account cleanup tool combines mailbox permissions, distribution-list context, and optional removal. Too broad/legacy to publish as-is. | Possible source for a focused Disabled User Access Cleanup workflow or improvements to Offboarding. |
 | resolve-names-to-upns.ps1 | HOLD | Appears alongside bulk-resolve-upns.ps1 in the same Verify-Status folder. Source comparison still needed. | Preserve only if it resolves edge cases the bulk resolver does not. |
 | 2-INVOKE-DISABLE-ACCOUNTS(2).ps1 | REPLACEMENT | Newer account-disable implementation than the current catalog source. | Better authority handling, validation, session revoke, sync state, verified CSV, and ticket-note output. |
+
+## Promoted From Leftovers
+
+These started as outliers or older focused scripts, survived behavior review, and now have a defensible public job.
+
+- Admin Role Audit — active Entra admin-role assignments with disabled/stale account context.
+- OAuth Consent Audit — delegated OAuth grants and risky scopes.
+- Guest User Hygiene Audit — stale, disabled, unused, or unaccepted guest accounts.
+- Tenant Licensing Audit — SKU usage plus disabled-licensed and enabled-unlicensed users.
+- Tenant Inbox Rules Audit — tenant-wide inbox-rule review with shared-mailbox and suspicious-only options.
+- Join Computer to Domain — focused endpoint join workflow with pre-flight checks and typed confirmation.
+- Deploy Printer — focused direct TCP/IP printer deployment.
+- Back Up User Profile — focused local profile-folder backup with dated destination and log.
 
 ## Historical / Archive Lineage
 
