@@ -1891,15 +1891,15 @@
   function connectMarkup(item){
     if (!item.connect.length) return "";
     return `
-      <section class="connect-block">
-        <div class="section-label">CONNECT</div>
+      <div class="run-connect">
+        <div class="run-info-subhead">CONNECT</div>
         ${item.connect.map(cmd => `
           <div class="connect-line">
             <code>${esc(cmd)}</code>
             <button class="copy-mini" type="button" data-copy="${esc(cmd)}">COPY</button>
           </div>
         `).join("")}
-      </section>
+      </div>
     `;
   }
 
@@ -1924,15 +1924,53 @@
     `;
   }
 
+  function comparableAction(value){
+    return norm(value)
+      .split(" ")
+      .map(word => {
+        if (/^(?:shows|checks|finds|moves|builds|reviews|removes|adds|updates|installs|disconnects|enforces|targets)$/.test(word)){
+          return word.replace(/(?:es|s)$/,"");
+        }
+        return word;
+      })
+      .join(" ");
+  }
+
+  function displayFacts(item){
+    const facts = Array.isArray(item.facts?.items) ? item.facts.items : [];
+    const bucket = primaryBucket(item);
+    const title = comparableAction(item.displayName);
+
+    return facts.filter(value => {
+      const text = String(value || "").trim();
+      const normalized = norm(text);
+      if (!normalized) return false;
+
+      // Requirements belong in RUN INFO.
+      if (/^requires?\b/i.test(text)) return false;
+
+      // Scope is already shown in the card context.
+      if (bucket === "Single User" && /^(?:targets?\s+)?(?:one|single)\s+user\b/i.test(text)) return false;
+      if (bucket === "Multi User" && /^(?:targets?\s+)?(?:multiple|many)\s+users?\b/i.test(text)) return false;
+      if (bucket === "Tenant Wide" && /^(?:targets?\s+)?tenant(?:[- ]wide)?\b/i.test(text)) return false;
+
+      // Don't repeat the card title as a DOES/CHECKS line.
+      if (title && comparableAction(text) === title) return false;
+
+      return true;
+    });
+  }
+
   function factsMarkup(item){
-    if (!item.facts?.items?.length) return "";
+    const facts = displayFacts(item);
+    if (!facts.length) return "";
     const label = item.facts.label || "CHECKS";
     const doesClass = label === "DOES" ? " does-list" : "";
     return `
       <section class="check-block">
         <div class="section-label">${esc(label)}</div>
         <div class="check-list${doesClass}">
-          ${item.facts.items.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
+          ${facts.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
         </div>
       </section>
     `;
@@ -1995,11 +2033,7 @@
   }
 
   function shortNote(item){
-    if (item.type === "Quick Command") return "";
-    const curated = curatedMeta(item);
-    const note = String(curated?.note || item.notes || "").trim();
-    if (!note) return "";
-    return `<div class="note-block">${esc(note)}</div>`;
+    return "";
   }
 
   function csvCapability(item){
@@ -2040,22 +2074,26 @@
       ["CSV",csvCapability(item)]
     ].filter(([,value]) => String(value || "").trim());
 
-    if (!rows.length) return "";
+    const connect = connectMarkup(item);
+    if (!rows.length && !connect) return "";
 
     return `
       <section class="run-info-block">
         <div class="section-label">RUN INFO</div>
-        <div class="run-info-grid">
-          ${rows.map(([label,value]) => {
-            const yes = /^(?:YES|READY)/i.test(String(value));
-            return `
-              <div class="run-info-row">
-                <span class="run-info-label">${esc(label)}</span>
-                <span class="run-info-value ${yes ? "run-info-yes" : ""}">${esc(value)}</span>
-              </div>
-            `;
-          }).join("")}
-        </div>
+        ${rows.length ? `
+          <div class="run-info-grid">
+            ${rows.map(([label,value]) => {
+              const yes = /^(?:YES|READY)/i.test(String(value));
+              return `
+                <div class="run-info-row">
+                  <span class="run-info-label">${esc(label)}</span>
+                  <span class="run-info-value ${yes ? "run-info-yes" : ""}">${esc(value)}</span>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        ` : ""}
+        ${connect}
       </section>
     `;
   }
@@ -2112,7 +2150,6 @@
       ${factsMarkup(item)}
       ${useForMarkup(item)}
       ${shortNote(item)}
-      ${connectMarkup(item)}
       ${standaloneCommandMarkup(item)}
 
       <div class="actions">
