@@ -9,12 +9,13 @@
     "Multi User",
     "Tenant Wide",
     "Incident Response",
-    "RMM",
     "Utility",
     "Standalone",
     "Tools",
     "About"
   ];
+
+  const INCIDENT_SOURCES = ["PowerShell","RMM"];
 
   const STANDALONE_GROUPS = [
     "Exchange",
@@ -836,88 +837,28 @@
 
   const EXTRA_RMM = [
     {
-      name:"M365 User Quick View",
-      type:"Tool",
-      area:"RMM",
-      subarea:"Identity",
-      platform:"Datto RMM + Microsoft 365",
-      access:"Read-only",
-      status:"Ready",
-      source:"RMM",
-      file:"M365-USER-QUICK-VIEW-v1.2-CHR.ps1",
-      keywords:"rmm datto m365 user quick view identity mailbox mfa"
-    },
-    {
-      name:"RMM Group Management",
-      type:"Tool",
-      area:"RMM",
-      subarea:"Access",
-      platform:"Datto RMM + Microsoft 365",
-      access:"Change",
-      status:"Ready",
-      source:"RMM",
-      file:"RMM-GROUP-MANAGEMENT-v0.5.ps1",
-      keywords:"rmm datto access groups membership"
-    },
-    {
-      name:"RMM User Group Review",
-      type:"Tool",
-      area:"RMM",
-      subarea:"Access",
-      platform:"Datto RMM + Microsoft 365",
-      access:"Read-only",
-      status:"Ready",
-      source:"RMM",
-      file:"RMM-USER-GROUP-REVIEW-v1.0.ps1",
-      keywords:"rmm datto access groups membership review"
-    },
-    {
-      name:"RMM User Onboarding Summary",
-      type:"Automation",
-      area:"RMM",
-      subarea:"On / Offboarding",
-      platform:"Datto RMM + Microsoft 365",
-      access:"Read-only",
-      status:"Ready",
-      source:"RMM",
-      file:"RMM-USER-ONBOARDING-SUMMARY-v1.1.ps1",
-      keywords:"rmm datto onboarding user summary"
-    },
-    {
-      name:"RMM User Offboarding Summary",
-      type:"Automation",
-      area:"RMM",
-      subarea:"On / Offboarding",
-      platform:"Datto RMM + Microsoft 365",
-      access:"Read-only",
-      status:"Ready",
-      source:"RMM",
-      file:"RMM-USER-OFFBOARDING-SUMMARY-v1.0.ps1",
-      keywords:"rmm datto offboarding user summary"
-    },
-    {
       name:"RMM BEC Risk Exposure Snapshot",
       type:"Tool",
-      area:"RMM",
-      subarea:"Security",
+      area:"Incident Response",
+      subarea:"RMM",
       platform:"Datto RMM + Microsoft 365",
       access:"Read-only",
       status:"Ready",
       source:"RMM",
       file:"BEC-IR-M365-RISK-EXPOSURE-SNAPSHOT-v0.32-CHR.ps1",
-      keywords:"rmm datto bec risk exposure security"
+      keywords:"rmm datto bec risk exposure security incident response"
     },
     {
       name:"RMM BEC Revoke Active Sessions",
       type:"Tool",
-      area:"RMM",
-      subarea:"Security",
+      area:"Incident Response",
+      subarea:"RMM",
       platform:"Datto RMM + Microsoft 365",
       access:"Change",
       status:"Ready",
       source:"RMM",
       file:"BEC-IR-REVOKE-ACTIVE-SESSIONS-v2.0-CHR.ps1",
-      keywords:"rmm datto bec active sessions security"
+      keywords:"rmm datto bec active sessions revoke security incident response"
     }
   ].map((x, i) => ({
     ...x,
@@ -974,9 +915,9 @@
   function logicalArea(item){
     if (item.area === "Tools") return "Tools";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
+    if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
     if (isRmm(item)) return "RMM";
     if (item.type === "Quick Command" || item.area === "Standalone") return "Standalone";
-    if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
     if (/mailbox/i.test(item.area || "")) return "Mailbox";
     if (/identity|groups|reporting\s*\/\s*audit/i.test(item.area || "")) return "Identity";
     if (/utilities|endpoint|network/i.test(item.area || "")) return "Utility";
@@ -1336,6 +1277,8 @@
 
   const state = {
     area:"Full Library",
+    incidentSource:"",
+    incidentOpen:false,
     standaloneGroup:"",
     standaloneOpen:false,
     query:"",
@@ -1375,21 +1318,54 @@
     return ITEMS.filter(item => primaryBucket(item) === "Standalone" && (item.group || "General") === group).length;
   }
 
+  function incidentSource(item){
+    return isRmm(item) ? "RMM" : "PowerShell";
+  }
+
+  function countIncidentSource(source){
+    return ITEMS.filter(item => primaryBucket(item) === "Incident Response" && incidentSource(item) === source).length;
+  }
+
   function navButton(area){
     const active = state.area === area;
     const isStandalone = area === "Standalone";
+    const isIncident = area === "Incident Response";
+    const expandable = isStandalone || isIncident;
+    const expanded = isStandalone
+      ? (active && state.standaloneOpen)
+      : isIncident
+        ? (active && state.incidentOpen)
+        : false;
     const label = areaLabel(area);
 
-    const expanded = isStandalone && active && state.standaloneOpen;
-
     const parent = `
-      <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${isStandalone ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${isStandalone ? String(expanded) : "false"}">
-        <span class="area-label">${esc(label)}${isStandalone ? '<span class="nav-caret">▾</span>' : ""}</span>
+      <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
+        <span class="area-label">${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
         <span class="area-count">${countArea(area)}</span>
       </button>
     `;
 
     if (!expanded) return parent;
+
+    if (isIncident){
+      const sources = INCIDENT_SOURCES
+        .map(source => ({source,count:countIncidentSource(source)}))
+        .filter(entry => entry.count > 0);
+
+      const allActive = !state.incidentSource;
+      const children = [
+        `<button class="area-sub-button ${allActive ? "active" : ""}" data-incident-source="" type="button">
+            <span>All Incident Response</span><span class="area-count">${countArea("Incident Response")}</span>
+          </button>`,
+        ...sources.map(({source,count}) => `
+          <button class="area-sub-button ${state.incidentSource === source ? "active" : ""}" data-incident-source="${esc(source)}" type="button">
+            <span>${esc(source)}</span><span class="area-count">${count}</span>
+          </button>
+        `)
+      ].join("");
+
+      return parent + `<div class="area-subnav">${children}</div>`;
+    }
 
     const groups = STANDALONE_GROUPS
       .map(group => ({group,count:countStandaloneGroup(group)}))
@@ -1421,7 +1397,7 @@
     areaNav.innerHTML = [
       '<div class="nav-primary">' + navButton("Full Library") + '</div>',
       navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
-      navSection("Operations", ["Incident Response","RMM","Utility","Standalone"]),
+      navSection("Operations", ["Incident Response","Utility","Standalone"]),
       navSection("Reference", ["Tools"]),
       '<div class="nav-bottom">' + navButton("About") + '</div>'
     ].join("");
@@ -1561,7 +1537,6 @@
   function primaryBucket(item){
     if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Incident Response") return "Incident Response";
-    if (item.logicalArea === "RMM") return "RMM";
     if (item.logicalArea === "Utility") return "Utility";
     if (item.logicalArea === "Tools") return "Tools";
 
@@ -1611,6 +1586,10 @@
     } else {
       list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
 
+      if (state.area === "Incident Response" && state.incidentSource){
+        list = list.filter(item => incidentSource(item) === state.incidentSource);
+      }
+
       if (state.area === "Standalone" && state.standaloneGroup){
         list = list.filter(item => (item.group || "General") === state.standaloneGroup);
       }
@@ -1650,7 +1629,7 @@
   }
 
   function areaRank(area){
-    const order = ["Identity","Mailbox","Incident Response","RMM","Utility","Standalone","Tools"];
+    const order = ["Identity","Mailbox","Incident Response","Utility","Standalone","Tools"];
     const idx = order.indexOf(area);
     return idx === -1 ? 99 : idx;
   }
@@ -1660,7 +1639,6 @@
       "Identity":["Single User","Multi User","Tenant","General"],
       "Mailbox":["Single User","Multi User","General"],
       "Incident Response":["Primary","Investigation","Response","General"],
-      "RMM":["Access","Audit","Identity","On / Offboarding","Mailbox","Security"],
       "Utility":["Workstation","Microsoft 365","Repository","Publishing","WinGet","General"],
       "Standalone":["Exchange","Graph","Active Directory","Windows CLI","Network CLI","WinGet","Terminal"],
       "Tools":["Reference","Standards","Templates"]
@@ -1823,13 +1801,15 @@
     entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
-    const standaloneContext = state.area === "Standalone" && state.standaloneGroup
+    const browseContext = state.area === "Standalone" && state.standaloneGroup
       ? `QUICK COMMANDS / ${state.standaloneGroup.toUpperCase()}`
-      : areaLabel(state.area).toUpperCase();
+      : state.area === "Incident Response" && state.incidentSource
+        ? `INCIDENT RESPONSE / ${state.incidentSource.toUpperCase()}`
+        : areaLabel(state.area).toUpperCase();
 
     contextBar.textContent = queryActive
       ? "SEARCH / ALL SECTIONS"
-      : standaloneContext;
+      : browseContext;
 
     if (!queryActive){
       let sections;
@@ -2294,7 +2274,7 @@
 
   function runFrameworkAudit(){
     const issues = [];
-    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone","Tools"]);
+    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","Utility","Standalone","Tools"]);
     const allowedPurpose = new Set(["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]);
     const seen = new Set();
 
@@ -2339,7 +2319,7 @@
       }
     }
 
-    for (const area of ["RMM","Utility","Standalone","Tools"]){
+    for (const area of ["Incident Response","Utility","Standalone","Tools"]){
       const groups = [...new Set(ITEMS.filter(item => primaryBucket(item) === area).map(item => item.group || "General"))];
       for (const group of groups){
         const subset = ITEMS
@@ -2364,11 +2344,26 @@
   }
 
   areaNav.addEventListener("click", event => {
+    const incidentSubgroup = event.target.closest("[data-incident-source]");
+    if (incidentSubgroup){
+      state.area = "Incident Response";
+      state.incidentSource = incidentSubgroup.getAttribute("data-incident-source") || "";
+      state.incidentOpen = true;
+      state.standaloneGroup = "";
+      state.standaloneOpen = false;
+      renderNav();
+      renderResults();
+      closeNav();
+      return;
+    }
+
     const subgroup = event.target.closest("[data-standalone-group]");
     if (subgroup){
       state.area = "Standalone";
       state.standaloneGroup = subgroup.getAttribute("data-standalone-group") || "";
       state.standaloneOpen = true;
+      state.incidentSource = "";
+      state.incidentOpen = false;
       renderNav();
       renderResults();
       closeNav();
@@ -2380,6 +2375,24 @@
 
     const nextArea = btn.getAttribute("data-area") || "Full Library";
 
+    if (nextArea === "Incident Response"){
+      if (state.area === "Incident Response"){
+        state.incidentOpen = !state.incidentOpen;
+        renderNav();
+        return;
+      }
+
+      state.area = "Incident Response";
+      state.incidentSource = "";
+      state.incidentOpen = true;
+      state.standaloneGroup = "";
+      state.standaloneOpen = false;
+      renderNav();
+      renderResults();
+      closeNav();
+      return;
+    }
+
     if (nextArea === "Standalone"){
       if (state.area === "Standalone"){
         state.standaloneOpen = !state.standaloneOpen;
@@ -2390,6 +2403,8 @@
       state.area = "Standalone";
       state.standaloneGroup = "";
       state.standaloneOpen = true;
+      state.incidentSource = "";
+      state.incidentOpen = false;
       renderNav();
       renderResults();
       closeNav();
@@ -2397,6 +2412,8 @@
     }
 
     state.area = nextArea;
+    state.incidentSource = "";
+    state.incidentOpen = false;
     state.standaloneGroup = "";
     state.standaloneOpen = false;
     renderNav();
