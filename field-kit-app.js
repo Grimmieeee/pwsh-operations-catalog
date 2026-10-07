@@ -1513,6 +1513,7 @@
 
     const weak = words([
       item.platform,
+      item.objective,
       item.notes,
       item.output,
       item.input,
@@ -2000,7 +2001,7 @@
   function shortNote(item){
     if (item.type === "Quick Command") return "";
     const curated = curatedMeta(item);
-    const note = String(curated?.note || item.notes || "").trim();
+    const note = String(item.objective || curated?.note || item.notes || "").trim();
     if (!note) return "";
     return `<div class="note-block">${esc(note)}</div>`;
   }
@@ -2020,15 +2021,19 @@
     return "NO";
   }
 
+  function summaryCapability(item){
+    const explicit = String(item.summary || "").trim();
+    return explicit || "NO";
+  }
+
   function runInfoMarkup(item){
     if (item.type === "Quick Command") return "";
 
     const rows = [
-      ["FILE",item.file],
       ["CSV",csvCapability(item)],
+      ["SUMMARY",summaryCapability(item)],
       ["REQUIRES",item.requires],
-      ["INPUT",item.input],
-      ["OUTPUT",item.output]
+      ["INPUT",item.input]
     ].filter(([,value]) => String(value || "").trim());
 
     if (!rows.length) return "";
@@ -2037,12 +2042,15 @@
       <section class="run-info-block">
         <div class="section-label">RUN INFO</div>
         <div class="run-info-grid">
-          ${rows.map(([label,value]) => `
-            <div class="run-info-row">
-              <span class="run-info-label">${esc(label)}</span>
-              <span class="run-info-value ${label === "CSV" && /^YES/i.test(String(value)) ? "run-info-yes" : ""}">${esc(value)}</span>
-            </div>
-          `).join("")}
+          ${rows.map(([label,value]) => {
+            const yes = /^(?:YES|READY)/i.test(String(value));
+            return `
+              <div class="run-info-row">
+                <span class="run-info-label">${esc(label)}</span>
+                <span class="run-info-value ${yes ? "run-info-yes" : ""}">${esc(value)}</span>
+              </div>
+            `;
+          }).join("")}
         </div>
       </section>
     `;
