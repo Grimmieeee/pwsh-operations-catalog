@@ -1121,6 +1121,36 @@
       match:/TEST-SENSITIVE-DATA|Sensitive Data Check/i,
       label:"CHECKS",
       facts:["Secret-like literals","Private-key / token material","Tenant or app GUIDs","Email addresses / UPNs","URLs and local paths","UNC paths","Authenticode blocks","Optional custom terms"]
+    },
+    {
+      match:/GET-USER-SECURITY-SNAPSHOT|User Security Snapshot/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","UserAuthenticationMethod.Read.All","Directory.Read.All","AuditLog.Read.All"'],
+      label:"CHECKS",
+      facts:["Account state and hybrid source","Password age","MFA methods","Active admin roles","Direct group memberships","Recent sign-ins"]
+    },
+    {
+      match:/GET-TENANT-SECURITY-SNAPSHOT|Tenant Security Snapshot/i,
+      connect:['Connect-MgGraph -Scopes "Organization.Read.All","User.Read.All","AuditLog.Read.All","Directory.Read.All","RoleManagement.Read.Directory","Policy.Read.ConditionalAccess","DelegatedPermissionGrant.Read.All"'],
+      label:"CHECKS",
+      facts:["Tenant and user counts","Stale enabled accounts","Conditional Access policy state","Active admin role counts","Delegated OAuth grants"]
+    },
+    {
+      match:/GET-ROOM-RESOURCE-ACCESS|Room & Resource Access Review/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Room / equipment mailbox type","Full Access delegates","In-policy booking principals","Resource delegates"]
+    },
+    {
+      match:/GET-TENANT-MAILBOX-ACCESS-AUDIT|Tenant Mailbox Access Audit/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["User and shared mailboxes","Forwarding","Full Access","Send As","Send on Behalf","Query failures"]
+    },
+    {
+      match:/CLEANUP-DISABLED-USER-MAILBOX-ACCESS|Disabled User Mailbox Access Cleanup/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All"','Connect-ExchangeOnline'],
+      label:"DOES",
+      facts:["Verifies the target account is disabled","Finds Full Access and Send As rights","Shows the complete removal plan","Requires typed CLEANUP confirmation","Removes only positively discovered rights"]
     }
   ];
 
@@ -1235,6 +1265,7 @@
     if (/Disable Sign-In/i.test(title)) return "Disables user sign-in.";
     if (/Enable Sign-In|Re-Enable/i.test(title)) return "Enables user sign-in.";
     if (/Reset Password/i.test(title)) return "Resets the user password.";
+    if (/Disabled User Mailbox Access Cleanup/i.test(title)) return "Removes Full Access and Send As rights from a disabled user after confirmation.";
     if (/Delete/i.test(title)) return "Deletes or removes the selected object.";
     if (/Remove/i.test(title)) return "Removes the selected access or configuration.";
     if (/Add/i.test(title)) return "Adds or changes access.";
