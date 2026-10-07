@@ -2046,10 +2046,10 @@
     if (item.type === "Quick Command") return "";
 
     const rows = [
-      ["CSV",csvCapability(item)],
+      ["REQUISITES",requirementInfo(item)],
+      ["INPUT",inputInfo(item)],
       ["SUMMARY",summaryCapability(item)],
-      ["REQUIRES",requirementInfo(item)],
-      ["INPUT",inputInfo(item)]
+      ["CSV",csvCapability(item)]
     ].filter(([,value]) => String(value || "").trim());
 
     if (!rows.length) return "";
