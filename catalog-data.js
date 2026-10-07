@@ -940,7 +940,7 @@ window.CATALOG_DATA = [
     "_order": 46
   },
   {
-    "name": "Show Cas Protocol State",
+    "name": "Show Mailbox Protocol State",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Mailbox",
@@ -956,7 +956,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail",
+    "keywords": "mailbox protocols pop imap smtp auth mapi owa activesync exchange",
     "_order": 47
   },
   {
@@ -980,7 +980,7 @@ window.CATALOG_DATA = [
     "_order": 48
   },
   {
-    "name": "Disable Authenticated Smtp",
+    "name": "Disable Mailbox SMTP AUTH",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Mailbox",
@@ -996,11 +996,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail",
+    "keywords": "mailbox smtp auth authenticated smtp exchange disable",
     "_order": 49
   },
   {
-    "name": "Disable Pop And Imap",
+    "name": "Disable Mailbox POP / IMAP",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Mailbox",
@@ -1016,11 +1016,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail",
+    "keywords": "mailbox pop imap protocols exchange disable",
     "_order": 50
   },
   {
-    "name": "Show Full Access Delegates",
+    "name": "Show Mailbox Full Access Delegates",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1036,7 +1036,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions full access who can access mailbox exchange",
     "_order": 51
   },
   {
@@ -1060,7 +1060,7 @@ window.CATALOG_DATA = [
     "_order": 52
   },
   {
-    "name": "Show Send As Delegates",
+    "name": "Show Mailbox Send As Delegates",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1076,11 +1076,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions send as exchange",
     "_order": 53
   },
   {
-    "name": "Show Send On Behalf Delegates",
+    "name": "Show Mailbox Send on Behalf Delegates",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1096,11 +1096,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions send on behalf exchange",
     "_order": 54
   },
   {
-    "name": "Remove Full Access Delegate",
+    "name": "Remove Mailbox Full Access Delegate",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1116,7 +1116,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions full access remove exchange",
     "_order": 55
   },
   {
@@ -1140,7 +1140,7 @@ window.CATALOG_DATA = [
     "_order": 56
   },
   {
-    "name": "Remove Send As Delegate",
+    "name": "Remove Mailbox Send As Delegate",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1156,11 +1156,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions send as remove exchange",
     "_order": 57
   },
   {
-    "name": "Remove Send On Behalf Delegate",
+    "name": "Remove Mailbox Send on Behalf Delegate",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Access / Forwarding",
@@ -1176,7 +1176,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "mailbox delegates permissions send on behalf remove exchange",
     "_order": 58
   },
   {
@@ -1196,7 +1196,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail",
+    "keywords": "transport rule transport rules mail flow rule mail flow rules exchange",
     "_order": 59
   },
   {
@@ -1216,11 +1216,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail",
+    "keywords": "transport rule transport rules mail flow rule mail flow rules exchange",
     "_order": 60
   },
   {
-    "name": "Show All Including Hidden",
+    "name": "Show Inbox Rules - Including Hidden",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Inbox Rules",
@@ -1236,11 +1236,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail outlook email rule",
+    "keywords": "inbox rule inbox rules hidden rule hidden rules mailbox rule mailbox rules outlook rule email rule exchange",
     "_order": 61
   },
   {
-    "name": "Show Suspicious Actions Only",
+    "name": "Show Suspicious Inbox Rules",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Inbox Rules",
@@ -1256,11 +1256,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail outlook email rule",
+    "keywords": "inbox rule inbox rules suspicious mailbox rule mailbox rules forwarding redirect delete stop processing exchange",
     "_order": 62
   },
   {
-    "name": "Remove All Rules",
+    "name": "Remove All Inbox Rules",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Inbox Rules",
@@ -1276,11 +1276,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail outlook email rule",
+    "keywords": "inbox rule inbox rules mailbox rule mailbox rules remove delete exchange",
     "_order": 63
   },
   {
-    "name": "Remove Specific Rule",
+    "name": "Remove Specific Inbox Rule",
     "type": "Quick Command",
     "area": "Mailbox",
     "subarea": "Exchange Online - Inbox Rules",
@@ -1296,7 +1296,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email mail outlook email rule",
+    "keywords": "inbox rule inbox rules mailbox rule mailbox rules remove delete exchange",
     "_order": 64
   },
   {
@@ -1680,7 +1680,7 @@ window.CATALOG_DATA = [
     "_order": 83
   },
   {
-    "name": "Inbox Rule Create Or Change Audit",
+    "name": "Audit Inbox Rule Changes",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Exchange Online - Audit",
@@ -1696,7 +1696,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "outlook email rule",
+    "keywords": "inbox rule inbox rules rule changes create change modified audit unified audit log exchange",
     "_order": 84
   },
   {
@@ -3203,7 +3203,7 @@ window.CATALOG_DATA = [
     "_order": 159
   },
   {
-    "name": "Disabled User Mailbox Debt",
+    "name": "Disabled User Mailbox Access Review",
     "type": "Tool",
     "area": "Reporting / Audit",
     "subarea": "Lifecycle",
@@ -3218,7 +3218,7 @@ window.CATALOG_DATA = [
     "code": "",
     "related": [],
     "notes": "Finds disabled or inactive users with remaining mailbox access or delivery paths.",
-    "keywords": "disabled mailbox access debt forwarding delegates lingering permissions offboarding outlook email mail",
+    "keywords": "disabled user mailbox access review forwarding delegates lingering permissions offboarding exchange",
     "url": "",
     "_order": 160
   },
@@ -3698,7 +3698,7 @@ window.CATALOG_DATA = [
     "_order": 183
   },
   {
-    "name": "Mailbox Forwarding and Permission Audit",
+    "name": "Bulk Mailbox Forwarding and Permissions Audit",
     "type": "Automation",
     "area": "Mailbox",
     "subarea": "Security Review",
@@ -3713,7 +3713,7 @@ window.CATALOG_DATA = [
     "code": "",
     "related": [],
     "notes": "Checks Full Access, Send As, Send on Behalf, forwarding, and inbox-rule forwarding for many users.",
-    "keywords": "mailbox permission audit forwarding full access send as inbox rule bulk email going somewhere else redirect auto forward external forwarding outlook email mail email going somewhere else email redirected mail redirect",
+    "keywords": "bulk mailbox forwarding permissions full access send as send on behalf inbox rule multi user exchange",
     "url": "",
     "_order": 184
   },
@@ -4373,7 +4373,7 @@ window.CATALOG_DATA = [
     "code": "",
     "related": [],
     "notes": "Reviews tenant transport/mail-flow rules for risk.",
-    "keywords": "transport rules mail flow rules forwarding redirect audit",
+    "keywords": "transport rule transport rules mail flow rule mail flow rules forwarding redirect audit exchange",
     "url": "",
     "_order": 214
   },
