@@ -740,7 +740,7 @@ window.CATALOG_DATA = [
     "_order": 36
   },
   {
-    "name": "Show Members",
+    "name": "Show AD Group Members",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Active Directory",
@@ -756,11 +756,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "active directory ad group members membership access",
     "_order": 37
   },
   {
-    "name": "Show User Memberships",
+    "name": "Show AD User Group Memberships",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Active Directory",
@@ -776,11 +776,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "active directory ad user group memberships memberof access",
     "_order": 38
   },
   {
-    "name": "Add User",
+    "name": "Add User to AD Group",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Active Directory",
@@ -796,11 +796,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "active directory ad group add user membership access",
     "_order": 39
   },
   {
-    "name": "Remove User",
+    "name": "Remove User from AD Group",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Active Directory",
@@ -816,7 +816,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "active directory ad group remove user membership access",
     "_order": 40
   },
   {
@@ -840,7 +840,7 @@ window.CATALOG_DATA = [
     "_order": 41
   },
   {
-    "name": "Show Direct Members",
+    "name": "Show Entra Group Direct Members",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Graph",
@@ -856,11 +856,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "entra graph group direct members membership access",
     "_order": 42
   },
   {
-    "name": "Show Owners",
+    "name": "Show Entra Group Owners",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Graph",
@@ -876,11 +876,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "entra graph group owners ownership access",
     "_order": 43
   },
   {
-    "name": "Show User Group Memberships",
+    "name": "Show Entra User Group Memberships",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Graph",
@@ -896,11 +896,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "entra graph user group memberships memberof access",
     "_order": 44
   },
   {
-    "name": "Add User To Group",
+    "name": "Add User to Entra Group",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Graph",
@@ -916,11 +916,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "entra graph group add user membership access",
     "_order": 45
   },
   {
-    "name": "Remove User From Group",
+    "name": "Remove User from Entra Group",
     "type": "Quick Command",
     "area": "Groups",
     "subarea": "Graph",
@@ -936,7 +936,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "membership access group member",
+    "keywords": "entra graph group remove user membership access",
     "_order": 46
   },
   {
@@ -1300,7 +1300,7 @@ window.CATALOG_DATA = [
     "_order": 64
   },
   {
-    "name": "Show Recovery Protectors",
+    "name": "Show BitLocker Recovery Protectors",
     "type": "Quick Command",
     "area": "Security / IR",
     "subarea": "Local Windows - Bitlocker",
@@ -1316,11 +1316,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "drive encryption recovery key",
+    "keywords": "bitlocker recovery protectors recovery key drive encryption",
     "_order": 65
   },
   {
-    "name": "Show Status",
+    "name": "Show BitLocker Status",
     "type": "Quick Command",
     "area": "Security / IR",
     "subarea": "Local Windows - Bitlocker",
@@ -1336,7 +1336,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "drive encryption recovery key",
+    "keywords": "bitlocker status drive encryption protection",
     "_order": 66
   },
   {
@@ -1880,7 +1880,7 @@ window.CATALOG_DATA = [
     "_order": 93
   },
   {
-    "name": "Show Detailed Events For One Trace",
+    "name": "Show Message Trace Events",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Exchange Online - Message Trace",
@@ -1896,11 +1896,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "",
+    "keywords": "exchange message trace events delivery mail flow email",
     "_order": 94
   },
   {
-    "name": "Show Recent Historical Search Jobs",
+    "name": "Show Message Trace Search Jobs",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Exchange Online - Message Trace",
@@ -1916,7 +1916,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "",
+    "keywords": "exchange message trace historical search jobs mail flow email",
     "_order": 95
   },
   {
@@ -1940,7 +1940,7 @@ window.CATALOG_DATA = [
     "_order": 96
   },
   {
-    "name": "Show Activity From One Ip",
+    "name": "Show Sign-ins from One IP",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Graph - Sign-Ins",
@@ -1956,7 +1956,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "login logon signin cannot login suspicious login failed login",
+    "keywords": "entra sign-in signin login ip address audit activity",
     "_order": 97
   },
   {
@@ -2020,7 +2020,7 @@ window.CATALOG_DATA = [
     "_order": 100
   },
   {
-    "name": "Show Last 48 Hours",
+    "name": "Show Entra Sign-ins - Last 48 Hours",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Graph - Sign-Ins",
@@ -2036,11 +2036,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "login logon signin cannot login suspicious login failed login",
+    "keywords": "entra sign-in signin login last 48 hours recent audit",
     "_order": 101
   },
   {
-    "name": "Show Legacy Or Other-Client Activity",
+    "name": "Show Legacy / Other-client Sign-ins",
     "type": "Quick Command",
     "area": "Reporting / Audit",
     "subarea": "Graph - Sign-Ins",
@@ -2056,7 +2056,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "login logon signin cannot login suspicious login failed login",
+    "keywords": "entra sign-in signin legacy authentication client app other client audit",
     "_order": 102
   },
   {
@@ -2180,7 +2180,7 @@ window.CATALOG_DATA = [
     "_order": 108
   },
   {
-    "name": "Show Profile Status",
+    "name": "Show Windows Firewall Profiles",
     "type": "Quick Command",
     "area": "Network",
     "subarea": "Firewall",
@@ -2196,11 +2196,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "internet connectivity connection ping port route",
+    "keywords": "windows firewall profile status domain private public",
     "_order": 109
   },
   {
-    "name": "Show Rules Matching A Name",
+    "name": "Show Windows Firewall Rules by Name",
     "type": "Quick Command",
     "area": "Network",
     "subarea": "Firewall",
@@ -2216,7 +2216,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "internet connectivity connection ping port route",
+    "keywords": "windows firewall rule rules name filter",
     "_order": 110
   },
   {
@@ -2540,7 +2540,7 @@ window.CATALOG_DATA = [
     "_order": 126
   },
   {
-    "name": "Show Current Connection",
+    "name": "Show Wi-Fi Connection",
     "type": "Quick Command",
     "area": "Network",
     "subarea": "Wi-Fi",
@@ -2556,11 +2556,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "internet connectivity connection ping port route",
+    "keywords": "wifi wi-fi wireless connection ssid signal interface",
     "_order": 127
   },
   {
-    "name": "Show Saved Profiles",
+    "name": "Show Saved Wi-Fi Profiles",
     "type": "Quick Command",
     "area": "Network",
     "subarea": "Wi-Fi",
@@ -2576,7 +2576,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "internet connectivity connection ping port route",
+    "keywords": "wifi wi-fi wireless saved profiles networks",
     "_order": 128
   },
   {
@@ -3000,7 +3000,7 @@ window.CATALOG_DATA = [
     "_order": 149
   },
   {
-    "name": "Show Active Sessions",
+    "name": "Show SMB Sessions",
     "type": "Quick Command",
     "area": "Endpoint",
     "subarea": "Smb",
@@ -3016,11 +3016,11 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "token logout revoke sign out computer pc workstation device",
+    "keywords": "smb sessions file sharing connected users network shares",
     "_order": 150
   },
   {
-    "name": "Show Shares",
+    "name": "Show SMB Shares",
     "type": "Quick Command",
     "area": "Endpoint",
     "subarea": "Smb",
@@ -3036,7 +3036,7 @@ window.CATALOG_DATA = [
     "related": [],
     "notes": "",
     "url": "",
-    "keywords": "computer pc workstation device",
+    "keywords": "smb shares file sharing network shares folders",
     "_order": 151
   },
   {
