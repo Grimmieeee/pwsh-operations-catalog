@@ -1,5 +1,5 @@
 <#
-endpoint-profile-backup-clean.ps1
+BACKUP-USER-PROFILE.ps1
 
 Endpoint profile backup helper.
 
