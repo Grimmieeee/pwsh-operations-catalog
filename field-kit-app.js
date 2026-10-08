@@ -1123,6 +1123,24 @@
       facts:["Secret-like literals","Private-key / token material","Tenant or app GUIDs","Email addresses / UPNs","URLs and local paths","UNC paths","Authenticode blocks","Optional custom terms"]
     },
     {
+      match:/INVOKE-DISABLE-ACCOUNTS-BULK|Bulk Disable User Accounts/i,
+      connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "User.ReadWrite.All","Directory.Read.All"'],
+      label:"DOES",
+      facts:["Separates synced and cloud-only authority","Uses Active Directory for synced users","Uses Entra ID for cloud-only users","Shows the full disable preview","Requires typed DISABLE confirmation","Validates post-change state","Optionally revokes sessions","Optionally requests Entra Connect delta sync","Exports verified results when requested"]
+    },
+    {
+      match:/GET-ENTRA-GROUP-MEMBERS-BULK|Bulk Entra Group Members Review/i,
+      connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "Group.Read.All","User.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Multiple Entra groups from TXT / CSV","Direct members only","Account-enabled context for user members","Unresolved or ambiguous group input","Verified member CSV when requested"]
+    },
+    {
+      match:/RESOLVE-NAMES-TO-UPNS|Resolve Names to UPNs in Bulk/i,
+      connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "User.Read.All"'],
+      label:"DOES",
+      facts:["Targets the requested tenant before searching","Classifies exact, likely, multiple, and no-match results","Shows account-enabled and hybrid context","Optionally exports a verified full review CSV","Optionally exports a verified exact-match UPN TXT"]
+    },
+    {
       match:/GET-USER-SECURITY-SNAPSHOT|User Security Snapshot/i,
       connect:['Connect-MgGraph -Scopes "User.Read.All","UserAuthenticationMethod.Read.All","Directory.Read.All","AuditLog.Read.All"'],
       label:"CHECKS",

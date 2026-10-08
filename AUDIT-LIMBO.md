@@ -13,24 +13,23 @@ The rule is simple: similarity alone is not enough to remove a tool. A duplicate
 
 ## Current Limbo
 
-| Item | Status | Why it is here | Possible value to preserve |
-| --- | --- | --- | --- |
-| Bulk Mailbox Permissions Review | HOLD | Covered by the reviewed Mailbox Permissions Review, which already accepts one or more mailbox UPNs. | None identified yet beyond bulk naming. |
-| Mailbox Access Audit | HOLD | Older overlapping mailbox-access card; source is not part of the current canonical baseline. | Review only if a missing access edge case is found. |
-| Bulk Mailbox Access Audit | HOLD | Older bulk mailbox-access card overlapping the current reviewed mailbox tools. | Review only if it contains coverage the current tool lacks. |
-| Bulk Mailbox Forwarding and Permissions Audit | SALVAGE | Broad bulk audit with CSV and summary output, but uses permissive error handling and needs behavior review before replacing anything. | Bulk TXT/CSV input, forwarding + delegate + risky inbox-rule review, export. |
-| group-access-audit-bulk-clean.ps1 | ARCHIVE | The useful room/equipment access logic was extracted into a focused public review; the mixed wrapper no longer has a public job. | Preserved in Room & Resource Access Review. |
-| tenant-user-access-audit-clean.ps1 | ARCHIVE | Its tenant-wide mailbox access job was extracted cleanly, while disabled-user group debt is already covered by focused lifecycle review. | Preserved in Tenant Mailbox Access Audit and existing disabled-user debt tools. |
-| tenant-conditional-access-audit-clean.ps1 | ARCHIVE | Simpler Conditional Access listing/gap audit appears superseded by tenant-cap-gaps-audit-clean.ps1, which adds deeper exclusion/device-code/location/coverage checks. | Revisit only if the simpler output is materially easier to use. |
-| tenant-multifactor-audit-clean.ps1 | ARCHIVE | Earlier MFA registration audit is substantially covered by the newer MFA Security Audit with method-strength classification and optional CA context. | Keep only for behavior archaeology unless an edge case is found. |
-| group-members-audit-bulk-clean.ps1 | HOLD | Entra-only bulk group member audit overlaps the current Bulk Group Members Review. | Compare CSV/reporting behavior and direct-member edge cases before deciding which implementation survives. |
-| jumpbox-disabled-mailbox-access.ps1 | ARCHIVE | The useful mailbox-rights cleanup was rebuilt with disabled-account verification, visible scan failures, an explicit plan, and typed confirmation. | Preserved in Disabled User Mailbox Access Cleanup. |
-| resolve-names-to-upns.ps1 | HOLD | Appears alongside bulk-resolve-upns.ps1 in the same Verify-Status folder. Source comparison still needed. | Preserve only if it resolves edge cases the bulk resolver does not. |
-| 2-INVOKE-DISABLE-ACCOUNTS(2).ps1 | REPLACEMENT | Newer account-disable implementation than the current catalog source. | Better authority handling, validation, session revoke, sync state, verified CSV, and ticket-note output. |
+No current HOLD, SALVAGE, or REPLACEMENT items. The reviewed overlaps from this audit have either been promoted into a stronger public survivor or archived as lineage.
+
+## Resolved In This Audit
+
+- Bulk mailbox review variants — archived. Mailbox Permissions Review already supports one or more mailboxes and keeps query failures visible; separate bulk cards added naming/output convenience rather than a distinct operational job.
+- Mailbox Access Audit / Bulk Mailbox Access Audit — archived. Their useful permission/forwarding coverage is already represented by Mailbox Permissions Review, Mailbox Security Snapshot, and Tenant Mailbox Access Audit.
+- Bulk Mailbox Forwarding and Permissions Audit — archived. Its useful checks overlap Mailbox Permissions Review; permissive error handling and CSV/summary convenience did not justify a competing public tool.
+- group-members-audit-bulk-clean.ps1 / get-group-members-lookup-bulk.ps1 — replaced by Bulk Entra Group Members Review, which preserves the actual Entra direct-member job with tenant targeting, clearer failure handling, verified CSV, and a ticket-ready summary.
+- 2-INVOKE-DISABLE-ACCOUNTS(2).ps1 — promoted as the Bulk Disable User Accounts implementation after authority, confirmation, validation, sync-state, session-revoke, and export review.
+- UPN resolver variants — consolidated into Resolve Names to UPNs in Bulk; tenant targeting from the older resolver was preserved in the reviewed survivor.
+- Redundant coverage placeholders — retired for external-forwarding inbox rules, app credential expiry, enterprise-app ownership, guest inventory, and orphaned Teams because promoted public tools now cover those jobs.
 
 ## Focused Extraction Backlog
 
 No current items. The five focused jobs from the previous backlog were rebuilt as public tools in this round.
+
+The remaining hidden Candidate entries are future coverage ideas with no current public source; they are not unresolved overlap decisions.
 
 ## Promoted From Leftovers
 
@@ -49,6 +48,9 @@ These started as outliers or older focused scripts, survived behavior review, an
 - Room & Resource Access Review — focused room/equipment mailbox Full Access, booking-policy, and resource-delegate review.
 - Tenant Mailbox Access Audit — tenant-wide forwarding, Full Access, Send As, and Send on Behalf review with query failures kept visible.
 - Disabled User Mailbox Access Cleanup — guarded post-offboarding cleanup that verifies the account is disabled and requires typed confirmation before removing discovered Full Access or Send As rights.
+- Resolve Names to UPNs in Bulk — tenant-targeted bulk identity resolver with exact/likely/multiple/no-match decisions plus verified review CSV and exact-match UPN TXT exports.
+- Bulk Entra Group Members Review — focused multi-group Entra direct-membership review with explicit tenant context, verified CSV, and ticket-ready summary.
+- Bulk Disable User Accounts — guarded authority-aware bulk disable workflow with typed confirmation, post-change validation, optional session revoke/sync, verified CSV, and ticket-ready summary.
 
 ## Historical / Archive Lineage
 
@@ -57,6 +59,13 @@ These are useful references for behavior archaeology but should not compete for 
 - jumpbox-user-snapshot.ps1 — earlier bare-bones user security snapshot.
 - jumpbox-mailbox-snapshot.ps1 — earlier bare-bones mailbox snapshot.
 - jumpbox-tenant-snapshot.ps1 — earlier bare-bones tenant security snapshot.
+- jumpbox-resolve-upns-clean.ps1 — older resolver; explicit tenant targeting was preserved in the public survivor.
+- multi-name-to-upn-reviewed.ps1 — reviewed resolver lineage promoted into the public survivor.
+- multi-name-to-upn-screen-only.ps1 — screen-only resolver variant; behavior is covered by the public survivor.
+- get-user-mailbox-permissions-bulk.ps1 / mailbox-permissions-audit-bulk-clean.ps1 — older bulk mailbox review lineage; core checks are covered by Mailbox Permissions Review.
+- user-mailbox-audit.ps1 / user-mailbox-audit-bulk.ps1 — older mailbox-access lineage; no distinct public job remained after comparison.
+- group-members-audit-bulk-clean.ps1 / get-group-members-lookup-bulk.ps1 — older Entra-only bulk group-member implementation replaced by the hardened public survivor.
+- user-account-disable-bulk-clean.ps1 — earlier bulk-disable implementation replaced by the validated authority-aware workflow.
 - Legacy RMM BEC triage / exposure / preflight variants — retained privately; public RMM is limited to the current Incident Response RMM tools.
 - IR drill setup / verify / teardown tools — removed from the public catalog; test-only.
 
