@@ -1350,6 +1350,7 @@
   const drawerOverlay = document.getElementById("drawerOverlay");
   const menuBtn = document.getElementById("menuBtn");
   const navOverlay = document.getElementById("navOverlay");
+  let lastFocusedElement = null;
 
   function areaLabel(area){
     if (area === "Standalone") return "Quick Commands";
@@ -2267,6 +2268,10 @@
   }
 
   function openItem(item){
+    closeNav();
+    lastFocusedElement = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
     state.selected = item;
 
     drawerBody.innerHTML = `
@@ -2298,6 +2303,7 @@
     bindDrawerActions(item);
     document.body.classList.add("drawer-open");
     drawer.setAttribute("aria-hidden","false");
+    window.requestAnimationFrame(() => closeDrawer?.focus());
   }
 
   function bindDrawerActions(item){
@@ -2439,13 +2445,25 @@
   }
 
   function closeItem(){
+    const wasOpen = document.body.classList.contains("drawer-open");
     document.body.classList.remove("drawer-open");
     drawer.setAttribute("aria-hidden","true");
     state.selected = null;
+
+    if (wasOpen && lastFocusedElement?.isConnected){
+      window.requestAnimationFrame(() => lastFocusedElement.focus());
+    }
+    lastFocusedElement = null;
+  }
+
+  function setNavOpen(open){
+    document.body.classList.toggle("nav-open",open);
+    menuBtn?.setAttribute("aria-expanded",String(open));
+    menuBtn?.setAttribute("aria-label",open ? "Close navigation" : "Open navigation");
   }
 
   function closeNav(){
-    document.body.classList.remove("nav-open");
+    setNavOpen(false);
   }
 
   function runFrameworkAudit(){
@@ -2618,8 +2636,16 @@
     }
   });
 
-  menuBtn?.addEventListener("click",() => document.body.classList.toggle("nav-open"));
+  menuBtn?.addEventListener("click",() => {
+    setNavOpen(!document.body.classList.contains("nav-open"));
+  });
   navOverlay.addEventListener("click",closeNav);
+
+  window.addEventListener("resize",() => {
+    if (window.innerWidth > 760){
+      closeNav();
+    }
+  },{passive:true});
 
   runFrameworkAudit();
   renderNav();

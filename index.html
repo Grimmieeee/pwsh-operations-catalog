@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'">
 <title>F I E L D&nbsp;&nbsp;//&nbsp;&nbsp;K I T</title>
@@ -729,6 +729,285 @@ body.open .drawer{transform:translateX(0)}
   letter-spacing:.06em;
 }
 
+
+/* FIELD // KIT — MOBILE HARDENING
+   Responsive-only adjustments. Desktop contract stays unchanged. */
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{overflow-x:hidden}
+button,a,input{-webkit-tap-highlight-color:transparent}
+
+@media(max-width:760px){
+  body.nav-open,
+  body.drawer-open{overflow:hidden}
+
+  .workspace{min-height:100dvh}
+
+  .topbar{
+    position:sticky;top:0;z-index:15;
+    min-height:62px;height:auto;
+    gap:10px;
+    padding:
+      8px max(12px,env(safe-area-inset-right))
+      8px max(12px,env(safe-area-inset-left));
+  }
+  .menu-button{
+    width:44px;height:44px;min-width:44px;min-height:44px;
+    flex:0 0 44px;font-size:20px;
+  }
+  .masthead-note{
+    flex:1;min-width:0;gap:7px;flex-wrap:wrap;
+    overflow:hidden;
+  }
+  .masthead-line-1{font-size:10.5px;letter-spacing:.16em}
+  .masthead-line-2{font-size:9.5px;letter-spacing:.18em}
+  .entry-count{
+    flex:0 0 auto;white-space:nowrap;font-size:9px;
+  }
+
+  .search-wrap{
+    padding:
+      12px max(12px,env(safe-area-inset-right))
+      12px max(12px,env(safe-area-inset-left));
+  }
+  .search-box{
+    min-height:54px;gap:9px;padding:0 11px;
+  }
+  .search-box>span{font-size:21px}
+  .search-box input{
+    font-size:17px;line-height:1.3;
+  }
+  .clear-button{
+    width:44px;height:44px;min-width:44px;min-height:44px;
+  }
+
+  .catalog{
+    padding:
+      8px max(12px,env(safe-area-inset-right))
+      calc(72px + env(safe-area-inset-bottom))
+      max(12px,env(safe-area-inset-left));
+  }
+  .context-bar{
+    padding:10px 0;
+    line-height:1.35;
+    overflow-wrap:anywhere;
+  }
+
+  .jump-bar{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    margin-left:-12px;margin-right:-12px;
+    padding:10px 12px 13px;
+    scroll-padding-inline:12px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .jump-bar::-webkit-scrollbar{display:none}
+  .jump-label,.jump-link{flex:0 0 auto}
+  .jump-link{
+    min-height:40px;
+    display:inline-flex;align-items:center;
+    padding:0 11px;
+  }
+
+  .group{scroll-margin-top:74px}
+  .group-title{
+    gap:9px;
+    padding:18px 4px 12px 8px;
+    letter-spacing:.16em;
+    overflow-wrap:anywhere;
+  }
+  .group-title::before{height:25px}
+  .group-title-accent,.group-title-muted{font-size:12.5px}
+
+  .result{
+    min-height:74px;
+    grid-template-columns:minmax(0,1fr) 16px;
+    grid-template-areas:
+      "name arrow"
+      "flags arrow";
+    gap:7px 10px;
+    padding:11px 8px;
+  }
+  .result-name{
+    grid-area:name;
+    min-width:0;
+    font-size:16px;
+    line-height:1.28;
+    overflow-wrap:anywhere;
+  }
+  .result-meta{display:none}
+  .result-flags{
+    grid-area:flags;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .result-tag{
+    min-height:24px;
+    padding:5px 7px;
+    font-size:9px;
+  }
+  .result-arrow{
+    grid-area:arrow;
+    align-self:center;
+  }
+
+  .sidebar{
+    width:min(86vw,320px);
+    height:100dvh;
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:24px 0 70px rgba(0,0,0,.42);
+  }
+  .brand{padding:22px 18px 18px}
+  .brand-main{font-size:18px}
+  .area-nav{padding-bottom:18px}
+  .area-button{min-height:46px;padding:11px 10px}
+  .area-sub-button{min-height:42px;padding:9px}
+  .signature{
+    padding:
+      17px 18px
+      max(20px,calc(14px + env(safe-area-inset-bottom)));
+  }
+
+  .drawer{
+    width:100vw;min-width:0;
+    height:100dvh;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  .drawer-head{
+    min-height:58px;height:auto;
+    padding:
+      max(7px,env(safe-area-inset-top))
+      max(12px,env(safe-area-inset-right))
+      7px max(14px,env(safe-area-inset-left));
+  }
+  .drawer-label{
+    min-width:0;
+    letter-spacing:.20em;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  #closeDrawer{
+    width:44px;height:44px;min-width:44px;min-height:44px;
+    flex:0 0 44px;
+  }
+  .drawer-body{
+    padding:
+      20px max(14px,env(safe-area-inset-right))
+      calc(48px + env(safe-area-inset-bottom))
+      max(14px,env(safe-area-inset-left));
+  }
+  .item-context{
+    font-size:10px;line-height:1.35;letter-spacing:.14em;
+    overflow-wrap:anywhere;
+  }
+  .item-title{
+    max-width:100%;
+    font-size:clamp(26px,8vw,34px);
+    overflow-wrap:anywhere;
+  }
+  .objective-copy{font-size:15.5px;line-height:1.55}
+  .access-state{gap:6px}
+  .access-tag{white-space:normal;line-height:1.2}
+
+  .connect-line{
+    align-items:flex-start;
+    gap:8px;
+    padding:10px 10px 10px 12px;
+  }
+  .connect-line code{
+    min-width:0;
+    font-size:11px;
+    line-height:1.55;
+    word-break:break-word;
+  }
+  .copy-mini{
+    width:44px;min-width:44px;height:44px;min-height:44px;
+    flex:0 0 44px;
+  }
+
+  .check-list{grid-template-columns:1fr}
+  .check-item{font-size:13px}
+  .workflow-block{padding:10px}
+  .sequence-row{
+    grid-template-columns:20px minmax(0,1fr);
+    gap:6px 8px;
+  }
+  .sequence-standalone{grid-column:2}
+  .option-line{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:5px;
+  }
+
+  .command{
+    max-height:46dvh;
+    padding:11px;
+    font-size:11px;
+    line-height:1.58;
+  }
+  .actions,.source-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .action{
+    width:100%;
+    min-height:46px;
+    padding:0 12px;
+  }
+
+  .run-info-row{
+    grid-template-columns:1fr;
+    gap:3px;
+    padding:10px 0;
+  }
+  .run-info-value{font-size:10.5px}
+
+  .about-block{padding:28px 2px 54px}
+  .about-block p{font-size:14px;line-height:1.65}
+  .about-title{max-width:100%;flex-wrap:wrap;row-gap:5px}
+}
+
+@media(max-width:420px){
+  .topbar{gap:8px}
+  .masthead-line-2{display:none}
+  .masthead-line-1{font-size:10px;letter-spacing:.13em}
+  .entry-count{font-size:8.5px}
+  .search-box input{font-size:16px}
+  .group-title{letter-spacing:.12em}
+  .group-title-accent,.group-title-muted{font-size:12px}
+  .result{padding-left:5px;padding-right:5px}
+  .drawer-label{font-size:9px}
+  .about-title{font-size:27px}
+}
+
+@media(hover:none) and (pointer:coarse){
+  .area-button,
+  .area-sub-button,
+  .jump-link,
+  .result,
+  .action,
+  .copy-mini,
+  .icon-button{touch-action:manipulation}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -754,7 +1033,7 @@ body.open .drawer{transform:translateX(0)}
 
   <main class="workspace">
     <header class="topbar">
-      <button id="menuBtn" class="icon-button menu-button" type="button" aria-label="Open navigation">☰</button>
+      <button id="menuBtn" class="icon-button menu-button" type="button" aria-label="Open navigation" aria-controls="areaNav" aria-expanded="false">☰</button>
       <div class="masthead-note">
         <span class="masthead-line masthead-line-1">A working reference.</span>
         <span class="masthead-line masthead-line-2">Use responsibly.</span>
@@ -780,9 +1059,9 @@ body.open .drawer{transform:translateX(0)}
   </main>
 </div>
 
-<aside id="drawer" class="drawer" aria-hidden="true">
+<aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerLabel" aria-hidden="true">
   <div class="drawer-head">
-    <div class="drawer-label">SELECTED</div>
+    <div id="drawerLabel" class="drawer-label">SELECTED</div>
     <button id="closeDrawer" class="icon-button" type="button" aria-label="Close">×</button>
   </div>
   <div id="drawerBody" class="drawer-body"></div>
