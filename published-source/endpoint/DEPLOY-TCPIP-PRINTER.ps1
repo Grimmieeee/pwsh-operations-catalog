@@ -21,7 +21,7 @@ param(
     [switch]$TestPage
 )
 
-$ErrorActionPreference = "SilentlyContinue"
+$ErrorActionPreference = "Stop"
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12

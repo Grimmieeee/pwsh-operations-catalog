@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Read-only helper for preparing clean UPN lists before account review or license workflows.
-    Accepts .txt or .csv input. Searches Microsoft Graph users. Does not make changes.
+    Accepts one or more direct values or .txt/.csv input. Searches Microsoft Graph users. Does not make changes.
 
 .NOTES
     PowerShell 5.1 compatible.
@@ -14,6 +14,8 @@
 #>
 
 param(
+    [Alias("Input")]
+    [string[]]$InputObject,
     [string]$InputPath,
     [string]$TenantDomain
 )
@@ -201,6 +203,48 @@ function Import-InputEntries($Path) {
     return @($entries | Where-Object { $_ } | Select-Object -Unique)
 }
 
+function Get-InputEntries {
+    param(
+        [string[]]$Values,
+        [string]$Path
+    )
+
+    $entries = New-Object System.Collections.ArrayList
+    $rawValues = @($Values | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+
+    if ($Path) {
+        $rawValues += $Path
+    }
+
+    if ($rawValues.Count -eq 0) {
+        $entered = Normalize-InputValue (Read-Host "Name, email, UPN, or TXT/CSV path")
+        if ($entered) {
+            $rawValues = @($entered)
+        }
+    }
+
+    foreach ($value in $rawValues) {
+        $clean = Normalize-InputValue $value
+        if (-not $clean) { continue }
+
+        if (Test-Path -LiteralPath $clean -PathType Leaf) {
+            foreach ($entry in @(Import-InputEntries -Path $clean)) {
+                [void]$entries.Add($entry)
+            }
+            continue
+        }
+
+        foreach ($entry in @($clean -split '\s*,\s*')) {
+            $normalized = Normalize-InputValue $entry
+            if ($normalized) {
+                [void]$entries.Add($normalized)
+            }
+        }
+    }
+
+    return @($entries | Where-Object { $_ } | Select-Object -Unique)
+}
+
 function Invoke-GraphRequestSafe {
     param(
         [string]$Stage,
@@ -366,9 +410,12 @@ function Get-MatchStatus($InputValue, $Matches) {
 }
 
 function Get-DefaultOutputDirectory($InputPath) {
-    $resolved = (Resolve-Path -LiteralPath $InputPath -ErrorAction Stop).Path
-    $parent = Split-Path -Path $resolved -Parent
-    if ($parent) { return $parent }
+    if ($InputPath -and (Test-Path -LiteralPath $InputPath -PathType Leaf)) {
+        $resolved = (Resolve-Path -LiteralPath $InputPath -ErrorAction Stop).Path
+        $parent = Split-Path -Path $resolved -Parent
+        if ($parent) { return $parent }
+    }
+
     return (Get-Location).Path
 }
 
@@ -427,7 +474,7 @@ try {
     Write-Host "Read-only"
     Write-Host ""
     Write-Host "Purpose: Convert display names, UPNs, or emails into a clean review list."
-    Write-Host "Input  : Tenant domain plus .txt or .csv"
+    Write-Host "Input  : Tenant domain plus one name/email/UPN or TXT/CSV"
     Write-Host "Output : Screen summary, optional review CSV, optional exact-match UPN TXT"
     Write-Host "Changes: None"
     Write-Host ""
@@ -443,24 +490,18 @@ try {
         throw "Tenant domain is required."
     }
 
-    if (-not $InputPath) {
-        $inputPath = Normalize-InputValue (Read-Host "Input file path")
-    }
-    else {
+    $inputPath = ""
+    if ($InputPath) {
         $inputPath = Normalize-InputValue $InputPath
     }
 
-    if (-not $inputPath) {
-        throw "Input file path is required."
-    }
-
     Write-Section "INPUT"
-    $entries = Import-InputEntries -Path $inputPath
+    $entries = @(Get-InputEntries -Values $InputObject -Path $inputPath)
     INFO "Tenant target : $TenantDomain"
     INFO "Entries loaded: $($entries.Count)"
 
     if ($entries.Count -eq 0) {
-        throw "No usable entries found in input file."
+        throw "No usable entries were provided."
     }
 
     Ensure-GraphConnection -TenantDomain $TenantDomain

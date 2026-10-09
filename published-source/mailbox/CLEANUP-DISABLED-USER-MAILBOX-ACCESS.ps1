@@ -1,20 +1,18 @@
 <#
-CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1
+CLEANUP DISABLED USER MAILBOX ACCESS
 
-Guarded cleanup for mailbox access still assigned to a disabled user.
+OBJECTIVE
+Find and optionally remove Full Access, Send As, and Send On Behalf permissions
+held by one disabled/departing user on other Exchange Online recipients.
 
-Purpose:
-- Verifies the target Entra account is disabled before allowing cleanup
-- Finds Full Access and Send As rights the user holds on other mailboxes
-- Shows the complete removal plan before any change
-- Removes only the discovered mailbox rights after typed confirmation
+INPUT
+One UPN.
 
-Makes changes. No mailbox content is deleted.
+CHANGES
+Changes may be made. Disabled-state validation and confirmation are required.
 #>
 
-param(
-    [string]$UPN
-)
+param([string]$UPN)
 
 $ErrorActionPreference = "Stop"
 
@@ -22,25 +20,62 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function Write-OK   { param($Message) Write-Host "[OK]   $Message" -ForegroundColor Green }
-function Write-Info { param($Message) Write-Host "[INFO] $Message" }
-function Write-Warn { param($Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
-function Write-Fail { param($Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
+function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
+function Write-Info { param($m) Write-Host "[INFO] $m" }
+function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
+function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
+
+function Write-Section {
+    param([string]$Title)
+
+    try {
+        Write-Host (" {0} " -f $Title) `
+            -ForegroundColor White `
+            -BackgroundColor DarkGray
+    }
+    catch {
+        Write-Host $Title
+    }
+}
 
 function Pause-End {
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Write-Host "Press Enter to EXIT" -NoNewline
+
+    try {
+        do {
+            $key = $Host.UI.RawUI.ReadKey(
+                "NoEcho,IncludeKeyDown"
+            )
+        }
+        until ($key.VirtualKeyCode -eq 13)
+
+        Write-Host ""
+    }
+    catch {
+        Write-Host ""
+        Read-Host "Press Enter to EXIT" | Out-Null
+    }
 }
 
 function Get-ShortError {
     param($ErrorRecord)
 
-    $Message = $ErrorRecord.Exception.Message
-    if ([string]::IsNullOrWhiteSpace($Message)) {
-        $Message = [string]$ErrorRecord
+    $message = $ErrorRecord.Exception.Message
+
+    if ([string]::IsNullOrWhiteSpace($message)) {
+        $message = [string]$ErrorRecord
     }
 
-    return (($Message -replace "\s+", " ").Trim())
+    return (($message -replace "\s+", " ").Trim())
+}
+
+function Confirm-Yes {
+    param([string]$Prompt)
+
+    return (
+        (Read-Host "$Prompt [Y/N]").Trim().ToUpperInvariant() -eq "Y"
+    )
 }
 
 function Confirm-Type {
@@ -51,140 +86,642 @@ function Confirm-Type {
 
     Write-Host ""
     Write-Warn $Prompt
-    $Answer = Read-Host "Type $Required to continue"
-    return ($Answer.Trim().ToUpperInvariant() -eq $Required.ToUpperInvariant())
+    $answer = Read-Host "Type $Required to continue"
+
+    return (
+        -not [string]::IsNullOrWhiteSpace($answer) -and
+        $answer.Trim().ToUpperInvariant() -eq $Required.ToUpperInvariant()
+    )
 }
 
-function Ensure-GraphModule {
-    if (-not (Get-Module -ListAvailable -Name Microsoft.Graph.Authentication)) {
-        throw "Microsoft.Graph.Authentication is not installed. Install it with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser"
+function Ensure-Module {
+    param(
+        [string]$Name,
+        [string]$Command
+    )
+
+    $module=Get-Module -ListAvailable -Name $Name -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
+
+    if (-not $module) {
+        throw "$Name is required but is not installed. Install with: Install-Module $Name -Scope CurrentUser"
     }
 
-    Import-Module Microsoft.Graph.Authentication -ErrorAction Stop | Out-Null
+    Import-Module $module.Path -Force -ErrorAction Stop
+
+    if (-not (Get-Command $Command -ErrorAction SilentlyContinue)) {
+        throw "$Name loaded, but $Command is unavailable."
+    }
 }
 
 function Invoke-GraphGet {
     param([string]$Uri)
 
-    return Invoke-MgGraphRequest `
-        -Method GET `
+    $command = Get-Command Invoke-MgGraphRequest -ErrorAction Stop
+    $parameters = @{
+        Method      = "GET"
+        Uri         = $Uri
+        ErrorAction = "Stop"
+    }
+
+    if ($command.Parameters.ContainsKey("OutputType")) {
+        $parameters["OutputType"] = "PSObject"
+    }
+
+    return Invoke-MgGraphRequest @parameters
+}
+
+function Invoke-GraphDelete {
+    param([string]$Uri)
+
+    Invoke-MgGraphRequest `
+        -Method DELETE `
         -Uri $Uri `
-        -OutputType PSObject `
-        -ErrorAction Stop
+        -ErrorAction Stop |
+        Out-Null
 }
 
-function Resolve-GraphUser {
-    param([string]$UserPrincipalName)
+function Get-GraphTenantInfo {
+    try {
+        $response = Invoke-GraphGet `
+            -Uri "https://graph.microsoft.com/v1.0/organization?`$select=displayName,verifiedDomains"
 
-    $Encoded = [System.Uri]::EscapeDataString($UserPrincipalName)
-    return Invoke-GraphGet -Uri "https://graph.microsoft.com/v1.0/users/$Encoded?`$select=id,displayName,userPrincipalName,accountEnabled,onPremisesSyncEnabled"
+        $organization = @($response.value) | Select-Object -First 1
+
+        if (-not $organization) {
+            return $null
+        }
+
+        return [PSCustomObject]@{
+            DisplayName = [string]$organization.displayName
+            Domains = @(
+                $organization.verifiedDomains |
+                ForEach-Object { [string]$_.name } |
+                Where-Object { $_ }
+            )
+        }
+    }
+    catch {
+        return $null
+    }
 }
 
-function Connect-GraphForUser {
-    param([string]$UserPrincipalName)
+function Test-GraphScopes {
+    param(
+        $Context,
+        [string[]]$RequiredScopes
+    )
 
-    Ensure-GraphModule
+    if (-not $Context) {
+        return $false
+    }
 
-    $RequiredScopes = @("User.Read.All")
-    $Context = Get-MgContext -ErrorAction SilentlyContinue
-    $ScopesOK = $false
-
-    if ($Context) {
-        $ScopesOK = $true
-        foreach ($Scope in $RequiredScopes) {
-            if (@($Context.Scopes) -notcontains $Scope) {
-                $ScopesOK = $false
-                break
-            }
+    foreach ($scope in $RequiredScopes) {
+        if (@($Context.Scopes) -notcontains $scope) {
+            return $false
         }
     }
 
-    if ($Context -and $ScopesOK) {
+    return $true
+}
+
+function Test-GraphTarget {
+    param([string]$UPN)
+
+    try {
+        $encoded = [System.Uri]::EscapeDataString($UPN)
+
+        Invoke-GraphGet `
+            -Uri ("https://graph.microsoft.com/v1.0/users/{0}?`$select=id" -f $encoded) |
+            Out-Null
+
+        return $true
+    }
+    catch {
+        return $false
+    }
+}
+
+function Connect-GraphAuto {
+    param(
+        [string[]]$Scopes,
+        [string]$TargetDomain,
+        [string]$ValidationUPN
+    )
+
+    Ensure-Module `
+        -Name "Microsoft.Graph.Authentication" `
+        -Command "Connect-MgGraph"
+
+    $context = Get-MgContext -ErrorAction SilentlyContinue
+
+    if (
+        $context -and
+        (Test-GraphScopes -Context $context -RequiredScopes $Scopes) -and
+        (Test-GraphTarget -UPN $ValidationUPN)
+    ) {
+        $tenant = Get-GraphTenantInfo
+
+        if (
+            $tenant -and
+            (
+                [string]::IsNullOrWhiteSpace($TargetDomain) -or
+                $tenant.Domains -contains $TargetDomain
+            )
+        ) {
+            Write-OK "Graph session reused"
+            return $tenant
+        }
+    }
+
+    if ($context) {
         try {
-            $User = Resolve-GraphUser -UserPrincipalName $UserPrincipalName
-            if ($User -and $User.id) {
-                Write-OK "Graph session reused"
-                return $User
-            }
+            Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
         }
         catch {
-            Write-Warn "Existing Graph session could not resolve the target user. Reconnecting."
         }
     }
 
-    if ($Context) {
-        Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
+    Write-Host "Graph: Connecting..."
+
+    $command = Get-Command Connect-MgGraph -ErrorAction Stop
+    $parameters = @{
+        Scopes      = $Scopes
+        ErrorAction = "Stop"
     }
 
-    $Domain = ($UserPrincipalName -split '@')[-1]
-    $Parameters = @{
-        TenantId     = $Domain
-        Scopes       = $RequiredScopes
-        ContextScope = 'Process'
-        ErrorAction  = 'Stop'
+    if ($command.Parameters.ContainsKey("ContextScope")) {
+        $parameters["ContextScope"] = "Process"
     }
 
-    $Command = Get-Command Connect-MgGraph -ErrorAction Stop
-    if ($Command.Parameters.ContainsKey('NoWelcome')) {
-        $Parameters.NoWelcome = $true
+    if ($command.Parameters.ContainsKey("NoWelcome")) {
+        $parameters["NoWelcome"] = $true
     }
 
-    Write-Info "Connecting to Microsoft Graph..."
-    Connect-MgGraph @Parameters | Out-Null
+    if (
+        -not [string]::IsNullOrWhiteSpace($TargetDomain) -and
+        $command.Parameters.ContainsKey("TenantId")
+    ) {
+        $parameters["TenantId"] = $TargetDomain
+    }
 
-    $User = Resolve-GraphUser -UserPrincipalName $UPN
-    if (-not $User -or -not $User.id) {
-        throw "The target user was not found in the connected tenant."
+    Connect-MgGraph @parameters | Out-Null
+
+    $context = Get-MgContext -ErrorAction Stop
+
+    if (-not (Test-GraphScopes -Context $context -RequiredScopes $Scopes)) {
+        throw "The Graph token is missing one or more required delegated scopes."
+    }
+
+    if (-not (Test-GraphTarget -UPN $ValidationUPN)) {
+        throw "The target user did not resolve in the connected Graph tenant."
+    }
+
+    $tenant = Get-GraphTenantInfo
+
+    if (-not $tenant) {
+        throw "Graph connected, but tenant details could not be verified."
+    }
+
+    if (
+        -not [string]::IsNullOrWhiteSpace($TargetDomain) -and
+        $tenant.Domains -notcontains $TargetDomain
+    ) {
+        throw "Graph connected to the wrong tenant for domain $TargetDomain."
     }
 
     Write-OK "Graph connected"
-    return $User
+    return $tenant
 }
 
-function Ensure-Exchane {
-    if (-not (Get-Module -ListAvailable -Name ExchangeOnlineManagement)) {
-        throw "ExchangeOnlineManagement is not installed. Install it with: Install-Module ExchangeOnlineManagement -Scope CurrentUser"
+function Get-GraphUser {
+    param([string]$UPN)
+
+    $encoded = [System.Uri]::EscapeDataString($UPN)
+
+    return Invoke-GraphGet `
+        -Uri (
+            "https://graph.microsoft.com/v1.0/users/{0}" +
+            "?`$select=id,displayName,userPrincipalName,accountEnabled,mail," +
+            "onPremisesSyncEnabled,onPremisesSamAccountName,userType"
+        ) -f $encoded
+}
+
+function Get-GraphPaged {
+    param([string]$Uri)
+
+    $items = @()
+    $next = $Uri
+
+    while ($next) {
+        $page = Invoke-GraphGet -Uri $next
+        $items += @($page.value)
+        $next = [string]$page.'@odata.nextLink'
     }
 
-    Import-Module ExchangeOnlineManagement -ErrorAction Stop | Out-Null
+    return $items
+}
 
-    if (Get-Command Get-ConnectionInformation -ErrorAction SilentlyContinue) {
-        $Connection = Get-ConnectionInformation -ErrorAction SilentlyContinue | Select-Object -First 1
-        if ($Connection) {
-            try {
-                Get-Mailbox -ResultSize 1 -ErrorAction Stop | Out-Null
-                Write-OK "Exchange session reused"
-                return
-            }
-            catch {
-                Write-Warn "Existing Exchange session could not be validated. Reconnecting."
-            }
+function Escape-LdapFilterValue {
+    param([string]$Value)
+
+    $escaped = [string]$Value
+    $escaped = $escaped.Replace('\', '\5c')
+    $escaped = $escaped.Replace('*', '\2a')
+    $escaped = $escaped.Replace('(', '\28')
+    $escaped = $escaped.Replace(')', '\29')
+    $escaped = $escaped.Replace([char]0, '\00')
+
+    return $escaped
+}
+
+function Find-ADUser {
+    param([string]$Filter)
+
+    $searcher = New-Object System.DirectoryServices.DirectorySearcher
+    $searcher.Filter = $Filter
+    $searcher.PageSize = 100
+
+    foreach ($property in @(
+        "displayName",
+        "userPrincipalName",
+        "sAMAccountName",
+        "userAccountControl",
+        "distinguishedName",
+        "memberOf"
+    )) {
+        [void]$searcher.PropertiesToLoad.Add($property)
+    }
+
+    return $searcher.FindOne()
+}
+
+function Convert-ADResult {
+    param(
+        $Result,
+        [string]$ResolvedBy
+    )
+
+    if (-not $Result) {
+        return $null
+    }
+
+    $entry = $Result.GetDirectoryEntry()
+    $uac = [int]$entry.Properties["userAccountControl"].Value
+
+    return [PSCustomObject]@{
+        Path              = [string]$entry.Path
+        DistinguishedName = [string]$entry.Properties["distinguishedName"].Value
+        DisplayName       = [string]$entry.Properties["displayName"].Value
+        UPN               = [string]$entry.Properties["userPrincipalName"].Value
+        SamAccountName    = [string]$entry.Properties["sAMAccountName"].Value
+        Disabled          = (($uac -band 2) -ne 0)
+        MemberOf          = @($entry.Properties["memberOf"] | ForEach-Object { [string]$_ })
+        ResolvedBy        = $ResolvedBy
+    }
+}
+
+function Resolve-ADUser {
+    param($GraphUser)
+
+    $upn = [string]$GraphUser.userPrincipalName
+    $samHint = [string]$GraphUser.onPremisesSamAccountName
+
+    if ($samHint) {
+        $safe = Escape-LdapFilterValue $samHint
+        $result = Find-ADUser `
+            -Filter "(&(objectCategory=person)(objectClass=user)(sAMAccountName=$safe))"
+
+        if ($result) {
+            return Convert-ADResult `
+                -Result $result `
+                -ResolvedBy "Graph onPremisesSamAccountName"
         }
     }
 
-    $Parameters = @{ ErrorAction = "Stop" }
-    $Command = Get-Command Connect-ExchangeOnline -ErrorAction Stop
-    if ($Command.Parameters.ContainsKey("ShowBanner")) {
-        $Parameters.ShowBanner = $false
+    $safeUpn = Escape-LdapFilterValue $upn
+
+    $result = Find-ADUser `
+        -Filter "(&(objectCategory=person)(objectClass=user)(userPrincipalName=$safeUpn))"
+
+    if ($result) {
+        return Convert-ADResult -Result $result -ResolvedBy "userPrincipalName"
     }
 
-    Write-Info "Connecting to Exchange Online..."
-    Connect-ExchangeOnline @Parameters | Out-Null
-    Get-Mailbox -ResultSize 1 -ErrorAction Stop | Out-Null
-    Write-OK "Exchange connected"
+    $result = Find-ADUser `
+        -Filter "(&(objectCategory=person)(objectClass=user)(mail=$safeUpn))"
+
+    if ($result) {
+        return Convert-ADResult -Result $result -ResolvedBy "mail"
+    }
+
+    $result = Find-ADUser `
+        -Filter "(&(objectCategory=person)(objectClass=user)(|(proxyAddresses=SMTP:$safeUpn)(proxyAddresses=smtp:$safeUpn)))"
+
+    if ($result) {
+        return Convert-ADResult -Result $result -ResolvedBy "proxyAddresses"
+    }
+
+    $fallback = ($upn -split "@", 2)[0]
+
+    if ($fallback) {
+        $safeFallback = Escape-LdapFilterValue $fallback
+        $result = Find-ADUser `
+            -Filter "(&(objectCategory=person)(objectClass=user)(sAMAccountName=$safeFallback))"
+
+        if ($result) {
+            return Convert-ADResult `
+                -Result $result `
+                -ResolvedBy "sAMAccountName fallback"
+        }
+    }
+
+    return $null
 }
 
-function Test-PrincipalMatch {
+function Get-CnFromDn {
+    param([string]$DN)
+
+    if ($DN -match '^CN=((?:\\.|[^,])+)') {
+        return ($Matches[1] -replace '\\,', ',')
+    }
+
+    return $DN
+}
+
+function Get-ActiveExchangeConnection {
+    if (-not (Get-Command Get-ConnectionInformation -ErrorAction SilentlyContinue)) {
+        return $null
+    }
+
+    try {
+        return Get-ConnectionInformation -ErrorAction SilentlyContinue |
+            Where-Object {
+                $_.State -eq "Connected" -or
+                $_.ConnectionStatus -eq "Connected"
+            } |
+            Select-Object -First 1
+    }
+    catch {
+        return $null
+    }
+}
+
+function Test-ExchangeTenant {
+    param([string]$TargetDomain)
+
+    try {
+        $domains = @(
+            Get-AcceptedDomain `
+                -ResultSize Unlimited `
+                -ErrorAction Stop |
+            ForEach-Object {
+                ([string]$_.DomainName).ToLowerInvariant()
+            }
+        )
+
+        return ($domains -contains $TargetDomain.ToLowerInvariant())
+    }
+    catch {
+        return $false
+    }
+}
+
+function Connect-ExchangeAttempt {
     param(
-        [object]$Value,
-        [string[]]$Identities
+        [string]$TargetDomain,
+        [switch]$Delegated
     )
 
-    $Text = ([string]$Value).Trim()
-    if ([string]::IsNullOrWhiteSpace($Text)) { return $false }
+    $command = Get-Command Connect-ExchangeOnline -ErrorAction Stop
+    $parameters = @{
+        ErrorAction = "Stop"
+    }
 
-    foreach ($Identity in $Identities) {
-        if (-not [string]::IsNullOrWhiteSpace($Identity) -and $Text -ieq $Identity) {
+    if ($command.Parameters.ContainsKey("ShowBanner")) {
+        $parameters["ShowBanner"] = $false
+    }
+
+    if ($command.Parameters.ContainsKey("ShowProgress")) {
+        $parameters["ShowProgress"] = $false
+    }
+
+    if ($command.Parameters.ContainsKey("DisableWAM")) {
+        $parameters["DisableWAM"] = $true
+    }
+
+    if (
+        $Delegated -and
+        $command.Parameters.ContainsKey("DelegatedOrganization")
+    ) {
+        $parameters["DelegatedOrganization"] = $TargetDomain
+    }
+
+    Connect-ExchangeOnline @parameters | Out-Null
+}
+
+function Connect-ExchangeAuto {
+    param([string]$TargetDomain)
+
+    Ensure-Module `
+        -Name "ExchangeOnlineManagement" `
+        -Command "Connect-ExchangeOnline"
+
+    if (
+        (Get-ActiveExchangeConnection) -and
+        (Test-ExchangeTenant -TargetDomain $TargetDomain)
+    ) {
+        Write-OK "Exchange session reused"
+        return
+    }
+
+    try {
+        Disconnect-ExchangeOnline `
+            -Confirm:$false `
+            -ErrorAction SilentlyContinue |
+            Out-Null
+    }
+    catch {
+    }
+
+    Write-Host "Exchange Online: Connecting..."
+
+    $errors = @()
+
+    foreach ($delegated in @($false, $true)) {
+        try {
+            Connect-ExchangeAttempt `
+                -TargetDomain $TargetDomain `
+                -Delegated:$delegated
+
+            if (Test-ExchangeTenant -TargetDomain $TargetDomain) {
+                Write-OK "Exchange connected"
+                return
+            }
+
+            $errors += "Connected, but the expected tenant domain was not present."
+        }
+        catch {
+            $errors += Get-ShortError $_
+        }
+
+        try {
+            Disconnect-ExchangeOnline `
+                -Confirm:$false `
+                -ErrorAction SilentlyContinue |
+                Out-Null
+        }
+        catch {
+        }
+    }
+
+    throw (
+        "Exchange connection failed: " +
+        (@($errors | Where-Object { $_ } | Select-Object -Unique) -join " | ")
+    )
+}
+
+function Normalize-PrincipalValue {
+    param([object]$Value)
+
+    if ($null -eq $Value) {
+        return ""
+    }
+
+    $text = ([string]$Value).Trim()
+
+    if ([string]::IsNullOrWhiteSpace($text)) {
+        return ""
+    }
+
+    if ($text -match '^(?i:smtp:)(.+)$') {
+        $text = $Matches[1]
+    }
+
+    return $text.ToLowerInvariant()
+}
+
+function Add-TargetPrincipalAlias {
+    param(
+        [hashtable]$Set,
+        [object]$Value
+    )
+
+    $normalized = Normalize-PrincipalValue $Value
+
+    if ($normalized) {
+        $Set[$normalized] = $true
+    }
+}
+
+function Add-TargetPrincipalObject {
+    param(
+        [hashtable]$Set,
+        [object]$Principal
+    )
+
+    if ($null -eq $Principal) {
+        return
+    }
+
+    Add-TargetPrincipalAlias -Set $Set -Value ([string]$Principal)
+
+    foreach ($property in @(
+        "PrimarySmtpAddress",
+        "WindowsEmailAddress",
+        "UserPrincipalName",
+        "ExternalDirectoryObjectId",
+        "Guid",
+        "DistinguishedName",
+        "LegacyExchangeDN",
+        "Alias",
+        "SamAccountName"
+    )) {
+        if ($Principal.PSObject.Properties.Name -contains $property) {
+            Add-TargetPrincipalAlias `
+                -Set $Set `
+                -Value $Principal.$property
+        }
+    }
+}
+
+function New-TargetPrincipalSet {
+    param(
+        $GraphUser,
+        $ADUser,
+        [string]$UPN
+    )
+
+    $set = @{}
+
+    Add-TargetPrincipalAlias -Set $set -Value $UPN
+
+    if ($GraphUser) {
+        Add-TargetPrincipalAlias -Set $set -Value $GraphUser.userPrincipalName
+        Add-TargetPrincipalAlias -Set $set -Value $GraphUser.mail
+        Add-TargetPrincipalAlias -Set $set -Value $GraphUser.id
+        Add-TargetPrincipalAlias -Set $set -Value $GraphUser.onPremisesSamAccountName
+    }
+
+    if ($ADUser) {
+        Add-TargetPrincipalAlias -Set $set -Value $ADUser.UPN
+        Add-TargetPrincipalAlias -Set $set -Value $ADUser.SamAccountName
+    }
+
+    if (Get-Command Get-Recipient -ErrorAction SilentlyContinue) {
+        try {
+            $recipient = Get-Recipient `
+                -Identity $UPN `
+                -ErrorAction Stop
+
+            Add-TargetPrincipalObject `
+                -Set $set `
+                -Principal $recipient
+        }
+        catch {
+            Write-Warn (
+                "Exchange principal alias expansion unavailable: {0}" -f
+                (Get-ShortError $_)
+            )
+        }
+    }
+
+    return $set
+}
+
+function Test-PrincipalMatchesTarget {
+    param(
+        [object]$Principal,
+        [hashtable]$TargetSet
+    )
+
+    if ($null -eq $Principal) {
+        return $false
+    }
+
+    $candidates = @([string]$Principal)
+
+    foreach ($property in @(
+        "PrimarySmtpAddress",
+        "WindowsEmailAddress",
+        "UserPrincipalName",
+        "ExternalDirectoryObjectId",
+        "Guid",
+        "DistinguishedName",
+        "LegacyExchangeDN",
+        "Alias",
+        "SamAccountName"
+    )) {
+        if ($Principal.PSObject.Properties.Name -contains $property) {
+            $candidates += [string]$Principal.$property
+        }
+    }
+
+    foreach ($candidate in $candidates) {
+        $normalized = Normalize-PrincipalValue $candidate
+
+        if ($normalized -and $TargetSet.ContainsKey($normalized)) {
             return $true
         }
     }
@@ -192,191 +729,395 @@ function Test-PrincipalMatch {
     return $false
 }
 
-try {
-    try { $Host.UI.RawUI.WindowTitle = "Disabled User Mailbox Access Cleanup" } catch {}
+function Get-SendOnBehalfMatch {
+    param(
+        $Mailbox,
+        [hashtable]$TargetSet
+    )
 
-    Clear-Host
+    return @(
+        @($Mailbox.GrantSendOnBehalfTo) |
+        Where-Object {
+            Test-PrincipalMatchesTarget `
+                -Principal $_ `
+                -TargetSet $TargetSet
+        }
+    )
+}
+
+function Get-FullAccessPermission {
+    param(
+        $Mailbox,
+        [hashtable]$TargetSet
+    )
+
+    $permissions = @(
+        Get-MailboxPermission `
+            -Identity $Mailbox.Identity `
+            -ErrorAction Stop
+    )
+
+    return @(
+        $permissions |
+        Where-Object {
+            $_.User -ne "NT AUTHORITY\SELF" -and
+            $_.IsInherited -eq $false -and
+            $_.Deny -eq $false -and
+            $_.AccessRights -contains "FullAccess" -and
+            (
+                Test-PrincipalMatchesTarget `
+                    -Principal $_.User `
+                    -TargetSet $TargetSet
+            )
+        }
+    )
+}
+
+function Get-SendAsPermission {
+    param(
+        $Recipient,
+        [hashtable]$TargetSet
+    )
+
+    $permissions = @(
+        Get-RecipientPermission `
+            -Identity $Recipient.Identity `
+            -ErrorAction Stop
+    )
+
+    return @(
+        $permissions |
+        Where-Object {
+            $_.Trustee -ne "NT AUTHORITY\SELF" -and
+            $_.IsInherited -eq $false -and
+            $_.Deny -eq $false -and
+            $_.AccessRights -contains "SendAs" -and
+            (
+                Test-PrincipalMatchesTarget `
+                    -Principal $_.Trustee `                    -TargetSet $TargetSet
+            )
+        }
+    )
+}
+
+try {
     Write-Host "DISABLED USER MAILBOX ACCESS CLEANUP"
-    Write-Host "MAKES CHANGES. NO MAILBOX CONTENT IS DELETED."
+    Write-Host "CHANGES MAY BE MADE."
     Write-Host ""
 
     if ([string]::IsNullOrWhiteSpace($UPN)) {
-        $UPN = (Read-Host "Disabled user UPN").Trim()
+        $UPN = (Read-Host "UPN").Trim()
     }
 
-    if ([string]::IsNullOrWhiteSpace($UPN) -or $UPN -notmatch '@') {
-        throw "A valid user UPN is required."
+    if ([string]::IsNullOrWhiteSpace($UPN)) {
+        throw "UPN is required."
     }
 
-    $GraphUser = Connect-GraphForUser -UserPrincipalName $UPN
+    $targetDomain = ($UPN -split "@", 2)[1].ToLowerInvariant()
 
-    Write-Host ""
-    Write-Host "ACCOUNT CHECK" -ForegroundColor Cyan
-    Write-Host "Name          : $($GraphUser.displayName)"
-    Write-Host "UPN           : $($GraphUser.userPrincipalName)"
-    Write-Host "Enabled       : $($GraphUser.accountEnabled)"
-    Write-Host "Hybrid synced : $($GraphUser.onPremisesSyncEnabled -eq $true)"
+    $tenant = Connect-GraphAuto `
+        -Scopes @(
+            "User.Read.All",
+            "Directory.Read.All"
+        ) `
+        -TargetDomain $targetDomain `
+        -ValidationUPN $UPN
 
-    if ($GraphUser.accountEnabled -ne $false) {
-        throw "Cleanup blocked. The target account is still enabled. Disable the account first or use the normal offboarding workflow."
-    }
+    $user = Get-GraphUser -UPN $UPN
+    $accountSource = if ($user.onPremisesSyncEnabled -eq $true) { "Active Directory" } else { "Entra ID" }
+    $adUser = $null
+    $authoritativeDisabled = $false
 
-    Write-OK "Target account is disabled"
-
-    Ensure-Exchange
-
-    $TargetRecipient = $null
-    try {
-        $TargetRecipient = Get-Recipient -Identity $UPN -ErrorAction Stop
-    }
-    catch {
-        Write-Warn "The target does not resolve as an Exchange recipient. Permission matching will use the UPN only."
-    }
-
-    $Identities = @($UPN)
-    if ($TargetRecipient) {
-        foreach ($Candidate in @(
-            [string]$TargetRecipient.PrimarySmtpAddress,
-            [string]$TargetRecipient.WindowsEmailAddress,
-            [string]$TargetRecipient.Identity,
-            [string]$TargetRecipient.Name
-        )) {
-            if (-not [string]::IsNullOrWhiteSpace($Candidate)) {
-                $Identities += $Candidate
-            }
-        }
-    }
-    $Identities = @($Identities | Sort-Object -Unique)
-
-    Write-Info "Scanning mailbox permissions..."
-    $Mailboxes = @(Get-Mailbox -ResultSize Unlimited -ErrorAction Stop)
-    $Findings = New-Object System.Collections.ArrayList
-    $ScanFailures = 0
-
-    foreach ($Mailbox in $Mailboxes) {
+    if ($accountSource -eq "Active Directory") {
         try {
-            $FullAccess = @(
-                Get-MailboxPermission -Identity $Mailbox.Identity -ErrorAction Stop |
-                Where-Object {
-                    $_.IsInherited -eq $false -and
-                    $_.AccessRights -contains "FullAccess" -and
-                    (Test-PrincipalMatch -Value $_.User -Identities $Identities)
-                }
-            )
-
-            if ($FullAccess.Count -gt 0) {
-                [void]$Findings.Add([pscustomobject]@{
-                    Mailbox = [string]$Mailbox.PrimarySmtpAddress
-                    Right   = "FullAccess"
-                })
-            }
+            $adUser = Resolve-ADUser -GraphUser $user
         }
         catch {
-            $ScanFailures++
-            Write-Warn ("Full Access scan failed for {0}: {1}" -f $Mailbox.PrimarySmtpAddress, (Get-ShortError $_))
+            throw "Active Directory lookup failed: $(Get-ShortError $_)"
         }
 
-        try {
-            $SendAs = @(
-                Get-RecipientPermission -Identity $Mailbox.Identity -ErrorAction Stop |
-                Where-Object {
-                    $_.AccessRights -contains "SendAs" -and
-                    (Test-PrincipalMatch -Value $_.Trustee -Identities $Identities)
-                }
-            )
-
-            if ($SendAs.Count -gt 0) {
-                [void]$Findings.Add([pscustomobject]@{
-                    Mailbox = [string]$Mailbox.PrimarySmtpAddress
-                    Right   = "SendAs"
-                })
-            }
+        if (-not $adUser) {
+            throw "Synced user could not be resolved in Active Directory."
         }
-        catch {
-            $ScanFailures++
-            Write-Warn ("Send As scan failed for {0}: {1}" -f $Mailbox.PrimarySmtpAddress, (Get-ShortError $_))
-        }
-    }
 
-    Write-Host ""
-    Write-Host "REMOVAL PLAN" -ForegroundColor Cyan
-
-    if ($Findings.Count -eq 0) {
-        Write-Host "No matching Full Access or Send As rights were found."
-        if ($ScanFailures -gt 0) {
-            Write-Warn "$ScanFailures permission query failure(s) occurred. Do not treat this as a clean result without reviewing those failures."
-        }
-        Write-OK "No changes made"
-        return
-    }
-
-    foreach ($Finding in ($Findings | Sort-Object Mailbox, Right)) {
-        Write-Host ("- {0} | {1}" -f $Finding.Mailbox, $Finding.Right)
-    }
-
-    if ($ScanFailures -gt 0) {
-        Write-Warn "$ScanFailures permission query failure(s) occurred. Cleanup will only touch rights that were positively discovered above."
-    }
-
-    if (-not (Confirm-Type "Remove the discovered mailbox rights for $UPN." "CLEANUP")) {
-        Write-Warn "Cleanup cancelled"
-        return
-    }
-
-    $Completed = New-Object System.Collections.ArrayList
-    $Failed = New-Object System.Collections.ArrayList
-
-    foreach ($Finding in $Findings) {
-        try {
-            if ($Finding.Right -eq "FullAccess") {
-                Remove-MailboxPermission `
-                    -Identity $Finding.Mailbox `
-                    -User $UPN `
-                    -AccessRights FullAccess `
-                    -InheritanceType All `
-                    -Confirm:$false `
-                    -ErrorAction Stop
-            }
-            elseif ($Finding.Right -eq "SendAs") {
-                Remove-RecipientPermission `
-                    -Identity $Finding.Mailbox `
-                    -Trustee $UPN `
-                    -AccessRights SendAs `
-                    -Confirm:$false `
-                    -ErrorAction Stop
-            }
-
-            [void]$Completed.Add($Finding)
-            Write-OK ("Removed {0} from {1}" -f $Finding.Right, $Finding.Mailbox)
-        }
-        catch {
-            [void]$Failed.Add([pscustomobject]@{
-                Mailbox = $Finding.Mailbox
-                Right   = $Finding.Right
-                Error   = Get-ShortError $_
-            })
-            Write-Fail ("Failed {0} on {1}: {2}" -f $Finding.Right, $Finding.Mailbox, (Get-ShortError $_))
-        }
-    }
-
-    Write-Host ""
-    Write-Host "SUMMARY" -ForegroundColor Cyan
-    Write-Host "Target    : $UPN"
-    Write-Host "Discovered: $($Findings.Count)"
-    Write-Host "Removed   : $($Completed.Count)"
-    Write-Host "Failed    : $($Failed.Count)"
-
-    if ($Failed.Count -gt 0) {
-        Write-Warn "One or more removals failed. Review the failures above."
+        $authoritativeDisabled = $adUser.Disabled
     }
     else {
-        Write-OK "Cleanup complete"
+        $authoritativeDisabled = ($user.accountEnabled -eq $false)
+    }
+
+    Write-Host ""
+    Write-Section "TARGET"
+    Write-Host ("Tenant         : {0}" -f $tenant.DisplayName)
+    Write-Host ("Name           : {0}" -f $user.displayName)
+    Write-Host ("UPN            : {0}" -f $user.userPrincipalName)
+    Write-Host ("Account Source : {0}" -f $accountSource)
+    Write-Host ("Status         : {0}" -f $(if ($authoritativeDisabled) { "Disabled" } else { "Enabled" }))
+
+    if (-not $authoritativeDisabled) {
+        throw "Target is not disabled at the authoritative identity source. No mailbox permission cleanup was performed."
+    }
+
+    Connect-ExchangeAuto -TargetDomain $targetDomain
+
+    $targetPrincipalSet = New-TargetPrincipalSet `
+        -GraphUser $user `
+        -ADUser $adUser `
+        -UPN $UPN
+
+    $dataGaps = @()
+    $findings = @()
+
+    Write-Host ""
+    Write-Info "Scanning Exchange recipients for direct Full Access, Send As, and Send On Behalf permissions..."
+
+    $mailboxes = @(
+        Get-Mailbox `
+            -ResultSize Unlimited `
+            -ErrorAction Stop
+    )
+
+    foreach ($mailbox in $mailboxes) {
+        try {
+            $full = @(
+                Get-FullAccessPermission `
+                    -Mailbox $mailbox `
+                    -TargetSet $targetPrincipalSet
+            )
+
+            foreach ($permission in $full) {
+                $findings += [PSCustomObject]@{
+                    Type      = "Full Access"
+                    Name      = [string]$mailbox.DisplayName
+                    Address   = [string]$mailbox.PrimarySmtpAddress
+                    Identity  = $mailbox.Identity
+                    Principal = $permission.User
+                }
+            }
+        }
+        catch {
+            $dataGaps += "Full Access query for $($mailbox.PrimarySmtpAddress): $(Get-ShortError $_)"
+        }
+
+        try {
+            $sendAs = @(
+                Get-SendAsPermission `
+                    -Recipient $mailbox `
+                    -TargetSet $targetPrincipalSet
+            )
+
+            foreach ($permission in $sendAs) {
+                $findings += [PSCustomObject]@{
+                    Type      = "Send As"
+                    Name      = [string]$mailbox.DisplayName
+                    Address   = [string]$mailbox.PrimarySmtpAddress
+                    Identity  = $mailbox.Identity
+                    Principal = $permission.Trustee
+                }
+            }
+        }
+        catch {
+            $dataGaps += "Send As query for $($mailbox.PrimarySmtpAddress): $(Get-ShortError $_)"
+        }
+
+        try {
+            $sendOnBehalf = @(
+                Get-SendOnBehalfMatch `
+                    -Mailbox $mailbox `
+                    -TargetSet $targetPrincipalSet
+            )
+
+            foreach ($delegate in $sendOnBehalf) {
+                $findings += [PSCustomObject]@{
+                    Type      = "Send On Behalf"
+                    Name      = [string]$mailbox.DisplayName
+                    Address   = [string]$mailbox.PrimarySmtpAddress
+                    Identity  = $mailbox.Identity
+                    Principal = $delegate
+                }
+            }
+        }
+        catch {
+            $dataGaps += "Send On Behalf query for $($mailbox.PrimarySmtpAddress): $(Get-ShortError $_)"
+        }
+    }
+
+    Write-Host ""
+    Write-Section "MAILBOX ACCESS DEBT"
+
+    if ($findings.Count -eq 0) {
+        Write-Host "  none found"
+    }
+    else {
+        for ($i = 0; $i -lt $findings.Count; $i++) {
+            Write-Host (
+                "[{0}] {1} | {2} <{3}>" -f
+                ($i + 1),
+                $findings[$i].Type,
+                $findings[$i].Name,
+                $findings[$i].Address
+            )
+        }
+    }
+
+    Write-Host ""
+    Write-Section "DATA GAPS"
+
+    if ($dataGaps.Count -eq 0) {
+        Write-Host "  none identified"
+    }
+    else {
+        $uniqueGaps = @($dataGaps | Select-Object -Unique)
+
+        Write-Host ("Count: {0}" -f $uniqueGaps.Count)
+
+        $uniqueGaps |
+            Select-Object -First 10 |
+            ForEach-Object { Write-Host "  - $_" }
+
+        if ($uniqueGaps.Count -gt 10) {
+            Write-Host ("  - ... {0} additional query gap(s)" -f ($uniqueGaps.Count - 10))
+        }
+    }
+
+    $selected = @()
+
+    if ($findings.Count -gt 0) {
+        Write-Host ""
+        Write-Host "[A] Remove all listed permissions"
+        Write-Host "[I] Review individually"
+        Write-Host "[N] No changes"
+
+        $choice = (Read-Host "Choose").Trim().ToUpperInvariant()
+
+        if ($choice -eq "A") {
+            $selected = @($findings)
+        }
+        elseif ($choice -eq "I") {
+            foreach ($finding in $findings) {
+                if (Confirm-Yes "Remove $($finding.Type) on $($finding.Address)") {
+                    $selected += $finding
+                }
+            }
+        }
+    }
+
+    $completed = @()
+    $failed = @()
+
+    if ($selected.Count -gt 0) {
+        if (-not (Confirm-Type `
+            -Prompt "Selected mailbox permissions will be removed." `
+            -Required "REMOVE MAILBOX ACCESS $UPN")) {
+            throw "OPERATOR_CANCELLED"
+        }
+
+        Write-Host ""
+        Write-Section "ACTIONS"
+
+        foreach ($finding in $selected) {
+            try {
+                if ($finding.Type -eq "Full Access") {
+                    Remove-MailboxPermission `
+                        -Identity $finding.Identity `
+                        -User $finding.Principal `
+                        -AccessRights FullAccess `
+                        -Confirm:$false `
+                        -ErrorAction Stop
+
+                    $remaining = @(
+                        Get-FullAccessPermission `
+                            -Mailbox (Get-Mailbox -Identity $finding.Identity -ErrorAction Stop) `
+                            -TargetSet $targetPrincipalSet
+                    )
+
+                    if ($remaining.Count -gt 0) {
+                        throw "Full Access permission still present after removal."
+                    }
+                }
+                elseif ($finding.Type -eq "Send As") {
+                    Remove-RecipientPermission `
+                        -Identity $finding.Identity `
+                        -Trustee $finding.Principal `
+                        -AccessRights SendAs `
+                        -Confirm:$false `
+                        -ErrorAction Stop
+
+                    $remaining = @(
+                        Get-SendAsPermission `
+                            -Recipient (Get-Mailbox -Identity $finding.Identity -ErrorAction Stop) `
+                            -TargetSet $targetPrincipalSet
+                    )
+
+                    if ($remaining.Count -gt 0) {
+                        throw "Send As permission still present after removal."
+                    }
+                }
+                elseif ($finding.Type -eq "Send On Behalf") {
+                    Set-Mailbox `
+                        -Identity $finding.Identity `
+                        -GrantSendOnBehalfTo @{ Remove = $UPN } `
+                        -ErrorAction Stop
+
+                    $updatedMailbox = Get-Mailbox `
+                        -Identity $finding.Identity `
+                        -ErrorAction Stop
+
+                    $remaining = @(
+                        Get-SendOnBehalfMatch `
+                            -Mailbox $updatedMailbox `
+                            -TargetSet $targetPrincipalSet
+                    )
+
+                    if ($remaining.Count -gt 0) {
+                        throw "Send On Behalf permission still present after removal."
+                    }
+                }
+                else {
+                    throw "Unsupported permission type: $($finding.Type)"
+                }
+
+                Write-OK ("Removed and verified: {0} | {1}" -f $finding.Type, $finding.Address)
+                $completed += "$($finding.Type): $($finding.Address)"
+            }
+            catch {
+                $detail = Get-ShortError $_
+                Write-Warn ("Failed: {0} | {1} | {2}" -f $finding.Type, $finding.Address, $detail)
+                $failed += "$($finding.Type): $($finding.Address) - $detail"
+            }
+        }
+    }
+
+    Write-Host ""
+    Write-Section "VALIDATION"
+    Write-Host ("Completed: {0}" -f $completed.Count)
+    Write-Host ("Failed   : {0}" -f $failed.Count)
+
+    Write-Host ""
+    Write-Section "NEXT"
+    Write-Host "- Continue offboarding/deletion review as needed."
+
+    Write-Host ""
+    Write-Host "STANDARD NOTE"
+
+    if ($completed.Count -gt 0) {
+        Write-Host ("CHANGES PERFORMED: {0} verified mailbox permission removal(s)." -f $completed.Count)
+    }
+    else {
+        Write-Host "No mailbox permission changes were made."
     }
 }
 catch {
     Write-Host ""
-    Write-Fail (Get-ShortError $_)
+
+    if ($_.Exception.Message -eq "OPERATOR_CANCELLED") {
+        Write-Warn "Cancelled by operator."
+    }
+    else {
+        Write-Fail (Get-ShortError $_)
+    }
 }
 finally {
     Pause-End
 }
+

@@ -1,8 +1,8 @@
 <#
-MULTI DISABLE ACCOUNTS
+DISABLE USER ACCOUNTS
 
 OBJECTIVE
-Disable a TXT or CSV list of Microsoft 365 user accounts.
+Disable one or more Microsoft 365 user accounts from a direct UPN or TXT/CSV input.
 
 IDENTITY AUTHORITY
 - Synced user: Active Directory
@@ -22,6 +22,8 @@ Right-click > Run with PowerShell 7
 #>
 
 param(
+    [Alias('UPN')]
+    [string[]]$InputObject,
     [string]$InputPath,
     [switch]$RevokeSessions
 )
@@ -37,7 +39,14 @@ function Write-Info { param($m) Write-Host "[INFO] $m" }
 function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
 
+function Write-FieldKitFooter {
+    Write-Host ""
+    Write-Host "F I E L D  //  K I T"
+    Write-Host ""
+}
+
 function Pause-End {
+    Write-FieldKitFooter
     Write-Host ""
     Write-Host "Press Enter to EXIT" -NoNewline
 
@@ -95,12 +104,12 @@ function Confirm-Type {
 
 function Ensure-GraphModule {
     $ModuleName = "Microsoft.Graph.Authentication"
-    $Module = Get-Module -ListAvailable -Name $ModuleName |
+    $Module = Get-Module -ListAvailable -Name $ModuleName -ErrorAction SilentlyContinue |
         Sort-Object Version -Descending |
         Select-Object -First 1
 
     if (-not $Module) {
-        throw "$ModuleName is required. Install it with: Install-Module $ModuleName -Scope CurrentUser"
+        throw "$ModuleName is required but is not installed. Install with: Install-Module $ModuleName -Scope CurrentUser"
     }
 
     Import-Module $Module.Path -Force -ErrorAction Stop
@@ -281,96 +290,85 @@ function Connect-GraphAuto {
     Write-Info ("Tenant : {0}" -f $TenantDomain)
 }
 
-function Get-UPNsFromFile {
-    param([string]$Path)
-
-    if ([string]::IsNullOrWhiteSpace($Path)) {
-        $Path = Read-Host "Input TXT or CSV path"
-    }
-
-    $Path = ([string]$Path).Trim().Trim('"').Trim("'")
-    $Path = [Environment]::ExpandEnvironmentVariables($Path)
-
-    if ([string]::IsNullOrWhiteSpace($Path)) {
-        throw "Input TXT or CSV path is required."
-    }
-
-    if (-not [System.IO.Path]::GetExtension($Path)) {
-        foreach ($Candidate in @("$Path.txt", "$Path.csv")) {
-            if (Test-Path -LiteralPath $Candidate -PathType Leaf) {
-                $Path = $Candidate
-                break
-            }
-        }
-    }
-
-    if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
-        throw "Input file not found: $Path"
-    }
-
-    $ResolvedPath = (Resolve-Path -LiteralPath $Path -ErrorAction Stop).Path
-    Write-OK "Input file found"
-    Write-Host ("Path    : {0}" -f $ResolvedPath)
-
-    $Extension = [System.IO.Path]::GetExtension($ResolvedPath).ToLowerInvariant()
-    $Values = @()
-
-    if ($Extension -eq ".txt") {
-        foreach ($Line in Get-Content -LiteralPath $ResolvedPath -ErrorAction Stop) {
-            $Value = ([string]$Line).Trim().Trim('"').Trim("'")
-
-            if (
-                -not [string]::IsNullOrWhiteSpace($Value) -and
-                $Value -notmatch "^#"
-            ) {
-                $Values += $Value
-            }
-        }
-    }
-    elseif ($Extension -eq ".csv") {
-        $Rows = @(Import-Csv -LiteralPath $ResolvedPath -ErrorAction Stop)
-
-        if ($Rows.Count -eq 0) {
-            throw "CSV contains no data rows."
-        }
-
-        $Column = $null
-
-        foreach ($Candidate in @(
-            "UserPrincipalName",
-            "UserPrincipleName",
-            "UPN",
-            "Email",
-            "Mail",
-            "Address"
-        )) {
-            if ($Rows[0].PSObject.Properties.Name -contains $Candidate) {
-                $Column = $Candidate
-                break
-            }
-        }
-
-        if (-not $Column) {
-            throw "CSV requires a UPN, UserPrincipalName, Email, Mail, or Address column."
-        }
-
-        foreach ($Row in $Rows) {
-            $Value = ([string]$Row.$Column).Trim().Trim('"').Trim("'")
-
-            if (-not [string]::IsNullOrWhiteSpace($Value)) {
-                $Values += $Value
-            }
-        }
-    }
-    else {
-        throw "Only TXT and CSV input files are supported."
-    }
-
-    return @(
-        $Values |
-        Where-Object { $_ -match "^[^@\s]+@[^@\s]+\.[^@\s]+$" } |
-        Select-Object -Unique
+function Get-InputUPNs {
+    param(
+        [string[]]$Values,
+        [string]$Path
     )
+
+    $items=New-Object System.Collections.ArrayList
+    $rawValues=@($Values | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+
+    if ($Path) { $rawValues += $Path }
+
+    if ($rawValues.Count -eq 0) {
+        $entered=(Read-Host "User UPN or TXT/CSV path").Trim().Trim('"').Trim("'")
+        if ($entered) { $rawValues=@($entered) }
+    }
+
+    foreach ($value in $rawValues) {
+        $clean=[Environment]::ExpandEnvironmentVariables(([string]$value).Trim().Trim('"').Trim("'"))
+        if (-not $clean) { continue }
+
+        if (-not [System.IO.Path]::GetExtension($clean)) {
+            foreach ($candidatePath in @("$clean.txt","$clean.csv")) {
+                if (Test-Path -LiteralPath $candidatePath -PathType Leaf) {
+                    $clean=$candidatePath
+                    break
+                }
+            }
+        }
+
+        if (Test-Path -LiteralPath $clean -PathType Leaf) {
+            $resolvedPath=(Resolve-Path -LiteralPath $clean -ErrorAction Stop).Path
+            Write-OK "Input file found"
+            Write-Host ("Path    : {0}" -f $resolvedPath)
+
+            $extension=[System.IO.Path]::GetExtension($resolvedPath).ToLowerInvariant()
+
+            if ($extension -eq '.txt') {
+                foreach ($line in @(Get-Content -LiteralPath $resolvedPath -ErrorAction Stop)) {
+                    $candidate=([string]$line).Trim().Trim('"').Trim("'")
+                    if ($candidate -and $candidate -notmatch '^#') { [void]$items.Add($candidate) }
+                }
+            }
+            elseif ($extension -eq '.csv') {
+                $rows=@(Import-Csv -LiteralPath $resolvedPath -ErrorAction Stop)
+                if ($rows.Count -eq 0) { throw "CSV contains no data rows." }
+
+                foreach ($row in $rows) {
+                    $candidate=$null
+                    foreach ($column in @('UPN','UserPrincipalName','Email','Address','User','Name','Input')) {
+                        if ($row.PSObject.Properties.Name -contains $column -and $row.$column) {
+                            $candidate=[string]$row.$column
+                            break
+                        }
+                    }
+                    if (-not $candidate) {
+                        $first=$row.PSObject.Properties | Select-Object -First 1
+                        if ($first) { $candidate=[string]$first.Value }
+                    }
+                    if ($candidate -and $candidate.Trim()) { [void]$items.Add($candidate.Trim().Trim('"').Trim("'")) }
+                }
+            }
+            else {
+                throw "Unsupported input file type: $extension"
+            }
+
+            continue
+        }
+
+        foreach ($candidate in @($clean -split '\s*,\s*')) {
+            if ($candidate) { [void]$items.Add($candidate.Trim()) }
+        }
+    }
+
+    $upns=@($items | Where-Object { $_ } | Select-Object -Unique)
+    foreach ($upn in $upns) {
+        if ($upn -notmatch '^[^@\s]+@[^@\s]+$') { throw "Invalid UPN in input: $upn" }
+    }
+
+    return $upns
 }
 
 function Get-TenantDomainFromUPNs {
@@ -624,23 +622,18 @@ function Offer-ExportCsv {
         throw "CSV verification failed. Expected $($ExportRows.Count) row(s); read back $($Check.Count)."
     }
 
-    $Expected = @(
-        $ExportRows |
-        ForEach-Object {
-            "{0}|{1}|{2}|{3}|{4}|{5}" -f $_.UPN,$_.AccountSource,$_.CurrentStatus,$_.Action,$_.Result,$_.Detail
+    $Expected=@(
+        $ExportRows | ForEach-Object {
+            "{0}|{1}|{2}|{3}|{4}" -f $_.UPN,$_.Source,$_.Before,$_.Action,$_.Result
+        }
+    )
+    $Actual=@(
+        $Check | ForEach-Object {
+            "{0}|{1}|{2}|{3}|{4}" -f $_.UPN,$_.Source,$_.Before,$_.Action,$_.Result
         }
     )
 
-    $Actual = @(
-        $Check |
-        ForEach-Object {
-            "{0}|{1}|{2}|{3}|{4}|{5}" -f $_.UPN,$_.AccountSource,$_.CurrentStatus,$_.Action,$_.Result,$_.Detail
-        }
-    )
-
-    $Difference = @(Compare-Object -ReferenceObject $Expected -DifferenceObject $Actual -SyncWindow 0)
-
-    if ($Difference.Count -gt 0) {
+    if (@(Compare-Object -ReferenceObject $Expected -DifferenceObject $Actual -SyncWindow 0).Count -gt 0) {
         throw "CSV verification failed. Exported content did not match the in-memory results."
     }
 
@@ -649,12 +642,12 @@ function Offer-ExportCsv {
 }
 
 try {
-    Write-Host "MULTI DISABLE ACCOUNTS"
+    Write-Host "DISABLE USER ACCOUNTS"
     Write-Host "CHANGES MAY BE MADE."
     Write-Host "Synced users are changed in Active Directory. Cloud-only users are changed in Entra ID."
     Write-Host ""
 
-    $UPNs = @(Get-UPNsFromFile -Path $InputPath)
+    $UPNs = @(Get-InputUPNs -Values $InputObject -Path $InputPath)
 
     if ($UPNs.Count -eq 0) {
         throw "No valid UPNs were loaded."
@@ -894,42 +887,43 @@ try {
         }
     }
 
-    $CompleteCount = @($Rows | Where-Object { $_.Result -eq "Complete" }).Count
-    $SyncPendingCount = @($Rows | Where-Object { $_.Result -eq "Complete - Sync Pending" }).Count
-    $ReviewCount = @($Rows | Where-Object { $_.Result -eq "Review" }).Count
-    $FailedCount = @($Rows | Where-Object { $_.Result -eq "Failed" }).Count
-    $AlreadyDisabledCount = @($Rows | Where-Object { $_.Action -eq "AlreadyDisabled" }).Count
-
     Write-Host ""
     Write-Host "SUMMARY"
     Write-Host "--------------------------------------"
-    Write-Host ("Complete               : {0}" -f $CompleteCount)
-    Write-Host ("Complete - sync pending: {0}" -f $SyncPendingCount)
-    Write-Host ("Review                 : {0}" -f $ReviewCount)
-    Write-Host ("Failed                 : {0}" -f $FailedCount)
-    Write-Host ("Already disabled       : {0}" -f $AlreadyDisabledCount)
-
-    Write-Host ""
-    Write-Host ". . . . COPY THIS SUMMARY TO TICKET . . . ."
-    Write-Host ""
-    Write-Host "BULK USER DISABLE SUMMARY"
-    Write-Host "--------------------------------------"
-    Write-Host ("Timestamp        : {0}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"))
-    Write-Host ("Tenant domain    : {0}" -f $TenantDomain)
-    Write-Host ("Input users      : {0}" -f $UPNs.Count)
-    Write-Host ("Complete         : {0}" -f $CompleteCount)
-    Write-Host ("Sync pending     : {0}" -f $SyncPendingCount)
-    Write-Host ("Review           : {0}" -f $ReviewCount)
-    Write-Host ("Failed           : {0}" -f $FailedCount)
-    Write-Host ("Already disabled : {0}" -f $AlreadyDisabledCount)
-    Write-Host ("Revoke sessions  : {0}" -f $RevokeSessions)
-    Write-Host ("Sync result      : {0}" -f $SyncResult.Result)
-    if ($SyncResult.Detail) { Write-Host ("Sync detail      : {0}" -f $SyncResult.Detail) }
-    Write-Host ""
-    Write-Host "Authority: synced users are changed in Active Directory; cloud-only users are changed in Entra ID."
-    Write-Host ". . . . END SUMMARY . . . ."
+    Write-Host ("Complete              : {0}" -f @($Rows | Where-Object { $_.Result -eq "Complete" }).Count)
+    Write-Host ("Complete - sync pending: {0}" -f @($Rows | Where-Object { $_.Result -eq "Complete - Sync Pending" }).Count)
+    Write-Host ("Review                : {0}" -f @($Rows | Where-Object { $_.Result -eq "Review" }).Count)
+    Write-Host ("Failed                : {0}" -f @($Rows | Where-Object { $_.Result -eq "Failed" }).Count)
+    Write-Host ("Already disabled      : {0}" -f @($Rows | Where-Object { $_.Action -eq "AlreadyDisabled" }).Count)
 
     Offer-ExportCsv -Rows $Rows
+
+    Write-Host ""
+    Write-Host "TICKET NOTE"
+
+    $changedRows = @(
+        $Rows |
+        Where-Object {
+            $_.Action -eq 'Disable' -and
+            $_.Result -like 'Complete*'
+        }
+    )
+
+    if ($changedRows.Count -eq 0) {
+        Write-Host "- No changes made."
+    }
+    else {
+        foreach ($Row in $changedRows) {
+            Write-Host ("- Disabled account: {0} ({1})" -f $Row.UPN, $Row.AccountSource)
+            if ([string]$Row.Detail -like '*sessions revoked*') {
+                Write-Host ("- Revoked active sessions: {0}" -f $Row.UPN)
+            }
+        }
+
+        if ($SyncResult.Result -eq 'Complete') {
+            Write-Host "- Entra delta sync triggered"
+        }
+    }
 }
 catch {
     Write-Host ""

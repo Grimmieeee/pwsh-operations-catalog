@@ -4,7 +4,7 @@
 GROUP MEMBERS LOOKUP
 
 OBJECTIVE
-Show members of one group.
+Show direct members of one or more groups.
 
 LOOKUP ORDER
 1. Exchange Online distribution group
@@ -12,7 +12,7 @@ LOOKUP ORDER
 3. Active Directory group
 
 INPUT
-Group display name or email address.
+One group name/email, multiple group values, or a TXT/CSV path.
 
 CHANGES
 Read-only. No changes are made.
@@ -25,6 +25,14 @@ Right-click > Run with PowerShell 7
 Compatible with Windows PowerShell 5.1 and PowerShell 7.
 #>
 
+
+[CmdletBinding()]
+param(
+    [Alias('Group')]
+    [string[]]$InputObject
+)
+
+$ErrorActionPreference = 'Stop'
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -364,45 +372,103 @@ function Get-AdMemberNames {
     return @($members | Sort-Object -Unique)
 }
 
+function Get-InputGroups {
+    param([string[]]$Values)
+
+    $items=New-Object System.Collections.ArrayList
+    $rawValues=@($Values | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+
+    if ($rawValues.Count -eq 0) {
+        $entered=(Read-Host "Group name/email or TXT/CSV path").Trim().Trim('"')
+        if ($entered) { $rawValues=@($entered) }
+    }
+
+    foreach ($value in $rawValues) {
+        $clean=([string]$value).Trim().Trim('"')
+        if (-not $clean) { continue }
+
+        if (Test-Path -LiteralPath $clean -PathType Leaf) {
+            if ([System.IO.Path]::GetExtension($clean) -ieq '.csv') {
+                foreach ($row in @(Import-Csv -LiteralPath $clean -ErrorAction Stop)) {
+                    $candidate=$null
+                    foreach ($name in @('Group','GroupName','Name','Email','Address','Mail','Input')) {
+                        if ($row.PSObject.Properties.Name -contains $name -and $row.$name) {
+                            $candidate=[string]$row.$name
+                            break
+                        }
+                    }
+                    if (-not $candidate) {
+                        $first=$row.PSObject.Properties | Select-Object -First 1
+                        if ($first) { $candidate=[string]$first.Value }
+                    }
+                    if ($candidate -and $candidate.Trim()) { [void]$items.Add($candidate.Trim().Trim('"')) }
+                }
+            }
+            else {
+                foreach ($line in @(Get-Content -LiteralPath $clean -Encoding UTF8 -ErrorAction Stop)) {
+                    $candidate=([string]$line).Trim().Trim('"')
+                    if ($candidate -and $candidate -notmatch '^#') { [void]$items.Add($candidate) }
+                }
+            }
+            continue
+        }
+
+        foreach ($candidate in @($clean -split '\s*,\s*')) {
+            if ($candidate) { [void]$items.Add($candidate.Trim()) }
+        }
+    }
+
+    return @($items | Where-Object { $_ } | Select-Object -Unique)
+}
+
+function Offer-VerifiedCsv {
+    param([object[]]$Rows,[string]$DefaultName='group-members.csv')
+
+    if (-not $Rows -or $Rows.Count -eq 0) { return }
+    if ((Read-Host "Export member detail to CSV [Y/N]").Trim() -notmatch '^(?i)y$') { return }
+
+    $path=(Read-Host "CSV output path [blank for .\$DefaultName]").Trim().Trim('"')
+    if (-not $path) { $path=Join-Path (Get-Location).Path $DefaultName }
+
+    $Rows | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8 -ErrorAction Stop
+    $check=@(Import-Csv -LiteralPath $path -ErrorAction Stop)
+    if ($check.Count -ne $Rows.Count) {
+        throw "CSV verification failed. Expected $($Rows.Count) row(s); read back $($check.Count)."
+    }
+
+    $expected=@($Rows | ForEach-Object { "{0}|{1}|{2}|{3}|{4}" -f $_.GroupInput,$_.Source,$_.GroupName,$_.MemberName,$_.MemberAddress })
+    $actual=@($check | ForEach-Object { "{0}|{1}|{2}|{3}|{4}" -f $_.GroupInput,$_.Source,$_.GroupName,$_.MemberName,$_.MemberAddress })
+
+    if (@(Compare-Object -ReferenceObject $expected -DifferenceObject $actual -SyncWindow 0).Count -gt 0) {
+        throw "CSV verification failed. Exported content did not match the in-memory results."
+    }
+
+    Write-Ok "Exported and verified: $path"
+}
+
 try {
     Write-Host ""
     Write-Host "GROUP MEMBERS LOOKUP"
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 
-    $inputGroup = (Read-Host "Group name or email").Trim()
+    $groupsToCheck=@(Get-InputGroups -Values $InputObject)
+    if ($groupsToCheck.Count -eq 0) { throw "At least one group is required." }
 
-    if ([string]::IsNullOrWhiteSpace($inputGroup)) {
-        throw "Group name or email is required."
-    }
+    $detailRows=New-Object System.Collections.ArrayList
+    $summaryRows=New-Object System.Collections.ArrayList
 
-    Write-Host ""
-
-    $members = @()
-    $source = ""
-    $groupResolved = $false
-
-    # Exchange Online distribution group.
-    $exoOk = $false
-
+    $exoOk=$false
     if (Ensure-Module -Name 'ExchangeOnlineManagement') {
         try {
-            $connection = Get-ConnectionInformation -ErrorAction SilentlyContinue
-
+            $connection=Get-ConnectionInformation -ErrorAction SilentlyContinue
             if (-not $connection) {
-                $exoCommand = Get-Command Connect-ExchangeOnline -ErrorAction Stop
-                $exoParameters = @{
-                    ErrorAction = 'Stop'
-                }
-
-                if ($exoCommand.Parameters.ContainsKey('ShowBanner')) {
-                    $exoParameters['ShowBanner'] = $false
-                }
-
-                Connect-ExchangeOnline @exoParameters
+                $exoCommand=Get-Command Connect-ExchangeOnline -ErrorAction Stop
+                $exoParameters=@{ ErrorAction='Stop' }
+                if ($exoCommand.Parameters.ContainsKey('ShowBanner')) { $exoParameters['ShowBanner']=$false }
+                Connect-ExchangeOnline @exoParameters | Out-Null
             }
-
-            $exoOk = $true
+            $exoOk=$true
             Write-Ok "Exchange connected"
         }
         catch {
@@ -410,113 +476,139 @@ try {
         }
     }
 
-    if ($exoOk) {
-        try {
-            $dl = Get-DistributionGroup `
-                -Identity $inputGroup `
-                -ErrorAction Stop
+    foreach ($inputGroup in $groupsToCheck) {
+        Write-Host ""
+        Write-Host "GROUP"
+        Write-Host ("Input   : {0}" -f $inputGroup)
 
-            if ($dl) {
-                $groupResolved = $true
+        $groupResolved=$false
+        $source=''
+        $groupName=''
+        $groupMail=''
+        $members=@()
 
-                $members = @(
-                    Get-DistributionGroupMember `
-                        -Identity $dl.Identity `
-                        -ResultSize Unlimited `
-                        -ErrorAction Stop |
-                    ForEach-Object {
-                        if ($_.DisplayName) {
-                            $_.DisplayName
-                        }
-                        elseif ($_.Name) {
-                            $_.Name
-                        }
-                    } |
-                    Where-Object {
-                        -not [string]::IsNullOrWhiteSpace($_)
-                    } |
-                    Sort-Object -Unique
-                )
-
-                $source = 'Exchange Distribution Group'
-            }
-        }
-        catch {
-        }
-    }
-
-    # Entra ID group.
-    if (-not $groupResolved) {
-        $graphGroup = Connect-GraphForGroup -GroupInput $inputGroup
-
-        if ($graphGroup) {
+        if ($exoOk) {
             try {
-                $groupResolved = $true
+                $dl=Get-DistributionGroup -Identity $inputGroup -ErrorAction Stop
+                if ($dl) {
+                    $groupResolved=$true
+                    $source='Exchange Distribution Group'
+                    $groupName=[string]$dl.DisplayName
+                    $groupMail=[string]$dl.PrimarySmtpAddress
+                    $members=@(Get-DistributionGroupMember -Identity $dl.Identity -ResultSize Unlimited -ErrorAction Stop | Sort-Object DisplayName)
 
-                $members = @(
-                    Get-MgGroupMember `
-                        -GroupId $graphGroup.Id `
-                        -All `
-                        -ErrorAction Stop |
-                    ForEach-Object {
-                        $name = [string]$_.AdditionalProperties['displayName']
+                    foreach ($m in $members) {
+                        $memberName=[string]$m.DisplayName
+                        if (-not $memberName) { $memberName=[string]$m.Name }
+                        $address=[string]$m.PrimarySmtpAddress
+                        if (-not $address) { $address=[string]$m.WindowsEmailAddress }
 
-                        if ([string]::IsNullOrWhiteSpace($name)) {
-                            $name = [string]$_.AdditionalProperties['userPrincipalName']
-                        }
-
-                        $name
-                    } |
-                    Where-Object {
-                        -not [string]::IsNullOrWhiteSpace($_)
-                    } |
-                    Sort-Object -Unique
-                )
-
-                $source = 'Entra ID'
+                        [void]$detailRows.Add([pscustomobject]@{
+                            GroupInput=$inputGroup; Source=$source; GroupName=$groupName; GroupMail=$groupMail
+                            MemberName=$memberName; MemberAddress=$address; MemberType=[string]$m.RecipientType
+                        })
+                    }
+                }
             }
-            catch {
-                Write-Warn "Entra group resolved, but members could not be read."
+            catch {}
+        }
+
+        if (-not $groupResolved) {
+            $graphGroup=Connect-GraphForGroup -GroupInput $inputGroup
+
+            if ($graphGroup) {
+                try {
+                    $graphMembers=@(
+                        Get-MgGroupMember -GroupId $graphGroup.Id -All -ErrorAction Stop
+                    )
+
+                    $groupResolved=$true
+                    $source='Entra ID'
+                    $groupName=[string]$graphGroup.DisplayName
+                    $groupMail=[string]$graphGroup.Mail
+                    $members=$graphMembers
+
+                    foreach ($m in $graphMembers) {
+                        $memberName=[string]$m.AdditionalProperties['displayName']
+                        if (-not $memberName) { $memberName=[string]$m.AdditionalProperties['userPrincipalName'] }
+
+                        $address=[string]$m.AdditionalProperties['userPrincipalName']
+                        if (-not $address) { $address=[string]$m.AdditionalProperties['mail'] }
+
+                        $memberType=[string]$m.AdditionalProperties['@odata.type']
+                        if ($memberType) { $memberType=$memberType -replace '^#microsoft\.graph\.','' }
+
+                        [void]$detailRows.Add([pscustomobject]@{
+                            GroupInput=$inputGroup; Source=$source; GroupName=$groupName; GroupMail=$groupMail
+                            MemberName=$memberName; MemberAddress=$address; MemberType=$memberType
+                        })
+                    }
+                }
+                catch {
+                    Write-Warn "Entra group resolved, but members could not be read."
+                }
             }
         }
-    }
 
-    # Active Directory group.
-    if (-not $groupResolved) {
-        $adGroup = Get-AdGroupByInput -GroupInput $inputGroup
+        if (-not $groupResolved) {
+            $adGroup=Get-AdGroupByInput -GroupInput $inputGroup
 
-        if ($adGroup) {
-            $groupResolved = $true
-            $members = @(Get-AdMemberNames -SearchResult $adGroup)
-            $source = 'Active Directory'
+            if ($adGroup) {
+                $groupResolved=$true
+                $source='Active Directory'
+                $groupName=$inputGroup
+                $members=@(Get-AdMemberNames -SearchResult $adGroup)
+
+                foreach ($memberName in $members) {
+                    [void]$detailRows.Add([pscustomobject]@{
+                        GroupInput=$inputGroup; Source=$source; GroupName=$groupName; GroupMail=''
+                        MemberName=$memberName; MemberAddress=''; MemberType='Directory object'
+                    })
+                }
+            }
+        }
+
+        if ($groupResolved) {
+            Write-Host ("Source  : {0}" -f $source)
+            Write-Host ("Name    : {0}" -f $groupName)
+            if ($groupMail) { Write-Host ("Email   : {0}" -f $groupMail) }
+            Write-Host ("Members : {0}" -f $members.Count)
+            Write-Host ""
+
+            if ($members.Count -eq 0) {
+                Write-Host "  none"
+            }
+            else {
+                foreach ($row in @($detailRows | Where-Object { $_.GroupInput -eq $inputGroup })) {
+                    if ($row.MemberAddress) { Write-Host ("  - {0} <{1}>" -f $row.MemberName,$row.MemberAddress) }
+                    else { Write-Host ("  - {0}" -f $row.MemberName) }
+                }
+            }
+
+            [void]$summaryRows.Add([pscustomobject]@{
+                GroupInput=$inputGroup; Source=$source; GroupName=$groupName; Members=$members.Count; Status='Found'
+            })
+        }
+        else {
+            Write-Host "Source  : Not resolved"
+            Write-Host "Members : 0"
+            Write-Warn "Group was not found in Exchange, Entra ID, or Active Directory."
+
+            [void]$summaryRows.Add([pscustomobject]@{
+                GroupInput=$inputGroup; Source=''; GroupName=''; Members=0; Status='NotFound'
+            })
         }
     }
 
     Write-Host ""
-    Write-Host "RESULT"
-    Write-Host "--------------------------------------"
+    Write-Host "TICKET SUMMARY"
+    Write-Host ("Groups checked : {0}" -f $groupsToCheck.Count)
+    Write-Host ("Found          : {0}" -f @($summaryRows | Where-Object { $_.Status -eq 'Found' }).Count)
+    Write-Host ("Not found      : {0}" -f @($summaryRows | Where-Object { $_.Status -eq 'NotFound' }).Count)
+    Write-Host ("Member rows    : {0}" -f $detailRows.Count)
 
-    if ($groupResolved) {
-        Write-Host ("Source  : {0}" -f $source)
+    Offer-VerifiedCsv -Rows @($detailRows)
 
-        if ($members.Count -gt 0) {
-            Write-Host ("Members : {0}" -f $members.Count)
-            Write-Host ""
-
-            foreach ($member in $members) {
-                Write-Host ("  {0}" -f $member)
-            }
-        }
-        else {
-            Write-Host "Members : 0"
-            Write-Warn "Group resolved but contains no readable members."
-        }
-    }
-    else {
-        Write-Host "Source  : Not resolved"
-        Write-Host "Members : 0"
-        Write-Warn "Group was not found in Exchange, Entra ID, or Active Directory."
-    }
     Write-Host ""
     Write-Ok "Complete. No changes made."
 }

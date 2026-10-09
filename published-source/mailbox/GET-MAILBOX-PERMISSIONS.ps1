@@ -4,6 +4,9 @@ MULTI MAILBOX PERMISSIONS AUDIT
 OBJECTIVE
 Review forwarding, mailbox delegates, and inbox rules for one or more mailboxes.
 
+INPUT
+One UPN, multiple UPNs, or a TXT/CSV path.
+
 CHANGES
 Read-only. No changes are made.
 
@@ -76,18 +79,15 @@ function Get-ShortError {
 function Ensure-Module {
     param([string]$Name)
 
-    if (-not (Get-Module -ListAvailable -Name $Name)) {
-        Write-Info "Installing $Name..."
+    $module=Get-Module -ListAvailable -Name $Name -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
 
-        Install-Module `
-            -Name $Name `
-            -Scope CurrentUser `
-            -Force `
-            -AllowClobber `
-            -ErrorAction Stop
+    if (-not $module) {
+        throw "$Name is required but is not installed. Install with: Install-Module $Name -Scope CurrentUser"
     }
 
-    Import-Module $Name -ErrorAction Stop
+    Import-Module $module.Path -Force -ErrorAction Stop
 }
 
 function Test-AnyMailbox {
@@ -153,19 +153,53 @@ function Connect-ExchangeAuto {
     Write-OK "Exchange connected"
 }
 
-function Ask-UPNs {
-    $Raw = (Read-Host "UPN or comma-separated UPNs").Trim()
+function Get-MailboxInputs {
+    param([string[]]$Values)
 
-    if ([string]::IsNullOrWhiteSpace($Raw)) {
-        return @()
+    $items=New-Object System.Collections.ArrayList
+    $rawValues=@($Values | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+
+    if ($rawValues.Count -eq 0) {
+        $entered=(Read-Host "Mailbox UPN(s) or TXT/CSV path").Trim().Trim('"')
+        if ($entered) { $rawValues=@($entered) }
     }
 
-    return @(
-        $Raw -split "," |
-        ForEach-Object { $_.Trim() } |
-        Where-Object { $_ } |
-        Select-Object -Unique
-    )
+    foreach ($value in $rawValues) {
+        $clean=([string]$value).Trim().Trim('"')
+        if (-not $clean) { continue }
+
+        if (Test-Path -LiteralPath $clean -PathType Leaf) {
+            if ([System.IO.Path]::GetExtension($clean) -ieq '.csv') {
+                foreach ($row in @(Import-Csv -LiteralPath $clean -ErrorAction Stop)) {
+                    $candidate=$null
+                    foreach ($name in @('UPN','UserPrincipalName','Email','Address','Mailbox','Name','Input')) {
+                        if ($row.PSObject.Properties.Name -contains $name -and $row.$name) {
+                            $candidate=[string]$row.$name
+                            break
+                        }
+                    }
+                    if (-not $candidate) {
+                        $first=$row.PSObject.Properties | Select-Object -First 1
+                        if ($first) { $candidate=[string]$first.Value }
+                    }
+                    if ($candidate -and $candidate.Trim()) { [void]$items.Add($candidate.Trim().Trim('"')) }
+                }
+            }
+            else {
+                foreach ($line in @(Get-Content -LiteralPath $clean -Encoding UTF8 -ErrorAction Stop)) {
+                    $candidate=([string]$line).Trim().Trim('"')
+                    if ($candidate -and $candidate -notmatch '^#') { [void]$items.Add($candidate) }
+                }
+            }
+            continue
+        }
+
+        foreach ($candidate in @($clean -split '\s*,\s*')) {
+            if ($candidate) { [void]$items.Add($candidate.Trim()) }
+        }
+    }
+
+    return @($items | Where-Object { $_ } | Select-Object -Unique)
 }
 
 function Clean-Name {
@@ -230,12 +264,10 @@ try {
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 
-    if (-not $UPN -or $UPN.Count -eq 0) {
-        $UPN = @(Ask-UPNs)
-    }
+    $UPN=@(Get-MailboxInputs -Values $UPN)
 
     if (-not $UPN -or $UPN.Count -eq 0) {
-        throw "At least one UPN is required."
+        throw "At least one mailbox UPN is required."
     }
 
     Connect-ExchangeAuto -ValidationMailboxes $UPN

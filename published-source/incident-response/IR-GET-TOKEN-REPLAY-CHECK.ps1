@@ -117,18 +117,15 @@ function Get-ExportPath {
 }
 
 function Ensure-GraphModule {
-    if (-not (Get-Module -ListAvailable -Name "Microsoft.Graph.Authentication")) {
-        INFO "Installing Microsoft.Graph.Authentication..."
+    $module=Get-Module -ListAvailable -Name Microsoft.Graph.Authentication -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
 
-        Install-Module `
-            -Name "Microsoft.Graph.Authentication" `
-            -Scope CurrentUser `
-            -Force `
-            -AllowClobber `
-            -ErrorAction Stop
+    if (-not $module) {
+        throw "Microsoft.Graph.Authentication is required but is not installed. Install with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser"
     }
 
-    Import-Module Microsoft.Graph.Authentication -ErrorAction Stop
+    Import-Module $module.Path -Force -ErrorAction Stop
 }
 
 function Test-GraphScopes {
@@ -182,7 +179,7 @@ function Connect-GraphAuto {
     }
 
     if ($command.Parameters.ContainsKey("ContextScope")) {
-        $parameters["ContextScope"] = "CurrentUser"
+        $parameters["ContextScope"] = "Process"
     }
 
     if ($command.Parameters.ContainsKey("NoWelcome")) {

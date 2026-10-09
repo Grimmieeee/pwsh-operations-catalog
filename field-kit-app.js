@@ -705,6 +705,21 @@
       toolFacts:["Clean working-tree gate","Fast-forward-only update","Versioned ZIP","Latest ZIP","SHA256 manifest"]
     },
     {
+      name:"Operating Standards",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Standards",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"OPERATING-STANDARDS.md",
+      publishedPath:"OPERATING-STANDARDS.md",
+      notes:"Project operating contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
+      keywords:"tools docs markdown operating standards canonical one-to-many safety authentication qa release handoff rebuild",
+      toolFacts:["Canonical source model","1-to-N input standard","Hybrid authority rules","Safety and confirmation gates","Authentication / module rules","Static and runtime QA","Release workflow","Handoff / rebuild checklist"]
+    },
+    {
       name:"FIELD // KIT Build Standard",
       type:"Documentation",
       area:"Tools",
@@ -1080,7 +1095,13 @@
       match:/GET-MAILBOX-PERMISSIONS|Mailbox Permissions Review|Mailbox Forwarding and Permission Audit/i,
       connect:['Connect-ExchangeOnline'],
       label:"CHECKS",
-      facts:["Forwarding","Mailbox delegates","Inbox rules","Full Access","Send As"]
+      facts:["One mailbox or TXT / CSV input","Forwarding","Mailbox delegates","Inbox rules","Full Access","Send As","Query failures remain visible"]
+    },
+    {
+      match:/GET-MAILBOX-FORWARDING|Mailbox Forwarding Check/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["One mailbox or TXT / CSV input","Mailbox-level forwarding","Deliver-to-mailbox-and-forward state","Visible and hidden inbox-rule forwarding","Redirect and forward-as-attachment actions","Query failures","Verified CSV when requested"]
     },
     {
       match:/INVOKE-ENFORCE-PER-USER-MFA_DEFAULT|Enforce Per-user MFA/i,
@@ -1123,19 +1144,73 @@
       facts:["Secret-like literals","Private-key / token material","Tenant or app GUIDs","Email addresses / UPNs","URLs and local paths","UNC paths","Authenticode blocks","Optional custom terms"]
     },
     {
-      match:/INVOKE-DISABLE-ACCOUNTS-BULK|Bulk Disable User Accounts/i,
+      match:/INVOKE-ASSIGN-LICENSES|Assign User Licenses/i,
+      connect:['Connect-MgGraph -Scopes "User.ReadWrite.All","Directory.Read.All","Organization.Read.All"'],
+      label:"GUARDS",
+      facts:["One user or TXT / CSV input","Tenant SKU inventory","UsageLocation handling when approved","Full preview before changes","Typed ASSIGN confirmation","Per-user post-change SKU verification","Verified CSV when requested"]
+    },
+    {
+      match:/INVOKE-REMOVE-LICENSES|Remove User Licenses/i,
+      connect:['Connect-MgGraph -Scopes "User.ReadWrite.All","Directory.Read.All","Organization.Read.All"'],
+      label:"GUARDS",
+      facts:["One user or TXT / CSV input","Current-license review","One selected SKU or ALL licenses","Full plan before changes","Typed REMOVE confirmation","Per-user post-change SKU verification","Verified CSV when requested"]
+    },
+    {
+      match:/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP|Create Dynamic License Group/i,
+      connect:['Connect-MgGraph -Scopes "Group.ReadWrite.All","Directory.Read.All"'],
+      label:"GUARDS",
+      facts:["Single group creation","Dynamic security group","Enabled licensed-user rule","Previewed membership rule","Typed CREATE confirmation","Post-create group configuration verification"]
+    },
+    {
+      match:/INVOKE-ENFORCE-PER-USER-MFA|Enforce Per-user MFA/i,
+      connect:['Connect-MgGraph -Scopes "Policy.ReadWrite.AuthenticationMethod","UserAuthenticationMethod.Read.All","User.Read.All"'],
+      label:"GUARDS",
+      facts:["One user or TXT / CSV input","Per-user MFA state preview","Separate from Conditional Access","Typed ENFORCE confirmation","Post-change state validation","Registered authentication methods","Verified CSV when requested"]
+    },
+    {
+      match:/GET-ACCOUNT-STATUS|Account Status Review/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","Directory.Read.All","AuditLog.Read.All"'],
+      label:"CHECKS",
+      facts:["One user or TXT / CSV input","Enabled / disabled state","Recorded Entra sign-in activity","Missing sign-in data kept separate","Query failures remain visible","Tenant-target validation","Verified CSV when requested"]
+    },
+    {
+      match:/INVOKE-DISABLE-ACCOUNTS|Disable User Accounts/i,
       connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "User.ReadWrite.All","Directory.Read.All"'],
       label:"DOES",
       facts:["Separates synced and cloud-only authority","Uses Active Directory for synced users","Uses Entra ID for cloud-only users","Shows the full disable preview","Requires typed DISABLE confirmation","Validates post-change state","Optionally revokes sessions","Optionally requests Entra Connect delta sync","Exports verified results when requested"]
     },
     {
-      match:/GET-ENTRA-GROUP-MEMBERS-BULK|Bulk Entra Group Members Review/i,
-      connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "Group.Read.All","User.Read.All","Directory.Read.All"'],
+      match:/GET-GROUP-MEMBERS|^Group Members$/i,
+      connect:['Connect-ExchangeOnline','Connect-MgGraph -Scopes "Group.Read.All","User.Read.All"','Import-Module ActiveDirectory'],
       label:"CHECKS",
-      facts:["Multiple Entra groups from TXT / CSV","Direct members only","Account-enabled context for user members","Unresolved or ambiguous group input","Verified member CSV when requested"]
+      facts:["One group or TXT / CSV input","Exchange distribution groups first","Entra groups second","Active Directory groups third","Direct members only","Verified member CSV when requested"]
     },
     {
-      match:/RESOLVE-NAMES-TO-UPNS|Resolve Names to UPNs in Bulk/i,
+      match:/GET-USER-GROUPS|User Group Memberships/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","Group.Read.All"','Import-Module ActiveDirectory'],
+      label:"CHECKS",
+      facts:["One user or TXT / CSV input","Active Directory memberships","Entra ID memberships","Synced Entra groups remain visible","Cloud / synced / dynamic markers","Independent AD and Entra coverage","Verified CSV when requested"]
+    },
+    {
+      match:/INVOKE-DELETE-ACCOUNTS|Delete User Accounts/i,
+      connect:['Connect-MgGraph -Scopes "User.ReadWrite.All","Organization.Read.All"','Import-Module ActiveDirectory'],
+      label:"GUARDS",
+      facts:["One user or TXT / CSV input","Exact UPN resolution","AD authority for synced users","Entra authority for cloud-only and guest users","Full deletion plan before action","Typed DELETE confirmation","Same-source post-delete validation","CSV / TXT evidence"]
+    },
+    {
+      match:/INVOKE-REMOVE-USER-GROUPS|Remove User Group Memberships/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","Group.Read.All","GroupMember.ReadWrite.All"','Import-Module ActiveDirectory'],
+      label:"GUARDS",
+      facts:["One user or TXT / CSV input","AD and Entra memberships shown independently","Synced Entra observations remain visible","Synced memberships changed in AD","Dynamic and role-assignable groups skipped","Exchange-managed mail groups skipped","Typed REMOVE GROUPS confirmation","Post-removal validation"]
+    },
+    {
+      match:/INVOKE-LITIGATION-HOLD|Enforce Litigation Hold/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"GUARDS",
+      facts:["One mailbox or TXT / CSV input","Pre-change hold-state review","Changes only noncompliant mailboxes","Typed HOLD confirmation","Unlimited duration target","Post-change mailbox re-read","Optional CSV evidence"]
+    },
+    {
+      match:/RESOLVE-NAMES-TO-UPNS|Resolve Names to UPNs/i,
       connect:['Connect-MgGraph -TenantId <tenant-domain> -Scopes "User.Read.All"'],
       label:"DOES",
       facts:["Targets the requested tenant before searching","Classifies exact, likely, multiple, and no-match results","Shows account-enabled and hybrid context","Optionally exports a verified full review CSV","Optionally exports a verified exact-match UPN TXT"]
@@ -1144,7 +1219,37 @@
       match:/GET-USER-SECURITY-SNAPSHOT|User Security Snapshot/i,
       connect:['Connect-MgGraph -Scopes "User.Read.All","UserAuthenticationMethod.Read.All","Directory.Read.All","AuditLog.Read.All"'],
       label:"CHECKS",
-      facts:["Account state and hybrid source","Password age","MFA methods","Active admin roles","Direct group memberships","Recent sign-ins"]
+      facts:["Account state and hybrid source","Password state","Authentication methods","Privileged roles","Direct group memberships","License state","Recent sign-ins","Explicit data gaps"]
+    },
+    {
+      match:/GET-STALE-SIGNIN-REVIEW|Stale Entra Sign-in Review/i,
+      connect:['Connect-MgGraph -Scopes "User.Read.All","Directory.Read.All","AuditLog.Read.All"'],
+      label:"CHECKS",
+      facts:["Enabled Entra member accounts","Configurable inactivity threshold","Recorded last sign-in age","Missing sign-in activity kept separate","Guests and disabled users excluded","Verified CSV when requested"]
+    },
+    {
+      match:/GET-TENANT-GROUP-OWNERS|Tenant Group Owners Review/i,
+      connect:['Connect-MgGraph -Scopes "Group.Read.All","User.Read.All"','Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Microsoft Teams","Microsoft 365 groups","Security groups","Mail-enabled groups","Distribution groups","Ownerless groups","Owner lookup failures"]
+    },
+    {
+      match:/GET-TRANSPORT-RULES-AUDIT|Transport Rules Audit/i,
+      connect:['Connect-ExchangeOnline'],
+      label:"CHECKS",
+      facts:["Tenant-wide transport rules","BCC actions","Redirect actions","Delete / reject actions","Quarantine / moderation actions","Disabled rules","Verified CSV when requested"]
+    },
+    {
+      match:/GET-CONDITIONAL-ACCESS-GAPS|Conditional Access Gaps/i,
+      connect:['Connect-MgGraph -Scopes "Policy.Read.All","Directory.Read.All"'],
+      label:"CHECKS",
+      facts:["Disabled and report-only policies","User and group exclusions","Device-code coverage","Location conditions","Weak coverage indicators","Optional reviewed export"]
+    },
+    {
+      match:/GET-TENANT-DRIFT-REVIEW|Tenant Drift Review/i,
+      connect:['Connect-MgGraph -Scopes "Directory.Read.All","Application.Read.All","Policy.Read.All","RoleAssignmentSchedule.Read.Directory","RoleEligibilitySchedule.Read.Directory"'],
+      label:"CHECKS",
+      facts:["Active privileged role assignments","Eligible privileged role assignments","Conditional Access policy fingerprints","App registration credentials","Delegated OAuth consent grants","Tenant-ID bound local baseline","Verified baseline writes only after approval"]
     },
     {
       match:/GET-TENANT-SECURITY-SNAPSHOT|Tenant Security Snapshot/i,
@@ -1168,7 +1273,7 @@
       match:/CLEANUP-DISABLED-USER-MAILBOX-ACCESS|Disabled User Mailbox Access Cleanup/i,
       connect:['Connect-MgGraph -Scopes "User.Read.All"','Connect-ExchangeOnline'],
       label:"DOES",
-      facts:["Verifies the target account is disabled","Finds Full Access and Send As rights","Shows the complete removal plan","Requires typed CLEANUP confirmation","Removes only positively discovered rights"]
+      facts:["Validates disabled state at the authoritative identity source","Scans Exchange recipients for Full Access","Scans Send As","Scans Send on Behalf","Shows the complete removal plan","Requires typed confirmation tied to the target UPN","Verifies each requested removal"]
     }
   ];
 
@@ -1361,7 +1466,7 @@
   function countArea(area){
     if (area === "Full Library") return ITEMS.length;
     if (area === "About") return "";
-    return ITEMS.filter(x => primaryBucket(x) === area).length;
+    return ITEMS.filter(x => itemBuckets(x).includes(area)).length;
   }
 
   function countStandaloneGroup(group){
@@ -1592,6 +1697,15 @@
     {scope:"Multi User", match:/Create Dynamic License Group|Distribution Group Members|^Group Members$|Mailbox Permissions Review/i}
   ];
 
+  function itemBuckets(item){
+    const declared = Array.isArray(item.scopes)
+      ? item.scopes.filter(scope => ["Single User","Multi User","Tenant Wide"].includes(scope))
+      : [];
+
+    if (declared.length) return [...new Set(declared)];
+    return [primaryBucket(item)];
+  }
+
   function primaryBucket(item){
     if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Incident Response") return "Incident Response";
@@ -1705,7 +1819,7 @@
     if (q){
       list = ITEMS.slice();
     } else {
-      list = ITEMS.filter(item => state.area === "Full Library" || primaryBucket(item) === state.area);
+      list = ITEMS.filter(item => state.area === "Full Library" || itemBuckets(item).includes(state.area));
 
       if (state.area === "Incident Response" && state.incidentSource){
         list = list.filter(item => incidentSource(item) === state.incidentSource);
@@ -1831,14 +1945,16 @@
     // Only show it when global search mixes scopes together.
     if (!state.query.trim()) return "";
 
-    const bucket = primaryBucket(item);
     const labels = {
       "Single User":"SINGLE USER",
       "Multi User":"MULTI USER",
       "Tenant Wide":"TENANT WIDE"
     };
-    const label = labels[bucket];
-    return label ? '<span class="result-tag result-scope">' + label + '</span>' : "";
+    return itemBuckets(item)
+      .map(bucket => labels[bucket])
+      .filter(Boolean)
+      .map(label => '<span class="result-tag result-scope">' + label + '</span>')
+      .join("");
   }
 
   function rowTags(item){

@@ -1,8 +1,8 @@
 <#
-MULTI DISTRO MEMBERS LOOKUP
+DISTRIBUTION GROUP MEMBERS
 
 OBJECTIVE
-Look up members of one Exchange Online distribution group.
+Look up members of one or more Exchange Online distribution groups.
 
 CHANGES
 Read-only. No changes are made.
@@ -13,8 +13,10 @@ or
 Right-click > Run with PowerShell 7
 #>
 
+[CmdletBinding()]
 param(
-    [string]$DistributionGroup
+    [Alias('DistributionGroup')]
+    [string[]]$InputObject
 )
 
 $ErrorActionPreference = "Stop"
@@ -63,18 +65,15 @@ function Get-ShortError {
 function Ensure-Module {
     param([string]$Name)
 
-    if (-not (Get-Module -ListAvailable -Name $Name)) {
-        Write-Info "Installing $Name..."
+    $module=Get-Module -ListAvailable -Name $Name -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
 
-        Install-Module `
-            -Name $Name `
-            -Scope CurrentUser `
-            -Force `
-            -AllowClobber `
-            -ErrorAction Stop
+    if (-not $module) {
+        throw "$Name is required but is not installed. Install with: Install-Module $Name -Scope CurrentUser"
     }
 
-    Import-Module $Name -ErrorAction Stop
+    Import-Module $module.Path -Force -ErrorAction Stop
 }
 
 function Connect-ExchangeAuto {
@@ -128,78 +127,153 @@ function Connect-ExchangeAuto {
     Write-OK "Exchange connected"
 }
 
+function Get-InputGroups {
+    param([string[]]$Values)
+
+    $items=New-Object System.Collections.ArrayList
+    $rawValues=@($Values | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+
+    if ($rawValues.Count -eq 0) {
+        $entered=(Read-Host "Distribution group name/email or TXT/CSV path").Trim().Trim('"')
+        if ($entered) { $rawValues=@($entered) }
+    }
+
+    foreach ($value in $rawValues) {
+        $clean=([string]$value).Trim().Trim('"')
+        if (-not $clean) { continue }
+
+        if (Test-Path -LiteralPath $clean -PathType Leaf) {
+            if ([System.IO.Path]::GetExtension($clean) -ieq '.csv') {
+                foreach ($row in @(Import-Csv -LiteralPath $clean -ErrorAction Stop)) {
+                    $candidate=$null
+                    foreach ($name in @('Group','GroupName','Name','Email','Address','Mail','Input')) {
+                        if ($row.PSObject.Properties.Name -contains $name -and $row.$name) {
+                            $candidate=[string]$row.$name
+                            break
+                        }
+                    }
+                    if (-not $candidate) {
+                        $first=$row.PSObject.Properties | Select-Object -First 1
+                        if ($first) { $candidate=[string]$first.Value }
+                    }
+                    if ($candidate -and $candidate.Trim()) { [void]$items.Add($candidate.Trim().Trim('"')) }
+                }
+            }
+            else {
+                foreach ($line in @(Get-Content -LiteralPath $clean -Encoding UTF8 -ErrorAction Stop)) {
+                    $candidate=([string]$line).Trim().Trim('"')
+                    if ($candidate -and $candidate -notmatch '^#') { [void]$items.Add($candidate) }
+                }
+            }
+            continue
+        }
+
+        foreach ($candidate in @($clean -split '\s*,\s*')) {
+            if ($candidate) { [void]$items.Add($candidate.Trim()) }
+        }
+    }
+
+    return @($items | Where-Object { $_ } | Select-Object -Unique)
+}
+
+function Offer-VerifiedCsv {
+    param([object[]]$Rows,[string]$DefaultName='distribution-group-members.csv')
+
+    if (-not $Rows -or $Rows.Count -eq 0) { return }
+    if ((Read-Host "Export member detail to CSV [Y/N]").Trim() -notmatch '^(?i)y$') { return }
+
+    $path=(Read-Host "CSV output path [blank for .\$DefaultName]").Trim().Trim('"')
+    if (-not $path) { $path=Join-Path (Get-Location).Path $DefaultName }
+
+    $Rows | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8 -ErrorAction Stop
+    $check=@(Import-Csv -LiteralPath $path -ErrorAction Stop)
+    if ($check.Count -ne $Rows.Count) {
+        throw "CSV verification failed. Expected $($Rows.Count) row(s); read back $($check.Count)."
+    }
+
+    Write-OK "Exported and verified: $path"
+}
+
 try {
     Write-Host "DISTRIBUTION GROUP MEMBERS"
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 
-    if ([string]::IsNullOrWhiteSpace($DistributionGroup)) {
-        $DistributionGroup = (Read-Host "Distribution group email or name").Trim()
+    $groupsToCheck=@(Get-InputGroups -Values $InputObject)
+    if ($groupsToCheck.Count -eq 0) { throw "At least one distribution group is required." }
+
+    Ensure-Module -Name "ExchangeOnlineManagement"
+
+    $connected=$false
+    if (Get-Command Get-ConnectionInformation -ErrorAction SilentlyContinue) {
+        $connection=Get-ConnectionInformation -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($connection) { $connected=$true }
     }
 
-    if ([string]::IsNullOrWhiteSpace($DistributionGroup)) {
-        throw "Distribution group email or name is required."
+    if (-not $connected) {
+        $command=Get-Command Connect-ExchangeOnline -ErrorAction Stop
+        $parameters=@{ ErrorAction='Stop' }
+        if ($command.Parameters.ContainsKey('ShowBanner')) { $parameters['ShowBanner']=$false }
+        Connect-ExchangeOnline @parameters | Out-Null
     }
 
-    Connect-ExchangeAuto -GroupIdentity $DistributionGroup
+    Write-OK "Exchange connected"
 
-    $Group = Get-DistributionGroup `
-        -Identity $DistributionGroup `
-        -ErrorAction Stop
+    $rows=New-Object System.Collections.ArrayList
+    $found=0
+    $failed=0
 
-    $MembersAvailable = $true
-    $Members = @()
-    $MemberError = ""
+    foreach ($DistributionGroup in $groupsToCheck) {
+        Write-Host ""
+        Write-Host "GROUP"
+        Write-Host ("Input  : {0}" -f $DistributionGroup)
 
-    try {
-        $Members = @(
-            Get-DistributionGroupMember `
-                -Identity $Group.Identity `
-                -ResultSize Unlimited `
-                -ErrorAction Stop |
-            Sort-Object DisplayName
-        )
-    }
-    catch {
-        $MembersAvailable = $false
-        $MemberError = Get-ShortError $_
-    }
+        try {
+            $Group=Get-DistributionGroup -Identity $DistributionGroup -ErrorAction Stop
+            $Members=@(Get-DistributionGroupMember -Identity $Group.Identity -ResultSize Unlimited -ErrorAction Stop | Sort-Object DisplayName)
 
-    Write-Host ""
-    Write-Host "GROUP"
-    Write-Host ("Name   : {0}" -f $Group.DisplayName)
-    Write-Host ("Email  : {0}" -f $Group.PrimarySmtpAddress)
-    Write-Host ("Type   : {0}" -f $Group.RecipientTypeDetails)
+            $found++
+            Write-Host ("Name   : {0}" -f $Group.DisplayName)
+            Write-Host ("Email  : {0}" -f $Group.PrimarySmtpAddress)
+            Write-Host ("Type   : {0}" -f $Group.RecipientTypeDetails)
+            Write-Host ("Count  : {0}" -f $Members.Count)
+            Write-Host ""
+            Write-Host "MEMBERS"
 
-    Write-Host ""
-    Write-Host "MEMBERS"
+            if ($Members.Count -eq 0) { Write-Host "  none" }
 
-    if (-not $MembersAvailable) {
-        Write-Host "Status : Not available"
-        Write-Warn "Member lookup failed: $MemberError"
-    }
-    elseif ($Members.Count -eq 0) {
-        Write-Host "Count  : 0"
-        Write-Host "  none"
-    }
-    else {
-        Write-Host ("Count  : {0}" -f $Members.Count)
+            foreach ($Member in $Members) {
+                $Email=[string]$Member.PrimarySmtpAddress
+                if (-not $Email) { $Email=[string]$Member.WindowsEmailAddress }
 
-        foreach ($Member in $Members) {
-            $Email = $Member.PrimarySmtpAddress
+                if ($Email) { Write-Host ("  - {0} <{1}>" -f $Member.DisplayName,$Email) }
+                else { Write-Host ("  - {0}" -f $Member.DisplayName) }
 
-            if (-not $Email) {
-                $Email = $Member.WindowsEmailAddress
-            }
-
-            if ($Email) {
-                Write-Host ("  - {0} <{1}>" -f $Member.DisplayName, $Email)
-            }
-            else {
-                Write-Host ("  - {0}" -f $Member.DisplayName)
+                [void]$rows.Add([pscustomobject]@{
+                    GroupInput=$DistributionGroup
+                    GroupName=[string]$Group.DisplayName
+                    GroupMail=[string]$Group.PrimarySmtpAddress
+                    GroupType=[string]$Group.RecipientTypeDetails
+                    MemberName=[string]$Member.DisplayName
+                    MemberMail=$Email
+                    MemberType=[string]$Member.RecipientType
+                })
             }
         }
+        catch {
+            $failed++
+            Write-Warn ("Lookup failed: {0}" -f (Get-ShortError $_))
+        }
     }
+
+    Write-Host ""
+    Write-Host "TICKET SUMMARY"
+    Write-Host ("Groups checked : {0}" -f $groupsToCheck.Count)
+    Write-Host ("Found          : {0}" -f $found)
+    Write-Host ("Failed         : {0}" -f $failed)
+    Write-Host ("Member rows    : {0}" -f $rows.Count)
+
+    Offer-VerifiedCsv -Rows @($rows)
 
     Write-Host ""
     Write-Host "STANDARD NOTE"
