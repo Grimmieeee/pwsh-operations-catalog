@@ -371,6 +371,8 @@ Write-Host "TENANT MFA SECURITY AUDIT"
             IsPasswordlessCapable=$d.isPasswordlessCapable
             MethodClass=$class
             Methods=($methods -join "; ")
+            SystemPreferred=(@($d.systemPreferredAuthenticationMethods) -join "; ")
+            UserPreferred=[string]$d.userPreferredMethodForSecondaryAuthentication
             Finding=$finding
         })
     }
@@ -450,7 +452,8 @@ Write-Host "TENANT MFA SECURITY AUDIT"
         Write-Host "- None"
     } else {
         foreach ($r in ($reviewRows | Select-Object -First 20)) {
-            Write-Host "- $($r.UPN) | $($r.Finding) | $($r.Methods)"
+            $preferred = if ($r.UserPreferred) { $r.UserPreferred } elseif ($r.SystemPreferred) { $r.SystemPreferred } else { 'not returned' }
+            Write-Host "- $($r.UPN) | $($r.Finding) | $($r.Methods) | Preferred: $preferred"
         }
         if ($reviewRows.Count -gt 20) {
             Write-Host "- plus $($reviewRows.Count - 20) more"
@@ -461,7 +464,8 @@ Write-Host "TENANT MFA SECURITY AUDIT"
     Write-Host ""
 
     foreach ($r in ($rows | Where-Object { $_.Finding -ne "OK" } | Select-Object -First 75)) {
-        WARN "$($r.UPN) | $($r.Finding) | $($r.Methods)"
+        $preferred = if ($r.UserPreferred) { $r.UserPreferred } elseif ($r.SystemPreferred) { $r.SystemPreferred } else { 'not returned' }
+        WARN "$($r.UPN) | $($r.Finding) | $($r.Methods) | Preferred: $preferred"
     }
 
     Offer-ExportCsv -Rows @($rows) -DefaultName "tenant-mfa-security-audit-$(Get-Date -Format 'yyyyMMdd-HHmmss').csv"

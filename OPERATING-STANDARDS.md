@@ -421,6 +421,18 @@ For generated CSV/TXT artifacts:
 
 Do not claim an export is verified when only the write command succeeded.
 
+### Generated credentials and temporary secrets
+
+Tools that generate or reset passwords, recovery codes, tokens, or equivalent temporary secrets require tighter output handling:
+
+- Never auto-export the secret to CSV, TXT, JSON, logs, or repository files.
+- Never copy the secret to the clipboard automatically.
+- Show the secret only after the related change succeeds.
+- Keep summary tables free of the secret value.
+- Warn that terminal capture or PowerShell transcription can record console output.
+- Clear in-memory variables containing the secret as soon as practical.
+- Validation should use resulting account state or metadata rather than echoing the secret again.
+
 ## 16. Public Publishing Standard
 
 The public repository must not contain:

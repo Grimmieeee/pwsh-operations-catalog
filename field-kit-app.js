@@ -586,6 +586,14 @@
       keywords:"windows cli storage cleanup disk settings temp files"
     },
     {
+      name:"Clear Delivery Optimization Cache",
+      platform:"Local Windows",
+      access:"Change",
+      code:"Delete-DeliveryOptimizationCache -Force",
+      useFor:"Clear the Windows Delivery Optimization cache after storage review.",
+      keywords:"windows delivery optimization cache cleanup delete storage disk update cache"
+    },
+    {
       name:"Identity and Privileges",
       platform:"Local Windows",
       access:"Read-only",
@@ -823,6 +831,21 @@
       notes:"Structural guide for single-objective tools, multi-section reviews, and connected workflows.",
       keywords:"tools docs markdown script template guide scaffold structure",
       toolFacts:["Recommended order","Three interaction levels","Prompting rules","Reuse guidance"]
+    },
+    {
+      name:"NATO Phonetic Alphabet",
+      type:"Documentation",
+      area:"Tools",
+      subarea:"Reference",
+      platform:"Markdown",
+      access:"Read-only",
+      status:"Ready",
+      source:"FIELD // KIT",
+      file:"nato-phonetic-alphabet.md",
+      publishedPath:"tools/nato-phonetic-alphabet.md",
+      notes:"A-to-Z NATO spelling alphabet reference for clear verbal communication.",
+      keywords:"alphabet phonetic alphabet nato spelling alphabet radio alphabet alpha bravo charlie x-ray whiskey reference",
+      toolFacts:["A-Z spelling reference","Alpha through Zulu","Searchable by alphabet / phonetic / NATO"]
     },
     {
       name:"Session Handoff Template",
@@ -1387,7 +1410,7 @@
     if (/Revoke Active Sessions/i.test(title)) return "Revokes active Microsoft 365 sessions.";
     if (/Disable Sign-In/i.test(title)) return "Disables user sign-in.";
     if (/Enable Sign-In|Re-Enable/i.test(title)) return "Enables user sign-in.";
-    if (/Reset Password/i.test(title)) return "Resets the user password.";
+    if (/Reset .*Password|Password Reset/i.test(title)) return "Resets the user password.";
     if (/Disabled User Mailbox Access Cleanup/i.test(title)) return "Removes Full Access and Send As rights from a disabled user after confirmation.";
     if (/Delete/i.test(title)) return "Deletes or removes the selected object.";
     if (/Remove/i.test(title)) return "Removes the selected access or configuration.";

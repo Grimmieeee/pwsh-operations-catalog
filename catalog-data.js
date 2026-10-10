@@ -5494,5 +5494,45 @@ window.CATALOG_DATA = [
     "objective": "Compares selected high-value tenant security configuration against an approved local baseline and reports tracked drift.",
     "publishedPath": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
     "summary": "YES"
+  },
+  {
+    "_order": 275,
+    "name": "Windows Storage Cleanup Review",
+    "type": "Script",
+    "area": "Endpoint",
+    "subarea": "Disk / Storage",
+    "platform": "Windows / PowerShell",
+    "access": "Read-only",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "PowerShell 5.1+ | Remote targets: PowerShell remoting / WinRM",
+    "input": "Local endpoint or -ComputerName; drive letter; top-file count",
+    "output": "Drive utilization, measured cleanup candidates, top largest files, summary block",
+    "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+    "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+    "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
+    "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space"
+  },
+  {
+    "_order": 276,
+    "name": "Reset Cloud User Password",
+    "type": "Script",
+    "area": "Identity",
+    "subarea": "Passwords",
+    "platform": "Microsoft 365 / Entra",
+    "access": "Change",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "Microsoft.Graph.Authentication | Delegated: User.Read.All + User-PasswordProfile.ReadWrite.All",
+    "input": "One user UPN, comma-separated UPNs, or TXT/CSV users; optional tenant domain",
+    "output": "Cloud-only validation, reset result, temporary password shown after success, verification summary",
+    "file": "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+    "publishedPath": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+    "notes": "Refuses synced users so Active Directory remains authoritative. Generated passwords are never exported.",
+    "keywords": "cloud password reset temporary password entra graph passwordprofile force change next sign-in one user multi user bulk txt csv",
+    "scopes": [
+      "Single User",
+      "Multi User"
+    ]
   }
 ];
