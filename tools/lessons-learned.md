@@ -13,6 +13,7 @@ Small rules worth keeping because they prevent recurring failures.
 - Do not hard-code operator export paths.
 - A downloaded script should not silently depend on the repository/current working directory.
 - Right-click > Run with PowerShell is a distinct launch model worth testing for public interactive scripts.
+- Static/parser QA is not runtime validation; record them separately.
 
 ## Authentication
 
@@ -36,6 +37,7 @@ Small rules worth keeping because they prevent recurring failures.
 - Human-readable names usually help the operator more than raw IDs.
 - Truncate noisy exception output to the actionable message when appropriate.
 - Keep summaries dense enough to scan but complete enough to support the next decision.
+- Temporary passwords, recovery codes, and similar generated secrets should not be auto-exported or automatically copied; terminal capture can still record anything intentionally displayed.
 
 ## Publishing
 

@@ -8,6 +8,18 @@ The goal is not to preserve every historical script. The goal is to maintain a s
 
 This document is the default decision record when script behavior, naming, publication, or repository structure is unclear.
 
+### Documentation hierarchy
+
+When guidance overlaps, use this order:
+
+1. `OPERATING-STANDARDS.md` — top-level project decision contract.
+2. `tools/field-kit-build-standard.md` — site, visual, navigation, and interaction baseline.
+3. `tools/powershell-standards.md` — PowerShell implementation baseline.
+4. Focused references, checklists, and templates — apply within their specific job.
+5. `tools/PROJECT-HANDOFF.md` — records current project state for continuation; it does not override the standards above.
+
+Keep focused documents focused. Do not copy the full operating contract into every checklist or template.
+
 ## 2. Core Principles
 
 ### One job, one canonical source
@@ -641,8 +653,14 @@ The site must remain usable on desktop and mobile. Mobile behavior includes a sl
 
 A new maintainer should be able to recover the project with the repository alone.
 
+Use `tools/PROJECT-HANDOFF.md` as the canonical handoff template. The handoff records current state and pending work; it does not redefine project standards.
+
 At handoff, verify:
 
+- Repository, branch, and last known-good commit are recorded.
+- Working-tree / upstream state is recorded, including any stash or local-only files.
+- Static QA and runtime QA are reported separately.
+- The exact first step for the next session is recorded.
 - `main` represents the intended public site.
 - `v1-repo-ui` contains current development work.
 - Working trees are clean or documented.

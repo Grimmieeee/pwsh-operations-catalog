@@ -9,6 +9,7 @@ Reusable connection guidance for Microsoft Graph, Exchange Online, and hybrid wo
 - Validate the tenant before using a reused session.
 - Keep authentication output separate from the evidence/report output.
 - Request only the permissions the task needs.
+- Treat API scopes/consent and administrative roles as separate requirements; change operations may require both.
 
 ## Microsoft Graph
 

@@ -21,6 +21,8 @@ Use this before approving a new script or publishing an updated one.
 - [ ] Interactive downloaded scripts do not depend on the repository working directory.
 - [ ] Related local files resolve from $PSScriptRoot when applicable.
 - [ ] File Explorer > Run with PowerShell is tested when that launch model is intended.
+- [ ] Operational scripts do not silently install modules/capabilities unless setup is their explicit job.
+- [ ] No normal execution path changes PowerShell execution policy.
 
 ## Authentication
 
@@ -30,6 +32,7 @@ Use this before approving a new script or publishing an updated one.
 - [ ] Graph multi-tenant sessions use process scope.
 - [ ] Exchange session health is checked before use.
 - [ ] Connection failures return one actionable explanation.
+- [ ] Required API scopes and administrative role/authority are both understood for change operations.
 
 ## Data handling
 
@@ -47,6 +50,7 @@ Use this before approving a new script or publishing an updated one.
 - [ ] Destructive actions require explicit confirmation.
 - [ ] Multi-object destructive work is confirmed at an appropriate level.
 - [ ] Completed, skipped, and failed actions are distinguishable.
+- [ ] Resulting state is verified after meaningful changes when the service exposes a reliable check.
 
 ## Output
 
@@ -63,6 +67,9 @@ Use this before approving a new script or publishing an updated one.
 - [ ] No unsafe dynamic execution is used without review.
 - [ ] External input is treated as untrusted.
 - [ ] Permissions requested are no broader than necessary.
+- [ ] Generated temporary secrets are not auto-exported or automatically copied to the clipboard.
+- [ ] Summary output does not repeat generated temporary secrets.
+- [ ] The operator is warned when terminal capture/transcription could record a displayed temporary secret.
 
 ## Publication
 

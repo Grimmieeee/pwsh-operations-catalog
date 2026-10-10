@@ -698,21 +698,6 @@
       toolFacts:["Session reuse","Tenant validation","Least-privilege connections","Hybrid source-of-truth guidance"]
     },
     {
-      name:"FIELD // KIT Backup Exporter",
-      type:"Script",
-      area:"Tools",
-      subarea:"Templates",
-      platform:"PowerShell",
-      access:"Read-only",
-      status:"Ready",
-      source:"FIELD // KIT",
-      file:"export-field-kit.ps1",
-      publishedPath:"tools/export-field-kit.ps1",
-      notes:"Creates a clean, versioned local backup from the exact tracked repository state and refreshes FIELD-KIT-LATEST.zip.",
-      keywords:"tools backup export zip archive latest manifest sha256 git repository",
-      toolFacts:["Clean working-tree gate","Fast-forward-only update","Versioned ZIP","Latest ZIP","SHA256 manifest"]
-    },
-    {
       name:"Operating Standards",
       type:"Documentation",
       area:"Tools",
@@ -723,7 +708,7 @@
       source:"FIELD // KIT",
       file:"OPERATING-STANDARDS.md",
       publishedPath:"OPERATING-STANDARDS.md",
-      notes:"Project operating contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
+      notes:"Top-level project decision contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
       keywords:"tools docs markdown operating standards canonical one-to-many safety authentication qa release handoff rebuild",
       toolFacts:["Canonical source model","1-to-N input standard","Hybrid authority rules","Safety and confirmation gates","Authentication / module rules","Static and runtime QA","Release workflow","Handoff / rebuild checklist"]
     },
@@ -768,7 +753,7 @@
       source:"FIELD // KIT",
       file:"powershell-standards.md",
       publishedPath:"tools/powershell-standards.md",
-      notes:"Primary public-safe build and alignment baseline for interactive FIELD // KIT PowerShell tools.",
+      notes:"Script implementation baseline for interactive FIELD // KIT PowerShell tools.",
       keywords:"tools docs markdown powershell standards build alignment coding style",
       toolFacts:["Compatibility","Authentication","Change safety","Output","Security","Validation"]
     },
@@ -848,7 +833,7 @@
       toolFacts:["A-Z spelling reference","Alpha through Zulu","Searchable by alphabet / phonetic / NATO"]
     },
     {
-      name:"Session Handoff Template",
+      name:"Project Handoff",
       type:"Documentation",
       area:"Tools",
       subarea:"Templates",
@@ -856,11 +841,11 @@
       access:"Read-only",
       status:"Ready",
       source:"FIELD // KIT",
-      file:"session-handoff-template.md",
-      publishedPath:"tools/session-handoff-template.md",
-      notes:"Compact project handoff template for decisions, current state, validation, limitations, and next actions.",
-      keywords:"tools docs markdown handoff template session context continuity",
-      toolFacts:["Current state","Locked decisions","Validation","Known limitations","Next actions"]
+      file:"PROJECT-HANDOFF.md",
+      publishedPath:"tools/PROJECT-HANDOFF.md",
+      notes:"Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
+      keywords:"tools docs markdown project handoff template continuity source of truth commit branch runtime qa next session",
+      toolFacts:["Source of truth","Local / remote state","Locked decisions","Static / runtime validation","Known limitations","Next session start"]
     }
   ].map((x, i) => ({
     ...x,

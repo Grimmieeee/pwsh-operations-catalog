@@ -87,6 +87,28 @@ Avoid:
 - asking for values already available from the service;
 - hidden assumptions.
 
+## Input model
+
+When one operational job naturally supports one target or many:
+
+- prefer one 1-to-N workflow instead of separate single/bulk implementations;
+- accept direct input plus TXT/CSV when that improves the real operator workflow;
+- preserve per-object resolution, result, error, and verification state;
+- do not add a mode-selection menu when the input itself can determine the path.
+
+## Change workflow
+
+For meaningful changes, prefer:
+
+1. resolve;
+2. preview;
+3. confirm;
+4. act;
+5. verify;
+6. summarize completed / skipped / failed results.
+
+If the action generates a temporary secret, keep it out of exports and summary tables and show it only after the related change succeeds.
+
 ## Reuse
 
 When creating a related script:

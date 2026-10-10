@@ -206,7 +206,7 @@ Source must never be fetched from arbitrary external URLs.
 
 ## 10. Tools section
 
-Tools contains reusable public-safe documentation.
+Tools contains reusable public-safe documentation and references. Repository-maintenance helpers may also live under `tools/`, but they are not automatically public catalog items.
 
 Preferred groups:
 
@@ -222,7 +222,7 @@ Good candidates:
 - publishing checklists;
 - connection patterns;
 - reusable skills/workflows;
-- session handoff templates;
+- project handoff templates;
 - lessons learned.
 
 Do not publish:

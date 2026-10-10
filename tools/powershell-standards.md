@@ -40,6 +40,15 @@ A downloaded script should not require being launched from the repository root u
 
 Non-interactive automation is a separate execution model. Do not apply pause-at-end behavior to unattended jobs.
 
+## Prerequisites and setup side effects
+
+Operational scripts should not silently install modules, Windows capabilities, or other prerequisites.
+
+- If a prerequisite is missing, state what is missing and provide the appropriate install/enable command or requirement.
+- Stop or skip only the affected source when safe.
+- A dedicated setup utility may install prerequisites when that is its explicit, visible job.
+- Do not call `Set-ExecutionPolicy` as part of normal script execution.
+
 ## Authentication
 
 Authentication should be quiet and automatic when required.
@@ -69,7 +78,8 @@ For destructive or high-impact actions:
 - show exactly what will change;
 - require explicit confirmation;
 - confirm per item when multiple unrelated objects are affected;
-- report completed, skipped, and failed actions separately.
+- report completed, skipped, and failed actions separately;
+- verify the resulting state when the service exposes a meaningful post-change check.
 
 ## Output
 
@@ -87,6 +97,18 @@ For destructive or high-impact actions:
 - Distinguish a directory path from a full filename.
 - Wrap export operations in error handling.
 - Test the actual export path, not only the in-memory result.
+
+## Generated credentials and temporary secrets
+
+When a tool generates or resets a password, recovery code, token, or equivalent temporary secret:
+
+- do not auto-export it to CSV, TXT, JSON, logs, or repository files;
+- do not automatically copy it to the clipboard;
+- display it only after the related change succeeds;
+- keep summaries free of the secret value;
+- warn that terminal capture or PowerShell transcription can record displayed output;
+- clear in-memory secret variables as soon as practical;
+- verify success from account/service state instead of printing the secret again.
 
 ## Security
 

@@ -27,6 +27,16 @@ Confirm the file contains no:
 - connection strings;
 - embedded credentials.
 
+## Generated secret handling
+
+When the tool creates or resets a password, recovery code, token, or equivalent temporary secret:
+
+- [ ] The secret is not automatically exported to a file or log.
+- [ ] The secret is not automatically copied to the clipboard.
+- [ ] Summary output excludes the secret.
+- [ ] The secret is shown only after the related change succeeds.
+- [ ] Terminal capture / transcription risk is disclosed when the secret is displayed.
+
 ## Proprietary / environment scan
 
 Remove or replace:
