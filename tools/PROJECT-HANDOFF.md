@@ -1,6 +1,6 @@
-# Session Handoff Template
+# Project Handoff
 
-Use this when stopping work mid-project and another session needs to resume without rediscovering decisions.
+Use this when stopping work mid-project so the next session can resume without rediscovering decisions.
 
 ## Goal
 
