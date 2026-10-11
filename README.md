@@ -8,6 +8,8 @@ The public site is intentionally static: plain HTML, JavaScript, catalog data, a
 
 Read [`OPERATING-STANDARDS.md`](OPERATING-STANDARDS.md) before adding, replacing, consolidating, or publishing scripts. It defines the canonical-source model, 1-to-N input standard, hybrid authority rules, auth/module behavior, public-safety requirements, validation expectations, and release workflow.
 
+For the current continuation state, read [`tools/PROJECT-HANDOFF.md`](tools/PROJECT-HANDOFF.md).
+
 Overlap and historical lineage decisions are tracked in [`AUDIT-LIMBO.md`](AUDIT-LIMBO.md).
 
 ## Repository Structure
