@@ -85,6 +85,7 @@ Terminal customization is a separate creative lane from the public operations ca
 
 Recent release work includes:
 
+- universal Handoff Snapshot tool published under Tools; first workstation runtime test still pending;
 - canonical 1-to-N workflow consolidation;
 - stronger group membership behavior across AD and Entra;
 - Windows Storage Cleanup Review;
@@ -161,11 +162,12 @@ Take Step 3 slowly while continuing to build and refine.
 
 Likely work:
 
-1. Continue accepting new tool/reference ideas and evaluate them against the canonical-job rule.
-2. Runtime-test changed/new executable behavior when it naturally comes into use.
-3. Add RELATED / NEXT relationships only where they genuinely improve operator flow.
-4. Continue improving search aliases/synonyms instead of adding UI clutter.
-5. Keep terminal experimentation separate and curated.
+1. On the next workstation session, pull current repos and run the Handoff Snapshot tool once to establish the first baseline.
+2. Continue accepting new tool/reference ideas and evaluate them against the canonical-job rule.
+3. Runtime-test changed/new executable behavior when it naturally comes into use.
+4. Add RELATED / NEXT relationships only where they genuinely improve operator flow.
+5. Continue improving search aliases/synonyms instead of adding UI clutter.
+6. Keep terminal experimentation separate and curated.
 
 ## Next session — start here
 
