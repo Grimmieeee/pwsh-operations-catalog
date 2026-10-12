@@ -838,14 +838,14 @@
       area:"Tools",
       subarea:"Templates",
       platform:"PowerShell + Git",
-      access:"Read-only",
+      access:"Change",
       status:"Ready",
       source:"FIELD // KIT",
-      file:"handoff.ps1",
-      publishedPath:"tools/handoff.ps1",
-      notes:"Generates a repeatable context-state artifact from the Git repository containing the selected path. Captures branch, HEAD, upstream state, working-tree changes, stashes, recent commits, changes since the previous snapshot, and common project-document presence without interpreting project intent.",
+      file:"git-handoff.ps1",
+      publishedPath:"tools/git-handoff.ps1",
+      notes:"Generates a repeatable context-state artifact from the Git repository containing the selected path. Captures branch, HEAD, upstream state, working-tree changes, stashes, recent commits, changes since the previous snapshot, and common project-document presence with readable names and best-effort sensitive-value redaction. Creates a local snapshot and local Git exclusion; does not stage, commit, fetch, or push. Review output before sharing. Run from a terminal; Windows validation pending.",
       keywords:"tools powershell git handoff snapshot context state artifact continuity repo repository session next conversation chatgpt",
-      toolFacts:["Auto-detects repository root","Uses previous snapshot as the work boundary","Captures Git state without changing repository content","Writes one reusable Markdown artifact","Designed for ChatGPT project handoff"]
+      toolFacts:["Auto-detects repository root","Uses previous snapshot as the work boundary","Preserves readable names and summaries with targeted redaction","Writes .handoff/HANDOFF-SNAPSHOT.md and a local Git exclusion","Designed for ChatGPT project handoff"]
     },
     {
       name:"Project Handoff",
