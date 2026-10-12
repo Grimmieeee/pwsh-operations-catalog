@@ -49,6 +49,7 @@ git check
 git check details
 git grab it
 git send it
+git handoff -Open
 ```
 
 These commands act on the Git repository containing the current working directory. Verify the current path before using them.
@@ -80,3 +81,7 @@ Everything committed to this public repository should be treated as public infor
 Do not publish passwords, tokens, secrets, private certificates/PFX material, client-specific identifiers, customer data, private incident evidence, or internal credentials.
 
 Public scripts are unsigned canonical source. Internal Authenticode signing belongs to the internal release/deployment process, not the public source tree.
+
+## Git Handoff
+
+[`tools/git-handoff.ps1`](tools/git-handoff.ps1) captures readable repository state in a locally excluded `.handoff/HANDOFF-SNAPSHOT.md`. It screens metadata for recognizable sensitive values; review the output before sharing. See [usage, privacy limits, and validation](tools/git-handoff.md). The Tools download uses this canonical file.
