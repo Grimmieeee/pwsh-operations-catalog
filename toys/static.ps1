@@ -1,14 +1,15 @@
+$script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # static.ps1
-# Standalone BURNSID terminal screensaver. Press Ctrl+C to stop.
+# Standalone custom text terminal screensaver. Press Ctrl+C to stop.
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false)
 $esc=[char]27; $reset="$esc[0m"; $hide="$esc[?25l"; $show="$esc[?25h"; $clear="$esc[2J"; $cursorHome="$esc[H"
 $altOn="$esc[?1049h"; $altOff="$esc[?1049l"; $eraseScrollback=""; $wrapOff="$esc[?7l"; $wrapOn="$esc[?7h"
 $blackCell="$esc[38;2;0;0;0;48;2;0;0;0m"
 $colors=@{
-Hot='38;2;225;0;150';Pink='38;2;230;65;205';Cyan='38;2;0;220;245';Blue='38;2;45;115;215';Green='38;2;35;175;85';
-White='38;2;230;238;238';Bone='38;2;205;205;190';Dim='38;2;82;88;105';Ghost='38;2;24;32;38';
-DarkMag='38;2;68;12;68';DarkCyn='38;2;10;62;82';DarkGrn='38;2;8;58;30';Red='38;2;180;20;35'}
+Hot='38;2;255;0;195';Pink='38;2;255;84;255';Cyan='38;2;0;255;255';Blue='38;2;58;150;255';Green='38;2;46;228;110';
+White='38;2;255;255;255';Bone='38;2;255;255;247';Dim='38;2;107;114;136';Ghost='38;2;31;42;49';
+DarkMag='38;2;88;16;88';DarkCyn='38;2;13;81;107';DarkGrn='38;2;10;75;39';Red='38;2;234;26;46'}
 function A{param([string]$Code) return ($script:esc+'['+$Code+';48;2;0;0;0m')}
 function MoveTo{param([int]$Row,[int]$Col) $r=[Math]::Max(1,$Row+1);$c=[Math]::Max(1,$Col+1);return ($script:esc+'['+$r+';'+$c+'H')}
 function PickFrom{param([object[]]$Items) return $Items[(Get-Random -Minimum 0 -Maximum $Items.Count)]}
@@ -26,8 +27,8 @@ function Get-FloatPosition{param([int]$Frame,[int]$Width,[int]$Height,[string]$T
  $phase=[int](($Frame+$Offset)/1000);$rows=@([int]($Height*.10),[int]($Height*.25),[int]($Height*.43),[int]($Height*.60),[int]($Height*.76),[int]($Height*.86))
  $cols=@([int]($Width*.08),[int]($Width*.62),[int]($Width*.24),[int]($Width*.72),[int]($Width*.13),[int]($Width*.48))
  $idx=$phase%$rows.Count;$row=[Math]::Max(1,[Math]::Min($Height-2,$rows[$idx]));$col=[Math]::Max(2,[Math]::Min($Width-$Text.Length-3,$cols[$idx]));return @{Row=$row;Col=$col}}
-function Write-Burnsid{param([System.Text.StringBuilder]$Sb,[int]$Frame,[int]$Width,[int]$Height,[int]$Offset=0)
- $text='B U R N S I D //';if(([int](($Frame+$Offset)/620)%19)-eq0){$text='B U R N   S I D //'};if(Test-RareDrop -Frame $Frame -Offset $Offset -Period 1450 -Length 3){return}
+function Write-DisplayText{param([System.Text.StringBuilder]$Sb,[int]$Frame,[int]$Width,[int]$Height,[int]$Offset=0)
+ $text=$script:DisplayText;if(([int](($Frame+$Offset)/620)%19)-eq0){$text=$script:DisplayText};if(Test-RareDrop -Frame $Frame -Offset $Offset -Period 1450 -Length 3){return}
  $p=Get-FloatPosition -Frame $Frame -Width $Width -Height $Height -Text $text -Offset $Offset;$pal=@($colors.Cyan,$colors.Hot,$colors.Pink,$colors.Bone,$colors.Dim,$colors.DarkCyn,$colors.Red)
  $c=$pal[([int](($Frame+$Offset)/420)%$pal.Count)];WriteAt -Sb $Sb -Row $p.Row -Col $p.Col -Text $text -ColorCode $c
  if(Test-RareDrop -Frame $Frame -Offset ($Offset+117) -Period 1900 -Length 2){WriteAt -Sb $Sb -Row ($p.Row+1) -Col ($p.Col+1) -Text $text -ColorCode $colors.Ghost}}
@@ -44,7 +45,7 @@ function Write-CleanTear{param([System.Text.StringBuilder]$Sb,[int]$Width,[int]$
 function Draw-Line{param([System.Text.StringBuilder]$Sb,[int]$X0,[int]$Y0,[int]$X1,[int]$Y1,[string]$Color,[string]$Ch='·')
  $dx=[Math]::Abs($X1-$X0);$dy=[Math]::Abs($Y1-$Y0);$sx=if($X0 -lt $X1){1}else{-1};$sy=if($Y0 -lt $Y1){1}else{-1};$err=$dx-$dy
  while($true){WriteAt -Sb $Sb -Row $Y0 -Col $X0 -Text $Ch -ColorCode $Color;if($X0 -eq $X1 -and $Y0 -eq $Y1){break};$e2=2*$err;if($e2 -gt (-$dy)){$err-=$dy;$X0+=$sx};if($e2 -lt $dx){$err+=$dx;$Y0+=$sy}}}
-function Start-Saver{param([scriptblock]$Draw,[string]$Title='BURNSID // SCREEN',[int]$Delay=190)
+function Start-Saver{param([scriptblock]$Draw,[string]$Title='Static',[int]$Delay=190)
  try{$host.UI.RawUI.WindowTitle=$Title}catch{};try{[Console]::CursorVisible=$false}catch{};try{[Console]::BackgroundColor=[ConsoleColor]::Black}catch{};try{[Console]::ForegroundColor=[ConsoleColor]::Black}catch{}
  [Console]::Write($script:wrapOff+$script:altOn+$script:hide+$script:clear+$script:eraseScrollback+$script:cursorHome);$paint=[System.Text.StringBuilder]::new();Paint-FullBlack -Sb $paint -Width ([Console]::WindowWidth) -Height ([Console]::WindowHeight);[Console]::Write($paint.ToString()+$script:cursorHome)
  $frame=0;try{while($true){$width=[Math]::Max(60,[Console]::WindowWidth-1);$height=[Math]::Max(22,[Console]::WindowHeight);& $Draw $frame $width $height;$frame++;Start-Sleep -Milliseconds $Delay}}finally{[Console]::Write($script:reset+$script:wrapOn+$script:show+$script:altOff);try{[Console]::CursorVisible=$true}catch{}}}
@@ -58,6 +59,6 @@ $Draw={
  for($a=0;$a -lt 360;$a+=18){$rad=$a*[Math]::PI/180;$x=[int]($centerCol+[Math]::Cos($rad)*$ringW);$y=[int]($centerRow+[Math]::Sin($rad)*$ringH);if($x -gt 0 -and $x -lt $Width -and $y -gt 0 -and $y -lt $Height){WriteAt -Sb $sb -Row $y -Col $x -Text (PickFrom @('·','.',' ')) -ColorCode (PickFrom @($colors.DarkCyn,$colors.DarkMag,$colors.Ghost,$colors.Dim))}}
  Write-CleanDust -Sb $sb -Width $Width -Height $Height -Count 6
  if((Get-Random -Minimum 0 -Maximum 100)-lt12){$txt=PickFrom @('BLACKOUT','STATIC HOLD','FIELD KIT','NO PICTURE','SIGNAL BELOW');WriteAt -Sb $sb -Row (Get-Random -Minimum 2 -Maximum ($Height-3)) -Col (Get-Random -Minimum 2 -Maximum ([Math]::Max(3,$Width-$txt.Length-3))) -Text $txt -ColorCode (PickFrom @($colors.Cyan,$colors.Hot,$colors.Bone,$colors.Red))}
- Write-Burnsid -Sb $sb -Frame $Frame -Width $Width -Height $Height -Offset 0;Write-Clock -Sb $sb -Frame $Frame -Width $Width -Height $Height -Offset 700;HidePromptMask -Sb $sb;[Console]::Write($sb.ToString())
+ Write-DisplayText -Sb $sb -Frame $Frame -Width $Width -Height $Height -Offset 0;Write-Clock -Sb $sb -Frame $Frame -Width $Width -Height $Height -Offset 700;HidePromptMask -Sb $sb;[Console]::Write($sb.ToString())
 }
-Start-Saver -Draw $Draw -Title 'BURNSID // STATIC' -Delay 175
+Start-Saver -Draw $Draw -Title 'Static' -Delay 175

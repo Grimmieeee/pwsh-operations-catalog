@@ -89,3 +89,11 @@ Public scripts are unsigned canonical source. Internal Authenticode signing belo
 ## Tools and Toys
 
 Tools now includes standalone Git Repository Tools (check/push/pull), Git Security Review, Handoff Snapshot and Set Execution. See [Git tools quick start](tools/git-tools.md). Toys contains Attractor, Rain and Static terminal screensavers. All downloads use the shared same-origin source viewer and copy/save controls. No private security exports, account baseline notes, signing identities or full terminal profiles are published.
+
+## Terminal tools and themes
+
+Tools includes Digital Signature, Terminal Readiness, File Inventory, Folder Map, and Session Reset. Two identical signing uploads share one canonical download. General-purpose readiness, inventory, and M365 reset helpers remain available with separate names because their behavior differs.
+
+Toys includes Basic and Cobalt previews plus Sea Glass and Silicon Valley profile installers. Silicon Valley also retains a predictable daily password generator: do not use its output as a credential. The cards explain profile and process-policy changes. Public copies are unsigned; uploaded originals are unchanged.
+
+Download and copy are available before opening source. Setup comes first where relevant, then A–Z; incident-response steps keep their required order.

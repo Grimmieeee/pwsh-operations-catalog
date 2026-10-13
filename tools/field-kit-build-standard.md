@@ -103,7 +103,7 @@ These purpose headings are intentionally ordered by operator workflow, not alpha
 
 ## 5. Sorting
 
-Within every non-sequential section, items are A-Z by display name.
+Setup and terminal provisioning come first where relevant. Within each non-sequential group, items are A-Z by display name.
 
 Exceptions:
 
@@ -163,39 +163,19 @@ All selected cards use one shared renderer.
 
 Order:
 
-1. SELECTED header
-2. SCOPE / PURPOSE context
-3. title with final word accented in mint
-4. mint underline
-5. READ ONLY / MAKES CHANGES / DESTRUCTIVE
-6. CONNECT when required
-7. change note when useful
-8. workflow/option block when required
-9. CHECKS / DOES / INCLUDES
-10. concise decision-focused description
-11. POWERSHELL or MARKDOWN source button
-12. source viewer when opened
-13. palette footer
+1. Scope, title, and risk flags.
+2. USE FOR: one short sentence.
+3. Important changes and required workflow order.
+4. Up to three useful checks; remaining checks expand under More checks.
+5. DOWNLOAD .PS1 / .MD, VIEW CODE, and COPY actions.
+6. Required inputs, permissions, and connection commands.
+7. Expandable details and source.
 
-CHECKS / DOES / INCLUDES use the same [✓] visual rhythm.
-
-Do not invent checklist items. Omit a section when approved metadata does not exist.
+Use the compact Path Ping card as the default. Checkmarks describe distinct capabilities; do not repeat the title, purpose, or generic summary/CSV availability. Omit empty sections. Do not invent checks. Preserve important behavior and limitations in Details; show unusual side effects prominently.
 
 ## 9. Source behavior
 
-PowerShell cards:
-
-- button label: POWERSHELL;
-- lazy-load approved same-origin source;
-- COPY SCRIPT;
-- SAVE .PS1.
-
-Documentation cards:
-
-- button label: MARKDOWN;
-- lazy-load approved same-origin source;
-- COPY MARKDOWN;
-- SAVE .MD.
+PowerShell and documentation cards expose download and copy before opening source. All three actions load the same approved same-origin content. Missing source is labeled unavailable, never presented as a working download. Copy confirms COPIED; loading failures remain visible.
 
 Standalone atomic commands:
 
@@ -211,11 +191,9 @@ Tools contains reusable public-safe documentation, references, and explicitly ap
 
 Preferred groups:
 
-- Repository
 - Setup
-- Reference
-- Standards
-- Templates
+- Repository
+- Reference (includes standards and templates)
 
 Good candidates:
 
@@ -261,7 +239,7 @@ Behavior:
 
 - Full Library searches the complete catalog.
 - Searching from Single User, Multi User, or Tenant Wide searches across all three scope buckets as one working set.
-- Incident Response, RMM, Utility, Standalone, Tools, and Toys searches stay scoped to their selected area.
+- Search includes every section; the selected area controls browsing only.
 - Flattened search results must retain useful scope context through the scope badge.
 - Search may use hidden aliases/metadata for matching, but the UI should display only decision-relevant information.
 
@@ -339,7 +317,7 @@ Before publishing a new build:
 - [ ] READ ONLY / MAKES CHANGES / DESTRUCTIVE badges match actual behavior;
 - [ ] destructive items show both MAKES CHANGES and DESTRUCTIVE in list and selected card;
 - [ ] CHECKS / DOES / INCLUDES render consistently;
-- [ ] POWERSHELL / MARKDOWN source controls work;
+- [ ] download, view-code, and copy controls work;
 - [ ] COPY works;
 - [ ] SAVE works;
 - [ ] same-origin source loading works;
@@ -383,4 +361,6 @@ The ZIP is a recovery/export snapshot. It is not a replacement for the repositor
 
 ## Toys
 
-Toys is a separate primary navigation area after Tools. Its Screensavers group uses the same cards, A-Z ordering, risk labels and source controls. Include terminal requirements and exit instructions; never imply screen-lock protection.
+Toys is a separate primary navigation area after Tools. Its Animations and Themes groups uses the same cards, A-Z ordering, risk labels and source controls. Include terminal requirements and exit instructions; never imply screen-lock protection.
+
+Theme previews and installers must be distinguished. Preserve explicitly requested source behavior and disclose profile writes, process policy changes, and other non-cosmetic effects. New uploaded theme palettes remain as supplied; the site and existing animations use a brighter palette.
