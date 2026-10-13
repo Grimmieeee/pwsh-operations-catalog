@@ -1021,6 +1021,14 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .more-details summary{cursor:pointer;color:var(--mint-soft);font-weight:600}
 .more-details p{margin:10px 0}
 #sourceStatus{font-size:13px;color:var(--yellow)}
+/* Stronger flags use color and borders, retaining existing type and weights. */
+.result-read,.access-tag.access-read{color:#9cffe0;border-color:#4fca9e;background:#12372d}
+.result-change,.access-tag.access-change{color:#ffe68b;border-color:#d7b64f;background:#3d3317}
+.result-danger,.access-tag.access-danger{color:#ffd0d6;border-color:#ed8491;background:#4b202a}
+.access-tag,.result-tag{box-shadow:inset 3px 0 0 currentColor}
+.actions:empty{display:none}
+.more-details{margin-top:14px}
+.run-info-block{margin-top:18px}
 </style>
 </head>
 <body>

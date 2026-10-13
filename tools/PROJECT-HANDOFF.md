@@ -224,3 +224,9 @@ http://127.0.0.1:9443
 ## Public handoff safety
 
 Do not store credentials, tokens, temporary passwords, tenant IDs, private hostnames, customer data, real incident evidence, private app/certificate identifiers, or unnecessary user-specific filesystem paths in this public handoff.
+
+## Approved catalog treatment — October 13, 2026
+
+Apply the approved compact card treatment through the shared renderer in every section. Preserve existing typography and weights; use stronger colored access flags, concise objectives, up to three visible checks, and directly available download/view/copy controls. Keep setup first and A–Z within groups, with incident response sequence preserved.
+
+Signing Certificates is the separate certificate-management companion to Digital Signature. Its public copy removes the signature block and uses Local Script Signing as the default label. It still lists installed current-user certificates; automatic personal-certificate selection and organization filtering have not been implemented. Uploaded operational logic remains unchanged. Windows runtime validation and broader portability work remain outstanding.

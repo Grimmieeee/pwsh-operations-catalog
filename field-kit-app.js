@@ -1128,16 +1128,20 @@
     "publishedPath": "tools/SIGN-FOLDER-SCRIPTS.ps1",
     "area": "Tools",
     "subarea": "Setup",
-    "objective": "Sign PowerShell scripts in a folder and its subfolders.",
+    "objective": "Sign reviewed PowerShell scripts with a certificate you choose.",
     "notes": "Uses an existing certificate or creates a local self-signed certificate. Optional trust adds it to the current-user TrustedPublisher and Root stores. Shows files and asks before signing; -ForceResign replaces existing signatures.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
-    "toolFacts": [],
+    "toolFacts": [
+      "Includes subfolders",
+      "Skips valid signatures from the selected certificate unless forced",
+      "Checks each signing result"
+    ],
     "access": "Change",
     "type": "Tool",
     "status": "Ready",
     "source": "FIELD // KIT",
     "keywords": "Digital Signature tools/SIGN-FOLDER-SCRIPTS.ps1",
-    "input": "",
+    "input": "Folder + signing certificate",
     "output": "",
     "code": "",
     "related": [],
@@ -1314,6 +1318,29 @@
     "code": "",
     "related": [],
     "url": ""
+  },
+  {
+    "name": "Signing Certificates",
+    "file": "MANAGE-CERT-SIGNATURES.ps1",
+    "publishedPath": "tools/MANAGE-CERT-SIGNATURES.ps1",
+    "area": "Tools",
+    "subarea": "Setup",
+    "type": "Tool",
+    "access": "Change",
+    "status": "Ready",
+    "objective": "Create and manage certificates used to sign PowerShell scripts.",
+    "toolFacts": [
+      "Create a self-signed certificate",
+      "Check and configure current-user trust",
+      "Import or export certificates when requested"
+    ],
+    "requires": "Windows PowerShell 5.1 or later",
+    "input": "Choose a certificate action",
+    "notes": "Public .cer files share trust. Private .pfx files include the signing key and require explicit confirmation and a password. Lists certificates installed for the current user; select your own signing identity.",
+    "keywords": "signing certificate trust import export digital signature",
+    "code": "",
+    "url": "",
+    "related": []
   }
 ];
 
@@ -2825,15 +2852,14 @@
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
       ${useForMarkup(item)}
-      ${shortNote(item)}
       ${standaloneCommandMarkup(item)}
+      ${runInfoMarkup(item)}
+      ${shortNote(item)}
 
       <div class="actions">
         ${sourceButton(item)}
         ${referenceButtons(item)}
       </div>
-
-      ${runInfoMarkup(item)}
 
       <div id="sourceMount"></div>
     `;
