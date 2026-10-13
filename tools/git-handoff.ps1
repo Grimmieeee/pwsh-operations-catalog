@@ -242,7 +242,11 @@ try {
         else { [IO.File]::Move($temp, $snapshot) }
     } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
     if ([IO.File]::ReadAllText($snapshot) -cne $script:Report.ToString()) { throw 'Snapshot verification failed.' }
-    Write-Host '[OK] Screened snapshot saved: <repo>\.handoff\HANDOFF-SNAPSHOT.md' -ForegroundColor Cyan
+    if ($status.Length) {
+        Write-Host '[OK] Screened snapshot saved (uncommitted changes recorded): <repo>\.handoff\HANDOFF-SNAPSHOT.md' -ForegroundColor Magenta
+    } else {
+        Write-Host '[OK] Screened snapshot saved (clean working tree): <repo>\.handoff\HANDOFF-SNAPSHOT.md' -ForegroundColor Green
+    }
     $script:HandoffStage = 'OPEN_SNAPSHOT'
     if ($Open) { Start-Process notepad.exe -ArgumentList ('"' + $snapshot + '"') }
 } catch {

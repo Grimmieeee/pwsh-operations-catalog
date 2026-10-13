@@ -12,6 +12,7 @@
     "Utility",
     "Standalone",
     "Tools",
+    "Toys",
     "About"
   ];
 
@@ -836,7 +837,7 @@
       name:"Handoff Snapshot",
       type:"Tool",
       area:"Tools",
-      subarea:"Templates",
+      subarea:"Repository",
       platform:"PowerShell + Git",
       access:"Change",
       status:"Ready",
@@ -912,6 +913,7 @@
 
   const SPLIT_COMMAND_ARTIFACTS = new Set([
     "Show Activity From One Ip",
+    "Show Sign-ins from One IP",
     '$Ip = "1.2.3.4"',
     "Look Up Isp And Location",
     '$Ip = "8.8.8.8"'
@@ -928,7 +930,198 @@
     !isRmm(item)
   );
 
-  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE, ...EXTRA_TOOLS];
+  const EXTRA_PUBLIC_TOOLS = [
+  {
+    "name": "Git Repository Tools",
+    "area": "Tools",
+    "subarea": "Repository",
+    "platform": "PowerShell + Git",
+    "access": "Change",
+    "file": "git-repo.ps1",
+    "publishedPath": "tools/git-repo.ps1",
+    "notes": "Standalone Git check, push and pull using the current repository or -Path. Default: -Action Check; add -Details for file names. -Action Push previews changes and requires typed approval before staging, committing and pushing. -Action Pull refuses a dirty tree and only fast-forwards. Run in a terminal; no profile dependency. File-name checks are not a secret scanner.",
+    "keywords": "git check details send it grab it push pull repository status commit standalone",
+    "toolFacts": [
+      "Check: local status and known upstream counts; no fetch",
+      "Push: preview and typed approval; no force push",
+      "Pull: clean working tree and fast-forward only",
+      "One standalone file; Windows Git required"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32000
+  },
+  {
+    "name": "Git Security Review",
+    "area": "Tools",
+    "subarea": "Repository",
+    "platform": "PowerShell + GitHub",
+    "access": "Change",
+    "file": "git-security.ps1",
+    "publishedPath": "tools/git-security.ps1",
+    "notes": "Run .\\git-security.ps1 -Account your-github-handle. Export JSON from GitHub, then press Enter for the newest matching download. Shows actionable unreviewed access/security events. Complete reviews without flags update a local checkpoint; flagged exports require explicit acknowledgement. Changes local history only, never GitHub settings. ALL CLEAR means no rule matches, not proof of no compromise.",
+    "keywords": "git security github audit log export json gzip zip baseline checkpoint permissions recovery",
+    "toolFacts": [
+      "Reads JSON, JSON.GZ and ZIP locally",
+      "Date, affected app/repository and next action",
+      "Remembers exact reviewed records, not trusted identities",
+      "No API token; manual GitHub export"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32001
+  },
+  {
+    "name": "Set Execution",
+    "area": "Tools",
+    "subarea": "Setup",
+    "platform": "PowerShell",
+    "access": "Change",
+    "file": "set-execution.ps1",
+    "publishedPath": "tools/set-execution.ps1",
+    "notes": "Explicit local setup utility. Checks effective execution policy, sets CurrentUser RemoteSigned only when needed and not managed, and unblocks adjacent .ps1 files. Run only in a folder of scripts you have reviewed. Does not sign files or install modules. Colored result; Enter to exit.",
+    "keywords": "set execution policy remotesigned unblock scripts local setup signing preparation",
+    "toolFacts": [
+      "Checks effective policy before changing it",
+      "Respects managed execution policy",
+      "Unblocks .ps1 files beside this script",
+      "No module installs or digital signing"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32002
+  },
+  {
+    "name": "Git Tools Quick Start",
+    "area": "Tools",
+    "subarea": "Reference",
+    "platform": "Markdown",
+    "access": "Read-only",
+    "file": "git-tools.md",
+    "publishedPath": "tools/git-tools.md",
+    "type": "Documentation",
+    "notes": "Commands and operating boundaries for the standalone repository, security, handoff and execution-setup helpers.",
+    "keywords": "git tools documentation check push pull security handoff setup",
+    "toolFacts": [
+      "Standalone commands",
+      "Checkpoint acknowledgement",
+      "Public-source safety boundaries"
+    ],
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32003
+  },
+  {
+    "name": "Attractor Screensaver",
+    "area": "Toys",
+    "subarea": "Screensavers",
+    "platform": "PowerShell 7 + Windows Terminal",
+    "access": "Read-only",
+    "file": "attractor.ps1",
+    "publishedPath": "toys/attractor.ps1",
+    "notes": "Slowly evolving Clifford attractor with floating branding and a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
+    "keywords": "toys screensaver terminal animation attractor",
+    "toolFacts": [
+      "Terminal-only animation",
+      "Cyan / magenta / dim palette",
+      "24-hour clock",
+      "Ctrl+C to stop"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32004
+  },
+  {
+    "name": "Rain Screensaver",
+    "area": "Toys",
+    "subarea": "Screensavers",
+    "platform": "PowerShell 7 + Windows Terminal",
+    "access": "Read-only",
+    "file": "rain.ps1",
+    "publishedPath": "toys/rain.ps1",
+    "notes": "Dense neon character rain, intermittent signal effects and a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
+    "keywords": "toys screensaver terminal animation rain",
+    "toolFacts": [
+      "Terminal-only animation",
+      "Cyan / magenta / dim palette",
+      "24-hour clock",
+      "Ctrl+C to stop"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32005
+  },
+  {
+    "name": "Static Screensaver",
+    "area": "Toys",
+    "subarea": "Screensavers",
+    "platform": "PowerShell 7 + Windows Terminal",
+    "access": "Read-only",
+    "file": "static.ps1",
+    "publishedPath": "toys/static.ps1",
+    "notes": "Sparse pulsing dots, subtle static and drifting branding with a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
+    "keywords": "toys screensaver terminal animation static",
+    "toolFacts": [
+      "Terminal-only animation",
+      "Cyan / magenta / dim palette",
+      "24-hour clock",
+      "Ctrl+C to stop"
+    ],
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "requires": "",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": "",
+    "_order": 32006
+  }
+];
+
+  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE, ...EXTRA_TOOLS, ...EXTRA_PUBLIC_TOOLS];
 
   const esc = value => String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -952,6 +1145,7 @@
 
   function logicalArea(item){
     if (item.area === "Tools") return "Tools";
+    if (item.area === "Toys") return "Toys";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
     if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
     if (isRmm(item)) return "RMM";
@@ -986,7 +1180,7 @@
     const file = item.file || "";
     const combined = [name,file,item.subarea,item.platform,item.code].join(" ");
 
-    if (area === "Tools"){
+    if (area === "Tools" || area === "Toys"){
       return item.subarea || "Reference";
     }
 
@@ -1577,6 +1771,7 @@
       navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
       navSection("Operations", ["Incident Response","Utility","Standalone"]),
       navSection("Reference", ["Tools"]),
+      navSection("Extras", ["Toys"]),
       '<div class="nav-bottom">' + navButton("About") + '</div>'
     ].join("");
   }
@@ -1734,6 +1929,7 @@
     if (item.logicalArea === "Incident Response") return "Incident Response";
     if (item.logicalArea === "Utility") return "Utility";
     if (item.logicalArea === "Tools") return "Tools";
+    if (item.logicalArea === "Toys") return "Toys";
 
     const combined = [item.displayName,item.name,item.file,item.notes,item.keywords].join(" ");
     const override = SCOPE_OVERRIDES.find(x => x.match.test(item.displayName || item.name || ""));
@@ -1752,7 +1948,7 @@
   }
 
   function bucketRank(bucket){
-    const order = ["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone","Tools"];
+    const order = ["Single User","Multi User","Tenant Wide","Incident Response","RMM","Utility","Standalone","Tools","Toys"];
     const idx = order.indexOf(bucket);
     return idx === -1 ? 99 : idx;
   }
@@ -1896,7 +2092,7 @@
   }
 
   function areaRank(area){
-    const order = ["Identity","Mailbox","Incident Response","Utility","Standalone","Tools"];
+    const order = ["Identity","Mailbox","Incident Response","Utility","Standalone","Tools","Toys"];
     const idx = order.indexOf(area);
     return idx === -1 ? 99 : idx;
   }
@@ -1908,7 +2104,8 @@
       "Incident Response":["Primary","Investigation","Response","General"],
       "Utility":["Workstation","Microsoft 365","Repository","Publishing","WinGet","General"],
       "Standalone":["Exchange","Graph","Active Directory","Windows CLI","Network CLI","WinGet","Terminal"],
-      "Tools":["Reference","Standards","Templates"]
+      "Tools":["Repository","Setup","Reference","Standards","Templates"],
+      "Toys":["Screensavers"]
     };
     const list = orders[area] || [];
     const idx = list.indexOf(group);
@@ -2052,7 +2249,7 @@
 
           <p>Related items are grouped together within each section, with read-only checks before change actions where practical. Incident Response workflows stay in required execution order.</p>
 
-          <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Reusable standards, checklists, and templates live under <strong>Tools</strong>.</p>
+          <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Git helpers, setup tools, standards, and references live under <strong>Tools</strong>. Terminal screensavers live under <strong>Toys</strong>.</p>
 
           <p>The search bar searches the full catalog regardless of the section currently selected. Jump links move between groups within the current browse view.</p>
 
@@ -2521,8 +2718,9 @@
         `;
 
         document.getElementById("copyScript")?.addEventListener("click", async e => {
+          const button = e.currentTarget;
           await copyText(source);
-          flashButton(e.currentTarget,"COPIED");
+          flashButton(button,"COPIED");
         });
 
         document.getElementById("saveScript")?.addEventListener("click", () => {
@@ -2607,7 +2805,7 @@
 
   function runFrameworkAudit(){
     const issues = [];
-    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","Utility","Standalone","Tools"]);
+    const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","Utility","Standalone","Tools","Toys"]);
     const allowedPurpose = new Set(["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]);
     const seen = new Set();
 
@@ -2652,7 +2850,7 @@
       }
     }
 
-    for (const area of ["Incident Response","Utility","Standalone","Tools"]){
+    for (const area of ["Incident Response","Utility","Standalone","Tools","Toys"]){
       const groups = [...new Set(ITEMS.filter(item => primaryBucket(item) === area).map(item => item.group || "General"))];
       for (const group of groups){
         const subset = ITEMS

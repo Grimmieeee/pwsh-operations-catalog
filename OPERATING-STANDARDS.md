@@ -324,7 +324,9 @@ This keeps runtime behavior predictable and avoids changing the operator's works
 
 ### Prohibited setup side effects
 
-Published tools must not call `Set-ExecutionPolicy` as part of normal execution.
+Published operational tools must not call `Set-ExecutionPolicy` as part of normal execution.
+
+The explicitly requested `tools/set-execution.ps1` is a dedicated, change-labeled local setup utility: policy adjustment and unblocking are its stated purpose. It must never be invoked automatically by other catalog downloads. It respects managed policy and performs no module installs or digital signing.
 
 ## 11. Error Handling
 
@@ -686,3 +688,6 @@ When a new script or variant appears, ask in this order:
 9. Is runtime validation still outstanding?
 
 If those questions are clear, the catalog decision usually becomes obvious.
+## Tools and Toys publication — October 12, 2026
+
+Tools includes the approved repository check/push/pull, security-review, handoff and execution-setup downloads. Toys contains terminal-only screensavers, separate from operational workflows. The shared renderer, source loader, sorting and risk labels apply to both. Toys requires an ANSI-capable terminal and never represents a workstation lock. Animation is appropriate inside Toys; operational tools retain concise output.
