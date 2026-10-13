@@ -4,6 +4,14 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
+## Tools and Toys publication — 2026-10-13
+
+Tools now includes standalone Git repository check/push/pull, security-export review, execution setup, the updated handoff snapshot, and a quick-start reference. Toys contains Attractor, Rain, and Static terminal animations. Public copies are unsigned and contain no personal exports or review checkpoints.
+
+Security review saves exact-event checkpoints silently only after a full unfiltered review with no flags; acknowledging flagged records remains explicit. The ALL CLEAR wording describes rule matches, not proof of authorization. Execution setup installs no modules and pauses with Enter to exit.
+
+Validation includes PowerShell parser checks, Linux PowerShell behavior tests, terminal animation smoke tests, and catalog DOM checks for navigation/source/copy/download. Native Windows and visual browser validation remain outstanding. Publishing also fixes the shared copy-button completion handler and excludes an empty legacy split-command duplicate from the catalog audit.
+
 ## Goal
 
 Maintain a small, dependable, searchable catalog of practical PowerShell tools and operator references.

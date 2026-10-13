@@ -85,3 +85,7 @@ Public scripts are unsigned canonical source. Internal Authenticode signing belo
 ## Git Handoff
 
 [`tools/git-handoff.ps1`](tools/git-handoff.ps1) captures readable repository state in a locally excluded `.handoff/HANDOFF-SNAPSHOT.md`. It screens metadata for recognizable sensitive values; review the output before sharing. See [usage, privacy limits, and validation](tools/git-handoff.md). The Tools download uses this canonical file.
+
+## Tools and Toys
+
+Tools now includes standalone Git Repository Tools (check/push/pull), Git Security Review, Handoff Snapshot and Set Execution. See [Git tools quick start](tools/git-tools.md). Toys contains Attractor, Rain and Static terminal screensavers. All downloads use the shared same-origin source viewer and copy/save controls. No private security exports, account baseline notes, signing identities or full terminal profiles are published.

@@ -83,7 +83,8 @@ Primary navigation order is intentional:
 7. Utility
 8. Standalone
 9. Tools
-10. About
+10. Toys
+11. About
 
 Do not reorder primary navigation alphabetically.
 
@@ -206,10 +207,12 @@ Source must never be fetched from arbitrary external URLs.
 
 ## 10. Tools section
 
-Tools contains reusable public-safe documentation and references. Repository-maintenance helpers may also live under `tools/`, but they are not automatically public catalog items.
+Tools contains reusable public-safe documentation, references, and explicitly approved Git and local setup helpers. Repository-maintenance helpers may also live under `tools/`, but they are not automatically public catalog items.
 
 Preferred groups:
 
+- Repository
+- Setup
 - Reference
 - Standards
 - Templates
@@ -258,7 +261,7 @@ Behavior:
 
 - Full Library searches the complete catalog.
 - Searching from Single User, Multi User, or Tenant Wide searches across all three scope buckets as one working set.
-- Incident Response, RMM, Utility, Standalone, and Tools searches stay scoped to their selected area.
+- Incident Response, RMM, Utility, Standalone, Tools, and Toys searches stay scoped to their selected area.
 - Flattened search results must retain useful scope context through the scope badge.
 - Search may use hidden aliases/metadata for matching, but the UI should display only decision-relevant information.
 
@@ -377,3 +380,7 @@ Default backup location:
 The exporter derives the backup folder from the repository location, so moving the FIELD-KIT parent folder keeps the backup workflow valid.
 
 The ZIP is a recovery/export snapshot. It is not a replacement for the repository.
+
+## Toys
+
+Toys is a separate primary navigation area after Tools. Its Screensavers group uses the same cards, A-Z ordering, risk labels and source controls. Include terminal requirements and exit instructions; never imply screen-lock protection.
