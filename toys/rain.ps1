@@ -1,7 +1,8 @@
+$script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # rain.ps1
 # PowerShell 7.6.6 / Windows Terminal
 # Best overall blend:
-# - strong BURNSID / FIELD // KIT branding
+# - strong custom text / FIELD // KIT branding
 # - 24h clock
 # - fast rain density
 # - broken-signal random phrases
@@ -31,19 +32,19 @@ $altOff = "$esc[?1049l"
 $eraseScrollback = ""
 
 $colors = @{
-    Hot     = '38;2;215;0;165'
-    Pink    = '38;2;230;65;205'
-    Cyan    = '38;2;0;220;245'
-    Blue    = '38;2;45;115;215'
-    Green   = '38;2;35;175;85'
-    Lime    = '38;2;105;235;110'
-    White   = '38;2;230;238;238'
-    Bone    = '38;2;205;205;190'
-    Dim     = '38;2;82;88;105'
-    Ghost   = '38;2;24;32;38'
-    DarkMag = '38;2;68;12;68'
-    DarkCyn = '38;2;10;62;82'
-    DarkGrn = '38;2;8;58;30'
+    Hot     = '38;2;255;0;214'
+    Pink    = '38;2;255;84;255'
+    Cyan    = '38;2;0;255;255'
+    Blue    = '38;2;58;150;255'
+    Green   = '38;2;46;228;110'
+    Lime    = '38;2;136;255;143'
+    White   = '38;2;255;255;255'
+    Bone    = '38;2;255;255;247'
+    Dim     = '38;2;107;114;136'
+    Ghost   = '38;2;31;42;49'
+    DarkMag = '38;2;88;16;88'
+    DarkCyn = '38;2;13;81;107'
+    DarkGrn = '38;2;10;75;39'
 }
 
 $glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@<>/\+-=*[]{}░▒▓'.ToCharArray()
@@ -194,7 +195,7 @@ function Get-DropColor {
         default {
             if ($Dist -lt 3) { return $colors.Green }
             if ($Dist -lt 9) { return $colors.DarkGrn }
-            return '38;2;6;36;18'
+            return '38;2;8;47;23'
         }
     }
 }
@@ -294,7 +295,7 @@ function Draw-Frame {
         $pulse = @($colors.Hot,$colors.Cyan,$colors.Bone,$colors.DarkCyn)[$phase % 4]
         $mid = [int]($Height / 2) - 1
 
-        $line1 = 'B U R N S I D //'
+        $line1 = $script:DisplayText
         $line2 = 'F I E L D // K I T'
         $line3 = 'rain signal / retro terminal'
         $clock = Get-ClockText
@@ -319,9 +320,9 @@ function Draw-Frame {
         if ((Get-Random -Minimum 0 -Maximum 100) -lt $SignatureChance) {
             $phase = [int]($Frame / 20)
 
-            $sig = 'B U R N S I D //'
+            $sig = $script:DisplayText
             if (($phase % 11) -eq 0) {
-                $sig = 'B U R N   S I D //'
+                $sig = $script:DisplayText
             }
 
             $tag = 'F I E L D // K I T'
@@ -382,7 +383,7 @@ function Draw-Frame {
 }
 
 try {
-    $host.UI.RawUI.WindowTitle = 'BURNSID // FIELD // KIT // RAIN'
+    $host.UI.RawUI.WindowTitle = 'Rain'
     try { [Console]::CursorVisible = $false } catch {}
 
     # Alt-screen buffer hides the prompt while the script runs

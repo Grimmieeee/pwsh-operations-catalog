@@ -834,7 +834,7 @@
       toolFacts:["A-Z spelling reference","Alpha through Zulu","Searchable by alphabet / phonetic / NATO"]
     },
     {
-      name:"Handoff Snapshot",
+      name:"Update Project Artifact",
       type:"Tool",
       area:"Tools",
       subarea:"Repository",
@@ -959,7 +959,7 @@
     "_order": 32000
   },
   {
-    "name": "Git Security Review",
+    "name": "GitHub Security Check",
     "area": "Tools",
     "subarea": "Repository",
     "platform": "PowerShell + GitHub",
@@ -986,7 +986,7 @@
     "_order": 32001
   },
   {
-    "name": "Set Execution",
+    "name": "Script Setup",
     "area": "Tools",
     "subarea": "Setup",
     "platform": "PowerShell",
@@ -1039,9 +1039,9 @@
     "_order": 32003
   },
   {
-    "name": "Attractor Screensaver",
+    "name": "Attractor",
     "area": "Toys",
-    "subarea": "Screensavers",
+    "subarea": "Animations",
     "platform": "PowerShell 7 + Windows Terminal",
     "access": "Read-only",
     "file": "attractor.ps1",
@@ -1066,9 +1066,9 @@
     "_order": 32004
   },
   {
-    "name": "Rain Screensaver",
+    "name": "Rain",
     "area": "Toys",
-    "subarea": "Screensavers",
+    "subarea": "Animations",
     "platform": "PowerShell 7 + Windows Terminal",
     "access": "Read-only",
     "file": "rain.ps1",
@@ -1093,9 +1093,9 @@
     "_order": 32005
   },
   {
-    "name": "Static Screensaver",
+    "name": "Static",
     "area": "Toys",
-    "subarea": "Screensavers",
+    "subarea": "Animations",
     "platform": "PowerShell 7 + Windows Terminal",
     "access": "Read-only",
     "file": "static.ps1",
@@ -1121,7 +1121,203 @@
   }
 ];
 
-  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE, ...EXTRA_TOOLS, ...EXTRA_PUBLIC_TOOLS];
+  const UPLOADED_TOOLS = [
+  {
+    "name": "Digital Signature",
+    "file": "SIGN-FOLDER-SCRIPTS.ps1",
+    "publishedPath": "tools/SIGN-FOLDER-SCRIPTS.ps1",
+    "area": "Tools",
+    "subarea": "Setup",
+    "objective": "Sign PowerShell scripts in a folder and its subfolders.",
+    "notes": "Uses an existing certificate or creates a local self-signed certificate. Optional trust adds it to the current-user TrustedPublisher and Root stores. Shows files and asks before signing; -ForceResign replaces existing signatures.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Change",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Digital Signature tools/SIGN-FOLDER-SCRIPTS.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Terminal Readiness",
+    "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+    "publishedPath": "tools/GET-TERMINAL-READINESS-CHECK.ps1",
+    "area": "Tools",
+    "subarea": "Setup",
+    "objective": "Check the shell, modules, signing certificates, and expected toolkit files.",
+    "notes": "This checks a fixed toolkit layout, not just PowerShell. Review $ExpectedFolders and $ExpectedFiles for your installation. Missing layout files are reported as failures. Root defaults to C:\\Field-Kit and can be changed at the prompt.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Read-only",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Terminal Readiness tools/GET-TERMINAL-READINESS-CHECK.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "File Inventory",
+    "file": "INVOKE-FILE-INVENTORY.ps1",
+    "publishedPath": "tools/INVOKE-FILE-INVENTORY.ps1",
+    "area": "Tools",
+    "subarea": "Repository",
+    "objective": "Find duplicate scripts, signature problems, and leftover working copies.",
+    "notes": "Groups files into Active, Testing, and Archive; compares duplicate filenames by SHA256. Optional CSV export includes local paths and signer details. Root defaults to C:\\Field-Kit; keep reports private.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [
+      "Compares duplicate filenames and hashes",
+      "Checks active-script signatures",
+      "Exports CSV only when requested"
+    ],
+    "access": "Read-only",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "File Inventory tools/INVOKE-FILE-INVENTORY.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Folder Map",
+    "file": "INVOKE-MAP-KIT.ps1",
+    "publishedPath": "tools/INVOKE-MAP-KIT.ps1",
+    "area": "Tools",
+    "subarea": "Repository",
+    "objective": "Show a folder tree, script counts, signatures, and file warnings.",
+    "notes": "Uses root detection or -RootPath; confirms the selected folder. Reports naming and file-extension warnings, not a full secret scan. Does not enforce a fixed layout or export files.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Read-only",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Folder Map tools/INVOKE-MAP-KIT.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Session Reset",
+    "file": "INVOKE-SESSION-RESET.ps1",
+    "publishedPath": "tools/INVOKE-SESSION-RESET.ps1",
+    "area": "Tools",
+    "subarea": "Setup",
+    "objective": "Disconnect local Graph and Exchange sessions and clear session errors.",
+    "notes": "Run in the terminal you want to reset. Asks before cleanup; can clear the optional JumpboxSessionPassword profile variable and open a fresh PowerShell 7 window. Does not change tenant settings.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Change",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Session Reset tools/INVOKE-SESSION-RESET.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Basic",
+    "file": "SET-THEME-BASIC.ps1",
+    "publishedPath": "toys/SET-THEME-BASIC.ps1",
+    "area": "Toys",
+    "subarea": "Themes",
+    "objective": "Preview plain terminal output and reusable message helpers.",
+    "notes": "Prints example messages and waits for Enter. No persistent theme changes. Example output is demonstration data.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Read-only",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Basic toys/SET-THEME-BASIC.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Cobalt",
+    "file": "SET-THEME-COBALT.ps1",
+    "publishedPath": "toys/SET-THEME-COBALT.ps1",
+    "area": "Toys",
+    "subarea": "Themes",
+    "objective": "Preview the Cobalt color palette and message styles.",
+    "notes": "Changes this terminal\u2019s appearance and sets Process execution policy to Bypass. Prints a palette reference; does not install a persistent theme. Requires an ANSI-capable terminal.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Change",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Cobalt toys/SET-THEME-COBALT.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Sea Glass",
+    "file": "SET-THEME-SEAGLASS.ps1",
+    "publishedPath": "toys/SET-THEME-SEAGLASS.ps1",
+    "area": "Toys",
+    "subarea": "Themes",
+    "objective": "Apply Sea Glass colors now and when PowerShell starts.",
+    "notes": "Writes CurrentUserAllHosts profile and replaces recognized theme blocks. Also sets Process execution policy to Bypass. Review your profile before running; remove the SEA GLASS THEME block to undo persistence.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Change",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Sea Glass toys/SET-THEME-SEAGLASS.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  },
+  {
+    "name": "Silicon Valley",
+    "file": "SET-THEME-SILICON-VALLEY.ps1",
+    "publishedPath": "toys/SET-THEME-SILICON-VALLEY.ps1",
+    "area": "Toys",
+    "subarea": "Themes",
+    "objective": "Apply Silicon Valley colors, keyboard shortcuts, and a startup banner.",
+    "notes": "Rewrites recognized theme blocks in CurrentUserAllHosts profile. Also installs and displays a date-seeded daily password generator. Its output is predictable: do not use it as a password. Remove the SILICON VALLEY THEME block to undo persistence.",
+    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+    "toolFacts": [],
+    "access": "Change",
+    "type": "Tool",
+    "status": "Ready",
+    "source": "FIELD // KIT",
+    "keywords": "Silicon Valley toys/SET-THEME-SILICON-VALLEY.ps1",
+    "input": "",
+    "output": "",
+    "code": "",
+    "related": [],
+    "url": ""
+  }
+];
+
+  const allSource = [...rawItems, ...EXTRA_RMM, ...EXTRA_STANDALONE, ...EXTRA_TOOLS, ...EXTRA_PUBLIC_TOOLS, ...UPLOADED_TOOLS];
 
   const esc = value => String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -1163,7 +1359,7 @@
 
     if (/^Show Password Last Changed And Age$/i.test(name)) return "Show Password Age";
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
-    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC Risk Exposure Snapshot";
+    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "M365 User Security Review";
     if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC Eradicate";
     if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
     if (/^Map Service Desk Kit$/i.test(name)) return "Folder Inventory";
@@ -1557,7 +1753,7 @@
     }
 
     const title = displayName(item);
-    if (/M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
+    if (/M365 User Security Review|M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
       return {label:"CHECKS",items:[...RISK_CHECKS]};
     }
 
@@ -1572,17 +1768,17 @@
     if (area !== "Incident Response") return null;
 
     const title = displayName(item);
-    if (!/BEC|Account Compromise|Risk Exposure|Eradicate|Recover|Revoke Active Sessions/i.test(title)) return null;
+    if (!/M365 User Security Review|BEC|Account Compromise|Risk Exposure|Eradicate|Recover|Revoke Active Sessions/i.test(title)) return null;
 
     const steps = [
-      {n:"1",name:"Risk Exposure Snapshot"},
+      {n:"1",name:"M365 User Security Review"},
       {n:"2",name:"Eradicate"},
       {n:"3",name:"Recover"},
       {n:"",name:"Revoke Active Sessions",standalone:true}
     ];
 
     let current = "";
-    if (/Risk Exposure|Discovery/i.test(title)) current = "1";
+    if (/User Security Review|Risk Exposure|Discovery/i.test(title)) current = "1";
     else if (/Eradicate|Execution/i.test(title)) current = "2";
     else if (/Recover/i.test(title)) current = "3";
     else if (/Revoke Active Sessions/i.test(title)) current = "standalone";
@@ -1609,11 +1805,18 @@
     if (/Delete/i.test(title)) return "Deletes or removes the selected object.";
     if (/Remove/i.test(title)) return "Removes the selected access or configuration.";
     if (/Add/i.test(title)) return "Adds or changes access.";
+    if (/Update Project Artifact/i.test(title)) return "Writes a local handoff file and Git exclusion.";
     if (/Update|Upgrade/i.test(title)) return "Installs or applies updates.";
     return "";
   }
 
+  const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
+
   function buildItem(source){
+    source = {...source, ...(CARD_UPDATES[source.file] || {})};
+    if (/SET-THEME-(SEAGLASS|SILICON-VALLEY)/.test(source.file || "")) source.changeNote = source.notes;
+    if (/SET-THEME-COBALT/.test(source.file || "")) source.changeNote = "Changes this terminal and sets Process execution policy to Bypass; no profile installation.";
+    if (source.area === "Tools" && source.type === "Documentation") source.subarea = "Reference";
     const area = logicalArea(source);
     return {
       ...source,
@@ -1623,7 +1826,7 @@
       connect:connectCommands(source),
       facts:factBlockFor(source),
       workflow:workflowFor(source, area),
-      changeNote:changeNote(source)
+      changeNote:source.changeNote || changeNote(source)
     };
   }
 
@@ -1959,7 +2162,7 @@
 
   function irRank(item){
     const name = displayName(item);
-    if (/Risk Exposure Snapshot|Discovery/i.test(name)) return 1;
+    if (/User Security Review|Risk Exposure Snapshot|Discovery/i.test(name)) return 1;
     if (/Eradicate|Execution/i.test(name)) return 2;
     if (/Recover/i.test(name)) return 3;
     if (/Revoke Active Sessions/i.test(name)) return 4;
@@ -2022,9 +2225,12 @@
     return 4;
   }
 
+  function setupRank(item){
+    return item.group === "Setup" || item.group === "Terminal" || /^(M365 Module Setup|PowerShell Readiness|Terminal Readiness|Script Setup)$/.test(item.displayName) ? 0 : 1;
+  }
+
   function semanticCompare(a,b){
-    return topicRank(a) - topicRank(b) ||
-      actionRank(a) - actionRank(b) ||
+    return setupRank(a) - setupRank(b) ||
       a.displayName.localeCompare(b.displayName) ||
       (a._order || 0) - (b._order || 0);
   }
@@ -2067,6 +2273,7 @@
           if (purposeDiff) return purposeDiff;
         }
 
+        if (bucket === "Incident Response") return irRank(a) - irRank(b) || semanticCompare(a,b);
         return semanticCompare(a,b);
       });
     } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)) {
@@ -2103,9 +2310,9 @@
       "Mailbox":["Single User","Multi User","General"],
       "Incident Response":["Primary","Investigation","Response","General"],
       "Utility":["Workstation","Microsoft 365","Repository","Publishing","WinGet","General"],
-      "Standalone":["Exchange","Graph","Active Directory","Windows CLI","Network CLI","WinGet","Terminal"],
-      "Tools":["Repository","Setup","Reference","Standards","Templates"],
-      "Toys":["Screensavers"]
+      "Standalone":["Terminal","Active Directory","Exchange","Graph","Network CLI","Windows CLI","WinGet"],
+      "Tools":["Setup","Repository","Reference"],
+      "Toys":["Animations","Themes"]
     };
     const list = orders[area] || [];
     const idx = list.indexOf(group);
@@ -2240,18 +2447,10 @@
 
           <div class="about-rule"></div>
 
-          <p class="about-lede">A searchable working catalog of PowerShell scripts, commands, and operational workflows.</p>
-
-          <p class="about-scope">
-            <span>Start with scope: <strong>Single User</strong>, <strong>Multi User</strong>, or <strong>Tenant Wide</strong>.</span>
-            <span>Then narrow by purpose: <strong>Access</strong>, <strong>Audit</strong>, <strong>Identity</strong>, <strong>On / Offboarding</strong>, <strong>Mailbox</strong>, or <strong>Security</strong>.</span>
-          </p>
-
-          <p>Related items are grouped together within each section, with read-only checks before change actions where practical. Incident Response workflows stay in required execution order.</p>
-
-          <p>Operational workflows live under <strong>Operations</strong>. Fast one-off commands are grouped under <strong>Quick Commands</strong>. Git helpers, setup tools, standards, and references live under <strong>Tools</strong>. Terminal screensavers live under <strong>Toys</strong>.</p>
-
-          <p>The search bar searches the full catalog regardless of the section currently selected. Jump links move between groups within the current browse view.</p>
+          <p class="about-lede">PowerShell scripts and commands for everyday IT work.</p>
+          <p>Choose a section or search the whole catalog. Setup tools come first where useful; other items are A–Z. Follow the numbered order for incident-response steps.</p>
+          <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
+          <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
 
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
@@ -2426,6 +2625,8 @@
 
       // Don't repeat the card title as a DOES/CHECKS line.
       if (title && comparableAction(text) === title) return false;
+      if (comparableAction(item.objective || "").includes(comparableAction(text))) return false;
+      if (/^(?:summary|csv|export)\s*:?\s*(?:yes|ready)$/i.test(text)) return false;
 
       return true;
     });
@@ -2440,7 +2641,8 @@
       <section class="check-block">
         <div class="section-label">${esc(label)}</div>
         <div class="check-list${doesClass}">
-          ${facts.map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
+          ${facts.slice(0,3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
+          ${facts.length > 3 ? `<details class="more-details"><summary>More checks</summary>${facts.slice(3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}</details>` : ""}
         </div>
       </section>
     `;
@@ -2491,19 +2693,21 @@
 
   function objectiveMarkup(item){
     if (item.type === "Quick Command") return "";
-    const objective = String(item.objective || "").trim();
+    const objective = String(item.objective || item.notes || "").trim().split(/(?<=[.!?])\s+/)[0];
     if (!objective) return "";
 
     return `
       <section class="objective-block">
-        <div class="section-label">OBJECTIVE</div>
+        <div class="section-label">USE FOR</div>
         <div class="objective-copy">${esc(objective)}</div>
       </section>
     `;
   }
 
   function shortNote(item){
-    return "";
+    const note = String(item.notes || "").trim();
+    if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return "";
+    return `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
   }
 
   function csvCapability(item){
@@ -2539,9 +2743,7 @@
 
     const rows = [
       ["REQUIRES",requirementInfo(item)],
-      ["INPUT",inputInfo(item)],
-      ["SUMMARY",summaryCapability(item)],
-      ["CSV",csvCapability(item)]
+      ["INPUT",inputInfo(item)]
     ].filter(([,value]) => String(value || "").trim());
 
     const connect = connectMarkup(item);
@@ -2570,9 +2772,9 @@
 
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
-    if (!item.file && !item.code && !item.publishedPath) return "";
-    const label = /\.md$/i.test(String(item.file || "")) ? "MARKDOWN" : "POWERSHELL";
-    return '<button id="showSource" class="action primary" type="button">' + label + '</button>';
+    if (!item.publishedPath && !item.code) return '<span class="source-note">Download not available yet.</span>';
+    const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
+    return `<button id="downloadSource" class="action primary" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button><button id="copyDownload" class="action" type="button">COPY</button><span id="sourceStatus" role="status"></span>`;
   }
 
   function referenceButtons(item){
@@ -2643,6 +2845,22 @@
   }
 
   function bindDrawerActions(item){
+    for (const id of ["downloadSource","copyDownload"]){
+      const button = document.getElementById(id);
+      button?.addEventListener("click", async () => {
+        button.disabled = true;
+        const status = document.getElementById("sourceStatus");
+        try {
+          const source = await resolveSource(item);
+          if (!source) throw new Error("Source is unavailable.");
+          if (id === "downloadSource") saveText(source,safeFilename(item.file));
+          else { await copyText(source); flashButton(button,"COPIED"); }
+          status.textContent = "";
+        } catch(error){ status.textContent = error.message || "Could not load source."; }
+        finally { button.disabled = false; }
+      });
+    }
+
     drawerBody.querySelectorAll("[data-copy]").forEach(btn => {
       btn.addEventListener("click", async () => {
         await copyText(btn.getAttribute("data-copy") || "");
@@ -2685,7 +2903,7 @@
     if (mount.dataset.open === "1"){
       mount.innerHTML = "";
       mount.dataset.open = "0";
-      button.textContent = sourceLabel;
+      button.textContent = "VIEW CODE";
       return;
     }
 
@@ -2729,7 +2947,7 @@
       }
 
       mount.dataset.open = "1";
-      button.textContent = "HIDE " + sourceLabel;
+      button.textContent = "HIDE CODE";
     } catch (error){
       mount.innerHTML = `
         <section class="source-block">
@@ -2737,7 +2955,7 @@
         </section>
       `;
       mount.dataset.open = "1";
-      button.textContent = sourceLabel;
+      button.textContent = "VIEW CODE";
     } finally {
       button.disabled = false;
     }
@@ -2788,7 +3006,8 @@
     state.selected = null;
 
     if (wasOpen && lastFocusedElement?.isConnected){
-      window.requestAnimationFrame(() => lastFocusedElement.focus());
+      const focusTarget = lastFocusedElement;
+      window.requestAnimationFrame(() => focusTarget?.isConnected && focusTarget.focus());
     }
     lastFocusedElement = null;
   }

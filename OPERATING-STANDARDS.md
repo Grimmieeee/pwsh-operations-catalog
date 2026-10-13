@@ -690,4 +690,6 @@ When a new script or variant appears, ask in this order:
 If those questions are clear, the catalog decision usually becomes obvious.
 ## Tools and Toys publication — October 12, 2026
 
-Tools includes the approved repository check/push/pull, security-review, handoff and execution-setup downloads. Toys contains terminal-only screensavers, separate from operational workflows. The shared renderer, source loader, sorting and risk labels apply to both. Toys requires an ANSI-capable terminal and never represents a workstation lock. Animation is appropriate inside Toys; operational tools retain concise output.
+Tools includes the approved repository check/push/pull, security-review, handoff and execution-setup downloads. Toys contains terminal animations and theme previews/installers, separate from operational workflows. The shared renderer, source loader, sorting and risk labels apply to both. Animations and colored themes require an ANSI-capable terminal and never represent a workstation lock. Animation is appropriate inside Toys; operational tools retain concise output.
+
+User-approved source-preservation exception: uploaded theme previews/installers retain their original process-policy and profile behavior. Cards disclose these effects. Do not silently remove them during sanitization. Setup-first ordering, then A-Z within groups, is the browsing standard; incident-response sequence and search relevance remain exceptions.

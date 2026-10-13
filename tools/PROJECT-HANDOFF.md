@@ -12,6 +12,18 @@ Security review saves exact-event checkpoints silently only after a full unfilte
 
 Validation includes PowerShell parser checks, Linux PowerShell behavior tests, terminal animation smoke tests, and catalog DOM checks for navigation/source/copy/download. Native Windows and visual browser validation remain outstanding. Publishing also fixes the shared copy-button completion handler and excludes an empty legacy split-command duplicate from the catalog audit.
 
+## Compact cards and uploaded tools — October 12, 2026
+
+Added nine unique public scripts from ten uploads. SIGN-FOLDER-SCRIPTS and INVOKE-SIGN-FOLDER-SCRIPTS were identical after normalizing newlines/removing signatures and are represented by Digital Signature. Originals were left untouched. Published copies remove signing blocks, replace local root defaults with C:\Field-Kit, and use generic signing/example labels. Control flow and operational commands are preserved.
+
+Tools includes setup, repository helpers, and reference groups. Themes live in Toys alongside animations. Existing generic readiness, repository inventory, and M365 reset remain separate from the uploaded fixed-layout readiness, file inventory, folder map, and profile-aware reset. They have different checks and inputs; no executable implementations were merged.
+
+Silicon Valley retains its predictable date-seeded daily password generator and key bindings, explicitly disclosed on its card. Sea Glass and Silicon Valley write profiles; Cobalt is a preview; Basic is plain-output examples. Cobalt and Sea Glass retain Process Bypass as supplied. Native Windows validation is still needed.
+
+Validation: all Tools/Toys parsed in PowerShell 7; nine uploaded copies matched their normalized originals with only listed sanitization replacements. The 338-entry audit, all new/renamed card downloads/copy/source tests, desktop/mobile Chromium checks, and three PTY animation/label/Ctrl+C checks passed. Native Windows execution is outstanding.
+
+Cards use USE FOR, risk flags, visible download/view/copy, up to three checks, and expandable detail. The site and existing animations are brighter; uploaded theme palettes remain unchanged. Animations use editable <YOUR TEXT HERE> and terminal titles Attractor/Rain/Static. BEC discovery displays as M365 User Security Review while preserving search terms and workflow sequence.
+
 ## Goal
 
 Maintain a small, dependable, searchable catalog of practical PowerShell tools and operator references.

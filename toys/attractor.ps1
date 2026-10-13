@@ -1,8 +1,9 @@
-# Standalone terminal fractal screensaver with floating/flickering BURNSID logo + clock. Ctrl+C exits.
+$script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
+# Standalone terminal fractal screensaver with floating/flickering custom text logo + clock. Ctrl+C exits.
 $ErrorActionPreference = 'Stop'
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 $esc=[char]27; $reset="$esc[0m"; $hide="$esc[?25l"; $show="$esc[?25h"; $clear="$esc[2J"; $homeCursor="$esc[H"; $altOn="$esc[?1049h"; $altOff="$esc[?1049l"; $erase=""; $wrapOff="$esc[?7l"; $wrapOn="$esc[?7h"; $black="$esc[38;2;0;0;0;48;2;0;0;0m"
-$colors=@{Hot='38;2;225;0;150';Cyan='38;2;0;220;245';White='38;2;230;238;238';Bone='38;2;205;205;190';Dim='38;2;82;88;105';Ghost='38;2;24;32;38';DarkMag='38;2;68;12;68';DarkCyn='38;2;10;62;82';Green='38;2;35;175;85';DarkGrn='38;2;8;58;30';Red='38;2;180;20;35';Black='38;2;0;0;0'}
+$colors=@{Hot='38;2;255;0;195';Cyan='38;2;0;255;255';White='38;2;255;255;255';Bone='38;2;255;255;247';Dim='38;2;107;114;136';Ghost='38;2;31;42;49';DarkMag='38;2;88;16;88';DarkCyn='38;2;13;81;107';Green='38;2;46;228;110';DarkGrn='38;2;10;75;39';Red='38;2;234;26;46';Black='38;2;0;0;0'}
 function A([string]$c){ "$script:esc[$c;48;2;0;0;0m" }
 function M([int]$r,[int]$c){ "$script:esc[$([Math]::Max(1,$r+1));$([Math]::Max(1,$c+1))H" }
 function Pick([object[]]$a){ $a[(Get-Random -Minimum 0 -Maximum $a.Count)] }
@@ -15,7 +16,7 @@ function Ellipse($sb,[int]$cx,[int]$cy,[int]$rx,[int]$ry,[string]$col,[object[]]
 # Independent slow drift, target changes, burst flicker, and ghost echoes.
 
 $script:BrandFloat = @{
-    Text='B U R N S I D //'
+    Text=$script:DisplayText
     X=8.0
     Y=4.0
     TargetX=8.0
@@ -189,7 +190,7 @@ function Tear($sb,[int]$w,[int]$h,[int]$min=10,[int]$pct=45){ $row=Get-Random -M
 function Start-Fractal($title,$delay,$draw){ try{$host.UI.RawUI.WindowTitle=$title}catch{}; try{[Console]::CursorVisible=$false}catch{}; [Console]::Write($wrapOff+$altOn+$hide+$clear+$erase+$homeCursor); $sb=[System.Text.StringBuilder]::new(); FullBlack $sb ([Console]::WindowWidth) ([Console]::WindowHeight); [Console]::Write($sb.ToString()+$homeCursor); $frame=0; try{ while($true){ $w=[Math]::Max(60,[Console]::WindowWidth-1); $h=[Math]::Max(22,[Console]::WindowHeight); & $draw $frame $w $h; $frame++; Start-Sleep -Milliseconds $delay } } finally { [Console]::Write($reset+$wrapOn+$show+$altOff); try{[Console]::CursorVisible=$true}catch{} } }
 
 # Real Clifford attractor: x1 = sin(a*y)+c*cos(a*x), y1 = sin(b*x)+d*cos(b*y)
-Start-Fractal 'ATTRACTOR' 85 {
+Start-Fractal 'Attractor' 85 {
     param($f,$w,$h)
     $sb=[System.Text.StringBuilder]::new(); [void]$sb.Append($homeCursor); FullBlack $sb $w $h
     $t=$f/160.0; $a=-1.4+([Math]::Sin($t*.31)*.16); $b=1.6+([Math]::Cos($t*.27)*.12); $c=1.0+([Math]::Sin($t*.19)*.18); $d=.7+([Math]::Cos($t*.23)*.14)
