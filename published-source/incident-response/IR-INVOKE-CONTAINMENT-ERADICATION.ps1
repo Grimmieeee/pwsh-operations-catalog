@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 0.1.1
+.VERSION 0.1.2
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
 .DESCRIPTION Selective containment and eradication candidate; controlled testing required.
@@ -18,13 +18,13 @@ Target user principal name. Prompts if omitted.
 .PARAMETER Tenant
 Expected tenant GUID or verified domain. Prompts if omitted.
 .PARAMETER SyncServer
-Entra Connect host for hybrid identity changes. Prompts only when those actions are selected.
+Optional Entra Connect host override. Otherwise uses the tenant-matched FIELD_KIT_SYNC_SERVERS local setting; never prompts.
 .PARAMETER SkipExchange
 Allow identity/session/OAuth work without Exchange. Mailbox actions are unavailable.
 .PARAMETER NoPause
 Suppress Enter to exit. Does not suppress any action confirmation.
 .NOTES
-Candidate 0.1.1, adapted from response v1.1. No implicit handoff to recovery.
+Candidate 0.1.2, adapted from response v1.1. No implicit handoff to recovery.
 Requires Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.
 #>
 
@@ -472,8 +472,27 @@ function Set-CloudUserPassword {
 }
 
 function Get-SyncServerForTarget {
-    param([string]$UserPrincipalName, [string]$ExplicitServer)
+    param([string]$UserPrincipalName, [string]$ExplicitServer, [string]$TenantId, [string]$TenantDomain)
     if (-not [string]::IsNullOrWhiteSpace($ExplicitServer)) { return $ExplicitServer.Trim() }
+    # Tenant-specific operator configuration stays on the workstation, outside public source.
+    $json = [Environment]::GetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS', 'Process')
+    if ([string]::IsNullOrWhiteSpace($json)) { $json = [Environment]::GetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS', 'User') }
+    if ([string]::IsNullOrWhiteSpace($json)) { return '' }
+    try {
+        $settings = $json | ConvertFrom-Json -ErrorAction Stop
+        if ($settings -isnot [pscustomobject]) { throw 'Expected an object mapping tenant GUIDs or verified domains to hostnames.' }
+        foreach ($key in @($TenantId, $TenantDomain)) {
+            if ([string]::IsNullOrWhiteSpace($key)) { continue }
+            $property = $settings.PSObject.Properties | Where-Object { $_.Name -ieq $key } | Select-Object -First 1
+            if ($property) {
+                if ($property.Value -isnot [string] -or $property.Value -notmatch '^[a-zA-Z0-9][a-zA-Z0-9.-]*$') {
+                    throw 'The selected tenant mapping must contain a server hostname.'
+                }
+                return $property.Value.Trim()
+            }
+        }
+    }
+    catch { Add-DataGap "Local sync-server setting is invalid: $(Get-ShortError $_)" }
     return ''
 }
 
@@ -481,7 +500,7 @@ function Test-EntraConnectServer {
     param([string]$Server)
     $script:SyncPreflightError = ''
     if ([string]::IsNullOrWhiteSpace($Server)) {
-        $script:SyncPreflightError = 'No Entra Connect server was supplied; no connection was attempted.'
+        $script:SyncPreflightError = 'No sync server is configured for this tenant; no connection was attempted.'
         return $false
     }
     try {
@@ -959,7 +978,7 @@ try {
     if ($user.onPremisesSyncEnabled -eq $true) {
         $script:ResolvedSyncServer = Get-SyncServerForTarget `
             -UserPrincipalName $UPN `
-            -ExplicitServer $SyncServer
+            -ExplicitServer $SyncServer -TenantId $script:ExpectedTenantId -TenantDomain $Tenant
         $adUser = Find-AdUser $user
         if (-not $adUser) { Add-DataGap 'Synced user could not be resolved in Active Directory. Identity changes are blocked.' }
     }
@@ -1164,16 +1183,13 @@ try {
                         $selections -contains 3
                     )
                 ) {
-                    if ([string]::IsNullOrWhiteSpace($script:ResolvedSyncServer)) {
-                        $script:ResolvedSyncServer=(Read-Host 'Entra Connect server hostname (required for AD disable/reset; Enter skips those actions)').Trim()
-                    }
                     if (
                         -not (Test-EntraConnectServer -Server $script:ResolvedSyncServer)
                     ) {
                         $adChangeAllowed = $false
                         Write-Warn $script:SyncPreflightError
                         Write-Warn 'Selected AD disable/reset actions are blocked.'
-                        Write-Host 'Use the same Entra Connect hostname supplied to your working sync test; a domain name alone is not the server.'
+                        Write-Host 'Set this tenant in FIELD_KIT_SYNC_SERVERS once, or supply -SyncServer, then rerun.'
                     }
                 }
 

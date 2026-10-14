@@ -205,10 +205,26 @@ function Invoke-Command {[CmdletBinding()]param($ComputerName,$ScriptBlock)
     if($global:PreflightDenied){throw 'Fixture remoting access denied'}
 }
 $global:PreflightCalls=0;$global:PreflightDenied=$false
-Assert (-not (Test-EntraConnectServer '') -and $global:PreflightCalls -eq 0 -and $script:SyncPreflightError -like '*No*supplied*') 'Blank server diagnostic wrong'
+Assert (-not (Test-EntraConnectServer '') -and $global:PreflightCalls -eq 0 -and $script:SyncPreflightError -like '*No*configured*') 'Blank server diagnostic wrong'
 Write-Host 'PASS BlankSyncServer'
 Assert (Test-EntraConnectServer 'sync.example.invalid') 'Reachable preflight rejected'
 Write-Host 'PASS SyncPreflightAvailable'
 $global:PreflightDenied=$true
 Assert (-not (Test-EntraConnectServer 'sync.example.invalid') -and $script:SyncPreflightError -like '*Fixture remoting access denied*') 'Preflight diagnostic lost'
 Write-Host 'PASS SyncPreflightReason'
+
+# Saved mappings must be tenant-specific; no fallback to another tenant or to the target UPN.
+$name='Get-SyncServerForTarget'
+$fn=$ast.Find({param($n)$n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true)
+. ([scriptblock]::Create($fn.Extent.Text))
+$previous=[Environment]::GetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS','Process')
+try {
+    [Environment]::SetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS','{"example.invalid":"sync.example.invalid","other.invalid":"other-sync.example.invalid"}','Process')
+    Assert ((Get-SyncServerForTarget -TenantDomain 'example.invalid') -eq 'sync.example.invalid') 'Verified-domain mapping not selected'
+    Assert ([string]::IsNullOrEmpty((Get-SyncServerForTarget -TenantDomain 'missing.invalid'))) 'Another tenant server was reused'
+    Assert ((Get-SyncServerForTarget -TenantDomain 'example.invalid' -ExplicitServer 'override.example.invalid') -eq 'override.example.invalid') 'Explicit override not honored'
+    Write-Host 'PASS TenantMappedSyncServer'
+    Write-Host 'PASS UnmappedTenantBlocked'
+    Write-Host 'PASS ExplicitSyncOverride'
+}
+finally { [Environment]::SetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS',$previous,'Process') }

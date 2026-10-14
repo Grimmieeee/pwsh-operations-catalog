@@ -1,4 +1,4 @@
-# IR: Contain and Eradicate — candidate 0.1.1
+# IR: Contain and Eradicate — candidate 0.1.2
 
 Status: draft for controlled testing. Makes changes, including irreversible removal of selected rules and grants. Not linked from the live catalog and not approved for production.
 
@@ -46,7 +46,7 @@ An explicitly selected tenant obtains a fresh Graph context; use a fresh shell r
 4. Rerun Step 1 and compare with Exchange to confirm the intended test rules are absent. Avoid selecting unrelated password/identity actions to test mailbox cleanup.
 5. Test session revocation, cloud disable/reset, each permission type, legacy protocols, and hybrid identity changes separately with authorized disposable test objects before broader use.
 
-`-SyncServer 'sync.example.invalid'` supplies the operator-verified sync host; otherwise hybrid identity selection prompts for it. Blank leaves those actions blocked. `-SkipExchange` disables mailbox operations and leaves validation incomplete. `-NoPause` only suppresses the ending pause, never confirmations.
+`-SyncServer 'sync.example.invalid'` supplies the operator-verified sync host; otherwise the script uses a tenant-matched entry in the local FIELD_KIT_SYNC_SERVERS setting. Missing configuration blocks those actions without a prompt. `-SkipExchange` disables mailbox operations and leaves validation incomplete. `-NoPause` only suppresses the ending pause, never confirmations.
 
 ## Automated verification
 
@@ -83,3 +83,15 @@ The operator reported successful tenant, mailbox, and SID-bound AD resolution. T
 Compared the supplied working smoke test: it also requires an explicit server hostname and invokes Start-ADSyncSyncCycle remotely on that server. The supplied dirty-state setup script does not implement AD synchronization. Neither private upload was copied into this repository.
 
 A blank server now explicitly reports that no connection was attempted. Actual remoting/module failures retain a short diagnostic. Incomplete typed confirmations retry until the full target-bound phrase is entered, or Enter/N cancels; partial confirmation never authorizes an action. No changes to mutation or synchronization commands.
+
+## No sync-server prompt — 0.1.2
+
+The operator requested removal of the recurring server question. Server resolution now uses an explicit -SyncServer argument, or a local FIELD_KIT_SYNC_SERVERS JSON environment setting keyed by the connected tenant GUID or explicitly selected verified tenant domain. There is no target-UPN-domain inference and no cross-tenant fallback. Missing mappings block AD identity changes and selected downstream cleanup; they never guess a server.
+
+Generic one-time configuration example (replace placeholders locally):
+
+```powershell
+[Environment]::SetEnvironmentVariable('FIELD_KIT_SYNC_SERVERS', '{"example.invalid":"sync.example.invalid"}', 'User')
+```
+
+User-level settings are read directly at runtime, so reopening the shell is unnecessary unless an existing process-level setting overrides them. Multiple tenants can be represented in the same JSON object. No private server names were added to source or repository documentation. Existing target-bound action confirmations remain unchanged.
