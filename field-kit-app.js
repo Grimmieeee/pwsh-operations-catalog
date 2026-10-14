@@ -16,7 +16,7 @@
     "About"
   ];
 
-  const INCIDENT_SOURCES = ["PowerShell","RMM"];
+  const INCIDENT_SOURCES = ["PowerShell"];
 
   const STANDALONE_GROUPS = [
     "Exchange",
@@ -1370,6 +1370,7 @@
     if (item.area === "Tools") return "Tools";
     if (item.area === "Toys") return "Toys";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
+    if (item.type === "Quick Command" && item.name !== "Revoke Active Sessions") return "Standalone";
     if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
     if (isRmm(item)) return "RMM";
     if (item.type === "Quick Command" || item.area === "Standalone") return "Standalone";
@@ -1386,8 +1387,9 @@
 
     if (/^Show Password Last Changed And Age$/i.test(name)) return "Show Password Age";
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
-    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "M365 User Security Review";
-    if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC Eradicate";
+    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "IR: Identity Risk Assessment";
+    if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "IR: Contain and Eradicate";
+    if (/^Revoke Active Sessions$/i.test(name)) return "IR: Revoke Sessions";
     if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
     if (/^Map Service Desk Kit$/i.test(name)) return "Folder Inventory";
     if (/^Reset PowerShell Sessions$/i.test(name)) return "M365 Session Reset";
@@ -1432,7 +1434,7 @@
     }
 
     if (area === "Incident Response"){
-      if (/risk exposure|account compromise|bec|revoke active sessions/i.test(name)) return "Primary";
+      if (/^IR:|risk exposure|account compromise|bec|revoke active sessions/i.test(name)) return "Account Response";
       if (/investigat|timeline|token|threat|trace|exfil|email search/i.test(combined)) return "Investigation";
       if (/recover|response|eradicate/i.test(name)) return "Response";
       return "General";
@@ -1451,7 +1453,7 @@
       if (/sensitive data|sanit|publish/i.test(combined)) return "Publishing";
       if (/m365|microsoft 365|graph|exchange|session/i.test(combined)) return "Microsoft 365";
       if (/folder inventory|repository|repo|tree|file map/i.test(combined)) return "Repository";
-      if (/readiness|workstation|terminal|powershell/i.test(combined)) return "Workstation";
+      if (/readiness|workstation|terminal|powershell/i.test(combined)) return "Device";
       if (/winget|windows app updates/i.test(combined)) return "WinGet";
       return "General";
     }
@@ -1780,7 +1782,7 @@
     }
 
     const title = displayName(item);
-    if (/M365 User Security Review|M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
+    if (/Identity Risk Assessment|M365 User Security Review|M365 Risk Exposure Snapshot|BEC Risk Exposure Snapshot|Identity Exposure Snapshot/i.test(title)){
       return {label:"CHECKS",items:[...RISK_CHECKS]};
     }
 
@@ -1794,27 +1796,9 @@
   function workflowFor(item, area){
     if (area !== "Incident Response") return null;
 
-    const title = displayName(item);
-    if (!/M365 User Security Review|BEC|Account Compromise|Risk Exposure|Eradicate|Recover|Revoke Active Sessions/i.test(title)) return null;
-
-    const steps = [
-      {n:"1",name:"M365 User Security Review"},
-      {n:"2",name:"Eradicate"},
-      {n:"3",name:"Recover"},
-      {n:"",name:"Revoke Active Sessions",standalone:true}
-    ];
-
-    let current = "";
-    if (/User Security Review|Risk Exposure|Discovery/i.test(title)) current = "1";
-    else if (/Eradicate|Execution/i.test(title)) current = "2";
-    else if (/Recover/i.test(title)) current = "3";
-    else if (/Revoke Active Sessions/i.test(title)) current = "standalone";
-
-    return {
-      note:"RUN IN ORDER — Complete each numbered step before moving to the next. Items marked STANDALONE may be run independently.",
-      current,
-      steps
-    };
+    const current = IR_STEPS.find(step=>step.file===item.file);
+    if (!current) return null;
+    return {current:current.n,steps:IR_STEPS,note:"Review findings before choosing the next action. Change steps require authorization."};
   }
 
   function changeNote(item){
@@ -1824,7 +1808,7 @@
     const title = displayName(item);
     if (/Add Calendar Permission/i.test(title)) return "Changes calendar folder permissions.";
     if (/Remove Calendar Permission/i.test(title)) return "Removes calendar folder permissions.";
-    if (/Revoke Active Sessions/i.test(title)) return "Revokes active Microsoft 365 sessions.";
+    if (/Revoke (?:Active )?Sessions/i.test(title)) return "Revokes active Microsoft 365 sessions.";
     if (/Disable Sign-In/i.test(title)) return "Disables user sign-in.";
     if (/Enable Sign-In|Re-Enable/i.test(title)) return "Enables user sign-in.";
     if (/Reset .*Password|Password Reset/i.test(title)) return "Resets the user password.";
@@ -1839,8 +1823,43 @@
 
   const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
 
+  const IR_STEPS = [
+    {file:"IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",name:"IR: Identity Risk Assessment",n:"1"},
+    {file:"IR-INVOKE-CONTAINMENT-ERADICATION.ps1",name:"IR: Contain and Eradicate",n:"2"},
+    {file:"IR-INVOKE-RECOVERY-VALIDATION.ps1",name:"IR: Restore and Validate",n:"3"}
+  ];
+  const IR_RENAMES = {
+    "_STEP1-ir-discovery-summary.ps1": IR_STEPS[0],
+    "_STEP2-ir-execution-v2.ps1": IR_STEPS[1]
+  };
+
+  function isDocument(item){
+    return /documentation|reference|runbook/i.test(item.type || "") || /\.(md|pdf|txt)$/i.test(item.file || "");
+  }
+  function documentLabel(item){
+    return /guide|runbook|checklist|standard|handoff|how to/i.test([item.name,item.file].join(" ")) ? "GUIDE" : "REFERENCE";
+  }
+  const RELATED_SETS = [
+    ["SIGN-FOLDER-SCRIPTS.ps1","MANAGE-CERT-SIGNATURES.ps1","set-execution.ps1"],
+    ["git-repo.ps1","git-security.ps1","git-handoff.ps1","git-tools.md"],
+    ["TEST-POWERSHELL-READINESS.ps1","INSTALL-M365-MODULES.ps1","RESET-M365-SESSION.ps1"],
+    ["GET-USER-GROUPS.ps1","GET-GROUP-MEMBERS.ps1","INVOKE-REMOVE-USER-GROUPS.ps1"],
+    ["GET-MAILBOX-FORWARDING.ps1","GET-MAILBOX-PERMISSIONS.ps1","GET-MAILBOX-SECURITY-SNAPSHOT.ps1"]
+  ];
+  function relatedMarkup(item){
+    const files = new Set(RELATED_SETS.filter(set=>set.includes(item.file)).flat());
+    const links = ITEMS.filter(other=>other.file!==item.file && files.has(other.file)).slice(0,3);
+    if (!links.length) return "";
+    return '<section class="related-block"><div class="section-label">RELATED TOOLS</div><div class="actions">'+links.map(other=>`<button type="button" class="action" data-related-file="${esc(other.file)}">${esc(other.displayName)}</button>`).join("")+'</div></section>';
+  }
+
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
+    if (source.name === "Revoke Active Sessions") source = {...source,area:"Security / IR",subarea:"Account Compromise"};
+    if (IR_RENAMES[source.file]) {
+      const legacy = source.file;
+      source = {...source,...IR_RENAMES[legacy],status:"Source pending",keywords:[source.keywords,legacy,"ir identity risk assessment incident response"].join(" "),notes:source.notes+" Interactive source pending; download is not yet available."};
+    }
     if (/SET-THEME-(SEAGLASS|SILICON-VALLEY)/.test(source.file || "")) source.changeNote = source.notes;
     if (/SET-THEME-COBALT/.test(source.file || "")) source.changeNote = "Changes this terminal and sets Process execution policy to Bypass; no profile installation.";
     if (source.area === "Tools" && source.type === "Documentation") source.subarea = "Reference";
@@ -1868,6 +1887,7 @@
 
   const byKey = new Map();
   for (const source of allSource){
+    if (isRmm(source)) continue;
     const item = buildItem(source);
     const key = norm(item.logicalArea + " " + item.displayName);
     const existing = byKey.get(key);
@@ -1932,7 +1952,7 @@
     const active = state.area === area;
     const isStandalone = area === "Standalone";
     const isIncident = area === "Incident Response";
-    const expandable = isStandalone || isIncident;
+    const expandable = isStandalone;
     const expanded = isStandalone
       ? (active && state.standaloneOpen)
       : isIncident
@@ -2025,6 +2045,20 @@
     ].join(" ");
 
     const tags = [];
+    const families = [
+      [/computer|endpoint|workstation|device|hostname|bitlocker/i,"device computer endpoint workstation"],
+      [/permission|delegat|full access|send as/i,"permission permissions access delegation"],
+      [/license|licensing|sku/i,"license licenses licensing"],
+      [/group|membership/i,"group groups membership"],
+      [/terminal|powershell|theme|readiness|execution policy/i,"terminal powershell"],
+      [/investigat|triage|risk assessment|incident|\bbec\b/i,"security investigation incident response ir bec"],
+      [/\bgit\b|github|repository/i,"git repository github"],
+      [/mailbox|inbox|forwarding|exchange/i,"mailbox email exchange"],
+      [/connect|authentication|session/i,"connect connection authentication"],
+      [/check|review|audit|assessment/i,"check review"]
+    ];
+    for (const [pattern,aliases] of families) if (pattern.test(text)) tags.push(aliases);
+    if (isDocument(item)) tags.push("documentation document guide reference");
 
     if (/\bmfa\b|\b2fa\b|multi[- ]?factor|authenticator|authentication methods?|registration status/i.test(text)){
       tags.push("mfa","2fa","multifactor");
@@ -2135,9 +2169,11 @@
     if (/onboard|offboard|pre[- ]?delete|disable(?:\s+user)?\s+accounts|delete(?:\s+user)?\s+accounts/i.test(text)) return "On / Offboarding";
     if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
     if (/mailbox|room|equipment|resource access|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
+    if (/license|licensing/i.test(text)) return "Licenses";
+    if (/permission|role|access/i.test(text) && !/conditional access/i.test(text)) return "Permissions";
+    if (/group|membership|owner/i.test(text)) return "Groups";
     if (/reporting\s*\/\s*audit/i.test(area) || /audit|review|report|stale|cleanup|tenant snapshot/i.test(text)) return "Audit";
-    if (/license|group|membership|owner|role|permission/i.test(text) && !/conditional access/i.test(text)) return "Access";
-    return "Identity";
+    return "User";
   }
 
   const SCOPE_OVERRIDES = [
@@ -2155,8 +2191,8 @@
   }
 
   function primaryBucket(item){
-    if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Incident Response") return "Incident Response";
+    if (item.type === "Quick Command" || item.logicalArea === "Standalone") return "Standalone";
     if (item.logicalArea === "Utility") return "Utility";
     if (item.logicalArea === "Tools") return "Tools";
     if (item.logicalArea === "Toys") return "Toys";
@@ -2189,10 +2225,12 @@
 
   function irRank(item){
     const name = displayName(item);
+    const step = IR_STEPS.find(step=>step.file===item.file);
+    if (step) return Number(step.n);
     if (/User Security Review|Risk Exposure Snapshot|Discovery/i.test(name)) return 1;
     if (/Eradicate|Execution/i.test(name)) return 2;
     if (/Recover/i.test(name)) return 3;
-    if (/Revoke Active Sessions/i.test(name)) return 4;
+    if (/Revoke (?:Active )?Sessions/i.test(name)) return 4;
     return 50;
   }
 
@@ -2258,6 +2296,8 @@
 
   function semanticCompare(a,b){
     return setupRank(a) - setupRank(b) ||
+      topicRank(a) - topicRank(b) ||
+      actionRank(a) - actionRank(b) ||
       a.displayName.localeCompare(b.displayName) ||
       (a._order || 0) - (b._order || 0);
   }
@@ -2289,7 +2329,7 @@
         .sort((a,b) => b.score - a.score || a.item.displayName.localeCompare(b.item.displayName))
         .map(x => x.item);
     } else if (state.area === "Full Library") {
-      const purposeOrder = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
+      const purposeOrder = ["User","Groups","Permissions","Licenses","Mailbox","Security","On / Offboarding","Audit"];
       list.sort((a,b) => {
         const bucketDiff = bucketRank(primaryBucket(a)) - bucketRank(primaryBucket(b));
         if (bucketDiff) return bucketDiff;
@@ -2304,7 +2344,7 @@
         return semanticCompare(a,b);
       });
     } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)) {
-      const order = ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"];
+      const order = ["User","Groups","Permissions","Licenses","Mailbox","Security","On / Offboarding","Audit"];
       list.sort((a,b) =>
         order.indexOf(scopeSubgroup(a)) - order.indexOf(scopeSubgroup(b)) ||
         semanticCompare(a,b)
@@ -2335,8 +2375,8 @@
     const orders = {
       "Identity":["Single User","Multi User","Tenant","General"],
       "Mailbox":["Single User","Multi User","General"],
-      "Incident Response":["Primary","Investigation","Response","General"],
-      "Utility":["Workstation","Microsoft 365","Repository","Publishing","WinGet","General"],
+      "Incident Response":["Account Response","Investigation","Response","General"],
+      "Utility":["Device","Microsoft 365","Repository","Publishing","WinGet","General"],
       "Standalone":["Terminal","Active Directory","Exchange","Graph","Network CLI","Windows CLI","WinGet"],
       "Tools":["Setup","Repository","Reference"],
       "Toys":["Animations","Themes"]
@@ -2347,6 +2387,7 @@
   }
 
   function accessTag(item){
+    if (isDocument(item)) return `<span class="result-tag result-document">${documentLabel(item)}</span>`;
     const access = String(item.access || "").toLowerCase();
 
     if (access.includes("destructive")){
@@ -2412,7 +2453,7 @@
   }
 
   function rowTags(item){
-    return scopeTag(item) + accessTag(item);
+    return scopeTag(item) + accessTag(item) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
   }
 
   function groupTitleMarkup(group){
@@ -2528,7 +2569,8 @@
       }
 
       if (sections.length > 1){
-        jumpBar.innerHTML = '<span class="jump-label">JUMP TO</span>' + sections.map(section =>
+        const labels = {"Full Library":"BROWSE BY SCOPE", "Single User":"USER TASKS", "Multi User":"MULTI-USER TASKS", "Tenant Wide":"TENANT TASKS", "Incident Response":"INCIDENT RESPONSE", "Tools":"TERMINAL & REPOSITORY TOOLS", "Toys":"TERMINAL TOYS", "Utility":"DEVICE & NETWORK TASKS", "Standalone":"COMMAND PLATFORMS"};
+        jumpBar.innerHTML = '<span class="jump-label">'+esc(labels[state.area] || "BROWSE TASKS")+'</span>' + sections.map(section =>
           `<button class="jump-link" type="button" data-jump="${esc(bucketId(section.value))}">${esc(section.label.toUpperCase())}</button>`
         ).join("");
         jumpBar.classList.remove("hidden");
@@ -2601,23 +2643,7 @@
 
   function workflowMarkup(workflow){
     if (!workflow) return "";
-    return `
-      <section class="workflow-block">
-        <div class="workflow-note">${esc(workflow.note)}</div>
-        <div class="sequence">
-          ${workflow.steps.map(step => {
-            const isCurrent = workflow.current === step.n || (step.standalone && workflow.current === "standalone");
-            return `
-              <div class="sequence-row ${isCurrent ? "sequence-current" : ""}">
-                <span class="sequence-number">${esc(step.n)}</span>
-                <span>${esc(step.name)}</span>
-                <span class="sequence-standalone">${step.standalone ? "STANDALONE" : ""}</span>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      </section>
-    `;
+    return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(workflow.note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^IR: /,""))}</span></button>`).join("")}</div></section>`;
   }
 
   function comparableAction(value){
@@ -2676,6 +2702,7 @@
   }
 
   function accessMarkup(item){
+    if (isDocument(item)) return `<div class="access-state"><span class="access-tag result-document">${documentLabel(item)}</span></div>`;
     const access = String(item.access || "").toLowerCase();
 
     if (access.includes("destructive")) {
@@ -2799,7 +2826,7 @@
 
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
-    if (!item.publishedPath && !item.code) return '<span class="source-note">Download not available yet.</span>';
+    if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
     const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
     return `<button id="downloadSource" class="action primary" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button><button id="copyDownload" class="action" type="button">COPY</button><span id="sourceStatus" role="status"></span>`;
   }
@@ -2844,6 +2871,7 @@
         <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}</h2>
         ${accessMarkup(item)}
+        ${item.status === "Source pending" ? '<div class="source-note">SOURCE PENDING — interactive script not yet available.</div>' : ""}
       </section>
 
       ${objectiveMarkup(item)}
@@ -2862,6 +2890,7 @@
       </div>
 
       <div id="sourceMount"></div>
+      ${relatedMarkup(item)}
     `;
 
     bindDrawerActions(item);
@@ -2871,6 +2900,10 @@
   }
 
   function bindDrawerActions(item){
+    drawerBody.querySelectorAll("[data-related-file]").forEach(button=>button.addEventListener("click",()=>{
+      const target=ITEMS.find(other=>other.file===button.dataset.relatedFile);
+      if (target) {openItem(target);drawerBody.scrollTop=0;}
+    }));
     for (const id of ["downloadSource","copyDownload"]){
       const button = document.getElementById(id);
       button?.addEventListener("click", async () => {
@@ -3051,7 +3084,7 @@
   function runFrameworkAudit(){
     const issues = [];
     const allowedBuckets = new Set(["Single User","Multi User","Tenant Wide","Incident Response","Utility","Standalone","Tools","Toys"]);
-    const allowedPurpose = new Set(["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]);
+    const allowedPurpose = new Set(["User","Groups","Permissions","Licenses","Mailbox","Security","On / Offboarding","Audit"]);
     const seen = new Set();
 
     for (const item of ITEMS){
@@ -3086,7 +3119,7 @@
     };
 
     for (const scope of ["Single User","Multi User","Tenant Wide"]){
-      for (const purpose of ["Access","Audit","Identity","On / Offboarding","Mailbox","Security"]){
+      for (const purpose of ["User","Groups","Permissions","Licenses","Mailbox","Security","On / Offboarding","Audit"]){
         const subset = ITEMS
           .filter(item => primaryBucket(item) === scope && scopeSubgroup(item) === purpose)
           .slice()

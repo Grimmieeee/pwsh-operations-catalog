@@ -230,3 +230,16 @@ Do not store credentials, tokens, temporary passwords, tenant IDs, private hostn
 Apply the approved compact card treatment through the shared renderer in every section. Preserve existing typography and weights; use stronger colored access flags, concise objectives, up to three visible checks, and directly available download/view/copy controls. Keep setup first and A–Z within groups, with incident response sequence preserved.
 
 Signing Certificates is the separate certificate-management companion to Digital Signature. Its public copy removes the signature block and uses Local Script Signing as the default label. It still lists installed current-user certificates; automatic personal-certificate selection and organization filtering have not been implemented. Uploaded operational logic remains unchanged. Windows runtime validation and broader portability work remain outstanding.
+
+## Task organization and incident names — October 13, 2026
+
+Approved incident names and intended canonical filenames:
+- IR: Identity Risk Assessment — IR-GET-IDENTITY-RISK-ASSESSMENT.ps1
+- IR: Contain and Eradicate — IR-INVOKE-CONTAINMENT-ERADICATION.ps1
+- IR: Restore and Validate — IR-INVOKE-RECOVERY-VALIDATION.ps1
+
+IMPORTANT: The interactive Step 1/2 executable files were not in the repository or supplied workspace, and Step 3 previously existed only as a workflow label. These three catalog entries are explicitly Source pending, with no download. Their names are approved; executable renaming and behavior verification await the interactive originals. The supplied assessment is an RMM-native version and has NOT been substituted into the interactive catalog. Recovery is a planned description pending source verification. No executable script changed in this release.
+
+RMM entries are excluded at the common item-building boundary, including supplemental RMM records; archived definitions/source are retained. The Revoke Sessions quick command remains available as an independent IR action. Numbered workflow links are navigation, not automatic execution or mandatory authorization to proceed.
+
+Browse groups distinguish User, Groups, Permissions, Licenses, Mailbox, Security, On / Offboarding, and Audit. Setup stays first; subject and action order come before A–Z tie-breaking. IR sequence remains fixed. Contextual navigation labels replace JUMP TO. Search uses controlled subject/task synonyms. Documents have GUIDE/REFERENCE flags rather than execution-risk labels. Related links are curated sets and resolve to real catalog cards.

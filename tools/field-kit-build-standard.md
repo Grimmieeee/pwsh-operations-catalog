@@ -364,3 +364,7 @@ The ZIP is a recovery/export snapshot. It is not a replacement for the repositor
 Toys is a separate primary navigation area after Tools. Its Animations and Themes groups uses the same cards, A-Z ordering, risk labels and source controls. Include terminal requirements and exit instructions; never imply screen-lock protection.
 
 Theme previews and installers must be distinguished. Preserve explicitly requested source behavior and disclose profile writes, process policy changes, and other non-cosmetic effects. New uploaded theme palettes remain as supplied; the site and existing animations use a brighter palette.
+
+## Task navigation update — October 13, 2026
+
+Preserve established typography, weights, and risk colors. Browse by subject and task; setup first, then subject/action order with alphabetical ties. Incident workflow order takes priority. Use contextual group-navigation labels and controlled search aliases. Distinguish GUIDE/REFERENCE documents from executable risk labels. Related links must resolve to catalog cards, with only curated, useful relationships. Missing incident sources must remain visibly unavailable; never substitute RMM implementations or invent executable downloads.
