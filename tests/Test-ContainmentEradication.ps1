@@ -179,3 +179,36 @@ foreach($syncCase in @('Success','Busy','Exception')){
     Assert (($syncCase -eq 'Success') -eq (-not $script:ContainmentBlocked)) "Sync $syncCase gate wrong"
     Write-Host "PASS Sync$syncCase"
 }
+
+# Prompt regression: a partial phrase never authorizes; retry or explicit cancel only.
+foreach($name in @('Confirm-Exact','Test-EntraConnectServer')){
+    $fn=$ast.Find({param($n)$n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true)
+    . ([scriptblock]::Create($fn.Extent.Text))
+}
+function Read-Host {param($Prompt)
+    if($global:Answers.Count -eq 0){throw 'Unexpected extra confirmation prompt'}
+    return $global:Answers.Dequeue()
+}
+foreach($test in @(
+    @{Name='PartialThenExact';Values=@('RESPOND','RESPOND target@example.invalid');Expected=$true},
+    @{Name='PartialThenCancel';Values=@('RESPOND','');Expected=$false},
+    @{Name='ExplicitCancel';Values=@('N');Expected=$false}
+)){
+    $global:Answers=New-Object System.Collections.Queue
+    foreach($answer in $test.Values){$global:Answers.Enqueue($answer)}
+    $accepted=Confirm-Exact 'RESPOND target@example.invalid' 6>$null
+    Assert ($accepted -eq $test.Expected -and $global:Answers.Count -eq 0) "Confirmation regression: $($test.Name)"
+    Write-Host "PASS $($test.Name)"
+}
+function Invoke-Command {[CmdletBinding()]param($ComputerName,$ScriptBlock)
+    $global:PreflightCalls++
+    if($global:PreflightDenied){throw 'Fixture remoting access denied'}
+}
+$global:PreflightCalls=0;$global:PreflightDenied=$false
+Assert (-not (Test-EntraConnectServer '') -and $global:PreflightCalls -eq 0 -and $script:SyncPreflightError -like '*No*supplied*') 'Blank server diagnostic wrong'
+Write-Host 'PASS BlankSyncServer'
+Assert (Test-EntraConnectServer 'sync.example.invalid') 'Reachable preflight rejected'
+Write-Host 'PASS SyncPreflightAvailable'
+$global:PreflightDenied=$true
+Assert (-not (Test-EntraConnectServer 'sync.example.invalid') -and $script:SyncPreflightError -like '*Fixture remoting access denied*') 'Preflight diagnostic lost'
+Write-Host 'PASS SyncPreflightReason'

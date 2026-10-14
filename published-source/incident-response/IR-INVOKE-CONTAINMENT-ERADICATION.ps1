@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 0.1.0
+.VERSION 0.1.1
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
 .DESCRIPTION Selective containment and eradication candidate; controlled testing required.
@@ -24,7 +24,7 @@ Allow identity/session/OAuth work without Exchange. Mailbox actions are unavaila
 .PARAMETER NoPause
 Suppress Enter to exit. Does not suppress any action confirmation.
 .NOTES
-Candidate 0.1.0, adapted from response v1.1. No implicit handoff to recovery.
+Candidate 0.1.1, adapted from response v1.1. No implicit handoff to recovery.
 Requires Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.
 #>
 
@@ -479,28 +479,20 @@ function Get-SyncServerForTarget {
 
 function Test-EntraConnectServer {
     param([string]$Server)
-
+    $script:SyncPreflightError = ''
     if ([string]::IsNullOrWhiteSpace($Server)) {
+        $script:SyncPreflightError = 'No Entra Connect server was supplied; no connection was attempted.'
         return $false
     }
-
     try {
-        Invoke-Command `
-            -ComputerName $Server `
-            -ScriptBlock {
-                Import-Module ADSync -ErrorAction Stop
-
-                Get-Command `
-                    Start-ADSyncSyncCycle `
-                    -ErrorAction Stop |
-                    Out-Null
-            } `
-            -ErrorAction Stop |
-            Out-Null
-
+        Invoke-Command -ComputerName $Server -ScriptBlock {
+            Import-Module ADSync -ErrorAction Stop
+            Get-Command Start-ADSyncSyncCycle -ErrorAction Stop | Out-Null
+        } -ErrorAction Stop | Out-Null
         return $true
     }
     catch {
+        $script:SyncPreflightError = "Cannot validate Entra Connect on ${Server}: $(Get-ShortError $_)"
         return $false
     }
 }
@@ -801,8 +793,13 @@ function Select-Items {
 
 function Confirm-Exact {
     param([string]$Required)
-    $value = Read-Host "Type $Required to continue"
-    return ($value.Trim() -ieq $Required)
+    while ($true) {
+        $value = Read-Host "Type $Required to continue"
+        if ([string]::IsNullOrWhiteSpace($value) -or $value.Trim() -ieq 'N') { return $false }
+        if ($value.Trim() -ieq $Required) { return $true }
+        Write-Warn "Not confirmed. Enter the full phrase including the target: $Required"
+        Write-Host 'Press Enter or type N to cancel.'
+    }
 }
 
 function Remove-SelectedRules {
@@ -1168,15 +1165,15 @@ try {
                     )
                 ) {
                     if ([string]::IsNullOrWhiteSpace($script:ResolvedSyncServer)) {
-                        $script:ResolvedSyncServer=(Read-Host 'Entra Connect server (blank blocks AD identity changes)').Trim()
+                        $script:ResolvedSyncServer=(Read-Host 'Entra Connect server hostname (required for AD disable/reset; Enter skips those actions)').Trim()
                     }
                     if (
-                        [string]::IsNullOrWhiteSpace($script:ResolvedSyncServer) -or
                         -not (Test-EntraConnectServer -Server $script:ResolvedSyncServer)
                     ) {
                         $adChangeAllowed = $false
-                        Write-Warn 'Entra sync is not available. Selected AD identity changes will be skipped.'
-                        Write-Host 'Action: Configure or validate the Entra Connect server and rerun Account Response.'
+                        Write-Warn $script:SyncPreflightError
+                        Write-Warn 'Selected AD disable/reset actions are blocked.'
+                        Write-Host 'Use the same Entra Connect hostname supplied to your working sync test; a domain name alone is not the server.'
                     }
                 }
 

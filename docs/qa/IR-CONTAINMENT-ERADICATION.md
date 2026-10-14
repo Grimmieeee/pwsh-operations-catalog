@@ -1,4 +1,4 @@
-# IR: Contain and Eradicate — candidate 0.1.0
+# IR: Contain and Eradicate — candidate 0.1.1
 
 Status: draft for controlled testing. Makes changes, including irreversible removal of selected rules and grants. Not linked from the live catalog and not approved for production.
 
@@ -75,3 +75,11 @@ No Graph/Exchange/AD mutation was executed against any real environment by these
 ## Step 1 evidence
 
 On 2026-10-14 the operator reported a completed live test-account run of Identity Risk Assessment. Graph and Exchange collection completed, the target was identified as AD-synced, and planted forwarding/delete-rule indicators produced HIGH RISK. No failures were shown in the supplied output. This confirms one success path, not every permission, host version, or failure mode. Tenant/user addresses and policy names are intentionally excluded from repository records.
+
+## Controlled-run feedback and prompt fix — 0.1.1
+
+The operator reported successful tenant, mailbox, and SID-bound AD resolution. The sync-server input was blank and the workflow confirmation omitted its target UPN. No response actions or sync were attempted. This is a cancellation/preflight-input observation, not a demonstrated sync-engine failure.
+
+Compared the supplied working smoke test: it also requires an explicit server hostname and invokes Start-ADSyncSyncCycle remotely on that server. The supplied dirty-state setup script does not implement AD synchronization. Neither private upload was copied into this repository.
+
+A blank server now explicitly reports that no connection was attempted. Actual remoting/module failures retain a short diagnostic. Incomplete typed confirmations retry until the full target-bound phrase is entered, or Enter/N cancels; partial confirmation never authorizes an action. No changes to mutation or synchronization commands.
