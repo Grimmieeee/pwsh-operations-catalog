@@ -109,3 +109,7 @@ The public catalog card remains Source pending until approval; the draft source 
 - [Delegated OAuth-grant permissions](https://learn.microsoft.com/graph/api/oauth2permissiongrant-list?view=graph-rest-1.0)
 - [Authentication-method permissions](https://learn.microsoft.com/graph/api/authentication-list-methods?view=graph-rest-1.0)
 - [Exchange connection metadata](https://learn.microsoft.com/powershell/module/exchangepowershell/get-connectioninformation?view=exchange-ps)
+
+## Operator runtime observation — 2026-10-14
+
+The operator reported a successful test-account run with Graph and Exchange output and the expected planted forwarding/delete-rule indicators flagged HIGH RISK. The target was AD-synced. No failure was shown in the supplied output. Tenant identifiers, addresses, policy names, and raw output were not copied into this repository. PowerShell version was not reported; this is one observed success path, not completion of the full runtime matrix.
