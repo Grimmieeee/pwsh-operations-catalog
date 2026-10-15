@@ -1038,6 +1038,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
+<noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
 <div id="navOverlay" class="overlay"></div>
 <div id="drawerOverlay" class="overlay drawer-overlay"></div>
 
@@ -1066,13 +1067,13 @@ button,a,input{-webkit-tap-highlight-color:transparent}
         <span class="masthead-line masthead-line-2">Use responsibly.</span>
       </div>
       <div id="crumb" class="crumb"></div>
-      <div id="entryCount" class="entry-count">0 ITEMS</div>
+      <div id="entryCount" class="entry-count" role="status" aria-live="polite" aria-atomic="true">0 ITEMS</div>
     </header>
 
     <section class="search-wrap">
       <label class="search-box">
         <span>&gt;</span>
-        <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Search by task, problem, script, or command">
+        <input id="search" type="search" aria-label="Search all catalog sections" autocomplete="off" spellcheck="false" placeholder="Search by task, problem, script, or command">
         <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
       </label>
     </section>
@@ -1086,7 +1087,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   </main>
 </div>
 
-<aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerLabel" aria-hidden="true">
+<aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerLabel" aria-hidden="true" inert>
   <div class="drawer-head">
     <div id="drawerLabel" class="drawer-label">SELECTED</div>
     <button id="closeDrawer" class="icon-button" type="button" aria-label="Close">×</button>
@@ -1095,6 +1096,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 </aside>
 
 <script src="catalog-data.js"></script>
+<script src="source-integrity.js"></script>
 <script src="field-kit-app.js"></script>
 </body>
 </html>

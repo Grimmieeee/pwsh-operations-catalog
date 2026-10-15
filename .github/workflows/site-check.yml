@@ -1,0 +1,26 @@
+name: Site release checks
+on:
+  pull_request:
+  push:
+    branches: [main, work/friday-site-hardening]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalog:
+    name: Catalog integrity and safety
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check JavaScript syntax
+        run: |
+          node --check catalog-data.js
+          node --check field-kit-app.js
+          node --check source-integrity.js
+      - name: Check catalog files, checksums, policy and public source
+        run: node tools/check-site.mjs
+      - name: Exercise download, clipboard and keyboard failure paths
+        run: node --test tests/site-security.test.mjs

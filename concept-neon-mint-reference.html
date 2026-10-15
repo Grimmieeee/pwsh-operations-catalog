@@ -732,6 +732,7 @@ body.open .drawer{transform:translateX(0)}
 </style>
 </head>
 <body>
+<noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
 <div id="navOverlay" class="overlay"></div>
 <div id="drawerOverlay" class="overlay drawer-overlay"></div>
 
@@ -760,13 +761,13 @@ body.open .drawer{transform:translateX(0)}
         <span class="masthead-line masthead-line-2">Use responsibly.</span>
       </div>
       <div id="crumb" class="crumb"></div>
-      <div id="entryCount" class="entry-count">0 ITEMS</div>
+      <div id="entryCount" class="entry-count" role="status" aria-live="polite" aria-atomic="true">0 ITEMS</div>
     </header>
 
     <section class="search-wrap">
       <label class="search-box">
         <span>&gt;</span>
-        <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Search by task, problem, script, or command">
+        <input id="search" type="search" aria-label="Search all catalog sections" autocomplete="off" spellcheck="false" placeholder="Search by task, problem, script, or command">
         <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
       </label>
     </section>
@@ -780,15 +781,16 @@ body.open .drawer{transform:translateX(0)}
   </main>
 </div>
 
-<aside id="drawer" class="drawer" aria-hidden="true">
+<aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerLabel" aria-hidden="true" inert>
   <div class="drawer-head">
-    <div class="drawer-label">SELECTED</div>
+    <div id="drawerLabel" class="drawer-label">SELECTED</div>
     <button id="closeDrawer" class="icon-button" type="button" aria-label="Close">×</button>
   </div>
   <div id="drawerBody" class="drawer-body"></div>
 </aside>
 
 <script src="catalog-data.js"></script>
+<script src="source-integrity.js"></script>
 <script src="field-kit-app.js"></script>
 </body>
 </html>
