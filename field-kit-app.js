@@ -1923,6 +1923,8 @@
   const menuBtn = document.getElementById("menuBtn");
   const navOverlay = document.getElementById("navOverlay");
   let lastFocusedElement = null;
+  const shell = document.querySelector('.shell');
+  const sourceCache = new Map();
 
   function areaLabel(area){
     if (area === "Standalone") return "Quick Commands";
@@ -2836,12 +2838,13 @@
     const file = String(item.file || "");
     const type = String(item.type || "");
     const buttons = [];
+    const reference = safeReferenceUrl(item.url);
 
-    if (/runbook/i.test(type + " " + name + " " + file) && item.url){
-      buttons.push(`<a class="action" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">RUNBOOK</a>`);
+    if (/runbook/i.test(type + " " + name + " " + file) && reference){
+      buttons.push(`<a class="action" href="${esc(reference)}" target="_blank" rel="noopener noreferrer">RUNBOOK</a>`);
     }
-    if (/readme/i.test(file) && item.url){
-      buttons.push(`<a class="action" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">README</a>`);
+    if (/readme/i.test(file) && reference){
+      buttons.push(`<a class="action" href="${esc(reference)}" target="_blank" rel="noopener noreferrer">README</a>`);
     }
     return buttons.join("");
   }
@@ -2861,9 +2864,11 @@
 
   function openItem(item){
     closeNav();
-    lastFocusedElement = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
+    if (!document.body.classList.contains("drawer-open")){
+      lastFocusedElement = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    }
     state.selected = item;
 
     drawerBody.innerHTML = `
@@ -2890,10 +2895,13 @@
       </div>
 
       <div id="sourceMount"></div>
+      <div id="copyStatus" role="status" aria-live="polite"></div>
       ${relatedMarkup(item)}
     `;
 
     bindDrawerActions(item);
+    drawer.inert = false;
+    if (shell) shell.inert = true;
     document.body.classList.add("drawer-open");
     drawer.setAttribute("aria-hidden","false");
     window.requestAnimationFrame(() => closeDrawer?.focus());
@@ -2914,7 +2922,7 @@
           if (!source) throw new Error("Source is unavailable.");
           if (id === "downloadSource") saveText(source,safeFilename(item.file));
           else { await copyText(source); flashButton(button,"COPIED"); }
-          status.textContent = "";
+          status.textContent = id === "downloadSource" ? "Download verified." : "Copied.";
         } catch(error){ status.textContent = error.message || "Could not load source."; }
         finally { button.disabled = false; }
       });
@@ -2922,16 +2930,14 @@
 
     drawerBody.querySelectorAll("[data-copy]").forEach(btn => {
       btn.addEventListener("click", async () => {
-        await copyText(btn.getAttribute("data-copy") || "");
-        flashButton(btn,"COPIED");
+        await copyWithFeedback(btn, btn.getAttribute("data-copy") || "");
       });
     });
 
     const copySource = drawerBody.querySelector("[data-copy-source]");
     if (copySource){
       copySource.addEventListener("click", async () => {
-        await copyText(item.code || "");
-        flashButton(copySource,"COPIED");
+        await copyWithFeedback(copySource, item.code || "");
       });
     }
 
@@ -2941,14 +2947,70 @@
     }
   }
 
-  async function resolveSource(item){
-    if (item.publishedPath){
-      const response = await fetch(item.publishedPath,{cache:"no-store"});
-      if (!response.ok) throw new Error("Source could not be loaded.");
-      return await response.text();
-    }
-    if (item.code) return item.code;
+  function safeReferenceUrl(value){
+    if (!String(value || "").trim()) return "";
+    try {
+      const url = new URL(value, window.location.href);
+      if (url.username || url.password) return "";
+      if (url.protocol === "https:" || (url.origin === window.location.origin && url.protocol === "http:")) return url.href;
+    } catch {}
     return "";
+  }
+
+  function approvedSourceUrl(path){
+    const value = String(path || "");
+    if (!/^(?:published-source\/|tools\/|toys\/|OPERATING-STANDARDS\.md$)/.test(value) ||
+        !/^[a-z0-9._/-]+\.(?:ps1|md)$/i.test(value) ||
+        value.split("/").some(part => !part || part === "." || part === "..")) {
+      throw new Error("This source path is not approved.");
+    }
+    const expected = window.FIELD_KIT_SOURCE_INTEGRITY?.[value];
+    if (!/^[a-f0-9]{64}$/.test(expected || "")) throw new Error("This source has no release checksum.");
+    const base = new URL("./", window.location.href);
+    const url = new URL(value, base);
+    if (url.origin !== base.origin || !url.pathname.startsWith(base.pathname)) throw new Error("Source must stay within this catalog.");
+    return {url:url.href,expected};
+  }
+
+  async function resolveSource(item){
+    if (!item.publishedPath) return item.code || "";
+    const approved = approvedSourceUrl(item.publishedPath);
+    if (sourceCache.has(approved.url)) return sourceCache.get(approved.url);
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(approved.url, {
+        cache:"no-store", credentials:"omit", redirect:"error", signal:controller.signal
+      });
+      if (!response.ok || response.redirected) throw new Error("Source could not be loaded.");
+      if (/html|xml/i.test(response.headers.get("content-type") || "")) throw new Error("The server returned a page instead of source.");
+      if (Number(response.headers.get("content-length")) > 2 * 1024 * 1024) throw new Error("Source exceeds the download limit.");
+      const chunks = [];
+      const reader = response.body.getReader();
+      let length = 0;
+      while (true){
+        const {value,done} = await reader.read();
+        if (done) break;
+        length += value.byteLength;
+        if (length > 2 * 1024 * 1024){ await reader.cancel(); throw new Error("Source exceeds the download limit."); }
+        chunks.push(value);
+      }
+      if (!length) throw new Error("The source file is empty.");
+      const bytes = new Uint8Array(length);
+      let offset = 0;
+      for (const chunk of chunks){ bytes.set(chunk,offset); offset += chunk.byteLength; }
+      if (!window.crypto?.subtle) throw new Error("Use HTTPS or localhost to verify downloads.");
+      const hash = Array.from(new Uint8Array(await window.crypto.subtle.digest("SHA-256",bytes)), byte => byte.toString(16).padStart(2,"0")).join("");
+      if (hash !== approved.expected) throw new Error("Source checksum mismatch. Reload the page and try again.");
+      // Keep an existing UTF-8 BOM and line endings so the saved file matches the reviewed bytes.
+      const source = new TextDecoder("utf-8",{fatal:true,ignoreBOM:true}).decode(bytes);
+      if (/^\s*(?:<!doctype\s+html|<html\b|<head\b|<body\b)/i.test(source)) throw new Error("The server returned a page instead of source.");
+      sourceCache.set(approved.url,source);
+      return source;
+    } catch(error){
+      if (error.name === "AbortError") throw new Error("Source request timed out. Try again.");
+      throw error;
+    } finally { window.clearTimeout(timer); }
   }
 
   async function toggleSource(item, button){
@@ -2971,6 +3033,7 @@
 
     try{
       const source = await resolveSource(item);
+      if (state.selected !== item || !mount.isConnected) return;
       if (!source){
         mount.innerHTML = `
           <section class="source-block">
@@ -2996,8 +3059,7 @@
 
         document.getElementById("copyScript")?.addEventListener("click", async e => {
           const button = e.currentTarget;
-          await copyText(source);
-          flashButton(button,"COPIED");
+          await copyWithFeedback(button,source);
         });
 
         document.getElementById("saveScript")?.addEventListener("click", () => {
@@ -3008,12 +3070,13 @@
       mount.dataset.open = "1";
       button.textContent = "HIDE CODE";
     } catch (error){
+      if (state.selected !== item || !mount.isConnected) return;
       mount.innerHTML = `
         <section class="source-block">
           <div class="source-note">${esc(error.message || "Source could not be loaded.")}</div>
         </section>
       `;
-      mount.dataset.open = "1";
+      mount.dataset.open = "0";
       button.textContent = "VIEW CODE";
     } finally {
       button.disabled = false;
@@ -3034,22 +3097,36 @@
     document.body.appendChild(a);
     a.click();
     a.remove();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url),1000);
   }
 
   async function copyText(text){
+    const value = String(text).replace(/^\uFEFF/,"");
     if (navigator.clipboard?.writeText){
-      await navigator.clipboard.writeText(text);
-      return;
+      try { await navigator.clipboard.writeText(value); return; } catch {}
     }
+    const active = document.activeElement;
     const ta = document.createElement("textarea");
-    ta.value = text;
+    ta.value = value;
     ta.style.position = "fixed";
     ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
+    // The fallback must stay inside the active dialog, outside the inert page.
+    (document.body.classList.contains("drawer-open") ? drawerBody : document.body).appendChild(ta);
+    try {
+      ta.select();
+      if (!document.execCommand("copy")) throw new Error("Copy failed. Select the code and copy it manually.");
+    } finally { ta.remove(); active?.focus(); }
+  }
+
+  async function copyWithFeedback(button,text){
+    const status = document.getElementById("copyStatus");
+    try {
+      await copyText(text);
+      flashButton(button,"COPIED");
+      if (status) status.textContent = "Copied.";
+    } catch {
+      if (status) status.textContent = "Copy failed. Select the code and copy it manually.";
+    }
   }
 
   function flashButton(button,label){
@@ -3061,6 +3138,8 @@
   function closeItem(){
     const wasOpen = document.body.classList.contains("drawer-open");
     document.body.classList.remove("drawer-open");
+    drawer.inert = true;
+    if (shell) shell.inert = false;
     drawer.setAttribute("aria-hidden","true");
     state.selected = null;
 
@@ -3104,9 +3183,11 @@
         issues.push("Quick Command has no code: " + item.displayName);
       }
 
-      if (item.publishedPath && (/^(?:https?:)?\/\//i.test(item.publishedPath) || /\.\./.test(item.publishedPath))){
-        issues.push("Unsafe publishedPath: " + item.displayName);
+      if (item.publishedPath){
+        try { approvedSourceUrl(item.publishedPath); }
+        catch { issues.push("Unapproved source: " + item.displayName); }
       }
+      if (item.url && !safeReferenceUrl(item.url)) issues.push("Unsafe reference URL: " + item.displayName);
     }
 
     const alphaCheck = (items, label) => {
@@ -3245,6 +3326,14 @@
   closeDrawer.addEventListener("click",closeItem);
   drawerOverlay.addEventListener("click",closeItem);
   document.addEventListener("keydown",event => {
+    if (event.key === "Tab" && document.body.classList.contains("drawer-open")){
+      const focusable = [...drawer.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),textarea:not([disabled]),summary,[tabindex="0"]')]
+        .filter(element => element.getClientRects().length);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (first && event.shiftKey && (document.activeElement === first || !drawer.contains(document.activeElement))){ event.preventDefault(); last.focus(); }
+      else if (last && !event.shiftKey && (document.activeElement === last || !drawer.contains(document.activeElement))){ event.preventDefault(); first.focus(); }
+    }
     if (event.key === "Escape"){
       closeItem();
       closeNav();
