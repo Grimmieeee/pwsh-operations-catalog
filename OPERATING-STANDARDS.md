@@ -577,10 +577,10 @@ Primary repository:
 pwsh-operations-catalog
 ```
 
-Working/development branch:
+Working/development branch (use a focused branch for each change):
 
 ```text
-v1-repo-ui
+work/<change-name>
 ```
 
 Public GitHub Pages branch:
@@ -611,15 +611,27 @@ Always verify which repository the terminal is currently inside before using the
 
 ### Publication flow
 
-1. Work and review on `v1-repo-ui`.
-2. Static QA.
-3. Runtime QA when available and applicable.
-4. Make the reviewed branch state available locally/remote.
-5. Fast-forward `main` only when the build is intended to become public.
-6. Verify GitHub Pages is actually sourcing `main`.
-7. Check desktop and phone layouts after deployment.
+1. Branch from current `main`; review the complete diff, including workflows and downloadable source.
+2. Run static QA and regenerate source checksums only after reviewing source changes.
+3. Perform applicable Windows/tenant runtime QA; record anything still untested.
+4. Open a pull request to `main` using the release checklist in `.github/pull_request_template.md`.
+5. Update the branch with current `main`, pass `Catalog integrity and safety`, review code-scanning findings, and resolve review conversations before merging.
+6. Merge through the protected pull request only when publication is intended. Never bypass a failed or missing check or push directly to `main`.
+7. Verify the Pages deployment for the merged commit, HTTPS, and live desktop/phone search, View Code, Copy, and Download.
 
 Do not use a force update on `main` for ordinary publication.
+
+### Security release gate
+
+Follow `docs/qa/SECURITY-RELEASE-CHECKLIST.md` for routine publication, repository protection verification, and the controlled failing-check drill. Keep `main` protected with no bypass actors, no deletion or force pushes, required pull requests, resolved conversations, and an up-to-date branch with the GitHub Actions `Catalog integrity and safety` check required.
+
+CodeQL analyzes JavaScript/TypeScript and GitHub Actions on pull requests, `main` pushes, and a weekly schedule. A completed scan is separate from a clean findings review; inspect both. CodeQL does not validate PowerShell behavior. Add CodeQL merge enforcement only after successful baseline scans and alert review; do not treat merely installing its workflow as enforcement.
+
+Use least-privilege workflow tokens, full commit SHA action pins, no persisted checkout credentials, and approval for external-contributor workflows. Review dependency-update pull requests before merging. Do not run untrusted pull request code with secrets or a privileged `pull_request_target` workflow.
+
+Keep app-based MFA or stronger authentication enabled and periodically review sessions, tokens, keys, and connected applications. Do not change authentication methods without the owner's direction. Canonical public source remains unsigned; signing internal/released artifacts requires a separately protected key and documented signer verification.
+
+Repeat the failing-check drill after changes to protections, workflow/check names, permissions, or publishing source, and before a major public release. Keep the test isolated from `main`, close it without merging, and record commit/check/merge-state evidence. Never test by attempting a merge that could publish intentionally broken content.
 
 ## 23. Site Structure and Rebuild
 
@@ -664,7 +676,7 @@ At handoff, verify:
 - Static QA and runtime QA are reported separately.
 - The exact first step for the next session is recorded.
 - `main` represents the intended public site.
-- `v1-repo-ui` contains current development work.
+- Current development branches and their pull requests are recorded.
 - Working trees are clean or documented.
 - `OPERATING-STANDARDS.md` reflects current decisions.
 - `AUDIT-LIMBO.md` reflects unresolved/replaced lineage.

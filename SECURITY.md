@@ -60,7 +60,11 @@ node --test tests/site-security.test.mjs
 
 The release checker covers effective catalog entries, local source paths and extensions, strict UTF-8 round trips, missing/stale checksums, high-confidence credential patterns, private credential file types, and uncatalogued PowerShell files in the download trees. It is a guardrail, not a comprehensive secret or vulnerability scanner. The two uncatalogued build/handoff wrappers are explicitly allowlisted.
 
-The GitHub workflow runs these checks with a read-only token, pinned checkout action, and no persisted Git credentials. Configure `Catalog integrity and safety` as a required status check after its first successful run if it should block merges.
+The GitHub workflow runs these checks with a read-only token, pinned checkout action, and no persisted Git credentials. `Catalog integrity and safety` must be required from GitHub Actions on an up-to-date pull request before merging to `main`. Keep the ruleset active with no bypass actors, resolved review conversations, and deletion/force-push protection.
+
+CodeQL scans JavaScript/TypeScript and GitHub Actions separately. It does not scan PowerShell or prove that downloads are harmless. Inspect scan completion and findings, and enable CodeQL merge enforcement after successful baseline scans. Dependabot proposes action-pin updates; review them through the same pull request process.
+
+Use `docs/qa/SECURITY-RELEASE-CHECKLIST.md` for publication and protection verification. The pull request template records evidence and pending runtime validation. A green build, successful deployment, and successful tenant test are distinct results.
 
 ## Hosting limits and launch checks
 
