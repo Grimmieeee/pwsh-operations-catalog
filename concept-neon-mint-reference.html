@@ -80,6 +80,12 @@ button{cursor:pointer}
   font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.48em;color:var(--mint);
 }
 .workspace{min-width:0;background:linear-gradient(180deg,#0f1416 0%,#111719 100%)}
+.security-note{margin:0 22px 8px;padding:10px 12px;border:1px solid var(--line-soft);border-radius:3px;color:var(--muted);font-size:14px;line-height:1.5}
+.security-note summary{cursor:pointer;color:var(--body);font-weight:600}
+.security-note summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.security-note p{max-width:85ch;margin:10px 0 0}
+.security-note a{color:var(--mint-soft);text-underline-offset:3px}
+@media(max-width:760px){.security-note{margin-left:12px;margin-right:12px}}
 .topbar{
   height:58px;display:flex;align-items:center;justify-content:space-between;
   gap:16px;padding:0 22px;border-bottom:1px solid var(--line);background:#0d1214;
@@ -771,6 +777,12 @@ body.open .drawer{transform:translateX(0)}
         <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
       </label>
     </section>
+
+    <details class="security-note">
+      <summary>Security checks &amp; responsible use</summary>
+      <p>Publishing is protected by pull requests, required integrity checks, code scanning, and secret scanning. Catalog downloads are verified against published checksums.</p>
+      <p>These controls reduce risk; they do not guarantee that every script is safe or suitable for your environment. Review the code and required permissions, and test before running. <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/blob/main/SECURITY.md">Security details</a>.</p>
+    </details>
 
     <section class="catalog">
       <div id="contextBar" class="context-bar hidden"></div>
