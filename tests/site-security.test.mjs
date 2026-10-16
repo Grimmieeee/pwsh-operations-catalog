@@ -8,6 +8,24 @@ import { loadCatalog,FixtureElement } from '../tools/site-test-harness.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
+
+test('three tested IR workflow steps expose checksum-verified canonical source',async()=>{
+  const f=loadCatalog(root,{fetchImpl:async url=>{
+    const relative=new URL(url,'https://catalog.invalid/').pathname.replace(/^\/pwsh-operations-catalog\//,'').replace(/^\//,'');
+    return new Response(fs.readFileSync(path.join(root,relative)),{headers:{'content-type':'text/plain'}});
+  }});
+  for(const file of ['IR-GET-IDENTITY-RISK-ASSESSMENT.ps1','IR-INVOKE-CONTAINMENT-ERADICATION.ps1','IR-INVOKE-RECOVERY-VALIDATION.ps1']){
+    const matches=f.api.ITEMS.filter(item=>item.file===file);
+    assert.equal(matches.length,1);
+    const item=matches[0];
+    assert.notEqual(item.status,'Source pending');
+    assert.equal(item.publishedPath,'published-source/incident-response/'+file);
+    const bytes=fs.readFileSync(path.join(root,item.publishedPath));
+    assert.deepEqual(Buffer.from(await f.api.resolveSource(item),'utf8'),bytes);
+    assert.match(bytes.toString('utf8'),/\.VERSION 0\.4\.0/);
+    assert(item.workflow);
+  }
+});
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 
 test('source paths and reference links reject executable, external, encoded and traversal targets',()=>{

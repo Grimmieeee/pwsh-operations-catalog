@@ -4,6 +4,21 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
+## Interactive IR baseline — October 16, 2026
+
+The three canonical interactive IR downloads now use the owner's tested 0.4.0
+copies. Source-pending placeholders are replaced with real paths and reviewed
+metadata; containment is destructive because selected persistence is deleted.
+See `docs/IR-WORKFLOW.md` for launch, consent, hybrid authority, secret-display
+and validation limits. Exact uploaded source bytes are retained, with no test
+transcripts or client evidence published. Assessment, response, cleanup,
+recovery and same-process handoffs were reported successful on the test jumpbox.
+Authentication-library combinations and synchronization remain deployment-specific.
+
+0.4.1 output/closing-flow candidates and test-user setup/verify/teardown auth
+hotfixes remain outside the public release pending the owner's next tests.
+Do not overwrite this tested baseline with those files without that review.
+
 ## Tools and Toys publication — 2026-10-13
 
 Tools now includes standalone Git repository check/push/pull, security-export review, execution setup, the updated handoff snapshot, and a quick-start reference. Toys contains Attractor, Rain, and Static terminal animations. Public copies are unsigned and contain no personal exports or review checkpoints.

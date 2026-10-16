@@ -68,6 +68,10 @@ main
 
 ## Public Site
 
+The interactive three-step IR tools are available with an
+[execution and safety guide](docs/IR-WORKFLOW.md). The published baseline is
+0.4.0; newer test candidates are not substituted into public downloads.
+
 ```text
 https://grimmieeee.github.io/pwsh-operations-catalog/
 ```
