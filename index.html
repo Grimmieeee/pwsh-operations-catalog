@@ -327,6 +327,7 @@ body.open .drawer{transform:translateX(0)}
   box-shadow:0 0 0 1px rgba(0,240,181,.08),0 0 28px rgba(0,240,181,.06);
 }
 .search-box>span{color:var(--mint);font-family:var(--display);font-size:24px;font-weight:400}
+.search-box>.entry-count{color:#85a69d;font:400 11px/1 var(--mono);white-space:nowrap}
 .search-box input{
   flex:1;min-width:0;border:0;outline:0;background:transparent;color:#ffffff;
   font-family:var(--ui);font-size:20px;font-weight:500;
@@ -371,7 +372,7 @@ body.open .drawer{transform:translateX(0)}
 
 .result{
   position:relative;width:100%;min-height:59px;display:grid;
-  grid-template-columns:minmax(250px,1fr) minmax(210px,.7fr) auto 16px;
+  grid-template-columns:minmax(250px,1fr) auto 16px;
   align-items:center;gap:12px;padding:10px;border:0;border-bottom:1px solid var(--line-soft);
   background:transparent;color:inherit;text-align:left;
 }
@@ -383,7 +384,9 @@ body.open .drawer{transform:translateX(0)}
   width:14px;height:14px;border:1px solid currentColor;border-radius:50%;
   color:#96baac;font:400 9px/1 var(--ui);letter-spacing:0;
 }
-.verification-legend{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin:0 0 14px;color:#8fa69e;font:400 10px/1.4 var(--mono)}
+.verification-legend{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin:0;color:#8fa69e;font:400 10px/1.4 var(--mono);white-space:nowrap;flex-shrink:0}
+.platform-label{display:inline-flex;align-items:center;margin-top:14px;padding:5px 8px;color:#9cc0b6;border:1px solid #3b554e;background:#162023;font:800 10px/1 var(--mono);letter-spacing:.07em}
+.about-security{margin:20px 0 0}
 .result-version{color:#8ba69c;font:400 10px/1 var(--mono);white-space:nowrap}
 .result-verified .release-version{color:#8ba69c;font-weight:400;letter-spacing:0}
 .result:hover .result-name{color:#ffffff}
@@ -410,13 +413,13 @@ body.open .drawer{transform:translateX(0)}
 .result:hover .result-meta,
 .result:hover .result-scope,
 .result:hover .result-read{
-  color:#f0ffff;border-color:#649285;background:#192a26;
+  color:#f0ffff;border-color:#517b6d;background:#192a26;
 }
 .result:hover .result-change{
-  color:var(--yellow);border-color:#b39b4e;background:#232015;
+  color:var(--yellow);border-color:#897747;background:#232015;
 }
 .result:hover .result-danger{
-  color:#ffffff;border-color:#ff8391;background:#b52e42;
+  color:#ffd4da;border-color:#a75b68;background:#5c2733;
 }
 .result-arrow{color:#4d7a6e;font-size:16px}
 .result:hover .result-arrow{color:var(--mint)}
@@ -576,7 +579,7 @@ body.open .drawer{transform:translateX(0)}
 @media(max-width:900px){
   .shell{grid-template-columns:215px minmax(0,1fr)}
   .drawer{width:70vw;min-width:0}
-  .result{grid-template-columns:minmax(0,1fr) auto}
+  .result{grid-template-columns:minmax(0,1fr) auto 16px}
   .result-meta{display:none}
 }
 @media(max-width:760px){
@@ -1039,10 +1042,10 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .more-details p{margin:10px 0}
 #sourceStatus{font-size:13px;color:var(--yellow)}
 /* Stronger flags use color and borders, retaining existing type and weights. */
-.result-read,.access-tag.access-read{color:#9cffe0;border-color:#4fca9e;background:#12372d}
-.result-change,.access-tag.access-change{color:#ffe68b;border-color:#d7b64f;background:#3d3317}
-.result-danger,.access-tag.access-danger{color:#fff0f2;border-color:#ff697b;background:#9f2638}
-.access-tag,.result-tag{box-shadow:inset 3px 0 0 currentColor}
+.result-read,.access-tag.access-read{color:#9cffe0;border-color:#3f6e5d;background:#12372d}
+.result-change,.access-tag.access-change{color:#ffe68b;border-color:#786a3c;background:#3d3317}
+.result-danger,.access-tag.access-danger{color:#ffb5bf;border-color:#88515b;background:#51232e}
+.access-tag,.result-tag{box-shadow:none}
 .actions:empty{display:none}
 .more-details{margin-top:14px}
 .run-info-block{margin-top:18px}
@@ -1084,22 +1087,17 @@ button,a,input{-webkit-tap-highlight-color:transparent}
         <span class="masthead-line masthead-line-2">Use responsibly.</span>
       </div>
       <div id="crumb" class="crumb"></div>
-      <div id="entryCount" class="entry-count" role="status" aria-live="polite" aria-atomic="true">0 ITEMS</div>
+      <div id="verificationKey" class="verification-legend hidden"><span class="verification-seal" aria-hidden="true">V</span><span>Operator verified</span></div>
     </header>
 
     <section class="search-wrap">
       <label class="search-box">
         <span>&gt;</span>
         <input id="search" type="search" aria-label="Search all catalog sections" autocomplete="off" spellcheck="false" placeholder="Search by task, problem, script, or command">
+        <span id="entryCount" class="entry-count" role="status" aria-live="polite" aria-atomic="true">(0)</span>
         <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
       </label>
     </section>
-
-    <details class="security-note">
-      <summary>Security checks &amp; responsible use</summary>
-      <p>Publishing is protected by pull requests, required integrity checks, code scanning, and secret scanning. Catalog downloads are verified against published checksums.</p>
-      <p>These controls reduce risk; they do not guarantee that every script is safe or suitable for your environment. Review the code and required permissions, and test before running. <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/blob/main/SECURITY.md">Security details</a>.</p>
-    </details>
 
     <section class="catalog">
       <div id="contextBar" class="context-bar hidden"></div>
@@ -1120,6 +1118,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=verified-card-seal-1"></script>
+<script src="field-kit-app.js?v=minimal-catalog-1"></script>
 </body>
 </html>
