@@ -1952,7 +1952,7 @@
     const parent = `
       <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
         <span class="area-label">${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
-        <span class="area-count">${countArea(area)}</span>
+        ${area === "Full Library" ? "" : `<span class="area-count">${countArea(area)}</span>`}
       </button>
     `;
 
@@ -2500,6 +2500,7 @@
     if (state.area === "About"){
       crumb.textContent = "ABOUT";
       entryCount.textContent = "";
+      entryCount.classList.add("hidden");
       clearSearch.classList.toggle("hidden", !state.query);
       contextBar.textContent = "";
       contextBar.classList.add("hidden");
@@ -2523,6 +2524,12 @@
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
           <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
 
+          <section class="about-library">
+            <div class="section-label">LIBRARY</div>
+            <div class="about-library-total">${ITEMS.length} catalog entries</div>
+            <div class="about-library-detail">Scripts, quick commands, and guides.</div>
+          </section>
+
           <div class="about-key">
             <span class="access-read">READ ONLY</span><span>reviews information</span>
             <span class="access-change">MAKES CHANGES</span><span>modifies configuration or access</span>
@@ -2543,7 +2550,9 @@
     const list = filteredItems();
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
-    entryCount.textContent = `(${list.length})`;
+    const showCount = queryActive || state.area !== "Full Library";
+    entryCount.textContent = showCount ? `(${list.length})` : "";
+    entryCount.classList.toggle("hidden", !showCount);
     entryCount.setAttribute("aria-label", `${list.length} matching catalog entries`);
     verificationKey.classList.toggle("hidden", !list.some(isVerifiedRelease));
     clearSearch.classList.toggle("hidden", !state.query);
