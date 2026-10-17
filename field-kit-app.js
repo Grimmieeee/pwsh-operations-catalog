@@ -2671,14 +2671,15 @@
   function factsMarkup(item){
     const facts = displayFacts(item);
     if (!facts.length) return "";
-    const label = item.facts.label || "CHECKS";
+    const guards = item.facts.label === "GUARDS";
+    const label = guards ? "CHECKS" : (item.facts.label || "CHECKS");
     const doesClass = label === "DOES" ? " does-list" : "";
     return `
       <section class="check-block">
         <div class="section-label">${esc(label)}</div>
         <div class="check-list${doesClass}">
           ${facts.slice(0,3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
-          ${facts.length > 3 ? `<details class="more-details"><summary>More checks</summary>${facts.slice(3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}</details>` : ""}
+          ${facts.length > 3 ? `<details class="more-details"><summary>${guards ? "More guards" : "More checks"}</summary>${facts.slice(3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}</details>` : ""}
         </div>
       </section>
     `;
