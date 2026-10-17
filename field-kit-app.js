@@ -2498,6 +2498,7 @@
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
+          ${isVerifiedRelease(item) ? '<span class="verification-seal" aria-hidden="true">V</span>' : ""}
         </span>
         <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
         <span class="result-flags">${rowTags(item)}</span>
@@ -2607,7 +2608,7 @@
 
     empty.classList.add("hidden");
     const verificationLegend = list.some(isVerifiedRelease)
-      ? '<div class="verification-legend">Mint edge = operator verified</div>' : "";
+      ? '<div class="verification-legend"><span class="verification-seal" aria-hidden="true">V</span><span>Operator verified</span></div>' : "";
 
     if (queryActive){
       results.innerHTML = verificationLegend + '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";

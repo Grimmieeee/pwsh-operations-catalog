@@ -378,12 +378,12 @@ body.open .drawer{transform:translateX(0)}
 .result:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
 .result-identity{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e2f3ee}
-.result-operator-verified::before{
-  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
-  width:2px;height:18px;border-radius:1px;background:#6aa58f;
+.verification-seal{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:14px;height:14px;border:1px solid currentColor;border-radius:50%;
+  color:#96baac;font:400 9px/1 var(--ui);letter-spacing:0;
 }
-.verification-legend{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#8fa69e;font:400 10px/1.4 var(--mono)}
-.verification-legend::before{content:"";width:2px;height:12px;background:#6aa58f;flex:none}
+.verification-legend{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin:0 0 14px;color:#8fa69e;font:400 10px/1.4 var(--mono)}
 .result-version{color:#8ba69c;font:400 10px/1 var(--mono);white-space:nowrap}
 .result-verified .release-version{color:#8ba69c;font-weight:400;letter-spacing:0}
 .result:hover .result-name{color:#ffffff}
@@ -416,7 +416,7 @@ body.open .drawer{transform:translateX(0)}
   color:var(--yellow);border-color:#b39b4e;background:#232015;
 }
 .result:hover .result-danger{
-  color:var(--red);border-color:#b36068;background:#2a171a;
+  color:#ffffff;border-color:#ff8391;background:#b52e42;
 }
 .result-arrow{color:#4d7a6e;font-size:16px}
 .result:hover .result-arrow{color:var(--mint)}
@@ -1041,7 +1041,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 /* Stronger flags use color and borders, retaining existing type and weights. */
 .result-read,.access-tag.access-read{color:#9cffe0;border-color:#4fca9e;background:#12372d}
 .result-change,.access-tag.access-change{color:#ffe68b;border-color:#d7b64f;background:#3d3317}
-.result-danger,.access-tag.access-danger{color:#ffd0d6;border-color:#ed8491;background:#4b202a}
+.result-danger,.access-tag.access-danger{color:#fff0f2;border-color:#ff697b;background:#9f2638}
 .access-tag,.result-tag{box-shadow:inset 3px 0 0 currentColor}
 .actions:empty{display:none}
 .more-details{margin-top:14px}
@@ -1120,6 +1120,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=verified-card-edge-1"></script>
+<script src="field-kit-app.js?v=verified-card-seal-1"></script>
 </body>
 </html>
