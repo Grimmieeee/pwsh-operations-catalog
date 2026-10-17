@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 1a8b1547-1cf2-7230-1dad-1b1b324e5b34
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #Requires -Version 5.1
 
 <#
@@ -26,24 +32,101 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-function OK($m)   { Write-Host "[OK]   $m" -ForegroundColor Green }
-function INFO($m) { Write-Host "[INFO] $m" }
-function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
-function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function INFO {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function WARN {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function RISK {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[RISK] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
+function FAIL {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
 
 function Section {
     param([string]$Title)
-
-    Write-Host ""
-    Write-Host (" {0} " -f $Title) `
-        -ForegroundColor White `
-        -BackgroundColor DarkGray
+    Write-FKHeading -Title $Title
 }
 
 function Pause-End {
-    Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Close-FKConsole
 }
 
 function Confirm-Yes {
@@ -355,8 +438,8 @@ function Test-IP {
 }
 
 try {
-    Write-Host "IR AUDIT - IP TRACE / UNIFIED AUDIT LOG"
-    Write-Host "READ-ONLY"
+    Write-FKStart -Title 'IR AUDIT - IP TRACE / UNIFIED AUDIT LOG' -Objective 'Finds tenant activity tied to an IP address.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     if (-not $TargetIP) {

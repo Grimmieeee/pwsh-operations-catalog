@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 0691a10c-56cd-d565-8586-dbb0f8377b20
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 <#
 ENFORCE LITIGATION HOLD
 
@@ -32,42 +38,95 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
-function Write-Info { param($m) Write-Host "[INFO] $m" }
-function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
 
-function Write-Section {
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
     param([string]$Title)
-
-    try {
-        Write-Host (" {0} " -f $Title) `
-            -ForegroundColor White `
-            -BackgroundColor DarkGray
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
     }
-    catch {
-        Write-Host $Title
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
     }
 }
 
+function Write-OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function Write-Info {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function Write-Warn {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function Write-Fail {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
+
+function Write-Section {
+    param([string]$Title)
+    Write-FKHeading -Title $Title
+}
+
 function Pause-End {
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Get-ShortError {
@@ -461,8 +520,8 @@ function Offer-ExportCsv {
 }
 
 try {
-    Write-Host "ENFORCE LITIGATION HOLD"
-    Write-Host "CHANGES MAY BE MADE."
+    Write-FKStart -Title 'ENFORCE LITIGATION HOLD' -Objective 'Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.' -Mode 'MAKES CHANGES'
+    Write-Host ''
     Write-Host "Target state: Litigation Hold enabled with Unlimited duration."
     Write-Host ""
 
@@ -709,7 +768,7 @@ try {
         )
 
     Write-Host ""
-    Write-Host "STANDARD NOTE"
+    Write-FKHeading -Title 'STATUS'
     Write-Host "Changed mailboxes were re-read and validated for LitigationHoldEnabled=True and LitigationHoldDuration=Unlimited."
 }
 catch {

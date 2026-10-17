@@ -28,7 +28,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
       "version": null,
-      "sha256": "efdbdc7eab4effa096645be533d046ff2d8c3170fcdcc69186df405bd5dd0367",
+      "sha256": "ff7ee265b60952f8dd78692009ac9b056c1e086ace0e76686366bc9961a9452c",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -44,7 +44,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
       "version": null,
-      "sha256": "bf750de1d4d0f7b2baf30d3f73254106ca09b210d5a4d4aea728b2ad16298de8",
+      "sha256": "fa27299bbeee719bb3c23d8f4e3cb2d21be544a46267a5c4fa7e1f6386847e2e",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -60,7 +60,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
       "version": null,
-      "sha256": "90a72cce1ace9af8d44ae02eeebc0cd47531b7c0b7b24e6e0a87e4c0368ee043",
+      "sha256": "c35314e3da1734f0e9b45077ddab5ee444459d9bbab4dbf63e82c60f53696111",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -76,7 +76,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
       "version": null,
-      "sha256": "668267cbadfc88d212a8708c77f0a5454343a0e4222e2e1cfaff2a44e84afb54",
+      "sha256": "1a3fa379a6cff8ba497373da797172529deb7000dabdc29b6f8599182f428392",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -92,7 +92,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
       "version": null,
-      "sha256": "f29671426b25b460169d4f8c7d0fe33d9d4ae5f525f61f24a08dcf201f248a22",
+      "sha256": "2223a2c7df1daa0801da1980d0a1d85aaa7d73bf1bb0642ae06dff879b3448aa",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -108,7 +108,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
       "version": null,
-      "sha256": "5d0d109515d67948673e6f3058c068899a8f74f06cba74908eeb961dd0612cd4",
+      "sha256": "a2953ee5695c6b8d1ddecb19fa510f9c2313c0b1c06ad32680479aa4d80b3368",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -124,7 +124,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1",
       "version": null,
-      "sha256": "0fbb42bb1db268b3f6e4b74a21af7008528b5acc2e684cccdf3696122fcb6bd2",
+      "sha256": "8b12f2d17de34a041ac5a82ca722edda19b52bfc3aa027563619d2ec6d005553",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -140,7 +140,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1",
       "version": null,
-      "sha256": "c6b31ea701d1e5a7886a73a125b67e726e66eb01d99e1c8ee8de9d4e0fae274e",
+      "sha256": "72745287ad23ebb2f658dd7a67f3ddf5960fc8eadac8602b4c1488cadf93885c",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -156,7 +156,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1",
       "version": null,
-      "sha256": "52c6ce8dc1af2323b9dcc6c831cdd211b555ae44280417181599290212fcf7bd",
+      "sha256": "5a5bbd6949a819bdb5b79c1dabaa7f19d448768cd1bf34edb98b875c4fdb63a3",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -172,7 +172,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1",
       "version": null,
-      "sha256": "c0d3bb2f0bf4857f45d6f6d52afb80b8171f4fc700d2e2999ec716b21df2cccf",
+      "sha256": "89b59ce71290124f4a3200a6559f1ccdde31735316b41e0d38d1493762de262e",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -188,7 +188,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
       "version": null,
-      "sha256": "c35632545c2818350704c9b9652bd9fd6bd2945dd5b347427800bcf04d67a038",
+      "sha256": "1a3e61251c918a05c5c10260a7f42f100ce7225fc49bb46a9eace77fd18d1d59",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -204,7 +204,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1",
       "version": null,
-      "sha256": "b5a8a4be4b79e1ef77fc8f75eaef88b70d5f50ffd1dd47bccf1e21f1b35c6ecd",
+      "sha256": "d0bb9fd858f4fc4b9c36c7808ef60a7dcb6382065ba5327c81bff53ef4684b3c",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -220,7 +220,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
       "version": null,
-      "sha256": "7ab0323cef10c5cc09399432ccdf2417d3401f2f422e6200dc35ebfc4399e0c5",
+      "sha256": "d2da87ae76471f007ab2df88f161fc6c4cb446cb2db334d8c02ab3a7a24bd37a",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -236,7 +236,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
       "version": null,
-      "sha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf",
+      "sha256": "facab391bea0ffd9afe915e2a605521868b77ebdb43f341f5a1323e9bb6d394b",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -252,7 +252,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
       "version": null,
-      "sha256": "5e089c864ee6a869b050ccdfd7b6666b683eae845d188f8d1e3ba3c27d4d8f12",
+      "sha256": "5b5fb1300138a40f05b557e5c3aa27ff8e8e07c569a595f8a7ebb228a8c2871c",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -268,7 +268,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
       "version": null,
-      "sha256": "aa949908eb989f4aedf0569c3c4c7c8111ae2d1cca1895754de167669ee1a25d",
+      "sha256": "3043001d388a2334bd7224c3df505cfa4c282e7e0638db6e089e9e83103a5590",
       "batch": "Change and destructive workflows",
       "reviewState": "Review required",
       "operatorTested": false
@@ -524,7 +524,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/GET-ACCOUNT-STATUS.ps1",
       "version": null,
-      "sha256": "4a6e6aed3b612556706c107b667911ef79a4c6a47074d7054ab907cc3ca3dbfc",
+      "sha256": "a9655a37704e6c946504ea396623081cdcfdd54fab350e6625859d1ee0c60898",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -540,7 +540,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
       "version": null,
-      "sha256": "e4046dacdf671ce73b213bc570b74cc238b9ea60d1bf5ba5a3c5f50dc65f07a9",
+      "sha256": "fd5c0e02dab6e41deb82cdb8a5c13d480f0ada6db3120980bf69e1e367662f3c",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -556,7 +556,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/GET-GROUP-MEMBERS.ps1",
       "version": null,
-      "sha256": "ba29a8c30f170c87b08a453fdfe73f6108bddfc69033f17a6270875ecc684dbd",
+      "sha256": "ce178d6facf38ea9dcde44b58562915e0c1abd872c5dacdfa54c3c462dd0a66b",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -572,7 +572,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1",
       "version": null,
-      "sha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
+      "sha256": "d865f4ba802503d0c94a116b844e542c35c42bab36f72eca9f8a4c03eb3b90fd",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -588,7 +588,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1",
       "version": null,
-      "sha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
+      "sha256": "2315d6e65f2ca03014e8999725631041c0b94b3ba435bca8272ebc2cac80504f",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -604,7 +604,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "version": null,
-      "sha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
+      "sha256": "6531273eac1bf414e71cd5930b3d5bf631ee4621e2aca491a41801fc2878e118",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -620,7 +620,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1",
       "version": null,
-      "sha256": "19b092079ccc61f4de9cbc6510b3a57f290f520abb08ab2b5db4089457fcc570",
+      "sha256": "a6fabf385748fa2ff4e6375434287ca279732f02a09374bb29b707a9ecfdbb29",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -636,7 +636,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/mailbox/GET-ROOM-RESOURCE-ACCESS.ps1",
       "version": null,
-      "sha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",
+      "sha256": "9f7c8ecea5c173ccb28c1242423ec2e1a6c2dec41f2f5bfa387982088e093f21",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -652,7 +652,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
       "version": null,
-      "sha256": "2c962dbc7d1ab56ef3a9968636e679c99ca482680ea7af4bdf859fb8a3c063ac",
+      "sha256": "3ffc40bfb2a109f9f3f003e6766eb3fbb9fc0b650f45e472a83fad106c69e49b",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -668,7 +668,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/GET-USER-GROUPS.ps1",
       "version": null,
-      "sha256": "a423d1f10e9bcfee903c646d95cf5dbf2142eda04d014e0521a29114c1b55469",
+      "sha256": "72c1b2ef460a23aeb333ce00ef9d654e1fdb81c29b3ff57bb8e84f28e58f3174",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -684,7 +684,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/GET-USER-PREDELETE-CHECK.ps1",
       "version": null,
-      "sha256": "922a2d16bcf7c753193e14296f9bf67715cf3e14ec8dd1fdeec8d9a31e10e9d2",
+      "sha256": "c34ae6f5782a7f80cf2c2db92d841c091a6461dbbbd8f9ae0543cce1868f64d9",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -700,7 +700,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1",
       "version": null,
-      "sha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
+      "sha256": "21abc981ffdf93e6169eac6610ca8e67b20d6a345ad1274820f9ac8825a809c3",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -716,7 +716,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
       "version": null,
-      "sha256": "c795ac5d107db35eed303dff231cedbee577824c6fe8b93285ad5895a97cd44b",
+      "sha256": "a2f7bb2edfdebbd2c88dba7e90aed7d8421f72b11ca3e98cd8097d9bfc51536f",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -732,7 +732,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
       "version": null,
-      "sha256": "5f80f8a9a3af0a250963e48deeebb6ce278b392140a7fc82a01da396c3e3bf73",
+      "sha256": "73c3e5be27ae4457c25bcfb4827891582050f2895aeea396b5200df9aa2519cf",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -748,7 +748,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
       "version": null,
-      "sha256": "30ea759b710a12b3650b48191b2fe3dc123ebbed4c7798d4c6a934d0702689d3",
+      "sha256": "3f2950845ecb06736185157fd0f1c8d044458ece1659611c2d83a31df373ec1d",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -764,7 +764,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
       "version": null,
-      "sha256": "dbb53c592a523fdf2a2c94dd166296afe6a9f482ec4372c2d3f551af56ea797e",
+      "sha256": "aa2b4a5480e905ea9eb8b233db598c22a85b5491c1aac7197dda0a4ea1c358d8",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -780,7 +780,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
       "version": null,
-      "sha256": "a9126fcc537a71b9471d49ecfe5f714ede93bc5e1306b3eee9fe9ea7f014859a",
+      "sha256": "345bedc8001b9f1eb8ab2fb56afec9834c66003b3a8c713f22d50b1dcc0e4b94",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -796,7 +796,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
       "version": null,
-      "sha256": "fb6e000a57b548f59fbc4f9317df3dac0ab61756c97223784d7b2e54a6d70c40",
+      "sha256": "098fcb19533f79f6310995e59ed9437d44e035a75718f71a2e68cc6463b348b2",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -812,7 +812,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
       "version": null,
-      "sha256": "179e01c20af4ad72faabd69c2567ccff9fa1d40a5ca3acf497544ba6d4849372",
+      "sha256": "34ca473260341b7b759e5263a82dbde5ec5ec43c2a2d32fd0c9320ef84d454a8",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -828,7 +828,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
       "version": null,
-      "sha256": "2627de9b2b13220ef6de444ac4f98f9a5b0481f55a68dd4fbaf61ecc58be28e3",
+      "sha256": "c1dd51c145db21926ab2d38b4c7e3ac30d4bc31b830b2db4d5acdcbc31b36ec9",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -844,7 +844,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1",
       "version": null,
-      "sha256": "9f0560d35c0941ff0723d400129f20b345673e0d9b6e4c751de48529ca6f232c",
+      "sha256": "ab034e707d699cbd6a4b65a4563a4f0cc2276385a22c1087f9ce372f47c46286",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -860,7 +860,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
       "version": null,
-      "sha256": "2c28a71fe9195f3e032c0386ed10c3ee5d7fcdd2385839b8b74ee95dc8ba20d0",
+      "sha256": "c948fa66747f4a7c7293591619f63655dbfaacb0182630e7d04c5abd1515dafc",
       "batch": "Identity, mailbox and IR read-only tools",
       "reviewState": "Review required",
       "operatorTested": false
@@ -892,7 +892,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
       "version": null,
-      "sha256": "fce9d9db96b42fe9b352b867afdd1a370c400f4d6f67c1a58dd7d50aefde9ec6",
+      "sha256": "5596773a6f468a7558ba9897da6c2b8f335bda75311efccd5c809154dccbbb88",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -908,7 +908,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "tools/GET-TERMINAL-READINESS-CHECK.ps1",
       "version": null,
-      "sha256": "e9d4d5f1974f2af40c01c23e4e4cf925f232baba8bd7f9b063f0c78110958c01",
+      "sha256": "db8620787f5e1a77f18e09cba0a5fa2409d722ed0e6c43eb097bc574b15c3341",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -972,7 +972,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
       "version": null,
-      "sha256": "a143a317bb85b76c39a5768b7b5cad4096d4acce4d5509465c01be820b37ff24",
+      "sha256": "c2a6286b37d96b8d2defda22e7ccf26124dfb95238b61e0ba00efad7706e6a3a",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -988,7 +988,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "tools/INVOKE-FILE-INVENTORY.ps1",
       "version": null,
-      "sha256": "c50633fd4f92e32f2401bf25c056d88dab2afee2296de1abf3976a32ef2e73d4",
+      "sha256": "768b7aea2467327254ee8566a53236c64338c3197bf50426a4f1c05a8ef5d1f5",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1020,7 +1020,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "tools/INVOKE-SESSION-RESET.ps1",
       "version": null,
-      "sha256": "0f183c52bd1ca24dcccba318913eac70eb89848cbe32ef42fe631c6270744446",
+      "sha256": "ebb7d3d74db4ab4d9344c12eb00d37484ddb42640162e28b036bf6ec102b9daa",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1036,7 +1036,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "tools/MANAGE-CERT-SIGNATURES.ps1",
       "version": null,
-      "sha256": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
+      "sha256": "3c0fdf2f8db26f7ab8774ba90d29c526b3a6a2560554b8d252140da27d606b33",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1068,7 +1068,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
       "version": null,
-      "sha256": "203ba913f1d8d1d72544ecf950c0b346e4e92244a9e6b75730095339c858a16a",
+      "sha256": "835c488e7281effd9600b33d0c5da0f7b42b709d3b79fecf14373559fc70bfb9",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1164,7 +1164,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "tools/SIGN-FOLDER-SCRIPTS.ps1",
       "version": null,
-      "sha256": "b8a7e1411654e6f9aa358cf6def278b5df4d1f4ccef8c4d18549609a32f50b27",
+      "sha256": "7455fbdfe1d078a07fd6c344f24ab47a53e4884a304823aeedfd00252d13eb5d",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1196,7 +1196,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
       "version": null,
-      "sha256": "b38f3eb165ac360eef390990dd6d2b4ee89f41916d3da54822f625b7d2c77612",
+      "sha256": "a1007bd4dfc1b7ff70e5c7f6d592f64092927a69a0f4e850c798fe4e4b748ba1",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5148,7 +5148,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1",
       "version": null,
-      "sha256": "b660a543b1044c58c74be40609c38caf40eb1cac040fcf87a77dea5e7d41fe78",
+      "sha256": "901d17ac1414e00d5510896d385e145e638d7845cc2907bbf0f0444f68e0a065",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5164,7 +5164,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1",
       "version": null,
-      "sha256": "6948e5a25a54c218a5114a366a59f839454b64050b3c5726093506fa9e28f0a0",
+      "sha256": "b64278b81cc2a15363fd0653886cecf19c9a3a12b251dcd6cb9ad9d2b39e4f59",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5180,7 +5180,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "version": null,
-      "sha256": "e4bf3fe87b7acc39ee21eb89a09d158568330a799755c8b553fe325d4dd34a45",
+      "sha256": "6ec6fe0dc06639045ee0325b2ee6c4864877ae0b7ea93286cbc3aa6dd3b70b64",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5196,7 +5196,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1",
       "version": null,
-      "sha256": "4ac8a6ee2c3f5091ee24b47f3f91f9b12888ddeda0ed86308a9ecc7a7f1919bf",
+      "sha256": "ea1d9dcd304e551af8b814bb9aea5722450f5a10b663a81af89ddf598f254899",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5212,7 +5212,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1",
       "version": null,
-      "sha256": "e90b4af2ff9b35a32498ffa93836bcc8f502aa5a8e89ba3f9e3dc520a7f1be62",
+      "sha256": "8ba88311c928ac8633d9aee45d6e2bfd225488fe6e3d0b11af881aad50f6b392",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5228,7 +5228,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-GUEST-USER-AUDIT.ps1",
       "version": null,
-      "sha256": "fe654017667917540bac5d099875379eb8760f24c448f9345fff626bf1894410",
+      "sha256": "2b1d8bb9d9c2f356edc3f7ff46081a9fbf8e95728cd52409312122f587a9a3d6",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5244,7 +5244,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1",
       "version": null,
-      "sha256": "91aef944427d3e85f94874014a2f6dd726781ba9eb9931e2b9565d11a6f0b00c",
+      "sha256": "cee562a42fbcfceb050e37c9d75f999ede9f0f95267f35c1bca8531c3af4e7bc",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5260,7 +5260,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1",
       "version": null,
-      "sha256": "9b26065a085a5376d6fdd0312783f037505ac496d39310b062eb62add6401f65",
+      "sha256": "cf25ac8329e972e6d64efc545dabf6fc9c5b747c4f0b70b11c2f6a709641873a",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5276,7 +5276,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1",
       "version": null,
-      "sha256": "649b23416b9ed9c9e78c60fd2867c2e47c48b12e5ae73e80013aafec357b3efa",
+      "sha256": "ad52ab2e4ac342551617c4d3fcaf9986155f3fb57c4df0a448400aec618909cc",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5292,7 +5292,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "version": null,
-      "sha256": "3a45fdde22e453f23a1bd4a269daee6d5ed3334d19250ebe84701ec6691b289f",
+      "sha256": "61324f458f6aa26e48ae30d95c9675ca453f73197279945918e17273dc04384f",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5308,7 +5308,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
       "version": null,
-      "sha256": "9df9711e8cdf8542a753a451b748e22d04a3448a3e88705f366fabacc3aae176",
+      "sha256": "7a1b98bf519f19d91310eff560ac8c4327aca228a1a4679dedcb6bc281a284fd",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5324,7 +5324,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1",
       "version": null,
-      "sha256": "b87f694333ec632f76bc5edc8a6c8210fffccadac38c4bf955e5dac95cd48e91",
+      "sha256": "bf373c7d2a86878ba75937792dabb04e286b368a8dd76ad55a9267198b2ff5e7",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5356,7 +5356,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "version": null,
-      "sha256": "85a1c9164ba0d0c0661b6c3e7ecb197f4ac7ab2865d3436de3a5f48f76844880",
+      "sha256": "bf05f505ef98d2f36e30bfe85fe5309fa0f031c37926c94e3889a9aa19a3c90a",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5372,7 +5372,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1",
       "version": null,
-      "sha256": "eca8f567c83f132e3c0ba263e633cfcf2552e938b9c232bf9de2860fd17474d0",
+      "sha256": "c5742863193cc9aefb10e1136bb6e1628ef6bee7e8d3bcf81d055dd10c452079",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5388,7 +5388,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "version": null,
-      "sha256": "79cf872432e023f6eb0036e355a71fab156ec79489e84344be7eee0b82e68c15",
+      "sha256": "afba313d18ba8c2c5b8206acea97b9422da94d86712853ac598fe34a1fd5f2a3",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5404,7 +5404,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "version": null,
-      "sha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
+      "sha256": "16378fec3564d0d79ec25590bd91e06aaf232ab88709733eb4127eb5c2bef01d",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false
@@ -5420,7 +5420,7 @@
       "catalogStatus": "Ready",
       "publishedPath": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
       "version": null,
-      "sha256": "38ca6289d157f33a57a60b316a3a0f1de15de8f07310b71eb977d1efbe86609f",
+      "sha256": "99f48e26e0e8bb69f1e117ac1859df64d02da89203551022d7d3e37c24cbf1c5",
       "batch": "Tenant-wide read-only audits",
       "reviewState": "Review required",
       "operatorTested": false

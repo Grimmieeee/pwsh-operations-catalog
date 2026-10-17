@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 817860d3-6f81-bfc9-4c37-6e4e878d9454
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 <#
 tenant-secure-score-snapshot-clean.ps1
 
@@ -22,22 +28,102 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
 function Write-FieldKitFooter {
     Write-Host ""
     Write-Host "F I E L D  //  K I T"
     Write-Host ""
 }
 
-function OK($m)   { Write-Host "[OK]   $m" -ForegroundColor Green }
-function INFO($m) { Write-Host "[INFO] $m" }
-function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function RISK($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
+function OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function INFO {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function WARN {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function RISK {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[RISK] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
+function FAIL {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
 
 function Pause-End {
-    Write-FieldKitFooter
-    Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Close-FKConsole
 }
 
 function Now {
@@ -46,9 +132,7 @@ function Now {
 
 function Section {
     param([string]$Title)
-
-    Write-Host ""
-    Write-Host $Title
+    Write-FKHeading -Title $Title
 }
 
 function Confirm-Yes {
@@ -286,8 +370,8 @@ function Is-RiskyScope {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Secure Score Snapshot" } catch {}
-Write-Host "TENANT SECURE SCORE SNAPSHOT"
-    Write-Host "Read-only"
+Write-FKStart -Title 'TENANT SECURE SCORE SNAPSHOT' -Objective 'Shows the tenant''s current Microsoft Secure Score and the areas affecting it.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     if (-not $PreviousSnapshotPath) {

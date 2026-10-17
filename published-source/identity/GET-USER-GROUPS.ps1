@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 02e3f058-6882-06a7-7ed4-338fa2722278
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #Requires -Version 5.1
 
 <#
@@ -29,21 +35,89 @@ param(
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $ErrorActionPreference = 'Stop'
 
-function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function Write-Info {
+    param([string]$Message)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $Message
+}
 
 function Write-OK {
     param([string]$Message)
-    Write-Host "[OK]   $Message" -ForegroundColor Green
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $Message
 }
 
 function Write-Warn {
     param([string]$Message)
-    Write-Host "[WARN] $Message" -ForegroundColor Yellow
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $Message
 }
 
 function Write-Fail {
     param([string]$Message)
-    Write-Host "[FAIL] $Message" -ForegroundColor Red
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $Message
 }
 
 function Write-FieldKitFooter {
@@ -53,24 +127,7 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
-    Write-FieldKitFooter
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Ensure-GraphAuthenticationModule {
@@ -494,10 +551,12 @@ function Get-GroupMarkers {
 }
 
 function Write-GroupSection {
-    param([string]$Title,[object[]]$Rows)
+    param([string]$Title,[object[]]$Rows,[bool]$Available=$true)
 
     Write-Host ""
     Write-Host $Title
+
+    if (-not $Available) { Write-Host 'Status: Not available' -ForegroundColor Yellow; return }
 
     if (-not $Rows -or $Rows.Count -eq 0) {
         Write-Host "None found"
@@ -587,7 +646,7 @@ function Get-GraphFailureAction {
 }
 
 try {
-    Write-Host "USER GROUP LOOKUP"
+    Write-FKStart -Title 'USER GROUP MEMBERSHIPS' -Objective 'Shows direct Active Directory and Entra group memberships for one or more users without cross-source deduplication.' -Mode ''
     Write-Host "Read-only. Active Directory and Entra ID are checked independently."
     Write-Host ""
 
@@ -635,12 +694,12 @@ try {
         elseif ($adResult.User -and $adResult.User.DisplayName) { $displayName=[string]$adResult.User.DisplayName }
 
         Write-Host ""
-        Write-Host "USER"
+        Write-FKHeading -Title 'TARGET'
         Write-Host ("Name: {0}" -f $displayName)
         Write-Host ("UPN : {0}" -f $UPN)
 
-        Write-GroupSection -Title "ACTIVE DIRECTORY GROUPS" -Rows $adRows
-        Write-GroupSection -Title "ENTRA ID GROUPS" -Rows $entraRows
+        Write-GroupSection -Title "ACTIVE DIRECTORY GROUPS" -Rows $adRows -Available ($adResult.Available -and -not $adResult.Error)
+        Write-GroupSection -Title "ENTRA ID GROUPS" -Rows $entraRows -Available $graphAvailable
 
         Write-Host ""
         Write-Host "COVERAGE"
@@ -692,15 +751,18 @@ try {
     }
 
     Write-Host ""
-    Write-Host "SUMMARY"
+    Write-FKHeading -Title 'TICKET SUMMARY'
     Write-Host ("Users checked        : {0}" -f $checked)
     Write-Host ("Entra check failures : {0}" -f $graphFailures)
     Write-Host ("AD check failures    : {0}" -f $adFailures)
 
+    Write-FKStatus $(if ($graphFailures -gt 0 -or $adFailures -gt 0) { 'REVIEW REQUIRED' } else { 'LOOKUP COMPLETE' })
+    Close-FKConsole -SkipPause $true
+
     Offer-VerifiedCsv -Rows @($exportRows)
 
     Write-Host ""
-    Write-OK "Complete. No changes made."
+    Write-Host ''
     Pause-End
 }
 catch {

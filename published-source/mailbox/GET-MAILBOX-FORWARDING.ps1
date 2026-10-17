@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 910adbb8-3887-6094-7b3d-d51a129aca2c
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #requires -Version 5.1
 
 <#
@@ -30,22 +36,90 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12
 }
 
-function Write-OK   { param([string]$Message) Write-Host "[OK]   $Message" -ForegroundColor Green }
-function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
-function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
-function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function Write-OK {
+    param([string]$Message)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $Message
+}
+function Write-Info {
+    param([string]$Message)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $Message
+}
+function Write-Warn {
+    param([string]$Message)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $Message
+}
+function Write-Fail {
+    param([string]$Message)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $Message
+}
 
 function Pause-End {
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-    try {
-        do { $key=$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") } until ($key.VirtualKeyCode -eq 13)
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Get-ShortError {
@@ -203,8 +277,8 @@ function Offer-VerifiedCsv {
 }
 
 try {
-    Write-Host "MAILBOX FORWARDING CHECK"
-    Write-Host "READ-ONLY. NO CHANGES MADE."
+    Write-FKStart -Title 'MAILBOX FORWARDING CHECK' -Objective 'Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     $mailboxes=@(Get-MailboxInputs -Values $InputObject)
@@ -218,7 +292,7 @@ try {
 
     foreach ($UPN in $mailboxes) {
         Write-Host ""
-        Write-Host "MAILBOX"
+        Write-FKHeading -Title 'TARGET'
         Write-Host ("UPN : {0}" -f $UPN)
 
         try {
@@ -227,6 +301,7 @@ try {
 
             $mailboxForwardingFound=$false
             $resolvedForwardingAddress=''
+            Write-FKHeading 'MAILBOX FORWARDING'
 
             if ($mailbox.ForwardingAddress) {
                 $mailboxForwardingFound=$true
@@ -254,7 +329,7 @@ try {
                 Write-Host ("DeliverToMailboxAndForward : {0}" -f $mailbox.DeliverToMailboxAndForward)
             }
             else {
-                Write-Host "Mailbox-level forwarding   : None"
+                Write-Host 'Status: None found'
             }
 
             $rules=@()
@@ -286,7 +361,7 @@ try {
                 })
             }
             elseif ($rules.Count -eq 0) {
-                Write-Host "None found"
+                Write-Host 'Status: None found'
             }
             else {
                 foreach ($rule in $rules) {
@@ -333,10 +408,13 @@ try {
     Write-Host ("Mailbox failures    : {0}" -f $failed)
     Write-Host ("Result rows         : {0}" -f $rows.Count)
 
+    Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } elseif (@($rows | Where-Object { $_.Status -eq 'Found' }).Count) { 'FORWARDING CONFIGURED' } else { 'NO FORWARDING FOUND' })
+    Close-FKConsole -SkipPause $true
+
     Offer-VerifiedCsv -Rows @($rows)
 
     Write-Host ""
-    Write-OK "Complete. No changes made."
+    Write-Host ''
 }
 catch {
     Write-Host ""

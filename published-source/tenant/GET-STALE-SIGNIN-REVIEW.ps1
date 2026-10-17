@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 1b288817-5ed0-273c-ac3b-4db6e7e6d82f
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #Requires -Version 5.1
 
 <#
@@ -31,36 +37,96 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
 function Write-FieldKitFooter {
     Write-Host ""
     Write-Host "F I E L D  //  K I T"
     Write-Host ""
 }
 
-function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
-function Write-Info { param($m) Write-Host "[INFO] $m" }
-function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
+function Write-OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function Write-Info {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function Write-Warn {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function Write-Fail {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
 
 function Pause-End {
-    Write-FieldKitFooter
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Get-ShortError {
@@ -231,7 +297,7 @@ function Offer-VerifiedCsv {
 }
 
 try {
-    Write-Host "TENANT STALE SIGN-IN REVIEW"
+    Write-FKStart -Title 'TENANT STALE SIGN-IN REVIEW' -Objective 'Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.' -Mode ''
     Write-Host "READ-ONLY. ENABLED ENTRA MEMBER ACCOUNTS."
     Write-Host ""
 
@@ -335,7 +401,7 @@ try {
     }
 
     Write-Host ""
-    Write-Host "SUMMARY"
+    Write-FKHeading -Title 'TICKET SUMMARY'
     Write-Host ("Enabled member accounts reviewed : {0}" -f $users.Count)
     Write-Host ("Stale {0}+ days               : {1}" -f $Days, $stale.Count)
     Write-Host ("Activity not available          : {0}" -f $activityUnavailable.Count)
@@ -364,7 +430,7 @@ try {
     Offer-VerifiedCsv -Rows $exportRows -DefaultName ("tenant-stale-signin-review-{0}.csv" -f (Get-Date -Format "yyyyMMdd-HHmmss"))
 
     Write-Host ""
-    Write-Host "STANDARD NOTE"
+    Write-FKHeading -Title 'STATUS'
     Write-Host "Read-only Entra sign-in review. Missing sign-in data was not classified as inactive."
 
     Write-Host ""

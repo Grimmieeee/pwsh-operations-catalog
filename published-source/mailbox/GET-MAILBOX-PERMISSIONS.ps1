@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 8615eafa-f964-942a-094f-f34b5355b58c
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 <#
 MULTI MAILBOX PERMISSIONS AUDIT
 
@@ -26,42 +32,95 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
-function Write-Info { param($m) Write-Host "[INFO] $m" }
-function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
 
-function Write-Section {
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
     param([string]$Title)
-
-    try {
-        Write-Host (" {0} " -f $Title) `
-            -ForegroundColor White `
-            -BackgroundColor DarkGray
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
     }
-    catch {
-        Write-Host $Title
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
     }
 }
 
+function Write-OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function Write-Info {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function Write-Warn {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function Write-Fail {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
+
+function Write-Section {
+    param([string]$Title)
+    Write-FKHeading -Title $Title
+}
+
 function Pause-End {
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Get-ShortError {
@@ -260,8 +319,8 @@ function Write-QueryFailure {
 }
 
 try {
-    Write-Host "MAILBOX PERMISSIONS AUDIT"
-    Write-Host "READ-ONLY. NO CHANGES MADE."
+    Write-FKStart -Title 'MAILBOX PERMISSIONS REVIEW' -Objective 'Reviews forwarding, delegates, and inbox rules for one or more mailboxes.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     $UPN=@(Get-MailboxInputs -Values $UPN)
@@ -303,7 +362,7 @@ try {
         }
 
         if ($Forwarding.Count -eq 0) {
-            Write-Host "  none"
+            Write-Host 'Status: None found'
         }
         else {
             $Forwarding | ForEach-Object {
@@ -327,7 +386,7 @@ try {
             )
 
             if ($FullAccess.Count -eq 0) {
-                Write-Host "  none"
+                Write-Host 'Status: None found'
             }
             else {
                 $FullAccess | ForEach-Object {
@@ -356,7 +415,7 @@ try {
             )
 
             if ($SendAs.Count -eq 0) {
-                Write-Host "  none"
+                Write-Host 'Status: None found'
             }
             else {
                 $SendAs | ForEach-Object {
@@ -377,7 +436,7 @@ try {
             $SendOnBehalf = @($Mailbox.GrantSendOnBehalfTo)
 
             if ($SendOnBehalf.Count -eq 0) {
-                Write-Host "  none"
+                Write-Host 'Status: None found'
             }
             else {
                 foreach ($Delegate in $SendOnBehalf) {
@@ -446,7 +505,7 @@ try {
                 -Message $RuleError
         }
         elseif ($Rules.Count -eq 0) {
-            Write-Host "  none"
+            Write-Host 'Status: None found'
         }
         else {
             foreach ($Rule in $Rules) {
@@ -463,8 +522,8 @@ try {
     }
 
     Write-Host ""
-    Write-Host "STANDARD NOTE"
-    Write-Host "Read-only mailbox permissions and forwarding audit. No changes were made."
+    Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'REVIEW COMPLETE' })
+    Write-Host ''
 }
 catch {
     Write-Host ""

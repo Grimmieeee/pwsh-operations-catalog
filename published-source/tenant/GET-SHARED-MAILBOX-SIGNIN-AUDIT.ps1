@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID d2b47970-1324-34b9-5fa2-e0b9acecc92c
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 <#
 shared-mailbox-signin-audit-clean.ps1
 
@@ -19,15 +25,96 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function OK($m)   { Write-Host "[OK]   $m" -ForegroundColor Green }
-function INFO($m) { Write-Host "[INFO] $m" }
-function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
-function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function OK {
+    param([string]$m)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $m
+}
+function INFO {
+    param([string]$m)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $m
+}
+function WARN {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $m
+}
+function RISK {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[RISK] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
+function FAIL {
+    param([string]$m)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $m
+}
 
 function Pause-End {
-    Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Close-FKConsole
 }
 
 function Now {
@@ -36,12 +123,7 @@ function Now {
 
 function Section {
     param([string]$Title)
-
-    Write-Host ""
-    Write-Host (" {0} " -f $Title) `
-        -ForegroundColor White `
-        -BackgroundColor DarkGray
-    Write-Host "Timestamp: $(Now)" -ForegroundColor DarkGray
+    Write-FKHeading -Title $Title
 }
 
 function Confirm-Yes {
@@ -292,8 +374,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Shared Mailbox Sign-in Audit" } catch {}
 
     Clear-Host
-    Write-Host "SHARED MAILBOX SIGN-IN AUDIT"
-    Write-Host "Read-only"
+    Write-FKStart -Title 'SHARED MAILBOX SIGN-IN AUDIT' -Objective 'Shows whether shared mailboxes are being signed into directly.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     $inputHours = Read-Host "Lookback hours [default $LookbackHours]"
