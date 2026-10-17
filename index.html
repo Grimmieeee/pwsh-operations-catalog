@@ -82,15 +82,16 @@ button{cursor:pointer}
 }
 .signature{
   padding:14px 20px 12px;
-  display:grid;grid-template-columns:max-content;gap:5px;
-  font-family:var(--display);font-weight:400;font-size:13px;letter-spacing:.22em;color:#ffffff;
+  --signature-scale:1;--signature-size:24px;--by-optical-offset:1.5px;--signature-muted:#819790;
+  font-family:var(--display);font-weight:400;color:#ffffff;
 }
-.signature-note,.signature-established{color:var(--muted);font-family:var(--display);font-weight:400;font-size:9px;letter-spacing:.19em}
-.signature-mark{white-space:nowrap}
-.signature-slash{margin-left:.30em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
-.signature-note{letter-spacing:.24em;color:#ffffff}
-.signature-established{margin-top:10px;font-size:9px;font-weight:500;letter-spacing:.12em}
-.signature-year{color:#ffffff}
+.signature-note{display:block;font-size:calc(10px * var(--signature-scale));line-height:1;letter-spacing:.22em;margin-bottom:calc(6px * var(--signature-scale));transform:translate(var(--by-optical-offset),.43em)}
+.signature-row{display:flex;align-items:baseline;gap:calc(12px * var(--signature-scale));line-height:1}
+.signature-mark{white-space:nowrap;font-size:calc(var(--signature-size) * var(--signature-scale));line-height:1.2;letter-spacing:.16em}
+.signature-muted{color:var(--signature-muted)}
+.signature-slash{margin-left:.08em;letter-spacing:.08em}
+.signature-established{margin-left:auto;white-space:nowrap;font-size:calc(10px * var(--signature-scale));line-height:1.2;letter-spacing:.22em;color:var(--signature-muted)}
+.signature-established strong{color:#ffffff;font-weight:500}
 .workspace{min-width:0;background:linear-gradient(180deg,#141a1d 0%,#161e20 100%)}
 .security-note{margin:0 22px 8px;padding:10px 12px;border:1px solid var(--line-soft);border-radius:3px;color:var(--muted);font-size:14px;line-height:1.5}
 .security-note summary{cursor:pointer;color:var(--body);font-weight:600}
@@ -1099,8 +1100,10 @@ button,a,input{-webkit-tap-highlight-color:transparent}
     <div class="sidebar-footer">
       <div class="signature">
         <span class="signature-note">BY</span>
-        <span class="signature-mark">B U R N S I D<span class="signature-slash">//</span></span>
-        <span class="signature-established">Est. <span class="signature-year">2026</span></span>
+        <div class="signature-row">
+          <span class="signature-mark">BURN<span class="signature-muted">SID<span class="signature-slash">//</span></span></span>
+          <span class="signature-established"><strong>EST.</strong> 2026</span>
+        </div>
       </div>
     </div>
   </aside>
@@ -1145,5 +1148,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
 <script src="field-kit-app.js?v=compact-requirements-1"></script>
+<script src="site-brand.js"></script>
 </body>
 </html>

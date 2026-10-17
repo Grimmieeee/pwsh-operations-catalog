@@ -4,6 +4,27 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
+## October 17, 2026 — design lock and testing handoff
+
+Read `DESIGN-LOCK.md` before visual work. The final in-chat footer preview is approved: BY above the larger B, bright BURN with muted SID//, and bright EST. / muted 2026 at the far right on the same baseline. Preserve the design; preview future visual changes before publishing.
+
+The public catalog has 338 entries and 92 downloadable sources. Cards now separate INPUT, CHECKS and GUARDS; requirements and long connection commands are compact disclosures. Home Screen branding is explicit. Card copy must match each exact source's prompts and behavior. Twelve site tests cover source integrity, exact-version verification, safe loading, clipboard errors, dialog accessibility, global search and card grouping. No PowerShell source changed during this design pass.
+
+### Next work
+
+- Draft PR #19 (`work/alignment-batch-1`, head `a16051fc45544993f5e246e2b07a6927d28bf96d`) holds 64 alignment candidates and the first read-only user batch runner. It remains unmerged and untested by the owner. Do not publish it as verified.
+- Start operator testing with the read-only user batch runner. Preserve tenant binding, shared-session validation and per-script evidence. A batch result does not automatically verify every catalog item.
+- Review `CARD-VERIFICATION-GAPS.md`. License tools currently resolve IDs to technical SKU codes, not guaranteed friendly product names. Cards correctly describe numbered selections. Product-name and applicable client-ID resolution need source work and operator tests.
+- Known candidate defects remain for Account Status null/disabled handling and Group Members permission-denied/empty results and ambiguous names. Re-read candidate sources before fixing or releasing.
+- Compare every card claim with its exact script; exercise runtime-dependent claims. Avoid scope, authority, authentication or destructive-behavior drift during presentation alignment.
+- The three IR 1.0.0 operator-verified downloads remain the released baseline. Other items do not acquire VERIFIED from static review.
+
+### Release and continuation
+
+Run `node --check field-kit-app.js`, `node --check site-brand.js`, `node tools/check-site.mjs`, `node --test tests/site-security.test.mjs`, and `git diff --check`; then required GitHub checks, Pages deployment and live browser inspection. Review current main/branch state before pushing. The associated pull request and Actions runs hold deployment results. Use current repository source rather than old upload names or local archive copies.
+
+The earlier dated sections below are historical context. They do not supersede this design lock, the tested IR 1.0.0 release or the draft candidate status above.
+
 ## IR 1.0.0, version-bound verification and catalog alignment
 
 The owner confirmed all three exact files in FIELD-KIT-IR-1.0.0.zip passed on

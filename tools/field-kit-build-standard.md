@@ -1,5 +1,7 @@
 # FIELD // KIT Build Standard
 
+The final October 17, 2026 visual contract is in `DESIGN-LOCK.md`. It takes precedence over older visual descriptions here. Future visual changes require an in-chat preview and explicit owner approval before publication.
+
 Status: LOCKED BASELINE
 Purpose: Preserve the approved visual, interaction, taxonomy, and publication model for FIELD // KIT.
 

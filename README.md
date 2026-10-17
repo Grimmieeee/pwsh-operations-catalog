@@ -10,6 +10,8 @@ Read [`OPERATING-STANDARDS.md`](OPERATING-STANDARDS.md) before adding, replacing
 
 For the current continuation state, read [`tools/PROJECT-HANDOFF.md`](tools/PROJECT-HANDOFF.md).
 
+The approved site design is locked in [`DESIGN-LOCK.md`](DESIGN-LOCK.md). Preview and approve visual changes before publishing them.
+
 Overlap and historical lineage decisions are tracked in [`AUDIT-LIMBO.md`](AUDIT-LIMBO.md).
 
 ## Repository Structure
