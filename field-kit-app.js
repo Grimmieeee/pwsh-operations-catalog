@@ -2462,7 +2462,7 @@
   }
 
   function releaseTag(item){
-    if (isVerifiedRelease(item)) return '<span class="result-tag result-verified" title="Operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span> VERIFIED · v' + esc(item.version) + '</span>';
+    if (isVerifiedRelease(item)) return '<span class="result-tag result-verified" title="Operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span> VERIFIED · <span class="release-version">v' + esc(item.version) + '</span></span>';
     return item.version ? '<span class="result-tag result-version">v' + esc(item.version) + '</span>' : "";
   }
 

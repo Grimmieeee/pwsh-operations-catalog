@@ -376,12 +376,13 @@ body.open .drawer{transform:translateX(0)}
   background:transparent;color:inherit;text-align:left;
 }
 .result:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
-.result-identity{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.result-identity{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e2f3ee}
 .result-identity .result-verified{
-  color:#082d23!important;background:#00f0b5;border-color:#69f6cf!important;
-  min-height:26px;padding:6px 9px;font-size:10.5px;letter-spacing:.07em;
+  color:#a4d8c7!important;background:transparent;border-color:#3c6659!important;
+  min-height:20px;padding:3px 6px;font-size:9px;font-weight:600;letter-spacing:.07em;
 }
+.result-verified .release-version{color:#8ba69c;font-weight:400;letter-spacing:0}
 .result:hover .result-name{color:#ffffff}
 .result-meta{
   min-width:0;justify-self:end;display:inline-flex;align-items:center;
@@ -1116,6 +1117,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=verified-card-stamp-1"></script>
+<script src="field-kit-app.js?v=verified-card-stamp-2"></script>
 </body>
 </html>
