@@ -370,7 +370,7 @@ body.open .drawer{transform:translateX(0)}
 .group-title-muted{font-size:14px;font-weight:300;color:#a5bcb5}
 
 .result{
-  width:100%;min-height:59px;display:grid;
+  position:relative;width:100%;min-height:59px;display:grid;
   grid-template-columns:minmax(250px,1fr) minmax(210px,.7fr) auto 16px;
   align-items:center;gap:12px;padding:10px;border:0;border-bottom:1px solid var(--line-soft);
   background:transparent;color:inherit;text-align:left;
@@ -378,10 +378,15 @@ body.open .drawer{transform:translateX(0)}
 .result:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
 .result-identity{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e2f3ee}
-.result-identity .result-verified{
-  color:#a4d8c7!important;background:transparent;border-color:#3c6659!important;
-  min-height:20px;padding:3px 6px;font-size:9px;font-weight:600;letter-spacing:.07em;
+.verification-mark{display:inline-flex;align-items:center;color:var(--mint-soft);font:600 14px/1 var(--ui)}
+.verification-tooltip{
+  display:none;position:absolute;z-index:30;left:10px;top:calc(100% - 2px);
+  width:230px;max-width:calc(100% - 20px);padding:8px 10px;border:1px solid #44625a;
+  background:#162023;color:#d1e4dc;font:400 11px/1.5 var(--ui);pointer-events:none;
 }
+.verification-mark:hover .verification-tooltip,
+.result:focus-visible .verification-tooltip{display:block}
+.result-version{color:#8ba69c;font:400 10px/1 var(--mono);white-space:nowrap}
 .result-verified .release-version{color:#8ba69c;font-weight:400;letter-spacing:0}
 .result:hover .result-name{color:#ffffff}
 .result-meta{
@@ -1117,6 +1122,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=verified-card-stamp-2"></script>
+<script src="field-kit-app.js?v=verified-card-stamp-3"></script>
 </body>
 </html>
