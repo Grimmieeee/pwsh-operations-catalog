@@ -1649,7 +1649,7 @@
       match:/INVOKE-LITIGATION-HOLD|Enforce Litigation Hold/i,
       connect:['Connect-ExchangeOnline'],
       label:"GUARDS",
-      facts:["One mailbox or TXT / CSV input","Pre-change hold-state review","Changes only noncompliant mailboxes","Typed HOLD confirmation","Unlimited duration target","Post-change mailbox re-read","Optional CSV evidence"]
+      facts:["One mailbox or TXT / CSV input","Pre-change hold-state review","Changes only noncompliant mailboxes","Full preview before changes","Typed HOLD confirmation","Unlimited duration target","Post-change mailbox re-read","Optional CSV evidence"]
     },
     {
       match:/RESOLVE-NAMES-TO-UPNS|Resolve Names to UPNs/i,
@@ -1802,22 +1802,8 @@
   }
 
   function changeNote(item){
-    const access = String(item.access || "");
-    if (!/change|destructive|mixed/i.test(access)) return "";
-
-    const title = displayName(item);
-    if (/Add Calendar Permission/i.test(title)) return "Changes calendar folder permissions.";
-    if (/Remove Calendar Permission/i.test(title)) return "Removes calendar folder permissions.";
-    if (/Revoke (?:Active )?Sessions/i.test(title)) return "Revokes active Microsoft 365 sessions.";
-    if (/Disable Sign-In/i.test(title)) return "Disables user sign-in.";
-    if (/Enable Sign-In|Re-Enable/i.test(title)) return "Enables user sign-in.";
-    if (/Reset .*Password|Password Reset/i.test(title)) return "Resets the user password.";
-    if (/Disabled User Mailbox Access Cleanup/i.test(title)) return "Removes Full Access and Send As rights from a disabled user after confirmation.";
-    if (/Delete/i.test(title)) return "Deletes or removes the selected object.";
-    if (/Remove/i.test(title)) return "Removes the selected access or configuration.";
-    if (/Add/i.test(title)) return "Adds or changes access.";
-    if (/Update Project Artifact/i.test(title)) return "Writes a local handoff file and Git exclusion.";
-    if (/Update|Upgrade/i.test(title)) return "Installs or applies updates.";
+    // Specific consequences come from source.changeNote. Access badges already
+    // communicate change/destructive state; generic action restatements add noise.
     return "";
   }
 
@@ -2616,7 +2602,7 @@
         <div class="run-info-subhead">CONNECT</div>
         ${item.connect.map(cmd => `
           <div class="connect-line">
-            <code>${esc(cmd)}</code>
+            ${cmd.length > 80 ? `<details class="connect-command"><summary>${esc(cmd.trim().split(/\s+/)[0])} <span class="connect-expand">Show command</span></summary><code>${esc(cmd)}</code></details>` : `<code>${esc(cmd)}</code>`}
             <button class="copy-mini" type="button" data-copy="${esc(cmd)}">COPY</button>
           </div>
         `).join("")}
@@ -2762,7 +2748,25 @@
   }
 
   function shortNote(item){
-    const note = String(item.notes || "").trim();
+    // Reviewed summaries only: remove known duplication without guessing whether
+    // an unfamiliar caveat is safe to hide.
+    const concise = {
+      "GET-QUARTERLY-CLEANUP-REVIEW.ps1":"",
+      "GET-STALE-SIGNIN-REVIEW.ps1":"Missing sign-in activity is never classified as inactivity.",
+      "get-inactive-group-debt.ps1":"", "get-inactive-mailbox-debt.ps1":"",
+      "invoke-user-onboard.ps1":"", "invoke-user-offboard.ps1":"",
+      "INVOKE-DISABLE-ACCOUNTS.ps1":"", "INVOKE-DELETE-ACCOUNTS.ps1":"",
+      "INVOKE-ASSIGN-LICENSES.ps1":"", "INVOKE-REMOVE-LICENSES.ps1":"",
+      "RESOLVE-NAMES-TO-UPNS.ps1":"", "GET-ACCOUNT-STATUS.ps1":"Missing sign-in data is never treated as inactivity.",
+      "GET-GROUP-MEMBERS.ps1":"", "GET-USER-GROUPS.ps1":"",
+      "INVOKE-REMOVE-USER-GROUPS.ps1":"", "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1":"",
+      "GET-TENANT-GROUP-OWNERS.ps1":"", "GET-MAILBOX-PERMISSIONS.ps1":"",
+      "GET-MAILBOX-FORWARDING.ps1":"", "INVOKE-LITIGATION-HOLD.ps1":"",
+      "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1":"", "GET-APP-REGISTRATION-AUDIT.ps1":"",
+      "GET-CONDITIONAL-ACCESS-GAPS.ps1":"", "TEST-POWERSHELL-READINESS.ps1":"",
+      "INSTALL-M365-MODULES.ps1":"", "GET-FOLDER-INVENTORY.ps1":"Does not enforce a fixed folder structure."
+    };
+    const note = String(Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || "")).trim();
     if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return "";
     return `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
   }

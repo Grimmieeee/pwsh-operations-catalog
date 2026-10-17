@@ -730,6 +730,12 @@ body.open .drawer{transform:translateX(0)}
 .connect-line code{
   color:#ffffff;
 }
+.connect-command{flex:1;min-width:0}
+.connect-command summary{cursor:pointer;color:#ffffff;font:12px/1.5 var(--mono);overflow-wrap:anywhere}
+.connect-expand{color:var(--mint-soft);font-size:10px;margin-left:8px}
+.connect-command[open] summary{margin-bottom:12px}
+.connect-command[open] .connect-expand{display:none}
+.connect-command code{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
 .check-list{
   border-top-color:#757f7c;
 }
@@ -1118,6 +1124,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=checks-guards-sections-1"></script>
+<script src="field-kit-app.js?v=minimal-card-copy-1"></script>
 </body>
 </html>
