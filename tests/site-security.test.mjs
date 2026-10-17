@@ -30,7 +30,7 @@ test('three tested IR workflow steps expose checksum-verified canonical source',
 test('VERIFIED is bound to operator evidence, exact version and source manifest hash',()=>{
   const f=loadCatalog(root);
   const item=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
-  assert.match(f.api.releaseTag(item),/VERIFIED · v1\.0\.0/);
+  assert.match(f.api.releaseTag(item).replace(/<[^>]*>/g,''),/VERIFIED · v1\.0\.0/);
   for(const altered of [
     {...item,version:'1.0.1'},
     {...item,verification:{...item.verification,sha256:'0'.repeat(64)}},
