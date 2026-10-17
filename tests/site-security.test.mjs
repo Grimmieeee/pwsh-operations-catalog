@@ -9,6 +9,28 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('cards separate operational checks from inputs and safety guards without overflow groups',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS){
+    f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(!/More (?:checks|guards)/.test(html),item.displayName);
+    for(const label of ['CHECKS','GUARDS']){
+      assert.ok(html.split(`<div class="section-label">${label}</div>`).length<=2,item.displayName);
+    }
+  }
+  const hold=f.api.ITEMS.find(item=>/Enforce Litigation Hold/.test(item.displayName));
+  assert.ok(hold);
+  f.api.openItem(hold);
+  const html=f.elements.get('drawerBody').innerHTML;
+  const checks=html.slice(html.indexOf('>CHECKS</div>'),html.indexOf('>GUARDS</div>'));
+  const guards=html.slice(html.indexOf('>GUARDS</div>'),html.indexOf('<section class="run-info-block">'));
+  for(const text of ['Pre-change hold-state review','Unlimited duration target','Post-change mailbox re-read','Optional CSV evidence']) assert.ok(checks.includes(text),text);
+  for(const text of ['Typed HOLD confirmation','Changes only noncompliant mailboxes','REQUIRES','INPUT']) assert.ok(guards.includes(text),text);
+  assert.ok(!checks.includes('Typed HOLD confirmation'));
+  assert.ok(!html.includes('More guards'));
+});
+
 test('three tested IR workflow steps expose checksum-verified canonical source',async()=>{
   const f=loadCatalog(root,{fetchImpl:async url=>{
     const relative=new URL(url,'https://catalog.invalid/').pathname.replace(/^\/pwsh-operations-catalog\//,'').replace(/^\//,'');
