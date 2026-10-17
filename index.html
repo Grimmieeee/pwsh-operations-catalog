@@ -378,14 +378,12 @@ body.open .drawer{transform:translateX(0)}
 .result:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
 .result-identity{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:#e2f3ee}
-.verification-mark{display:inline-flex;align-items:center;color:var(--mint-soft);font:600 14px/1 var(--ui)}
-.verification-tooltip{
-  display:none;position:absolute;z-index:30;left:10px;top:calc(100% - 2px);
-  width:230px;max-width:calc(100% - 20px);padding:8px 10px;border:1px solid #44625a;
-  background:#162023;color:#d1e4dc;font:400 11px/1.5 var(--ui);pointer-events:none;
+.result-operator-verified::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:2px;height:18px;border-radius:1px;background:#6aa58f;
 }
-.verification-mark:hover .verification-tooltip,
-.result:focus-visible .verification-tooltip{display:block}
+.verification-legend{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#8fa69e;font:400 10px/1.4 var(--mono)}
+.verification-legend::before{content:"";width:2px;height:12px;background:#6aa58f;flex:none}
 .result-version{color:#8ba69c;font:400 10px/1 var(--mono);white-space:nowrap}
 .result-verified .release-version{color:#8ba69c;font-weight:400;letter-spacing:0}
 .result:hover .result-name{color:#ffffff}
@@ -1122,6 +1120,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=verified-card-stamp-3"></script>
+<script src="field-kit-app.js?v=verified-card-edge-1"></script>
 </body>
 </html>

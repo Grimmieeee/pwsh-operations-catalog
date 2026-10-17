@@ -2467,8 +2467,7 @@
   }
 
   function rowTags(item){
-    const version = item.version ? '<span class="result-version">v' + esc(item.version) + '</span>' : "";
-    return scopeTag(item) + accessTag(item) + version + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
+    return scopeTag(item) + accessTag(item) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
   }
 
   function groupTitleMarkup(group){
@@ -2496,10 +2495,9 @@
   function resultMarkup(item, index){
     const meta = moduleLabel(item);
     return `
-      <button class="result" type="button" data-open-index="${index}">
+      <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
-          ${isVerifiedRelease(item) ? '<span class="verification-mark" role="img" aria-label="Verified: operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span><span class="verification-tooltip" aria-hidden="true">Operator tested. Download integrity checked. Applies to this version only.</span></span>' : ""}
         </span>
         <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
         <span class="result-flags">${rowTags(item)}</span>
@@ -2608,9 +2606,11 @@
     }
 
     empty.classList.add("hidden");
+    const verificationLegend = list.some(isVerifiedRelease)
+      ? '<div class="verification-legend">Mint edge = operator verified</div>' : "";
 
     if (queryActive){
-      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
+      results.innerHTML = verificationLegend + '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
     } else {
       const grouped = new Map();
       for (const item of list){
@@ -2623,7 +2623,7 @@
         grouped.get(key).push(item);
       }
 
-      results.innerHTML = [...grouped.entries()].map(([group,items]) => `
+      results.innerHTML = verificationLegend + [...grouped.entries()].map(([group,items]) => `
         <section class="group" id="${esc(bucketId(group))}">
           <div class="group-title">${groupTitleMarkup(state.area === "Full Library" ? areaLabel(group) : group)}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
