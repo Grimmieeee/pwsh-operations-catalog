@@ -9,6 +9,26 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('library total lives in About while result counts appear only for search or filters',()=>{
+  const f=loadCatalog(root);
+  const counter=f.elements.get('entryCount');
+  const search=f.elements.get('search');
+  assert.equal(counter.textContent,'');
+  assert.ok(counter.classList.contains('hidden'));
+  f.api.state.area='Incident Response';
+  search.value='';search.listeners.input();
+  assert.equal(counter.textContent,`(${f.api.filteredItems().length})`);
+  assert.ok(!counter.classList.contains('hidden'));
+  f.api.state.area='Full Library';
+  search.value='mailbox';search.listeners.input();
+  assert.equal(counter.textContent,`(${f.api.filteredItems().length})`);
+  search.value='';search.listeners.input();
+  assert.ok(counter.classList.contains('hidden'));
+  f.api.state.area='About';search.listeners.input();
+  assert.ok(counter.classList.contains('hidden'));
+  assert.ok(f.elements.get('results').innerHTML.includes(`${f.api.ITEMS.length} catalog entries`));
+});
+
 test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   const f=loadCatalog(root);
   const license=f.api.ITEMS.find(item=>item.file==='INVOKE-ASSIGN-LICENSES.ps1');

@@ -15,7 +15,7 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 ## Catalog and cards
 
 - Minimal list: task name, exact-version operator-verification mark when earned, and access flags. No row versions or platform badges.
-- Parenthetical search count; small verification key at upper right. No redundant controls below search.
+- Full catalog total appears in About as catalog entries (scripts, commands and guides), not as a search-box or Full Library navigation total. Parenthetical result counts appear only during search or filtered browsing. Small verification key stays at upper right; no redundant controls below search. This refinement was previewed and approved October 17, 2026.
 - Card order: USE FOR, INPUT, CHECKS, GUARDS, connection commands, useful Details, source actions. Omit empty sections.
 - INPUT distinguishes what the technician brings from script-provided choices. CHECKS and GUARDS describe the exact script, not generic assurances.
 - Compact REQUIRES supports hover, tap and keyboard. Long connection commands expand; COPY always copies the full command.
