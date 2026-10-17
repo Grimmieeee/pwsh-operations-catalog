@@ -2834,8 +2834,10 @@
 
   function standaloneCommandMarkup(item){
     if (item.type !== "Quick Command" || !item.code) return "";
+    const platform = moduleLabel(item);
     return `
       <section class="command-block">
+        ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
         <div class="section-label">COMMAND</div>
         <pre class="command">${esc(item.code)}</pre>
         <div class="source-actions">
