@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'">
-<title>F I E L D&nbsp;&nbsp;//&nbsp;&nbsp;K I T</title>
-<meta name="apple-mobile-web-app-title" content="BURNSID //">
+<title>F I E L D //  K I T</title>
+<meta name="apple-mobile-web-app-title" content="F I E L D //  K I T">
+<meta name="application-name" content="F I E L D //  K I T">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="assets/field-kit-icon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -60,7 +61,7 @@ button{cursor:pointer}
 }
 .brand-main::after{display:none}
 .brand-field{font-weight:600;letter-spacing:.19em}
-.brand-slash{margin:0 .30em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
+.brand-slash{margin:0 .65em 0 .05em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
 .brand-kit{font-weight:200;letter-spacing:.22em;color:#ffffff}
 .nav{padding:7px 11px 24px}
 .nav button{
@@ -81,8 +82,9 @@ button{cursor:pointer}
 }
 .signature{
   padding:18px 20px 22px;
-  font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.48em;color:var(--mint);
+  font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.10em;color:var(--mint);
 }
+.signature-by{margin-right:.7em;color:var(--muted);font-family:var(--ui);font-size:10px;letter-spacing:0}
 .workspace{min-width:0;background:linear-gradient(180deg,#141a1d 0%,#161e20 100%)}
 .security-note{margin:0 22px 8px;padding:10px 12px;border:1px solid var(--line-soft);border-radius:3px;color:var(--muted);font-size:14px;line-height:1.5}
 .security-note summary{cursor:pointer;color:var(--body);font-weight:600}
@@ -1081,7 +1083,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   <aside class="sidebar" aria-label="Library navigation">
     <div>
       <div class="brand">
-        <div class="brand-main">
+        <div class="brand-main" aria-label="FIELD // KIT">
           <span class="brand-field">F I E L D</span>
           <span class="brand-slash">//</span>
           <span class="brand-kit">K I T</span>
@@ -1090,7 +1092,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       <nav id="areaNav" class="nav area-nav"></nav>
     </div>
     <div class="sidebar-footer">
-      <div class="signature">B U R N S I D //</div>
+      <div class="signature"><span class="signature-by">by</span><span>burnsid//</span></div>
     </div>
   </aside>
 
