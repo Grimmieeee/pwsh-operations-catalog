@@ -1595,7 +1595,7 @@
       match:/INVOKE-REMOVE-LICENSES|Remove User Licenses/i,
       connect:['Connect-MgGraph -Scopes "User.ReadWrite.All","Directory.Read.All","Organization.Read.All"'],
       label:"GUARDS",
-      facts:["One user or TXT / CSV input","Current-license review","One selected SKU or ALL licenses","Full plan before changes","Typed REMOVE confirmation","Per-user post-change SKU verification","Verified CSV when requested"]
+      facts:["One user or TXT / CSV input","Current-license review","Numbered license selection or ALL","Full plan before changes","Typed REMOVE confirmation","Per-user post-change SKU verification","Verified CSV when requested"]
     },
     {
       match:/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP|Create Dynamic License Group/i,
@@ -2661,7 +2661,7 @@
       "Exact UPN resolution", "AD authority for synced users",
       "Entra authority for cloud-only and guest users", "Full deletion plan before action",
       "UsageLocation handling when approved", "Full preview before changes",
-      "One selected SKU or ALL licenses", "Full plan before changes",
+      "Numbered license selection or ALL", "Full plan before changes",
       "Targets the requested tenant before searching", "Tenant-target validation",
       "Direct members only", "Single group creation", "Previewed membership rule",
       "Changes only noncompliant mailboxes", "Uses CurrentUser scope",
@@ -2681,14 +2681,13 @@
     const inputFacts = facts.filter(text => /^one .+ input$/i.test(text));
     const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
     const guards = facts.filter(isGuard).filter(text => !inputFacts.includes(text));
-    const rows = [["REQUIRES",requirementInfo(item)]]
-      .filter(([,value]) => value);
+    const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
     return `${inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : ""}
       ${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
-      ${guards.length || rows.length ? `<section class="check-block"><div class="section-label">GUARDS</div>
+      ${guards.length || requires ? `<section class="check-block"><div class="section-label">GUARDS</div>
         ${guards.length ? list(guards) : ""}
-        ${rows.length ? `<div class="run-info-grid">${rows.map(([label,value]) => `<div class="run-info-row"><span class="run-info-label">${esc(label)}</span><span class="run-info-value">${esc(value)}</span></div>`).join("")}</div>` : ""}
+        ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES <span aria-hidden="true">ⓘ</span></summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}
       </section>` : ""}`;
   }
 

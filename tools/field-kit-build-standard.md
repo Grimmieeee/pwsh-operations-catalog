@@ -359,6 +359,12 @@ The exporter derives the backup folder from the repository location, so moving t
 
 The ZIP is a recovery/export snapshot. It is not a replacement for the repository.
 
+## Selected card information
+
+Order: USE FOR, INPUT, CHECKS, GUARDS, connector commands, useful additional Details, source actions. INPUT lists what the operator supplies and distinguishes choices discovered by the script. Omit empty sections. INPUT, CHECKS and GUARDS use matching headings. Keep requirements in a compact REQUIRES disclosure with hover text and tap/keyboard access; never rely on hover alone. Keep change consequences visible when they add safety information. Do not duplicate the objective or checklist in Details.
+
+Card accuracy is part of script verification: trace every input, check, guard, permission, connection and output claim to the exact source version. Operator testing must exercise name resolution and failure paths before granting a verified release. Never infer functionality from a title, template, or another script.
+
 ## Toys
 
 Toys is a separate primary navigation area after Tools. Its Animations and Themes groups uses the same cards, A-Z ordering, risk labels and source controls. Include terminal requirements and exit instructions; never imply screen-lock protection.

@@ -55,6 +55,7 @@ Use this before approving a new script or publishing an updated one.
 ## Output
 
 - [ ] Human-readable names are preferred over IDs.
+- [ ] SKU IDs resolve to friendly product names and application/client IDs resolve to application display names where available. Unresolved values are explicitly identified; raw IDs are not silently presented as resolved names.
 - [ ] Output is concise and ticket-friendly.
 - [ ] Warnings are actionable.
 - [ ] No confidential environment detail is printed without a clear need.
@@ -80,6 +81,9 @@ Use this before approving a new script or publishing an updated one.
 - [ ] No internal repository paths remain.
 - [ ] No private certificate, app-registration, or automation identifiers remain.
 - [ ] Catalog name, filename, primary module/platform, scope, risk flag, and card description match the script.
+- [ ] Every INPUT, CHECKS, GUARDS, requirement and connection command is traced to the exact published source version and checked during operator testing.
+- [ ] INPUT distinguishes information to bring from choices the script discovers or resolves. Do not ask the technician to bring a SKU/client ID when the script offers a named or numbered selection.
+- [ ] Card claims about name resolution, validation, exports, confirmations and session reuse are exercised, including unresolved lookups and permission failures. Source review alone is not runtime verification.
 - [ ] Destructive items are represented as MAKES CHANGES + DESTRUCTIVE.
 - [ ] The published-source copy matches the reviewed approved file.
 - [ ] Any executable change made during sanitization was re-reviewed as a new revision.
