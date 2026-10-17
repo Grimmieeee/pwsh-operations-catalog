@@ -1909,6 +1909,7 @@
   const areaNav = document.getElementById("areaNav");
   const crumb = document.getElementById("crumb");
   const entryCount = document.getElementById("entryCount");
+  const verificationKey = document.getElementById("verificationKey");
   const search = document.getElementById("search");
   const searchWrap = document.querySelector(".search-wrap");
   const clearSearch = document.getElementById("clearSearch");
@@ -2493,14 +2494,12 @@
   }
 
   function resultMarkup(item, index){
-    const meta = moduleLabel(item);
     return `
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
           ${isVerifiedRelease(item) ? '<span class="verification-seal" aria-hidden="true">V</span>' : ""}
         </span>
-        <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
         <span class="result-flags">${rowTags(item)}</span>
         <span class="result-arrow">›</span>
       </button>
@@ -2510,6 +2509,7 @@
   function renderResults(){
     const queryActive = Boolean(state.query.trim());
     searchWrap?.classList.toggle("hidden", state.area === "About");
+    verificationKey.classList.add("hidden");
 
     if (state.area === "About"){
       crumb.textContent = "ABOUT";
@@ -2543,6 +2543,11 @@
             <span class="access-danger">DESTRUCTIVE</span><span>can remove data, access, or objects; shown with MAKES CHANGES</span>
           </div>
 
+          <details class="security-note about-security">
+            <summary>Security checks &amp; responsible use</summary>
+            <p>Publishing is protected by pull requests, required integrity checks, code scanning, and secret scanning. Catalog downloads are verified against published checksums.</p>
+            <p>These controls reduce risk; they do not guarantee that every script is safe or suitable for your environment. Review the code and required permissions, and test before running. <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/blob/main/SECURITY.md">Security details</a>.</p>
+          </details>
           <p class="about-foot">Review the selected item before execution.</p>
         </section>
       `;
@@ -2552,53 +2557,14 @@
     const list = filteredItems();
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
-    entryCount.textContent = `${list.length} ${list.length === 1 ? "ITEM" : "ITEMS"}`;
+    entryCount.textContent = `(${list.length})`;
+    entryCount.setAttribute("aria-label", `${list.length} matching catalog entries`);
+    verificationKey.classList.toggle("hidden", !list.some(isVerifiedRelease));
     clearSearch.classList.toggle("hidden", !state.query);
-    contextBar.classList.toggle("hidden", state.area === "Full Library" && !queryActive);
-    const browseContext = state.area === "Standalone" && state.standaloneGroup
-      ? `QUICK COMMANDS / ${state.standaloneGroup.toUpperCase()}`
-      : state.area === "Incident Response" && state.incidentSource
-        ? `INCIDENT RESPONSE / ${state.incidentSource.toUpperCase()}`
-        : areaLabel(state.area).toUpperCase();
-
-    contextBar.textContent = queryActive
-      ? "SEARCH / ALL SECTIONS"
-      : browseContext;
-
-    if (!queryActive){
-      let sections;
-
-      if (state.area === "Full Library"){
-        sections = [...new Set(list.map(primaryBucket))].map(value => ({
-          value,
-          label:areaLabel(value)
-        }));
-      } else if (["Single User","Multi User","Tenant Wide"].includes(state.area)){
-        sections = [...new Set(list.map(scopeSubgroup))].map(value => ({
-          value,
-          label:value
-        }));
-      } else {
-        sections = [...new Set(list.map(item => item.group || "General"))].map(value => ({
-          value,
-          label:value
-        }));
-      }
-
-      if (sections.length > 1){
-        const labels = {"Full Library":"BROWSE BY SCOPE", "Single User":"USER TASKS", "Multi User":"MULTI-USER TASKS", "Tenant Wide":"TENANT TASKS", "Incident Response":"INCIDENT RESPONSE", "Tools":"TERMINAL & REPOSITORY TOOLS", "Toys":"TERMINAL TOYS", "Utility":"DEVICE & NETWORK TASKS", "Standalone":"COMMAND PLATFORMS"};
-        jumpBar.innerHTML = '<span class="jump-label">'+esc(labels[state.area] || "BROWSE TASKS")+'</span>' + sections.map(section =>
-          `<button class="jump-link" type="button" data-jump="${esc(bucketId(section.value))}">${esc(section.label.toUpperCase())}</button>`
-        ).join("");
-        jumpBar.classList.remove("hidden");
-      } else {
-        jumpBar.innerHTML = "";
-        jumpBar.classList.add("hidden");
-      }
-    } else {
-      jumpBar.innerHTML = "";
-      jumpBar.classList.add("hidden");
-    }
+    contextBar.textContent = "";
+    contextBar.classList.add("hidden");
+    jumpBar.innerHTML = "";
+    jumpBar.classList.add("hidden");
 
     if (!list.length){
       results.innerHTML = "";
@@ -2607,11 +2573,9 @@
     }
 
     empty.classList.add("hidden");
-    const verificationLegend = list.some(isVerifiedRelease)
-      ? '<div class="verification-legend"><span class="verification-seal" aria-hidden="true">V</span><span>Operator verified</span></div>' : "";
 
     if (queryActive){
-      results.innerHTML = verificationLegend + '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
+      results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
     } else {
       const grouped = new Map();
       for (const item of list){
@@ -2624,7 +2588,7 @@
         grouped.get(key).push(item);
       }
 
-      results.innerHTML = verificationLegend + [...grouped.entries()].map(([group,items]) => `
+      results.innerHTML = [...grouped.entries()].map(([group,items]) => `
         <section class="group" id="${esc(bucketId(group))}">
           <div class="group-title">${groupTitleMarkup(state.area === "Full Library" ? areaLabel(group) : group)}</div>
           ${items.map(item => resultMarkup(item, list.indexOf(item))).join("")}
@@ -2820,7 +2784,8 @@
     ].filter(([,value]) => String(value || "").trim());
 
     const connect = connectMarkup(item);
-    if (!rows.length && !connect) return "";
+    const platform = moduleLabel(item);
+    if (!rows.length && !connect && !platform) return "";
 
     return `
       <section class="run-info-block">
@@ -2838,6 +2803,7 @@
             }).join("")}
           </div>
         ` : ""}
+        ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
         ${connect}
       </section>
     `;
@@ -2868,8 +2834,10 @@
 
   function standaloneCommandMarkup(item){
     if (item.type !== "Quick Command" || !item.code) return "";
+    const platform = moduleLabel(item);
     return `
       <section class="command-block">
+        ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
         <div class="section-label">COMMAND</div>
         <pre class="command">${esc(item.code)}</pre>
         <div class="source-actions">
