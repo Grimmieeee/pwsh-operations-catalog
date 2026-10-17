@@ -61,7 +61,7 @@ button{cursor:pointer}
 }
 .brand-main::after{display:none}
 .brand-field{font-weight:600;letter-spacing:.19em}
-.brand-slash{margin:0 .65em 0 .05em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
+.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
 .brand-kit{font-weight:200;letter-spacing:.22em;color:#ffffff}
 .nav{padding:7px 11px 24px}
 .nav button{
@@ -82,9 +82,13 @@ button{cursor:pointer}
 }
 .signature{
   padding:18px 20px 22px;
-  font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.10em;color:var(--mint);
+  display:grid;gap:7px;
+  font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.19em;color:#ffffff;
 }
-.signature-by{margin-right:.7em;color:var(--muted);font-family:var(--ui);font-size:10px;letter-spacing:0}
+.signature-note,.signature-established{color:var(--muted);font-family:var(--ui);font-weight:400;font-size:9px;letter-spacing:.08em}
+.signature-mark{white-space:nowrap}
+.signature-slash{margin-left:.15em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
+.signature-established{font-size:8px;letter-spacing:.12em}
 .workspace{min-width:0;background:linear-gradient(180deg,#141a1d 0%,#161e20 100%)}
 .security-note{margin:0 22px 8px;padding:10px 12px;border:1px solid var(--line-soft);border-radius:3px;color:var(--muted);font-size:14px;line-height:1.5}
 .security-note summary{cursor:pointer;color:var(--body);font-weight:600}
@@ -1092,7 +1096,11 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       <nav id="areaNav" class="nav area-nav"></nav>
     </div>
     <div class="sidebar-footer">
-      <div class="signature"><span class="signature-by">by</span><span>burnsid//</span></div>
+      <div class="signature">
+        <span class="signature-note">Created by</span>
+        <span class="signature-mark">B U R N S I D<span class="signature-slash">//</span></span>
+        <span class="signature-established">EST. 2026</span>
+      </div>
     </div>
   </aside>
 
