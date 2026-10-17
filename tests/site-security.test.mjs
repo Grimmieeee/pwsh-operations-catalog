@@ -9,6 +9,25 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('minimal cards keep full copy commands and explicit safety caveats',()=>{
+  const f=loadCatalog(root);
+  const license=f.api.ITEMS.find(item=>item.file==='INVOKE-ASSIGN-LICENSES.ps1');
+  f.api.openItem(license);
+  let html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('class="connect-command"'));
+  assert.ok(html.includes('Show command'));
+  assert.ok(html.includes('User.ReadWrite.All'));
+  assert.ok(!html.includes('<summary>Details</summary>'));
+  assert.ok(html.includes('Typed ASSIGN confirmation'));
+  const ir=f.api.ITEMS.find(item=>item.file==='ir-contain-eradicate.ps1');
+  f.api.openItem(ir);
+  html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('terminal capture/transcripts'));
+  const theme=f.api.ITEMS.find(item=>item.file==='SET-THEME-COBALT.ps1');
+  f.api.openItem(theme);
+  assert.ok(f.elements.get('drawerBody').innerHTML.includes('sets Process execution policy to Bypass'));
+});
+
 test('cards separate operational checks from inputs and safety guards without overflow groups',()=>{
   const f=loadCatalog(root);
   for(const item of f.api.ITEMS){
