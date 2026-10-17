@@ -2467,7 +2467,7 @@
   }
 
   function rowTags(item){
-    return scopeTag(item) + accessTag(item) + releaseTag(item) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
+    return scopeTag(item) + accessTag(item) + (isVerifiedRelease(item) ? "" : releaseTag(item)) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
   }
 
   function groupTitleMarkup(group){
@@ -2496,7 +2496,10 @@
     const meta = moduleLabel(item);
     return `
       <button class="result" type="button" data-open-index="${index}">
-        <span class="result-name">${esc(item.displayName)}</span>
+        <span class="result-identity">
+          <span class="result-name">${esc(item.displayName)}</span>
+          ${isVerifiedRelease(item) ? releaseTag(item) : ""}
+        </span>
         <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
         <span class="result-flags">${rowTags(item)}</span>
         <span class="result-arrow">›</span>
