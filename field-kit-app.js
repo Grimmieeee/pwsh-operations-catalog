@@ -2651,9 +2651,6 @@
       const normalized = norm(text);
       if (!normalized) return false;
 
-      // Requirements belong in RUN INFO.
-      if (/^requires?\b/i.test(text)) return false;
-
       // Scope is already shown in the card context.
       if (bucket === "Single User" && /^(?:targets?\s+)?(?:one|single)\s+user\b/i.test(text)) return false;
       if (bucket === "Multi User" && /^(?:targets?\s+)?(?:multiple|many)\s+users?\b/i.test(text)) return false;
@@ -2670,19 +2667,41 @@
 
   function factsMarkup(item){
     const facts = displayFacts(item);
-    if (!facts.length) return "";
-    const guards = item.facts.label === "GUARDS";
-    const label = guards ? "CHECKS" : (item.facts.label || "CHECKS");
-    const doesClass = label === "DOES" ? " does-list" : "";
-    return `
-      <section class="check-block">
-        <div class="section-label">${esc(label)}</div>
-        <div class="check-list${doesClass}">
-          ${facts.slice(0,3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}
-          ${facts.length > 3 ? `<details class="more-details"><summary>${guards ? "More guards" : "More checks"}</summary>${facts.slice(3).map(x => `<div class="check-item">${esc(x)}</div>`).join("")}</details>` : ""}
-        </div>
-      </section>
-    `;
+    // Classify by meaning, never by list position or the old mixed-list label.
+    const guardFacts = new Set([
+      "Configurable inactivity threshold", "Guests and disabled users excluded",
+      "Separates synced and cloud-only authority", "Uses Active Directory for synced users",
+      "Uses Entra ID for cloud-only users", "Shows the full disable preview",
+      "Exact UPN resolution", "AD authority for synced users",
+      "Entra authority for cloud-only and guest users", "Full deletion plan before action",
+      "UsageLocation handling when approved", "Full preview before changes",
+      "One selected SKU or ALL licenses", "Full plan before changes",
+      "Targets the requested tenant before searching", "Tenant-target validation",
+      "Direct members only", "Single group creation", "Previewed membership rule",
+      "Changes only noncompliant mailboxes", "Uses CurrentUser scope",
+      "Does not connect to a tenant", "Supports review-only mode", "Confirms before changes",
+      "Uses the preferred authentication flow", "Validates disabled state at the authoritative identity source",
+      "Shows the complete removal plan", "Tenant-ID bound local baseline",
+      "Verified baseline writes only after approval", "Synced memberships changed in AD",
+      "Dynamic and role-assignable groups skipped", "Exchange-managed mail groups skipped",
+      "Separate from Conditional Access", "Uses previous snapshot as the work boundary",
+      "Remembers exact reviewed records, not trusted identities", "No API token; manual GitHub export",
+      "Respects managed execution policy", "No module installs or digital signing",
+      "Public-source safety boundaries", "Skips valid signatures from the selected certificate unless forced"
+    ]);
+    const isGuard = text => guardFacts.has(text) ||
+      /^(?:requires?\b|typed\b|one .+ input$|supports .+ selection$|push:|pull:)/i.test(text);
+    const checks = facts.filter(text => !isGuard(text));
+    const guards = facts.filter(isGuard).filter(text =>
+      !(inputInfo(item) && /^one .+ input$/i.test(text)));
+    const rows = [["REQUIRES",requirementInfo(item)],["INPUT",inputInfo(item)]]
+      .filter(([,value]) => value);
+    const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
+    return `${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
+      ${guards.length || rows.length ? `<section class="check-block"><div class="section-label">GUARDS</div>
+        ${guards.length ? list(guards) : ""}
+        ${rows.length ? `<div class="run-info-grid">${rows.map(([label,value]) => `<div class="run-info-row"><span class="run-info-label">${esc(label)}</span><span class="run-info-value">${esc(value)}</span></div>`).join("")}</div>` : ""}
+      </section>` : ""}`;
   }
 
   function accessMarkup(item){
@@ -2779,31 +2798,12 @@
   function runInfoMarkup(item){
     if (item.type === "Quick Command") return "";
 
-    const rows = [
-      ["REQUIRES",requirementInfo(item)],
-      ["INPUT",inputInfo(item)]
-    ].filter(([,value]) => String(value || "").trim());
-
     const connect = connectMarkup(item);
     const platform = moduleLabel(item);
-    if (!rows.length && !connect && !platform) return "";
+    if (!connect && !platform) return "";
 
     return `
       <section class="run-info-block">
-        <div class="section-label">RUN INFO</div>
-        ${rows.length ? `
-          <div class="run-info-grid">
-            ${rows.map(([label,value]) => {
-              const yes = /^(?:YES|READY)/i.test(String(value));
-              return `
-                <div class="run-info-row">
-                  <span class="run-info-label">${esc(label)}</span>
-                  <span class="run-info-value ${yes ? "run-info-yes" : ""}">${esc(value)}</span>
-                </div>
-              `;
-            }).join("")}
-          </div>
-        ` : ""}
         ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
         ${connect}
       </section>
