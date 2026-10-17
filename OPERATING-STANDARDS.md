@@ -395,16 +395,17 @@ Do not count a successful command invocation as validation when the resulting st
 
 Console output should be human-readable and ticket-friendly.
 
-Recommended structure:
+Default interactive structure (omit sections that add no useful information):
 
 ```text
 TITLE
-Read-only / Changes may be made
+One-sentence objective
+Start timestamp
 
 TARGET / USER / GROUP
 ...
 
-FINDINGS
+STATUS: <result>
 ...
 
 COVERAGE
@@ -412,11 +413,24 @@ COVERAGE
 
 TICKET SUMMARY
 ...
+
+NEXT STEP
+One concise objective for the operator.
+Press ENTER to continue: <exact next filename without extension>
+Press ESC to close
 ```
 
 Prefer plain names and addresses over raw IDs unless an ID materially helps investigation or follow-up.
 
 Sort human-facing lists alphabetically when order has no operational meaning.
+
+Use STATUS for results and NEXT STEP for guidance consistently. Preserve
+meaningful coverage, warnings and unavailable evidence. Use neutral text with
+green success prefixes, yellow review/unavailable states, and red failures or
+contained-account/recovery-required states. Avoid decorative color. Use one
+approval per operational section; retain numbered item selection for cleanup.
+An asynchronous operation may be reported as submitted, never as a completed
+effect without evidence. Do not apply pauses or navigation to unattended jobs.
 
 Mark source/state rather than hiding overlap.
 
@@ -518,6 +532,26 @@ Useful internal tool that should not be exposed publicly in its current form.
 Useful pointer or external material, not a FIELD // KIT-maintained script.
 
 `AUDIT-LIMBO.md` tracks overlap and lineage decisions. It should not become a second catalog.
+
+### Release versions and VERIFIED
+
+Use semantic versions MAJOR.MINOR.PATCH: breaking workflow/input contracts
+increment MAJOR, backward-compatible capabilities increment MINOR, and fixes
+or output-only changes increment PATCH. Version the exact canonical source;
+do not invent versions for unreviewed legacy entries. A coupled workflow may
+share one release version, with all companion files replaced together.
+
+VERIFIED means: Operator tested. Download integrity checked. Applies to this
+version only. Display a small checkmark and version, without dates. This is a
+FIELD // KIT release assurance marker, not a signing certificate or a claim
+of safety in every environment. Keep access/risk labels visible beside it.
+
+Each verified card needs explicit owner runtime-test confirmation, a version,
+the exact SHA-256, and a public sanitized evidence record. Static review,
+PowerShell parsing, mocks, CodeQL and download checks do not replace operator
+testing. Remove verification after any source-byte or version change until
+the exact revision is retested. CI rejects stale records and the UI withholds
+the badge when its version/hash differs from the integrity manifest.
 
 ## 20. Duplicate and Lineage Review
 

@@ -4,7 +4,24 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
-## Interactive IR baseline — October 16, 2026
+## IR 1.0.0, version-bound verification and catalog alignment
+
+The owner confirmed all three exact files in FIELD-KIT-IR-1.0.0.zip passed on
+the client jumpbox. The canonical downloads now use ir-risk-assessment.ps1,
+ir-contain-eradicate.ps1 and ir-recover-validate.ps1 at version 1.0.0. Their
+VERIFIED records bind version, SHA-256 and sanitized owner-test evidence in
+docs/qa/IR-1.0.0-VERIFICATION.md. Any source change invalidates the stamp until
+the replacement is tested. Do not stamp other tools based on static review.
+
+Approved output uses STATUS and NEXT STEP, concise paced sections, one approval
+per section, exact-filename ENTER navigation and ESC to close. The final
+assessment ends the workflow. Test-user utilities remain unpublished.
+
+Continue with docs/CATALOG-ALIGNMENT-PLAN.md and the generated source inventory.
+Review existing repository source in small batches. Stop for owner decisions
+on behavior, authority, scope, consolidation, or unclear success criteria.
+
+## Previous interactive IR baseline — October 16, 2026
 
 The three canonical interactive IR downloads now use the owner's tested 0.4.0
 copies. Source-pending placeholders are replaced with real paths and reviewed

@@ -90,6 +90,19 @@ For destructive or high-impact actions:
 - Never represent a failed or skipped query as a clean result.
 - Mark unavailable data as unavailable.
 
+## Interactive output contract
+
+Use TITLE, a one-sentence objective, a start timestamp, connection results,
+TARGET, task-specific sections, STATUS, and NEXT STEP where useful. Keep the
+same labels and spacing across tools. TICKET SUMMARY is the concise record,
+not another status label. Show exact companion filenames in ENTER handoffs;
+use Press ESC to close. Do not close the caller's existing PowerShell window.
+Automation must not gain interactive pauses. One approval per action section
+is enough; keep numbered cleanup choices. Never shorten a skipped result to
+None found unless the query actually succeeded and returned no items.
+
+Release metadata and the VERIFIED gate are defined by OPERATING-STANDARDS.md.
+
 ## Files and exports
 
 - Do not hard-code user-specific or client-specific export paths.

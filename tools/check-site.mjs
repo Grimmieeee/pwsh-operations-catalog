@@ -26,6 +26,17 @@ for(const item of api.ITEMS){
   assert(!/^\s*(?:<!doctype\s+html|<html\b)/i.test(bytes.toString('utf8')),`Source is an HTML page: ${value}`);
   assert.equal(path.extname(item.file).toLowerCase(),path.extname(value).toLowerCase(),`Download extension mismatch: ${value}`);
   hashes[value]=crypto.createHash('sha256').update(bytes).digest('hex');
+  if(item.verification){
+    const record=item.verification;
+    assert.match(item.version||'',/^\d+\.\d+\.\d+$/,`Verified release needs a semantic version: ${value}`);
+    assert.equal(record.version,item.version,`Verification version is stale: ${value}`);
+    assert.equal(record.sha256,hashes[value],`Verification hash is stale; remove verification until this source is retested: ${value}`);
+    assert.equal(record.operatorTested,true,`Operator testing is required for VERIFIED: ${value}`);
+    assert.match(record.evidence||'',/^docs\/qa\/[a-zA-Z0-9._-]+\.md$/,`Verification evidence path is invalid: ${value}`);
+    assert(fs.existsSync(path.join(root,record.evidence)),`Verification evidence is missing: ${value}`);
+    assert(fs.readFileSync(path.join(root,record.evidence),'utf8').includes(record.sha256),`Evidence does not identify exact source: ${value}`);
+    assert(text.includes('.VERSION '+item.version),`Source version differs from catalog: ${value}`);
+  }
 }
 // Unlinked files in a public repository are still public. Only these build wrappers are intentionally uncatalogued.
 const wrappers=new Set(['tools/export-field-kit.ps1','tools/handoff.ps1']);

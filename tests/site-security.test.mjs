@@ -14,7 +14,7 @@ test('three tested IR workflow steps expose checksum-verified canonical source',
     const relative=new URL(url,'https://catalog.invalid/').pathname.replace(/^\/pwsh-operations-catalog\//,'').replace(/^\//,'');
     return new Response(fs.readFileSync(path.join(root,relative)),{headers:{'content-type':'text/plain'}});
   }});
-  for(const file of ['IR-GET-IDENTITY-RISK-ASSESSMENT.ps1','IR-INVOKE-CONTAINMENT-ERADICATION.ps1','IR-INVOKE-RECOVERY-VALIDATION.ps1']){
+  for(const file of ['ir-risk-assessment.ps1','ir-contain-eradicate.ps1','ir-recover-validate.ps1']){
     const matches=f.api.ITEMS.filter(item=>item.file===file);
     assert.equal(matches.length,1);
     const item=matches[0];
@@ -22,9 +22,24 @@ test('three tested IR workflow steps expose checksum-verified canonical source',
     assert.equal(item.publishedPath,'published-source/incident-response/'+file);
     const bytes=fs.readFileSync(path.join(root,item.publishedPath));
     assert.deepEqual(Buffer.from(await f.api.resolveSource(item),'utf8'),bytes);
-    assert.match(bytes.toString('utf8'),/\.VERSION 0\.4\.0/);
+    assert.match(bytes.toString('utf8'),/\.VERSION 1\.0\.0/);
+    assert.equal(f.api.isVerifiedRelease(item),true);
     assert(item.workflow);
   }
+});
+test('VERIFIED is bound to operator evidence, exact version and source manifest hash',()=>{
+  const f=loadCatalog(root);
+  const item=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
+  assert.match(f.api.releaseTag(item),/VERIFIED · v1\.0\.0/);
+  for(const altered of [
+    {...item,version:'1.0.1'},
+    {...item,verification:{...item.verification,sha256:'0'.repeat(64)}},
+    {...item,verification:{...item.verification,operatorTested:false}},
+    {...item,verification:null}
+  ])assert(!f.api.releaseTag(altered).includes('VERIFIED'));
+  f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
+  assert(!f.api.releaseTag(item).includes('VERIFIED'));
+  assert(f.api.ITEMS.filter(item=>item.verification).length===3);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 

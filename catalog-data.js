@@ -3788,27 +3788,33 @@ window.CATALOG_DATA = [
     "objective": "Moves email back to the mailbox location you choose after an incident."
   },
   {
-    "name": "IR: Identity Risk Assessment",
+    "name": "IR: Risk Assessment",
     "type": "Workflow",
     "area": "Security / IR",
     "subarea": "Account Compromise",
     "platform": "Microsoft Graph + Exchange Online",
     "access": "Read-only",
     "status": "Ready",
-    "source": "FIELD // KIT interactive IR workflow 0.4.0",
+    "source": "FIELD // KIT interactive IR workflow 1.0.0",
     "requires": "Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. First sign-in requests workflow read/change scopes. AD changes require local Windows AD rights.",
     "input": "One exact user UPN and tenant domain; validated context reused between steps",
     "output": "Indicators, unavailable checks, risk summary and optional response handoff",
-    "file": "IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",
+    "file": "ir-risk-assessment.ps1",
     "code": "",
     "related": [],
     "notes": "Makes no tenant changes. Conditional Access is an enabled-policy inventory, not proof of user coverage. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
-    "keywords": "bec compromised account hacked phishing incident discovery triage mailbox compromise ioc hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP1-ir-discovery-summary.ps1 ir incident response",
+    "keywords": "bec compromised account hacked phishing incident discovery triage mailbox compromise ioc hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP1-ir-discovery-summary.ps1 ir incident response IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",
     "url": "",
     "_order": 189,
-    "version": "0.4.0",
-    "publishedPath": "published-source/incident-response/IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",
-    "objective": "Check an account and mailbox for suspicious activity before deciding on containment."
+    "version": "1.0.0",
+    "publishedPath": "published-source/incident-response/ir-risk-assessment.ps1",
+    "objective": "Check an account and mailbox for suspicious activity before deciding on containment.",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "IR: Contain and Eradicate",
@@ -3818,20 +3824,26 @@ window.CATALOG_DATA = [
     "platform": "Microsoft Graph + Exchange Online + Active Directory",
     "access": "Destructive",
     "status": "Ready",
-    "source": "FIELD // KIT interactive IR workflow 0.4.0",
+    "source": "FIELD // KIT interactive IR workflow 1.0.0",
     "requires": "Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. First sign-in requests workflow read/change scopes. AD changes require local Windows AD rights.",
     "input": "One exact user UPN and tenant domain; validated context reused between steps",
     "output": "Selected-action results, post-change validation and recovery handoff",
-    "file": "IR-INVOKE-CONTAINMENT-ERADICATION.ps1",
+    "file": "ir-contain-eradicate.ps1",
     "code": "",
     "related": [],
     "notes": "Revocation, sign-in block, password reset and selected persistence deletion require explicit approvals. Synced AD changes use a SID-matched account. MFA is operator-confirmed, not independently enforced by the script. A temporary password can appear in terminal capture/transcripts; no automatic export or clipboard copy. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
-    "keywords": "contain compromised account revoke reset eradicate recover incident response hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP2-ir-execution-v2.ps1 ir incident response",
+    "keywords": "contain compromised account revoke reset eradicate recover incident response hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP2-ir-execution-v2.ps1 ir incident response IR-INVOKE-CONTAINMENT-ERADICATION.ps1",
     "url": "",
     "_order": 190,
-    "version": "0.4.0",
-    "publishedPath": "published-source/incident-response/IR-INVOKE-CONTAINMENT-ERADICATION.ps1",
-    "objective": "Contain one approved account and remove selected mailbox and OAuth persistence."
+    "version": "1.0.0",
+    "publishedPath": "published-source/incident-response/ir-contain-eradicate.ps1",
+    "objective": "Contain one approved account and remove selected mailbox and OAuth persistence.",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Graph Session and User Check",
@@ -5542,8 +5554,8 @@ window.CATALOG_DATA = [
     ]
   },
   {
-    "name": "IR: Restore and Validate",
-    "file": "IR-INVOKE-RECOVERY-VALIDATION.ps1",
+    "name": "IR: Recovery and Validation",
+    "file": "ir-recover-validate.ps1",
     "area": "Security / IR",
     "subarea": "Account Compromise",
     "type": "Workflow",
@@ -5552,14 +5564,20 @@ window.CATALOG_DATA = [
     "platform": "Microsoft Graph + Exchange Online + Active Directory",
     "objective": "Confirm recovery readiness and restore approved account access.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
-    "keywords": "ir incident response recovery recover restore validate account compromise bec",
+    "keywords": "ir incident response recovery recover restore validate account compromise bec IR-INVOKE-RECOVERY-VALIDATION.ps1",
     "code": "",
     "related": [],
-    "source": "FIELD // KIT interactive IR workflow 0.4.0",
+    "source": "FIELD // KIT interactive IR workflow 1.0.0",
     "input": "One exact user UPN and tenant domain; validated context reused between steps",
     "requires": "Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. First sign-in requests workflow read/change scopes. AD changes require local Windows AD rights.",
-    "version": "0.4.0",
-    "publishedPath": "published-source/incident-response/IR-INVOKE-RECOVERY-VALIDATION.ps1",
-    "output": "Verified enable state, ticket summary and assessment/monitoring follow-up"
+    "version": "1.0.0",
+    "publishedPath": "published-source/incident-response/ir-recover-validate.ps1",
+    "output": "Verified enable state, ticket summary and assessment/monitoring follow-up",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   }
 ];

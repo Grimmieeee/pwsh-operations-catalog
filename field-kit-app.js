@@ -1387,7 +1387,7 @@
 
     if (/^Show Password Last Changed And Age$/i.test(name)) return "Show Password Age";
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
-    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "IR: Identity Risk Assessment";
+    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "IR: Risk Assessment";
     if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "IR: Contain and Eradicate";
     if (/^Revoke Active Sessions$/i.test(name)) return "IR: Revoke Sessions";
     if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
@@ -1824,9 +1824,9 @@
   const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
 
   const IR_STEPS = [
-    {file:"IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",name:"IR: Identity Risk Assessment",n:"1"},
-    {file:"IR-INVOKE-CONTAINMENT-ERADICATION.ps1",name:"IR: Contain and Eradicate",n:"2"},
-    {file:"IR-INVOKE-RECOVERY-VALIDATION.ps1",name:"IR: Restore and Validate",n:"3"}
+    {file:"ir-risk-assessment.ps1",name:"IR: Risk Assessment",n:"1"},
+    {file:"ir-contain-eradicate.ps1",name:"IR: Contain and Eradicate",n:"2"},
+    {file:"ir-recover-validate.ps1",name:"IR: Recovery and Validation",n:"3"}
   ];
   const IR_RENAMES = {
     "_STEP1-ir-discovery-summary.ps1": IR_STEPS[0],
@@ -2454,8 +2454,20 @@
       .join("");
   }
 
+  function isVerifiedRelease(item){
+    const record = item.verification;
+    return !!(record && record.operatorTested === true && item.version === record.version &&
+      /^[0-9a-f]{64}$/.test(record.sha256 || "") && item.publishedPath &&
+      window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] === record.sha256);
+  }
+
+  function releaseTag(item){
+    if (isVerifiedRelease(item)) return '<span class="result-tag result-verified" title="Operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span> VERIFIED · v' + esc(item.version) + '</span>';
+    return item.version ? '<span class="result-tag result-version">v' + esc(item.version) + '</span>' : "";
+  }
+
   function rowTags(item){
-    return scopeTag(item) + accessTag(item) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
+    return scopeTag(item) + accessTag(item) + releaseTag(item) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
   }
 
   function groupTitleMarkup(group){
@@ -2876,6 +2888,7 @@
         <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}</h2>
         ${accessMarkup(item)}
+        ${item.version ? `<div class="release-note">${releaseTag(item)}${isVerifiedRelease(item) ? '<div>Operator tested. Download integrity checked. Applies to this version only.</div>' : ''}</div>` : ''}
         ${item.status === "Source pending" ? '<div class="source-note">SOURCE PENDING — interactive script not yet available.</div>' : ""}
       </section>
 
