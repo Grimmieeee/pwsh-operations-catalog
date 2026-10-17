@@ -19,6 +19,14 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   assert.ok(html.includes('User.ReadWrite.All'));
   assert.ok(!html.includes('<summary>Details</summary>'));
   assert.ok(html.includes('Typed ASSIGN confirmation'));
+  assert.ok(html.includes('<details class="requirements"><summary title='));
+  assert.ok(!html.includes('run-info-label">REQUIRES'));
+  assert.ok(html.includes('script’s numbered list'));
+  const removal=f.api.ITEMS.find(item=>item.file==='INVOKE-REMOVE-LICENSES.ps1');
+  f.api.openItem(removal);
+  html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('Numbered license selection or ALL'));
+  assert.ok(!html.includes('selected SKU or ALL'));
   const ir=f.api.ITEMS.find(item=>item.file==='ir-contain-eradicate.ps1');
   f.api.openItem(ir);
   html=f.elements.get('drawerBody').innerHTML;

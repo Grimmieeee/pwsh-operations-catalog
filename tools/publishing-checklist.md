@@ -76,6 +76,9 @@ Remove or replace:
 - [ ] Risk state is correct: READ ONLY, MAKES CHANGES, or MAKES CHANGES + DESTRUCTIVE.
 - [ ] Filename is correct.
 - [ ] Card checklist reflects real behavior.
+- [ ] INPUT matches actual prompts and separates prerequisites from script-provided choices.
+- [ ] Every card claim is traced to this source version; runtime-dependent claims are operator-tested before verification.
+- [ ] Friendly product/application names and explicit unresolved lookup behavior are checked; technical SKU codes alone do not satisfy the friendly-name standard.
 - [ ] Connect command is accurate.
 - [ ] Source loads from an approved same-origin path.
 - [ ] Published source matches the reviewed approved file.
