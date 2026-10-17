@@ -1,8 +1,8 @@
 ﻿<#PSScriptInfo
-.VERSION 0.4.0
+.VERSION 1.0.0
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
-.DESCRIPTION Selective containment and eradication candidate; controlled testing required.
+.DESCRIPTION Selective containment and eradication workflow for operator-approved response.
 #>
 <#
 .SYNOPSIS
@@ -24,7 +24,7 @@ Allow identity/session/OAuth work without Exchange. Mailbox actions are unavaila
 .PARAMETER NoPause
 Suppress end-of-step navigation. Does not suppress any action confirmation.
 .NOTES
-Candidate 0.4.0, adapted from response v1.1. Offers same-process handoff after validation.
+Release 1.0.0, adapted from response v1.1. Offers same-process handoff after validation.
 Requires Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.
 #>
 
@@ -33,10 +33,31 @@ param(
     [string]$UPN,
     [string]$Tenant,
     [switch]$SkipExchange,
-    [switch]$NoPause
+    [switch]$NoPause,
+    [ValidateRange(0,2000)][int]$OutputDelayMs = 200
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Pace completed lines; status prefixes stay attached to their messages.
+function Write-IRLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][AllowNull()][object]$Object,
+        [switch]$NoNewline,
+        [object]$Separator,
+        [ConsoleColor]$ForegroundColor,
+        [ConsoleColor]$BackgroundColor
+    )
+    Microsoft.PowerShell.Utility\Write-Host @PSBoundParameters
+    if (-not $NoNewline -and -not $NoPause -and $OutputDelayMs -gt 0) {
+        Start-Sleep -Milliseconds $OutputDelayMs
+    }
+}
+
+
+
+
 
 # Shared workflow functions are embedded so each script remains standalone.
 function Get-IRWorkflowScopes {
@@ -65,14 +86,13 @@ function Connect-IRWorkflowGraph {
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     $reuse = $context -and $missing.Count -eq 0 -and (Test-IRWorkflowTenant $context $ExpectedTenant)
     if (-not $reuse) {
-        Write-Host 'Sign in once for assessment, response, and recovery. Changes require operator confirmation.' -ForegroundColor Cyan
         Connect-MgGraph -TenantId $ExpectedTenant -Scopes $scopes -ContextScope Process -NoWelcome -ErrorAction Stop | Out-Null
         $context = Get-MgContext -ErrorAction Stop
     }
     if (-not (Test-IRWorkflowTenant $context $ExpectedTenant)) { throw 'Graph tenant or sign-in context could not be verified.' }
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     if ($missing.Count) { throw "Graph consent is missing: $($missing -join ', ')." }
-    Write-Host '[OK]   GRAPH CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   GRAPH CONNECTED' -ForegroundColor Green
     return $context
 }
 
@@ -95,8 +115,8 @@ function Connect-IRWorkflowExchange {
     if (-not $mailbox.ExternalDirectoryObjectId -or [string]$mailbox.ExternalDirectoryObjectId -ne $UserId) {
         throw 'UPN/mailbox match failed. No mailbox changes are allowed.'
     }
-    Write-Host '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
-    Write-Host '[OK]   UPN MATCHED' -ForegroundColor Green
+    Write-IRLine '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   UPN MATCHED' -ForegroundColor Green
     return $mailbox
 }
 
@@ -131,34 +151,90 @@ function Get-IRWorkflowInput {
     if ($ExpectedTenant -notmatch '^[a-zA-Z0-9][a-zA-Z0-9.-]+$' -or $ExpectedTenant -in @('common','organizations','consumers')) {
         throw 'Enter a specific tenant domain or tenant ID.'
     }
-    if (-not $saved -and -not $NoPause) { [void](Read-Host 'Press [ENTER] to sign in once for assessment, response, and recovery') }
+    if (-not $saved -and -not $NoPause) {
+        Write-IRLine ''
+        [void](Read-Host 'Press ENTER to sign in for assessment, response, and recovery. Changes require operator confirmation')
+        Write-IRLine ''
+    }
     return @{UPN=$TargetUpn;Tenant=$ExpectedTenant}
+}
+
+function Read-IRNavigation {
+    param([string]$NextLabel)
+    Write-IRLine ''
+    Write-IRLine "Press ENTER to continue: $NextLabel"
+    Write-IRLine 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 13) { return $true }
+                if ($key.VirtualKeyCode -eq 27) { return $false }
+            }
+        } catch { Write-IRLine 'Key input unavailable here. Type ESC and Enter to close.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'ENTER = continue; type ESC then ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer)) { return $true }
+        if ($answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return $false }
+        Write-IRLine 'Press ENTER to continue, or type ESC and ENTER to close.'
+    }
+}
+
+function Close-IRWorkflow {
+    param([string]$Message, [switch]$Wait)
+    Write-IRLine ''
+    Write-IRLine $Message
+    if ($Wait -and -not $NoPause) { [void](Read-Host 'Press ENTER to finish') }
 }
 
 function Invoke-IRNextStep {
     param([string]$FileName, [string]$Objective)
     if ($NoPause) { return }
-    Write-Host ''
     if ([string]::IsNullOrWhiteSpace($FileName)) {
-        [void](Read-Host 'Press Enter to return to PowerShell')
+        Close-IRWorkflow 'Run finished. Review unresolved items above before continuing.' -Wait
         return
     }
-    $answer = Read-Host 'Continue? [Y/N; Enter = N]'
-    if ($answer.Trim() -ine 'Y') { return }
-    $next = Join-Path $PSScriptRoot ($FileName + '.ps1')
-    if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
-        Write-Host "Next script not found: $FileName. Keep all three files in the same folder." -ForegroundColor Yellow
+    $label=switch ($FileName) {
+        'ir-contain-eradicate' { 'ir-contain-eradicate' }
+        'ir-recover-validate' { 'ir-recover-validate' }
+        default { 'ir-risk-assessment (FINAL CHECK)' }
+    }
+    if (-not (Read-IRNavigation $label)) {
+        $message=switch ($FileName) {
+            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
+        }
+        Close-IRWorkflow $message
         return
     }
-    $saved = $global:FieldKitIRSession
-    if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
-        Write-Host 'Verified target context is unavailable. Start the next script manually.' -ForegroundColor Yellow
-        return
+    try {
+        $next=Join-Path $PSScriptRoot ($FileName+'.ps1')
+        if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
+            throw "Next script not found: $FileName. Extract all three files together with their original filenames."
+        }
+        $saved=$global:FieldKitIRSession
+        if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
+            throw 'Verified target context unavailable. Start the next script manually.'
+        }
+        $nextArgs=@{Tenant=[string]$saved.TenantId}
+        $command=Get-Command -Name $next -ErrorAction Stop
+        if (-not $command.Parameters.ContainsKey('OutputDelayMs')) {
+            throw 'Next script is from a different release. Replace all three files together.'
+        }
+        $nextArgs.OutputDelayMs=$OutputDelayMs
+        if ($FileName -eq 'ir-risk-assessment') {
+            $nextArgs.UserPrincipalName=[string]$saved.UPN
+            $nextArgs.FinalReview=$true
+        } else { $nextArgs.UPN=[string]$saved.UPN }
+        & $next @nextArgs
     }
-    $nextArgs = @{Tenant=[string]$saved.TenantId}
-    if ($FileName -eq 'IR-GET-IDENTITY-RISK-ASSESSMENT') { $nextArgs.UserPrincipalName=[string]$saved.UPN }
-    else { $nextArgs.UPN=[string]$saved.UPN }
-    & $next @nextArgs
+    catch {
+        Write-IRLine "[FAIL] Next step did not finish: $($_.Exception.Message)" -ForegroundColor Red
+        Close-IRWorkflow 'Workflow stopped. Review the error and current account state before retrying.' -Wait
+    }
 }
 
 # End shared workflow functions.
@@ -179,27 +255,28 @@ $script:NextIRFile = ''
 $script:Phase = 'Discovery'
 $script:ContainmentBlocked = $false
 
-function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
-function Write-Ok   { param([string]$Message) Write-Host '[OK]   ' -ForegroundColor Green -NoNewline; Write-Host $Message }
-function Write-Warn { param([string]$Message) Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline; Write-Host $Message }
-function Write-Fail { param([string]$Message) Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline; Write-Host $Message }
+function Write-Info { param([string]$Message) Write-IRLine "[INFO] $Message" }
+function Write-Ok   { param([string]$Message) Write-IRLine '[OK]   ' -ForegroundColor Green -NoNewline; Write-IRLine $Message }
+function Write-Warn { param([string]$Message) Write-IRLine '[WARN] ' -ForegroundColor Yellow -NoNewline; Write-IRLine $Message }
+function Write-Fail { param([string]$Message) Write-IRLine '[FAIL] ' -ForegroundColor Red -NoNewline; Write-IRLine $Message }
 
 function Write-Section {
     param([string]$Title)
 
-    Write-Host $Title
+    if ($Title -eq 'ADDITIONAL CHECKS: ALL CLEAR') { Write-IRLine $Title -ForegroundColor Green }
+    else { Write-IRLine $Title }
 }
 
 
 
 function Section([string]$Title) {
-    Write-Host ''
-    Write-Host $Title
+    Write-IRLine ''
+    Write-IRLine $Title
 }
 
 function Write-ResourceFooter {
     param([datetime]$Completed)
-    Write-Host "COMPLETED: $($Completed.ToString('MM/dd/yyyy HH:mm'))" -ForegroundColor Cyan
+    Write-IRLine "COMPLETED: $($Completed.ToString('MM/dd/yyyy HH:mm'))" -ForegroundColor Cyan
 }
 
 function Add-UniqueText {
@@ -575,8 +652,8 @@ function Record-AdSyncPending {
 function Revoke-UserSessions {
     param($GraphUser)
     if (Invoke-GraphWrite -Method POST -Uri "https://graph.microsoft.com/v1.0/users/$($GraphUser.id)/revokeSignInSessions" -Body $null) {
-        Add-Action 'Sessions' 'Revoke active sessions' 'Completed' 'Request accepted; invalidation may be delayed'
-        Write-Ok 'Session revocation request accepted'
+        Add-Action 'Sessions' 'Revoke active sessions' 'Completed' 'Session revocation submitted; invalidation may be delayed'
+        Write-Ok 'Session revocation submitted'
         return $true
     }
     Add-Action 'Sessions' 'Revoke active sessions' 'Failed' $script:LastWriteError
@@ -628,10 +705,12 @@ function Reset-UserPassword {
         }
         else { $success = Set-CloudUserPassword -GraphUser $GraphUser -Password $password }
         if ($success) {
-            Write-Ok "$(if ($GraphUser.onPremisesSyncEnabled -eq $true) {'Active Directory'} else {'Entra ID'}) password reset - $password"
-            Write-Host ''
-            Write-Host 'Script clears its password variable after the secure-delivery pause.'
-            [void](Read-Host 'Press [Enter] after secure delivery to continue')
+            Write-Ok "$(if ($GraphUser.onPremisesSyncEnabled -eq $true) {'Active Directory'} else {'Entra ID'}) password reset"
+            Write-IRLine ''
+            Write-IRLine "Temporary password: $password"
+            Write-IRLine 'Deliver through the approved secure channel.'
+            Write-IRLine 'Script clears its password variable after the secure-delivery pause.'
+            [void](Read-Host 'Press ENTER after secure delivery to continue')
         }
         return [bool]$success
     }
@@ -857,19 +936,19 @@ function Select-Items {
 }
 
 function Read-CleanupApproval {
-    Write-Host '[ESC] Return to response menu. Completed containment remains in effect.'
+    Write-IRLine '[ESC] Return to response menu. Completed containment remains in effect.'
     if ($Host.Name -ne 'ConsoleHost' -or [Console]::IsInputRedirected -or (Get-Command Read-Host).CommandType -eq 'Function') {
         return (Read-Host 'Type ERADICATE to continue, or ESC to return')
     }
-    Write-Host 'Type ERADICATE to continue: ' -NoNewline
+    Write-IRLine 'Type ERADICATE to continue: ' -NoNewline
     $text=''
     while ($true) {
         $key=[Console]::ReadKey($true)
-        if ($key.Key -eq 'Escape') { Write-Host ''; return 'ESC' }
-        if ($key.Key -eq 'Enter') { Write-Host ''; return $text }
+        if ($key.Key -eq 'Escape') { Write-IRLine ''; return 'ESC' }
+        if ($key.Key -eq 'Enter') { Write-IRLine ''; return $text }
         if ($key.Key -eq 'Backspace') {
-            if ($text.Length) { $text=$text.Substring(0,$text.Length-1); Write-Host "`b `b" -NoNewline }
-        } elseif (-not [char]::IsControl($key.KeyChar)) { $text += $key.KeyChar; Write-Host $key.KeyChar -NoNewline }
+            if ($text.Length) { $text=$text.Substring(0,$text.Length-1); Write-IRLine "`b `b" -NoNewline }
+        } elseif (-not [char]::IsControl($key.KeyChar)) { $text += $key.KeyChar; Write-IRLine $key.KeyChar -NoNewline }
     }
 }
 
@@ -881,7 +960,7 @@ function Confirm-Exact {
         if ([string]::IsNullOrWhiteSpace($value) -or $value.Trim() -ieq 'N') { return $false }
         if ($value.Trim() -ieq $Required) { return $true }
         Write-Warn "Not confirmed. Enter: $Required"
-        Write-Host 'Press Enter or type N to cancel.'
+        Write-IRLine 'Press Enter or type N to cancel.'
     }
 }
 
@@ -921,8 +1000,8 @@ function Remove-SelectedRules {
 function Clear-MailboxForwarding {
     param([string]$Identity, $MailboxState)
     if ($MailboxState.Forwarding.Count -eq 0) { Add-Action 'Mailbox Persistence' 'Clear mailbox forwarding' 'Skipped' 'No mailbox forwarding returned'; return }
-    Write-Host 'Current mailbox forwarding:'
-    foreach ($item in $MailboxState.Forwarding) { Write-Host "- $item" }
+    Write-IRLine 'Current mailbox forwarding:'
+    foreach ($item in $MailboxState.Forwarding) { Write-IRLine "- $item" }
     try {
         Assert-ResponseContext -Exchange; Set-IRWorkflowMailbox -Identity $Identity -ForwardingAddress $null -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false -ErrorAction Stop
         Add-Action 'Mailbox Persistence' 'Clear mailbox forwarding' 'Completed' ($MailboxState.Forwarding -join '; ')
@@ -937,7 +1016,7 @@ function Clear-MailboxForwarding {
 function Remove-SelectedOAuth {
     param([object[]]$Items, [string]$Identity)
     if ($Items.Count -eq 0) { Add-Action 'OAuth' 'Remove user-specific OAuth consent' 'Skipped' 'No grants selected'; return }
-    foreach ($item in $Items) { Write-Host "- $($item.App) | $($item.Publisher) | Scope: $($item.Scope)" }
+    foreach ($item in $Items) { Write-IRLine "- $($item.App) | $($item.Publisher) | Scope: $($item.Scope)" }
     Write-Warn 'This removes user-specific delegated consent only. Tenant-wide admin consent is not included.'
     foreach ($item in $Items) {
         if (Invoke-GraphWrite -Method DELETE -Uri "https://graph.microsoft.com/v1.0/oauth2PermissionGrants/$($item.Id)" -Body $null) {
@@ -963,7 +1042,7 @@ function Get-MailboxAccessItems {
 function Remove-SelectedMailboxAccess {
     param([object[]]$Items, [string]$Identity)
     if ($Items.Count -eq 0) { Add-Action 'Mailbox Access' 'Remove mailbox access' 'Skipped' 'No access entries selected'; return }
-    foreach ($item in $Items) { Write-Host "- $($item.Type): $($item.Display)" }
+    foreach ($item in $Items) { Write-IRLine "- $($item.Type): $($item.Display)" }
     foreach ($item in $Items) {
         try {
             switch ($item.Type) {
@@ -999,8 +1078,8 @@ function Write-ActionSection {
     param([string]$Result)
     Write-Section ("ACTIONS " + $Result.ToUpper())
     $items = @($script:ActionLog | Where-Object { $_.Result -eq $Result })
-    if ($items.Count -eq 0) { Write-Host '- None'; return }
-    foreach ($item in $items) { Write-Host "- $($item.Action): $($item.Detail)" }
+    if ($items.Count -eq 0) { Write-IRLine '- None'; return }
+    foreach ($item in $items) { Write-IRLine "- $($item.Action): $($item.Detail)" }
 }
 
 function Invoke-EradicationPlan {
@@ -1020,14 +1099,14 @@ function Invoke-EradicationPlan {
                 Section 'INBOX RULE SELECTION'
                 for ($i=0; $i -lt $Rules.Count; $i++) {
                     $r=$Rules[$i]
-                    Write-Host "[$($i+1)] $($r.Name) | Hidden: $($r.Hidden) | $($r.Actions -join ', ') | $($r.Targets -join ', ')"
+                    Write-IRLine "[$($i+1)] $($r.Name) | Hidden: $($r.Hidden) | $($r.Actions -join ', ') | $($r.Targets -join ', ')"
                 }
                 $selectedRules=@(Select-Items -Items $Rules -Prompt 'Select rules to remove')
                 foreach ($r in $selectedRules) { $plan.Add("Remove rule: $($r.Name) | $($r.Actions -join ', ') | $($r.Targets -join ', ')") }
             }
             if (-not $selectedRules.Count) { Add-Action 'Mailbox Persistence' 'Remove inbox rules' 'Skipped' 'No rules selected or returned' }
             if ($MailboxState.Forwarding.Count) {
-                Write-Host "Mailbox forwarding: $($MailboxState.Forwarding -join '; ')"
+                Write-IRLine "Mailbox forwarding: $($MailboxState.Forwarding -join '; ')"
                 $clearForwarding=((Read-Host 'Include mailbox forwarding removal? [Y/N]').Trim() -ieq 'Y')
                 if ($clearForwarding) { $plan.Add("Clear forwarding: $($MailboxState.Forwarding -join '; ')") }
             }
@@ -1037,7 +1116,7 @@ function Invoke-EradicationPlan {
     if ($Selections -contains 5) {
         if ($OAuth.Count) {
             Section 'OAUTH SELECTION'
-            for ($i=0; $i -lt $OAuth.Count; $i++) { Write-Host "[$($i+1)] $($OAuth[$i].App) | $($OAuth[$i].Publisher) | $($OAuth[$i].Scope)" }
+            for ($i=0; $i -lt $OAuth.Count; $i++) { Write-IRLine "[$($i+1)] $($OAuth[$i].App) | $($OAuth[$i].Publisher) | $($OAuth[$i].Scope)" }
             $selectedOAuth=@(Select-Items -Items $OAuth -Prompt 'Select user-specific OAuth grants to remove')
             foreach ($o in $selectedOAuth) { $plan.Add("Remove user consent: $($o.App) | $($o.Scope)") }
         }
@@ -1048,7 +1127,7 @@ function Invoke-EradicationPlan {
         else {
             if ($Access.Count) {
                 Section 'MAILBOX ACCESS SELECTION'
-                for ($i=0; $i -lt $Access.Count; $i++) { Write-Host "[$($i+1)] $($Access[$i].Type): $($Access[$i].Display)" }
+                for ($i=0; $i -lt $Access.Count; $i++) { Write-IRLine "[$($i+1)] $($Access[$i].Type): $($Access[$i].Display)" }
                 $selectedAccess=@(Select-Items -Items $Access -Prompt 'Select mailbox access entries to remove')
                 foreach ($a in $selectedAccess) { $plan.Add("Remove $($a.Type): $($a.Display)") }
             }
@@ -1061,10 +1140,10 @@ function Invoke-EradicationPlan {
         elseif ($disableLegacy) { $plan.Add("Disable protocols: $($MailboxState.Legacy -join ', ')") }
         else { Add-Action 'Legacy Authentication' 'Disable legacy authentication' 'Skipped' 'No enabled mailbox protocols returned' }
     }
-    if (-not $plan.Count) { Write-Host 'No cleanup changes selected.'; return }
+    if (-not $plan.Count) { Write-IRLine 'No cleanup changes selected.'; return }
     Section 'VERIFY CLEANUP PLAN'
-    foreach ($line in $plan) { Write-Host "- $line" }
-    if ($selectedOAuth.Count) { Write-Host 'Only selected user-specific consent is removed; tenant-wide consent is unchanged.' }
+    foreach ($line in $plan) { Write-IRLine "- $line" }
+    if ($selectedOAuth.Count) { Write-IRLine 'Only selected user-specific consent is removed; tenant-wide consent is unchanged.' }
     if (-not (Confirm-EradicationGate $Identity)) { return }
     if ($selectedRules.Count) { Remove-SelectedRules $selectedRules $Identity }
     if ($clearForwarding) { Clear-MailboxForwarding $Identity $MailboxState }
@@ -1078,11 +1157,11 @@ try {
     Enable-Tls12
     try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Contain and Eradicate' } catch {}
 
-    Write-Host 'IR: Contain and Eradicate // MAKES CHANGES'
-    Write-Host ''
-    Write-Host 'Contain the account, review persistence, and remove only approved items.'
-    Write-Host 'Review legacy app passwords separately in Entra if applicable; this script does not clear them.'
-    Write-Host ''
+    Write-IRLine 'IR: CONTAIN AND ERADICATE'
+    Write-IRLine 'Contain the account and remove approved persistence.'
+    Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-IRLine 'Review legacy app passwords separately in Entra if applicable; this script does not clear them.'
+    Write-IRLine ''
     $inputs = Get-IRWorkflowInput $UPN $Tenant
     $UPN=$inputs.UPN; $Tenant=$inputs.Tenant
     if ($global:FieldKitIRSession) { $global:FieldKitIRSession.Response = $null; $global:FieldKitIRSession.Recovery = $null }
@@ -1092,7 +1171,7 @@ try {
     $user = Connect-GraphForTarget -UserPrincipalName $UPN -Scopes $scopes
     if (-not $user) {
         Write-Fail 'Target could not be safely resolved. No action was performed.'
-        foreach ($gap in $script:DataGaps) { Write-Host "- $gap" }
+        foreach ($gap in $script:DataGaps) { Write-IRLine "- $gap" }
         return
     }
 
@@ -1101,7 +1180,7 @@ try {
     if (-not $tenantInfo -or -not $tenantInfo.id) {
         Write-Fail 'Tenant identity could not be validated. No action was performed.'
         Add-DataGap 'Tenant organization lookup did not return a tenant ID.'
-        foreach ($gap in $script:DataGaps) { Write-Host "- $gap" }
+        foreach ($gap in $script:DataGaps) { Write-IRLine "- $gap" }
         return
     }
     $tenantName = if ($tenantInfo.displayName) { [string]$tenantInfo.displayName } else { 'Not available' }
@@ -1132,30 +1211,32 @@ try {
     $accessItems = @(Get-MailboxAccessItems $mailboxState)
 
     Section 'TARGET'
-    Write-Host "UPN: $($user.userPrincipalName)"
-    Write-Host "Account Status: $accountStatus"
+    Write-IRLine "UPN: $($user.userPrincipalName)"
+    Write-IRLine "Account Status: $accountStatus"
 
     if ($adUser) {
     }
 
-    Write-Host ''
+    Write-IRLine ''
     $initialCounts=@{Account=$accountStatus;Rules=$ruleItems.Count;Forwarding=$mailboxState.Forwarding.Count;OAuth=$oauthItems.Count;Access=$accessItems.Count}
     do {
     $script:ReturnToMenu=$false
-    Write-Section 'AVAILABLE RESPONSE ACTIONS - [1,2,3,4] or [ENTER] = ALL'
-    Write-Host '[1] Revoke Active Sessions'
-    Write-Host '[2] Disable Account'
-    Write-Host '[3] Reset Password'
-    Write-Host '[4] Remove Mailbox Rules / Forwarding'
-    Write-Host '[5] Remove User-Specific OAuth Consent'
-    Write-Host '[6] Remove Mailbox Access'
-    Write-Host '[7] Disable Legacy Authentication'
-    Write-Host '[8] Verify MFA Protection'
-    Write-Host '[N] No changes'
-    Write-Host ''
-    Write-Host 'Actions execute in a fixed safe order regardless of selection order.'
-    if ($script:ContainmentApproved) { Write-Host 'On return, ENTER selects cleanup only (4-7). Select 1-3 explicitly to repeat containment.' }
-    $selectionText = Read-Host 'Select approved actions (example: 1,2,3,4; ENTER = ALL; N = no changes)'
+    Write-Section 'AVAILABLE RESPONSE ACTIONS'
+    Write-IRLine $(if ($script:ContainmentApproved) { 'Enter numbers separated by commas, or ENTER for remaining cleanup (4-7).' } else { 'Enter numbers separated by commas, or ENTER for ALL.' })
+    Write-IRLine ''
+    Write-IRLine '[1] Revoke Active Sessions'
+    Write-IRLine '[2] Disable Account'
+    Write-IRLine '[3] Reset Password'
+    Write-IRLine '[4] Remove Mailbox Rules / Forwarding'
+    Write-IRLine '[5] Remove User-Specific OAuth Consent'
+    Write-IRLine '[6] Remove Mailbox Access'
+    Write-IRLine '[7] Disable Legacy Authentication'
+    Write-IRLine '[8] Verify MFA Protection'
+    Write-IRLine '[N] No changes'
+    Write-IRLine ''
+    Write-IRLine 'Actions execute in a fixed safe order regardless of selection order.'
+    if ($script:ContainmentApproved) { Write-IRLine 'On return, ENTER selects cleanup only (4-7). Select 1-3 explicitly to repeat containment.' }
+    $selectionText = Read-Host 'Selection'
     if ([string]::IsNullOrWhiteSpace($selectionText)) { $selectionText = if ($script:ContainmentApproved) {'4,5,6,7'} else {'1,2,3,4,5,6,7,8'} }
     if ($selectionText.Trim().ToUpper() -eq 'N') {
         Add-Action 'Response' 'Account response' 'Skipped' 'No actions selected'
@@ -1166,17 +1247,17 @@ try {
             Add-Action 'Response' 'Account response' 'Skipped' 'No valid actions selected'
         }
         else {
-            Write-Host ''
+            Write-IRLine ''
             Write-Section 'PLANNED ACTIONS'
             $labels = @{
                 1='Revoke active sessions'; 2='Disable account'; 3='Reset password';
                 4='Review/remove mailbox rules and forwarding'; 5='Review/remove user-specific OAuth consent';
                 6='Review/remove mailbox access'; 7='Disable legacy authentication'; 8='Confirm MFA is enforced and registered methods are trusted (operator verified)'
             }
-            foreach ($number in $selections) { Write-Host "- $($labels[$number])" }
+            foreach ($number in $selections) { Write-IRLine "- $($labels[$number])" }
             if ($selections -contains 2 -and $selections -notcontains 1) { Write-Warn 'Account disable was selected without session revocation.' }
             if ($selections -contains 5 -and $selections -notcontains 1) { Write-Warn 'OAuth removal was selected without session revocation; existing access tokens can remain valid until expiry.' }
-            Write-Host ''
+            Write-IRLine ''
             $validatedUser = Get-GraphUser $UPN
             if (-not $validatedUser -or [string]$validatedUser.id -ne [string]$user.id) {
                 Write-Fail 'The target could not be revalidated immediately before response. No action was performed.'
@@ -1195,6 +1276,7 @@ try {
                     Add-Action 'Response' 'Account response' 'Skipped' 'Typed workflow confirmation not entered'
                 }
                 else {
+                    Write-IRLine ''
                     $script:ContainmentApproved=$true
                     $script:Phase = 'Containment'
                     if ($selections -contains 1) { [void](Revoke-UserSessions $user) }
@@ -1217,7 +1299,7 @@ try {
         $mailboxState=Get-MailboxState $UPN
         $oauthItems=@(Get-OAuthItems $user)
         $accessItems=@(Get-MailboxAccessItems $mailboxState)
-        Write-Host 'Choose the remaining actions. Earlier changes have not been undone.'
+        Write-IRLine 'Choose the remaining actions. Earlier changes have not been undone.'
     }
     } while ($script:ReturnToMenu)
 
@@ -1271,20 +1353,20 @@ try {
             $postStatus -eq 'Disabled' -and $remainingHighRiskRules.Count -eq 0 -and
             $remainingSensitiveOAuth.Count -eq 0 -and $postMailboxState.Forwarding.Count -eq 0)
     }
-    Write-Host ''
-    Write-Host "SUMMARY: $status" -ForegroundColor $(if ($failedCount) { 'Red' } else { 'Yellow' })
-    Write-Host "ACTION: $recommendation"
+    Write-IRLine ''
+    Write-IRLine "STATUS: $status" -ForegroundColor $(if ($failedCount -or $status -eq 'ACCOUNT CONTAINED') { 'Red' } else { 'Yellow' })
+    Write-IRLine $recommendation
 
-    Write-Host ''
+    Write-IRLine ''
     Write-ActionSection 'Failed'
-    Write-Host ''
+    Write-IRLine ''
     Write-ActionSection 'Skipped'
 
-    Write-Host ''
+    Write-IRLine ''
     Write-Section 'VALIDATION'
-    Write-Host ("Entra Account: {0}" -f $postStatus)
+    Write-IRLine ("Entra Account: {0}" -f $postStatus)
     if ($user.onPremisesSyncEnabled -eq $true) {
-        Write-Host (
+        Write-IRLine (
             "AD Account: {0}" -f
             $(if ($currentAd) {
                 if (Test-AdUserDisabled $currentAd) { 'Disabled' } else { 'Enabled' }
@@ -1294,51 +1376,52 @@ try {
         # No repeated synchronization output.
     }
     if ($script:DataGaps.Count) { Write-Warn 'Counts below are observed results only; unavailable checks are NOT verified clear.' }
-    Write-Host ("Inbox Rules Remaining: {0}" -f $postRules.Count)
-    Write-Host ("Forwarding Remaining: {0}" -f $postMailboxState.Forwarding.Count)
-    Write-Host ("OAuth Grants Remaining: {0}" -f $postOAuth.Count)
-    Write-Host ("Mailbox Access Remaining: {0}" -f $postAccess.Count)
-    Write-Host ("Legacy Auth: {0}" -f $(if ($postMailboxState.Legacy.Count -gt 0) { $postMailboxState.Legacy -join '; ' } else { 'No' }))
+    Write-IRLine ("Inbox Rules Remaining: {0}" -f $postRules.Count)
+    Write-IRLine ("Forwarding Remaining: {0}" -f $postMailboxState.Forwarding.Count)
+    Write-IRLine ("OAuth Grants Remaining: {0}" -f $postOAuth.Count)
+    Write-IRLine ("Mailbox Access Remaining: {0}" -f $postAccess.Count)
+    Write-IRLine ("Legacy Auth: {0}" -f $(if ($postMailboxState.Legacy.Count -gt 0) { $postMailboxState.Legacy -join '; ' } else { 'No' }))
 
     foreach ($rule in $postRules) {
         $hidden = if ($rule.Hidden) { ' [Hidden]' } else { '' }
-        Write-Host ("Rule: {0}{1} | {2}" -f $rule.Name, $hidden, ($rule.Actions -join '; '))
+        Write-IRLine ("Rule: {0}{1} | {2}" -f $rule.Name, $hidden, ($rule.Actions -join '; '))
     }
 
     if ($script:DataGaps.Count -gt 0) {
         Section 'REVIEW ITEMS'
 
         foreach ($gap in @($script:DataGaps | Select-Object -Unique)) {
-            Write-Host ("- {0}" -f $gap)
+            Write-IRLine ("- {0}" -f $gap)
         }
     }
 
-    Write-Host "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
+    Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
     if ($global:FieldKitIRSession.Response.RecoveryReady) {
-        Section 'NEXT - REQUIRED'
-        Write-Host 'IR-INVOKE-RECOVERY-VALIDATION'
-        Write-Host 'Next: confirm recovery readiness and restore approved access.'
-        $script:NextIRFile='IR-INVOKE-RECOVERY-VALIDATION'
+        Write-IRLine ''
+        Write-IRLine 'STATUS: RECOVERY REQUIRED' -ForegroundColor Red
+        Section 'NEXT STEP'
+        Write-IRLine 'Confirm recovery readiness and restore approved access.'
+        $script:NextIRFile='ir-recover-validate'
     }
     elseif ($failedCount -gt 0 -or $script:DataGaps.Count -gt 0 -or $remainingHighRiskRules.Count -gt 0 -or $postMailboxState.Forwarding.Count -gt 0 -or $remainingSensitiveOAuth.Count -gt 0) {
-        Section 'ACTION REQUIRED'
-        Write-Host 'IR-INVOKE-CONTAINMENT-ERADICATION'
-        Write-Host 'Resolve failed actions and review remaining findings before recovery.'
-        Write-Host 'Then run IR-INVOKE-RECOVERY-VALIDATION to complete the response.'
+        Section 'NEXT STEP'
+        Write-IRLine 'ir-contain-eradicate'
+        Write-IRLine 'Resolve failed actions and review remaining findings before recovery.'
+        Write-IRLine 'Then run ir-recover-validate to complete the response.'
     }
     else {
-        Section 'NEXT - REVIEW'
-        Write-Host 'IR-INVOKE-RECOVERY-VALIDATION'
-        Write-Host 'Review skipped actions and current account state before recovery.'
+        Section 'NEXT STEP'
+        Write-IRLine 'ir-recover-validate'
+        Write-IRLine 'Review skipped actions and current account state before recovery.'
     }
 
 }
 catch {
-    Write-Host ''
+    Write-IRLine ''
     Write-Fail 'Response stopped'
-    Write-Host 'NEXT: IR-INVOKE-CONTAINMENT-ERADICATION'
-    Write-Host 'Resolve the reported items and finish response before restoring access.'
-    Write-Host (Get-ShortError $_)
+    Write-IRLine 'NEXT: ir-contain-eradicate'
+    Write-IRLine 'Resolve the reported items and finish response before restoring access.'
+    Write-IRLine (Get-ShortError $_)
     if ($script:ActionLog.Count) {
         Write-Warn 'Some changes may already be applied. Review the results before retrying.'
             Write-ActionSection 'Failed'

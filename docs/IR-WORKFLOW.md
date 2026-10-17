@@ -1,11 +1,12 @@
 # Interactive incident-response workflow
 
-Published baseline: 0.4.0. The owner tested assessment, containment, cleanup,
-recovery and same-window handoffs on a Windows client jumpbox. This is not a
+Published release: 1.0.0. The owner confirmed successful runs of these exact
+assessment, containment, cleanup, recovery and same-window handoff files on
+a Windows client jumpbox. This is not a
 claim of compatibility with every tenant, module version or hybrid deployment.
 
 Download all three scripts into one folder, retaining their filenames. Start
-`IR-GET-IDENTITY-RISK-ASSESSMENT` from an existing PowerShell window. Enter an
+`ir-risk-assessment` from an existing PowerShell window. Enter an
 exact target UPN and tenant domain. The first sign-in requests the delegated
 read and change scopes for the workflow; assessment itself makes no tenant
 changes. Administrative roles and tenant consent are separate requirements.
@@ -15,14 +16,20 @@ changes. Administrative roles and tenant consent are separate requirements.
 2. **Contain and Eradicate:** select actions, approve RESPOND, choose cleanup
    items, then approve ERADICATE. These can block access, reset passwords and
    delete rules or consent. Only approved items should be selected.
-3. **Restore and Validate:** approve RECOVER only after identity, remediation,
+3. **Recovery and Validation:** approve RECOVER only after identity, remediation,
    device safety, trusted MFA methods and incident-owner authorization are
    confirmed. The script rechecks available evidence and verifies enable state.
 
-Choose Y at a handoff to continue in the same process with validated context.
-Choose N or Enter to return to PowerShell. In baseline 0.4.0, the optional
-post-recovery assessment offers response again; choose N when finished. Newer
-output-pacing and closing-flow refinements remain in testing, not this release.
+Press ENTER at a handoff to continue in the same process with validated context.
+Press ESC to end the workflow. In hosts without direct key support, type ESC
+and press ENTER as prompted. The final assessment completes without offering
+containment again. An existing PowerShell window remains open.
+
+The companion filenames are `ir-risk-assessment.ps1`,
+`ir-contain-eradicate.ps1`, and `ir-recover-validate.ps1`. Download and replace
+all three together; older uppercase filenames are retired. Output uses STATUS
+for results and NEXT STEP for guidance. Verification evidence and exact hashes
+are recorded in [IR-1.0.0-VERIFICATION.md](qa/IR-1.0.0-VERIFICATION.md).
 
 ## Limits and safety
 
@@ -46,5 +53,5 @@ output-pacing and closing-flow refinements remain in testing, not this release.
 - Successful user sign-in with MFA, investigation, monitoring and closure remain
   the incident owner's responsibility. Keep private evidence out of this repo.
 
-Test-user setup, verification and teardown utilities remain unpublished while
-their authentication and verification fixes receive client-side testing.
+Test-user setup, verification and teardown utilities remain outside the public
+catalog release. The IR verification stamp does not cover those utilities.

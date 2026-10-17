@@ -49,7 +49,7 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');
-  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,state,filteredItems,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit };\n${marker}`);
+  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,state,filteredItems,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,releaseTag,rowTags };\n${marker}`);
   vm.runInContext(instrumented,context);
   return {api:window.__TEST,window,document,elements,context,logs};
 }

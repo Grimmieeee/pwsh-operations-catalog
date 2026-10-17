@@ -385,7 +385,9 @@ body.open .drawer{transform:translateX(0)}
   font:800 10px/1 var(--mono);letter-spacing:.07em;
   transition:.15s ease;
 }
-.result-flags{display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.result-flags{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px;min-width:0;max-width:300px}
+.result-verified{color:#a4ead3!important;border-color:#518e7b!important;gap:5px;border-radius:3px}
+.release-note{margin:10px 0;color:#b8ccc5;font:12px/1.5 var(--ui)}
 .result-tag{
   display:inline-flex;align-items:center;min-height:22px;padding:4px 7px;
   border:1px solid #44625a;background:#162023;color:#9cc0b6;

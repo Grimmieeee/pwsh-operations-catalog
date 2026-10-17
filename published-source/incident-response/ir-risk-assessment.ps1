@@ -1,8 +1,8 @@
 ﻿<#PSScriptInfo
-.VERSION 0.4.0
+.VERSION 1.0.0
 .GUID 7cf20e90-263b-4c97-98ec-f7d7d105d9aa
 .AUTHOR FIELD // KIT
-.DESCRIPTION Standalone read-only identity risk assessment. Candidate pending Windows and tenant validation.
+.DESCRIPTION Read-only identity risk assessment for the operator-guided IR workflow.
 #>
 <#
 .SYNOPSIS
@@ -23,7 +23,7 @@ Skip mailbox collection. The assessment remains incomplete and requires review.
 .PARAMETER NoPause
 Suppress end-of-step navigation. Does not bypass action confirmations.
 .NOTES
-Version 0.4.0 candidate. Derived from the v0.32 risk exposure snapshot.
+Version 1.0.0. Derived from the v0.32 risk exposure snapshot.
 Preserves indicator rules and summary precedence; not a compromise verdict or incident closure.
 Graph sign-ins are a bounded latest-25 sample over 10 days, not a complete investigation.
 #>
@@ -32,10 +32,32 @@ param(
     [string]$UserPrincipalName,
     [string]$Tenant,
     [switch]$SkipExchange,
-    [switch]$NoPause
+    [switch]$NoPause,
+    [ValidateRange(0,2000)][int]$OutputDelayMs = 200,
+    [switch]$FinalReview
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Pace completed lines; status prefixes stay attached to their messages.
+function Write-IRLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][AllowNull()][object]$Object,
+        [switch]$NoNewline,
+        [object]$Separator,
+        [ConsoleColor]$ForegroundColor,
+        [ConsoleColor]$BackgroundColor
+    )
+    Microsoft.PowerShell.Utility\Write-Host @PSBoundParameters
+    if (-not $NoNewline -and -not $NoPause -and $OutputDelayMs -gt 0) {
+        Start-Sleep -Milliseconds $OutputDelayMs
+    }
+}
+
+
+
+
 
 # Shared workflow functions are embedded so each script remains standalone.
 function Get-IRWorkflowScopes {
@@ -64,14 +86,13 @@ function Connect-IRWorkflowGraph {
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     $reuse = $context -and $missing.Count -eq 0 -and (Test-IRWorkflowTenant $context $ExpectedTenant)
     if (-not $reuse) {
-        Write-Host 'Sign in once for assessment, response, and recovery. Changes require operator confirmation.' -ForegroundColor Cyan
         Connect-MgGraph -TenantId $ExpectedTenant -Scopes $scopes -ContextScope Process -NoWelcome -ErrorAction Stop | Out-Null
         $context = Get-MgContext -ErrorAction Stop
     }
     if (-not (Test-IRWorkflowTenant $context $ExpectedTenant)) { throw 'Graph tenant or sign-in context could not be verified.' }
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     if ($missing.Count) { throw "Graph consent is missing: $($missing -join ', ')." }
-    Write-Host '[OK]   GRAPH CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   GRAPH CONNECTED' -ForegroundColor Green
     return $context
 }
 
@@ -94,8 +115,8 @@ function Connect-IRWorkflowExchange {
     if (-not $mailbox.ExternalDirectoryObjectId -or [string]$mailbox.ExternalDirectoryObjectId -ne $UserId) {
         throw 'UPN/mailbox match failed. No mailbox changes are allowed.'
     }
-    Write-Host '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
-    Write-Host '[OK]   UPN MATCHED' -ForegroundColor Green
+    Write-IRLine '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   UPN MATCHED' -ForegroundColor Green
     return $mailbox
 }
 
@@ -130,42 +151,99 @@ function Get-IRWorkflowInput {
     if ($ExpectedTenant -notmatch '^[a-zA-Z0-9][a-zA-Z0-9.-]+$' -or $ExpectedTenant -in @('common','organizations','consumers')) {
         throw 'Enter a specific tenant domain or tenant ID.'
     }
-    if (-not $saved -and -not $NoPause) { [void](Read-Host 'Press [ENTER] to sign in once for assessment, response, and recovery') }
+    if (-not $saved -and -not $NoPause) {
+        Write-IRLine ''
+        [void](Read-Host 'Press ENTER to sign in for assessment, response, and recovery. Changes require operator confirmation')
+        Write-IRLine ''
+    }
     return @{UPN=$TargetUpn;Tenant=$ExpectedTenant}
+}
+
+function Read-IRNavigation {
+    param([string]$NextLabel)
+    Write-IRLine ''
+    Write-IRLine "Press ENTER to continue: $NextLabel"
+    Write-IRLine 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 13) { return $true }
+                if ($key.VirtualKeyCode -eq 27) { return $false }
+            }
+        } catch { Write-IRLine 'Key input unavailable here. Type ESC and Enter to close.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'ENTER = continue; type ESC then ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer)) { return $true }
+        if ($answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return $false }
+        Write-IRLine 'Press ENTER to continue, or type ESC and ENTER to close.'
+    }
+}
+
+function Close-IRWorkflow {
+    param([string]$Message, [switch]$Wait)
+    Write-IRLine ''
+    Write-IRLine $Message
+    if ($Wait -and -not $NoPause) { [void](Read-Host 'Press ENTER to finish') }
 }
 
 function Invoke-IRNextStep {
     param([string]$FileName, [string]$Objective)
     if ($NoPause) { return }
-    Write-Host ''
     if ([string]::IsNullOrWhiteSpace($FileName)) {
-        [void](Read-Host 'Press Enter to return to PowerShell')
+        Close-IRWorkflow 'Run finished. Review unresolved items above before continuing.' -Wait
         return
     }
-    $answer = Read-Host 'Continue? [Y/N; Enter = N]'
-    if ($answer.Trim() -ine 'Y') { return }
-    $next = Join-Path $PSScriptRoot ($FileName + '.ps1')
-    if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
-        Write-Host "Next script not found: $FileName. Keep all three files in the same folder." -ForegroundColor Yellow
+    $label=switch ($FileName) {
+        'ir-contain-eradicate' { 'ir-contain-eradicate' }
+        'ir-recover-validate' { 'ir-recover-validate' }
+        default { 'ir-risk-assessment (FINAL CHECK)' }
+    }
+    if (-not (Read-IRNavigation $label)) {
+        $message=switch ($FileName) {
+            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
+        }
+        Close-IRWorkflow $message
         return
     }
-    $saved = $global:FieldKitIRSession
-    if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
-        Write-Host 'Verified target context is unavailable. Start the next script manually.' -ForegroundColor Yellow
-        return
+    try {
+        $next=Join-Path $PSScriptRoot ($FileName+'.ps1')
+        if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
+            throw "Next script not found: $FileName. Extract all three files together with their original filenames."
+        }
+        $saved=$global:FieldKitIRSession
+        if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
+            throw 'Verified target context unavailable. Start the next script manually.'
+        }
+        $nextArgs=@{Tenant=[string]$saved.TenantId}
+        $command=Get-Command -Name $next -ErrorAction Stop
+        if (-not $command.Parameters.ContainsKey('OutputDelayMs')) {
+            throw 'Next script is from a different release. Replace all three files together.'
+        }
+        $nextArgs.OutputDelayMs=$OutputDelayMs
+        if ($FileName -eq 'ir-risk-assessment') {
+            $nextArgs.UserPrincipalName=[string]$saved.UPN
+            $nextArgs.FinalReview=$true
+        } else { $nextArgs.UPN=[string]$saved.UPN }
+        & $next @nextArgs
     }
-    $nextArgs = @{Tenant=[string]$saved.TenantId}
-    if ($FileName -eq 'IR-GET-IDENTITY-RISK-ASSESSMENT') { $nextArgs.UserPrincipalName=[string]$saved.UPN }
-    else { $nextArgs.UPN=[string]$saved.UPN }
-    & $next @nextArgs
+    catch {
+        Write-IRLine "[FAIL] Next step did not finish: $($_.Exception.Message)" -ForegroundColor Red
+        Close-IRWorkflow 'Workflow stopped. Review the error and current account state before retrying.' -Wait
+    }
 }
 
 # End shared workflow functions.
 
 
 function Section([string]$Title) {
-    Write-Host ""
-    Write-Host $Title
+    Write-IRLine ""
+    if ($Title -eq 'ADDITIONAL CHECKS: ALL CLEAR') { Write-IRLine $Title -ForegroundColor Green }
+    else { Write-IRLine $Title }
 }
 
 function Import-AssessmentModule([string]$Name, [version]$MinimumVersion) {
@@ -685,9 +763,10 @@ try {
         $OriginalTitle = $Host.UI.RawUI.WindowTitle
         $Host.UI.RawUI.WindowTitle = 'IR: Identity Risk Assessment'
     } catch { }
-    Write-Host 'IR: Identity Risk Assessment // READ ONLY'
-    Write-Host 'Check the account and mailbox for signs of suspicious activity.'
-    Write-Host ''
+    Write-IRLine 'IR: RISK ASSESSMENT'
+    Write-IRLine 'Check the account and mailbox for signs of suspicious activity.'
+    Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-IRLine ''
     $inputs = Get-IRWorkflowInput $UserPrincipalName $Tenant
     $TargetUpn = $inputs.UPN; $Tenant = $inputs.Tenant
     if ($global:FieldKitIRSession) { $global:FieldKitIRSession.Assessment = $null }
@@ -815,7 +894,7 @@ try {
             $ExoErrorText = $_.Exception.Message
             Add-Unique $DataGaps 'Exchange mailbox checks unavailable'
             Add-Unique $CriticalDataGaps 'Exchange mailbox checks unavailable'
-            Write-Host "[!!] Exchange checks unavailable: $ExoErrorText" -ForegroundColor Yellow
+            Write-IRLine "[!!] Exchange checks unavailable: $ExoErrorText" -ForegroundColor Yellow
         }
     }
     else {
@@ -1000,83 +1079,82 @@ try {
 
 
     Section 'TARGET'
-    Write-Host "UPN: $TargetUpn"
-    Write-Host "Status: $(if ($TargetUser.accountEnabled) { 'Enabled' } else { 'Disabled' })"
+    Write-IRLine "UPN: $TargetUpn"
+    Write-IRLine "Status: $(if ($TargetUser.accountEnabled) { 'Enabled' } else { 'Disabled' })"
     if (-not $MfaAvailable) {
-        Write-Host 'MFA Methods: Not available'
+        Write-IRLine 'MFA Methods: Not available'
     }
     elseif ($MfaMethods.Count -gt 0) {
-        Write-Host "MFA Methods: $($MfaMethods -join '; ')"
+        Write-IRLine "MFA Methods: $($MfaMethods -join '; ')"
     }
     else {
-        Write-Host 'MFA Methods: None returned'
+        Write-IRLine 'MFA Methods: None returned'
     }
-    Write-Host "Created: $(Format-DateTime $TargetUser.createdDateTime 'MM/dd/yyyy')"
-    Write-Host "Password Last Changed: $(Format-DateTime $TargetUser.lastPasswordChangeDateTime 'MM/dd/yyyy')"
+    Write-IRLine "Created: $(Format-DateTime $TargetUser.createdDateTime 'MM/dd/yyyy')"
+    Write-IRLine "Password Last Changed: $(Format-DateTime $TargetUser.lastPasswordChangeDateTime 'MM/dd/yyyy')"
     if ($SignInActivityDisplayReason -eq 'tenant licensing') {
-        Write-Host 'Last Interactive Sign-In: Not available - tenant licensing'
+        Write-IRLine 'Last Interactive Sign-In: Not available - tenant licensing'
     }
     elseif ($SignInActivityDisplayReason -eq 'unavailable') {
-        Write-Host 'Last Interactive Sign-In: Not available'
+        Write-IRLine 'Last Interactive Sign-In: Not available'
     }
     else {
-        Write-Host "Last Interactive Sign-In: $(Format-DateTime $LastInteractiveSignIn 'MM/dd/yyyy HH:mm')"
+        Write-IRLine "Last Interactive Sign-In: $(Format-DateTime $LastInteractiveSignIn 'MM/dd/yyyy HH:mm')"
     }
 
-    Write-Host ""
+    Write-IRLine ""
     $SummaryColor = if ($Summary -eq 'HIGH RISK') { 'Red' } elseif ($Summary -eq 'REVIEW REQUIRED') { 'Yellow' } else { 'Green' }
-    Write-Host "$(if ($Summary -eq 'HIGH RISK') {'WARNING: HIGH-RISK FINDINGS'} else {"SUMMARY: $Summary"})" -ForegroundColor $SummaryColor
+    Write-IRLine "STATUS: $(if ($Summary -eq 'HIGH RISK') {'HIGH-RISK IOCs'} elseif ($Summary -eq 'NO HIGH-RISK FINDINGS') {'NO HIGH-RISK IOCs FOUND'} else {'REVIEW REQUIRED'})" -ForegroundColor $SummaryColor
     if ($DataGaps.Count) {
-        Write-Host "[!!] Not checked: $($DataGaps -join '; ')." -ForegroundColor Yellow
+        Write-IRLine "[!!] Not checked: $($DataGaps -join '; ')." -ForegroundColor Yellow
     }
-    Write-Host "RECOMMENDATION: $Action"
 
     if ($HighRiskReasons.Count -gt 0) {
-        Write-Host ""
-        Write-Host 'HIGH-RISK FINDINGS'
+        Write-IRLine ""
+        Write-IRLine 'HIGH-RISK FINDINGS'
         foreach ($Reason in $HighRiskReasons) {
-            Write-Host "- $Reason"
+            Write-IRLine "- $Reason"
         }
     }
 
     if ($ReviewReasons.Count -gt 0) {
-        Write-Host ""
-        Write-Host 'REVIEW ITEMS'
+        Write-IRLine ""
+        Write-IRLine 'REVIEW ITEMS'
         foreach ($Reason in $ReviewReasons) {
-            Write-Host "- $Reason"
+            Write-IRLine "- $Reason"
         }
     }
 
     Section 'PRIVILEGED ROLES'
     if ($Roles.Count -gt 0) {
         foreach ($Role in $Roles) {
-            Write-Host "Role: $Role"
+            Write-IRLine "Role: $Role"
         }
     }
     elseif ($RolesAvailable) {
-        Write-Host 'Status: No'
+        Write-IRLine 'Status: No'
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
     Section 'SIGN-INS 48H'
     if ($SignIns48.Count -gt 0) {
-        Write-Host "Status: $($SignIns48.Count) sampled sign-in(s) in the last 48 hours"
+        Write-IRLine "Status: $($SignIns48.Count) sampled sign-in(s) in the last 48 hours"
         foreach ($Row in $RecentIpRows) {
             $Line = "IP: $($Row.Ip) | Last Seen: $(Format-DateTime $Row.LastSeen 'MM/dd/yyyy HH:mm')"
             if (-not [string]::IsNullOrWhiteSpace($Row.Country)) {
                 $Line = "$Line | Country: $($Row.Country)"
             }
             $Line = "$Line | Result: $($Row.Result)"
-            Write-Host $Line
+            Write-IRLine $Line
         }
     }
     elseif ($SignInsAvailable) {
-        Write-Host 'Status: No sign-ins found in the last 48 hours'
+        Write-IRLine 'Status: No sign-ins found in the last 48 hours'
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
     $VisibleInboxRules = @(
@@ -1087,30 +1165,30 @@ try {
         $InboxRules | Where-Object { $_.IsHidden -eq $true }
     )
 
-    Section 'INBOX RULES - [ VISIBLE ]'
+    Section 'VISIBLE INBOX RULES'
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden' -or $InboxRuleCoverage -eq 'Visible Only') {
         if ($VisibleInboxRules.Count -gt 0) {
     
             for ($Index = 0; $Index -lt $VisibleInboxRules.Count; $Index++) {
                 if ($Index -gt 0) {
-                    Write-Host ""
+                    Write-IRLine ""
                 }
 
                 $Rule = $VisibleInboxRules[$Index]
-                Write-Host "Rule: $($Rule.Name)"
-                Write-Host "Action: $($Rule.Actions)"
+                Write-IRLine "Rule: $($Rule.Name)"
+                Write-IRLine "Action: $($Rule.Actions)"
             }
         }
         else {
-            Write-Host 'Status: No'
+            Write-IRLine 'Status: No'
         }
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
-    Section 'INBOX RULES - [ HIDDEN ]'
+    Section 'HIDDEN INBOX RULES'
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden') {
         if ($HiddenRuleFindings.Count -gt 0) {
@@ -1137,141 +1215,135 @@ try {
             if ($SuspiciousHiddenRules.Count -gt 0) {
                 for ($Index = 0; $Index -lt $SuspiciousHiddenRules.Count; $Index++) {
                     if ($Index -gt 0) {
-                        Write-Host ""
+                        Write-IRLine ""
                     }
 
                     $Rule = $SuspiciousHiddenRules[$Index]
-                    Write-Host "Rule: $($Rule.Name)"
-                    Write-Host "Action: $($Rule.Actions)"
+                    Write-IRLine "Rule: $($Rule.Name)"
+                    Write-IRLine "Action: $($Rule.Actions)"
                 }
             }
             else {
                 foreach ($Finding in $HiddenRuleFindings) {
-                    Write-Host "Finding: $Finding"
+                    Write-IRLine "Finding: $Finding"
                 }
             }
         }
         else {
-            Write-Host 'Status: No suspicious rules'
+            Write-IRLine 'Status: No suspicious rules'
         }
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
-    Write-Host ""
-    Write-Host 'EXTERNAL FORWARDING'
+    Write-IRLine ""
+    Write-IRLine 'EXTERNAL FORWARDING'
     if ($ExternalForwardTargets.Count -gt 0 -or $ForwardingRules.Count -gt 0) {
         foreach ($Target in @($ExternalForwardTargets | Sort-Object -Unique)) {
-            Write-Host "Target: $Target"
+            Write-IRLine "Target: $Target"
         }
         if ($Mailbox) {
-            Write-Host "Deliver copy to mailbox: $($Mailbox.DeliverToMailboxAndForward)"
+            Write-IRLine "Deliver copy to mailbox: $($Mailbox.DeliverToMailboxAndForward)"
         }
         foreach ($Rule in $ForwardingRules) {
-            Write-Host "Rule: $($Rule.Name)"
-            Write-Host "Action: $($Rule.Actions)"
+            Write-IRLine "Rule: $($Rule.Name)"
+            Write-IRLine "Action: $($Rule.Actions)"
         }
     }
     elseif (
         $MailboxObjectAvailable -and
         ($InboxRuleCoverage -eq 'Visible + Hidden')
     ) {
-        Write-Host 'Status: No'
+        Write-IRLine 'Status: No'
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
     Section 'MAILBOX PERMISSIONS'
     if ($FullAccess.Count -gt 0 -or $SendAs.Count -gt 0) {
         foreach ($Item in $FullAccess) {
-            Write-Host "Full Access: $Item"
+            Write-IRLine "Full Access: $Item"
         }
         foreach ($Item in $SendAs) {
-            Write-Host "Send As: $Item"
+            Write-IRLine "Send As: $Item"
         }
     }
     elseif ($FullAccessAvailable -and $SendAsAvailable) {
-        Write-Host 'Status: No'
+        Write-IRLine 'Status: No'
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
-    Section 'UNVERIFIED OAUTH GRANTS'
+    Section 'UNVERIFIED OAUTH'
     if ($UnverifiedOAuth.Count -gt 0) {
         foreach ($Grant in $UnverifiedOAuth) {
-            Write-Host "App: $($Grant.App)"
-            Write-Host "Scope: $($Grant.Scope)"
+            Write-IRLine "App: $($Grant.App)"
+            Write-IRLine "Scope: $($Grant.Scope)"
         }
     }
     elseif ($OAuthAvailable) {
-        Write-Host 'Status: No'
+        Write-IRLine 'Status: No'
     }
     else {
-        Write-Host 'Status: Not available'
+        Write-IRLine 'Status: Not available'
     }
 
-    Section 'LEGACY AUTH PROTOCOLS'
+    Section 'LEGACY PROTOCOLS'
     if ($LegacyAuth.Count -gt 0) {
         foreach ($Item in $LegacyAuth) {
-            Write-Host $Item
+            Write-IRLine $Item
         }
     }
     elseif ($CasMailboxAvailable) {
-        Write-Host 'Status: No'
+        Write-IRLine 'Status: No'
     }
     else {
-        Write-Host 'Status: Not available; please review in M365 Admin portal.'
+        Write-IRLine 'Status: Not available; please review in M365 Admin portal.'
     }
 
-    Section $(if ($RolesAvailable -and $Roles.Count -eq 0 -and $MailboxObjectAvailable -and $SendOnBehalf.Count -eq 0 -and $SignInsAvailable -and $FailedSignIns.Count -eq 0) { 'ALL CLEAR - ADDITIONAL CHECKS' } else { 'ADDITIONAL CHECKS' })
-    if ($Roles.Count -eq 0 -and $RolesAvailable) {
-        Write-Host 'Privileged Roles: No'
-    }
-    elseif (-not $RolesAvailable) {
-        Write-Host 'Privileged Roles: Not available'
-    }
+    Section $(if ($RolesAvailable -and $Roles.Count -eq 0 -and $MailboxObjectAvailable -and $SendOnBehalf.Count -eq 0 -and $SignInsAvailable -and $FailedSignIns.Count -eq 0) { 'ADDITIONAL CHECKS: ALL CLEAR' } else { 'ADDITIONAL CHECKS' })
 
     if ($SendOnBehalf.Count -gt 0) {
-        Write-Host "Send On Behalf: $($SendOnBehalf -join '; ')"
+        Write-IRLine "Send On Behalf: $($SendOnBehalf -join '; ')"
     }
     elseif ($MailboxObjectAvailable) {
-        Write-Host 'Send On Behalf: No'
+        Write-IRLine 'Send On Behalf: No'
     }
     else {
-        Write-Host 'Send On Behalf: Not available'
+        Write-IRLine 'Send On Behalf: Not available'
     }
 
     if ($FailedSignIns.Count -gt 0) {
-        Write-Host "Failed Sign-ins: $($FailedSignIns.Count) in recent 10-day sample"
+        Write-IRLine "Failed Sign-ins: $($FailedSignIns.Count) in recent 10-day sample"
     }
     elseif ($SignInsAvailable) {
-        Write-Host 'Failed Sign-ins: None in recent 10-day sample'
+        Write-IRLine 'Failed Sign-ins: None in recent 10-day sample'
     }
     else {
-        Write-Host 'Failed Sign-ins: Not available'
+        Write-IRLine 'Failed Sign-ins: Not available'
     }
 
-    Section 'CONDITIONAL ACCESS POLICIES - [ ENABLED ]'
-    Write-Host 'Policy inventory; user coverage still requires verification.'
+    Section 'ENABLED CAPs'
+    Write-IRLine 'Policy inventory; user coverage still requires verification.'
     if (
         $ConditionalAccessPolicyStatus -eq 'Available' -and
         $ConditionalAccessEnabledPolicies.Count -gt 0
     ) {
         foreach ($Policy in $ConditionalAccessEnabledPolicies) {
-            Write-Host "Policy: $(Format-ConditionalAccessPolicyName $Policy)"
+            Write-IRLine "Policy: $(Format-ConditionalAccessPolicyName $Policy)"
         }
     }
     elseif ($ConditionalAccessPolicyStatus -eq 'Available') {
-        Write-Host 'None'
+        Write-IRLine 'None'
     }
     elseif ($ConditionalAccessPolicyStatus -eq 'Unavailable') {
-        Write-Host 'Unable to retrieve'
+        Write-IRLine 'Unable to retrieve'
     }
     else {
-        Write-Host 'Unknown'
+        Write-IRLine 'Unknown'
     }
 
     $global:FieldKitIRSession.Assessment = @{
@@ -1279,31 +1351,54 @@ try {
         InitialStatus=$(if ($TargetUser.accountEnabled) {'Enabled'} else {'Disabled'})
         HighRisk=@($HighRiskReasons); Review=@($ReviewReasons); Gaps=@($DataGaps)
     }
-    Write-Host "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
-    Section 'NEXT STEP: DECISION POINT'
-    if ($HighRiskReasons.Count -gt 0) {
-        Write-Host 'ESCALATION REVIEW'
-        Write-Host 'Review the high-risk findings and decide whether to contain this account.'
-    }
-    elseif ($CriticalDataGaps.Count -gt 0 -or $ReviewReasons.Count -gt 0) {
-        Section 'NEXT - REVIEW'
-        Write-Host 'Resolve the review items. Continue to containment if the incident evidence warrants it.'
+    if ($FinalReview) {
+        Section 'FINAL FINDINGS SUMMARY'
+        Write-IRLine "UPN: $TargetUpn"
+        Write-IRLine "Result: $Summary"
+        Write-IRLine "Account: $(if ($TargetUser.accountEnabled) {'Enabled'} else {'Disabled'})"
+        foreach ($reason in $HighRiskReasons) { Write-IRLine "High risk: $reason" }
+        foreach ($reason in $ReviewReasons) { Write-IRLine "Review: $reason" }
+        foreach ($gap in $DataGaps) { Write-IRLine "Unavailable: $gap" }
+        if ($HighRiskReasons.Count -or $ReviewReasons.Count -or $DataGaps.Count) {
+            Write-IRLine 'Follow up on the findings above. Do not treat this result as incident closure.'
+            Write-IRLine ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+            Close-IRWorkflow 'Final assessment finished - follow-up required.' -Wait
+        }
+        else {
+            Write-IRLine 'No high-risk findings in the checks completed.'
+            Write-IRLine 'Confirm user sign-in with MFA and monitor for new suspicious activity for 48 hours.'
+            Write-IRLine ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+            Close-IRWorkflow 'Script workflow complete. Incident monitoring continues.' -Wait
+        }
+        $script:FinalReviewFinished=$true
     }
     else {
-        Write-Host 'NO CONTAINMENT INDICATED'
-        Write-Host 'No high-risk findings in the checks completed. Continue only if other incident evidence warrants response.'
+    Write-IRLine ''
+    if ($HighRiskReasons.Count -gt 0) {
+        Write-IRLine 'STATUS: CONTAINMENT REVIEW INDICATED' -ForegroundColor Red
+        Section 'NEXT STEP'
+        Write-IRLine 'Document evidence. Review the high-risk findings and approve response if warranted.'
     }
-    Write-Host 'N: document findings and return to PowerShell.'
-    Write-Host 'Y: contain the account and review persistence removal.'
-    Write-Host 'IR-INVOKE-CONTAINMENT-ERADICATION'
-    $script:NextIRFile='IR-INVOKE-CONTAINMENT-ERADICATION'
+    elseif ($CriticalDataGaps.Count -gt 0 -or $ReviewReasons.Count -gt 0) {
+        Write-IRLine 'STATUS: REVIEW REQUIRED' -ForegroundColor Yellow
+        Section 'NEXT STEP'
+        Write-IRLine 'Resolve unavailable checks and review the incident evidence before closure.'
+    }
+    else {
+        Write-IRLine 'STATUS: NO CONTAINMENT INDICATED'
+        Section 'NEXT STEP'
+        Write-IRLine 'Document evidence. Continue only if other incident evidence warrants response.'
+    }
+    Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
+    $script:NextIRFile='ir-contain-eradicate'
+    }
 
 }
 catch {
-    Write-Host "[FAIL] Assessment incomplete: $($_.Exception.Message)" -ForegroundColor Red
-    Section 'NEXT'
-    Write-Host 'IR-GET-IDENTITY-RISK-ASSESSMENT'
-    Write-Host 'Resolve the reported checks and rerun. Confirmed compromise can still require approved containment.'
+    Write-IRLine "[FAIL] Assessment incomplete: $($_.Exception.Message)" -ForegroundColor Red
+    Section 'NEXT STEP'
+    Write-IRLine 'ir-risk-assessment'
+    Write-IRLine 'Resolve the reported checks and rerun. Confirmed compromise can still require approved containment.'
 }
 finally {
     if ($null -ne $OriginalTitle) {
@@ -1311,4 +1406,6 @@ finally {
     }
 }
 
-Invoke-IRNextStep -FileName $script:NextIRFile -Objective 'Next: contain the account and review approved persistence removal.'
+if (-not $script:FinalReviewFinished) {
+    Invoke-IRNextStep -FileName $script:NextIRFile -Objective 'Next: contain the account and review approved persistence removal.'
+}

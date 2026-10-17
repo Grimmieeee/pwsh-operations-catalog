@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 0.4.0
+.VERSION 1.0.0
 .GUID d77fb13d-5860-46ad-bc7e-2ef0df3a458d
 .AUTHOR FIELD // KIT
 .DESCRIPTION Verify response readiness and restore one approved identity.
@@ -15,8 +15,29 @@ No password reset, persistence deletion, automatic sync, module install, or expo
 Synced accounts restore in SID-matched AD first, then Entra. Pending sync remains unverified.
 #>
 [CmdletBinding()]
-param([string]$UPN, [string]$Tenant, [switch]$NoPause)
+param([string]$UPN, [string]$Tenant, [switch]$NoPause,
+    [ValidateRange(0,2000)][int]$OutputDelayMs = 200)
 $ErrorActionPreference = 'Stop'
+
+# Pace completed lines; status prefixes stay attached to their messages.
+function Write-IRLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][AllowNull()][object]$Object,
+        [switch]$NoNewline,
+        [object]$Separator,
+        [ConsoleColor]$ForegroundColor,
+        [ConsoleColor]$BackgroundColor
+    )
+    Microsoft.PowerShell.Utility\Write-Host @PSBoundParameters
+    if (-not $NoNewline -and -not $NoPause -and $OutputDelayMs -gt 0) {
+        Start-Sleep -Milliseconds $OutputDelayMs
+    }
+}
+
+
+
+
 $SkipExchange=$false
 $script:DataGaps=New-Object System.Collections.ArrayList
 $script:ActionLog=New-Object System.Collections.ArrayList
@@ -57,14 +78,13 @@ function Connect-IRWorkflowGraph {
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     $reuse = $context -and $missing.Count -eq 0 -and (Test-IRWorkflowTenant $context $ExpectedTenant)
     if (-not $reuse) {
-        Write-Host 'Sign in once for assessment, response, and recovery. Changes require operator confirmation.' -ForegroundColor Cyan
         Connect-MgGraph -TenantId $ExpectedTenant -Scopes $scopes -ContextScope Process -NoWelcome -ErrorAction Stop | Out-Null
         $context = Get-MgContext -ErrorAction Stop
     }
     if (-not (Test-IRWorkflowTenant $context $ExpectedTenant)) { throw 'Graph tenant or sign-in context could not be verified.' }
     $missing = @($scopes | Where-Object { @($context.Scopes) -notcontains $_ })
     if ($missing.Count) { throw "Graph consent is missing: $($missing -join ', ')." }
-    Write-Host '[OK]   GRAPH CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   GRAPH CONNECTED' -ForegroundColor Green
     return $context
 }
 
@@ -87,8 +107,8 @@ function Connect-IRWorkflowExchange {
     if (-not $mailbox.ExternalDirectoryObjectId -or [string]$mailbox.ExternalDirectoryObjectId -ne $UserId) {
         throw 'UPN/mailbox match failed. No mailbox changes are allowed.'
     }
-    Write-Host '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
-    Write-Host '[OK]   UPN MATCHED' -ForegroundColor Green
+    Write-IRLine '[OK]   EXCHANGE CONNECTED' -ForegroundColor Green
+    Write-IRLine '[OK]   UPN MATCHED' -ForegroundColor Green
     return $mailbox
 }
 
@@ -123,47 +143,107 @@ function Get-IRWorkflowInput {
     if ($ExpectedTenant -notmatch '^[a-zA-Z0-9][a-zA-Z0-9.-]+$' -or $ExpectedTenant -in @('common','organizations','consumers')) {
         throw 'Enter a specific tenant domain or tenant ID.'
     }
-    if (-not $saved -and -not $NoPause) { [void](Read-Host 'Press [ENTER] to sign in once for assessment, response, and recovery') }
+    if (-not $saved -and -not $NoPause) {
+        Write-IRLine ''
+        [void](Read-Host 'Press ENTER to sign in for assessment, response, and recovery. Changes require operator confirmation')
+        Write-IRLine ''
+    }
     return @{UPN=$TargetUpn;Tenant=$ExpectedTenant}
+}
+
+function Read-IRNavigation {
+    param([string]$NextLabel)
+    Write-IRLine ''
+    Write-IRLine "Press ENTER to continue: $NextLabel"
+    Write-IRLine 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 13) { return $true }
+                if ($key.VirtualKeyCode -eq 27) { return $false }
+            }
+        } catch { Write-IRLine 'Key input unavailable here. Type ESC and Enter to close.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'ENTER = continue; type ESC then ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer)) { return $true }
+        if ($answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return $false }
+        Write-IRLine 'Press ENTER to continue, or type ESC and ENTER to close.'
+    }
+}
+
+function Close-IRWorkflow {
+    param([string]$Message, [switch]$Wait)
+    Write-IRLine ''
+    Write-IRLine $Message
+    if ($Wait -and -not $NoPause) { [void](Read-Host 'Press ENTER to finish') }
 }
 
 function Invoke-IRNextStep {
     param([string]$FileName, [string]$Objective)
     if ($NoPause) { return }
-    Write-Host ''
     if ([string]::IsNullOrWhiteSpace($FileName)) {
-        [void](Read-Host 'Press Enter to return to PowerShell')
+        Close-IRWorkflow 'Run finished. Review unresolved items above before continuing.' -Wait
         return
     }
-    $answer = Read-Host 'Continue? [Y/N; Enter = N]'
-    if ($answer.Trim() -ine 'Y') { return }
-    $next = Join-Path $PSScriptRoot ($FileName + '.ps1')
-    if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
-        Write-Host "Next script not found: $FileName. Keep all three files in the same folder." -ForegroundColor Yellow
+    $label=switch ($FileName) {
+        'ir-contain-eradicate' { 'ir-contain-eradicate' }
+        'ir-recover-validate' { 'ir-recover-validate' }
+        default { 'ir-risk-assessment (FINAL CHECK)' }
+    }
+    if (-not (Read-IRNavigation $label)) {
+        $message=switch ($FileName) {
+            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
+        }
+        Close-IRWorkflow $message
         return
     }
-    $saved = $global:FieldKitIRSession
-    if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
-        Write-Host 'Verified target context is unavailable. Start the next script manually.' -ForegroundColor Yellow
-        return
+    try {
+        $next=Join-Path $PSScriptRoot ($FileName+'.ps1')
+        if (-not (Test-Path -LiteralPath $next -PathType Leaf)) {
+            throw "Next script not found: $FileName. Extract all three files together with their original filenames."
+        }
+        $saved=$global:FieldKitIRSession
+        if (-not $saved -or -not $saved.UPN -or -not $saved.TenantId) {
+            throw 'Verified target context unavailable. Start the next script manually.'
+        }
+        $nextArgs=@{Tenant=[string]$saved.TenantId}
+        $command=Get-Command -Name $next -ErrorAction Stop
+        if (-not $command.Parameters.ContainsKey('OutputDelayMs')) {
+            throw 'Next script is from a different release. Replace all three files together.'
+        }
+        $nextArgs.OutputDelayMs=$OutputDelayMs
+        if ($FileName -eq 'ir-risk-assessment') {
+            $nextArgs.UserPrincipalName=[string]$saved.UPN
+            $nextArgs.FinalReview=$true
+        } else { $nextArgs.UPN=[string]$saved.UPN }
+        & $next @nextArgs
     }
-    $nextArgs = @{Tenant=[string]$saved.TenantId}
-    if ($FileName -eq 'IR-GET-IDENTITY-RISK-ASSESSMENT') { $nextArgs.UserPrincipalName=[string]$saved.UPN }
-    else { $nextArgs.UPN=[string]$saved.UPN }
-    & $next @nextArgs
+    catch {
+        Write-IRLine "[FAIL] Next step did not finish: $($_.Exception.Message)" -ForegroundColor Red
+        Close-IRWorkflow 'Workflow stopped. Review the error and current account state before retrying.' -Wait
+    }
 }
 
 # End shared workflow functions.
 
-function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
+function Write-Info { param([string]$Message) Write-IRLine "[INFO] $Message" }
 
-function Write-Ok   { param([string]$Message) Write-Host '[OK]   ' -ForegroundColor Green -NoNewline; Write-Host $Message }
+function Write-Ok   { param([string]$Message) Write-IRLine '[OK]   ' -ForegroundColor Green -NoNewline; Write-IRLine $Message }
 
-function Write-Warn { param([string]$Message) Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline; Write-Host $Message }
+function Write-Warn { param([string]$Message) Write-IRLine '[WARN] ' -ForegroundColor Yellow -NoNewline; Write-IRLine $Message }
 
-function Write-Fail { param([string]$Message) Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline; Write-Host $Message }
+function Write-Fail { param([string]$Message) Write-IRLine '[FAIL] ' -ForegroundColor Red -NoNewline; Write-IRLine $Message }
 
-function Section([string]$Title) { Write-Host ''; Write-Host $Title }
+function Section([string]$Title) {
+    Write-IRLine ''
+    if ($Title -eq 'ADDITIONAL CHECKS: ALL CLEAR') { Write-IRLine $Title -ForegroundColor Green }
+    else { Write-IRLine $Title }
+}
 
 function Add-UniqueText {
     param([System.Collections.ArrayList]$List, [string]$Text)
@@ -642,7 +722,7 @@ function Confirm-Exact {
         if ([string]::IsNullOrWhiteSpace($value) -or $value.Trim() -ieq 'N') { return $false }
         if ($value.Trim() -ieq $Required) { return $true }
         Write-Warn "Not confirmed. Enter: $Required"
-        Write-Host 'Press Enter or type N to cancel.'
+        Write-IRLine 'Press Enter or type N to cancel.'
     }
 }
 
@@ -658,7 +738,7 @@ function Enable-AdRecoveryAccount {
         throw 'AD account enable was not verified. Entra was not re-enabled.'
     }
     Add-Action 'Identity' 'Restore AD account' 'Completed' 'Enabled state verified'
-    Write-Ok 'AD account enabled'
+    Write-Ok 'Active Directory account enabled'
 }
 
 function Test-RecoveryReadiness {
@@ -683,8 +763,8 @@ function Test-RecoveryReadiness {
         if ($fingerprint -cne $script:ApprovedRecoveryFindings) {
             if (-not $AllowReview) { throw 'Persistence findings changed after approval. Access was not restored.' }
             Write-Warn 'Remaining findings need review. Remove unauthorized items in Step 2.'
-            foreach ($finding in $findings) { Write-Host $finding.Text }
-            Write-Host 'Continue only if every listed item is legitimate and approved to remain.'
+            foreach ($finding in $findings) { Write-IRLine $finding.Text }
+            Write-IRLine 'Continue only if every listed item is legitimate and approved to remain.'
             $script:PendingRecoveryFindings=$fingerprint
         }
     }
@@ -693,39 +773,47 @@ function Test-RecoveryReadiness {
 
 function Write-IRTicketSummary {
     $session=$global:FieldKitIRSession
-    Write-Host ''
-    Write-Host 'TICKET SUMMARY'
-    Write-Host "User: $($session.UPN)"
-    Write-Host "Completed: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
-    if ($session.Assessment) { Write-Host "Initial assessment: $($session.Assessment.Summary)" }
+    Write-IRLine ''
+    Write-IRLine '--------------------------------------'
+    Write-IRLine 'TICKET SUMMARY'
+    Write-IRLine "User: $($session.UPN)"
+    Write-IRLine "Completed: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
+    if ($session.Assessment) { Write-IRLine "Initial assessment: $(if ($session.Assessment.Summary -eq 'NO HIGH-RISK FINDINGS') {'NO HIGH-RISK IOCs FOUND'} elseif ($session.Assessment.Summary -eq 'HIGH RISK') {'HIGH-RISK IOCs'} else {$session.Assessment.Summary})" }
     if ($session.Response) {
         $response=$session.Response
         if ($response.Before -and $response.After) {
-            Write-Host "Account: $($response.Before.Account) -> $($response.After.Account) during response -> Enabled after recovery"
-            Write-Host "Response counts: Rules $($response.Before.Rules) -> $($response.After.Rules); Forwarding $($response.Before.Forwarding) -> $($response.After.Forwarding); OAuth grants $($response.Before.OAuth) -> $($response.After.OAuth); Mailbox access $($response.Before.Access) -> $($response.After.Access)"
+            Write-IRLine "Account: $($response.Before.Account) -> $($response.After.Account) -> Enabled"
         }
-        foreach ($action in @($response.Actions)) { Write-Host "$($action.Action): $($action.Result)$(if ($action.Result -eq 'Skipped') {" - $($action.Detail)"})" }
-        if ($response.Failed -gt 0) { Write-Host 'Earlier response failures: operator confirmed resolution before recovery.' }
+        foreach ($action in @($response.Actions)) {
+            $result=if ($action.Result -eq 'Completed' -and $action.Action -eq 'Revoke active sessions') { 'Session revocation submitted' }
+                elseif ($action.Result -eq 'Completed' -and $action.Action -eq 'Verify user MFA protection') { 'Operator confirmed' }
+                else { $action.Result }
+            Write-IRLine "$($action.Action): $result$(if ($action.Result -eq 'Skipped') {" - $($action.Detail)"})"
+        }
+        if ($response.Failed -gt 0) { Write-IRLine 'Earlier response failures: operator confirmed resolution before recovery.' }
     }
-    else { Write-Host 'Earlier response: no results recorded in this PowerShell session.' }
-    Write-Host 'Recovery: account enable verified; identity, remediation and MFA readiness confirmed by operator.'
-    Write-Host 'Follow-up: verify user sign-in with MFA; monitor for new suspicious activity for 48 hours.'
+    else { Write-IRLine 'Earlier response: no results recorded in this PowerShell session.' }
+    Write-IRLine 'Recovery: Account enable verified. Identity, device safety, remediation, and MFA readiness confirmed by operator.'
+    Write-IRLine 'Follow-up: verify user sign-in with MFA; monitor for new suspicious activity for 48 hours.'
+    Write-IRLine '--------------------------------------'
 }
 
 
 try {
     Enable-Tls12
     try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Recovery and Validation' } catch {}
-    Write-Host 'IR: Recovery and Validation // MAKES CHANGES'
-    Write-Host '' 
+    Write-IRLine 'IR: RECOVERY AND VALIDATION'
+    Write-IRLine 'Confirm recovery readiness and restore approved access.'
+    Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-IRLine '' 
     $inputs=Get-IRWorkflowInput $UPN $Tenant
     $UPN=$inputs.UPN; $Tenant=$inputs.Tenant
     $user=Connect-GraphForTarget $UPN (Get-IRWorkflowScopes)
     $global:FieldKitIRSession.Recovery=$null
     $exoOk=Connect-ExchangeForTarget $UPN
     Section 'TARGET'
-    Write-Host "UPN: $($user.userPrincipalName)"
-    Write-Host "Account Status: $(if ($user.accountEnabled -eq $false) {'Disabled'} elseif ($user.accountEnabled -eq $true) {'Enabled'} else {'Unknown'})"
+    Write-IRLine "UPN: $($user.userPrincipalName)"
+    Write-IRLine "Account Status: $(if ($user.accountEnabled -eq $false) {'Disabled'} elseif ($user.accountEnabled -eq $true) {'Enabled'} else {'Unknown'})"
     $null=Test-RecoveryReadiness $user $exoOk -AllowReview
     $adUser=$null
     if ($user.onPremisesSyncEnabled -eq $true) {
@@ -734,15 +822,16 @@ try {
     }
     $response=$global:FieldKitIRSession.Response
     if (-not $response -or -not $response.RecoveryReady) {
-        Write-Host 'RECOVER confirms any failed or unfinished response work was completed and verified.'
+        Write-IRLine 'RECOVER confirms any failed or unfinished response work was completed and verified.'
     }
-    Write-Host ''
-    Write-Host 'Before restoring access, confirm:'
-    Write-Host '- User identity verified through a trusted contact method.'
-    Write-Host '- Password remediation, scope review, and persistence cleanup complete.'
-    Write-Host '- MFA is enforced for this user and registered methods are trusted (operator confirmed).'
-    Write-Host '- Recovery approved by the incident owner.'
-    if ($script:PendingRecoveryFindings) { Write-Host '- Every remaining finding listed above is legitimate and approved to remain.' }
+    Write-IRLine ''
+    Write-IRLine 'RECOVERY CHECKLIST'
+    Write-IRLine '- User identity verified through a trusted contact method.'
+    Write-IRLine '- Device safety confirmed.'
+    Write-IRLine '- Password remediation, scope review, and persistence cleanup complete.'
+    Write-IRLine '- MFA is enforced for this user and registered methods are trusted (operator confirmed).'
+    Write-IRLine '- Recovery approved by the incident owner.'
+    if ($script:PendingRecoveryFindings) { Write-IRLine '- Every remaining finding listed above is legitimate and approved to remain.' }
     if (-not (Confirm-Exact 'RECOVER')) { throw 'Recovery cancelled. Access was not restored.' }
     $script:ApprovedRecoveryFindings=$script:PendingRecoveryFindings
     # Recheck live state and evidence after confirmation, not just before the prompt.
@@ -764,32 +853,33 @@ try {
         throw 'Entra account enable was not verified. Check current state before retrying.'
     }
     Add-Action 'Identity' 'Restore Entra account' 'Completed' 'Enabled state verified'
+    Write-Ok 'Entra account enabled'
     $global:FieldKitIRSession.Recovery=@{Completed=Get-Date;UserId=$script:ExpectedUserId;Status='Access restored; monitoring required'}
     $script:RecoverySucceeded=$true
-    Section 'SUMMARY'
-    Write-Ok 'Account enabled. User sign-in with MFA still needs validation.'
-    Write-Host 'Identity, remediation, and MFA readiness confirmed by the operator.'
+    Write-IRLine ''
+    Write-IRLine 'STATUS: ACCOUNT ENABLED' -ForegroundColor Green
+    Write-IRLine 'User sign-in with MFA still needs validation.'
+    Write-IRLine 'Identity, remediation, and MFA readiness confirmed by the operator.'
     Write-IRTicketSummary
     
-    Write-Host "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
-    Section 'NEXT STEP: FOLLOW-UP'
-    Write-Host 'IR-GET-IDENTITY-RISK-ASSESSMENT'
-    Write-Host 'Confirm the user can sign in with MFA. Monitor for new suspicious activity before closing the incident.'
-    Write-Host 'Rerun the assessment for a fresh account and mailbox check.'
+    Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
+    Section 'NEXT STEP'
+    Write-IRLine 'Verify user sign-in with MFA.'
+    Write-IRLine 'Run the final assessment and monitor for new suspicious activity for 48 hours.'
 }
 catch {
     Write-Fail "Recovery incomplete: $(Get-ShortError $_)"
-    foreach ($item in $script:ActionLog) { Write-Host "$($item.Action): $($item.Result)" }
+    foreach ($item in $script:ActionLog) { Write-IRLine "$($item.Action): $($item.Result)" }
     foreach ($gap in $script:DataGaps) { Write-Warn $gap }
     if ($script:AdChanged) { Write-Warn 'AD may already be enabled. Verify AD and Entra state before retrying.' }
-    Section 'NEXT'
-    Write-Host 'IR-INVOKE-RECOVERY-VALIDATION'
-    Write-Host 'Resolve the reported items, then finish recovery. Do not assume access was fully restored.'
+    Section 'NEXT STEP'
+    Write-IRLine 'ir-recover-validate'
+    Write-IRLine 'Resolve the reported items, then finish recovery. Do not assume access was fully restored.'
 }
 finally {
     if ($null -ne $script:OriginalTitle) { try { $Host.UI.RawUI.WindowTitle=$script:OriginalTitle } catch {} }
 }
 if ($script:RecoverySucceeded) {
-    Invoke-IRNextStep -FileName 'IR-GET-IDENTITY-RISK-ASSESSMENT' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
+    Invoke-IRNextStep -FileName 'ir-risk-assessment' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
 }
 else { Invoke-IRNextStep -FileName '' -Objective '' }
