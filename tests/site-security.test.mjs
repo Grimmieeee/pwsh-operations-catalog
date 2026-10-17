@@ -34,7 +34,7 @@ test('cards separate operational checks from inputs and safety guards without ov
     f.api.openItem(item);
     const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(!/More (?:checks|guards)/.test(html),item.displayName);
-    for(const label of ['CHECKS','GUARDS']){
+    for(const label of ['INPUT','CHECKS','GUARDS']){
       assert.ok(html.split(`<div class="section-label">${label}</div>`).length<=2,item.displayName);
     }
   }
@@ -45,7 +45,11 @@ test('cards separate operational checks from inputs and safety guards without ov
   const checks=html.slice(html.indexOf('>CHECKS</div>'),html.indexOf('>GUARDS</div>'));
   const guards=html.slice(html.indexOf('>GUARDS</div>'),html.indexOf('<section class="run-info-block">'));
   for(const text of ['Pre-change hold-state review','Unlimited duration target','Post-change mailbox re-read','Optional CSV evidence']) assert.ok(checks.includes(text),text);
-  for(const text of ['Typed HOLD confirmation','Changes only noncompliant mailboxes','REQUIRES','INPUT']) assert.ok(guards.includes(text),text);
+  for(const text of ['Typed HOLD confirmation','Changes only noncompliant mailboxes','REQUIRES']) assert.ok(guards.includes(text),text);
+  const inputStart=html.indexOf('>INPUT</div>');
+  assert.ok(inputStart>=0 && inputStart<html.indexOf('>CHECKS</div>'));
+  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</div>')).includes('TXT/CSV mailbox list'));
+  assert.ok(!guards.includes('>INPUT</div>'));
   assert.ok(!checks.includes('Typed HOLD confirmation'));
   assert.ok(!html.includes('More guards'));
 });

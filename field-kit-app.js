@@ -2678,12 +2678,14 @@
     const isGuard = text => guardFacts.has(text) ||
       /^(?:requires?\b|typed\b|one .+ input$|supports .+ selection$|push:|pull:)/i.test(text);
     const checks = facts.filter(text => !isGuard(text));
-    const guards = facts.filter(isGuard).filter(text =>
-      !(inputInfo(item) && /^one .+ input$/i.test(text)));
-    const rows = [["REQUIRES",requirementInfo(item)],["INPUT",inputInfo(item)]]
+    const inputFacts = facts.filter(text => /^one .+ input$/i.test(text));
+    const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
+    const guards = facts.filter(isGuard).filter(text => !inputFacts.includes(text));
+    const rows = [["REQUIRES",requirementInfo(item)]]
       .filter(([,value]) => value);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
-    return `${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
+    return `${inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : ""}
+      ${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
       ${guards.length || rows.length ? `<section class="check-block"><div class="section-label">GUARDS</div>
         ${guards.length ? list(guards) : ""}
         ${rows.length ? `<div class="run-info-grid">${rows.map(([label,value]) => `<div class="run-info-row"><span class="run-info-label">${esc(label)}</span><span class="run-info-value">${esc(value)}</span></div>`).join("")}</div>` : ""}
