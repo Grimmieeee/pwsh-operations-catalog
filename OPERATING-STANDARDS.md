@@ -705,3 +705,5 @@ If those questions are clear, the catalog decision usually becomes obvious.
 Tools includes the approved repository check/push/pull, security-review, handoff and execution-setup downloads. Toys contains terminal animations and theme previews/installers, separate from operational workflows. The shared renderer, source loader, sorting and risk labels apply to both. Animations and colored themes require an ANSI-capable terminal and never represent a workstation lock. Animation is appropriate inside Toys; operational tools retain concise output.
 
 User-approved source-preservation exception: uploaded theme previews/installers retain their original process-policy and profile behavior. Cards disclose these effects. Do not silently remove them during sanitization. Setup-first ordering, then A-Z within groups, is the browsing standard; incident-response sequence and search relevance remain exceptions.
+
+<!-- Harmless integrity-gate drill: DO NOT MERGE. -->
