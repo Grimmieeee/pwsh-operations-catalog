@@ -2467,7 +2467,8 @@
   }
 
   function rowTags(item){
-    return scopeTag(item) + accessTag(item) + (isVerifiedRelease(item) ? "" : releaseTag(item)) + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
+    const version = item.version ? '<span class="result-version">v' + esc(item.version) + '</span>' : "";
+    return scopeTag(item) + accessTag(item) + version + (item.status === "Source pending" ? '<span class="result-tag">SOURCE PENDING</span>' : "");
   }
 
   function groupTitleMarkup(group){
@@ -2498,7 +2499,7 @@
       <button class="result" type="button" data-open-index="${index}">
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
-          ${isVerifiedRelease(item) ? releaseTag(item) : ""}
+          ${isVerifiedRelease(item) ? '<span class="verification-mark" role="img" aria-label="Verified: operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span><span class="verification-tooltip" aria-hidden="true">Operator tested. Download integrity checked. Applies to this version only.</span></span>' : ""}
         </span>
         <span class="result-meta ${meta ? "" : "hidden"}">${esc(meta)}</span>
         <span class="result-flags">${rowTags(item)}</span>
