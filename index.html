@@ -81,9 +81,9 @@ button{cursor:pointer}
   flex:0 0 auto;border-top:0;
 }
 .signature{
-  padding:18px 20px 22px;
-  display:grid;grid-template-columns:max-content;gap:7px;
-  font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.19em;color:#ffffff;
+  padding:14px 20px 12px;
+  display:grid;grid-template-columns:max-content;gap:5px;
+  font-family:var(--display);font-weight:400;font-size:13px;letter-spacing:.22em;color:#ffffff;
 }
 .signature-note,.signature-established{color:var(--muted);font-family:var(--display);font-weight:400;font-size:9px;letter-spacing:.19em}
 .signature-mark{white-space:nowrap}
@@ -914,9 +914,8 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   .area-button{min-height:46px;padding:11px 10px}
   .area-sub-button{min-height:42px;padding:9px}
   .signature{
-    padding:
-      17px 18px
-      max(20px,calc(14px + env(safe-area-inset-bottom)));
+    /* The sidebar already supplies the device safe-area inset. */
+    padding:12px 18px 10px;
   }
 
   .drawer{
