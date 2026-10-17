@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "batchVersion": "0.1.0",
+  "scripts": [
+    {
+      "key": "Forwarding",
+      "path": "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1",
+      "version": "0.1.0",
+      "sha256": "d865f4ba802503d0c94a116b844e542c35c42bab36f72eca9f8a4c03eb3b90fd"
+    },
+    {
+      "key": "Permissions",
+      "path": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1",
+      "version": "0.1.0",
+      "sha256": "2315d6e65f2ca03014e8999725631041c0b94b3ba435bca8272ebc2cac80504f"
+    },
+    {
+      "key": "Groups",
+      "path": "published-source/identity/GET-USER-GROUPS.ps1",
+      "version": "0.1.0",
+      "sha256": "72c1b2ef460a23aeb333ce00ef9d654e1fdb81c29b3ff57bb8e84f28e58f3174"
+    }
+  ]
+}

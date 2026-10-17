@@ -24,3 +24,6 @@ jobs:
         run: node tools/check-site.mjs
       - name: Exercise download, clipboard and keyboard failure paths
         run: node --test tests/site-security.test.mjs
+      - name: Exercise read-only batch runner with isolated service fixtures
+        shell: pwsh
+        run: ./docs/qa/Test-UserReadOnlyBatch.ps1

@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID fdf64243-9684-09d2-f2ad-069890cf46da
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #Requires -Version 5.1
 
 <#
@@ -40,10 +46,87 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-function Write-OK   { param([string]$Message) Write-Host "[OK]   $Message" -ForegroundColor Green }
-function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
-function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
-function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function Write-OK {
+    param([string]$Message)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $Message
+}
+function Write-Info {
+    param([string]$Message)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $Message
+}
+function Write-Warn {
+    param([string]$Message)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $Message
+}
+function Write-Fail {
+    param([string]$Message)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $Message
+}
 
 function Write-FieldKitFooter {
     Write-Host ""
@@ -52,8 +135,7 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
-    Write-FieldKitFooter
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Close-FKConsole
 }
 
 function Ensure-GraphAuthentication {
@@ -250,7 +332,7 @@ function New-TemporaryPassword {
 }
 
 try {
-    Write-Host "RESET CLOUD USER PASSWORD"
+    Write-FKStart -Title 'RESET CLOUD USER PASSWORD' -Objective 'Refuses synced users so Active Directory remains authoritative.' -Mode 'MAKES CHANGES'
     Write-Host "MAKES CHANGES. CLOUD-ONLY USERS ONLY."
     Write-Host ""
 
@@ -420,7 +502,7 @@ try {
     }
 
     Write-Host ""
-    Write-Host "SUMMARY"
+    Write-FKHeading -Title 'TICKET SUMMARY'
     $results | Format-Table UPN,Result,Verification -AutoSize
     Write-Host ""
     Write-OK "Complete. Generated passwords were not exported."

@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 44ba1cde-a078-3f86-f14f-332ae51f1236
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 <#
 GET-TENANT-DRIFT-REVIEW.ps1
 
@@ -24,29 +30,93 @@ param(
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $ErrorActionPreference = 'Stop'
 
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
 function Write-OK {
     param([string]$Message)
-    Write-Host "[OK]   $Message" -ForegroundColor Green
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $Message
 }
 
 function Write-Info {
     param([string]$Message)
-    Write-Host "[INFO] $Message"
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $Message
 }
 
 function Write-Warn {
     param([string]$Message)
-    Write-Host "[WARN] $Message" -ForegroundColor Yellow
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $Message
 }
 
 function Write-Fail {
     param([string]$Message)
-    Write-Host "[FAIL] $Message" -ForegroundColor Red
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $Message
 }
 
 function Pause-End {
-    Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Close-FKConsole
 }
 
 function Get-FriendlyGraphError {
@@ -615,7 +685,7 @@ function Write-ChangeSection {
 }
 
 try {
-    Write-Host "TENANT DRIFT REVIEW"
+    Write-FKStart -Title 'TENANT DRIFT REVIEW' -Objective 'Compares selected high-value tenant security configuration against an approved local baseline and reports tracked drift.' -Mode 'MAKES CHANGES'
     Write-Host "Shows high-value tenant changes since the last approved baseline."
     Write-Host ""
 
@@ -699,7 +769,7 @@ try {
     }
 
     Write-Host ""
-    Write-Host "SUMMARY"
+    Write-FKHeading -Title 'TICKET SUMMARY'
     Write-Host ("Changes detected: {0}" -f $changeCount)
     Write-Host ("Baseline captured: {0}" -f $baseline.Metadata.CapturedAt)
     Write-Host ("Current captured : {0}" -f $current.Metadata.CapturedAt)

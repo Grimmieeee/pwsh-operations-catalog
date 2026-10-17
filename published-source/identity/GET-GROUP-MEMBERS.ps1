@@ -1,3 +1,9 @@
+<#PSScriptInfo
+.VERSION 0.1.0
+.GUID 1584524b-72a6-c39b-8304-e7539636deab
+.AUTHOR FIELD // KIT
+.DESCRIPTION Console alignment candidate; operator validation pending.
+#>
 #Requires -Version 5.1
 
 <#
@@ -40,10 +46,87 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
 
 [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-function Write-Ok   { param($Msg) Write-Host "[OK]   $Msg" }
-function Write-Info { param($Msg) Write-Host "[INFO] $Msg" }
-function Write-Warn { param($Msg) Write-Host "[WARN] $Msg" }
-function Write-Fail { param($Msg) Write-Host "[FAIL] $Msg" }
+
+# Console presentation only. Does not request scopes, query services or write data.
+$script:FKEndWritten = $false
+$script:FKStatusWritten = $false
+$script:FKHasIssue = $false
+function Write-FKStatus {
+    param([string]$Status)
+    Write-Host ''
+    if ($Status -eq 'REVIEW REQUIRED') { Write-Host ('STATUS: '+$Status) -ForegroundColor Yellow }
+    else { Write-Host ('STATUS: '+$Status) }
+    $script:FKStatusWritten = $true
+}
+function Write-FKStart {
+    param([string]$Title,[string]$Objective,[string]$Mode)
+    Write-Host $Title
+    Write-Host $Objective
+    if ($Mode) { Write-Host $Mode }
+    Write-Host (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+    Write-Host ''
+}
+function Write-FKHeading {
+    param([string]$Title)
+    Write-Host ''
+    switch ($Title.Trim().ToUpperInvariant()) {
+        'SUMMARY' { Write-Host 'TICKET SUMMARY'; break }
+        'FOLLOW-UP' { Write-Host 'NEXT STEP'; break }
+        'NEXT' { Write-Host 'NEXT STEP'; break }
+        default { Write-Host $Title }
+    }
+}
+function Close-FKConsole {
+    param([bool]$SkipPause = $false)
+    if (-not $script:FKEndWritten) {
+        Write-Host ''
+        if (-not $script:FKStatusWritten) {
+            Write-FKStatus $(if ($script:FKHasIssue) { 'REVIEW REQUIRED' } else { 'RUN FINISHED' })
+        }
+        Write-Host ("COMPLETED: {0}" -f (Get-Date).ToString('MM/dd/yyyy HH:mm'))
+        $script:FKEndWritten = $true
+    }
+    if ($SkipPause) { return }
+    Write-Host ''
+    Write-Host 'Press ESC to close'
+    if ($Host.Name -eq 'ConsoleHost' -and -not [Console]::IsInputRedirected -and
+        (Get-Command Read-Host).CommandType -ne 'Function') {
+        try {
+            while ($true) {
+                $key=$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+                if ($key.VirtualKeyCode -eq 27 -or $key.VirtualKeyCode -eq 13) { return }
+            }
+        }
+        catch { Write-Host 'Key input unavailable here.' }
+    }
+    while ($true) {
+        $answer=Read-Host 'Type ESC then press ENTER to close'
+        if ([string]::IsNullOrWhiteSpace($answer) -or $answer.Trim() -ieq 'ESC' -or $answer -eq [string][char]27) { return }
+    }
+}
+
+function Write-Ok {
+    param([string]$Msg)
+    Write-Host '[OK] ' -ForegroundColor Green -NoNewline
+    Write-Host $Msg
+}
+function Write-Info {
+    param([string]$Msg)
+    Write-Host '[INFO] ' -NoNewline
+    Write-Host $Msg
+}
+function Write-Warn {
+    param([string]$Msg)
+    $script:FKHasIssue = $true
+    Write-Host '[WARN] ' -ForegroundColor Yellow -NoNewline
+    Write-Host $Msg
+}
+function Write-Fail {
+    param([string]$Msg)
+    $script:FKHasIssue = $true
+    Write-Host '[FAIL] ' -ForegroundColor Red -NoNewline
+    Write-Host $Msg
+}
 
 function Write-FieldKitFooter {
     Write-Host ""
@@ -52,24 +135,7 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
-    Write-FieldKitFooter
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
-
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
-    }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
-    }
+    Close-FKConsole
 }
 
 function Get-ShortError {
@@ -448,8 +514,8 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host ""
-    Write-Host "GROUP MEMBERS LOOKUP"
-    Write-Host "READ-ONLY. NO CHANGES MADE."
+    Write-FKStart -Title 'GROUP MEMBERS' -Objective 'Shows direct members of one or more groups after resolving the appropriate source.' -Mode ''
+    Write-Host ''
     Write-Host ""
 
     $groupsToCheck=@(Get-InputGroups -Values $InputObject)
@@ -478,7 +544,7 @@ try {
 
     foreach ($inputGroup in $groupsToCheck) {
         Write-Host ""
-        Write-Host "GROUP"
+        Write-FKHeading -Title 'TARGET'
         Write-Host ("Input   : {0}" -f $inputGroup)
 
         $groupResolved=$false
@@ -607,10 +673,13 @@ try {
     Write-Host ("Not found      : {0}" -f @($summaryRows | Where-Object { $_.Status -eq 'NotFound' }).Count)
     Write-Host ("Member rows    : {0}" -f $detailRows.Count)
 
+    Write-FKStatus 'RUN FINISHED'
+    Close-FKConsole -SkipPause $true
+
     Offer-VerifiedCsv -Rows @($detailRows)
 
     Write-Host ""
-    Write-Ok "Complete. No changes made."
+    Write-Host ''
 }
 catch {
     Write-Host ""
