@@ -6,6 +6,8 @@ This file records the current project state so a new session can resume without 
 
 ## October 17, 2026 — design lock and testing handoff
 
+Later approved refinement: plain access labels; raised circled V beside the selected title with meaning in About; versions retained in source/internal evidence rather than card chrome; script COPY inside exposed source; small mint connection headings and boxed services. Source-reviewed connection guidance covers 80 released PowerShell files (49 auto-connect, 30 without a cloud connection step, one review item), bound to source hashes. See `docs/qa/CONNECTION-CARD-REVIEW.md` and `connection-guidance.js`. Tenant Group Owners has an existing parser error to fix/retest; it is not labeled auto-connect. The site suite now has 16 tests.
+
 Read `DESIGN-LOCK.md` before visual work. The final in-chat footer preview is approved: BY above the larger B, bright BURN with muted SID//, and bright EST. / muted 2026 at the far right on the same baseline. Preserve the design; preview future visual changes before publishing.
 
 The public catalog has 338 entries and 92 downloadable sources. Cards now separate INPUT, CHECKS and GUARDS; requirements and long connection commands are compact disclosures. Home Screen branding is explicit. Card copy must match each exact source's prompts and behavior. Twelve site tests cover source integrity, exact-version verification, safe loading, clipboard errors, dialog accessibility, global search and card grouping. No PowerShell source changed during this design pass.

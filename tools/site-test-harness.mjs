@@ -46,6 +46,8 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   const manifestPath=path.join(root,'source-integrity.js');
   if(integrity)window.FIELD_KIT_SOURCE_INTEGRITY=integrity;
   else if(fs.existsSync(manifestPath))vm.runInContext(fs.readFileSync(manifestPath,'utf8'),context);
+  const guidancePath=path.join(root,'connection-guidance.js');
+  if(fs.existsSync(guidancePath))vm.runInContext(fs.readFileSync(guidancePath,'utf8'),context);
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');

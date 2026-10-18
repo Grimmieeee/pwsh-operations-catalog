@@ -1081,6 +1081,25 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .workflow-link:hover,.workflow-link:focus-visible{background:var(--panel);outline:1px solid var(--mint-soft)}
 .related-block{margin-top:22px}
 .related-block .actions{margin-top:10px}
+/* Approved plain access labels and compact technical controls. */
+.result-tag,.access-tag,.result:hover .result-tag{border:0;background:transparent;box-shadow:none;padding:0;min-height:0}
+.access-tag.access-read,.access-tag.access-change,.access-tag.access-danger{border:0;background:transparent}
+.result-tag{font:600 10px/1.5 var(--mono);letter-spacing:.045em}
+.access-tag{font:600 11px/1.5 var(--mono);letter-spacing:.045em}
+.result-read,.result:hover .result-read,.access-tag.access-read{color:#9cffe0}
+.result-change,.result:hover .result-change,.access-tag.access-change{color:#ffe68b}
+.result-danger,.result:hover .result-danger,.access-tag.access-danger,.about-key .access-danger{color:#ff9690}
+.result-flags,.access-state{gap:16px}
+.title-verification{width:12px;height:12px;min-width:12px;font:8px/1 var(--mono);padding:0;margin-left:6px;vertical-align:super;position:relative;top:-2px;background:transparent;cursor:pointer}
+.title-verification:focus-visible{outline:1px solid var(--mint);outline-offset:4px}
+.run-info-subhead{font:10px/1.5 var(--mono);letter-spacing:.08em;color:var(--mint);margin-bottom:9px}
+.platform-label{margin:0 0 10px;padding:5px 8px;border:1px solid #49665e;background:#10171a;color:var(--mint);font:10px/1.5 var(--mono);letter-spacing:.08em}
+.connection-direction{margin:2px 0 10px;color:#b5cbc1;font-size:14px;line-height:1.6}
+.source-block,.inline-code-box{border:1px solid #49665e;background:#10171a}
+.source-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 14px}
+.source-heading .section-label{margin:0}
+.inline-code-box .source-heading{justify-content:flex-end}
+.source-block pre.command,.inline-code-box pre.command{border:0;background:transparent;margin:0;padding:0 14px 16px}
 </style>
 </head>
 <body>
@@ -1119,7 +1138,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
         <span class="masthead-line masthead-line-2">Use responsibly.</span>
       </div>
       <div id="crumb" class="crumb"></div>
-      <div id="verificationKey" class="verification-legend hidden"><span class="verification-seal" aria-hidden="true">V</span><span>Operator verified</span></div>
+      <div id="verificationKey" class="hidden"></div>
     </header>
 
     <section class="search-wrap">
@@ -1150,7 +1169,8 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
 <script src="catalog-data.js"></script>
 <script src="source-integrity.js"></script>
-<script src="field-kit-app.js?v=about-library-total-1"></script>
+<script src="connection-guidance.js"></script>
+<script src="field-kit-app.js?v=plain-labels-raised-verification-1"></script>
 <script src="site-brand.js"></script>
 </body>
 </html>

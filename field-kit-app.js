@@ -2449,8 +2449,7 @@
   }
 
   function releaseTag(item){
-    if (isVerifiedRelease(item)) return '<span class="result-tag result-verified" title="Operator tested. Download integrity checked. Applies to this version only."><span aria-hidden="true">✓</span> VERIFIED · <span class="release-version">v' + esc(item.version) + '</span></span>';
-    return item.version ? '<span class="result-tag result-version">v' + esc(item.version) + '</span>' : "";
+    return isVerifiedRelease(item) ? '<button class="verification-seal title-verification" type="button" data-verification-about aria-label="Operator verified; read About">V</button>' : "";
   }
 
   function rowTags(item){
@@ -2525,6 +2524,11 @@
           <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
 
           <section class="about-library">
+            <div class="section-label">VERIFICATION</div>
+            <p><span class="verification-seal" aria-hidden="true">V</span> Operator tested for this exact script version. Download integrity is checked against its published checksum. A changed script needs new operator testing before retaining the mark.</p>
+          </section>
+
+          <section class="about-library">
             <div class="section-label">LIBRARY</div>
             <div class="about-library-total">${ITEMS.length} catalog entries</div>
             <div class="about-library-detail">Scripts, quick commands, and guides.</div>
@@ -2554,7 +2558,6 @@
     entryCount.textContent = showCount ? `(${list.length})` : "";
     entryCount.classList.toggle("hidden", !showCount);
     entryCount.setAttribute("aria-label", `${list.length} matching catalog entries`);
-    verificationKey.classList.toggle("hidden", !list.some(isVerifiedRelease));
     clearSearch.classList.toggle("hidden", !state.query);
     contextBar.textContent = "";
     contextBar.classList.add("hidden");
@@ -2608,7 +2611,6 @@
     if (!item.connect.length) return "";
     return `
       <div class="run-connect">
-        <div class="run-info-subhead">CONNECT</div>
         ${item.connect.map(cmd => `
           <div class="connect-line">
             ${cmd.length > 80 ? `<details class="connect-command"><summary>${esc(cmd.trim().split(/\s+/)[0])} <span class="connect-expand">Show command</span></summary><code>${esc(cmd)}</code></details>` : `<code>${esc(cmd)}</code>`}
@@ -2810,25 +2812,31 @@
   }
 
   function runInfoMarkup(item){
-    if (item.type === "Quick Command") return "";
-
-    const connect = connectMarkup(item);
-    const platform = moduleLabel(item);
-    if (!connect && !platform) return "";
-
-    return `
-      <section class="run-info-block">
-        ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
-        ${connect}
-      </section>
-    `;
+    if (isDocument(item)) return "";
+    const recorded = window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
+    const profile = recorded && recorded.sha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? recorded : null;
+    const platform = profile?.services?.length ? profile.services.join(" + ") : moduleLabel(item);
+    const badge = platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : "";
+    if (profile?.mode === "auto"){
+      const workflow = IR_STEPS.some(step => step.file === item.file);
+      return `<section class="run-info-block"><div class="run-info-subhead">AUTO-CONNECT</div>${badge}<p class="connection-direction">Run the script. Sign in when prompted.</p>${workflow ? '<p class="connection-direction">Keep all three IR scripts together and run them in the same PowerShell window. Existing sessions are validated before reuse.</p>' : ''}</section>`;
+    }
+    if (profile?.mode === "local") return badge ? `<section class="run-info-block">${badge}</section>` : "";
+    if (item.publishedPath || item.status === "Source pending"){
+      return `<section class="run-info-block"><div class="run-info-subhead">CONNECTIONS</div>${badge}<p class="connection-direction">Connection setup needs review before running this script.</p></section>`;
+    }
+    // Quick commands are their own source. Do not duplicate connection commands
+    // when the selected command already performs that connection.
+    if (/^\s*(?:Connect-|Import-Module)/i.test(item.code || "")) return "";
+    if (!item.connect.length) return "";
+    return `<section class="run-info-block"><div class="run-info-subhead">CONNECT FIRST</div>${badge}<p class="connection-direction">Run these commands in the same PowerShell window before running the selected command.</p>${connectMarkup(item)}</section>`;
   }
 
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
     if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
     const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
-    return `<button id="downloadSource" class="action primary" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button><button id="copyDownload" class="action" type="button">COPY</button><span id="sourceStatus" role="status"></span>`;
+    return `<button id="downloadSource" class="action primary" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button><span id="sourceStatus" role="status"></span>`;
   }
 
   function referenceButtons(item){
@@ -2849,15 +2857,12 @@
 
   function standaloneCommandMarkup(item){
     if (item.type !== "Quick Command" || !item.code) return "";
-    const platform = moduleLabel(item);
+    const platform = !item.connect.length || /^\s*(?:Connect-|Import-Module)/i.test(item.code) ? moduleLabel(item) : "";
     return `
       <section class="command-block">
         ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
         <div class="section-label">COMMAND</div>
-        <pre class="command">${esc(item.code)}</pre>
-        <div class="source-actions">
-          <button class="action primary" type="button" data-copy-source>COPY COMMAND</button>
-        </div>
+        <div class="inline-code-box"><div class="source-heading"><button class="copy-mini" type="button" data-copy-source>COPY</button></div><pre class="command">${esc(item.code)}</pre></div>
       </section>
     `;
   }
@@ -2874,9 +2879,8 @@
     drawerBody.innerHTML = `
       <section class="item-head">
         <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
-        <h2 class="item-title">${itemTitleMarkup(item.displayName)}</h2>
+        <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${accessMarkup(item)}
-        ${item.version ? `<div class="release-note">${releaseTag(item)}${isVerifiedRelease(item) ? '<div>Operator tested. Download integrity checked. Applies to this version only.</div>' : ''}</div>` : ''}
         ${item.status === "Source pending" ? '<div class="source-note">SOURCE PENDING — interactive script not yet available.</div>' : ""}
       </section>
 
@@ -2886,8 +2890,8 @@
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
       ${useForMarkup(item)}
-      ${standaloneCommandMarkup(item)}
       ${runInfoMarkup(item)}
+      ${standaloneCommandMarkup(item)}
       ${shortNote(item)}
 
       <div class="actions">
@@ -2909,11 +2913,14 @@
   }
 
   function bindDrawerActions(item){
+    drawerBody.querySelector("[data-verification-about]")?.addEventListener("click",()=>{
+      closeItem();state.area="About";state.query="";search.value="";renderNav();renderResults();
+    });
     drawerBody.querySelectorAll("[data-related-file]").forEach(button=>button.addEventListener("click",()=>{
       const target=ITEMS.find(other=>other.file===button.dataset.relatedFile);
       if (target) {openItem(target);drawerBody.scrollTop=0;}
     }));
-    for (const id of ["downloadSource","copyDownload"]){
+    for (const id of ["downloadSource"]){
       const button = document.getElementById(id);
       button?.addEventListener("click", async () => {
         button.disabled = true;
@@ -2921,9 +2928,8 @@
         try {
           const source = await resolveSource(item);
           if (!source) throw new Error("Source is unavailable.");
-          if (id === "downloadSource") saveText(source,safeFilename(item.file));
-          else { await copyText(source); flashButton(button,"COPIED"); }
-          status.textContent = id === "downloadSource" ? "Download verified." : "Copied.";
+          saveText(source,safeFilename(item.file));
+          status.textContent = "Download verified.";
         } catch(error){ status.textContent = error.message || "Could not load source."; }
         finally { button.disabled = false; }
       });
@@ -3020,7 +3026,6 @@
 
     const isMarkdown = /\.md$/i.test(String(item.file || ""));
     const sourceLabel = isMarkdown ? "MARKDOWN" : "POWERSHELL";
-    const copyLabel = isMarkdown ? "COPY MARKDOWN" : "COPY SCRIPT";
 
     if (mount.dataset.open === "1"){
       mount.innerHTML = "";
@@ -3047,14 +3052,8 @@
       } else {
         mount.innerHTML = `
           <section class="source-block">
-            <div class="section-label">${sourceLabel}</div>
+            <div class="source-heading"><div class="section-label">${sourceLabel}</div><button id="copyScript" class="copy-mini" type="button">COPY</button></div>
             <pre class="command">${esc(source)}</pre>
-            <div class="source-actions">
-              <button id="copyScript" class="action primary" type="button">${copyLabel}</button>
-              ${item.file && /\.(ps1|md)$/i.test(item.file)
-                ? '<button id="saveScript" class="action" type="button">SAVE ' + (isMarkdown ? '.MD' : '.PS1') + '</button>'
-                : ""}
-            </div>
           </section>
         `;
 
@@ -3063,9 +3062,6 @@
           await copyWithFeedback(button,source);
         });
 
-        document.getElementById("saveScript")?.addEventListener("click", () => {
-          saveText(source, safeFilename(item.file || item.displayName + ".ps1"));
-        });
       }
 
       mount.dataset.open = "1";

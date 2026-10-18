@@ -34,8 +34,8 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   const license=f.api.ITEMS.find(item=>item.file==='INVOKE-ASSIGN-LICENSES.ps1');
   f.api.openItem(license);
   let html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('class="connect-command"'));
-  assert.ok(html.includes('Show command'));
+  assert.ok(html.includes('AUTO-CONNECT'));
+  assert.ok(!html.includes('data-copy="Connect-MgGraph'));
   assert.ok(html.includes('User.ReadWrite.All'));
   assert.ok(!html.includes('<summary>Details</summary>'));
   assert.ok(html.includes('Typed ASSIGN confirmation'));
@@ -103,18 +103,71 @@ test('three tested IR workflow steps expose checksum-verified canonical source',
 test('VERIFIED is bound to operator evidence, exact version and source manifest hash',()=>{
   const f=loadCatalog(root);
   const item=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
-  assert.match(f.api.releaseTag(item),/VERIFIED · <span class="release-version">v1\.0\.0<\/span>/);
+  assert.match(f.api.releaseTag(item),/data-verification-about/);
+  assert.ok(!f.api.releaseTag(item).includes('v1.0.0'));
   for(const altered of [
     {...item,version:'1.0.1'},
     {...item,verification:{...item.verification,sha256:'0'.repeat(64)}},
     {...item,verification:{...item.verification,operatorTested:false}},
     {...item,verification:null}
-  ])assert(!f.api.releaseTag(altered).includes('VERIFIED'));
+  ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
-  assert(!f.api.releaseTag(item).includes('VERIFIED'));
+  assert.equal(f.api.releaseTag(item),'');
   assert(f.api.ITEMS.filter(item=>item.verification).length===3);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
+
+test('connection guidance is bound to every published script and suppresses redundant sign-in commands',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS.filter(item=>item.publishedPath?.endsWith('.ps1'))){
+    const profile=f.window.FIELD_KIT_CONNECTION_GUIDANCE[item.publishedPath];
+    assert.ok(profile,item.publishedPath);
+    assert.equal(profile.sha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),item.publishedPath);
+    assert.ok(['auto','local','review'].includes(profile.mode));
+    f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(!html.includes('id="copyDownload"'),item.file);
+    assert.ok(!html.includes('release-version'),item.file);
+    if(profile.mode==='auto'){
+      assert.ok(html.includes('AUTO-CONNECT'),item.file);
+      assert.ok(!html.includes('data-copy="Connect-'),item.file);
+    } else assert.ok(!html.includes('AUTO-CONNECT'),item.file);
+  }
+  const risk=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
+  f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[risk.publishedPath]:'0'.repeat(64)};
+  f.api.openItem(risk);
+  assert.ok(!f.elements.get('drawerBody').innerHTML.includes('AUTO-CONNECT'));
+  assert.ok(!f.elements.get('drawerBody').innerHTML.includes('data-verification-about'));
+});
+
+test('script copy is exposed inside the verified source box and removed when code is hidden',async()=>{
+  const bytes=Buffer.from('<#\n.VERSION 1.0.0\n#>\nWrite-Output "fixture"\n');
+  const f=sourceFixture(bytes);
+  const base=f.api.ITEMS.find(item=>item.publishedPath);
+  const item={...base,file:'fixture.ps1',publishedPath:fixturePath};
+  f.api.openItem(item);
+  assert.ok(!f.elements.get('drawerBody').innerHTML.includes('id="copyDownload"'));
+  const button=f.document.getElementById('showSource');
+  await f.api.toggleSource(item,button);
+  const mount=f.document.getElementById('sourceMount');
+  assert.match(mount.innerHTML,/<div class="source-heading">[\s\S]*id="copyScript"/);
+  let copied='';f.context.navigator.clipboard.writeText=async text=>{copied=text;};
+  const copy=f.document.getElementById('copyScript');
+  await copy.listeners.click({currentTarget:copy});
+  assert.equal(copied,bytes.toString('utf8'));
+  await f.api.toggleSource(item,button);
+  assert.equal(mount.innerHTML,'');
+});
+
+test('quick command preparation precedes its own boxed command and copy control',()=>{
+  const f=loadCatalog(root);
+  const item=f.api.ITEMS.find(item=>item.type==='Quick Command'&&item.connect.length&&!/^\s*(Connect-|Import-Module)/i.test(item.code));
+  f.api.openItem(item);
+  const html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('CONNECT FIRST'));
+  assert.ok(html.indexOf('CONNECT FIRST')<html.indexOf('class="command-block"'));
+  assert.ok(html.includes('class="copy-mini" type="button" data-copy-source'));
+});
 
 test('source paths and reference links reject executable, external, encoded and traversal targets',()=>{
   const f=loadCatalog(root);
