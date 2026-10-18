@@ -542,9 +542,11 @@ do not invent versions for unreviewed legacy entries. A coupled workflow may
 share one release version, with all companion files replaced together.
 
 VERIFIED means: Operator tested. Download integrity checked. Applies to this
-version only. Display a small checkmark and version, without dates. This is a
+version only. Display a small raised circled V beside the title, without dates.
+Explain its meaning in About; keep versions in source headers and internal
+release records, without a visible card version line. This is a
 FIELD // KIT release assurance marker, not a signing certificate or a claim
-of safety in every environment. Keep access/risk labels visible beside it.
+of safety in every environment. Keep plain colored access/risk labels visible.
 
 Each verified card needs explicit owner runtime-test confirmation, a version,
 the exact SHA-256, and a public sanitized evidence record. Static review,

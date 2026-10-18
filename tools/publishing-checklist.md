@@ -69,6 +69,11 @@ Remove or replace:
 
 ## Catalog review
 
+- [ ] Run `pwsh -NoProfile -File tools/check-powershell.ps1`; all tracked PowerShell files parse without execution.
+- [ ] Every script card has source-backed CHECKS; GUARDS includes actual approval and target-selection safeguards.
+- [ ] Quick-command example targets have replacement directions in INPUT.
+- [ ] Source-bound card and connection review hashes match the released bytes; review both after changing source.
+- [ ] Add semantic versions during formal release review; do not invent versions or VERIFIED marks for legacy files. Operator evidence remains mandatory for verification.
 - [ ] Display name matches the actual task.
 - [ ] Scope is correct.
 - [ ] Purpose/category is correct.

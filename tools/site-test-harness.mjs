@@ -48,6 +48,8 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   else if(fs.existsSync(manifestPath))vm.runInContext(fs.readFileSync(manifestPath,'utf8'),context);
   const guidancePath=path.join(root,'connection-guidance.js');
   if(fs.existsSync(guidancePath))vm.runInContext(fs.readFileSync(guidancePath,'utf8'),context);
+  const cardPath=path.join(root,'card-guidance.js');
+  if(fs.existsSync(cardPath))vm.runInContext(fs.readFileSync(cardPath,'utf8'),context);
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');

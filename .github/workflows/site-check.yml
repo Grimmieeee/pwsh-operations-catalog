@@ -20,6 +20,11 @@ jobs:
           node --check catalog-data.js
           node --check field-kit-app.js
           node --check source-integrity.js
+          node --check connection-guidance.js
+          node --check card-guidance.js
+      - name: Parse all PowerShell sources without executing them
+        shell: pwsh
+        run: ./tools/check-powershell.ps1
       - name: Check catalog files, checksums, policy and public source
         run: node tools/check-site.mjs
       - name: Exercise download, clipboard and keyboard failure paths

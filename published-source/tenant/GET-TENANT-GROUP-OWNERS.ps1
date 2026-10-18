@@ -98,7 +98,7 @@ function Ensure-Module {
         Import-Module $module.Path -Force -WarningAction SilentlyContinue -ErrorAction Stop
     }
     catch {
-        throw "Unable to load $Name: $(Get-ShortError $_)"
+        throw "Unable to load ${Name}: $(Get-ShortError $_)"
     }
 }
 

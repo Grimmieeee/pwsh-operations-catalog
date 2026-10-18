@@ -1841,6 +1841,8 @@
 
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
+    const review = window.FIELD_KIT_CARD_GUIDANCE?.[source.file];
+    if (review && review.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) source = {...source, ...review};
     if (source.name === "Revoke Active Sessions") source = {...source,area:"Security / IR",subarea:"Account Compromise"};
     if (IR_RENAMES[source.file]) {
       const legacy = source.file;
@@ -2688,10 +2690,10 @@
     ]);
     const isGuard = text => guardFacts.has(text) ||
       /^(?:requires?\b|typed\b|one .+ input$|supports .+ selection$|push:|pull:)/i.test(text);
-    const checks = facts.filter(text => !isGuard(text));
+    const checks = item.checks || facts.filter(text => !isGuard(text));
     const inputFacts = facts.filter(text => /^one .+ input$/i.test(text));
     const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
-    const guards = facts.filter(isGuard).filter(text => !inputFacts.includes(text));
+    const guards = item.guards || facts.filter(isGuard).filter(text => !inputFacts.includes(text));
     const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
     return `${inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : ""}
@@ -2802,6 +2804,7 @@
 
   function inputInfo(item){
     const value = String(item.input || "").trim();
+    if (!value && item.type === "Quick Command") return commandInputInfo(item.code || "");
     if (!value) return "";
 
     const bucket = primaryBucket(item);
@@ -2809,6 +2812,30 @@
     if (bucket === "Tenant Wide" && /^tenant$/i.test(value)) return "";
 
     return value;
+  }
+
+  function commandInputInfo(code){
+    // Match the catalog's literal examples, not command/property names.
+    const examples = [
+      [/\busername\b|DOMAIN\\\\User/i, "target account name"],
+      [/(?:user|owner|delegate|recipient|group)@domain\.com/i, "target user, mailbox or group address"],
+      [/GroupName|Group Name|GROUP-OBJECT-ID/, "group name or object ID"],
+      [/Jane Doe/, "exact display name"],
+      [/APP-ID|AUTH-METHOD-ID|OAUTH-GRANT-ID|MESSAGE-TRACE-ID/, "record ID from a prior lookup"],
+      [/THUMBPRINT/, "certificate thumbprint"],
+      [/SEARCH-NAME|EmailSubject|phishing subject|Rule Name|Task Name/, "target search, rule, task or subject"],
+      [/1\.2\.3\.4|8\.8\.8\.8|example\.com|server01/, "target IP address, domain or host"],
+      [/C:\\\\(?:Temp|Scripts)|C:\\(?:Temp|Scripts)/, "local file or folder path"],
+      [/badguy@evil\.com/, "suspect sender address"],
+      [/['"](?:Ethernet|Wi-Fi)['"]/, "network adapter name"],
+      [/['"]UPN['"]/, "target user UPN"],
+      [/['"]notepad['"]/, "process name"],
+      [/['"]Spooler['"]/, "service name"],
+      [/\*Remote Desktop\*/, "firewall rule display-name filter"],
+      [/M365-AppAuth/, "certificate subject name"]
+    ].filter(([pattern]) => pattern.test(code)).map(([,label]) => label);
+    if (!examples.length) return "";
+    return "Replace command examples with your " + [...new Set(examples)].join("; ") + ". Review all target values before running.";
   }
 
   function runInfoMarkup(item){

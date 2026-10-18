@@ -39,7 +39,7 @@ for(const item of api.ITEMS){
   }
 }
 // Unlinked files in a public repository are still public. Only these build wrappers are intentionally uncatalogued.
-const wrappers=new Set(['tools/export-field-kit.ps1','tools/handoff.ps1']);
+const wrappers=new Set(['tools/export-field-kit.ps1','tools/handoff.ps1','tools/check-powershell.ps1']);
 const tracked=execFileSync('git',['ls-files','-z'],{cwd:root,encoding:'utf8'}).split('\0').filter(Boolean);
 const privateMaterial=/\.(?:pfx|p12|key|kdbx)$/i;
 const secretPatterns=[/-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----/,
@@ -59,7 +59,7 @@ if(process.argv.includes('--write-integrity'))fs.writeFileSync(path.join(root,'s
 else assert.equal(fs.readFileSync(path.join(root,'source-integrity.js'),'utf8'),manifest,'Source checksums are stale. Review source changes, then run node tools/check-site.mjs --write-integrity');
 window.FIELD_KIT_SOURCE_INTEGRITY=sorted;
 assert.equal(api.runFrameworkAudit().ok,true,'Catalog framework audit failed');
-for(const name of ['index.html','concept-neon-mint-reference.html']){
+for(const name of ['index.html']){
   const html=fs.readFileSync(path.join(root,name),'utf8');
   assert(html.includes('name="referrer" content="no-referrer"'),`${name}: missing referrer policy`);
   for(const directive of ["script-src 'self'","script-src-attr 'none'","object-src 'none'","base-uri 'none'","form-action 'none'"]){
@@ -77,5 +77,15 @@ for(const name of ['index.html','concept-neon-mint-reference.html']){
   }
   assert(html.includes('aria-label="Search all catalog sections"'),`${name}: search needs an accessible label`);
   assert(/aria-hidden="true" inert/.test(html),`${name}: closed drawer must be inert`);
+}
+const legacy=fs.readFileSync(path.join(root,'concept-neon-mint-reference.html'),'utf8');
+assert(legacy.includes('content="0;url=./index.html"'),'Legacy preview must lead to the canonical catalog');
+assert(!/<script\b/i.test(legacy),'Legacy preview must not run a second catalog');
+for(const item of api.ITEMS){
+  if(!item.publishedPath?.endsWith('.ps1'))continue;
+  const review=window.FIELD_KIT_CARD_GUIDANCE?.[item.file];
+  if(review) assert.equal(review.sourceSha256,hashes[item.publishedPath],`Card review is stale: ${item.file}`);
+  assert(item.checks?.length || item.facts?.items?.length,`Script needs source-reviewed card coverage: ${item.file}`);
+  assert(!/^Read-only tenant permissions$/i.test(item.requires||''),`Document exact prerequisites: ${item.file}`);
 }
 console.log(`PASS: ${api.ITEMS.length} catalog items; ${Object.keys(sorted).length} downloadable sources; checksums, paths, policy and markup.`);

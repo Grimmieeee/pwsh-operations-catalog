@@ -134,7 +134,7 @@ Display contract:
 - MAKES CHANGES is shown explicitly.
 - DESTRUCTIVE is shown together with MAKES CHANGES because destructive work is also change-making.
 - The main-list row and selected card must use the same wording and combined state.
-- Risk labels use restrained outline badges; yellow remains the change warning and red remains the destructive warning.
+- Risk labels are plain colored text without boxes: mint read-only, yellow changes, coral red destructive.
 
 Do not use abbreviated CHANGE labels.
 
@@ -143,18 +143,18 @@ Do not use abbreviated CHANGE labels.
 Each row should prioritize:
 
 1. display name;
-2. primary module / platform;
-3. primary scope when applicable;
+2. small exact-version circled V when earned;
+3. primary scope in search results when useful;
 4. risk state;
 5. navigation arrow.
 
 Context treatment:
 
-- module/platform examples: EXCHANGE, GRAPH, ACTIVE DIRECTORY, GRAPH + EXO;
+- module/platform labels belong in the selected card's technical section;
 - scope examples: SINGLE USER, MULTI USER, TENANT WIDE;
 - context badges are informational, not separate click targets;
-- neutral badges stay deliberately subdued and brighten with row hover;
-- risk badges retain their warning color;
+- context text stays deliberately subdued;
+- risk labels retain their warning color without borders or fill;
 - do not expose a metadata wall.
 
 Rows should remain dense enough for fast scanning while giving a new operator enough context to understand what the item targets, what it uses, and what it can do.
@@ -165,24 +165,24 @@ All selected cards use one shared renderer.
 
 Order:
 
-1. Scope, title, and risk flags.
+1. Scope, title, small raised circled V when earned, and plain risk labels.
 2. USE FOR: one short sentence.
 3. Important changes and required workflow order.
-4. Up to three useful checks; remaining checks expand under More checks.
-5. DOWNLOAD .PS1 / .MD, VIEW CODE, and COPY actions.
-6. Required inputs, permissions, and connection commands.
-7. Expandable details and source.
+4. INPUT, CHECKS and GUARDS, using matching headings and no overflow groups.
+5. Compact REQUIRES disclosure, then AUTO-CONNECT or CONNECT FIRST above small boxed service names and accurate start directions.
+6. Useful expandable Details; DOWNLOAD .PS1 / .MD and VIEW CODE actions.
+7. COPY inside the exposed source box only.
 
 Use the compact Path Ping card as the default. Checkmarks describe distinct capabilities; do not repeat the title, purpose, or generic summary/CSV availability. Omit empty sections. Do not invent checks. Preserve important behavior and limitations in Details; show unusual side effects prominently.
 
 ## 9. Source behavior
 
-PowerShell and documentation cards expose download and copy before opening source. All three actions load the same approved same-origin content. Missing source is labeled unavailable, never presented as a working download. Copy confirms COPIED; loading failures remain visible.
+PowerShell and documentation cards expose download and View Code. COPY appears inside the source box only after approved source loads. All actions use the same checksum-verified same-origin content. Missing source is labeled unavailable, never presented as a working download. Copy confirms success; loading failures remain visible.
 
 Standalone atomic commands:
 
 - show the command directly;
-- COPY COMMAND;
+- COPY inside the command's code box;
 - no unnecessary source indirection.
 
 Source must never be fetched from arbitrary external URLs.
@@ -316,7 +316,7 @@ Before publishing a new build:
 - [ ] drawer opens/closes correctly;
 - [ ] module/platform badges are accurate;
 - [ ] scope badges are accurate;
-- [ ] READ ONLY / MAKES CHANGES / DESTRUCTIVE badges match actual behavior;
+- [ ] READ ONLY / MAKES CHANGES / DESTRUCTIVE text labels match actual behavior;
 - [ ] destructive items show both MAKES CHANGES and DESTRUCTIVE in list and selected card;
 - [ ] CHECKS / DOES / INCLUDES render consistently;
 - [ ] download, view-code, and copy controls work;
