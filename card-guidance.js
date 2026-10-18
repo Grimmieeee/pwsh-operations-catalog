@@ -1,5 +1,11 @@
 // Source-reviewed card details. Static review does not confer operator verification.
 window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
+  "INVOKE-REMOVE-LICENSES.ps1": {
+    "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list (UPN column recommended). Choose a license from the numbered list, or ALL.",
+    "checks": ["Current assigned licenses", "Per-user post-change removal verification", "Failed and unverified results kept open; optional result CSV"],
+    "guards": ["Expected tenant and signed-in account validated", "Each target UPN and planned license shown before approval", "Typed REMOVE confirmation; cancellation makes no changes"],
+    "sourceSha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928"
+  },
   "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
     "input": "Tenant domain; optional inactivity threshold (default 90 days).",
     "requires": "Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, AuditLog.Read.All, Group.Read.All; ExchangeOnlineManagement with recipient-read access.",

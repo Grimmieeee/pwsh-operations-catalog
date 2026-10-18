@@ -10,6 +10,33 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('offboarding language leads to read-only preparation without enabling missing sources',()=>{
+  const f=loadCatalog(root);
+  for(const query of ['employee left','departing employee','user leaving','offboarding','leaver']){
+    f.api.state.query=query;
+    const list=f.api.filteredItems();
+    assert.equal(list[0].displayName,'Pre-delete User Check',query);
+    assert.equal(list[0].access,'Read-only');
+    assert.ok(list.some(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1'));
+    assert.equal(list.find(x=>x.displayName==='User Offboarding').status,'Source pending');
+  }
+  for(const query of ['remove license','Disable Sign-In']){
+    f.api.state.query=query;
+    assert.match(f.api.filteredItems()[0].displayName,query==='remove license'?/Remove User Licenses/:/Disable Sign-In/);
+  }
+  f.api.state.query='unmatchableexample123';f.api.renderResults();
+  assert.equal(f.elements.get('empty').classList.contains('hidden'),false);
+  assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/No matches\. Try a task name[\s\S]*browse a section/);
+});
+
+test('license removal card discloses tenant input and exact target approval without a verified mark',()=>{
+  const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');
+  f.api.openItem(item);
+  const html=f.elements.get('drawerBody').innerHTML;
+  for(const text of ['Expected tenant ID (GUID)','Each target UPN','Failed and unverified','Typed REMOVE'])assert.ok(html.includes(text),text);
+  assert.equal(f.api.isVerifiedRelease(item),false);
+});
+
 test('investigation searches lead to assessment without hijacking explicit actions',()=>{
   const f=loadCatalog(root);
   for(const query of ['suspicious login','unexpected MFA prompts','compromised account','account hacked','suspicious sign-in']){
@@ -166,7 +193,7 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   const removal=f.api.ITEMS.find(item=>item.file==='INVOKE-REMOVE-LICENSES.ps1');
   f.api.openItem(removal);
   html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('Numbered license selection or ALL'));
+  assert.ok(html.includes('Choose a license from the numbered list, or ALL'));
   assert.ok(!html.includes('selected SKU or ALL'));
   const ir=f.api.ITEMS.find(item=>item.file==='ir-contain-eradicate.ps1');
   f.api.openItem(ir);
