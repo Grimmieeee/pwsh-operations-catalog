@@ -2143,6 +2143,9 @@
 
   function searchScore(item, query){
     if (!query) return 1;
+    const intent = norm(query);
+    const assessmentIntent = /^(?:(?:suspicious|unfamiliar|unusual|unexpected) (?:login|logon|sign in|signin|mfa prompts?)|(?:hacked|compromised) (?:account|mailbox)|(?:account|mailbox) (?:hacked|compromised)|possible account compromise|bec|phishing)$/.test(intent);
+    if (assessmentIntent && item.file === 'ir-risk-assessment.ps1') return 1000;
     const q = words(query);
     if (!q.length) return 1;
 
@@ -2663,7 +2666,28 @@
 
   function workflowMarkup(workflow){
     if (!workflow) return "";
-    return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(workflow.note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^IR: /,""))}</span></button>`).join("")}</div></section>`;
+    const note = workflow.current === '1' ? 'Start here. Continue to containment only when findings and authorization justify it.' : workflow.current === '2' ? 'After containment, review recovery readiness before restoring access.' : 'Restore only approved access, then verify the user can sign in with MFA.';
+    return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^IR: /,""))}</span></button>`).join("")}</div></section>`;
+  }
+
+  function startMarkup(item){
+    if (!item.publishedPath?.endsWith('.ps1')) return '';
+    if (!window.FIELD_KIT_START) return '<section class="guided-start"><div class="section-label">START</div><p>Start guidance could not load. Reload the site before proceeding. Individual source controls remain below.</p></section>';
+    const ir = Boolean(window.FIELD_KIT_START.stages[item.file]);
+    const code = window.FIELD_KIT_START.launch(item.file);
+    return `<section class="guided-start"><div class="section-label">START</div>
+      ${ir ? '<p>Download the workflow once. It includes all three scripts and the IR workflow guide.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div><p>Extract the ZIP into one folder on the client jumpbox.</p>' : '<p>Download the script below and save it on the computer where it should run.</p>'}
+      <p>Open PowerShell${ir ? ' on the jumpbox and keep that window open' : ''}. Copy the script’s full path${ir ? ' from the extracted folder' : ''}; on Windows, right-click the file and choose <strong>Copy as path</strong>.</p>
+      <div class="connect-line"><details class="connect-command"><summary>Launch in PowerShell <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
+      <p>Paste the launch command into PowerShell, press Enter, then paste the file path when asked. If execution is blocked, use the approved signing/policy process.</p>
+      ${ir ? `<details class="workflow-guide"><summary>IR workflow guide</summary><div class="guide-copy">${window.FIELD_KIT_START.preparation.map(text=>`<p>${esc(text)}</p>`).join('')}<p>Start with ir-risk-assessment. Use the script’s handoff to continue in the same window. The guide in the ZIP includes expected results and blocked/cancelled paths for all three steps.</p></div></details>` : ''}
+    </section>`;
+  }
+
+  function finishMarkup(item){
+    const step=window.FIELD_KIT_START?.stages[item.file];
+    if(!step)return '';
+    return `<section class="guided-finish"><div class="section-label">EXPECTED RESULT</div><p>${esc(step.result)}</p><div class="section-label">NEXT</div><p>${esc(step.next)}</p><details class="workflow-guide"><summary>If blocked or cancelled</summary><p>${esc(step.blocked)}</p></details></section>`;
   }
 
   function comparableAction(value){
@@ -2734,12 +2758,13 @@
     const guards = item.guards || facts.filter(isGuard).filter(text => !inputFacts.includes(text));
     const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
-    return `${inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : ""}
-      ${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
+    const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
+    const review = `${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
       ${guards.length || requires ? `<section class="check-block"><div class="section-label">GUARDS</div>
         ${guards.length ? list(guards) : ""}
         ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES <span aria-hidden="true">ⓘ</span></summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}
       </section>` : ""}`;
+    return input + (item.workflow ? `<details class="scope-review"><summary>CHECKS &amp; GUARDS</summary>${review}</details>` : review);
   }
 
   function accessMarkup(item){
@@ -2884,7 +2909,7 @@
     const badge = platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : "";
     if (profile?.mode === "auto"){
       const workflow = IR_STEPS.some(step => step.file === item.file);
-      return `<section class="run-info-block"><div class="run-info-subhead">AUTO-CONNECT</div>${badge}<p class="connection-direction">Run the script. Sign in when prompted.</p>${workflow ? '<p class="connection-direction">Keep all three IR scripts together and run them in the same PowerShell window. Existing sessions are validated before reuse.</p>' : ''}</section>`;
+      return `<section class="run-info-block"><div class="run-info-subhead">AUTO-CONNECT</div>${badge}<p class="connection-direction">Sign in when the script asks.</p>${workflow ? '<p class="connection-direction">First sign-in requests read/change permissions for all three steps. Assessment makes no tenant changes; response actions require approval.</p><p class="connection-direction">Before starting: approved Windows jumpbox, Graph Authentication 2.x, Exchange Online module 3.2+, and authorized tenant access. Keep all three files together and use the same PowerShell window.</p><button type="button" class="copy-mini" data-related-file="TEST-POWERSHELL-READINESS.ps1">CHECK POWERSHELL READINESS</button>' : ''}</section>`;
     }
     if (profile?.mode === "local") return badge ? `<section class="run-info-block">${badge}</section>` : "";
     if (item.status === "Source pending") return "";
@@ -2902,7 +2927,8 @@
     if (item.type === "Quick Command") return "";
     if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
     const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
-    return `<button id="downloadSource" class="action primary" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button><span id="sourceStatus" role="status"></span>`;
+    const buttons = `<button id="downloadSource" class="action ${item.workflow ? '' : 'primary'}" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button>`;
+    return (item.workflow ? `<details class="individual-source"><summary>Individual script / source</summary><div class="actions">${buttons}</div></details>` : buttons)+'<span id="sourceStatus" role="status"></span>';
   }
 
   function referenceButtons(item){
@@ -2957,8 +2983,10 @@
       ${factsMarkup(item)}
       ${useForMarkup(item)}
       ${runInfoMarkup(item)}
+      ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
       ${shortNote(item)}
+      ${finishMarkup(item)}
 
       <div class="actions">
         ${sourceButton(item)}
@@ -2979,6 +3007,14 @@
   }
 
   function bindDrawerActions(item){
+    document.getElementById('downloadIRWorkflow')?.addEventListener('click',async e=>{
+      const button=e.currentTarget,status=document.getElementById('workflowStatus');
+      button.disabled=true;
+      button.textContent='VERIFYING WORKFLOW';status.textContent='Checking all three scripts before building the package…';
+      try { const blob=await buildIRBundle();saveBlob(blob,'field-kit-ir.zip');status.textContent='All three scripts verified. Workflow package downloaded.'; }
+      catch(error){status.textContent=error.message||'Workflow package could not be built. No partial package was downloaded.';}
+      finally{button.disabled=false;button.textContent='DOWNLOAD IR WORKFLOW';}
+    });
     drawerBody.querySelector("[data-verification-about]")?.addEventListener("click",()=>{
       closeItem();state.area="About";state.query="";search.value="";renderNav();renderResults();
     });
@@ -3151,8 +3187,21 @@
     return base.replace(/[^a-z0-9._-]/gi,"-");
   }
 
+  async function buildIRBundle(){
+    if(!window.FIELD_KIT_START)throw new Error('Workflow guidance could not load. Reload the site.');
+    const files = await Promise.all(IR_STEPS.map(async step=>{
+      const item=ITEMS.find(candidate=>candidate.file===step.file);
+      if(!item || !isVerifiedRelease(item))throw new Error('The workflow needs release review. No package downloaded.');
+      return {name:item.file,text:await resolveSource(item),hash:window.FIELD_KIT_SOURCE_INTEGRITY[item.publishedPath],version:item.version};
+    }));
+    if(new Set(files.map(file=>file.version)).size!==1)throw new Error('Workflow versions do not match. No package downloaded.');
+    return window.FIELD_KIT_START.zip([...files,{name:'IR-WORKFLOW-GUIDE.md',text:window.FIELD_KIT_START.guide()},{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
+  }
+
   function saveText(source, filename){
-    const blob = new Blob([source],{type:"text/plain;charset=utf-8"});
+    saveBlob(new Blob([source],{type:"text/plain;charset=utf-8"}),filename);
+  }
+  function saveBlob(blob,filename){
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

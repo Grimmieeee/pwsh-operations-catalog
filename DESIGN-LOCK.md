@@ -25,4 +25,6 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 
 ## Acceptance
 
+Owner-approved guided-start refinement: keep INPUT and preparation visible, with detailed IR CHECKS/GUARDS in one disclosure. Provide the verified IR workflow package, same-window launch help, and expected-result/next/blocked guidance. Shared path-prompted launch help applies to downloadable PowerShell scripts. Preserve all existing identity and verification rules. The owner authorized publication after the guided-start preview discussion.
+
 Preview visual changes in chat before publishing. Run site and required security checks, inspect live behavior and retain screenshot evidence. A site UI pass does not prove PowerShell runtime behavior.

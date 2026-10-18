@@ -50,10 +50,12 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   if(fs.existsSync(guidancePath))vm.runInContext(fs.readFileSync(guidancePath,'utf8'),context);
   const cardPath=path.join(root,'card-guidance.js');
   if(fs.existsSync(cardPath))vm.runInContext(fs.readFileSync(cardPath,'utf8'),context);
+  const startPath=path.join(root,'workflow-start.js');
+  if(fs.existsSync(startPath))vm.runInContext(fs.readFileSync(startPath,'utf8'),context);
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');
-  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,state,filteredItems,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,releaseTag,rowTags };\n${marker}`);
+  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,state,filteredItems,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,releaseTag,rowTags,buildIRBundle };\n${marker}`);
   vm.runInContext(instrumented,context);
   return {api:window.__TEST,window,document,elements,context,logs};
 }

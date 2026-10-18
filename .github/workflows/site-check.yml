@@ -22,6 +22,7 @@ jobs:
           node --check source-integrity.js
           node --check connection-guidance.js
           node --check card-guidance.js
+          node --check workflow-start.js
           node --check tools/catalog-commands.mjs
       - name: Parse PowerShell sources and inline catalog commands without execution
         shell: pwsh

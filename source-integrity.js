@@ -78,7 +78,7 @@ window.FIELD_KIT_SOURCE_INTEGRITY = Object.freeze({
   "tools/MANAGE-CERT-SIGNATURES.ps1": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
   "tools/nato-phonetic-alphabet.md": "c9dec1a66a3530972991663504e4c54e895e87093a43081404edfdf3da7288c7",
   "tools/powershell-standards.md": "78146e39af76b07c6fb945013d0971b45cd646c7bc0007bd678324aedd399785",
-  "tools/PROJECT-HANDOFF.md": "2f8f5388ad3ee8272ccb8bdb449d794a2e87205017ce4c43fd3a765b0d1ece87",
+  "tools/PROJECT-HANDOFF.md": "0f99439b5373c58b145063784c50fa90ea4a193e69320e88dc2585631ac299fa",
   "tools/publishing-checklist.md": "2ee855b823d32f2e6b3c667eedfa019234df0a6a515bbd4ed271510b6ac596d6",
   "tools/script-review-checklist.md": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
   "tools/script-template-guide.md": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",

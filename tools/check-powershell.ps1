@@ -27,4 +27,4 @@ foreach ($command in $commands) {
     }
 }
 if ($failures.Count) { throw ($failures -join [Environment]::NewLine) }
-Write-Output "PASS: $($files.Count) PowerShell files and $($commands.Count) inline commands parsed. Nothing was executed."
+Write-Output "PASS: $($files.Count) PowerShell files and $($commands.Count) catalog command blocks parsed. Nothing was executed."
