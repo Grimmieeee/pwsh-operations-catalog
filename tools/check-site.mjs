@@ -82,6 +82,13 @@ const legacy=fs.readFileSync(path.join(root,'concept-neon-mint-reference.html'),
 assert(legacy.includes('content="0;url=./index.html"'),'Legacy preview must lead to the canonical catalog');
 assert(!/<script\b/i.test(legacy),'Legacy preview must not run a second catalog');
 for(const item of api.ITEMS){
+  if(!item.publishedPath && !String(item.code||'').trim()) assert.equal(item.status,'Source pending',`Missing source presented as ready: ${item.name}`);
+  if(item.type==='Quick Command'){
+    assert(!/^\s*={8,}\s*$/m.test(item.code),`Decorative separator in command: ${item.name}`);
+    assert(!/<Package\.Id>/i.test(item.code),`Invalid package placeholder: ${item.name}`);
+    assert(!item.connect.includes('Connect-MgGraph'),`Graph preparation needs explicit scopes or no connection: ${item.name}`);
+    if(/\bRemove-(?:ADUser|MgUser|LocalUser)\b|\bNew-ComplianceSearchAction\b[^\n]*\bHardDelete\b/i.test(item.code))assert.equal(item.access,'Destructive',`Destructive quick command mislabeled: ${item.name}`);
+  }
   if(!item.publishedPath?.endsWith('.ps1'))continue;
   const review=window.FIELD_KIT_CARD_GUIDANCE?.[item.file];
   if(review) assert.equal(review.sourceSha256,hashes[item.publishedPath],`Card review is stale: ${item.file}`);
