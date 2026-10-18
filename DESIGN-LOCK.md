@@ -14,13 +14,14 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 
 ## Catalog and cards
 
-- Minimal list: task name, exact-version operator-verification mark when earned, and access flags. No row versions or platform badges.
-- Full catalog total appears in About as catalog entries (scripts, commands and guides), not as a search-box or Full Library navigation total. Parenthetical result counts appear only during search or filtered browsing. Small verification key stays at upper right; no redundant controls below search. This refinement was previewed and approved October 17, 2026.
+- Minimal list: task name, exact-version operator-verification mark when earned, and plain colored access labels. No access-label boxes, row versions or platform badges. Destructive text uses the approved coral red.
+- Full catalog total appears in About as catalog entries (scripts, commands and guides), not as a search-box or Full Library navigation total. Parenthetical result counts appear only during search or filtered browsing. Verification meaning is in About, without a repeated header legend. No redundant controls below search.
 - Card order: USE FOR, INPUT, CHECKS, GUARDS, connection commands, useful Details, source actions. Omit empty sections.
 - INPUT distinguishes what the technician brings from script-provided choices. CHECKS and GUARDS describe the exact script, not generic assurances.
-- Compact REQUIRES supports hover, tap and keyboard. Long connection commands expand; COPY always copies the full command.
-- Preserve muted flag borders and readable destructive red. No extra verification borders or decorative badges.
-- Versions stay inside cards. No new VERIFIED marks without exact-version operator evidence.
+- Compact REQUIRES supports hover, tap and keyboard. Connection section starts with small mint AUTO-CONNECT or CONNECT FIRST, followed by smaller boxed mint service names. Built-in sign-in gets directions, without redundant connection commands. Manual preparation shows the needed commands and direction in the same PowerShell window. Source changes invalidate the reviewed connection profile until reviewed again.
+- Use a small raised circled V beside the selected title only when exact-version evidence qualifies. Its explanation lives in About. Clicking the mark opens About.
+- Script versions remain in existing source headers and internal verification data, without a visible card version line. Source COPY lives inside the exposed code box. Download and View Code remain outside; connection and standalone command COPY stays with its code. Keep action and code-box borders.
+- No new VERIFIED marks without exact-version operator evidence. These refinements were previewed and approved October 17, 2026.
 
 ## Acceptance
 
