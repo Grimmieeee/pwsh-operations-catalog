@@ -298,14 +298,16 @@
       name:"Show WinGet Package Information",
       platform:"WinGet",
       access:"Read-only",
-      code:"winget show --id <Package.Id>",
+      input:'Exact package ID from winget search. Replace "Package.Id" before running.',
+      code:'$PackageId = "Package.Id"\nwinget show --id $PackageId --exact',
       keywords:"winget package info version"
     },
     {
       name:"Update Specific WinGet Package",
       platform:"WinGet",
       access:"Change",
-      code:"winget upgrade --id <Package.Id> --accept-source-agreements --accept-package-agreements",
+      input:'Exact package ID from winget search. Replace "Package.Id" before running.',
+      code:'$PackageId = "Package.Id"\nwinget upgrade --id $PackageId --exact --accept-source-agreements --accept-package-agreements',
       keywords:"winget update specific package"
     },
     {
@@ -654,8 +656,10 @@
       name:"Connect Microsoft Graph",
       platform:"Microsoft Graph",
       access:"Read-only",
-      code:"Connect-MgGraph",
-      useFor:"Start an interactive Microsoft Graph PowerShell session before running Graph commands.",
+      input:"Delegated scopes required by your task. User.Read below is a basic signed-in-user example; use each task card's scopes for other operations.",
+      requires:"Microsoft.Graph.Authentication; consent to the selected delegated scopes.",
+      code:'Connect-MgGraph -Scopes "User.Read" -ContextScope Process',
+      useFor:"Start a Microsoft Graph session with explicitly selected delegated permissions.",
       keywords:"graph connect session authentication microsoft graph powershell"
     },
     {
@@ -672,7 +676,7 @@
     subarea:"",
     status:"Ready",
     source:"Standalone",
-    input:"",
+    input:x.input || "",
     output:"",
     file:"",
     related:[],
@@ -1725,6 +1729,11 @@
   }
 
   function connectCommands(item){
+    if (/^Connect Microsoft Graph$/i.test(displayName(item))) return [];
+    if (item.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,item.name)){
+      const scopes = QUICK_GRAPH_SCOPES[item.name];
+      return scopes.length ? ['Connect-MgGraph -Scopes '+scopes.map(scope=>JSON.stringify(scope)).join(',')+' -ContextScope Process'] : [];
+    }
     if (/^Connect Exchange Online$/i.test(displayName(item))) return [];
 
     const curated = curatedMeta(item);
@@ -1839,6 +1848,27 @@
     return '<section class="related-block"><div class="section-label">RELATED TOOLS</div><div class="actions">'+links.map(other=>`<button type="button" class="action" data-related-file="${esc(other.file)}">${esc(other.displayName)}</button>`).join("")+'</div></section>';
   }
 
+  // Delegated preparation for these atomic commands; roles and consent remain
+  // prerequisites. Diagnostic/disconnect commands deliberately need no sign-in.
+  const QUICK_GRAPH_SCOPES = {
+    "Show Password Last Changed And Age":["User.Read.All"],
+    "Show Sync Source":["User.Read.All"],
+    "Delete Cloud User":["User.ReadWrite.All"],
+    "Disable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
+    "Enable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
+    "Revoke Active Sessions":["User.RevokeSessions.All"],
+    "Remove Specific Authenticator Method":["UserAuthenticationMethod.ReadWrite.All"],
+    "Remove Specific Phone Method":["UserAuthenticationMethod.ReadWrite.All"],
+    "Remove Specific Delegated Grant":["DelegatedPermissionGrant.ReadWrite.All"],
+    "Add User to Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
+    "Remove User from Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
+    "Show Entra Sign-ins - Last 48 Hours":["AuditLog.Read.All"],
+    "Show Legacy / Other-client Sign-ins":["AuditLog.Read.All"],
+    "Show Successful Sign-Ins":["AuditLog.Read.All"],
+    "Show Graph Context":[],
+    "Disconnect Microsoft Graph":[]
+  };
+
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
     const review = window.FIELD_KIT_CARD_GUIDANCE?.[source.file];
@@ -1851,6 +1881,14 @@
     if (/SET-THEME-(SEAGLASS|SILICON-VALLEY)/.test(source.file || "")) source.changeNote = source.notes;
     if (/SET-THEME-COBALT/.test(source.file || "")) source.changeNote = "Changes this terminal and sets Process execution policy to Bypass; no profile installation.";
     if (source.area === "Tools" && source.type === "Documentation") source.subarea = "Reference";
+    if (source.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,source.name)){
+      const scopes = QUICK_GRAPH_SCOPES[source.name];
+      source.requires = scopes.length
+        ? 'Microsoft.Graph modules for this command; delegated scopes: '+scopes.join(', ')+'. Consent and a supported Entra role for the target are required.'+(scopes.includes('AuditLog.Read.All') ? ' Sign-in logs also require tenant licensing and log-read access.' : '')
+        : 'Microsoft.Graph.Authentication; uses or inspects only the current session. No new sign-in required.';
+    }
+    if (source.type === "Quick Command" && /\bRemove-(?:ADUser|MgUser|LocalUser)\b|\bNew-ComplianceSearchAction\b[^\n]*\bHardDelete\b/i.test(source.code || "")) source.access = "Destructive";
+    if (source.type !== "Quick Command" && !source.publishedPath && !String(source.code || "").trim()) source.status = "Source pending";
     const area = logicalArea(source);
     return {
       ...source,
@@ -2849,7 +2887,8 @@
       return `<section class="run-info-block"><div class="run-info-subhead">AUTO-CONNECT</div>${badge}<p class="connection-direction">Run the script. Sign in when prompted.</p>${workflow ? '<p class="connection-direction">Keep all three IR scripts together and run them in the same PowerShell window. Existing sessions are validated before reuse.</p>' : ''}</section>`;
     }
     if (profile?.mode === "local") return badge ? `<section class="run-info-block">${badge}</section>` : "";
-    if (item.publishedPath || item.status === "Source pending"){
+    if (item.status === "Source pending") return "";
+    if (item.publishedPath){
       return `<section class="run-info-block"><div class="run-info-subhead">CONNECTIONS</div>${badge}<p class="connection-direction">Connection setup needs review before running this script.</p></section>`;
     }
     // Quick commands are their own source. Do not duplicate connection commands

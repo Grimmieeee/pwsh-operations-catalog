@@ -9,6 +9,42 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('quick command risk, scoped preparation and missing-source readiness stay aligned',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS){
+    if(!item.publishedPath&&!item.code){
+      assert.equal(item.status,'Source pending',item.name);
+      assert.ok(f.api.rowTags(item).includes('SOURCE PENDING'));
+      f.api.openItem(item);
+      const html=f.elements.get('drawerBody').innerHTML;
+      assert.ok(html.includes('Source pending. Download not available yet.'));
+      assert.ok(!html.includes('CONNECT FIRST'));
+      assert.ok(!html.includes('id="downloadSource"'));
+    }
+    if(item.type==='Quick Command'){
+      assert.ok(!/^\s*={8,}\s*$/m.test(item.code),item.name);
+      assert.ok(!item.code.includes('<Package.Id>'),item.name);
+      assert.ok(!item.connect.includes('Connect-MgGraph'),item.name);
+    }
+  }
+  for(const name of ['Delete User','Delete Cloud User','Hard-Delete Search Results']){
+    const item=f.api.ITEMS.find(x=>x.name===name);
+    assert.equal(item.access,'Destructive');
+    assert.ok(f.api.rowTags(item).includes('DESTRUCTIVE'));
+  }
+  for(const name of ['Show Graph Context','Disconnect Microsoft Graph']){
+    const item=f.api.ITEMS.find(x=>x.name===name);
+    assert.equal(item.connect.length,0);
+    f.api.openItem(item);
+    assert.ok(!f.elements.get('drawerBody').innerHTML.includes('CONNECT FIRST'));
+  }
+  for(const name of ['Show WinGet Package Information','Update Specific WinGet Package']){
+    const item=f.api.ITEMS.find(x=>x.name===name);
+    assert.ok(item.input.includes('winget search'));
+    assert.ok(item.code.includes('--exact'));
+  }
+});
+
 test('every released script has operational coverage and reviewed prerequisites',()=>{
   const f=loadCatalog(root);
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){

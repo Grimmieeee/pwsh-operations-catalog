@@ -69,7 +69,11 @@ Remove or replace:
 
 ## Catalog review
 
-- [ ] Run `pwsh -NoProfile -File tools/check-powershell.ps1`; all tracked PowerShell files parse without execution.
+- [ ] Run `pwsh -NoProfile -File tools/check-powershell.ps1`; all tracked PowerShell files AND effective inline quick commands parse without execution.
+- [ ] Copied commands contain no decorative separators, stray braces or unquoted angle-bracket placeholders.
+- [ ] Account-deletion and hard-delete commands show DESTRUCTIVE alongside MAKES CHANGES.
+- [ ] Graph preparation specifies delegated scopes; diagnostic/disconnect commands do not demand a new connection.
+- [ ] Cards lacking both published source and inline code show SOURCE PENDING and no launch preparation.
 - [ ] Every script card has source-backed CHECKS; GUARDS includes actual approval and target-selection safeguards.
 - [ ] Quick-command example targets have replacement directions in INPUT.
 - [ ] Source-bound card and connection review hashes match the released bytes; review both after changing source.
