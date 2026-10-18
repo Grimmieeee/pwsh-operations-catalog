@@ -2144,6 +2144,13 @@
   function searchScore(item, query){
     if (!query) return 1;
     const intent = norm(query);
+    const offboardingIntent = /^(?:offboarding|offboard(?: user| employee)?|employee left|(?:employee|user) (?:leaving|departed)|departing (?:employee|user)|leaver)$/.test(intent);
+    if (offboardingIntent) {
+      if (item.displayName === 'Pre-delete User Check') return 1000;
+      if (item.displayName === 'User Offboarding') return 900;
+      if (item.file === 'INVOKE-REMOVE-LICENSES.ps1') return 800;
+      return 0;
+    }
     const assessmentIntent = /^(?:(?:suspicious|unfamiliar|unusual|unexpected) (?:login|logon|sign in|signin|mfa prompts?)|(?:hacked|compromised) (?:account|mailbox)|(?:account|mailbox) (?:hacked|compromised)|possible account compromise|bec|phishing)$/.test(intent);
     if (assessmentIntent && item.file === 'ir-risk-assessment.ps1') return 1000;
     const q = words(query);

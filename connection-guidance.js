@@ -40,7 +40,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-REMOVE-LICENSES.ps1": {
-    "sha256": "c35632545c2818350704c9b9652bd9fd6bd2945dd5b347427800bcf04d67a038",
+    "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
     "mode": "auto",
     "services": [
       "GRAPH"

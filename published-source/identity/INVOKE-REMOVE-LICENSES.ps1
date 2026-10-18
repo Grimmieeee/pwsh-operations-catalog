@@ -1,5 +1,6 @@
 <#
-user-license-removal-bulk-clean.ps1
+INVOKE-REMOVE-LICENSES.ps1
+.VERSION 1.0.1
 
 User license removal for one or more users.
 
@@ -15,7 +16,8 @@ Change-making.
 param(
     [Alias('UPN')]
     [string[]]$InputObject,
-    [string]$InputPath
+    [string]$InputPath,
+    [string]$ExpectedTenantId
 )
 
 $ErrorActionPreference = "Stop"
@@ -174,11 +176,7 @@ function Offer-ExportCsv {
 function Graph-Get {
     param([string]$Uri)
 
-    try {
-        return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
-    } catch {
-        return $null
-    }
+    return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
 }
 
 function Graph-Post {
@@ -187,11 +185,7 @@ function Graph-Post {
         [object]$Body
     )
 
-    try {
-        return Invoke-MgGraphRequest -Method POST -Uri $Uri -Body ($Body | ConvertTo-Json -Depth 20) -ContentType "application/json" -ErrorAction Stop
-    } catch {
-        return $null
-    }
+    return Invoke-MgGraphRequest -Method POST -Uri $Uri -Body ($Body | ConvertTo-Json -Depth 20) -ContentType "application/json" -ErrorAction Stop
 }
 
 function Graph-Patch {
@@ -220,7 +214,7 @@ function Graph-Delete {
 }
 
 function Ensure-Graph {
-    param([string[]]$Scopes)
+    param([string[]]$Scopes, [string]$TenantId)
 
     $module=Get-Module -ListAvailable -Name Microsoft.Graph.Authentication -ErrorAction SilentlyContinue |
         Sort-Object Version -Descending |
@@ -235,6 +229,12 @@ function Ensure-Graph {
     Import-Module $module.Path -Force -ErrorAction Stop | Out-Null
 
     $ctx=Get-MgContext -ErrorAction SilentlyContinue
+    if ($ctx -and $ctx.TenantId -ne $TenantId) {
+        throw 'Existing Graph session is for another tenant. No changes made. Open a new PowerShell window and sign in to the expected tenant.'
+    }
+    if ($ctx -and ($ctx.AuthType -ne 'Delegated' -or -not $ctx.Account)) {
+        throw 'An interactive delegated Graph session is required. Open a new PowerShell window and sign in.'
+    }
     $hasScopes=$true
     if (-not $ctx) { $hasScopes=$false }
     else {
@@ -243,20 +243,21 @@ function Ensure-Graph {
         }
     }
 
-    if ($ctx -and -not $hasScopes) {
+    if ($ctx -and (-not $hasScopes -or $ctx.ContextScope -ne 'Process')) {
         Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
         $ctx=$null
     }
 
     if (-not $ctx) {
         $command=Get-Command Connect-MgGraph -ErrorAction Stop
-        $parameters=@{ Scopes=$Scopes; ErrorAction='Stop' }
-        if ($command.Parameters.ContainsKey('ContextScope')) { $parameters['ContextScope']='Process' }
+        if (-not $command.Parameters.ContainsKey('ContextScope')) { throw 'Update Microsoft.Graph.Authentication to a version supporting process-scoped sign-in.' }
+        $parameters=@{ Scopes=$Scopes; TenantId=$TenantId; ContextScope='Process'; ErrorAction='Stop' }
         if ($command.Parameters.ContainsKey('NoWelcome')) { $parameters['NoWelcome']=$true }
         Connect-MgGraph @parameters | Out-Null
     }
 
     $ctx=Get-MgContext -ErrorAction Stop
+    Assert-GraphContext -TenantId $TenantId
     foreach ($scope in $Scopes) {
         if (@($ctx.Scopes) -notcontains $scope) {
             FAIL "Graph token is missing required scope: $scope"
@@ -268,6 +269,27 @@ function Ensure-Graph {
     return $true
 }
 
+function Assert-GraphContext {
+    param([string]$TenantId, [string]$Account)
+    $ctx=Get-MgContext -ErrorAction Stop
+    if (-not $ctx -or $ctx.TenantId -ne $TenantId -or $ctx.AuthType -ne 'Delegated' -or
+        -not $ctx.Account -or $ctx.ContextScope -ne 'Process' -or ($Account -and $ctx.Account -ne $Account)) {
+        throw 'Graph tenant/account context changed or could not be validated. Stop and review the results; do not retry changes blindly.'
+    }
+}
+
+function Get-AssignedLicenseIds {
+    param($User)
+    $hasState = $null -ne $User -and (
+        ($User -is [System.Collections.IDictionary] -and $User.Contains('assignedLicenses')) -or
+        $User.PSObject.Properties.Name -contains 'assignedLicenses')
+    if (-not $hasState -or $null -eq $User.assignedLicenses) { throw 'Assigned-license state is unavailable; absence is not verified.' }
+    foreach ($license in @($User.assignedLicenses)) {
+        if (-not $license.skuId) { throw 'Assigned-license state is incomplete.' }
+        [string]$license.skuId
+    }
+}
+
 function Get-GraphPages {
     param([string]$Uri)
 
@@ -276,7 +298,7 @@ function Get-GraphPages {
     while ($Uri) {
         $page = Graph-Get $Uri
 
-        if (-not $page) { break }
+        if (-not $page -or $null -eq $page.value) { throw 'License inventory is unavailable. No changes made.' }
 
         foreach ($item in @($page.value)) {
             [void]$items.Add($item)
@@ -292,21 +314,11 @@ function Get-GraphUserByUPN {
     param([string]$UPN)
 
     $encoded = Encode-Value $UPN
-    $uri = "https://graph.microsoft.com/v1.0/users/$encoded?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,usageLocation,signInActivity,lastPasswordChangeDateTime"
+    $uri = "https://graph.microsoft.com/v1.0/users/${encoded}?`$select=id,displayName,userPrincipalName,assignedLicenses"
     $user = Graph-Get $uri
 
-    if ($user -and $user.id) { return $user }
-
-    $escaped = Escape-OData $UPN
-    $filter = Encode-Value "userPrincipalName eq '$escaped' or mail eq '$escaped'"
-    $uri = "https://graph.microsoft.com/v1.0/users?`$filter=$filter&`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,usageLocation,signInActivity,lastPasswordChangeDateTime"
-    $fallback = Graph-Get $uri
-
-    if ($fallback -and $fallback.value -and @($fallback.value).Count -gt 0) {
-        return @($fallback.value)[0]
-    }
-
-    return $null
+    if (-not $user -or -not $user.id -or $user.userPrincipalName -ne $UPN) { throw "Exact UPN could not be validated: $UPN. No alias/first-match fallback is used." }
+    return $user
 }
 
 function Get-GraphGroupByInput {
@@ -336,13 +348,20 @@ try {
 
     if ($upns.Count -eq 0) {
         Pause-End
-        exit 1
+        return
     }
 
-    if (-not (Ensure-Graph -Scopes @("User.ReadWrite.All","Directory.Read.All","Organization.Read.All"))) {
-        Pause-End
-        exit 1
+    if (-not $ExpectedTenantId) { $ExpectedTenantId=(Read-Host 'Expected tenant ID (GUID; blank cancels)').Trim() }
+    $tenantGuid=[guid]::Empty
+    if (-not [guid]::TryParse($ExpectedTenantId, [ref]$tenantGuid) -or $tenantGuid -eq [guid]::Empty) {
+        throw 'A valid expected tenant ID is required. No changes made.'
     }
+    $ExpectedTenantId=$tenantGuid.ToString()
+    if (-not (Ensure-Graph -Scopes @("User.ReadWrite.All","Directory.Read.All","Organization.Read.All") -TenantId $ExpectedTenantId)) {
+        Pause-End
+        return
+    }
+    $approvedAccount=(Get-MgContext -ErrorAction Stop).Account
 
     $skus = @(Get-GraphPages -Uri "https://graph.microsoft.com/v1.0/subscribedSkus")
     $skuMap = @{}
@@ -359,11 +378,8 @@ try {
     foreach ($upn in $upns) {
         $u = Get-GraphUserByUPN -UPN $upn
 
-        if (-not $u) {
-            WARN "User not found: $upn"
-            continue
-        }
-
+        # Resolve every supplied target before offering any change approval.
+        $null = @(Get-AssignedLicenseIds -User $u)
         $licenses = @($u.assignedLicenses)
 
         [void]$users.Add([pscustomobject]@{
@@ -384,7 +400,7 @@ try {
     if ($users.Count -eq 0) {
         FAIL "No valid users found"
         Pause-End
-        exit 1
+        return
     }
 
     Write-Host "Users found: $($users.Count)"
@@ -412,21 +428,32 @@ try {
         if (-not $indexMap.ContainsKey($choice)) {
             FAIL "Invalid selection"
             Pause-End
-            exit 1
+            return
         }
 
         $targetSku = $indexMap[$choice]
     }
 
     Section "PLAN"
+    Assert-GraphContext -TenantId $ExpectedTenantId -Account $approvedAccount
+    Write-Host "Tenant ID  : $ExpectedTenantId"
+    Write-Host "Account    : $approvedAccount"
     Write-Host "Users      : $($users.Count)"
     Write-Host "Remove     : $(if ($removeAll) { 'ALL LICENSES' } else { $(if ($skuMap.ContainsKey($targetSku)) { $skuMap[$targetSku] } else { $targetSku }) })"
     Write-Host ""
+    foreach ($u in $users) {
+        $planned=@($u.Licenses | Where-Object { $removeAll -or [string]$_.skuId -eq $targetSku } | ForEach-Object {
+            $id=[string]$_.skuId
+            if ($skuMap.ContainsKey($id)) { $skuMap[$id] } else { $id }
+        })
+        $description=if ($planned.Count) { $planned -join ', ' } else { 'No matching license; will skip' }
+        Write-Host "$($u.UPN) -> $description"
+    }
 
     if (-not (Confirm-Type "This will remove licenses from users." "REMOVE")) {
         WARN "Cancelled"
         Pause-End
-        exit 0
+        return
     }
 
     $results = New-Object System.Collections.ArrayList
@@ -454,32 +481,27 @@ try {
             removeLicenses = $removeIds
         }
 
-        $result = Graph-Post "https://graph.microsoft.com/v1.0/users/$($u.Id)/assignLicense" $body
-
-        if ($result) {
+        $requestReturned=$false
+        try {
+            Assert-GraphContext -TenantId $ExpectedTenantId -Account $approvedAccount
+            Graph-Post "https://graph.microsoft.com/v1.0/users/$($u.Id)/assignLicense" $body | Out-Null
+            $requestReturned=$true
             Start-Sleep -Milliseconds 300
             $verified=Get-GraphUserByUPN -UPN $u.UPN
-            $remaining=@()
-
-            if ($verified) {
-                $remaining=@(
-                    $verified.assignedLicenses |
-                    ForEach-Object { "$($_.skuId)" } |
-                    Where-Object { $removeIds -contains $_ }
-                )
-            }
-
-            if ($verified -and $remaining.Count -eq 0) {
+            if ($verified.id -ne $u.Id) { throw 'Target identity changed; final state is unverified.' }
+            $remaining=@(Get-AssignedLicenseIds -User $verified | Where-Object { $removeIds -contains $_ })
+            if ($remaining.Count -eq 0) {
                 OK "$($u.UPN) license removal verified"
                 [void]$results.Add([pscustomobject]@{ UPN=$u.UPN; Action="RemoveLicense"; Result="Verified"; Detail=($removeIds -join "; ") })
             }
             else {
-                WARN "$($u.UPN) removal returned success but verification still found targeted license state"
+                WARN "$($u.UPN) request returned but targeted licenses remain. Review before retrying."
                 [void]$results.Add([pscustomobject]@{ UPN=$u.UPN; Action="RemoveLicense"; Result="FailedValidation"; Detail=($removeIds -join "; ") })
             }
-        } else {
-            WARN "$($u.UPN) license removal failed"
-            [void]$results.Add([pscustomobject]@{ UPN=$u.UPN; Action="RemoveLicense"; Result="Failed"; Detail=($removeIds -join "; ") })
+        } catch {
+            $state=if ($requestReturned) { 'FailedValidation' } else { 'Failed' }
+            WARN "$($u.UPN): request or verification failed; final state is unverified. $($_.Exception.Message)"
+            [void]$results.Add([pscustomobject]@{ UPN=$u.UPN; Action="RemoveLicense"; Result=$state; Detail=$_.Exception.Message })
         }
     }
 
@@ -488,15 +510,26 @@ try {
     Write-Host "Verified        : $(@($results | Where-Object { $_.Result -eq 'Verified' }).Count)"
     Write-Host "Skipped         : $(@($results | Where-Object { $_.Result -eq 'Skipped' }).Count)"
     Write-Host "Failed          : $(@($results | Where-Object { $_.Result -eq 'Failed' }).Count)"
+    Write-Host "Unverified      : $(@($results | Where-Object { $_.Result -eq 'FailedValidation' }).Count)"
 
     Offer-ExportCsv -Rows @($results) -DefaultName "license-removal-$(Get-Date -Format 'yyyyMMdd-HHmmss').csv"
 
-    OK "Complete"
+    $unresolved=@($results | Where-Object { $_.Result -in @('Failed','FailedValidation') }).Count
+    if ($unresolved) {
+        WARN 'STATUS: Incomplete - failed or unverified results remain.'
+        INFO 'NEXT STEP: Review per-user results and current license state before retrying. Do not close the task as successful.'
+    } elseif (@($results | Where-Object { $_.Result -eq 'Verified' }).Count) {
+        OK 'STATUS: Completed - requested removals verified; review any skipped users.'
+        INFO 'NEXT STEP: Record results and continue the approved offboarding process. License removal alone is not offboarding.'
+    } else {
+        INFO 'STATUS: No changes - no matching licenses.'
+        INFO 'NEXT STEP: Review the selected users and license; no removal was verified.'
+    }
     Pause-End
 }
 catch {
     Write-Host ""
-    FAIL "Unhandled script error"
+    FAIL "STATUS: Stopped - task not completed"
     Write-Host $_.Exception.Message
     Pause-End
 }

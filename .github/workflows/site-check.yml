@@ -29,5 +29,8 @@ jobs:
         run: ./tools/check-powershell.ps1
       - name: Check catalog files, checksums, policy and public source
         run: node tools/check-site.mjs
+      - name: Exercise license-removal safety with offline Graph and prompt mocks
+        shell: pwsh
+        run: ./tests/license-removal.test.ps1
       - name: Exercise download, clipboard and keyboard failure paths
         run: node --test tests/site-security.test.mjs
