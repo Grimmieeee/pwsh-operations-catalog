@@ -190,12 +190,11 @@ function Copy-FolderSafe {
             New-Item -Path $Destination -ItemType Directory -Force | Out-Null
         }
 
-        $cmd = "robocopy `"$Source`" `"$Destination`" /E /R:1 /W:1 /NFL /NDL /NP"
         INFO "Copying: $Source"
-        cmd.exe /c $cmd | Out-Null
+        & robocopy.exe $Source $Destination /E /R:1 /W:1 /NFL /NDL /NP | Out-Null
         $code = $LASTEXITCODE
 
-        if ($code -le 7) {
+        if ($code -ge 0 -and $code -le 7) {
             OK "Copied: $Source"
             [void]$Log.Add("OK | Copied | $Source -> $Destination")
         } else {
@@ -207,6 +206,17 @@ function Copy-FolderSafe {
         WARN "Copy failed: $Source"
         [void]$Log.Add("FAIL | $($_.Exception.Message) | $Source")
     }
+}
+
+function Show-BackupOutcome {
+    param([System.Collections.ArrayList]$Log)
+    $copied=@($Log | Where-Object { $_ -like 'OK |*' }).Count
+    $failed=@($Log | Where-Object { $_ -like 'WARN |*' -or $_ -like 'FAIL |*' }).Count
+    $skipped=@($Log | Where-Object { $_ -like 'SKIP |*' }).Count
+    Write-Host "Copied folders: $copied | Failed/warning: $failed | Skipped: $skipped"
+    if ($failed -or -not $copied) { WARN 'STATUS: Incomplete - backup errors or no copied folders. Review the log before relying on this backup.' }
+    elseif ($skipped) { WARN 'STATUS: Partial - some source folders were missing. Review the log and backup coverage.' }
+    else { INFO 'STATUS: Copy pass finished without reported Robocopy errors. Review the log; file contents were not independently checksum-verified.' }
 }
 
 try {
@@ -307,7 +317,7 @@ try {
     Write-Host "Operator    : $env:USERDOMAIN\$env:USERNAME"
     Write-Host "Time        : $(Now)"
 
-    OK "Complete"
+    Show-BackupOutcome -Log $log
     Pause-End
 }
 catch {

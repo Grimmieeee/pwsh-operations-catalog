@@ -191,6 +191,21 @@ function Connect-FieldKitGraph {
     if ($context.TenantId) { Write-Host ("Tenant  : {0}" -f $context.TenantId) }
 }
 
+function Test-ResetTimestamp {
+    param([string]$UPN, $Before)
+    for ($attempt=1; $attempt -le 5; $attempt++) {
+        Start-Sleep -Seconds 2
+        try {
+            $after=Get-GraphUser -UPN $UPN
+            if ($after.lastPasswordChangeDateTime -and (-not $Before -or [string]$after.lastPasswordChangeDateTime -ne [string]$Before)) { return $true }
+        } catch {
+            # Accepted reset still needs secure delivery; a failed read is pending verification.
+            return $false
+        }
+    }
+    return $false
+}
+
 function Get-GraphUser {
     param([string]$UPN)
 
@@ -371,32 +386,15 @@ try {
 
             Invoke-MgGraphRequest -Method PATCH -Uri $uri -Body $body -ContentType 'application/json' -ErrorAction Stop | Out-Null
 
-            $verified = $false
-            $afterValue = $null
-
-            for ($attempt = 1; $attempt -le 5; $attempt++) {
-                Start-Sleep -Seconds 2
-                $after = Get-GraphUser -UPN $target.UPN
-                $afterValue = $after.lastPasswordChangeDateTime
-
-                if (
-                    $afterValue -and
-                    (
-                        -not $target.LastPasswordChange -or
-                        [string]$afterValue -ne [string]$target.LastPasswordChange
-                    )
-                ) {
-                    $verified = $true
-                    break
-                }
-            }
+            $verified = Test-ResetTimestamp -UPN $target.UPN -Before $target.LastPasswordChange
 
             Write-Host ""
-            Write-Host "RESET COMPLETE"
+            Write-Host "RESET REQUEST ACCEPTED"
             Write-Host ("UPN                : {0}" -f $target.UPN)
             Write-Host ("Temporary password : {0}" -f $temporaryPassword) -ForegroundColor Yellow
             Write-Host ("Force change       : {0}" -f $forceChange)
             Write-Host ("Verification       : {0}" -f $(if ($verified) { 'Verified by password-change timestamp' } else { 'Command accepted; timestamp pending' }))
+            Read-Host 'Deliver through the approved secure channel. Press Enter when delivered; the script then clears its password variables' | Out-Null
 
             [void]$results.Add([pscustomobject]@{
                 UPN = $target.UPN
@@ -415,7 +413,8 @@ try {
         }
         finally {
             $temporaryPassword = $null
-            Remove-Variable temporaryPassword -ErrorAction SilentlyContinue
+            $body = $null
+            Remove-Variable temporaryPassword,body -ErrorAction SilentlyContinue
         }
     }
 
@@ -423,7 +422,10 @@ try {
     Write-Host "SUMMARY"
     $results | Format-Table UPN,Result,Verification -AutoSize
     Write-Host ""
-    Write-OK "Complete. Generated passwords were not exported."
+    $unresolved=@($results | Where-Object { $_.Verification -ne 'Verified' -and $_.Verification -ne 'Not changed' }).Count
+    if ($unresolved) { Write-Warn 'STATUS: Incomplete - failed or pending reset verification remains. Review results before retrying.' }
+    else { Write-Info 'STATUS: Review finished. See per-user verified and not-changed results.' }
+    Write-Info 'Generated passwords were not exported by this script.'
 }
 catch {
     Write-Fail $_.Exception.Message

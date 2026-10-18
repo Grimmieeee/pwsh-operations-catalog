@@ -1,0 +1,10 @@
+[
+  {
+    "path": "published-source/incident-response/ir-risk-assessment.ps1",
+    "rule": "URI_VARIABLE_QUESTION",
+    "line": 557,
+    "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+    "reason": "Direct service-principal lookup can lose the identifier and return a collection. Its fallback runs after a failed request, not a successful collection response.",
+    "disposition": "Prepare a separate IR revision and repeat operator tests before moving exact-version verification. Keep the tested executable intact while this limitation is documented."
+  }
+]

@@ -70,8 +70,8 @@ try {
     Show-Section 'SUMMARY'
     Write-Info "Update command exit: $updateExit"
     Write-Info "Review command exit: $verifyExit"
-    if ($updateExit -eq 0) { Write-Ok 'Windows app update pass complete.' }
-    else { Write-Warn 'Review the WinGet output above for packages that did not update.' }
+    if ($updateExit -eq 0 -and $verifyExit -eq 0) { Write-Info 'STATUS: Update pass finished; review remaining packages above. This does not prove every application is current.' }
+    else { Write-Warn 'STATUS: Incomplete - update or post-update review failed. Review the WinGet output before closing the task.' }
 } catch {
     Write-Host ''
     Write-Fail $_.Exception.Message

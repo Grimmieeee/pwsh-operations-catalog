@@ -24,13 +24,27 @@ jobs:
           node --check card-guidance.js
           node --check workflow-start.js
           node --check tools/catalog-commands.mjs
+          node --check tools/catalog-safety-audit.mjs
       - name: Parse PowerShell sources and inline catalog commands without execution
         shell: pwsh
         run: ./tools/check-powershell.ps1
       - name: Check catalog files, checksums, policy and public source
         run: node tools/check-site.mjs
+      - name: Check that the whole-catalog safety inventory matches current sources
+        run: node tools/catalog-safety-audit.mjs --check
       - name: Exercise license-removal safety with offline Graph and prompt mocks
         shell: pwsh
-        run: ./tests/license-removal.test.ps1
+        run: |
+          ./tests/license-removal.test.ps1
+          ./tests/license-removal.test.ps1 -Mode Assign
+      - name: Screen catalog sources and shared Graph URI helpers
+        shell: pwsh
+        run: ./tests/catalog-safety.test.ps1
+      - name: Test endpoint failure reporting offline
+        shell: pwsh
+        run: ./tests/result-safety.test.ps1
+      - name: Test group creation and accepted-reset failure paths offline
+        shell: pwsh
+        run: ./tests/change-safety.test.ps1
       - name: Exercise download, clipboard and keyboard failure paths
         run: node --test tests/site-security.test.mjs

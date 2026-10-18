@@ -11,7 +11,8 @@ Purpose:
 #>
 
 param(
-    [int]$ExpiringDays = 30
+    [int]$ExpiringDays = 30,
+    [string]$ExpectedTenantId
 )
 $ErrorActionPreference = "Stop"
 
@@ -120,59 +121,90 @@ function Offer-ExportJson {
     }
 }
 
+function Get-CredentialExpiryFinding {
+    param($EndDate, [datetime]$Now, [datetime]$Soon, [ValidateSet('Secret','Certificate')][string]$Kind)
+    if (-not $EndDate) { return "$Kind expiry unavailable" }
+    try { $end=[datetime]$EndDate } catch { return "$Kind expiry unavailable" }
+    if ($end -lt $Now) { return "Expired $($Kind.ToLowerInvariant())" }
+    if ($end -lt $Soon) { return "$Kind expiring soon" }
+    return "$Kind OK"
+}
+
 function Graph-Get {
     param([string]$Uri)
 
-    try {
-        return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
-    } catch {
-        return $null
-    }
+    try { return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop }
+    catch { throw "Graph read failed; review incomplete. $($_.Exception.Message)" }
 }
 
 function Ensure-Graph {
-    param([string[]]$Scopes)
+    param([string[]]$Scopes, [string]$TenantId)
+    if (-not $TenantId) { $TenantId=(Read-Host "Expected tenant ID (GUID; blank cancels)").Trim() }
+    $expectedGuid=[guid]::Empty
+    if (-not [guid]::TryParse($TenantId,[ref]$expectedGuid) -or $expectedGuid -eq [guid]::Empty) { throw "A valid expected tenant ID is required. No audit was completed." }
+    $TenantId=$expectedGuid.ToString()
 
-    Import-Module Microsoft.Graph.Authentication -ErrorAction SilentlyContinue | Out-Null
+    $module=Get-Module -ListAvailable -Name Microsoft.Graph.Authentication -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
 
-    if (-not (Get-Command Connect-MgGraph -ErrorAction SilentlyContinue)) {
+    if (-not $module) {
         FAIL "Microsoft.Graph.Authentication module not available"
         Write-Host "Install with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser"
         return $false
     }
 
-    $ctx = Get-MgContext -ErrorAction SilentlyContinue
+    Import-Module $module.Path -Force -ErrorAction Stop | Out-Null
+
+    $ctx=Get-MgContext -ErrorAction SilentlyContinue
+    if ($ctx -and $ctx.TenantId -ne $TenantId) {
+        throw 'Existing Graph session is for another tenant. No changes made. Open a new PowerShell window and sign in to the expected tenant.'
+    }
+    if ($ctx -and ($ctx.AuthType -ne 'Delegated' -or -not $ctx.Account)) {
+        throw 'An interactive delegated Graph session is required. Open a new PowerShell window and sign in.'
+    }
+    $hasScopes=$true
+    if (-not $ctx) { $hasScopes=$false }
+    else {
+        foreach ($scope in $Scopes) {
+            if (@($ctx.Scopes) -notcontains $scope) { $hasScopes=$false; break }
+        }
+    }
+
+    if ($ctx -and (-not $hasScopes -or $ctx.ContextScope -ne 'Process')) {
+        Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
+        $ctx=$null
+    }
 
     if (-not $ctx) {
-        WARN "Graph not connected"
+        $command=Get-Command Connect-MgGraph -ErrorAction Stop
+        if (-not $command.Parameters.ContainsKey('ContextScope')) { throw 'Update Microsoft.Graph.Authentication to a version supporting process-scoped sign-in.' }
+        $parameters=@{ Scopes=$Scopes; TenantId=$TenantId; ContextScope='Process'; ErrorAction='Stop' }
+        if ($command.Parameters.ContainsKey('NoWelcome')) { $parameters['NoWelcome']=$true }
+        Connect-MgGraph @parameters | Out-Null
+    }
 
-        if (-not (Confirm-Yes "Connect to Graph now")) {
+    $ctx=Get-MgContext -ErrorAction Stop
+    Assert-GraphContext -TenantId $TenantId
+    foreach ($scope in $Scopes) {
+        if (@($ctx.Scopes) -notcontains $scope) {
+            FAIL "Graph token is missing required scope: $scope"
             return $false
         }
-
-        try {
-            Connect-MgGraph -Scopes $Scopes -ContextScope Process -NoWelcome -ErrorAction Stop | Out-Null
-        }
-        catch {
-            try {
-                Connect-MgGraph -Scopes $Scopes -ContextScope Process -ErrorAction Stop | Out-Null
-            }
-            catch {
-                FAIL "Graph connection failed"
-                return $false
-            }
-        }
     }
 
-    $ctx = Get-MgContext -ErrorAction SilentlyContinue
+    OK "Graph connected"
+    INFO "Tenant ID: $TenantId | Account: $($ctx.Account)"
+    return $true
+}
 
-    if ($ctx) {
-        OK "Graph connected"
-        return $true
+function Assert-GraphContext {
+    param([string]$TenantId, [string]$Account)
+    $ctx=Get-MgContext -ErrorAction Stop
+    if (-not $ctx -or $ctx.TenantId -ne $TenantId -or $ctx.AuthType -ne 'Delegated' -or
+        -not $ctx.Account -or $ctx.ContextScope -ne 'Process' -or ($Account -and $ctx.Account -ne $Account)) {
+        throw 'Graph tenant/account context changed or could not be validated. Stop and review the results; do not retry changes blindly.'
     }
-
-    FAIL "Graph unavailable"
-    return $false
 }
 
 function Get-GraphPages {
@@ -183,7 +215,7 @@ function Get-GraphPages {
     while ($Uri) {
         $page = Graph-Get $Uri
 
-        if (-not $page) { break }
+        if (-not $page -or $null -eq $page.value) { throw "Graph collection data is unavailable; review incomplete." }
 
         foreach ($item in @($page.value)) {
             [void]$items.Add($item)
@@ -199,7 +231,7 @@ function Get-GraphUserByUPN {
     param([string]$UPN)
 
     $encoded = Encode-Value $UPN
-    $uri = "https://graph.microsoft.com/v1.0/users/$encoded?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,signInActivity,lastPasswordChangeDateTime"
+    $uri = "https://graph.microsoft.com/v1.0/users/${encoded}?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,signInActivity,lastPasswordChangeDateTime"
     $user = Graph-Get $uri
 
     if ($user -and $user.id) { return $user }
@@ -254,7 +286,7 @@ try {
     Write-Host "Read-only"
     Write-Host ""
 
-    if (-not (Ensure-Graph -Scopes @("Application.Read.All","Directory.Read.All"))) {
+    if (-not (Ensure-Graph -Scopes @("Application.Read.All","Directory.Read.All") -TenantId $ExpectedTenantId)) {
         Pause-End
         exit 1
     }
@@ -272,13 +304,8 @@ try {
         $owners = @(Get-GraphPages -Uri "https://graph.microsoft.com/v1.0/applications/$($app.id)/owners?`$select=id,displayName,userPrincipalName,userType,accountEnabled")
         $ownerText = if ($owners.Count -gt 0) { (@($owners | ForEach-Object { if ($_.userPrincipalName) { $_.userPrincipalName } else { $_.displayName } }) -join "; ") } else { "None" }
 
-        foreach ($secret in @($app.passwordCredentials)) {
-            $end = $null
-            try { $end = [datetime]$secret.endDateTime } catch {}
-
-            $finding = "Secret OK"
-            if ($end -and $end -lt $now) { $finding = "Expired secret" }
-            elseif ($end -and $end -lt $soon) { $finding = "Secret expiring soon" }
+        foreach ($secret in @($app.passwordCredentials | Where-Object { $_ })) {
+            $finding=Get-CredentialExpiryFinding -EndDate $secret.endDateTime -Now $now -Soon $soon -Kind Secret
 
             [void]$rows.Add([pscustomobject]@{
                 AppName=(Clean-Name $app.displayName)
@@ -291,13 +318,8 @@ try {
             })
         }
 
-        foreach ($cert in @($app.keyCredentials)) {
-            $end = $null
-            try { $end = [datetime]$cert.endDateTime } catch {}
-
-            $finding = "Certificate OK"
-            if ($end -and $end -lt $now) { $finding = "Expired certificate" }
-            elseif ($end -and $end -lt $soon) { $finding = "Certificate expiring soon" }
+        foreach ($cert in @($app.keyCredentials | Where-Object { $_ })) {
+            $finding=Get-CredentialExpiryFinding -EndDate $cert.endDateTime -Now $now -Soon $soon -Kind Certificate
 
             [void]$rows.Add([pscustomobject]@{
                 AppName=(Clean-Name $app.displayName)
@@ -348,6 +370,7 @@ try {
     Write-Host "Rows                 : $($rows.Count)"
     Write-Host "Expired secrets/certs: $(@($rows | Where-Object { $_.Finding -match '^Expired' }).Count)"
     Write-Host "Expiring soon        : $(@($rows | Where-Object { $_.Finding -match 'expiring soon' }).Count)"
+    Write-Host "Expiry unavailable   : $(@($rows | Where-Object { $_.Finding -match 'expiry unavailable' }).Count)"
     Write-Host "No owner             : $(@($rows | Where-Object { $_.Finding -eq 'No owner' }).Count)"
     Write-Host "App permissions      : $(@($rows | Where-Object { $_.Finding -eq 'Application permission present' }).Count)"
     Write-Host ""

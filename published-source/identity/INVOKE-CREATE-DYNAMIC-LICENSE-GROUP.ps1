@@ -1,5 +1,6 @@
 <#
 INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1
+.VERSION 1.0.1
 
 Create dynamic Entra group for licensed users.
 
@@ -14,7 +15,8 @@ Requires Graph write permissions.
 
 param(
     [string]$DisplayName = "Dynamic-Group-AnyLicense",
-    [string]$MailNickname = "DG_AnyLicense"
+    [string]$MailNickname = "DG_AnyLicense",
+    [string]$ExpectedTenantId
 )
 
 $ErrorActionPreference = "Stop"
@@ -173,11 +175,8 @@ function Offer-ExportCsv {
 function Graph-Get {
     param([string]$Uri)
 
-    try {
-        return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
-    } catch {
-        return $null
-    }
+    try { return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop }
+    catch { throw "Graph read failed; review incomplete. $($_.Exception.Message)" }
 }
 
 function Graph-Post {
@@ -219,7 +218,7 @@ function Graph-Delete {
 }
 
 function Ensure-Graph {
-    param([string[]]$Scopes)
+    param([string[]]$Scopes, [string]$TenantId)
 
     $module=Get-Module -ListAvailable -Name Microsoft.Graph.Authentication -ErrorAction SilentlyContinue |
         Sort-Object Version -Descending |
@@ -234,6 +233,12 @@ function Ensure-Graph {
     Import-Module $module.Path -Force -ErrorAction Stop | Out-Null
 
     $ctx=Get-MgContext -ErrorAction SilentlyContinue
+    if ($ctx -and $ctx.TenantId -ne $TenantId) {
+        throw 'Existing Graph session is for another tenant. No changes made. Open a new PowerShell window and sign in to the expected tenant.'
+    }
+    if ($ctx -and ($ctx.AuthType -ne 'Delegated' -or -not $ctx.Account)) {
+        throw 'An interactive delegated Graph session is required. Open a new PowerShell window and sign in.'
+    }
     $hasScopes=$true
     if (-not $ctx) { $hasScopes=$false }
     else {
@@ -242,20 +247,21 @@ function Ensure-Graph {
         }
     }
 
-    if ($ctx -and -not $hasScopes) {
+    if ($ctx -and (-not $hasScopes -or $ctx.ContextScope -ne 'Process')) {
         Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
         $ctx=$null
     }
 
     if (-not $ctx) {
         $command=Get-Command Connect-MgGraph -ErrorAction Stop
-        $parameters=@{ Scopes=$Scopes; ErrorAction='Stop' }
-        if ($command.Parameters.ContainsKey('ContextScope')) { $parameters['ContextScope']='Process' }
+        if (-not $command.Parameters.ContainsKey('ContextScope')) { throw 'Update Microsoft.Graph.Authentication to a version supporting process-scoped sign-in.' }
+        $parameters=@{ Scopes=$Scopes; TenantId=$TenantId; ContextScope='Process'; ErrorAction='Stop' }
         if ($command.Parameters.ContainsKey('NoWelcome')) { $parameters['NoWelcome']=$true }
         Connect-MgGraph @parameters | Out-Null
     }
 
     $ctx=Get-MgContext -ErrorAction Stop
+    Assert-GraphContext -TenantId $TenantId
     foreach ($scope in $Scopes) {
         if (@($ctx.Scopes) -notcontains $scope) {
             FAIL "Graph token is missing required scope: $scope"
@@ -267,6 +273,15 @@ function Ensure-Graph {
     return $true
 }
 
+function Assert-GraphContext {
+    param([string]$TenantId, [string]$Account)
+    $ctx=Get-MgContext -ErrorAction Stop
+    if (-not $ctx -or $ctx.TenantId -ne $TenantId -or $ctx.AuthType -ne 'Delegated' -or
+        -not $ctx.Account -or $ctx.ContextScope -ne 'Process' -or ($Account -and $ctx.Account -ne $Account)) {
+        throw 'Graph tenant/account context changed or could not be validated. Stop and review the results; do not retry changes blindly.'
+    }
+}
+
 function Get-GraphPages {
     param([string]$Uri)
 
@@ -275,7 +290,7 @@ function Get-GraphPages {
     while ($Uri) {
         $page = Graph-Get $Uri
 
-        if (-not $page) { break }
+        if (-not $page -or $null -eq $page.value) { throw "Graph collection data is unavailable; review incomplete." }
 
         foreach ($item in @($page.value)) {
             [void]$items.Add($item)
@@ -291,7 +306,7 @@ function Get-GraphUserByUPN {
     param([string]$UPN)
 
     $encoded = Encode-Value $UPN
-    $uri = "https://graph.microsoft.com/v1.0/users/$encoded?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,usageLocation,signInActivity,lastPasswordChangeDateTime"
+    $uri = "https://graph.microsoft.com/v1.0/users/${encoded}?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,usageLocation,signInActivity,lastPasswordChangeDateTime"
     $user = Graph-Get $uri
 
     if ($user -and $user.id) { return $user }
@@ -316,7 +331,9 @@ function Get-GraphGroupByInput {
     $uri = "https://graph.microsoft.com/v1.0/groups?`$filter=$filter&`$select=id,displayName,mail,securityEnabled,mailEnabled,groupTypes,onPremisesSyncEnabled,membershipRule,membershipRuleProcessingState"
     $result = Graph-Get $uri
 
-    if ($result -and $result.value -and @($result.value).Count -gt 0) {
+    if (-not $result -or $null -eq $result.value) { throw 'Group lookup is unavailable. No creation approved.' }
+    if (@($result.value).Count -gt 1) { throw 'Group lookup is ambiguous. Resolve duplicate names before creating a group.' }
+    if (@($result.value).Count -eq 1) {
         return @($result.value)[0]
     }
 
@@ -337,14 +354,21 @@ try {
     $inputNick = Read-Host "Mail nickname [default: $MailNickname]"
     if ($inputNick) { $MailNickname = $inputNick.Trim() }
 
-    if (-not (Ensure-Graph -Scopes @("Group.ReadWrite.All","Directory.ReadWrite.All"))) {
+    if (-not $ExpectedTenantId) { $ExpectedTenantId=(Read-Host 'Expected tenant ID (GUID; blank cancels)').Trim() }
+    $tenantGuid=[guid]::Empty
+    if (-not [guid]::TryParse($ExpectedTenantId,[ref]$tenantGuid) -or $tenantGuid -eq [guid]::Empty) { throw 'A valid expected tenant ID is required. No changes made.' }
+    $ExpectedTenantId=$tenantGuid.ToString()
+    if (-not (Ensure-Graph -Scopes @("Group.ReadWrite.All","Directory.Read.All") -TenantId $ExpectedTenantId)) {
         Pause-End
-        exit 1
+        return
     }
+    $approvedAccount=(Get-MgContext -ErrorAction Stop).Account
 
     $rule = '(user.accountEnabled -eq true) -and (user.assignedPlans -any (assignedPlan.servicePlanId -ne null -and assignedPlan.capabilityStatus -eq "Enabled"))'
 
     Section "PREVIEW"
+    Write-Host "Tenant ID    : $ExpectedTenantId"
+    Write-Host "Account      : $approvedAccount"
     Write-Host "Display name : $DisplayName"
     Write-Host "Mail nickname: $MailNickname"
     Write-Host "Rule         : $rule"
@@ -355,13 +379,13 @@ try {
     if ($existing) {
         WARN "Group already exists: $($existing.displayName)"
         Pause-End
-        exit 0
+        return
     }
 
     if (-not (Confirm-Type "This will create a dynamic Entra security group." "CREATE")) {
         WARN "Cancelled"
         Pause-End
-        exit 0
+        return
     }
 
     $body = @{
@@ -375,6 +399,7 @@ try {
     }
 
     Section "CREATE"
+    Assert-GraphContext -TenantId $ExpectedTenantId -Account $approvedAccount
 
     $created = Graph-Post "https://graph.microsoft.com/v1.0/groups" $body
 
@@ -395,7 +420,7 @@ try {
             throw "Group creation returned success, but the dynamic membership configuration could not be verified."
         }
     } else {
-        throw "Group creation failed."
+        throw "Group creation is unverified. Review current tenant groups before retrying; the request outcome may be unknown."
     }
 
     Section "SUMMARY"

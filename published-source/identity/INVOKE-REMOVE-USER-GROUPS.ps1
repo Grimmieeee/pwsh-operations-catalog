@@ -1173,7 +1173,7 @@ $firstUser = Connect-GraphForUser `
     Write-Host "TICKET NOTE"
 
     if (($removedAD.Count + $removedEntra.Count) -eq 0) {
-        Write-Host "- No changes made."
+        Write-Host "- No removals verified for this note. Review needs-attention results before concluding that nothing changed."
     }
     else {
         foreach ($item in $removedAD) {

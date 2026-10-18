@@ -10,6 +10,25 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('reviewed tenant audits disclose expected tenant before launch',()=>{
+  const f=loadCatalog(root);
+  const items=f.api.ITEMS.filter(x=>x.publishedPath?.startsWith('published-source/tenant/')&&fs.readFileSync(path.join(root,x.publishedPath),'utf8').includes('Graph read failed; review incomplete.'));
+  assert.equal(items.length,13);
+  for(const item of items){
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('Expected tenant ID (GUID)'),item.file);
+    assert.ok(html.indexOf('Expected tenant ID (GUID)')<html.indexOf('guided-start'),item.file);
+    assert.equal(f.api.isVerifiedRelease(item),false,item.file);
+  }
+});
+
+test('known IR lookup limitation is visible without changing exact-version release evidence',()=>{
+  const f=loadCatalog(root),risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');
+  f.api.openItem(risk);
+  assert.ok(f.elements.get('drawerBody').innerHTML.includes('Known limitation: app display names may be unresolved'));
+  assert.equal(digest(fs.readFileSync(path.join(root,risk.publishedPath))),risk.verification.sha256);
+});
+
 test('offboarding language leads to read-only preparation without enabling missing sources',()=>{
   const f=loadCatalog(root);
   for(const query of ['employee left','departing employee','user leaving','offboarding','leaver']){
@@ -189,7 +208,7 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   assert.ok(html.includes('Typed ASSIGN confirmation'));
   assert.ok(html.includes('<details class="requirements"><summary title='));
   assert.ok(!html.includes('run-info-label">REQUIRES'));
-  assert.ok(html.includes('script’s numbered list'));
+  assert.ok(html.includes('Choose a license from the numbered list'));
   const removal=f.api.ITEMS.find(item=>item.file==='INVOKE-REMOVE-LICENSES.ps1');
   f.api.openItem(removal);
   html=f.elements.get('drawerBody').innerHTML;

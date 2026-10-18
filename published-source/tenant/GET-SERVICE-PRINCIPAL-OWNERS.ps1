@@ -10,7 +10,8 @@ Purpose:
 - Helps find persistence/ownership risk
 #>
 
-param()
+param(
+    [string]$ExpectedTenantId)
 
 $ErrorActionPreference = "Stop"
 
@@ -126,11 +127,8 @@ function Offer-ExportJson {
 function Graph-Get {
     param([string]$Uri)
 
-    try {
-        return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop
-    } catch {
-        return $null
-    }
+    try { return Invoke-MgGraphRequest -Method GET -Uri $Uri -ErrorAction Stop }
+    catch { throw "Graph read failed; review incomplete. $($_.Exception.Message)" }
 }
 
 function Ensure-Module {
@@ -159,54 +157,72 @@ function Ensure-Module {
 }
 
 function Ensure-Graph {
-    param([string[]]$Scopes)
+    param([string[]]$Scopes, [string]$TenantId)
+    if (-not $TenantId) { $TenantId=(Read-Host "Expected tenant ID (GUID; blank cancels)").Trim() }
+    $expectedGuid=[guid]::Empty
+    if (-not [guid]::TryParse($TenantId,[ref]$expectedGuid) -or $expectedGuid -eq [guid]::Empty) { throw "A valid expected tenant ID is required. No audit was completed." }
+    $TenantId=$expectedGuid.ToString()
 
-    try {
-        Ensure-Module `
-            -Name "Microsoft.Graph.Authentication" `
-            -Command "Connect-MgGraph"
+    $module=Get-Module -ListAvailable -Name Microsoft.Graph.Authentication -ErrorAction SilentlyContinue |
+        Sort-Object Version -Descending |
+        Select-Object -First 1
 
-        $ctx = Get-MgContext -ErrorAction SilentlyContinue
-        $missingScopes = @()
-
-        if ($ctx) {
-            foreach ($scope in $Scopes) {
-                if (@($ctx.Scopes) -notcontains $scope) {
-                    $missingScopes += $scope
-                }
-            }
-        }
-
-        if (-not $ctx -or $missingScopes.Count -gt 0) {
-            $command = Get-Command Connect-MgGraph -ErrorAction Stop
-            $params = @{
-                Scopes      = $Scopes
-                ErrorAction = "Stop"
-            }
-
-            if ($command.Parameters.ContainsKey("ContextScope")) {
-                $params["ContextScope"] = "Process"
-            }
-
-            if ($command.Parameters.ContainsKey("NoWelcome")) {
-                $params["NoWelcome"] = $true
-            }
-
-            Connect-MgGraph @params | Out-Null
-        }
-
-        $ctx = Get-MgContext -ErrorAction Stop
-
-        if (-not $ctx) {
-            throw "Microsoft Graph did not return an authentication context."
-        }
-
-        OK "Graph ready"
-        return $true
-    }
-    catch {
-        FAIL ("Graph unavailable: {0}" -f $_.Exception.Message)
+    if (-not $module) {
+        FAIL "Microsoft.Graph.Authentication module not available"
+        Write-Host "Install with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser"
         return $false
+    }
+
+    Import-Module $module.Path -Force -ErrorAction Stop | Out-Null
+
+    $ctx=Get-MgContext -ErrorAction SilentlyContinue
+    if ($ctx -and $ctx.TenantId -ne $TenantId) {
+        throw 'Existing Graph session is for another tenant. No changes made. Open a new PowerShell window and sign in to the expected tenant.'
+    }
+    if ($ctx -and ($ctx.AuthType -ne 'Delegated' -or -not $ctx.Account)) {
+        throw 'An interactive delegated Graph session is required. Open a new PowerShell window and sign in.'
+    }
+    $hasScopes=$true
+    if (-not $ctx) { $hasScopes=$false }
+    else {
+        foreach ($scope in $Scopes) {
+            if (@($ctx.Scopes) -notcontains $scope) { $hasScopes=$false; break }
+        }
+    }
+
+    if ($ctx -and (-not $hasScopes -or $ctx.ContextScope -ne 'Process')) {
+        Disconnect-MgGraph -ErrorAction SilentlyContinue | Out-Null
+        $ctx=$null
+    }
+
+    if (-not $ctx) {
+        $command=Get-Command Connect-MgGraph -ErrorAction Stop
+        if (-not $command.Parameters.ContainsKey('ContextScope')) { throw 'Update Microsoft.Graph.Authentication to a version supporting process-scoped sign-in.' }
+        $parameters=@{ Scopes=$Scopes; TenantId=$TenantId; ContextScope='Process'; ErrorAction='Stop' }
+        if ($command.Parameters.ContainsKey('NoWelcome')) { $parameters['NoWelcome']=$true }
+        Connect-MgGraph @parameters | Out-Null
+    }
+
+    $ctx=Get-MgContext -ErrorAction Stop
+    Assert-GraphContext -TenantId $TenantId
+    foreach ($scope in $Scopes) {
+        if (@($ctx.Scopes) -notcontains $scope) {
+            FAIL "Graph token is missing required scope: $scope"
+            return $false
+        }
+    }
+
+    OK "Graph connected"
+    INFO "Tenant ID: $TenantId | Account: $($ctx.Account)"
+    return $true
+}
+
+function Assert-GraphContext {
+    param([string]$TenantId, [string]$Account)
+    $ctx=Get-MgContext -ErrorAction Stop
+    if (-not $ctx -or $ctx.TenantId -ne $TenantId -or $ctx.AuthType -ne 'Delegated' -or
+        -not $ctx.Account -or $ctx.ContextScope -ne 'Process' -or ($Account -and $ctx.Account -ne $Account)) {
+        throw 'Graph tenant/account context changed or could not be validated. Stop and review the results; do not retry changes blindly.'
     }
 }
 function Get-GraphPages {
@@ -217,7 +233,7 @@ function Get-GraphPages {
     while ($Uri) {
         $page = Graph-Get $Uri
 
-        if (-not $page) { break }
+        if (-not $page -or $null -eq $page.value) { throw "Graph collection data is unavailable; review incomplete." }
 
         foreach ($item in @($page.value)) {
             [void]$items.Add($item)
@@ -233,7 +249,7 @@ function Get-GraphUserByUPN {
     param([string]$UPN)
 
     $encoded = Encode-Value $UPN
-    $uri = "https://graph.microsoft.com/v1.0/users/$encoded?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,signInActivity,lastPasswordChangeDateTime"
+    $uri = "https://graph.microsoft.com/v1.0/users/${encoded}?`$select=id,displayName,userPrincipalName,mail,accountEnabled,userType,onPremisesSyncEnabled,assignedLicenses,signInActivity,lastPasswordChangeDateTime"
     $user = Graph-Get $uri
 
     if ($user -and $user.id) { return $user }
@@ -286,7 +302,7 @@ Write-Host "TENANT SERVICE PRINCIPAL OWNERS AUDIT"
     Write-Host "Read-only"
     Write-Host ""
 
-    if (-not (Ensure-Graph -Scopes @("Application.Read.All","Directory.Read.All","User.Read.All"))) {
+    if (-not (Ensure-Graph -Scopes @("Application.Read.All","Directory.Read.All","User.Read.All") -TenantId $ExpectedTenantId)) {
         Pause-End
         exit 1
     }

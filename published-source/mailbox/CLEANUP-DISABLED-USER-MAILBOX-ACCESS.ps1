@@ -1104,7 +1104,7 @@ try {
         Write-Host ("CHANGES PERFORMED: {0} verified mailbox permission removal(s)." -f $completed.Count)
     }
     else {
-        Write-Host "No mailbox permission changes were made."
+        Write-Host "No mailbox permission removals were verified. Review failed actions before concluding that nothing changed."
     }
 }
 catch {
