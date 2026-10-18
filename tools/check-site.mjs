@@ -70,9 +70,8 @@ for(const name of ['index.html']){
   assert(html.indexOf('source-integrity.js')<html.indexOf('field-kit-app.js'),`${name}: checksum manifest loads too late`);
   for(const [,src]of html.matchAll(/<script[^>]*src="([^"]+)"/g)){
     assert(!src.includes('..')&&!src.includes(':'),`${name}: unexpected script origin`);
-    // Only the catalog app accepts a plain cache-version suffix; still check
-    // the actual local file and reject every other unrecognized script URL.
-    const scriptPath=src.replace(/^(field-kit-app\.js)\?v=[a-zA-Z0-9._-]+$/,'$1');
+    // Release assets accept a plain cache revision; check the actual local file.
+    const scriptPath=src.replace(/^((?:field-kit-app|catalog-data|source-integrity|connection-guidance|card-guidance|workflow-start)\.js)\?v=[a-zA-Z0-9._-]+$/,'$1');
     assert(fs.existsSync(path.join(root,scriptPath)),`${name}: missing script ${src}`);
   }
   assert(html.includes('aria-label="Search all catalog sections"'),`${name}: search needs an accessible label`);
