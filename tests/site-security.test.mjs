@@ -3,11 +3,63 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog,FixtureElement } from '../tools/site-test-harness.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
+
+test('investigation searches lead to assessment without hijacking explicit actions',()=>{
+  const f=loadCatalog(root);
+  for(const query of ['suspicious login','unexpected MFA prompts','compromised account','account hacked','suspicious sign-in']){
+    f.api.state.query=query;
+    assert.equal(f.api.filteredItems()[0].file,'ir-risk-assessment.ps1',query);
+  }
+  f.api.state.query='Disable Sign-In';
+  assert.equal(f.api.filteredItems()[0].name,'Disable Sign-In');
+});
+
+test('IR cards show preparation, exact launch, expected results and explicit handoffs',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS.filter(x=>x.workflow)){
+    f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    for(const text of ['DOWNLOAD IR WORKFLOW','IR workflow guide','EXPECTED RESULT','If blocked or cancelled','First sign-in requests read/change permissions','Paste the full path to '+item.file])assert.ok(html.includes(text),item.file+': '+text);
+    assert.ok(html.includes('CHECK POWERSHELL READINESS'));
+    assert.ok(html.indexOf('Before starting:')<html.indexOf('DOWNLOAD IR WORKFLOW'));
+  }
+  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){
+    f.api.openItem(item);assert.ok(!f.elements.get('drawerBody').innerHTML.includes('guided-start'));
+  }
+});
+
+test('IR package is a readable ZIP with exact reviewed script bytes and a guide',async()=>{
+  const f=loadCatalog(root,{fetchImpl:async url=>new Response(fs.readFileSync(path.join(root,new URL(url).pathname.replace('/pwsh-operations-catalog/',''))),{headers:{'content-type':'text/plain'}})});
+  const archive=Buffer.from(await (await f.api.buildIRBundle()).arrayBuffer());
+  const report=JSON.parse(execFileSync('python3',['-c','import io,sys,zipfile,hashlib,json; z=zipfile.ZipFile(io.BytesIO(sys.stdin.buffer.read())); assert z.testzip() is None; print(json.dumps({n:hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist()}))'],{input:archive,encoding:'utf8'}));
+  assert.equal(Object.keys(report).length,5);
+  for(const item of f.api.ITEMS.filter(x=>x.workflow))assert.equal(report[item.file],item.verification.sha256);
+  assert.ok(report['IR-WORKFLOW-GUIDE.md']);assert.ok(report['SHA256SUMS.txt']);
+  const guide=f.window.FIELD_KIT_START.guide();
+  for(const text of ['ir-risk-assessment','ir-contain-eradicate','ir-recover-validate','48 hours','blocked or cancelled'])assert.ok(guide.includes(text));
+});
+
+test('IR package fails closed if any source bytes or release evidence differ',async()=>{
+  const f=loadCatalog(root,{fetchImpl:async()=>new Response('changed script',{headers:{'content-type':'text/plain'}})});
+  await assert.rejects(()=>f.api.buildIRBundle(),/checksum mismatch/);
+  const risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');risk.verification.operatorTested=false;
+  await assert.rejects(()=>f.api.buildIRBundle(),/release review/);
+});
+
+test('missing start guidance leaves source controls available with a clear blocked state',()=>{
+  const f=loadCatalog(root);f.window.FIELD_KIT_START=undefined;
+  f.api.openItem(f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1'));
+  const html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('Start guidance could not load'));
+  assert.ok(html.includes('id="downloadSource"'));
+  assert.ok(!html.includes('id="downloadIRWorkflow"'));
+});
 
 test('quick command risk, scoped preparation and missing-source readiness stay aligned',()=>{
   const f=loadCatalog(root);
