@@ -100,14 +100,11 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1": {
-    "sha256": "92fdd14ab1f9725623c56626858f50dfc2f4fc72ab5a4cd74e60222d5025c0c9",
-    "mode": "review",
+    "sha256": "6bd4a410ed549559c63b9c33d100051dbd6bfbc0b574dc61a396917af62cfa6f",
+    "mode": "auto",
     "services": [
       "GRAPH",
       "EXO"
-    ],
-    "notes": [
-      "Variable reference is not valid. ':' was not followed by a valid variable name character. Consider using ${} to delimit the name."
     ]
   },
   "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1": {

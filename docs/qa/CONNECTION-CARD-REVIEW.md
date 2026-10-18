@@ -14,7 +14,7 @@ Quick commands use their existing preparation commands with CONNECT FIRST, unles
 
 ## Source review item
 
-`published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1` has a pre-existing PowerShell parser error: a colon follows an unbraced variable reference. This release does not modify that script or award verification. Review/correct the source and retest before treating it as ready. Its connection section explicitly says review is needed.
+The initial review found a parser error in `published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1`: a colon followed an unbraced variable reference. The subsequent alignment fix braces `${Name}`, passes parsing, and updates its connection fingerprint. AUTO-CONNECT now reflects its reachable Graph/Exchange connection paths. No operator verification is awarded; Windows/tenant execution remains outstanding.
 
 ## UI acceptance
 

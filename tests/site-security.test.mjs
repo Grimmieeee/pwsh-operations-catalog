@@ -9,6 +9,39 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('every released script has operational coverage and reviewed prerequisites',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
+    f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('<div class="section-label">CHECKS</div>'),item.file);
+    assert.ok(!/Read-only tenant permissions|preferred authentication flow/.test(html),item.file);
+  }
+  const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');
+  f.api.openItem(removal);
+  const html=f.elements.get('drawerBody').innerHTML;
+  for(const text of ['Typed REMOVE GROUPS confirmation','Dynamic, role-assignable and Exchange-managed groups skipped','Group.Read.All'])assert.ok(html.includes(text));
+  const snapshot=f.api.ITEMS.find(x=>x.file==='GET-MAILBOX-SECURITY-SNAPSHOT.ps1');
+  assert.ok(snapshot.requires.includes('Microsoft Graph is not used'));
+  for(const [file,review] of Object.entries(f.window.FIELD_KIT_CARD_GUIDANCE)){
+    const item=f.api.ITEMS.find(x=>x.file===file);
+    assert.ok(item,file);
+    assert.equal(review.sourceSha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
+  }
+});
+
+test('quick command examples disclose replacement inputs before preparation or command',()=>{
+  const f=loadCatalog(root);
+  const examples=f.api.ITEMS.filter(x=>x.type==='Quick Command'&&/username|user@domain\.com|GROUP-OBJECT-ID|APP-ID/.test(x.code));
+  assert.ok(examples.length>50);
+  for(const item of examples){
+    f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('Replace command examples'),item.name);
+    assert.ok(html.indexOf('>INPUT</div>')<html.indexOf('>COMMAND</div>'),item.name);
+  }
+});
+
 test('library total lives in About while result counts appear only for search or filters',()=>{
   const f=loadCatalog(root);
   const counter=f.elements.get('entryCount');
