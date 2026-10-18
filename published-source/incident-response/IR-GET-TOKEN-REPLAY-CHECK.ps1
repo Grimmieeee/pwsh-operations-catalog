@@ -379,7 +379,7 @@ try {
 
     $encodedUPN = Encode-UrlValue $UPN
     $user = Invoke-GraphGet `
-        -Uri "https://graph.microsoft.com/v1.0/users/$encodedUPN?`$select=displayName,userPrincipalName,lastPasswordChangeDateTime"
+        -Uri "https://graph.microsoft.com/v1.0/users/${encodedUPN}?`$select=displayName,userPrincipalName,lastPasswordChangeDateTime"
 
     if (-not $user -or -not $user.userPrincipalName) {
         throw "User lookup did not return the target account."

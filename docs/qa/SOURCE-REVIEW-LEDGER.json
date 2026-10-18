@@ -1,0 +1,425 @@
+{
+  "BACKUP-USER-PROFILE.ps1": {
+    "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+    "state": "Automated tests passed",
+    "scope": [
+      "Native Robocopy invocation and return-code classification",
+      "Missing/partial/error backup summaries"
+    ],
+    "tests": [
+      "6 offline helper/result cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Actual Windows files, ACLs, locked files, destination failures and content verification."
+    ]
+  },
+  "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
+    "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+    "state": "Source reviewed",
+    "scope": [
+      "Changed control path review",
+      "No verified result is no longer described as no change"
+    ],
+    "tests": [
+      "Parser, source integrity and card/connection binding checks"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Full workflow, authoritative target and error-path behavior."
+    ]
+  },
+  "DEPLOY-TCPIP-PRINTER.ps1": {
+    "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+    "state": "Automated tests passed",
+    "scope": [
+      "Default printer API and return values",
+      "Exact printer resolution without interpolated WQL",
+      "Optional-action failures and deployed driver/port validation"
+    ],
+    "tests": [
+      "5 offline printer method cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Real spooler/driver/current-user default and physical test-page checks."
+    ]
+  },
+  "GET-ADMIN-ROLE-AUDIT.ps1": {
+    "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-APP-REGISTRATION-AUDIT.ps1": {
+    "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture",
+      "10 offline credential-expiry cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
+    "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-DEVICE-CODE-EXPOSURE.ps1": {
+    "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
+    "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-GUEST-USER-AUDIT.ps1": {
+    "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-MFA-SECURITY-AUDIT.ps1": {
+    "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-OAUTH-CONSENT-AUDIT.ps1": {
+    "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-SECURE-SCORE-SNAPSHOT.ps1": {
+    "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
+    "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
+    "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-SIGNIN-ANOMALIES.ps1": {
+    "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture",
+      "6 offline region/page-limit cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-TENANT-LICENSING-AUDIT.ps1": {
+    "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant/account binding and process-scoped delegated authentication",
+      "Successful empty, malformed, denied and interrupted collection reads",
+      "Graph URI interpolation and card input alignment"
+    ],
+    "tests": [
+      "7 offline tenant/account cases",
+      "4 offline collection cases",
+      "1 user resolver fixture"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+    ]
+  },
+  "GET-USER-PREDELETE-CHECK.ps1": {
+    "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
+    "state": "Source reviewed",
+    "scope": [
+      "Changed control path review",
+      "Graph URI variable boundary correction"
+    ],
+    "tests": [
+      "Parser, source integrity and card/connection binding checks"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Full workflow, authoritative target and error-path behavior."
+    ]
+  },
+  "INVOKE-ASSIGN-LICENSES.ps1": {
+    "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+    "state": "Automated tests passed",
+    "scope": [
+      "Exact-UPN resolution and complete target preview",
+      "Expected tenant/account before reads and writes",
+      "One typed change approval",
+      "Missing state and failed/unverified completion reporting"
+    ],
+    "tests": [
+      "22 offline assignment cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Selected/all and group-inherited licenses, API propagation and approved result CSV."
+    ]
+  },
+  "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
+    "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
+    "state": "Automated tests passed",
+    "scope": [
+      "Tenant binding and least required group/directory scopes",
+      "Existing-group ambiguity and failed-read blocking",
+      "Creation and post-change configuration validation"
+    ],
+    "tests": [
+      "15 offline group workflow cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Dynamic rule behavior, tenant licensing and actual created-group validation."
+    ]
+  },
+  "INVOKE-DISABLE-ACCOUNTS.ps1": {
+    "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+    "state": "Source reviewed",
+    "scope": [
+      "Changed control path review",
+      "No verified result is no longer described as no change"
+    ],
+    "tests": [
+      "Parser, source integrity and card/connection binding checks"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Full workflow, authoritative target and error-path behavior."
+    ]
+  },
+  "INVOKE-REMOVE-LICENSES.ps1": {
+    "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+    "state": "Automated tests passed",
+    "scope": [
+      "Exact-UPN resolution and complete target preview",
+      "Expected tenant/account before reads and writes",
+      "One typed change approval",
+      "Missing state and failed/unverified completion reporting"
+    ],
+    "tests": [
+      "19 offline removal cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Selected/all and group-inherited licenses, API propagation and approved result CSV."
+    ]
+  },
+  "INVOKE-REMOVE-USER-GROUPS.ps1": {
+    "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+    "state": "Source reviewed",
+    "scope": [
+      "Changed control path review",
+      "No verified result is no longer described as no change"
+    ],
+    "tests": [
+      "Parser, source integrity and card/connection binding checks"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Full workflow, authoritative target and error-path behavior."
+    ]
+  },
+  "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
+    "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+    "state": "Source reviewed",
+    "scope": [
+      "Accepted reset with unavailable timestamp read",
+      "Secure delivery pause and password/body variable cleanup",
+      "Pending/failed summary states"
+    ],
+    "tests": [
+      "4 offline timestamp cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Non-production reset and secure delivery; no passwords generated in this audit."
+    ]
+  },
+  "IR-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
+    "state": "Source reviewed",
+    "scope": [
+      "Changed control path review",
+      "Graph URI variable boundary correction"
+    ],
+    "tests": [
+      "Parser, source integrity and card/connection binding checks"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Full workflow, authoritative target and error-path behavior."
+    ]
+  },
+  "UPDATE-WINDOWS-APPS.ps1": {
+    "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+    "state": "Automated tests passed",
+    "scope": [
+      "Update and post-update command results",
+      "Cancel-before-update path"
+    ],
+    "tests": [
+      "4 offline main-workflow cases"
+    ],
+    "remaining": [
+      "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+      "Native WinGet package results and remaining updates."
+    ]
+  }
+}

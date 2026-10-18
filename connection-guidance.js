@@ -17,7 +17,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1": {
-    "sha256": "c6b31ea701d1e5a7886a73a125b67e726e66eb01d99e1c8ee8de9d4e0fae274e",
+    "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -33,7 +33,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1": {
-    "sha256": "f29671426b25b460169d4f8c7d0fe33d9d4ae5f525f61f24a08dcf201f248a22",
+    "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -85,7 +85,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1": {
-    "sha256": "b5a8a4be4b79e1ef77fc8f75eaef88b70d5f50ffd1dd47bccf1e21f1b35c6ecd",
+    "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -93,7 +93,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
-    "sha256": "5d0d109515d67948673e6f3058c068899a8f74f06cba74908eeb961dd0612cd4",
+    "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -196,14 +196,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1": {
-    "sha256": "2627de9b2b13220ef6de444ac4f98f9a5b0481f55a68dd4fbaf61ecc58be28e3",
+    "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
-    "sha256": "9df9711e8cdf8542a753a451b748e22d04a3448a3e88705f366fabacc3aae176",
+    "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -211,56 +211,56 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1": {
-    "sha256": "6948e5a25a54c218a5114a366a59f839454b64050b3c5726093506fa9e28f0a0",
+    "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1": {
-    "sha256": "e4bf3fe87b7acc39ee21eb89a09d158568330a799755c8b553fe325d4dd34a45",
+    "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1": {
-    "sha256": "4ac8a6ee2c3f5091ee24b47f3f91f9b12888ddeda0ed86308a9ecc7a7f1919bf",
+    "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1": {
-    "sha256": "e90b4af2ff9b35a32498ffa93836bcc8f502aa5a8e89ba3f9e3dc520a7f1be62",
+    "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1": {
-    "sha256": "91aef944427d3e85f94874014a2f6dd726781ba9eb9931e2b9565d11a6f0b00c",
+    "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1": {
-    "sha256": "649b23416b9ed9c9e78c60fd2867c2e47c48b12e5ae73e80013aafec357b3efa",
+    "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
-    "sha256": "3a45fdde22e453f23a1bd4a269daee6d5ed3334d19250ebe84701ec6691b289f",
+    "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1": {
-    "sha256": "b87f694333ec632f76bc5edc8a6c8210fffccadac38c4bf955e5dac95cd48e91",
+    "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -281,12 +281,12 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1": {
-    "sha256": "90a72cce1ace9af8d44ae02eeebc0cd47531b7c0b7b24e6e0a87e4c0368ee043",
+    "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
     "mode": "local",
     "services": []
   },
   "published-source/endpoint/BACKUP-USER-PROFILE.ps1": {
-    "sha256": "efdbdc7eab4effa096645be533d046ff2d8c3170fcdcc69186df405bd5dd0367",
+    "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
     "mode": "local",
     "services": []
   },
@@ -316,12 +316,12 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/utility/UPDATE-WINDOWS-APPS.ps1": {
-    "sha256": "aa949908eb989f4aedf0569c3c4c7c8111ae2d1cca1895754de167669ee1a25d",
+    "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
     "mode": "local",
     "services": []
   },
   "published-source/identity/GET-USER-PREDELETE-CHECK.ps1": {
-    "sha256": "922a2d16bcf7c753193e14296f9bf67715cf3e14ec8dd1fdeec8d9a31e10e9d2",
+    "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -337,28 +337,28 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1": {
-    "sha256": "b660a543b1044c58c74be40609c38caf40eb1cac040fcf87a77dea5e7d41fe78",
+    "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1": {
-    "sha256": "9b26065a085a5376d6fdd0312783f037505ac496d39310b062eb62add6401f65",
+    "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-GUEST-USER-AUDIT.ps1": {
-    "sha256": "fe654017667917540bac5d099875379eb8760f24c448f9345fff626bf1894410",
+    "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1": {
-    "sha256": "eca8f567c83f132e3c0ba263e633cfcf2552e938b9c232bf9de2860fd17474d0",
+    "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -400,7 +400,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sha256": "bf750de1d4d0f7b2baf30d3f73254106ca09b210d5a4d4aea728b2ad16298de8",
+    "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -421,7 +421,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
-    "sha256": "7ab0323cef10c5cc09399432ccdf2417d3401f2f422e6200dc35ebfc4399e0c5",
+    "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
     "mode": "auto",
     "services": [
       "GRAPH"

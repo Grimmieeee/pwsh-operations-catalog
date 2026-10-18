@@ -758,7 +758,7 @@ try {
             }
 
             $encodedUPN = [uri]::EscapeDataString($UPN)
-            $userUri = "https://graph.microsoft.com/v1.0/users/$encodedUPN?`$select=id,displayName,userPrincipalName,accountEnabled,onPremisesSyncEnabled,onPremisesImmutableId,mail"
+            $userUri = "https://graph.microsoft.com/v1.0/users/${encodedUPN}?`$select=id,displayName,userPrincipalName,accountEnabled,onPremisesSyncEnabled,onPremisesImmutableId,mail"
 
             $graphUser = Invoke-MgGraphRequest -Method GET -Uri $userUri -ErrorAction Stop
 

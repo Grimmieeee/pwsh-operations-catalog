@@ -1,5 +1,33 @@
 // Source-reviewed card details. Static review does not confer operator verification.
 window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
+  "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "checks": [
+      "Disabled policies",
+      "Report-only policies",
+      "User / group exclusions",
+      "Device-code gaps",
+      "Location conditions",
+      "Weak coverage indicators"
+    ],
+    "guards": [
+      "Expected tenant/account validated before collection",
+      "Failed or unavailable reads stop the review"
+    ],
+    "sourceSha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3"
+  },
+  "INVOKE-ASSIGN-LICENSES.ps1": {
+    "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list. Choose a license from the numbered list; provide a country/region code only for users missing UsageLocation.",
+    "checks": ["Tenant license inventory", "Per-user license and approved UsageLocation verification", "Failed and unverified results kept open; optional result CSV"],
+    "guards": ["Expected tenant and signed-in account validated", "Each target and planned license/location shown before approval", "Typed ASSIGN confirmation; unavailable targets stop preparation"],
+    "sourceSha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e"
+  },
+  "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
+    "input": "Expected tenant ID (GUID), group display name and mail nickname; defaults are offered.",
+    "requires": "Microsoft.Graph.Authentication: Group.ReadWrite.All and Directory.Read.All; tenant rights and licensing for dynamic groups.",
+    "guards": ["Expected tenant and account validated", "Failed or ambiguous existing-group lookup blocks creation", "Typed CREATE approval of the displayed group and membership rule"],
+    "sourceSha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153"
+  },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list (UPN column recommended). Choose a license from the numbered list, or ALL.",
     "checks": ["Current assigned licenses", "Per-user post-change removal verification", "Failed and unverified results kept open; optional result CSV"],
@@ -43,7 +71,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Dynamic, role-assignable and Exchange-managed groups skipped",
       "Synced memberships changed in AD"
     ],
-    "sourceSha256": "b5a8a4be4b79e1ef77fc8f75eaef88b70d5f50ffd1dd47bccf1e21f1b35c6ecd"
+    "sourceSha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55"
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "checks": [
@@ -76,6 +104,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf"
   },
   "ir-risk-assessment.ps1": {
+    "reviewNote": "Known limitation: app display names may be unresolved. Review the app IDs and grants; an unresolved name does not clear a finding.",
     "checks": [
       "Account state, password last changed and privileged roles",
       "Authentication methods and enabled Conditional Access policy inventory",
@@ -199,44 +228,60 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Unavailable data remains a limitation",
       "Unexpected geography alone is not called token replay"
     ],
-    "sourceSha256": "2627de9b2b13220ef6de444ac4f98f9a5b0481f55a68dd4fbaf61ecc58be28e3"
+    "sourceSha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f"
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Application.Read.All.",
     "checks": [
       "Delegated OAuth grants made by guests",
       "Application/resource names where resolvable",
       "High-risk granted scopes"
     ],
-    "sourceSha256": "e90b4af2ff9b35a32498ffa93836bcc8f502aa5a8e89ba3f9e3dc520a7f1be62"
+    "sourceSha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18"
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "ExchangeOnlineManagement with recipient-read access; Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "9df9711e8cdf8542a753a451b748e22d04a3448a3e88705f366fabacc3aae176"
+    "sourceSha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a"
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All.",
-    "sourceSha256": "6948e5a25a54c218a5114a366a59f839454b64050b3c5726093506fa9e28f0a0"
+    "sourceSha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3"
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All; policy/sign-in log role and licensing access.",
-    "sourceSha256": "4ac8a6ee2c3f5091ee24b47f3f91f9b12888ddeda0ed86308a9ecc7a7f1919bf"
+    "sourceSha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db"
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All; Policy.Read.ConditionalAccess when CA review is requested; appropriate report-read role.",
-    "sourceSha256": "91aef944427d3e85f94874014a2f6dd726781ba9eb9931e2b9565d11a6f0b00c"
+    "sourceSha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d"
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All; Secure Score read access.",
-    "sourceSha256": "649b23416b9ed9c9e78c60fd2867c2e47c48b12e5ae73e80013aafec357b3efa"
+    "sourceSha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0"
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All, User.Read.All.",
-    "sourceSha256": "3a45fdde22e453f23a1bd4a269daee6d5ed3334d19250ebe84701ec6691b289f"
+    "sourceSha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f"
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
+    "input": "Expected tenant ID (GUID). Lookback hours (default 24), expected country/region codes (default US), optional exact UPN filter; MaxPages defaults to 5.",
+    "guards": ["Expected regions are shown before interpreting foreign sign-ins", "Page-limit coverage remains explicitly partial", "Failed or malformed reads stop the review"],
     "requires": "Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "b87f694333ec632f76bc5edc8a6c8210fffccadac38c4bf955e5dac95cd48e91"
+    "sourceSha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782"
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "checks": [
@@ -259,7 +304,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed ADD confirmation before adding the printer"
     ],
-    "sourceSha256": "90a72cce1ace9af8d44ae02eeebc0cd47531b7c0b7b24e6e0a87e4c0368ee043"
+    "sourceSha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649"
   },
   "BACKUP-USER-PROFILE.ps1": {
     "checks": [
@@ -269,7 +314,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed BACKUP confirmation before copying profile data"
     ],
-    "sourceSha256": "efdbdc7eab4effa096645be533d046ff2d8c3170fcdcc69186df405bd5dd0367"
+    "sourceSha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6"
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "input": "Exact user UPN; access to the authoritative AD environment when applicable.",
@@ -283,38 +328,46 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Review only; does not delete the user"
     ],
-    "sourceSha256": "922a2d16bcf7c753193e14296f9bf67715cf3e14ec8dd1fdeec8d9a31e10e9d2"
+    "sourceSha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4"
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "checks": [
       "Active Entra directory role assignments",
       "User state, hybrid source and recorded last sign-in",
       "Optional role-review CSV"
     ],
-    "sourceSha256": "b660a543b1044c58c74be40609c38caf40eb1cac040fcf87a77dea5e7d41fe78"
+    "sourceSha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696"
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "checks": [
       "Tenant delegated OAuth grants",
       "Application and resource name resolution",
       "High-risk scopes and optional CSV"
     ],
-    "sourceSha256": "9b26065a085a5376d6fdd0312783f037505ac496d39310b062eb62add6401f65"
+    "sourceSha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4"
   },
   "GET-GUEST-USER-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "checks": [
       "Guest state and invitation acceptance",
       "Stale guests and unavailable sign-in history",
       "Optional guest-review CSV"
     ],
-    "sourceSha256": "fe654017667917540bac5d099875379eb8760f24c448f9345fff626bf1894410"
+    "sourceSha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6"
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
+    "input": "Expected tenant ID (GUID).",
+    "guards": ["Expected tenant/account validated before collection", "Failed or unavailable reads stop the review"],
     "checks": [
       "Subscribed SKUs and user license assignments",
       "Disabled licensed and enabled unlicensed users"
     ],
-    "sourceSha256": "eca8f567c83f132e3c0ba263e633cfcf2552e938b9c232bf9de2860fd17474d0"
+    "sourceSha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3"
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "checks": [
@@ -347,7 +400,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed RESET confirmation",
       "Temporary passwords shown only after successful reset; never exported"
     ],
-    "sourceSha256": "7ab0323cef10c5cc09399432ccdf2417d3401f2f422e6200dc35ebfc4399e0c5"
+    "sourceSha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11"
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "input": "Local kit root (default C:\\Field-Kit); review expected layout for your installation.",

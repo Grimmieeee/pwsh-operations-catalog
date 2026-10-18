@@ -910,7 +910,7 @@ try {
     )
 
     if ($changedRows.Count -eq 0) {
-        Write-Host "- No changes made."
+        Write-Host "- No completed changes verified for this note. Review failed, pending and unavailable results; actions may already have been applied."
     }
     else {
         foreach ($Row in $changedRows) {

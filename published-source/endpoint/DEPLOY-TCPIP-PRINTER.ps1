@@ -174,6 +174,18 @@ function Offer-ExportCsv {
     }
 }
 
+function Invoke-PrinterMethodChecked {
+    param([string]$Name, [ValidateSet('SetDefaultPrinter','PrintTestPage')][string]$Method)
+    $printers=@(Get-CimInstance -ClassName Win32_Printer -ErrorAction Stop | Where-Object { $_.Name -eq $Name })
+    if ($printers.Count -ne 1) { throw 'Exact printer could not be resolved for the requested method.' }
+    $result=Invoke-CimMethod -InputObject $printers[0] -MethodName $Method -ErrorAction Stop
+    if ($null -eq $result.ReturnValue -or $result.ReturnValue -ne 0) { throw "$Method was not accepted. Review printer state before retrying." }
+    if ($Method -eq 'SetDefaultPrinter') {
+        $after=@(Get-CimInstance -ClassName Win32_Printer -ErrorAction Stop | Where-Object { $_.Name -eq $Name })
+        if ($after.Count -ne 1 -or $after[0].Default -ne $true) { throw 'Default printer state did not verify for the current user.' }
+    }
+}
+
 try {
     try { $host.UI.RawUI.WindowTitle = "Endpoint Printer Deployment" } catch {}
 
@@ -248,6 +260,9 @@ try {
     $portName = "IP_$PrinterIP"
     $existingPort = Get-PrinterPort -Name $portName -ErrorAction SilentlyContinue
 
+    if (-not $SetDefault) { $SetDefault=Confirm-Yes 'Set as default printer for the current user' }
+    if (-not $TestPage) { $TestPage=Confirm-Yes 'Send a test page after deployment' }
+
     Section "PLAN"
     Write-Host "Printer : $PrinterName"
     Write-Host "Address : $PrinterIP"
@@ -291,28 +306,26 @@ try {
         exit 1
     }
 
-    if ($SetDefault -or (Confirm-Yes "Set as default printer")) {
+    $optionalFailures=0
+    if ($SetDefault) {
         try {
-            Set-Printer -Name $PrinterName -IsDefault $true -ErrorAction Stop
-            OK "Default printer set"
+            Invoke-PrinterMethodChecked -Name $PrinterName -Method SetDefaultPrinter
+            OK "Default printer verified for the current user"
         }
         catch {
-            WARN "Could not set default printer"
+            $optionalFailures++
+            WARN "Default printer not verified: $($_.Exception.Message)"
         }
     }
 
-    if ($TestPage -or (Confirm-Yes "Print test page")) {
+    if ($TestPage) {
         try {
-            $p = Get-CimInstance Win32_Printer -Filter "Name='$PrinterName'" -ErrorAction SilentlyContinue
-            if ($p) {
-                Invoke-CimMethod -InputObject $p -MethodName PrintTestPage | Out-Null
-                OK "Test page sent"
-            } else {
-                WARN "Could not locate printer for test page"
-            }
+            Invoke-PrinterMethodChecked -Name $PrinterName -Method PrintTestPage
+            INFO "Test-page request accepted. Confirm physical output at the printer."
         }
         catch {
-            WARN "Test page failed"
+            $optionalFailures++
+            WARN "Test-page request not verified: $($_.Exception.Message)"
         }
     }
 
@@ -323,7 +336,10 @@ try {
     Write-Host "Operator : $env:USERDOMAIN\$env:USERNAME"
     Write-Host "Time     : $(Now)"
 
-    OK "Complete"
+    $after=Get-Printer -Name $PrinterName -ErrorAction Stop
+    if ($after.DriverName -ne $DriverName -or $after.PortName -ne $portName) { throw 'Deployed printer driver/port did not verify. Review the installed printer before retrying.' }
+    if ($optionalFailures) { WARN 'STATUS: Incomplete - printer exists, but requested optional actions need review.' }
+    else { OK 'STATUS: Printer configuration verified. Confirm physical printing when a test page was requested.' }
     Pause-End
 }
 catch {

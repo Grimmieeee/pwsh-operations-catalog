@@ -2832,6 +2832,7 @@
   }
 
   function shortNote(item){
+    const reviewNote = item.reviewNote ? `<p class="source-note">${esc(item.reviewNote)}</p>` : "";
     // Reviewed summaries only: remove known duplication without guessing whether
     // an unfamiliar caveat is safe to hide.
     const concise = {
@@ -2851,8 +2852,8 @@
       "INSTALL-M365-MODULES.ps1":"", "GET-FOLDER-INVENTORY.ps1":"Does not enforce a fixed folder structure."
     };
     const note = String(Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || "")).trim();
-    if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return "";
-    return `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
+    if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return reviewNote;
+    return reviewNote + `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
   }
 
   function csvCapability(item){

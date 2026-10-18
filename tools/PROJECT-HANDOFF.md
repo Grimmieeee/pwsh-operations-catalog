@@ -4,6 +4,12 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
+## October 18, 2026 — catalog-wide safety review
+
+See `docs/qa/CATALOG-SAFETY-REVIEW.md`, `CATALOG-SAFETY-MATRIX.md`, `CATALOG-SAFETY-AUDIT.json` and `SOURCE-REVIEW-LEDGER.json`. The full 338-entry screen covers 80 scripts, 235 commands, 12 references and 11 pending entries. Scoped fixes cover 24 script sources; offline checks cover 265 cases plus 28 site tests. Thirteen tenant audits now require the expected tenant GUID and reject wrong-tenant reuse. Assignment and dynamic-group creation also require it. Source/card/connection evidence must be refreshed after each source edit.
+
+The three IR 1.0.0 executables and their operator evidence remain unchanged. A known app-name lookup limitation in assessment is visible on its card; its tested candidate is `docs/qa/IR-APP-NAME-LOOKUP.patch`. It still needs an IR revision/operator retest before release. No additional script earned VERIFIED. Native Windows/client tests and remaining source-review scopes are explicit in the ledger and matrix. The earlier sections below are historical, including old test counts. Draft PR #19 remains separate.
+
 ## October 17, 2026 — design lock and testing handoff
 
 License-removal safety follow-up: `INVOKE-REMOVE-LICENSES.ps1` 1.0.1 requires an expected tenant GUID, validates delegated/process context and signed-in account, previews every exact target UPN and planned license before one REMOVE approval, and leaves failed/unverified results incomplete. Lookup URI interpolation is corrected; unavailable reads no longer silently become empty data, and the exact-UPN resolver has no alias/first-match fallback. All supplied users must resolve before approval. The CI suite includes 19 offline mocked Graph/prompt regressions; this is not native Windows/client runtime verification and adds no VERIFIED mark. Plain-language offboarding searches lead to read-only preparation; no-result text offers task-name and browsing recovery. The unrelated candidate PR #19 remains separate.

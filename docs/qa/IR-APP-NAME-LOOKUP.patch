@@ -1,0 +1,15 @@
+--- a/published-source/incident-response/ir-risk-assessment.ps1
++++ b/published-source/incident-response/ir-risk-assessment.ps1
+@@ -554,10 +554,10 @@
+ 
+     if ($Cache.ContainsKey($ServicePrincipalId)) { return $Cache[$ServicePrincipalId] }
+ 
+-    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/$ServicePrincipalId?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
++    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/${ServicePrincipalId}?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
+ 
+-    if (-not $Result.Ok) {
++    if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {
+         $Filter = [System.Uri]::EscapeDataString("id eq '$ServicePrincipalId'")
+         $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=$Filter&`$select=id,appId,displayName,publisherName,verifiedPublisher&`$top=1" $Headers
+ 
+         if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {
