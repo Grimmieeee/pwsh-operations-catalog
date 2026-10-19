@@ -61,7 +61,7 @@ button{cursor:pointer}
 }
 .brand-main::after{display:none}
 .brand-field{font-weight:600;letter-spacing:.19em}
-.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:var(--mint)}
+.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:#ffffff}
 .brand-kit{font-weight:200;letter-spacing:.22em;color:#ffffff}
 .nav{padding:7px 11px 24px}
 .nav button{
@@ -82,14 +82,15 @@ button{cursor:pointer}
 }
 .signature{
   padding:14px 20px 12px;
-  --signature-scale:1;--signature-size:24px;--by-optical-offset:1.5px;--signature-muted:#819790;
+  --signature-scale:1;--signature-size:17px;--by-optical-offset:1.5px;--signature-muted:#819790;
   font-family:var(--display);font-weight:400;color:#ffffff;
 }
 .signature-note{display:block;font-size:calc(10px * var(--signature-scale));line-height:1;letter-spacing:.22em;margin-bottom:calc(6px * var(--signature-scale));transform:translate(var(--by-optical-offset),.43em)}
 .signature-row{display:flex;align-items:baseline;gap:calc(12px * var(--signature-scale));line-height:1}
 .signature-mark{white-space:nowrap;font-size:calc(var(--signature-size) * var(--signature-scale));line-height:1.2;letter-spacing:.16em}
-.signature-muted{color:var(--signature-muted)}
-.signature-slash{margin-left:.08em;letter-spacing:.08em}
+.signature-mark{font-weight:600}
+.signature-muted{color:#ffffff;font-weight:200}
+.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:400}
 .signature-established{margin-left:auto;white-space:nowrap;font-size:calc(10px * var(--signature-scale));line-height:1.2;letter-spacing:.22em;color:var(--signature-muted)}
 .signature-established strong{color:#ffffff;font-weight:500}
 .workspace{min-width:0;background:linear-gradient(180deg,#141a1d 0%,#161e20 100%)}
@@ -410,6 +411,7 @@ body.open .drawer{transform:translateX(0)}
   font:800 10px/1 var(--mono);letter-spacing:.07em;
   transition:.15s ease;
 }
+.result-verification{color:#96baac;font:400 10px/1.5 var(--mono);letter-spacing:.045em;white-space:nowrap}
 .result-flags{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px;min-width:0;max-width:300px}
 .result-verified{color:#a4ead3!important;border-color:#518e7b!important;gap:5px;border-radius:3px}
 .release-note{margin:10px 0;color:#b8ccc5;font:12px/1.5 var(--ui)}
@@ -1173,12 +1175,12 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   <div id="drawerBody" class="drawer-body"></div>
 </aside>
 
-<script src="catalog-data.js?v=card-start-1"></script>
-<script src="source-integrity.js?v=card-start-1"></script>
-<script src="connection-guidance.js?v=card-start-1"></script>
-<script src="card-guidance.js?v=card-start-1"></script>
-<script src="workflow-start.js?v=card-start-1"></script>
-<script src="field-kit-app.js?v=card-start-1"></script>
-<script src="site-brand.js"></script>
+<script src="catalog-data.js?v=brand-verified-1"></script>
+<script src="source-integrity.js?v=brand-verified-1"></script>
+<script src="connection-guidance.js?v=brand-verified-1"></script>
+<script src="card-guidance.js?v=brand-verified-1"></script>
+<script src="workflow-start.js?v=brand-verified-1"></script>
+<script src="field-kit-app.js?v=brand-verified-1"></script>
+<script src="site-brand.js?v=brand-verified-1"></script>
 </body>
 </html>

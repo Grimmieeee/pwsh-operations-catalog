@@ -13,8 +13,8 @@
     const family = getComputedStyle(by).fontFamily;
     context.font = `400 10px ${family}`;
     const labelWidth = context.measureText('BY').width + 2.2;
-    context.font = `400 100px ${family}`;
-    const size = 1.08 * 100 * labelWidth / context.measureText('B').width;
+    context.font = `600 100px ${family}`;
+    const size = Math.min(17, 1.08 * 100 * labelWidth / context.measureText('B').width);
     root.style.setProperty('--signature-size', `${size}px`);
     root.style.setProperty('--signature-scale', '1');
     const desired = maker.getBoundingClientRect().width + established.getBoundingClientRect().width + 12;
@@ -23,7 +23,7 @@
     // Match visible glyph edges rather than different-sized font boxes.
     context.font = `400 ${10 * scale}px ${family}`;
     const smallLeft = context.measureText('B').actualBoundingBoxLeft;
-    context.font = `400 ${size * scale}px ${family}`;
+    context.font = `600 ${size * scale}px ${family}`;
     const largeLeft = context.measureText('B').actualBoundingBoxLeft;
     root.style.setProperty('--by-optical-offset', `${smallLeft - largeLeft}px`);
   }

@@ -430,3 +430,15 @@ test('global search includes every scope regardless of navigation selection',()=
     assert.ok(!html.includes('First sign-in requests read/change permissions'),item.file);
   }
 });
+
+test('verified rows use quiet text at the right; footer matches header colors and weights',()=>{
+  const f=loadCatalog(root);f.api.state.query='ir';f.api.renderResults();
+  const html=f.elements.get('results').innerHTML;
+  assert.ok(html.includes('class="result-verification">VERIFIED'));
+  assert.ok(!html.includes('class="verification-seal"'));
+  const css=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.ok(css.includes('.signature-mark{font-weight:600}'));
+  assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:#ffffff}'));
+  assert.ok(css.includes('.signature-muted{color:#ffffff;font-weight:200}'));
+  assert.ok(css.includes('.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:400}'));
+});

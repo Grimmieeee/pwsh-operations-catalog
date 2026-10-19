@@ -5,8 +5,9 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 ## Identity
 
 - Home Screen name: `F I E L D //  K I T`; dark icon with mint `//`.
+- Both wordmark slashes match the adjacent light white text; retain semibold FIELD/BURN and light KIT/SID. Footer mark stays smaller.
 - Main wordmark: existing Raleway treatment; a visible gap after FIELD and a larger gap before KIT.
-- Low sidebar footer: BY above BURNSID//. BURN is bright; SID// muted, with tight slashes after D.
+- Low sidebar footer: BY above BURNSID//. BURN is semibold white; SID// is white with light SID, with tight slashes after D.
 - BY sits .43em lower than its normal position, with its visible B edge aligned to the larger B. The larger wordmark is 8% larger than the size that makes its B span BY.
 - EST. 2026 sits at the far right on the wordmark baseline. EST. is bright, 2026 muted; its type size matches BY.
 - Preserve proportions across sidebar widths. Scale only as needed to fit; do not wrap the date below the name.
@@ -29,3 +30,5 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 Owner-approved guided-start refinement: keep INPUT and preparation visible, with detailed IR CHECKS/GUARDS in one disclosure. Provide the verified IR workflow package, same-window launch help, and expected-result/next/blocked guidance. Shared path-prompted launch help applies to downloadable PowerShell scripts. Preserve all existing identity and verification rules. The owner authorized publication after the guided-start preview discussion.
 
 Preview visual changes in chat before publishing. Run site and required security checks, inspect live behavior and retain screenshot evidence. A site UI pass does not prove PowerShell runtime behavior.
+
+- Verified list rows use small muted VERIFIED text at the far right beside access labels. Expanded cards retain the circled V. Preserve the exact-source verification gate.
