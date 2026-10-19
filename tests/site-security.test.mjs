@@ -148,7 +148,7 @@ test('every released script has operational coverage and reviewed prerequisites'
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);
     const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('<div class="section-label">CHECKS</div>'),item.file);
+    assert.ok(html.includes('<summary>CHECKS</summary>'),item.file);
     assert.ok(!/Read-only tenant permissions|preferred authentication flow/.test(html),item.file);
   }
   const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');
@@ -238,13 +238,13 @@ test('cards separate operational checks from inputs and safety guards without ov
   assert.ok(hold);
   f.api.openItem(hold);
   const html=f.elements.get('drawerBody').innerHTML;
-  const checks=html.slice(html.indexOf('>CHECKS</div>'),html.indexOf('>GUARDS</div>'));
-  const guards=html.slice(html.indexOf('>GUARDS</div>'),html.indexOf('<section class="run-info-block">'));
+  const checks=html.slice(html.indexOf('>CHECKS</summary>'),html.indexOf('>GUARDS</summary>'));
+  const guards=html.slice(html.indexOf('>GUARDS</summary>'),html.indexOf('<section class="run-info-block">'));
   for(const text of ['Pre-change hold-state review','Unlimited duration target','Post-change mailbox re-read','Optional CSV evidence']) assert.ok(checks.includes(text),text);
   for(const text of ['Typed HOLD confirmation','Changes only noncompliant mailboxes','REQUIRES']) assert.ok(guards.includes(text),text);
   const inputStart=html.indexOf('>INPUT</div>');
-  assert.ok(inputStart>=0 && inputStart<html.indexOf('>CHECKS</div>'));
-  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</div>')).includes('TXT/CSV mailbox list'));
+  assert.ok(inputStart>=0 && inputStart<html.indexOf('>CHECKS</summary>'));
+  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</summary>')).includes('TXT/CSV mailbox list'));
   assert.ok(!guards.includes('>INPUT</div>'));
   assert.ok(!checks.includes('Typed HOLD confirmation'));
   assert.ok(!html.includes('More guards'));
@@ -438,7 +438,7 @@ test('verified rows use quiet text at the right; footer matches header colors an
   assert.ok(!html.includes('class="verification-seal"'));
   const css=fs.readFileSync(path.join(root,'index.html'),'utf8');
   assert.ok(css.includes('.signature-mark{font-weight:600}'));
-  assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:#ffffff}'));
+  assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:#ffffff}'));
   assert.ok(css.includes('.signature-muted{color:#ffffff;font-weight:200}'));
-  assert.ok(css.includes('.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:400}'));
+  assert.ok(css.includes('.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:200}'));
 });

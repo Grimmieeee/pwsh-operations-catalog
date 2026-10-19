@@ -32,3 +32,9 @@ Owner-approved guided-start refinement: keep INPUT and preparation visible, with
 Preview visual changes in chat before publishing. Run site and required security checks, inspect live behavior and retain screenshot evidence. A site UI pass does not prove PowerShell runtime behavior.
 
 - Verified list rows use small muted VERIFIED text at the far right beside access labels. Expanded cards retain the circled V. Preserve the exact-source verification gate.
+
+## Approved October 19, 2026 refinement
+
+- Both wordmarks use 70% opacity; both slash sets use weight 200 to match adjacent light text. Preserve the remaining brand layout.
+- USE FOR and INPUT stay visible. CHECKS, GUARDS, REQUIRES, and useful DETAILS use separate closed disclosures with matching compact uppercase mint typography and native disclosure arrows. Keep warnings and START visible.
+- All secondary card disclosures use the same type size, weight, spacing and focus treatment. Omit empty sections and preserve exact-script facts.

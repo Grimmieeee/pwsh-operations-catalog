@@ -2763,12 +2763,10 @@
     const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
     const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
-    const review = `${checks.length ? `<section class="check-block"><div class="section-label">CHECKS</div>${list(checks)}</section>` : ""}
-      ${guards.length || requires ? `<section class="check-block"><div class="section-label">GUARDS</div>
-        ${guards.length ? list(guards) : ""}
-        ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES <span aria-hidden="true">ⓘ</span></summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}
-      </section>` : ""}`;
-    return input + (item.workflow ? `<details class="scope-review"><summary>CHECKS &amp; GUARDS</summary>${review}</details>` : review);
+    const review = `${checks.length ? `<details class="card-disclosure"><summary>CHECKS</summary>${list(checks)}</details>` : ""}
+      ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}
+      ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES</summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}`;
+    return input + review;
   }
 
   function accessMarkup(item){
