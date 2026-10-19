@@ -1,3 +1,4 @@
+﻿# .VERSION 1.0.0
 #Requires -Version 5.1
 
 <#
@@ -28,23 +29,100 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-function OK($m)   { Write-Host "[OK]   $m" -ForegroundColor Green }
-function INFO($m) { Write-Host "[INFO] $m" }
-function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
-function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
+# Embedded into standalone report scripts by tools/reporting/build.ps1.
+$script:FKReportLines = New-Object 'Collections.Generic.List[string]'
+$script:FKReportWarnings = @()
+$script:FKReportStartedUtc = [DateTime]::UtcNow.ToString('o')
+
+function Write-FKReportLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][object[]]$Object,
+        [object]$Separator=' ',[switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor,[ConsoleColor]$BackgroundColor
+    )
+    $line=($Object | ForEach-Object {[string]$_}) -join [string]$Separator
+    $script:FKReportLines.Add($line)
+    Write-Host @PSBoundParameters
+}
+
+function ConvertTo-FKDesktopReport {
+    param([string]$Title,[string[]]$Lines,[string]$StartedUtc,[string]$ScopeNote)
+    $encode={param($Text) [Net.WebUtility]::HtmlEncode([string]$Text)}
+    $blocks=New-Object 'Collections.Generic.List[string]'
+    $section=New-Object 'Collections.Generic.List[string]'
+    foreach($line in @($Lines)) {
+        if($line -match '^\s*[A-Z][A-Z /+&:()-]{2,}\s*$' -and $line.Trim().Length -lt 90) {
+            if($section.Count) {$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>');$section.Clear()}
+            $blocks.Add('<h2>'+(& $encode $line.Trim())+'</h2>')
+        } else {$section.Add([string]$line)}
+    }
+    if($section.Count){$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>')}
+    $safeTitle=& $encode $Title
+    return @"
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>$safeTitle</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f5f7f7;color:#172524;margin:0}main{max-width:1000px;margin:32px auto;padding:32px;background:white;border-top:4px solid #168779}header{border-bottom:1px solid #d1ddda;padding-bottom:20px}small{letter-spacing:.12em;color:#52716b}h1{font-size:28px;margin:12px 0}h2{font-size:15px;letter-spacing:.1em;color:#166b60;margin:28px 0 10px;border-bottom:1px solid #d1ddda;padding-bottom:8px}pre{font:14px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}aside{background:#eef5f2;padding:12px 16px;margin:20px 0}footer{font-size:12px;color:#52716b;margin-top:32px}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}pre{font-size:11px}}</style></head>
+<body><main><header><small>F I E L D // K I T</small><h1>$safeTitle</h1><p>Collection started (UTC): $(& $encode $StartedUtc)</p></header><aside>$(& $encode $ScopeNote) Findings, unavailable checks, and displayed limits below are preserved from this run. Absence of a finding does not establish complete coverage.</aside>$($blocks.ToArray() -join "`n")<footer>Read-only report. No remote content or executable scripts. Review findings in context before taking action.</footer></main></body></html>
+"@
+}
+
+function Save-FKDesktopReport {
+    param([string]$Folder,[string]$Title,[string]$Content)
+    if([string]::IsNullOrWhiteSpace($Folder) -or -not [IO.Directory]::Exists($Folder)){throw 'Report folder does not exist.'}
+    $stem=($Title -replace '[^a-zA-Z0-9._-]','-').Trim('-')
+    if(-not $stem){$stem='field-kit-report'}
+    $stem=$stem.Substring(0,[Math]::Min(80,$stem.Length))
+    $name=$stem+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)+'.html'
+    $path=Join-Path $Folder $name
+    $bytes=(New-Object Text.UTF8Encoding($false)).GetBytes($Content)
+    $stream=New-Object IO.FileStream($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+    $actual=[IO.File]::ReadAllBytes($path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try {
+        if([Convert]::ToBase64String($sha.ComputeHash($bytes)) -cne [Convert]::ToBase64String($sha.ComputeHash($actual))){throw 'Report readback did not match the collected content.'}
+    }finally{$sha.Dispose()}
+    return $path
+}
+
+function Offer-FKDesktopReport {
+    param([string]$Title,[string]$ScopeNote='Scope matches the console output; only displayed rows are included.',[string]$DesktopFolder=[Environment]::GetFolderPath([Environment+SpecialFolder]::DesktopDirectory))
+    if(-not $script:FKReportLines.Count){return}
+    try {
+        if((Read-Host 'Save report to Desktop? [Y/N]').Trim() -notmatch '^(?i)y$'){return}
+        $folder=$DesktopFolder
+        $reportLines=@($script:FKReportLines.ToArray())
+        if(@($script:FKReportWarnings).Count){$reportLines+=@('','SERVICE WARNINGS');$reportLines+=@($script:FKReportWarnings|ForEach-Object {[string]$_})}
+        $content=ConvertTo-FKDesktopReport -Title $Title -Lines $reportLines -StartedUtc $script:FKReportStartedUtc -ScopeNote $ScopeNote
+        try {$saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content}
+        catch {
+            Write-Host '[WARN] Desktop report could not be saved. Choose another existing folder or cancel.' -ForegroundColor Yellow
+            $folder=(Read-Host 'Report folder (ENTER cancels)').Trim().Trim('"')
+            if(-not $folder){return}
+            $saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content
+        }
+        Write-Host ('[OK] Report saved and readback checked: '+$saved)
+    }catch{Write-Host ('[WARN] Report export failed: '+$_.Exception.Message) -ForegroundColor Yellow}
+}
+
+function OK($m)   { Write-FKReportLine "[OK]   $m" -ForegroundColor Green }
+function INFO($m) { Write-FKReportLine "[INFO] $m" }
+function WARN($m) { Write-FKReportLine "[WARN] $m" -ForegroundColor Yellow }
+function RISK($m) { Write-FKReportLine "[RISK] $m" -ForegroundColor Red }
+function FAIL($m) { Write-FKReportLine "[FAIL] $m" -ForegroundColor Red }
 
 function Section {
     param([string]$Title)
 
-    Write-Host ""
-    Write-Host (" {0} " -f $Title) `
+    Write-FKReportLine ""
+    Write-FKReportLine (" {0} " -f $Title) `
         -ForegroundColor White `
         -BackgroundColor DarkGray
 }
 
 function Pause-End {
-    Write-Host ""
+    Write-FKReportLine ""
     Read-Host "Press Enter to EXIT" | Out-Null
 }
 
@@ -65,7 +143,7 @@ function Confirm-Type {
         [string]$Required
     )
 
-    Write-Host ""
+    Write-FKReportLine ""
     WARN $Prompt
     $answer = Read-Host "Type $Required to continue"
 
@@ -170,7 +248,7 @@ function Connect-GraphAuto {
         }
     }
 
-    Write-Host "Graph: Connecting..."
+    Write-FKReportLine "Graph: Connecting..."
 
     $command = Get-Command Connect-MgGraph -ErrorAction Stop
     $parameters = @{
@@ -242,7 +320,7 @@ function Get-GraphPaged {
         $next = [string]$page.'@odata.nextLink'
     }
 
-    return @($items)
+    return $items.ToArray()
 }
 
 function Encode-UrlValue {
@@ -331,9 +409,9 @@ function Get-DeviceText {
 }
 
 try {
-    Write-Host "IR AUDIT - TOKEN REPLAY CHECK"
-    Write-Host "READ-ONLY INDICATOR REVIEW"
-    Write-Host ""
+    Write-FKReportLine "IR AUDIT - TOKEN REPLAY CHECK"
+    Write-FKReportLine "READ-ONLY INDICATOR REVIEW"
+    Write-FKReportLine ""
 
     if (-not $UPN) {
         $UPN = (Read-Host "UPN").Trim()
@@ -397,11 +475,11 @@ try {
         }
     }
 
-    Write-Host "Target          : $($user.userPrincipalName)"
-    Write-Host "Display Name    : $($user.displayName)"
-    Write-Host "Lookback        : $LookbackHours hours"
-    Write-Host "Expected country: $($expectedCountries -join ', ')"
-    Write-Host "Password change : $passwordChangeText"
+    Write-FKReportLine "Target          : $($user.userPrincipalName)"
+    Write-FKReportLine "Display Name    : $($user.displayName)"
+    Write-FKReportLine "Lookback        : $LookbackHours hours"
+    Write-FKReportLine "Expected country: $($expectedCountries -join ', ')"
+    Write-FKReportLine "Password change : $passwordChangeText"
 
     $startUtc = (Get-Date).ToUniversalTime().AddHours(-1 * $LookbackHours)
     $startText = $startUtc.ToString("yyyy-MM-ddTHH:mm:ssZ")
@@ -552,7 +630,7 @@ try {
             $app = if ($event.appDisplayName) { [string]$event.appDisplayName } else { "Unknown" }
             $risk = if ($event.riskLevelDuringSignIn) { [string]$event.riskLevelDuringSignIn } else { "unknown" }
 
-            Write-Host "$time | $result | $location | $ip | $app | $device | Risk=$risk"
+            Write-FKReportLine "$time | $result | $location | $ip | $app | $device | Risk=$risk"
         }
     }
     else {
@@ -600,30 +678,30 @@ try {
         $recommendation = "No direct token-specific detection was returned; continue incident review using the broader evidence set"
     }
 
-    Write-Host "TOKEN REPLAY CHECK SUMMARY"
-    Write-Host "--------------------------------------"
-    Write-Host "Target                    : $UPN"
-    Write-Host "Timestamp                 : $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-    Write-Host "Lookback                  : $LookbackHours hours"
-    Write-Host "Expected country          : $($expectedCountries -join ', ')"
-    Write-Host "Password change           : $passwordChangeText"
-    Write-Host "Sign-ins reviewed         : $($signIns.Count)"
-    Write-Host "Risk detections reviewed  : $($riskDetections.Count)"
-    Write-Host "Direct token detections   : $($directTokenDetections.Count)"
-    Write-Host "Supporting detections     : $($supportingDetections.Count)"
-    Write-Host "Unexpected successes      : $($unexpectedSuccesses.Count)"
-    Write-Host "Post-change unexpected    : $($postPasswordChangeUnexpected.Count)"
-    Write-Host "Risky sign-ins            : $($riskySignIns.Count)"
-    Write-Host "Limitations               : $($limitations.Count)"
-    Write-Host "Verdict                   : $verdict"
-    Write-Host "Recommendation            : $recommendation"
+    Write-FKReportLine "TOKEN REPLAY CHECK SUMMARY"
+    Write-FKReportLine "--------------------------------------"
+    Write-FKReportLine "Target                    : $UPN"
+    Write-FKReportLine "Timestamp                 : $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+    Write-FKReportLine "Lookback                  : $LookbackHours hours"
+    Write-FKReportLine "Expected country          : $($expectedCountries -join ', ')"
+    Write-FKReportLine "Password change           : $passwordChangeText"
+    Write-FKReportLine "Sign-ins reviewed         : $($signIns.Count)"
+    Write-FKReportLine "Risk detections reviewed  : $($riskDetections.Count)"
+    Write-FKReportLine "Direct token detections   : $($directTokenDetections.Count)"
+    Write-FKReportLine "Supporting detections     : $($supportingDetections.Count)"
+    Write-FKReportLine "Unexpected successes      : $($unexpectedSuccesses.Count)"
+    Write-FKReportLine "Post-change unexpected    : $($postPasswordChangeUnexpected.Count)"
+    Write-FKReportLine "Risky sign-ins            : $($riskySignIns.Count)"
+    Write-FKReportLine "Limitations               : $($limitations.Count)"
+    Write-FKReportLine "Verdict                   : $verdict"
+    Write-FKReportLine "Recommendation            : $recommendation"
 
     if ($directTokenDetections.Count -gt 0) {
-        Write-Host ""
-        Write-Host "Direct token detections:"
+        Write-FKReportLine ""
+        Write-FKReportLine "Direct token detections:"
 
         foreach ($detection in $directTokenDetections) {
-            Write-Host (
+            Write-FKReportLine (
                 "- {0} | {1} | {2} | {3}" -f
                 $detection.activityDateTime,
                 $detection.riskEventType,
@@ -634,18 +712,20 @@ try {
     }
 
     if ($limitations.Count -gt 0) {
-        Write-Host ""
-        Write-Host "Limitations:"
+        Write-FKReportLine ""
+        Write-FKReportLine "Limitations:"
 
         foreach ($limitation in $limitations) {
-            Write-Host "- $limitation"
+            Write-FKReportLine "- $limitation"
         }
     }
 }
 catch {
-    Write-Host ""
+    Write-FKReportLine ""
     FAIL (Get-ShortError $_)
 }
 finally {
+    Offer-FKDesktopReport -Title 'IR-GET-TOKEN-REPLAY-CHECK'
+
     Pause-End
 }

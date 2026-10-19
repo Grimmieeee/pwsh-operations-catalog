@@ -6,8 +6,8 @@
     "commands": 235,
     "references": 12,
     "pending": 11,
-    "operatorVerified": 3,
-    "scopedReviews": 25
+    "operatorVerified": 11,
+    "scopedReviews": 31
   },
   "entries": [
     {
@@ -2800,64 +2800,87 @@
       "path": "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "19b092079ccc61f4de9cbc6510b3a57f290f520abb08ab2b5db4089457fcc570",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "571046c187f77ade4935736511f3dcfed26b2fdab8eb8b1274b8288a934d5f64",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 345,
+          "line": 423,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 358,
+          "line": 436,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 382,
+          "line": 460,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 1069,
+          "line": 1148,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 122,
+          "line": 200,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 136,
+          "line": 214,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 258,
+          "line": 336,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 279,
+          "line": 357,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 333,
+          "line": 411,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 338,
+          "line": 416,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 131,
+          "line": 209,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3672,44 +3695,67 @@
       "path": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "6bd4a410ed549559c63b9c33d100051dbd6bfbc0b574dc61a396917af62cfa6f",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "a3179b60fe9833cb1f44c76024eb410ba3a4f91d03cba3c0acdfc14fffdb14f5",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 89,
+          "line": 167,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 133,
+          "line": 211,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 147,
+          "line": 225,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 173,
+          "line": 251,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 190,
+          "line": 268,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 198,
+          "line": 276,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 94,
+          "line": 172,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3726,29 +3772,52 @@
       "path": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 82,
+          "line": 160,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 119,
+          "line": 197,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 120,
+          "line": 198,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 87,
+          "line": 165,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3765,69 +3834,92 @@
       "path": "published-source/mailbox/GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 100,
+          "line": 178,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 125,
+          "line": 203,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 862,
+          "line": 940,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 72,
+          "line": 150,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 82,
+          "line": 160,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 88,
+          "line": 166,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 93,
+          "line": 171,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 182,
+          "line": 260,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 212,
+          "line": 290,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 459,
+          "line": 537,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 472,
+          "line": 550,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 77,
+          "line": 155,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4347,48 +4439,60 @@
       "path": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
-      "family": "Read-only workflows",
-      "state": "Source reviewed",
+      "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
-        "state": "Source reviewed",
+        "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+        "state": "Export update awaiting operator retest",
         "scope": [
           "Changed control path review",
-          "Graph URI variable boundary correction"
+          "Graph URI variable boundary correction",
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
         ],
         "tests": [
-          "Parser, source integrity and card/connection binding checks"
+          "Parser, source integrity and card/connection binding checks",
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
         ],
         "remaining": [
-          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-          "Full workflow, authoritative target and error-path behavior."
-        ]
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "sampledRuntime": {
+          "sha256": "9c5be4224fc76567431e348673104c869ac063020974a45b97450f6f5027804f",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        }
       },
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 266,
+          "line": 344,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 120,
+          "line": 198,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 155,
+          "line": 233,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 167,
+          "line": 245,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 125,
+          "line": 203,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -5758,48 +5862,60 @@
       "path": "published-source/identity/GET-USER-PREDELETE-CHECK.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
-      "family": "Read-only workflows",
-      "state": "Source reviewed",
+      "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
-        "state": "Source reviewed",
+        "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
+        "state": "Export update awaiting operator retest",
         "scope": [
           "Changed control path review",
-          "Graph URI variable boundary correction"
+          "Graph URI variable boundary correction",
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
         ],
         "tests": [
-          "Parser, source integrity and card/connection binding checks"
+          "Parser, source integrity and card/connection binding checks",
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
         ],
         "remaining": [
-          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-          "Full workflow, authoritative target and error-path behavior."
-        ]
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "sampledRuntime": {
+          "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        }
       },
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 342,
+          "line": 420,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 740,
+          "line": 818,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 1000,
+          "line": 1080,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 1008,
+          "line": 1088,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 1015,
+          "line": 1095,
           "note": "Distinguish optional probes from hidden failures."
         }
       ],
@@ -6220,49 +6336,72 @@
       "path": "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 131,
+          "line": 209,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 167,
+          "line": 245,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 768,
+          "line": 846,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 79,
+          "line": 157,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 89,
+          "line": 167,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 183,
+          "line": 261,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 206,
+          "line": 284,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 84,
+          "line": 162,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6279,29 +6418,52 @@
       "path": "published-source/tenant/GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
-      "family": "Read-only workflows",
-      "state": "Needs review",
-      "review": null,
+      "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
+        "state": "Export update awaiting operator retest",
+        "sampledRuntime": {
+          "sha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
+          "runnerVersion": "0.3.2",
+          "ownerConfirmed": true,
+          "recordLimit": 10,
+          "requestBudget": 40,
+          "readFailures": 0,
+          "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+        },
+        "remaining": [
+          "Standalone launch and complete findings review.",
+          "Full pagination and environment-specific branches.",
+          "Operator test of the updated optional Desktop report."
+        ],
+        "scope": [
+          "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+        ],
+        "tests": [
+          "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+        ]
+      },
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 56,
+          "line": 134,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 75,
+          "line": 153,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 92,
+          "line": 170,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 51,
+          "line": 129,
           "note": "Distinguish printed directions from executable installs."
         }
       ],

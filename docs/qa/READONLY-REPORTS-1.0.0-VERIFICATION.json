@@ -1,0 +1,88 @@
+{
+  "basis": "Owner explicitly accepted the sampled read-only workflow and HTML exports as sufficient for VERIFIED.",
+  "sourceAttribution": "Owner-confirmed supplied batch; released bytes match supplied test bundle; no returned execution manifest.",
+  "sampleLimit": 10,
+  "rawClientDataIncluded": false,
+  "records": [
+    {
+      "file": "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+      "version": "1.0.0",
+      "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
+      "reportSha256": "4d435c3f6d39be2cfa28d01825eb280f749e116bd16a40c22a1b4b24cf702fb9",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-TENANT-GROUP-OWNERS.ps1",
+      "version": "1.0.0",
+      "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
+      "reportSha256": "327fe6bb17c5e998a7642c4e85ab3f7af06aa8d844c1ca11beb92008b60c50c1",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-MAILBOX-PERMISSIONS.ps1",
+      "version": "1.0.0",
+      "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
+      "reportSha256": "e39e61ac74031ddf46b90336f0bf816d67ecdddfb0227f620bc71c40a50d0991",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "version": "1.0.0",
+      "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
+      "reportSha256": "684699cd390970a1559ac71574764bd65a88593d44f614d8f7c1301c5ebb769c",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "version": "1.0.0",
+      "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+      "reportSha256": "02b85c0a47d86af0a45ac4b68af2f766971b4bfa0362c1fc752657833a72bf0b",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-USER-PREDELETE-CHECK.ps1",
+      "version": "1.0.0",
+      "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
+      "reportSha256": "1923b593128f5b7f2e424550b0f5a607ceaa51ecf2eb744fb57d94c43ee04111",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "version": "1.0.0",
+      "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
+      "reportSha256": "682f852b5e8ec6d01aea7671c61ede62de5bfca4d76e2796bf5ecdf862db17bc",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    },
+    {
+      "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+      "version": "1.0.0",
+      "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
+      "reportSha256": "7fd86d595e5e3a8e3f35dbbd411222b5b9fb41fa86caecab17bb020fee90006c",
+      "ownerAccepted": true,
+      "testMode": "sampled batch + HTML export",
+      "standaloneTested": false,
+      "paginationTested": false
+    }
+  ]
+}

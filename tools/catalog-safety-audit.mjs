@@ -30,7 +30,7 @@ const entries=api.ITEMS.map(item=>{
  const record=ledger[item.file]?.sha256===sha256?ledger[item.file]:null;
  const operator=api.isVerifiedRelease(item);
  return {name:item.displayName,file:item.file,path:item.publishedPath||null,kind,access:item.access,sha256,
-  family:operator?'Verified IR':kind==='PowerShell'?(/Toys|Tools/.test(item.logicalArea)?'Local tools / toys':/change|destructive|mixed/i.test(item.access)?'Change workflows':'Read-only workflows'):kind,
+  family:operator?(item.workflow?'Verified IR':'Verified read-only workflows'):kind==='PowerShell'?(/Toys|Tools/.test(item.logicalArea)?'Local tools / toys':/change|destructive|mixed/i.test(item.access)?'Change workflows':'Read-only workflows'):kind,
   state:operator?'Operator verified — exact version':record?.state||'Needs review',review:record,signals,
   authentication:{graph:/\b(?:Connect-MgGraph|Invoke-MgGraphRequest)\b/i.test(text),exchange:/\bConnect-ExchangeOnline\b/i.test(text),ad:/\b(?:Get|Set|Remove|Disable|Enable|New|Add)-AD\w+/i.test(text)},
   resultStates:[...new Set([...text.matchAll(/(?:Result|Status)\s*=\s*["']([a-zA-Z][a-zA-Z -]{1,30})["']/g)].map(x=>x[1]))]};

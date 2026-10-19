@@ -282,7 +282,7 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===3);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===11);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 
@@ -527,5 +527,20 @@ test('release card contract rejects stale source and command guidance and missin
     if(kind==='missing')f.window.FIELD_KIT_COMMAND_GUIDANCE={};
     if(kind==='launch')f.window.FIELD_KIT_START=undefined;
     assert.throws(()=>validateCardContract({...f,hashes}),/stale|Missing|launch guidance/,kind);
+  }
+});
+
+
+test('the eight owner-accepted report releases have source-bound VERIFIED flags',()=>{
+  const f=loadCatalog(root);
+  const names=['GET-QUARTERLY-CLEANUP-REVIEW.ps1','GET-TENANT-GROUP-OWNERS.ps1','GET-MAILBOX-PERMISSIONS.ps1','GET-MAILBOX-SECURITY-SNAPSHOT.ps1','IR-GET-TOKEN-REPLAY-CHECK.ps1','GET-USER-PREDELETE-CHECK.ps1','GET-USER-SECURITY-SNAPSHOT.ps1','GET-TENANT-SECURITY-SNAPSHOT.ps1'];
+  for(const file of names){
+    const item=f.api.ITEMS.find(x=>x.file===file);
+    assert.ok(f.api.isVerifiedRelease(item),file);
+    assert.equal(item.verification.ownerAccepted,true,file);
+    assert.equal(item.verification.testMode,'Sampled read-only batch and HTML export',file);
+    assert.equal(item.verification.sha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
+    assert.ok(fs.readFileSync(path.join(root,item.publishedPath),'utf8').includes('function Offer-FKDesktopReport'),file);
+    assert.equal(f.api.isVerifiedRelease({...item,verification:{...item.verification,sha256:'0'.repeat(64)}}),false,file);
   }
 });

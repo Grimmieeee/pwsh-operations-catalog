@@ -1,3 +1,4 @@
+﻿# .VERSION 1.0.0
 #requires -Version 5.1
 
 <#
@@ -39,6 +40,83 @@ $script:Gaps     = New-Object System.Collections.Generic.List[string]
 $GraphConnectedHere = $false
 $ExoConnectedHere   = $false
 
+# Embedded into standalone report scripts by tools/reporting/build.ps1.
+$script:FKReportLines = New-Object 'Collections.Generic.List[string]'
+$script:FKReportWarnings = @()
+$script:FKReportStartedUtc = [DateTime]::UtcNow.ToString('o')
+
+function Write-FKReportLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][object[]]$Object,
+        [object]$Separator=' ',[switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor,[ConsoleColor]$BackgroundColor
+    )
+    $line=($Object | ForEach-Object {[string]$_}) -join [string]$Separator
+    $script:FKReportLines.Add($line)
+    Write-Host @PSBoundParameters
+}
+
+function ConvertTo-FKDesktopReport {
+    param([string]$Title,[string[]]$Lines,[string]$StartedUtc,[string]$ScopeNote)
+    $encode={param($Text) [Net.WebUtility]::HtmlEncode([string]$Text)}
+    $blocks=New-Object 'Collections.Generic.List[string]'
+    $section=New-Object 'Collections.Generic.List[string]'
+    foreach($line in @($Lines)) {
+        if($line -match '^\s*[A-Z][A-Z /+&:()-]{2,}\s*$' -and $line.Trim().Length -lt 90) {
+            if($section.Count) {$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>');$section.Clear()}
+            $blocks.Add('<h2>'+(& $encode $line.Trim())+'</h2>')
+        } else {$section.Add([string]$line)}
+    }
+    if($section.Count){$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>')}
+    $safeTitle=& $encode $Title
+    return @"
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>$safeTitle</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f5f7f7;color:#172524;margin:0}main{max-width:1000px;margin:32px auto;padding:32px;background:white;border-top:4px solid #168779}header{border-bottom:1px solid #d1ddda;padding-bottom:20px}small{letter-spacing:.12em;color:#52716b}h1{font-size:28px;margin:12px 0}h2{font-size:15px;letter-spacing:.1em;color:#166b60;margin:28px 0 10px;border-bottom:1px solid #d1ddda;padding-bottom:8px}pre{font:14px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}aside{background:#eef5f2;padding:12px 16px;margin:20px 0}footer{font-size:12px;color:#52716b;margin-top:32px}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}pre{font-size:11px}}</style></head>
+<body><main><header><small>F I E L D // K I T</small><h1>$safeTitle</h1><p>Collection started (UTC): $(& $encode $StartedUtc)</p></header><aside>$(& $encode $ScopeNote) Findings, unavailable checks, and displayed limits below are preserved from this run. Absence of a finding does not establish complete coverage.</aside>$($blocks.ToArray() -join "`n")<footer>Read-only report. No remote content or executable scripts. Review findings in context before taking action.</footer></main></body></html>
+"@
+}
+
+function Save-FKDesktopReport {
+    param([string]$Folder,[string]$Title,[string]$Content)
+    if([string]::IsNullOrWhiteSpace($Folder) -or -not [IO.Directory]::Exists($Folder)){throw 'Report folder does not exist.'}
+    $stem=($Title -replace '[^a-zA-Z0-9._-]','-').Trim('-')
+    if(-not $stem){$stem='field-kit-report'}
+    $stem=$stem.Substring(0,[Math]::Min(80,$stem.Length))
+    $name=$stem+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)+'.html'
+    $path=Join-Path $Folder $name
+    $bytes=(New-Object Text.UTF8Encoding($false)).GetBytes($Content)
+    $stream=New-Object IO.FileStream($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+    $actual=[IO.File]::ReadAllBytes($path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try {
+        if([Convert]::ToBase64String($sha.ComputeHash($bytes)) -cne [Convert]::ToBase64String($sha.ComputeHash($actual))){throw 'Report readback did not match the collected content.'}
+    }finally{$sha.Dispose()}
+    return $path
+}
+
+function Offer-FKDesktopReport {
+    param([string]$Title,[string]$ScopeNote='Scope matches the console output; only displayed rows are included.',[string]$DesktopFolder=[Environment]::GetFolderPath([Environment+SpecialFolder]::DesktopDirectory))
+    if(-not $script:FKReportLines.Count){return}
+    try {
+        if((Read-Host 'Save report to Desktop? [Y/N]').Trim() -notmatch '^(?i)y$'){return}
+        $folder=$DesktopFolder
+        $reportLines=@($script:FKReportLines.ToArray())
+        if(@($script:FKReportWarnings).Count){$reportLines+=@('','SERVICE WARNINGS');$reportLines+=@($script:FKReportWarnings|ForEach-Object {[string]$_})}
+        $content=ConvertTo-FKDesktopReport -Title $Title -Lines $reportLines -StartedUtc $script:FKReportStartedUtc -ScopeNote $ScopeNote
+        try {$saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content}
+        catch {
+            Write-Host '[WARN] Desktop report could not be saved. Choose another existing folder or cancel.' -ForegroundColor Yellow
+            $folder=(Read-Host 'Report folder (ENTER cancels)').Trim().Trim('"')
+            if(-not $folder){return}
+            $saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content
+        }
+        Write-Host ('[OK] Report saved and readback checked: '+$saved)
+    }catch{Write-Host ('[WARN] Report export failed: '+$_.Exception.Message) -ForegroundColor Yellow}
+}
+
 function Add-Finding {
     param([string]$Text)
     if (-not [string]::IsNullOrWhiteSpace($Text)) {
@@ -56,9 +134,9 @@ function Add-Gap {
 function Write-Section {
     param([string]$Title)
 
-    Write-Host ""
-    Write-Host $Title
-    Write-Host ('-' * $Title.Length)
+    Write-FKReportLine ""
+    Write-FKReportLine $Title
+    Write-FKReportLine ('-' * $Title.Length)
 }
 
 function Write-List {
@@ -71,12 +149,12 @@ function Write-List {
     $clean = @($Items | Where-Object { $null -ne $_ -and -not [string]::IsNullOrWhiteSpace([string]$_) })
 
     if ($clean.Count -eq 0) {
-        Write-Host "- $NoneText"
+        Write-FKReportLine "- $NoneText"
         return
     }
 
     foreach ($item in $clean) {
-        Write-Host "- $item"
+        Write-FKReportLine "- $item"
     }
 }
 
@@ -170,7 +248,7 @@ function Test-ExoIdentityMatch {
 }
 
 function Pause-End {
-    Write-Host ""
+    Write-FKReportLine ""
 
     try {
         Read-Host "Press ENTER to EXIT" | Out-Null
@@ -179,7 +257,7 @@ function Pause-End {
     catch {}
 
     try {
-        Write-Host "Press ENTER to EXIT..."
+        Write-FKReportLine "Press ENTER to EXIT..."
         [Console]::ReadLine() | Out-Null
         return
     }
@@ -197,11 +275,11 @@ try {
 
     $UPN = $UPN.Trim()
 
-    Write-Host ""
-    Write-Host "USER PRE-DELETE CHECK"
-    Write-Host "---------------------"
-    Write-Host "Target: $UPN"
-    Write-Host "Mode:   READ-ONLY"
+    Write-FKReportLine ""
+    Write-FKReportLine "USER PRE-DELETE CHECK"
+    Write-FKReportLine "---------------------"
+    Write-FKReportLine "Target: $UPN"
+    Write-FKReportLine "Mode:   READ-ONLY"
 
     # -------------------------------------------------------------------------
     # ACTIVE DIRECTORY
@@ -224,12 +302,12 @@ try {
             $adUser = Get-ADUser -Filter "UserPrincipalName -eq '$escapedUPN'" -Properties `
                 DisplayName, Enabled, MemberOf, ManagedObjects, Manager, DirectReports, `
                 mail, proxyAddresses, servicePrincipalName, DistinguishedName, ObjectGUID, `
-                SamAccountName -ErrorAction Stop
+                SamAccountName -ErrorAction Stop -WarningVariable +script:FKReportWarnings
 
             if ($adUser) {
-                Write-Host "Found:   $($adUser.DisplayName)"
-                Write-Host "Enabled: $($adUser.Enabled)"
-                Write-Host "SAM:     $($adUser.SamAccountName)"
+                Write-FKReportLine "Found:   $($adUser.DisplayName)"
+                Write-FKReportLine "Enabled: $($adUser.Enabled)"
+                Write-FKReportLine "SAM:     $($adUser.SamAccountName)"
 
                 $proxyAddresses = @($adUser.proxyAddresses)
 
@@ -237,7 +315,7 @@ try {
                     $adUser.MemberOf |
                     ForEach-Object {
                         try {
-                            (Get-ADGroup -Identity $_ -ErrorAction Stop).Name
+                            (Get-ADGroup -Identity $_ -ErrorAction Stop -WarningVariable +script:FKReportWarnings).Name
                         }
                         catch {
                             [string]$_
@@ -250,7 +328,7 @@ try {
                     $adUser.DirectReports |
                     ForEach-Object {
                         try {
-                            $r = Get-ADUser -Identity $_ -Properties UserPrincipalName,DisplayName -ErrorAction Stop
+                            $r = Get-ADUser -Identity $_ -Properties UserPrincipalName,DisplayName -ErrorAction Stop -WarningVariable +script:FKReportWarnings
                             if ($r.UserPrincipalName) {
                                 "$($r.DisplayName) <$($r.UserPrincipalName)>"
                             }
@@ -269,7 +347,7 @@ try {
 
                 try {
                     $adManagedGroups = @(
-                        Get-ADGroup -Filter * -Properties ManagedBy -ErrorAction Stop |
+                        Get-ADGroup -Filter * -Properties ManagedBy -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object { $_.ManagedBy -eq $adUser.DistinguishedName } |
                         Select-Object -ExpandProperty Name |
                         Sort-Object -Unique
@@ -279,20 +357,20 @@ try {
                     Add-Gap "AD managed-group lookup failed: $($_.Exception.Message)"
                 }
 
-                Write-Host ""
-                Write-Host "Direct group memberships: $($adGroups.Count)"
+                Write-FKReportLine ""
+                Write-FKReportLine "Direct group memberships: $($adGroups.Count)"
                 Write-List -Items $adGroups -NoneText "No direct AD group memberships"
 
-                Write-Host ""
-                Write-Host "Groups managed by user: $($adManagedGroups.Count)"
+                Write-FKReportLine ""
+                Write-FKReportLine "Groups managed by user: $($adManagedGroups.Count)"
                 Write-List -Items $adManagedGroups -NoneText "No AD groups managed by user"
 
-                Write-Host ""
-                Write-Host "Direct reports: $($directReports.Count)"
+                Write-FKReportLine ""
+                Write-FKReportLine "Direct reports: $($directReports.Count)"
                 Write-List -Items $directReports -NoneText "No direct reports"
 
-                Write-Host ""
-                Write-Host "Service Principal Names: $($spns.Count)"
+                Write-FKReportLine ""
+                Write-FKReportLine "Service Principal Names: $($spns.Count)"
                 Write-List -Items $spns -NoneText "No SPNs assigned"
 
                 if ($adManagedGroups.Count -gt 0) {
@@ -308,17 +386,17 @@ try {
                 }
             }
             else {
-                Write-Host "- User not found in Active Directory"
+                Write-FKReportLine "- User not found in Active Directory"
                 Add-Gap "User was not found in Active Directory."
             }
         }
         catch {
-            Write-Host "- AD lookup failed: $($_.Exception.Message)"
+            Write-FKReportLine "- AD lookup failed: $($_.Exception.Message)"
             Add-Gap "Active Directory lookup failed: $($_.Exception.Message)"
         }
     }
     else {
-        Write-Host "- ActiveDirectory module not installed"
+        Write-FKReportLine "- ActiveDirectory module not installed"
         Add-Gap "ActiveDirectory module is unavailable."
     }
 
@@ -351,7 +429,7 @@ try {
             }
 
             try {
-                $exoRecipient = Get-Recipient -Identity $UPN -ErrorAction Stop
+                $exoRecipient = Get-Recipient -Identity $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings
             }
             catch {}
 
@@ -390,25 +468,25 @@ try {
             )
 
             try {
-                $mailbox = Get-Mailbox -Identity $UPN -ErrorAction Stop
-                Write-Host "Mailbox: $($mailbox.DisplayName) <$($mailbox.PrimarySmtpAddress)>"
-                Write-Host "Type:    $($mailbox.RecipientTypeDetails)"
+                $mailbox = Get-Mailbox -Identity $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings
+                Write-FKReportLine "Mailbox: $($mailbox.DisplayName) <$($mailbox.PrimarySmtpAddress)>"
+                Write-FKReportLine "Type:    $($mailbox.RecipientTypeDetails)"
             }
             catch {
-                Write-Host "- No Exchange Online mailbox found"
+                Write-FKReportLine "- No Exchange Online mailbox found"
             }
 
             if ($mailbox) {
                 # Mailbox-level forwarding
-                Write-Host ""
-                Write-Host "MAILBOX FORWARDING"
+                Write-FKReportLine ""
+                Write-FKReportLine "MAILBOX FORWARDING"
 
                 $mailboxForwarding = @()
 
                 if ($mailbox.ForwardingAddress) {
                     $resolved = [string]$mailbox.ForwardingAddress
                     try {
-                        $forwardRecipient = Get-Recipient -Identity $mailbox.ForwardingAddress -ErrorAction Stop
+                        $forwardRecipient = Get-Recipient -Identity $mailbox.ForwardingAddress -ErrorAction Stop -WarningVariable +script:FKReportWarnings
                         if ($forwardRecipient.PrimarySmtpAddress) {
                             $resolved = [string]$forwardRecipient.PrimarySmtpAddress
                         }
@@ -424,20 +502,20 @@ try {
 
                 if ($mailboxForwarding.Count -gt 0) {
                     Write-List -Items $mailboxForwarding
-                    Write-Host "- DeliverToMailboxAndForward: $($mailbox.DeliverToMailboxAndForward)"
+                    Write-FKReportLine "- DeliverToMailboxAndForward: $($mailbox.DeliverToMailboxAndForward)"
                     Add-Finding "Mailbox-level forwarding is configured."
                 }
                 else {
-                    Write-Host "- No mailbox-level forwarding"
+                    Write-FKReportLine "- No mailbox-level forwarding"
                 }
 
                 # Inbox forwarding/redirect rules
-                Write-Host ""
-                Write-Host "FORWARDING / REDIRECT INBOX RULES"
+                Write-FKReportLine ""
+                Write-FKReportLine "FORWARDING / REDIRECT INBOX RULES"
 
                 try {
                     $forwardRules = @(
-                        Get-InboxRule -Mailbox $UPN -IncludeHidden -ErrorAction Stop |
+                        Get-InboxRule -Mailbox $UPN -IncludeHidden -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object {
                             $_.ForwardTo -or
                             $_.ForwardAsAttachmentTo -or
@@ -446,7 +524,7 @@ try {
                     )
 
                     if ($forwardRules.Count -eq 0) {
-                        Write-Host "- None"
+                        Write-FKReportLine "- None"
                     }
                     else {
                         foreach ($rule in $forwardRules) {
@@ -462,9 +540,9 @@ try {
                                 if ($target) { $targets += "RedirectTo=$target" }
                             }
 
-                            Write-Host "- $($rule.Name) | Enabled=$($rule.Enabled)"
+                            Write-FKReportLine "- $($rule.Name) | Enabled=$($rule.Enabled)"
                             foreach ($target in $targets) {
-                                Write-Host "  $target"
+                                Write-FKReportLine "  $target"
                             }
                         }
 
@@ -472,17 +550,17 @@ try {
                     }
                 }
                 catch {
-                    Write-Host "- Lookup failed: $($_.Exception.Message)"
+                    Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                     Add-Gap "Inbox rule lookup failed: $($_.Exception.Message)"
                 }
 
                 # Delegates ON the target mailbox
-                Write-Host ""
-                Write-Host "DELEGATES ON THIS MAILBOX"
+                Write-FKReportLine ""
+                Write-FKReportLine "DELEGATES ON THIS MAILBOX"
 
                 try {
                     $fullAccessOnTarget = @(
-                        Get-MailboxPermission -Identity $UPN -ErrorAction Stop |
+                        Get-MailboxPermission -Identity $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object {
                             -not $_.IsInherited -and
                             -not $_.Deny -and
@@ -495,7 +573,7 @@ try {
                     )
 
                     $sendAsOnTarget = @(
-                        Get-RecipientPermission -Identity $UPN -ErrorAction Stop |
+                        Get-RecipientPermission -Identity $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object {
                             ($_.AccessRights -contains 'SendAs') -and
                             ([string]$_.Trustee -notmatch 'NT AUTHORITY\\SELF')
@@ -525,17 +603,17 @@ try {
                     }
                 }
                 catch {
-                    Write-Host "- Delegate lookup failed: $($_.Exception.Message)"
+                    Write-FKReportLine "- Delegate lookup failed: $($_.Exception.Message)"
                     Add-Gap "Delegate lookup on target mailbox failed: $($_.Exception.Message)"
                 }
 
                 # Distribution / mail-enabled group ownership
-                Write-Host ""
-                Write-Host "EXCHANGE GROUP OWNERSHIP"
+                Write-FKReportLine ""
+                Write-FKReportLine "EXCHANGE GROUP OWNERSHIP"
 
                 try {
                     $ownedDgs = @(
-                        Get-DistributionGroup -ResultSize Unlimited -ErrorAction Stop |
+                        Get-DistributionGroup -ResultSize Unlimited -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object {
                             Test-ExoIdentityMatch -Value $_.ManagedBy -Tokens $exoIdentityTokens
                         } |
@@ -550,19 +628,19 @@ try {
                     }
                 }
                 catch {
-                    Write-Host "- Lookup failed: $($_.Exception.Message)"
+                    Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                     Add-Gap "Exchange group ownership lookup failed: $($_.Exception.Message)"
                 }
 
                 # Permissions the user holds on other recipients/mailboxes
-                Write-Host ""
-                Write-Host "ACCESS HELD BY THIS USER"
+                Write-FKReportLine ""
+                Write-FKReportLine "ACCESS HELD BY THIS USER"
 
                 $heldAccess = @()
 
                 try {
                     $sendAsHeld = @(
-                        Get-RecipientPermission -Trustee $UPN -ResultSize Unlimited -ErrorAction Stop |
+                        Get-RecipientPermission -Trustee $UPN -ResultSize Unlimited -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                         Where-Object { $_.AccessRights -contains 'SendAs' } |
                         ForEach-Object {
                             "Send As: $($_.Identity)"
@@ -577,7 +655,7 @@ try {
 
                 try {
                     $allMailboxes = @(
-                        Get-Mailbox -ResultSize Unlimited -ErrorAction Stop
+                        Get-Mailbox -ResultSize Unlimited -ErrorAction Stop -WarningVariable +script:FKReportWarnings
                     )
 
                     $index = 0
@@ -595,7 +673,7 @@ try {
 
                         try {
                             $fa = @(
-                                Get-MailboxPermission -Identity $mbx.Identity -User $UPN -ErrorAction Stop |
+                                Get-MailboxPermission -Identity $mbx.Identity -User $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings |
                                 Where-Object {
                                     -not $_.IsInherited -and
                                     -not $_.Deny -and
@@ -632,8 +710,8 @@ try {
                 }
 
                 # Transport rule references
-                Write-Host ""
-                Write-Host "TRANSPORT RULE REFERENCES"
+                Write-FKReportLine ""
+                Write-FKReportLine "TRANSPORT RULE REFERENCES"
 
                 try {
                     $needles = @(
@@ -646,7 +724,7 @@ try {
 
                     $transportHits = @()
 
-                    foreach ($rule in @(Get-TransportRule -ErrorAction Stop)) {
+                    foreach ($rule in @(Get-TransportRule -ErrorAction Stop -WarningVariable +script:FKReportWarnings)) {
                         $ruleText = ($rule | Format-List * | Out-String)
 
                         foreach ($needle in $needles) {
@@ -666,41 +744,41 @@ try {
                     }
                 }
                 catch {
-                    Write-Host "- Lookup failed: $($_.Exception.Message)"
+                    Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                     Add-Gap "Transport rule scan failed: $($_.Exception.Message)"
                 }
 
                 # Data / retention
-                Write-Host ""
-                Write-Host "MAILBOX DATA / RETENTION"
+                Write-FKReportLine ""
+                Write-FKReportLine "MAILBOX DATA / RETENTION"
 
                 try {
-                    $stats = Get-MailboxStatistics -Identity $UPN -ErrorAction Stop
+                    $stats = Get-MailboxStatistics -Identity $UPN -ErrorAction Stop -WarningVariable +script:FKReportWarnings
 
-                    Write-Host "- Item count: $($stats.ItemCount)"
-                    Write-Host "- Total size: $($stats.TotalItemSize)"
-                    Write-Host "- Last logon: $($stats.LastLogonTime)"
+                    Write-FKReportLine "- Item count: $($stats.ItemCount)"
+                    Write-FKReportLine "- Total size: $($stats.TotalItemSize)"
+                    Write-FKReportLine "- Last logon: $($stats.LastLogonTime)"
                 }
                 catch {
-                    Write-Host "- Mailbox statistics unavailable: $($_.Exception.Message)"
+                    Write-FKReportLine "- Mailbox statistics unavailable: $($_.Exception.Message)"
                     Add-Gap "Mailbox statistics lookup failed: $($_.Exception.Message)"
                 }
 
-                Write-Host "- Archive status: $($mailbox.ArchiveStatus)"
-                Write-Host "- Litigation hold: $($mailbox.LitigationHoldEnabled)"
-                Write-Host "- Retention hold: $($mailbox.RetentionHoldEnabled)"
-                Write-Host "- Retention policy: $($mailbox.RetentionPolicy)"
+                Write-FKReportLine "- Archive status: $($mailbox.ArchiveStatus)"
+                Write-FKReportLine "- Litigation hold: $($mailbox.LitigationHoldEnabled)"
+                Write-FKReportLine "- Retention hold: $($mailbox.RetentionHoldEnabled)"
+                Write-FKReportLine "- Retention policy: $($mailbox.RetentionPolicy)"
 
                 $inPlaceHolds = @($mailbox.InPlaceHolds | Where-Object { $_ })
 
                 if ($inPlaceHolds.Count -gt 0) {
-                    Write-Host "- In-place holds:"
+                    Write-FKReportLine "- In-place holds:"
                     foreach ($hold in $inPlaceHolds) {
-                        Write-Host "  $hold"
+                        Write-FKReportLine "  $hold"
                     }
                 }
                 else {
-                    Write-Host "- In-place holds: None"
+                    Write-FKReportLine "- In-place holds: None"
                 }
 
                 if ($mailbox.LitigationHoldEnabled -or
@@ -712,12 +790,12 @@ try {
             }
         }
         catch {
-            Write-Host "- Exchange Online check failed: $($_.Exception.Message)"
+            Write-FKReportLine "- Exchange Online check failed: $($_.Exception.Message)"
             Add-Gap "Exchange Online check failed: $($_.Exception.Message)"
         }
     }
     else {
-        Write-Host "- ExchangeOnlineManagement module not installed"
+        Write-FKReportLine "- ExchangeOnlineManagement module not installed"
         Add-Gap "ExchangeOnlineManagement module is unavailable."
     }
 
@@ -762,19 +840,19 @@ try {
 
             $graphUser = Invoke-MgGraphRequest -Method GET -Uri $userUri -ErrorAction Stop
 
-            Write-Host "Found:   $($graphUser.displayName)"
-            Write-Host "Enabled: $($graphUser.accountEnabled)"
-            Write-Host "Synced:  $($graphUser.onPremisesSyncEnabled)"
+            Write-FKReportLine "Found:   $($graphUser.displayName)"
+            Write-FKReportLine "Enabled: $($graphUser.accountEnabled)"
+            Write-FKReportLine "Synced:  $($graphUser.onPremisesSyncEnabled)"
 
             if ($graphUser.onPremisesSyncEnabled -eq $true) {
-                Write-Host "- This is an on-premises-synchronized Entra object."
+                Write-FKReportLine "- This is an on-premises-synchronized Entra object."
             }
 
             $graphId = [string]$graphUser.id
 
             # Direct cloud group membership
-            Write-Host ""
-            Write-Host "CLOUD GROUP MEMBERSHIPS"
+            Write-FKReportLine ""
+            Write-FKReportLine "CLOUD GROUP MEMBERSHIPS"
 
             try {
                 $memberUri = "https://graph.microsoft.com/v1.0/users/$graphId/memberOf/microsoft.graph.group?`$select=id,displayName,mail,groupTypes,mailEnabled,securityEnabled"
@@ -801,13 +879,13 @@ try {
                 Write-List -Items $cloudMembershipText -NoneText "No direct cloud group memberships"
             }
             catch {
-                Write-Host "- Lookup failed: $($_.Exception.Message)"
+                Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                 Add-Gap "Cloud group membership lookup failed: $($_.Exception.Message)"
             }
 
             # Owned M365 / Teams / Entra groups
-            Write-Host ""
-            Write-Host "GROUP / TEAM OWNERSHIP"
+            Write-FKReportLine ""
+            Write-FKReportLine "GROUP / TEAM OWNERSHIP"
 
             try {
                 $ownedGroupsUri = "https://graph.microsoft.com/v1.0/users/$graphId/ownedObjects/microsoft.graph.group?`$select=id,displayName,mail,groupTypes,resourceProvisioningOptions,mailEnabled,securityEnabled"
@@ -848,13 +926,13 @@ try {
                 }
             }
             catch {
-                Write-Host "- Lookup failed: $($_.Exception.Message)"
+                Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                 Add-Gap "Graph group ownership lookup failed: $($_.Exception.Message)"
             }
 
             # Owned apps/service principals
-            Write-Host ""
-            Write-Host "APPLICATION OWNERSHIP"
+            Write-FKReportLine ""
+            Write-FKReportLine "APPLICATION OWNERSHIP"
 
             try {
                 $ownedObjectsUri = "https://graph.microsoft.com/v1.0/users/$graphId/ownedObjects?`$select=id,displayName"
@@ -886,13 +964,13 @@ try {
                 }
             }
             catch {
-                Write-Host "- Lookup failed: $($_.Exception.Message)"
+                Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                 Add-Gap "Application ownership lookup failed: $($_.Exception.Message)"
             }
 
             # Direct enterprise app assignments
-            Write-Host ""
-            Write-Host "DIRECT ENTERPRISE APP ASSIGNMENTS"
+            Write-FKReportLine ""
+            Write-FKReportLine "DIRECT ENTERPRISE APP ASSIGNMENTS"
 
             try {
                 $appRoleUri = "https://graph.microsoft.com/v1.0/users/$graphId/appRoleAssignments?`$select=principalId,resourceDisplayName,resourceId,appRoleId"
@@ -914,13 +992,13 @@ try {
                 }
             }
             catch {
-                Write-Host "- Lookup failed: $($_.Exception.Message)"
+                Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                 Add-Gap "Enterprise app assignment lookup failed: $($_.Exception.Message)"
             }
 
             # Licenses
-            Write-Host ""
-            Write-Host "LICENSES"
+            Write-FKReportLine ""
+            Write-FKReportLine "LICENSES"
 
             try {
                 $licenseUri = "https://graph.microsoft.com/v1.0/users/$graphId/licenseDetails?`$select=skuPartNumber,skuId"
@@ -942,17 +1020,17 @@ try {
                 Write-List -Items $licenseText -NoneText "No licenses assigned"
             }
             catch {
-                Write-Host "- Lookup failed: $($_.Exception.Message)"
+                Write-FKReportLine "- Lookup failed: $($_.Exception.Message)"
                 Add-Gap "License lookup failed: $($_.Exception.Message)"
             }
         }
         catch {
-            Write-Host "- Microsoft Graph check failed: $($_.Exception.Message)"
+            Write-FKReportLine "- Microsoft Graph check failed: $($_.Exception.Message)"
             Add-Gap "Microsoft Graph check failed: $($_.Exception.Message)"
         }
     }
     else {
-        Write-Host "- Microsoft.Graph.Authentication module not installed"
+        Write-FKReportLine "- Microsoft.Graph.Authentication module not installed"
         Add-Gap "Microsoft.Graph.Authentication module is unavailable."
     }
 
@@ -961,42 +1039,44 @@ try {
     # -------------------------------------------------------------------------
 
     Write-Section "NOT CHECKED"
-    Write-Host "- OneDrive / SharePoint site ownership or file sharing"
-    Write-Host "- Local Windows services or scheduled tasks using this account"
-    Write-Host "- Third-party applications, SaaS integrations, scripts, or stored credentials"
-    Write-Host "- Indirect mailbox access inherited through security groups"
+    Write-FKReportLine "- OneDrive / SharePoint site ownership or file sharing"
+    Write-FKReportLine "- Local Windows services or scheduled tasks using this account"
+    Write-FKReportLine "- Third-party applications, SaaS integrations, scripts, or stored credentials"
+    Write-FKReportLine "- Indirect mailbox access inherited through security groups"
 
     Write-Section "RESULT"
 
     if ($script:Findings.Count -eq 0 -and $script:Gaps.Count -eq 0) {
-        Write-Host "CLEAN IN CHECKED AREAS"
-        Write-Host "No dependency requiring review was found by this script."
+        Write-FKReportLine "CLEAN IN CHECKED AREAS"
+        Write-FKReportLine "No dependency requiring review was found by this script."
     }
     else {
-        Write-Host "REVIEW BEFORE DELETE"
+        Write-FKReportLine "REVIEW BEFORE DELETE"
 
         if ($script:Findings.Count -gt 0) {
-            Write-Host ""
-            Write-Host "Dependencies found:"
+            Write-FKReportLine ""
+            Write-FKReportLine "Dependencies found:"
             foreach ($finding in $script:Findings) {
-                Write-Host "- $finding"
+                Write-FKReportLine "- $finding"
             }
         }
 
         if ($script:Gaps.Count -gt 0) {
-            Write-Host ""
-            Write-Host "Checks incomplete:"
+            Write-FKReportLine ""
+            Write-FKReportLine "Checks incomplete:"
             foreach ($gap in $script:Gaps) {
-                Write-Host "- $gap"
+                Write-FKReportLine "- $gap"
             }
         }
     }
 }
 catch {
-    Write-Host ""
-    Write-Host "[FAIL] $($_.Exception.Message)" -ForegroundColor Red
+    Write-FKReportLine ""
+    Write-FKReportLine "[FAIL] $($_.Exception.Message)" -ForegroundColor Red
 }
 finally {
+    Offer-FKDesktopReport -Title 'GET-USER-PREDELETE-CHECK'
+
     Write-Progress -Activity "Checking mailbox delegation" -Completed -ErrorAction SilentlyContinue
 
     # Pause before cleanup so the console cannot disappear immediately after

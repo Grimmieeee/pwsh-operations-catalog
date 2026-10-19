@@ -98,17 +98,19 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "External mailbox forwarding"
     ],
     "guards": [
-      "Shows failed checks; exports only when requested"
+      "Shows failed checks; exports only when requested",
+      "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "19b092079ccc61f4de9cbc6510b3a57f290f520abb08ab2b5db4089457fcc570",
+    "sourceSha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
     "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.",
     "notes": "Periodic read-only tenant hygiene review covering stale enabled users, active admin-role counts, ownerless cloud-manageable groups, and external mailbox forwarding.",
     "startMode": "right-click",
     "completion": {
       "result": "Findings for old sign-ins, admin roles, groups without owners, and external forwarding; failed checks remain gaps.",
-      "next": "Review each finding before planning cleanup. This tool makes no tenant changes.",
+      "next": "Review each finding before planning cleanup. This tool makes no tenant changes. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "checks": [
@@ -179,16 +181,20 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement; rights to read recipient, mailbox configuration, inbox rules and mailbox permissions. Microsoft Graph is not used.",
-    "sourceSha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
+    "sourceSha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
     "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.",
     "input": "One mailbox sign-in name (UPN).",
     "notes": "Reviews forwarding, inbox rules, permissions, and legacy protocol state.",
     "startMode": "right-click",
     "completion": {
       "result": "Mailbox forwarding, rules, permissions, and mail-protocol settings.",
-      "next": "Use the findings to choose deeper checks or approved containment; this snapshot does not clear an incident.",
+      "next": "Use the findings to choose deeper checks or approved containment; this snapshot does not clear an incident. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "guards": [
+      "Desktop HTML report is optional; keep exported client information private"
+    ]
   },
   "IR-INVOKE-EMAIL-RECOVERY.ps1": {
     "input": "Mailbox sign-in name (UPN). Defaults: move from RSS Subscriptions to Restored Messages, looking back 24 hours. Review or change the folders before approving moves.",
@@ -404,17 +410,19 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "guards": [
       "Unavailable data remains a limitation",
-      "An unexpected location alone does not prove a stolen session"
+      "An unexpected location alone does not prove a stolen session",
+      "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
+    "sourceSha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
     "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack.",
     "notes": "Looks for suspicious sign-in patterns consistent with token replay/AiTM.",
     "startMode": "right-click",
     "completion": {
       "result": "Available sign-in and risk records for the user and selected time period.",
-      "next": "Review token-specific signals and missing data; an unexpected location alone does not prove a stolen session.",
+      "next": "Review token-specific signals and missing data; an unexpected location alone does not prove a stolen session. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -632,17 +640,19 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Direct application assignments and licenses"
     ],
     "guards": [
-      "Review only; does not delete the user"
+      "Review only; does not delete the user",
+      "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
+    "sourceSha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
     "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.",
     "notes": "Read-only dependency review before deleting an on-premises AD user object; does not prove third-party or local-system dependencies are safe.",
     "startMode": "right-click",
     "completion": {
       "result": "Available identity, mailbox, ownership, app, license, and retention dependencies are listed.",
-      "next": "Resolve dependencies and missing checks before deleting the account. Third-party and local-system dependencies still need separate review.",
+      "next": "Resolve dependencies and missing checks before deleting the account. Third-party and local-system dependencies still need separate review. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default old-sign-in threshold: 30 days.",
@@ -1027,7 +1037,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
-    "sourceSha256": "6bd4a410ed549559c63b9c33d100051dbd6bfbc0b574dc61a396917af62cfa6f",
+    "sourceSha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
     "objective": "Shows owners for tenant groups across major Entra and Exchange group types and keeps unresolved ownership visible.",
     "input": "No group list needed. Reviews groups in the tenant you sign in to.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Microsoft.Graph.Groups + Group.Read.All + User.Read.All + ExchangeOnlineManagement",
@@ -1035,12 +1045,16 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "startMode": "right-click",
     "completion": {
       "result": "Owners across the supported group types, with missing owners and failed lookups visible.",
-      "next": "Confirm a responsible owner before changing ownership; a failed lookup is not proof that a group has no owner.",
+      "next": "Confirm a responsible owner before changing ownership; a failed lookup is not proof that a group has no owner. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "guards": [
+      "Desktop HTML report is optional; keep exported client information private"
+    ]
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
-    "sourceSha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
+    "sourceSha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
     "objective": "Reviews forwarding, delegates, and inbox rules for one or more mailboxes.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1048,9 +1062,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "startMode": "right-click",
     "completion": {
       "result": "Forwarding, shared access, and inbox-rule findings for the requested mailboxes.",
-      "next": "Review each finding and unavailable check before deciding whether access should change.",
+      "next": "Review each finding and unavailable check before deciding whether access should change. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "guards": [
+      "Desktop HTML report is optional; keep exported client information private"
+    ]
   },
   "GET-MAILBOX-FORWARDING.ps1": {
     "sourceSha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
@@ -1170,7 +1188,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
-    "sourceSha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
+    "sourceSha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
     "objective": "Shows the security state around one user before you decide what needs deeper review.",
     "input": "One user sign-in name (UPN).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + UserAuthenticationMethod.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -1178,12 +1196,16 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "startMode": "right-click",
     "completion": {
       "result": "Available account, sign-in, MFA, role, group, and license findings for the user.",
-      "next": "Choose deeper reviews from the findings; missing data must remain unresolved.",
+      "next": "Choose deeper reviews from the findings; missing data must remain unresolved. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "guards": [
+      "Desktop HTML report is optional; keep exported client information private"
+    ]
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
-    "sourceSha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
+    "sourceSha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
     "objective": "Gives a fast tenant security overview before you open the deeper focused audits.",
     "input": "Reviews the tenant you sign in to; no user list needed. Default old-sign-in threshold: 90 days.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Organization.Read.All + User.Read.All + AuditLog.Read.All + Directory.Read.All + RoleManagement.Read.Directory + Policy.Read.ConditionalAccess + DelegatedPermissionGrant.Read.All",
@@ -1191,9 +1213,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "startMode": "right-click",
     "completion": {
       "result": "An overview of users, old sign-ins, policies, admin roles, and app grants.",
-      "next": "Open the focused audits for details and resolve missing checks before making tenant-wide conclusions.",
+      "next": "Open the focused audits for details and resolve missing checks before making tenant-wide conclusions. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "guards": [
+      "Desktop HTML report is optional; keep exported client information private"
+    ]
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "sourceSha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",

@@ -46,3 +46,5 @@ Preview visual changes in chat before publishing. Run site and required security
 - Owner brightness refinement: brighter menu options, navigation section labels/counts, catalog/card section headings and text-only status/verification flags. Preserve font sizes, layout, risk colors, and softened wordmarks.
 
 - Completion refinement: standalone scripts use the existing compact dropdown treatment for WHEN FINISHED, with tool-specific result/follow-up and blocked/cancelled guidance. The three IR steps retain visible EXPECTED RESULT and NEXT. Inputs state actual defaults. Release checks require source-bound copy, concrete inputs, requirements, launch mode and completion guidance.
+
+- Owner acceptance decision: the eight read-only report releases in docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md earn the existing VERIFIED mark based on the accepted sampled run and HTML export review. Keep source/version checksum binding; record test scope and provenance in evidence. No further rerun is required for this batch.
