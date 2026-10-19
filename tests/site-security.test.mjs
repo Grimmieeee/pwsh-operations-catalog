@@ -71,7 +71,7 @@ test('IR cards show preparation, exact launch, expected results and explicit han
   for(const item of f.api.ITEMS.filter(x=>x.workflow)){
     f.api.openItem(item);
     const html=f.elements.get('drawerBody').innerHTML;
-    for(const text of ['DOWNLOAD IR WORKFLOW','IR workflow guide','EXPECTED RESULT','If blocked or cancelled','First sign-in requests read/change permissions','Paste the full path to '+item.file])assert.ok(html.includes(text),item.file+': '+text);
+    for(const text of ['DOWNLOAD IR WORKFLOW','IR workflow guide','EXPECTED RESULT','If blocked or cancelled','Paste the full path to '+item.file])assert.ok(html.includes(text),item.file+': '+text);
     assert.ok(html.includes('CHECK POWERSHELL READINESS'));
     assert.ok(html.indexOf('Before starting:')<html.indexOf('DOWNLOAD IR WORKFLOW'));
   }
@@ -201,7 +201,8 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   const license=f.api.ITEMS.find(item=>item.file==='INVOKE-ASSIGN-LICENSES.ps1');
   f.api.openItem(license);
   let html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('AUTO-CONNECT'));
+  assert.ok(!html.includes('AUTO-CONNECT'));
+  assert.ok(html.includes('Run with PowerShell'));
   assert.ok(!html.includes('data-copy="Connect-MgGraph'));
   assert.ok(html.includes('User.ReadWrite.All'));
   assert.ok(!html.includes('<summary>Details</summary>'));
@@ -296,7 +297,8 @@ test('connection guidance is bound to every published script and suppresses redu
     assert.ok(!html.includes('id="copyDownload"'),item.file);
     assert.ok(!html.includes('release-version'),item.file);
     if(profile.mode==='auto'){
-      assert.ok(html.includes('AUTO-CONNECT'),item.file);
+      assert.ok(!html.includes('AUTO-CONNECT'),item.file);
+      assert.ok(!html.includes('Sign in when the script asks.'),item.file);
       assert.ok(!html.includes('data-copy="Connect-'),item.file);
     } else assert.ok(!html.includes('AUTO-CONNECT'),item.file);
   }
@@ -416,4 +418,15 @@ test('global search includes every scope regardless of navigation selection',()=
   const f=loadCatalog(root);f.api.state.query='mailbox';f.api.state.area='Toys';
   const toysResults=f.api.filteredItems().map(x=>x.file||x.name);
   f.api.state.area='Single User';assert.deepEqual(f.api.filteredItems().map(x=>x.file||x.name),toysResults);assert(toysResults.length>0);
+});
+
+ test('script cards place Details before START and preserve the IR shared window',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    if(html.includes('<summary>Details</summary>'))assert.ok(html.indexOf('<summary>Details</summary>')<html.indexOf('class="guided-start"'),item.file);
+    if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
+    else assert.ok(html.includes('Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>'),item.file);
+    assert.ok(!html.includes('First sign-in requests read/change permissions'),item.file);
+  }
 });
