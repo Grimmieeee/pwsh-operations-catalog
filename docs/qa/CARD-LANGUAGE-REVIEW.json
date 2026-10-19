@@ -1,0 +1,3055 @@
+{
+  "scope": "Card language and launch guidance; no executable-source changes or new runtime verification.",
+  "counts": {
+    "entries": 338,
+    "scripts": 80,
+    "commands": 235,
+    "references": 12,
+    "pending": 11,
+    "changedCards": 338
+  },
+  "entries": [
+    {
+      "name": "Get User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d92e28c8ebb577a06730dfb82d6ec48e34cdd121331b3ae2344005648427493c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Password Expiry",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a242493bd0ecd4b76d599ba96f7dc6f56e1a60b971601fcbe6b2e66d069d3c77",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "cf4352aace25083d96c38c7ca62b4387126ccb5f1194416801e6ef1c54bc5781",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8bb90befd7aa77b4e0b94e1e5bf957781a6fc80d915a3e53876e7f01ab6be369",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Enable User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f9abca1d33e264e86c21dc80605556869370ecff7703e211bd33a6cebde56a37",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Force Password Change Next Logon",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "186b9ca17c1b95c7920f2c60e184b03e9bcbe7fc5bbb2253780e7e37ab343903",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reset Password",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "582fdcd3cb2033836abd7a6b10b7087e0afc7256a9d00e25b4c7ce22e1786dcd",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Unlock User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9b7592655cf1021c9bd9e0fba065e8c400a3572ae701d7a6ea099707a35e42fb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find User By Exact Display Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d7eb915328f445b6b005f1ed3c9c46510bb29f87a7b43f99f0bcb6344572df33",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Get User By Upn",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ae7ba35863e4cc7b2187d5d1dbb895e1b2d96086c7d58e65ee58592f838b4671",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Assigned Licenses",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "fca787b5d27dd580ff777ae78f01b89f2d7a6978bd9528ed0d69e62cb087994a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Manager",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b92ba994297560c10bfa8e944dd2d9af1582ca880871b2d4e4ccc6f385ec4f6f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Password Age",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d72e06c164e845eab77a336d82fec883a242381e93901fb0d8bcf030eee3fc2f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Sync Source",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "23a02ef2b1fabb1de31b53e5143aac4eb0616a3dc00c6d7a52e7873bc65f9ff9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete Cloud User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3330aec9a71d0216d5e01c3545f65849822d4127e514695321e8ef51f8a90edf",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable Sign-In",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5cd2484343b31e27c130923792b1e3399a0ffab2de4097d459bdf09f1ec66553",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Enable Sign-In",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "26a204f1f23829002dc58f5cbdfcd061a638ebd4d9dbb23537b6f3e11d28c0c5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "IR: Revoke Sessions",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "926811f46a02c18cc78da669828dde73982cd00e7edcb5b3be3cec2497cf2202",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Cached Tickets",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "39ca55fa96b18633fa27a871ec7f90c5bcf152b10f2f99b5f4bae1b543b4beff",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Purge Cached Tickets",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "16da8769fb8fd9e5f31d86769c0438e092142444f530777b73b2e859c6ffda5a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Local Administrators",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1deafddcb8d1e65d3067f6b08f1bad7afacae801293b4c4b0af16885d851a4d7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Local Users",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "757900294611858240dc152a56981954bf720af2a64ee13a39adf1d7245df975",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add User To Administrators",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "08373d2225b44365bd28805455a3028048ca5f0f2cc147a44069f6c37d75294e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove User From Administrators",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "50fa5d1b00857ad3d0fffcef66c12088ca14bf89632b2b7e74bb5225a16247ed",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show MFA Methods",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "023679d35e684c6833a711cc28ca3c00acd6e2ac6db2ad6648dcac126233b2bc",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Microsoft Authenticator Methods",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "fd04e9bca33a06b81eb86cb14db4182b4207cfafada920f0e7950d55605d5a7c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Phone Methods",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4229ef5f0ed7c9f169f73b2985472493e8c81d497dfbfdacf49e04f7a5464f7f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Registration Status For One User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f8776ea69a613348362f13b876cbf2d9cfed488b80d48c886129e73d524eb330",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Specific Authenticator Method",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "af395817183e8bf07d613ed9ea0ec7b0e2170f6bad4f437481b09825d0f6a510",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Specific Phone Method",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7f830e6ae058a00a36a3591e8b8ccfc489be6816a9eafe291f7ddafb7ee7f9ed",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Delegated Grants For One User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "446fb9bb2cb26d51109bd4f834baed9c4abf7e099e758ab3ecb04a9ca82a82b5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Potentially High-Impact Delegated Scopes",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7f317e0877e5f59ac27112215972abb6ae9734af4eb1bdaab3742c30a5105f31",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Specific Delegated Grant",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8707506fdf90e5793f42ec01d9bbcc5904fa2c2643148686990c36ab500c1882",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Distribution Group Members",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a1b45f4fc4bc2a9f5aa1bd3bc166afa1cfa4ca214abd204a1aa77e4700a9a9ad",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Distribution Group Owners",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ff8b8c3d1fc3e340824f95186246e256fa22dff51518a9fe6a539045071252be",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add Distribution Group Member",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "032ef262c078ead7d8c2ef418f22523279fcb1916fbe53d0dd24668aa309faa3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Distribution Group Member",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0c6d933393a528501271ae5e3c338bd9679ae41dab38de5a5c150f0281c44c29",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show AD Group Members",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "35e05f236fd885d0fae5af7c9fe2b87345a553f40075067c969f9a3477a3346c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show AD User Group Memberships",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "cc8c10139f884044a6ae24e21162a70342792bc5680c516cb5d41cbd7543869e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add User to AD Group",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "495ceaf610b1558c698ad966b03d92db624a90f5061214cb8d9ea2ff2525c109",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove User from AD Group",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "134c29b55a7d451efe3efaa66f687506d5c43a9efabf3b10d6a8fee56faf7b09",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find Exact Group",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "05d8a1a034b2f486fc66d54152cfa5778434a722d9566dcef1780f2895b80325",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Entra Group Direct Members",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "193671d24463c809d31071a747c035ce17ee197070df729a5cb442c4ef481370",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Entra Group Owners",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0385e5b4d48ef708dddf42ad0d27008245d228b4fae9396bef029cbb4ed3d18c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Entra User Group Memberships",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c1cc2602f37ffecd3ac8ea4eff85397962c1efbfd66a86092c8b6e523b71b491",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add User to Entra Group",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5858671ddc18ad56bd069021680dd6a580fd059bb9de8335ebebc8b1684f8d08",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove User from Entra Group",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1642999247ce9991796dcdcd06df60365525bd0878d29b52891872d6ec7e78b7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Protocol State",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "781458eefd7111b1e15abd3a99e167aad8530788cbf224f65cad71b7bc30a402",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Summary",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "140cd192ffcdbdecbdadb67f86a6a5d2bb00d3963dbca5cf64f23140731d5d39",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable Mailbox SMTP AUTH",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "63a7e8f2361e129620ad59ffd961bf99598970435dcb888a3eca9ee114ae1767",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable Mailbox POP / IMAP",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9946a362d8d8e95d880aa22e330db5418ccf6d03b7a637413f4f5038f4b76a58",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Full Access Delegates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d2c0d7335a6a3ee689eea5cc0b4bb7331fa81834169979edcf43a5607527d62a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Forwarding",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b6509ddf091b4a5d0a1fdbb769652ae6c2367c47dd160f2561951de530eab5fc",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Send As Delegates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "308f2e60836fd32da13ae400e0b1d0e1c672b280958e4835a50592b399980e2e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Mailbox Send on Behalf Delegates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a78f4516379efb1cd462d375e6e8b1f4ba1ff83ed580de59f2586fe59695203f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Mailbox Full Access Delegate",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "57fc537abb2c375a46b7e658fd0d1669e2966d82875d47f19494a11809af36c8",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Mailbox Forwarding",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "dff908c0b833a8b6b563c9d91a06566bb544a20f4701e26db3cebe37cae3994d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Mailbox Send As Delegate",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5d2a9954c18594c1623556874124a7a8905ae5b5151956fdc4e4c9d878d4caac",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Mailbox Send on Behalf Delegate",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e9224a4ed83e7b13378701fb5dfce0a2e30ca62528d76b0f192ce09ad6a73775",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Specific Transport Rule",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "676c09821b592777a8dcaf317d58cf0a7972d440a6cd6a7e5f217ad8a03fea4e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Transport Rules",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "99d1aef0cba4e8f31819d7abd3c6877ce724bdef5afa4c686ba2faa087b1de93",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Inbox Rules - Including Hidden",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5c57a3ec84f346124d78839b4f4260e88a3c396422a038b7ef56f1147ddb792d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Suspicious Inbox Rules",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4740c57aa13fd0c8d946554d474b7c6c30d073f1a821127d737b788da5ce17b9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove All Inbox Rules",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7cdf94999b7915a409921097e9d3557b46784c6f9b6df2d7b630469ce84c0d78",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Specific Inbox Rule",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "819d24c9d986228ef5b625da923562c715bdef54568ae8e29294f043a51951ec",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show BitLocker Recovery Protectors",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "76146e94947a13626b969afcb02eb570eedc3657ebb54bce8e2b0ab0e018b089",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show BitLocker Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d8b503a9d3d2fc26bf24f367d3c35854d90e6ef06877439c8a698c121cfd20f1",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Resume Protection",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f2bf571c266be54346ff73833fd6bbc9cfb9138d29948b676059f59b9de7bb7d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Suspend For One Reboot",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "42cc24c8778b62466d6cc91c0f2a36af105a64e5f220e6df73b6f6a78080ce13",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find By Thumbprint",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ef264560c7c3aace91e482676aa46bb9fd675b53bad510968422451bb005e085",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Expiring Certificates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9bdbd061bf5afa23f6f48854a5166c617c88bf749d99c35f286fc03adda6eb87",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Verify Script Signature",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "45047f92891a37f5df94792db8171e4da719d5145cbbe14266f9fd0a56ae4232",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Create Self-Signed App-Auth Certificate",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f4276d005ceca5779ae0b895b7253ef2b19228aaad4b9ca0b07c028129a52b7d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Export Pfx",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "652e7264a9a749753581dd431ea31cd0957dff956d8977e3e20f3135f892c76c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Export Public Cer",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c3b0b58ac20e3b14ee896468c471f9e2f67c2fe2dd73232bba9edb8eb7b06c0d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Sign Script",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e3d857742ab516d9a7ae0a6bf5935f503cd6bc4ec8f55362905180a009b2b9fe",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find Exchange Service Principal By Appid",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "2eb5726f617436a67722d028cb9805b51c6dcf1e5e2cd3a20eceef6b80fcb702",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Calculate Sha256 Hash",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7804fd49a28e62cbbd01ff2eb2c56057d060c9e750e753bac8af2d6c783e20e5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Compliance Search Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "dde836c6cd468b31aa4d8c3a010c601cd7b2fb28db1f8b15f812c76d8023aca1",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Create Phishing Search By Subject",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e880682e9470878af1218b8d5b3d7d9e343f7e7821132ddf298f0e8bfd18bb02",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Hard-Delete Search Results",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c08a36a2ef74eda4c07add2a7e220a8ff328a74641d2159971ed5c1e8bc8359f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Start Compliance Search",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "60f380faf59616a70e1c97f83464dd6768ed80f86b61b41cb93f8e1592929904",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Run Quick Scan",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4ae6896ddda736ff45898a23550a54e4eb7f4127ef68398fe7016ff8ccdc1ada",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Update Signatures",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3ece2b34e2e4a97cfd6f08c1297ac518283975dda5abbb2d20eae0f776220a03",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Audit Inbox Rule Changes",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "52f50934bd09c7702f2af4c85b7f8c39d70e51cd9dd834525ea6fa0bc80c7e41",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mail Delete And Move Audit",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d62214826ee8a88fbf12131a2bcf5ee7ce590c9268cbd17f0c627944d016122e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mail Items Accessed Audit",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1bd4a2c7df9666fc6de8231f7841177e930404a2c9c13905e981b8805e77910b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Parse Mail Audit Subject, Ip, And Destination Folder",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "32df33bc41526b0620c6fa69a023d82117593fb024d14b9d3a6e6294fcc78165",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Search Query Audit",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0ca2d596a96c79f510766aa0715f770df0c027cdb15b18b0031053467ea3a86e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Unified Audit Log For One User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3f39317a7a8d1ca564f90e44c699d1267b5aa64fd4b59c7f1202b2a5a51ace14",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Risk Detections For One User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f8ea1f1d762855951ff916b5817870a85169f796b3136a25ed3e03c0f504f0a9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Risky User State",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "11dfc8f08686295cb813c3b907b4f93f812c405546acfa75938fe99c825e5178",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Recipient",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7596c68373956a269b4820f65dc345b0df8c65136aed62af217cbc0848aaa759",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Sender",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4928657380c497a54a3d4790fc35d972a4d4c0b7e7e4f1d559262fa243614989",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Message Trace Events",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8c97b679b647ebd8f4aab4eb2bbbf8ff091986f21518a374bdf4aab3d7e4b3d0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Message Trace Search Jobs",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e31ad630c331684633120f8ee064fe30ac35887d1ebdd236a58346585c1732fe",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Who Received Mail From Suspicious Sender",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "51f44076834efbe160db46dd3a069998f30eca4a0593e38f2789bfec29c8cf5a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Failed Sign-Ins",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e548dc75c7107839a0ad86571c83f2673a6c27668d64da11fb0e58c170ab2fb3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Last 10 Entra Sign-Ins",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "6832e5a77aa3409dcf71be70316eec7753c85dbc72ff796123fa33045bfd0dbb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Entra Sign-ins - Last 48 Hours",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "453722184d7f6be24540e916507117404cd04d3d247c01196fcb02e82e0e417a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Legacy / Other-client Sign-ins",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8e4600e2644c10e9cdb4d4ef0b5de9afb45f0c800281372d5432b5cbebdac302",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Successful Sign-Ins",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "eb5018f3abe5198c06ff7c94bcbb28a06230dde601b6f04b45e3a219b1343def",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Recent Application Errors",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "da95f892d0eeac82d907dfc45e6a98569d99fe906e3439a8ebf92f24c0da1902",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Recent System Errors",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "30bb429f605a18b4d3db238c0906b94d2e048843e899d23220f5b6ddcb6a6ed0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Resolve Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ced189a74d59074330b5690698b266d2b6ba732ca4c1854df0a0094dbb2d67de",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Configured Dns Servers",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ed4d50c47522a795b935432c889c08b7c95c8a1c1a582975aa835e7e59902a68",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Flush Resolver Cache",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d7b5990535b4052b68712d82054895a4ec538bb5df9428637720c2141c38caeb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Windows Firewall Profiles",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "2623d2b2a4ce7edfc2220f368d958dfd2fe64a578d00882fbef7d010c73b6ac4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Windows Firewall Rules by Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b6af3d57bba3c1e24dad7745ec1bf4fdf1da7fa2c868d5a3f5583afa39931c74",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Ping Host",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b93a505259715201d761d244f261ddfc7ab33b7d1d9e21183deeedcc471d77f9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Active Adapters",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c877d0b1314ace82d18c642dc59cbacd22194bdc209040f2087eea4121eb82c5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Arp Neighbor Cache",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "210ea342c67a2254dd49dc9a505b1ea8356aee73efa4bf3d881208b423495e6a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Established Tcp Connections",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7bfa7f9ed7c252aae44d633a6149646be38127839aa0adb7c4e039f5c98a9b73",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Ip Configuration",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "6c2a401ba42d3418705ea56546337ce893136babe6e96bf113f2e4b3dfcb1c68",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Listening Tcp Ports",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "02d89e5fbd851c222f2af68392200a6083bc00bc90f96206938c93472f3bf6e3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Routing Table",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "cfdd30183ec340fefd5c49acc5ecfa0a9cec2fb6d58ceaf82ad3e2d7fabd1662",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Test Tcp Port",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9523836c47665b1f4264f3c298fff8deb12684a6bd7b3ee2ba6628fe58fa031b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Trace Route",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "fe4286654be0dc0debba59c29419ad94172a55416ea14a48d31389b3267b3bea",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Release And Renew Dhcp",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7cfa3063168b71bbc2491876d023fffa158395d154d52e912301d9d225e917bf",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reset Tcp/Ip Stack",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "20e93953b9878e435abbcd0c0e51c7f518dbd5ee95f4e57e76fe9fe292f0ed77",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reset Winsock",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "6fe4db2f92861379743ae5b2b133a0e78fe3aedc7ea179824dde9c59a0acfeb4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Restart Adapter",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3564f4ad595e829437bdfa1a95ec286acec4f0a70c6eadfc0e1a7217fb85cd16",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Configured Windows Vpn Connections",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4f4d56776cb7cd9ac352ca178a72824bf3d3b355e56d3bef19a80762b771c807",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Wi-Fi Connection",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Saved Wi-Fi Profiles",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "fceb64cc0bef7c987aecc68f6104ca5e30f8279f6c25aa86b86e2443c4548ade",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Problem Devices",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "77de46298fbb32adb81f7738e7c316d1971d52681058fc64a4e0fb6e89506413",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Free Space",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "543e86aecb5a9cab799f880f0b1fc3cabe0fbfabcd0536281c8478ff297ef692",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Physical Disk Health",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b2875ffc8fce7866adf4dfd3f2ea9a54cb8cb446324596684cd0dd45eac1c5eb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find Files Modified In Last 24 Hours",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "24b314a500eebb3269a14c36d41a1e3afa7e3e208988a079b2e04ff243ff79d8",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Computer Model And Serial Number",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0c81556c95a9715eca2010040d478cbd3586327c8d7189b4bd1123523559b461",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Hostname And Current User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0faffa63ac37de564e36fec57dc515fad7a8158584ab25ce39269b52d6623135",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Last Boot And Uptime",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "60669c3cfdf25e27685d41c6583ad8a547dc3422f2f32534b5093317943de776",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Os And Build",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d35222e1d8cab64b916689ab4ec10cd41f3752cb5f8809012a812d8e17386da4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Top Cpu Consumers",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "070d3f1f50d08eb21aef6427ef8fe55154ef5610552deddbe84de3ca5766dbe6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Top Memory Consumers",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "453bc12da7f30548663b55af0503fc58101bda0927ce84f648654699f6ac7cd0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Stop Process By Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0fcb7b32122bbf2fdde6cc5335e7eb4f24d2c9cc8160a7cd66741a78ce3a8995",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Whether Remote Desktop Is Enabled",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9353fe1c7df3f2dd0d1478c170d9baedf2c3ccb80cc21fb70e6032039dc04208",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Chkdsk Online Scan",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f1c434a53a61416ddba25e912d3ee02224fc96e99c209d17cbb510ac84f8db5f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Dism Component Store Scan",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9592d2d53d32de23e05098353649e78343270666592e1d4bb82d65124f7ee00d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Dism Restore Health",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "6823edd3f231554ee5408ba942eadc4b2ced7696a18ef90ec4e8add73ac7766a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "System File Checker",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "6de4670620be3bb5599d162664d524757e3e6d69354ec8feff2e43481558f3ef",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reboot Computer",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7275a6dc7fd41985637bec01c3745ec674691da333420cc2087b68bcffc224b7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Service Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3e821924ed45a1bfddb430210a7c8adb689545b36ff16339f2322a282d4de0de",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Restart Service",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "349b20c8417f31fa23f272d9bd252e22f159a397b1788340a49105844291e90d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Set Startup Type",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9325287af960fc7e3100d90f3c2a1db0a01e357c1dd8ab1d5f11cd23e922516e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Locally Logged-On Users",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show SMB Sessions",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d4b9058840fdcf44600baf49e45944ea6e633cbd31ab68fa124102971c3b79d2",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show SMB Shares",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "931a487e2e6578b869c0d11dbd78fc10dc1d7846ac1fe23c5c9377be77acb996",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Scheduled Task",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "65aba81a88aa074913580c7523026032de741cf242e4fff53b8b0f5f1ceea43c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Scheduled Task Last Run Result",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a4358529f02574a98de34239a2678ef3cac64a82b722298125d7cccee0734a48",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Check Common Pending Reboot Flags",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5a7b3db2e2931a62089392e2be71348e93fad3eb7c392e9dc10c21637aba4eff",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Installed Hotfixes",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "65ce9b577010d15172adf58c8281a6af3cf79debfa0635460b18e8a5d0598eb7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Recent Windows Update History",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "02b1126bfc427bbb07accaa2903075261bda6b23d562fb93b4d5d7f05c4304b2",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Quarterly Account Cleanup",
+      "file": "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+      "type": "Workflow",
+      "path": "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+      "sha256": "19b092079ccc61f4de9cbc6510b3a57f290f520abb08ab2b5db4089457fcc570",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Stale Entra Sign-in Review",
+      "file": "GET-STALE-SIGNIN-REVIEW.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
+      "sha256": "2c962dbc7d1ab56ef3a9968636e679c99ca482680ea7af4bdf859fb8a3c063ac",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disabled User Group Debt",
+      "file": "get-inactive-group-debt.ps1",
+      "type": "Tool",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disabled User Mailbox Access Review",
+      "file": "get-inactive-mailbox-debt.ps1",
+      "type": "Tool",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "User Onboarding",
+      "file": "invoke-user-onboard.ps1",
+      "type": "Workflow",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "User Offboarding",
+      "file": "invoke-user-offboard.ps1",
+      "type": "Workflow",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable User Accounts",
+      "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1",
+      "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete User Accounts",
+      "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1",
+      "sha256": "0fbb42bb1db268b3f6e4b74a21af7008528b5acc2e684cccdf3696122fcb6bd2",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Assign User Licenses",
+      "file": "INVOKE-ASSIGN-LICENSES.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
+      "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove User Licenses",
+      "file": "INVOKE-REMOVE-LICENSES.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
+      "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Resolve Names to UPNs",
+      "file": "RESOLVE-NAMES-TO-UPNS.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1",
+      "sha256": "9f0560d35c0941ff0723d400129f20b345673e0d9b6e4c751de48529ca6f232c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Account Status Review",
+      "file": "GET-ACCOUNT-STATUS.ps1",
+      "type": "Tool",
+      "path": "published-source/identity/GET-ACCOUNT-STATUS.ps1",
+      "sha256": "4a6e6aed3b612556706c107b667911ef79a4c6a47074d7054ab907cc3ca3dbfc",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Find Accounts by Name or Email",
+      "file": "find-accounts-by-name-clean.ps1",
+      "type": "Tool",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Distribution Group Members",
+      "file": "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "type": "Script",
+      "path": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "sha256": "e4046dacdf671ce73b213bc570b74cc238b9ea60d1bf5ba5a3c5f50dc65f07a9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Group Members",
+      "file": "GET-GROUP-MEMBERS.ps1",
+      "type": "Script",
+      "path": "published-source/identity/GET-GROUP-MEMBERS.ps1",
+      "sha256": "ba29a8c30f170c87b08a453fdfe73f6108bddfc69033f17a6270875ecc684dbd",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "User Group Memberships",
+      "file": "GET-USER-GROUPS.ps1",
+      "type": "Tool",
+      "path": "published-source/identity/GET-USER-GROUPS.ps1",
+      "sha256": "a423d1f10e9bcfee903c646d95cf5dbf2142eda04d014e0521a29114c1b55469",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove User Group Memberships",
+      "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1",
+      "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Create Dynamic License Group",
+      "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+      "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Group Owners Review",
+      "file": "GET-TENANT-GROUP-OWNERS.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
+      "sha256": "6bd4a410ed549559c63b9c33d100051dbd6bfbc0b574dc61a396917af62cfa6f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mailbox Permissions Review",
+      "file": "GET-MAILBOX-PERMISSIONS.ps1",
+      "type": "Tool",
+      "path": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1",
+      "sha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mailbox Security Snapshot",
+      "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "type": "Tool",
+      "path": "published-source/mailbox/GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "sha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mailbox Forwarding Check",
+      "file": "GET-MAILBOX-FORWARDING.ps1",
+      "type": "Script",
+      "path": "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1",
+      "sha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Shared Mailbox Membership Review",
+      "file": "shared-mailbox-members.ps1",
+      "type": "Tool",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Distribution Group Inventory",
+      "file": "distro-group-members.ps1",
+      "type": "Tool",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Enforce Litigation Hold",
+      "file": "INVOKE-LITIGATION-HOLD.ps1",
+      "type": "Automation",
+      "path": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1",
+      "sha256": "c0d3bb2f0bf4857f45d6f6d52afb80b8171f4fc700d2e2999ec716b21df2cccf",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Restore Moved Email",
+      "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "type": "Workflow",
+      "path": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "sha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "IR: Risk Assessment",
+      "file": "ir-risk-assessment.ps1",
+      "type": "Workflow",
+      "path": "published-source/incident-response/ir-risk-assessment.ps1",
+      "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "IR: Contain and Eradicate",
+      "file": "ir-contain-eradicate.ps1",
+      "type": "Workflow",
+      "path": "published-source/incident-response/ir-contain-eradicate.ps1",
+      "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Graph Session and User Check",
+      "file": "get-graph-session-user-check.ps1",
+      "type": "Script",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "File Activity / Exfiltration Review",
+      "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "sha256": "5f80f8a9a3af0a250963e48deeebb6ce278b392140a7fc82a01da396c3e3bf73",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Suspicious IP Tenant Trace",
+      "file": "IR-GET-IP-TRACE.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
+      "sha256": "30ea759b710a12b3650b48191b2fe3dc123ebbed4c7798d4c6a934d0702689d3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Email Search",
+      "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "sha256": "dbb53c592a523fdf2a2c94dd166296afe6a9f482ec4372c2d3f551af56ea797e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Threat Intel IP Check",
+      "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "sha256": "a9126fcc537a71b9471d49ecfe5f714ede93bc5e1306b3eee9fe9ea7f014859a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Incident Timeline Builder",
+      "file": "IR-GET-TIMELINE-BUILDER.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
+      "sha256": "fb6e000a57b548f59fbc4f9317df3dac0ab61756c97223784d7b2e54a6d70c40",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "JWT Token Decode",
+      "file": "IR-GET-TOKEN-DECODE.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
+      "sha256": "179e01c20af4ad72faabd69c2567ccff9fa1d40a5ca3acf497544ba6d4849372",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Token Replay / AiTM Review",
+      "file": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "type": "Tool",
+      "path": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Security Hardening",
+      "file": "tenant-security-hardening-guided.ps1",
+      "type": "Workflow",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Shared Mailbox Sign-in Audit",
+      "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+      "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "App Registration Audit",
+      "file": "GET-APP-REGISTRATION-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1",
+      "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Conditional Access Gaps",
+      "file": "GET-CONDITIONAL-ACCESS-GAPS.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
+      "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Device Code Exposure Audit",
+      "file": "GET-DEVICE-CODE-EXPOSURE.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1",
+      "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Guest App Consent Audit",
+      "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1",
+      "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "MFA Security Audit",
+      "file": "GET-MFA-SECURITY-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1",
+      "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Secure Score Snapshot",
+      "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1",
+      "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Service Principal Owners Audit",
+      "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Sign-in Anomalies Audit",
+      "file": "GET-SIGNIN-ANOMALIES.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1",
+      "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Transport Rules Audit",
+      "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
+      "sha256": "38ca6289d157f33a57a60b316a3a0f1de15de8f07310b71eb977d1efbe86609f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Join Computer to Domain",
+      "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+      "type": "Script",
+      "path": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
+      "sha256": "5e089c864ee6a869b050ccdfd7b6666b683eae845d188f8d1e3ba3c27d4d8f12",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Deploy Printer",
+      "file": "DEPLOY-TCPIP-PRINTER.ps1",
+      "type": "Script",
+      "path": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
+      "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Back Up User Profile",
+      "file": "BACKUP-USER-PROFILE.ps1",
+      "type": "Script",
+      "path": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
+      "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "PowerShell Readiness",
+      "file": "TEST-POWERSHELL-READINESS.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
+      "sha256": "b38f3eb165ac360eef390990dd6d2b4ee89f41916d3da54822f625b7d2c77612",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Repository Inventory",
+      "file": "GET-FOLDER-INVENTORY.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
+      "sha256": "fce9d9db96b42fe9b352b867afdd1a370c400f4d6f67c1a58dd7d50aefde9ec6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "M365 Module Setup",
+      "file": "INSTALL-M365-MODULES.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/INSTALL-M365-MODULES.ps1",
+      "sha256": "a143a317bb85b76c39a5768b7b5cad4096d4acce4d5509465c01be820b37ff24",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Sensitive Data Check",
+      "file": "TEST-SENSITIVE-DATA.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
+      "sha256": "2c28a71fe9195f3e032c0386ed10c3ee5d7fcdd2385839b8b74ee95dc8ba20d0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "M365 Session Reset",
+      "file": "RESET-M365-SESSION.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/RESET-M365-SESSION.ps1",
+      "sha256": "203ba913f1d8d1d72544ecf950c0b346e4e92244a9e6b75730095339c858a16a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Combine CSV Reports",
+      "file": "csv-combine.ps1",
+      "type": "Script",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Send Bulk Graph Email",
+      "file": "csv-graph-send-bulk-emails.ps1",
+      "type": "Automation",
+      "path": null,
+      "sha256": null,
+      "status": "Source pending",
+      "languageReviewed": true
+    },
+    {
+      "name": "Windows App Updates",
+      "file": "UPDATE-WINDOWS-APPS.ps1",
+      "type": "Tool",
+      "path": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
+      "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Pre-delete User Check",
+      "file": "GET-USER-PREDELETE-CHECK.ps1",
+      "type": "Tool",
+      "path": "published-source/identity/GET-USER-PREDELETE-CHECK.ps1",
+      "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Enforce Per-user MFA",
+      "file": "INVOKE-ENFORCE-PER-USER-MFA.ps1",
+      "type": "Automation",
+      "path": "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1",
+      "sha256": "52c6ce8dc1af2323b9dcc6c831cdd211b555ae44280417181599290212fcf7bd",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Admin Role Audit",
+      "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1",
+      "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "OAuth Consent Audit",
+      "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1",
+      "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Guest User Hygiene Audit",
+      "file": "GET-GUEST-USER-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-GUEST-USER-AUDIT.ps1",
+      "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Licensing Audit",
+      "file": "GET-TENANT-LICENSING-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1",
+      "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Inbox Rules Audit",
+      "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "sha256": "85a1c9164ba0d0c0661b6c3e7ecb197f4ac7ab2865d3436de3a5f48f76844880",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "User Security Snapshot",
+      "file": "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "type": "Tool",
+      "path": "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1",
+      "sha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Security Snapshot",
+      "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-SECURITY-SNAPSHOT.ps1",
+      "sha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Room & Resource Access Review",
+      "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+      "type": "Tool",
+      "path": "published-source/mailbox/GET-ROOM-RESOURCE-ACCESS.ps1",
+      "sha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Mailbox Access Audit",
+      "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+      "sha256": "79cf872432e023f6eb0036e355a71fab156ec79489e84344be7eee0b82e68c15",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disabled User Mailbox Access Cleanup",
+      "file": "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
+      "type": "Workflow",
+      "path": "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
+      "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Tenant Drift Review",
+      "file": "GET-TENANT-DRIFT-REVIEW.ps1",
+      "type": "Tool",
+      "path": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
+      "sha256": "668267cbadfc88d212a8708c77f0a5454343a0e4222e2e1cfaff2a44e84afb54",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Windows Storage Cleanup Review",
+      "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "type": "Script",
+      "path": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "sha256": "c795ac5d107db35eed303dff231cedbee577824c6fe8b93285ad5895a97cd44b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reset Cloud User Password",
+      "file": "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+      "type": "Script",
+      "path": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+      "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "IR: Recovery and Validation",
+      "file": "ir-recover-validate.ps1",
+      "type": "Workflow",
+      "path": "published-source/incident-response/ir-recover-validate.ps1",
+      "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add Calendar Permission",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "faf4c11a82aa87aeee141ab75ab2e7b8684562e9934c4be2937e71b99773a8f7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Remove Calendar Permission",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "78c1c047ba772895b229718af3a973862ce3edc1cd429e3e4df48f0a68f4ab45",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Calendar Permissions",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "68958a0a5107bcab51070f9945a0ce8833d2567f5ccc3ff6102614399c64b27e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Contacts Permissions",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a26043e3122e43d0048e2f26eb50cdd4663b989a94625de6f07b4e1c4d1eb26d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Add Contacts Permission",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7fc3cb0d48e3e5678b9eac33f82776691c6fd3801b4be90414ab289858cea8b4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Send-To Restrictions / authOrig",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1f1d4091cf0431ab699851173bd144292616bd33122f93bca9a0436ba3475c6a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Account Enabled",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1f8fcb91d316a09e428fc08876187d1e852f688ca35fad76b5ad6b0c62051dc4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show User Principal Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "68852da617f70b23af8dc57e8d736af4344da2813f2c30f8840f2d972ed38784",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Password Last Set",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7a1da3e352222f9657dc31028a941dcf08dce04bfdf3f13d0f67ddba1da90cfd",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Distinguished Name",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a69faba2ea674dd795ea1409b7001ee3d72e852d839f98e898634586793f68f2",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Default Domain Password Policy",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "b0945f677e1276e3dde8ba1976df75a6f989953329c2d005195a3cceaebfb364",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Force Group Policy Update",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c5f217c8c267b763d4ad24ac63d5b153ede0e4c4f20c2a59445f3f604aa0a7b9",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Group Policy Result",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d7b92382af5b1819f0e711d053867bd700114b80e4d1a6f6690c33476cc348ed",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable Hibernation",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8691d5e4b0e2075311d7c7903833c5c58b15cbbc817c9962df4be10b2c213cfd",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Domain Account Details",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "888eca09ede07967a748f20c7e7d8f6f7c5faf876693a29d4892a73b4ef54a73",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Create Local User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1e4fdd6c33d79d60b50c148fcc6a6a81767617ef21414ab5c1c8f90dde24438a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete Local User",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ae627979dc5e2b2f4d64f50f05ae382d38ffbf52f74b3378f6f7cf7ae6609c83",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Set Local User Password",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c36ca210bd1c2052a9c5aaffc4a4cd39d012c5bbbf886e1406fefddcaa5f2862",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Enable Local Account",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f1acb369cdbae8ee39b7383dc83bc1d8a8b6a271083574446d7f7e970692c3af",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Open Local Users and Groups",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4ef5ce7d15a701ee3b3c135e2230078ae2b2c86a4010727bd833c7130a50db10",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Logged-On Users",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disable Network Adapter",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "12ad05057273be4f93e896670e30f15a134b49147b14e6cd575b76289d101ee0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Restart Network Adapter",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "16bb420233a80b2df8a1bdea0608de4727650ef7528fb2b014124df053ac9c10",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Isolate Device - Disable Enabled Adapters",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9000dc4d0fd4d445eaa8168b417002340b35bd584b5aca3ac8f9406bbc2059ff",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Resync Windows Time",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "ee008245b50e459c01c3932c104b83cec769d7de87b49f299291049617a973b8",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Open Windows Update",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3a96357adc48367447097115c25077b1841781c848d38238e68786fe89133765",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Wi-Fi Interface",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete Wi-Fi Profile",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0bc8e0799812b596db01c594faecfc910ea6c58ad8f4be1fe9d861f85306bb44",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "DISM Analyze Component Store",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a4e78d4685305209e85ac8a08f768d99a979a521354d33d9bd0591ea979e4332",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "DISM Component Store Cleanup",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f2123c774a8981bbc13cdce188fa059873a8bda620f03defaa134685262f7961",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Launch Disk Cleanup",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "fa3e114bbccb26b5421c6b5033ebf4a315d674d956326787032fc382d6854749",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Defragment Volume",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e81487a9e9bfeb1a72703f9fcd1af7ce6ce1ab844859b315020b25a503547ba7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Available WinGet Updates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f05314e778cf75960668942d8bfd85a223d0a70057151e99008a1513661b02d1",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Update All Eligible WinGet Packages",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a95ffba8e131a7639646d8c683af97f28da9404b11b288e5c586e48e26ab41ba",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show WinGet Package Information",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3b31b13d60506459330cdfc707f30294db35824dfa8fae545271c48b9bc8d0ab",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Update Specific WinGet Package",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "be5085dbf74e9533a4fed04c23fb1105461c40da4b77035a6f4b6db838e2dd65",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Update WinGet Sources",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "63f98a90056a4c373bced766eb812d7932406ab0d564fb858b6b7fcde96f664f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show PowerShell Version",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "08baf561a7cbdbe6647a651824c113900167870d74f4b9a45720ba67a861f257",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Execution Policies",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "02dce87650beca1327cdd0ee18ed7dcf694b83f2e1a9448bccfa9ba19b4cfe6d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Set Current User Execution Policy - RemoteSigned",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d3791228baf56b3f90d5514d85f61c5899ef1c5c1f250d48a43338ee273d014b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Installed Microsoft Graph Module Version",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7884242b6d5a2140d7fd2747894627bfdfe8d57fe0ce4dec4b497b36dcebd5ea",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Installed ExchangeOnlineManagement Version",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "086842a280494a3e905c2fdefe64b9ce9da5f1e90ae8334b928779c9e9f365e6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Graph Context",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f40eb7388625aa98b48a77077b2e9b3ae856f02786e5b8ddec228a64de3e8d2d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Exchange Connection",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "5ca1904591160df64c92de558e9a4d63ffc564253d2630280497cf20604fca37",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disconnect Microsoft Graph",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "1e87232fbd57d0e1b99fe409ea23e8de6b4752d12f21632748a77995d0d725f0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Disconnect Exchange Online",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "0398157b4ffb953c264bb3c3ea5f39a9f4db0a9ff446345f4dce0de00255c455",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Activity From One IP",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "da8381a1b3ed3d07432edcc5fc5c2308af0e021e7f5f81f155c14e4c24013955",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Look Up ISP And Location",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "444c712585c96a045d5d5a580e2679b71aed1de13188b2ea269229e8621a1ab1",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "AD Group Memberships",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "f259211fd6c666b5a33a07f45a1b4fea51badb3686ae0e01ad76b8d5340da870",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "AD Group Members",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "df834f9173b6d60c54d109c765e80007706f0b6a6d33ba72ae69a34541626b49",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Connect Exchange Online",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "67325c2ff7a6a2022eef69c3e0868668696c332fca4c58ead8c7d0a6e8c2165a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Install Exchange Online Module",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "57a8b4d9ae4c6a729cba5bf6899a5e8835718c9f19ba7699cab66273178bc951",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Install Microsoft Graph Module",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9b1c29918edc4e9dc7fe84a1943fc8709078d3cb77d919302eba19f1a59c50c0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Hidden Inbox Rules",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "d3c0d6ab1b91610d73ff9a2784f6a4f40c087142a3a18452fef68bc71afdb6ff",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Delete All Inbox Rules",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "4cd98e4953f803e570dc003af414d480bd0af00b0c6c8c9580b3800d0874f718",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "IP Configuration (ipconfig)",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "59cb534e02a16fd3d21d1ba5d34ee15e665d7a955751171249563d1192aa33e4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Flush DNS",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "998e9c67094be03bcf1b090bc5a57af2929d659f93037377ca4006e5713f1cb3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "DNS Lookup",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a8d4495fd893e57e4cdbfe9eefff97fb774c6018c90471697dbe419ff1821a5f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Continuous Ping",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "67fbd345d5ac74252094c10caca547ef2a81f14e14ca1a7751c36238612d34bb",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Traceroute",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c8556fa1297471f727579f37bc8e84585bdf12b80aa14f35965d01b58e1729e3",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Path Ping",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "741aedea63b4fdf9ac19698a66d2a068669fabafc463160b131e3df6b4fc22aa",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Routing Table (route print)",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "26c042be25515e3a897319631fe25f0644fca2d1f7bfa8d636b1408af71aab0a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "ARP Cache",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "be7661c5c1522142e4425aaec0fced2d6832ec33edfa602b6022cdabb34ebb33",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "TCP Connections (netstat)",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "300915695831de23126d59367ca0a058efaa065a8b708845cd655eae5a8bf273",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Port 443 Connections",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "9d76cc600c0d7679a8aa599cf2dc3402a4e99b75b3a5cf37d1b3fcf00f7e48c5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Local Account Details",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7eec651d65d63711e9148c5101ca49610889478b2da06d5eff98e660e8067e43",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Windows Time Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "360c64cfce4f7b70cef8d56e4e5df69f451795f0af8b41a1438b39b720e7c2da",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Windows Time Source",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "75cb21a981f282469e4bfde15e1d83f2132c3eb9d4243de2fa387e500beb0e05",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "WinHTTP Proxy",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "07dff11d60284e43dbbcc89a6eaa40e7d50643159d39ee43a041e967cd08a3b4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Domain Trust Check",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "77256bac8500da38f53f8a54c4436426066dfe628ff8a6742c476bd36639b72b",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Printer Check",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e63546124965a25bd5cfe8d1c79b4659550d1887985eebfb7556fafe756324ab",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Open Storage Settings",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e5c5800584bebeb49f2fe43c6682cb09a2425de26b4f7e3949e078ac16cf83e5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Clear Delivery Optimization Cache",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "3b676f149232c918b1c76bf6b212ef1070ceb49fbb2a1911e5fd1b8425752e32",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Identity and Privileges",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "e4f2104522f16071520d60701d463279b947b777bee9290c7c3e8bc89e7691b8",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Entra Join Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "bf8c9cea699e55691e9cd95860f76c833eafc1ab8a7cb3001a3cc260e98d3c24",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Mapped Drives",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "c38ed655c219843015b8bcb703b31fcc9b985956784dc38dfe4690ae9cf2524d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Network Profile",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a88b1af102bff4a6fce0e67d3098cd54af02d463bcc8bce1cea3e060460c630d",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Defender Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "7b26c5548c71a5652e1fb0958216c7c3f570bfdb15f5871e405a7f3a6140793a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Print Jobs",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "391d8b17bad0198f9df88ea41b8440d0b7a349c5a6f36354bc25a9c1a3941847",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Spooler Status",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "a10f6676675754aef1c797440921e2a825a4633b5c666c5b1fbb0fb528855989",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Connect Microsoft Graph",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "91829e8f6f910408ff89489d2e5c982a5092010492b72c7dbdd33cc6674baffc",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Show Code-Signing Certificates",
+      "file": null,
+      "type": "Quick Command",
+      "path": null,
+      "sha256": "8c7b78e8d329e1c38267e1223057d402e64df1d9195f8bbc753a8a29a4c35332",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Connection Patterns",
+      "file": "connection-patterns.md",
+      "type": "Documentation",
+      "path": "tools/connection-patterns.md",
+      "sha256": "f186db47a6da071169e2ea0c1213a527f2f9eebbc78a4da2d1121db9fa387bc6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Operating Standards",
+      "file": "OPERATING-STANDARDS.md",
+      "type": "Documentation",
+      "path": "OPERATING-STANDARDS.md",
+      "sha256": "ade5ec3a333026e8811ea749d5c6df9f2cec95e77a044cf4c05f87d35ac26229",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "FIELD // KIT Build Standard",
+      "file": "field-kit-build-standard.md",
+      "type": "Documentation",
+      "path": "tools/field-kit-build-standard.md",
+      "sha256": "c3802c7cb2cf32b7285c4b16c5cdb976f4b2e062709b58db06de324f3a01d5d0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Lessons Learned",
+      "file": "lessons-learned.md",
+      "type": "Documentation",
+      "path": "tools/lessons-learned.md",
+      "sha256": "f6bc6f62b00d32ef007589d931d6ee05e63944738a5df3d57a01344193c7e00f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "PowerShell Standards",
+      "file": "powershell-standards.md",
+      "type": "Documentation",
+      "path": "tools/powershell-standards.md",
+      "sha256": "78146e39af76b07c6fb945013d0971b45cd646c7bc0007bd678324aedd399785",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Publishing Checklist",
+      "file": "publishing-checklist.md",
+      "type": "Documentation",
+      "path": "tools/publishing-checklist.md",
+      "sha256": "2ee855b823d32f2e6b3c667eedfa019234df0a6a515bbd4ed271510b6ac596d6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Script Review Checklist",
+      "file": "script-review-checklist.md",
+      "type": "Documentation",
+      "path": "tools/script-review-checklist.md",
+      "sha256": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Reusable Skills",
+      "file": "skills.md",
+      "type": "Documentation",
+      "path": "tools/skills.md",
+      "sha256": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Script Template Guide",
+      "file": "script-template-guide.md",
+      "type": "Documentation",
+      "path": "tools/script-template-guide.md",
+      "sha256": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "NATO Phonetic Alphabet",
+      "file": "nato-phonetic-alphabet.md",
+      "type": "Documentation",
+      "path": "tools/nato-phonetic-alphabet.md",
+      "sha256": "c9dec1a66a3530972991663504e4c54e895e87093a43081404edfdf3da7288c7",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Update Project Artifact",
+      "file": "git-handoff.ps1",
+      "type": "Tool",
+      "path": "tools/git-handoff.ps1",
+      "sha256": "6783255cf5418e432da3677406f281460ab6538a1628f47b5c9ea3b558de70a6",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Project Handoff",
+      "file": "PROJECT-HANDOFF.md",
+      "type": "Documentation",
+      "path": "tools/PROJECT-HANDOFF.md",
+      "sha256": "9811d368d81a47ba1abb8e34df7fb9dbc1ae1deefa632f460ad2db49491cbd51",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Git Repository Tools",
+      "file": "git-repo.ps1",
+      "type": "Tool",
+      "path": "tools/git-repo.ps1",
+      "sha256": "4ec1ebc30c976a410c5dc616f0671727c34278b777b323e671189553f0b1aa7a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "GitHub Security Check",
+      "file": "git-security.ps1",
+      "type": "Tool",
+      "path": "tools/git-security.ps1",
+      "sha256": "3cba00d77603ffe94401fbda18953579b90492012be0446b08c6de806d5fe1e8",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Script Setup",
+      "file": "set-execution.ps1",
+      "type": "Tool",
+      "path": "tools/set-execution.ps1",
+      "sha256": "fe6e46d409518b856bf52ee985d4298e41376676d2e984af8092c0ef316bf09f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Git Tools Quick Start",
+      "file": "git-tools.md",
+      "type": "Documentation",
+      "path": "tools/git-tools.md",
+      "sha256": "5aa1d822aa27dd41c43bab2554b87d925b1e1eb5fd41fc22f44c12d4cbfae21a",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Attractor",
+      "file": "attractor.ps1",
+      "type": "Tool",
+      "path": "toys/attractor.ps1",
+      "sha256": "2adc04c32a4d20820577933c463d07642c8be18f9de17c739a617ffcc55c68a5",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Rain",
+      "file": "rain.ps1",
+      "type": "Tool",
+      "path": "toys/rain.ps1",
+      "sha256": "46d67ed7200597e89de91d76dbbceedb63f202852972070f18db6ea13f56a53c",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Static",
+      "file": "static.ps1",
+      "type": "Tool",
+      "path": "toys/static.ps1",
+      "sha256": "4e4db77166ad4f60ceb3e50b5aa3685719d9d84805ec93dbd729005074d86e1f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Digital Signature",
+      "file": "SIGN-FOLDER-SCRIPTS.ps1",
+      "type": "Tool",
+      "path": "tools/SIGN-FOLDER-SCRIPTS.ps1",
+      "sha256": "b8a7e1411654e6f9aa358cf6def278b5df4d1f4ccef8c4d18549609a32f50b27",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Terminal Readiness",
+      "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+      "type": "Tool",
+      "path": "tools/GET-TERMINAL-READINESS-CHECK.ps1",
+      "sha256": "e9d4d5f1974f2af40c01c23e4e4cf925f232baba8bd7f9b063f0c78110958c01",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "File Inventory",
+      "file": "INVOKE-FILE-INVENTORY.ps1",
+      "type": "Tool",
+      "path": "tools/INVOKE-FILE-INVENTORY.ps1",
+      "sha256": "c50633fd4f92e32f2401bf25c056d88dab2afee2296de1abf3976a32ef2e73d4",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Folder Map",
+      "file": "INVOKE-MAP-KIT.ps1",
+      "type": "Tool",
+      "path": "tools/INVOKE-MAP-KIT.ps1",
+      "sha256": "22046718b32efd8f0d8d5e27bbccb78836ee52262159aa215796e6df5ff7e418",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Session Reset",
+      "file": "INVOKE-SESSION-RESET.ps1",
+      "type": "Tool",
+      "path": "tools/INVOKE-SESSION-RESET.ps1",
+      "sha256": "0f183c52bd1ca24dcccba318913eac70eb89848cbe32ef42fe631c6270744446",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Basic",
+      "file": "SET-THEME-BASIC.ps1",
+      "type": "Tool",
+      "path": "toys/SET-THEME-BASIC.ps1",
+      "sha256": "a3959c764ee2c0b4e155f89b5cf28faed7db74f54f2b277e2152b453c392827f",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Cobalt",
+      "file": "SET-THEME-COBALT.ps1",
+      "type": "Tool",
+      "path": "toys/SET-THEME-COBALT.ps1",
+      "sha256": "01b14b7f32a176f6f107ea73c1421a40d967dd634957f2fb849e94bedab92347",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Sea Glass",
+      "file": "SET-THEME-SEAGLASS.ps1",
+      "type": "Tool",
+      "path": "toys/SET-THEME-SEAGLASS.ps1",
+      "sha256": "4b67f87297ce80e2f4f34d4bade7f784005ee4788686046968022e075df167c0",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Silicon Valley",
+      "file": "SET-THEME-SILICON-VALLEY.ps1",
+      "type": "Tool",
+      "path": "toys/SET-THEME-SILICON-VALLEY.ps1",
+      "sha256": "f8de1e1fc05f78dbabfdaf6d156ebbdd13049cc2ff7067e177e3c80bb63050aa",
+      "status": "Ready",
+      "languageReviewed": true
+    },
+    {
+      "name": "Signing Certificates",
+      "file": "MANAGE-CERT-SIGNATURES.ps1",
+      "type": "Tool",
+      "path": "tools/MANAGE-CERT-SIGNATURES.ps1",
+      "sha256": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
+      "status": "Ready",
+      "languageReviewed": true
+    }
+  ]
+}
