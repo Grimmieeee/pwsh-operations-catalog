@@ -38,3 +38,5 @@ Preview visual changes in chat before publishing. Run site and required security
 - Both wordmarks use 70% opacity; both slash sets use weight 200 to match adjacent light text. Preserve the remaining brand layout.
 - USE FOR and INPUT stay visible. CHECKS, GUARDS, REQUIRES, and useful DETAILS use separate closed disclosures with matching compact uppercase mint typography and native disclosure arrows. Keep warnings and START visible.
 - All secondary card disclosures use the same type size, weight, spacing and focus treatment. Omit empty sections and preserve exact-script facts.
+
+- Owner refinement: FIELD and BURN use 85% white; KIT, SID and both slash sets retain 70% white. Keep type weights and layout unchanged.
