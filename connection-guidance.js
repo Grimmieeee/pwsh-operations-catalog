@@ -1,7 +1,7 @@
 // Source-reviewed connection paths. Re-review when the published source hash changes.
 window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
   "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
-    "sha256": "19b092079ccc61f4de9cbc6510b3a57f290f520abb08ab2b5db4089457fcc570",
+    "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -100,7 +100,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1": {
-    "sha256": "6bd4a410ed549559c63b9c33d100051dbd6bfbc0b574dc61a396917af62cfa6f",
+    "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -108,14 +108,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1": {
-    "sha256": "a88851cc5a2e69684d26f90c8f028626daf986c57ca5938e14b02ea29ceed052",
+    "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/mailbox/GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
-    "sha256": "ab87c10d108dff487da2d4cf762e0081ab88f6e501686db6042e301317363790",
+    "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
     "mode": "auto",
     "services": [
       "EXO"
@@ -196,7 +196,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1": {
-    "sha256": "8425b8ecc345535a4ac8be7049fcc076d88352b6120c16d2866832c0974c487f",
+    "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -321,7 +321,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/identity/GET-USER-PREDELETE-CHECK.ps1": {
-    "sha256": "99fd7d84bb4d12d7237ebaed5799e44d68dd594a791b40c9533ce1e81e9590b4",
+    "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -372,14 +372,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1": {
-    "sha256": "f09c4716f0a801c7c6fd02328975142ed86e3c4307ea11f540b9c22b7195e6ab",
+    "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-TENANT-SECURITY-SNAPSHOT.ps1": {
-    "sha256": "fc9963bdd53137c6dcee21f8b9c3f5f20bdb3fb64c110e67a148bd0651eb256c",
+    "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
     "mode": "auto",
     "services": [
       "GRAPH"

@@ -1,3 +1,4 @@
+﻿# .VERSION 1.0.0
 #Requires -Version 5.1
 
 <#
@@ -40,34 +41,111 @@ try {
 catch {
 }
 
+# Embedded into standalone report scripts by tools/reporting/build.ps1.
+$script:FKReportLines = New-Object 'Collections.Generic.List[string]'
+$script:FKReportWarnings = @()
+$script:FKReportStartedUtc = [DateTime]::UtcNow.ToString('o')
+
+function Write-FKReportLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][object[]]$Object,
+        [object]$Separator=' ',[switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor,[ConsoleColor]$BackgroundColor
+    )
+    $line=($Object | ForEach-Object {[string]$_}) -join [string]$Separator
+    $script:FKReportLines.Add($line)
+    Write-Host @PSBoundParameters
+}
+
+function ConvertTo-FKDesktopReport {
+    param([string]$Title,[string[]]$Lines,[string]$StartedUtc,[string]$ScopeNote)
+    $encode={param($Text) [Net.WebUtility]::HtmlEncode([string]$Text)}
+    $blocks=New-Object 'Collections.Generic.List[string]'
+    $section=New-Object 'Collections.Generic.List[string]'
+    foreach($line in @($Lines)) {
+        if($line -match '^\s*[A-Z][A-Z /+&:()-]{2,}\s*$' -and $line.Trim().Length -lt 90) {
+            if($section.Count) {$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>');$section.Clear()}
+            $blocks.Add('<h2>'+(& $encode $line.Trim())+'</h2>')
+        } else {$section.Add([string]$line)}
+    }
+    if($section.Count){$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>')}
+    $safeTitle=& $encode $Title
+    return @"
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>$safeTitle</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f5f7f7;color:#172524;margin:0}main{max-width:1000px;margin:32px auto;padding:32px;background:white;border-top:4px solid #168779}header{border-bottom:1px solid #d1ddda;padding-bottom:20px}small{letter-spacing:.12em;color:#52716b}h1{font-size:28px;margin:12px 0}h2{font-size:15px;letter-spacing:.1em;color:#166b60;margin:28px 0 10px;border-bottom:1px solid #d1ddda;padding-bottom:8px}pre{font:14px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}aside{background:#eef5f2;padding:12px 16px;margin:20px 0}footer{font-size:12px;color:#52716b;margin-top:32px}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}pre{font-size:11px}}</style></head>
+<body><main><header><small>F I E L D // K I T</small><h1>$safeTitle</h1><p>Collection started (UTC): $(& $encode $StartedUtc)</p></header><aside>$(& $encode $ScopeNote) Findings, unavailable checks, and displayed limits below are preserved from this run. Absence of a finding does not establish complete coverage.</aside>$($blocks.ToArray() -join "`n")<footer>Read-only report. No remote content or executable scripts. Review findings in context before taking action.</footer></main></body></html>
+"@
+}
+
+function Save-FKDesktopReport {
+    param([string]$Folder,[string]$Title,[string]$Content)
+    if([string]::IsNullOrWhiteSpace($Folder) -or -not [IO.Directory]::Exists($Folder)){throw 'Report folder does not exist.'}
+    $stem=($Title -replace '[^a-zA-Z0-9._-]','-').Trim('-')
+    if(-not $stem){$stem='field-kit-report'}
+    $stem=$stem.Substring(0,[Math]::Min(80,$stem.Length))
+    $name=$stem+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)+'.html'
+    $path=Join-Path $Folder $name
+    $bytes=(New-Object Text.UTF8Encoding($false)).GetBytes($Content)
+    $stream=New-Object IO.FileStream($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+    $actual=[IO.File]::ReadAllBytes($path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try {
+        if([Convert]::ToBase64String($sha.ComputeHash($bytes)) -cne [Convert]::ToBase64String($sha.ComputeHash($actual))){throw 'Report readback did not match the collected content.'}
+    }finally{$sha.Dispose()}
+    return $path
+}
+
+function Offer-FKDesktopReport {
+    param([string]$Title,[string]$ScopeNote='Scope matches the console output; only displayed rows are included.',[string]$DesktopFolder=[Environment]::GetFolderPath([Environment+SpecialFolder]::DesktopDirectory))
+    if(-not $script:FKReportLines.Count){return}
+    try {
+        if((Read-Host 'Save report to Desktop? [Y/N]').Trim() -notmatch '^(?i)y$'){return}
+        $folder=$DesktopFolder
+        $reportLines=@($script:FKReportLines.ToArray())
+        if(@($script:FKReportWarnings).Count){$reportLines+=@('','SERVICE WARNINGS');$reportLines+=@($script:FKReportWarnings|ForEach-Object {[string]$_})}
+        $content=ConvertTo-FKDesktopReport -Title $Title -Lines $reportLines -StartedUtc $script:FKReportStartedUtc -ScopeNote $ScopeNote
+        try {$saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content}
+        catch {
+            Write-Host '[WARN] Desktop report could not be saved. Choose another existing folder or cancel.' -ForegroundColor Yellow
+            $folder=(Read-Host 'Report folder (ENTER cancels)').Trim().Trim('"')
+            if(-not $folder){return}
+            $saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content
+        }
+        Write-Host ('[OK] Report saved and readback checked: '+$saved)
+    }catch{Write-Host ('[WARN] Report export failed: '+$_.Exception.Message) -ForegroundColor Yellow}
+}
+
 function Write-OK {
     param([string]$Message)
-    Write-Host "[OK]   $Message"
+    Write-FKReportLine "[OK]   $Message"
 }
 
 function Write-Info {
     param([string]$Message)
-    Write-Host "[INFO] $Message"
+    Write-FKReportLine "[INFO] $Message"
 }
 
 function Write-Warn {
     param([string]$Message)
-    Write-Host "[WARN] $Message"
+    Write-FKReportLine "[WARN] $Message"
 }
 
 function Write-Fail {
     param([string]$Message)
-    Write-Host "[FAIL] $Message"
+    Write-FKReportLine "[FAIL] $Message"
 }
 
 function Write-FieldKitFooter {
-    Write-Host ""
-    Write-Host "F I E L D  //  K I T"
-    Write-Host ""
+    Write-FKReportLine ""
+    Write-FKReportLine "F I E L D  //  K I T"
+    Write-FKReportLine ""
 }
 
 function Pause-End {
-    Write-Host ""
+    Write-FKReportLine ""
     Read-Host "Press Enter to EXIT" | Out-Null
 }
 
@@ -234,7 +312,7 @@ function Resolve-ExchangeOwner {
     try {
         $recipient = Get-Recipient `
             -Identity $Identity `
-            -ErrorAction Stop
+            -ErrorAction Stop -WarningVariable +script:FKReportWarnings
 
         return [pscustomobject]@{
             id                = ""
@@ -244,11 +322,28 @@ function Resolve-ExchangeOwner {
         }
     }
     catch {
-        return [pscustomobject]@{
-            id                = ""
-            displayName       = [string]$Identity
-            userPrincipalName = ""
-            mail              = ""
+        # ManagedBy may identify a non-mail-enabled Exchange role group.
+        if ($_.CategoryInfo.Category -ne 'ObjectNotFound' -and $_.Exception.Message -notmatch "object .*couldn't be found") {
+            Write-Warning "Owner lookup failed; owner details are incomplete."
+        }
+        try {
+            $group = Get-Group -Identity $Identity -ErrorAction Stop -WarningVariable +script:FKReportWarnings
+            if (-not $group) { throw "Owner group not returned." }
+            return [pscustomobject]@{
+                id = ""
+                displayName = [string]$group.DisplayName
+                userPrincipalName = ""
+                mail = ""
+            }
+        }
+        catch {
+            Write-Warning "Owner could not be resolved; displaying the original identity."
+            return [pscustomobject]@{
+                id = ""
+                displayName = [string]$Identity
+                userPrincipalName = ""
+                mail = ""
+            }
         }
     }
 }
@@ -266,12 +361,12 @@ function Get-ExchangeGroupOwners {
     if (@($Group.GroupTypes) -contains "Unified") {
         $exchangeGroup = Get-UnifiedGroup `
             -Identity $Group.Mail `
-            -ErrorAction Stop
+            -ErrorAction Stop -WarningVariable +script:FKReportWarnings
     }
     else {
         $exchangeGroup = Get-DistributionGroup `
             -Identity $Group.Mail `
-            -ErrorAction Stop
+            -ErrorAction Stop -WarningVariable +script:FKReportWarnings
     }
 
     $owners = @()
@@ -399,7 +494,7 @@ function Get-AllCurrentGroups {
                 "groupTypes",
                 "resourceProvisioningOptions"
             ) `
-            -ErrorAction Stop
+            -ErrorAction Stop -WarningVariable +script:FKReportWarnings
     )
 }
 
@@ -501,7 +596,7 @@ try {
     )
 
     foreach ($line in $headerLines) {
-        Write-Host $line
+        Write-FKReportLine $line
         $outputLines.Add($line)
     }
 
@@ -512,13 +607,13 @@ try {
     )
 
     foreach ($groupType in $groupTypes) {
-        Write-Host $groupType
+        Write-FKReportLine $groupType
         $outputLines.Add($groupType)
 
         $divider = "-" * $groupType.Length
-        Write-Host $divider
+        Write-FKReportLine $divider
         $outputLines.Add($divider)
-        Write-Host ""
+        Write-FKReportLine ""
         $outputLines.Add("")
 
         $typeResults = @(
@@ -528,80 +623,53 @@ try {
         )
 
         foreach ($result in $typeResults) {
-            Write-Host $result.GroupName
+            Write-FKReportLine $result.GroupName
             $outputLines.Add($result.GroupName)
 
             if ($result.LookupFailed) {
                 $line = "- LOOKUP FAILED"
-                Write-Host $line
+                Write-FKReportLine $line
                 $outputLines.Add($line)
             }
             elseif ($result.Owners.Count -gt 0) {
                 foreach ($owner in $result.Owners) {
                     $line = "- {0}" -f $owner
-                    Write-Host $line
+                    Write-FKReportLine $line
                     $outputLines.Add($line)
                 }
             }
             elseif ($result.RawOwnerCount -gt 0) {
                 $line = "- No human owner found"
-                Write-Host $line
+                Write-FKReportLine $line
                 $outputLines.Add($line)
             }
             else {
                 $line = "- No owner assigned"
-                Write-Host $line
+                Write-FKReportLine $line
                 $outputLines.Add($line)
             }
 
-            Write-Host ""
+            Write-FKReportLine ""
             $outputLines.Add("")
         }
     }
 
-    try {
-        Write-Host ""
-        $exportChoice = Read-Host "Export results to Desktop? (Y/N)"
-
-        if ($exportChoice -match '^[Yy]') {
-            $desktop = [Environment]::GetFolderPath('Desktop')
-
-            if ([string]::IsNullOrWhiteSpace($desktop)) {
-                throw "Desktop path could not be determined."
-            }
-
-            $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
-            $exportPath = Join-Path `
-                -Path $desktop `
-                -ChildPath ("Tenant-Group-Owners_{0}.txt" -f $timestamp)
-
-            $outputLines |
-                Out-File `
-                    -FilePath $exportPath `
-                    -Encoding UTF8 `
-                    -Force
-
-            Write-Host ""
-            Write-Host ("Exported: {0}" -f $exportPath)
-        }
-    }
-    catch {
-        Write-Host ""
-        Write-Warn ("Export prompt unavailable: {0}" -f (Get-ShortError $_))
-    }
+    # Desktop HTML report is offered once in finally.
 }
 catch {
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Fail (Get-ShortError $_)
 }
 finally {
-    Write-Host ""
+    Offer-FKDesktopReport -Title 'GET-TENANT-GROUP-OWNERS'
+
+    Write-FKReportLine ""
 
     try {
         Read-Host "Press ENTER to EXIT" | Out-Null
     }
     catch {
-        Write-Host "Closing in 15 seconds..."
+        Write-FKReportLine "Closing in 15 seconds..."
         Start-Sleep -Seconds 15
     }
 }

@@ -2585,7 +2585,7 @@
 
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
-            <p><span class="verification-seal" aria-hidden="true">V</span> Operator tested for this exact script version. Download integrity is checked against its published checksum. A changed script needs new operator testing before retaining the mark.</p>
+            <p><span class="verification-seal" aria-hidden="true">V</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled; release evidence records its scope and limits. A changed script needs testing and acceptance before retaining the mark.</p>
           </section>
 
           <section class="about-library">

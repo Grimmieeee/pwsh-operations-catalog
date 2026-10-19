@@ -45,3 +45,7 @@ All 80 script cards now include source-matched result, next-step, and blocked/ca
 The release gate in tools/card-contract.mjs runs through the existing tools/check-site.mjs CI command. It rejects a missing or stale review for any published source or quick command; published scripts also need an explicit purpose, concrete inputs/default context, requirements, reviewed launch mode and full completion guidance. Missing launch-helper data blocks the release. Script source hashes and exact quick-command example text bind the review.
 
 Validation now includes 36 site tests. Negative cases remove inputs, requirements, launch modes, completion text or review records, change source/command bindings, or remove launch-helper data; each fails the gate. All published source hashes and executable quick-command bytes remain unchanged. This adds no runtime verification or VERIFIED marks.
+
+## Accepted report release follow-up
+
+The owner subsequently accepted the eight read-only report candidates for the existing VERIFIED mark. These eight source revisions add the tested optional Desktop HTML reports and include previously tested read-only fixes. Their card and connection hashes were refreshed, and report directions were added. See READONLY-REPORTS-1.0.0-VERIFICATION.md for the accepted scope and source attribution. Earlier statements that the language-only pass changed no scripts describe that earlier pass.

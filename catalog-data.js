@@ -3160,7 +3160,16 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 157,
     "summary": "NO",
-    "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant."
+    "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Stale Entra Sign-in Review",
@@ -3618,7 +3627,16 @@ window.CATALOG_DATA = [
     "_order": 177,
     "objective": "Shows owners for tenant groups across major Entra and Exchange group types and keeps unresolved ownership visible.",
     "publishedPath": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
-    "summary": "YES"
+    "summary": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Mailbox Permissions Review",
@@ -3645,7 +3663,16 @@ window.CATALOG_DATA = [
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Mailbox Security Snapshot",
@@ -3668,7 +3695,16 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 180,
     "summary": "NO",
-    "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation."
+    "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Mailbox Forwarding Check",
@@ -4031,7 +4067,16 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 198,
     "summary": "NO",
-    "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack."
+    "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Tenant Security Hardening",
@@ -4799,7 +4844,16 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 233,
     "summary": "NO",
-    "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed."
+    "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Enforce Per-user MFA",
@@ -5391,7 +5445,16 @@ window.CATALOG_DATA = [
     "_order": 269,
     "summary": "NO",
     "objective": "Shows the security state around one user before you decide what needs deeper review.",
-    "csv": "NO"
+    "csv": "NO",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Tenant Security Snapshot",
@@ -5415,7 +5478,16 @@ window.CATALOG_DATA = [
     "_order": 270,
     "summary": "NO",
     "objective": "Gives a fast tenant security overview before you open the deeper focused audits.",
-    "csv": "NO"
+    "csv": "NO",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch and HTML export",
+      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Room & Resource Access Review",

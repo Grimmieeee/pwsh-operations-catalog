@@ -1,3 +1,4 @@
+﻿# .VERSION 1.0.0
 <#
 GET USER SECURITY SNAPSHOT
 
@@ -19,21 +20,98 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
-function Write-Info { param($m) Write-Host "[INFO] $m" }
-function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
+# Embedded into standalone report scripts by tools/reporting/build.ps1.
+$script:FKReportLines = New-Object 'Collections.Generic.List[string]'
+$script:FKReportWarnings = @()
+$script:FKReportStartedUtc = [DateTime]::UtcNow.ToString('o')
+
+function Write-FKReportLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][object[]]$Object,
+        [object]$Separator=' ',[switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor,[ConsoleColor]$BackgroundColor
+    )
+    $line=($Object | ForEach-Object {[string]$_}) -join [string]$Separator
+    $script:FKReportLines.Add($line)
+    Write-Host @PSBoundParameters
+}
+
+function ConvertTo-FKDesktopReport {
+    param([string]$Title,[string[]]$Lines,[string]$StartedUtc,[string]$ScopeNote)
+    $encode={param($Text) [Net.WebUtility]::HtmlEncode([string]$Text)}
+    $blocks=New-Object 'Collections.Generic.List[string]'
+    $section=New-Object 'Collections.Generic.List[string]'
+    foreach($line in @($Lines)) {
+        if($line -match '^\s*[A-Z][A-Z /+&:()-]{2,}\s*$' -and $line.Trim().Length -lt 90) {
+            if($section.Count) {$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>');$section.Clear()}
+            $blocks.Add('<h2>'+(& $encode $line.Trim())+'</h2>')
+        } else {$section.Add([string]$line)}
+    }
+    if($section.Count){$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>')}
+    $safeTitle=& $encode $Title
+    return @"
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>$safeTitle</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f5f7f7;color:#172524;margin:0}main{max-width:1000px;margin:32px auto;padding:32px;background:white;border-top:4px solid #168779}header{border-bottom:1px solid #d1ddda;padding-bottom:20px}small{letter-spacing:.12em;color:#52716b}h1{font-size:28px;margin:12px 0}h2{font-size:15px;letter-spacing:.1em;color:#166b60;margin:28px 0 10px;border-bottom:1px solid #d1ddda;padding-bottom:8px}pre{font:14px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}aside{background:#eef5f2;padding:12px 16px;margin:20px 0}footer{font-size:12px;color:#52716b;margin-top:32px}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}pre{font-size:11px}}</style></head>
+<body><main><header><small>F I E L D // K I T</small><h1>$safeTitle</h1><p>Collection started (UTC): $(& $encode $StartedUtc)</p></header><aside>$(& $encode $ScopeNote) Findings, unavailable checks, and displayed limits below are preserved from this run. Absence of a finding does not establish complete coverage.</aside>$($blocks.ToArray() -join "`n")<footer>Read-only report. No remote content or executable scripts. Review findings in context before taking action.</footer></main></body></html>
+"@
+}
+
+function Save-FKDesktopReport {
+    param([string]$Folder,[string]$Title,[string]$Content)
+    if([string]::IsNullOrWhiteSpace($Folder) -or -not [IO.Directory]::Exists($Folder)){throw 'Report folder does not exist.'}
+    $stem=($Title -replace '[^a-zA-Z0-9._-]','-').Trim('-')
+    if(-not $stem){$stem='field-kit-report'}
+    $stem=$stem.Substring(0,[Math]::Min(80,$stem.Length))
+    $name=$stem+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)+'.html'
+    $path=Join-Path $Folder $name
+    $bytes=(New-Object Text.UTF8Encoding($false)).GetBytes($Content)
+    $stream=New-Object IO.FileStream($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+    $actual=[IO.File]::ReadAllBytes($path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try {
+        if([Convert]::ToBase64String($sha.ComputeHash($bytes)) -cne [Convert]::ToBase64String($sha.ComputeHash($actual))){throw 'Report readback did not match the collected content.'}
+    }finally{$sha.Dispose()}
+    return $path
+}
+
+function Offer-FKDesktopReport {
+    param([string]$Title,[string]$ScopeNote='Scope matches the console output; only displayed rows are included.',[string]$DesktopFolder=[Environment]::GetFolderPath([Environment+SpecialFolder]::DesktopDirectory))
+    if(-not $script:FKReportLines.Count){return}
+    try {
+        if((Read-Host 'Save report to Desktop? [Y/N]').Trim() -notmatch '^(?i)y$'){return}
+        $folder=$DesktopFolder
+        $reportLines=@($script:FKReportLines.ToArray())
+        if(@($script:FKReportWarnings).Count){$reportLines+=@('','SERVICE WARNINGS');$reportLines+=@($script:FKReportWarnings|ForEach-Object {[string]$_})}
+        $content=ConvertTo-FKDesktopReport -Title $Title -Lines $reportLines -StartedUtc $script:FKReportStartedUtc -ScopeNote $ScopeNote
+        try {$saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content}
+        catch {
+            Write-Host '[WARN] Desktop report could not be saved. Choose another existing folder or cancel.' -ForegroundColor Yellow
+            $folder=(Read-Host 'Report folder (ENTER cancels)').Trim().Trim('"')
+            if(-not $folder){return}
+            $saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content
+        }
+        Write-Host ('[OK] Report saved and readback checked: '+$saved)
+    }catch{Write-Host ('[WARN] Report export failed: '+$_.Exception.Message) -ForegroundColor Yellow}
+}
+
+function Write-OK   { param($m) Write-FKReportLine "[OK]   $m" -ForegroundColor Green }
+function Write-Info { param($m) Write-FKReportLine "[INFO] $m" }
+function Write-Warn { param($m) Write-FKReportLine "[WARN] $m" -ForegroundColor Yellow }
+function Write-Fail { param($m) Write-FKReportLine "[FAIL] $m" -ForegroundColor Red }
 
 function Write-FieldKitFooter {
-    Write-Host ""
-    Write-Host "F I E L D  //  K I T"
-    Write-Host ""
+    Write-FKReportLine ""
+    Write-FKReportLine "F I E L D  //  K I T"
+    Write-FKReportLine ""
 }
 
 function Pause-End {
     Write-FieldKitFooter
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine ""
+    Write-FKReportLine "Press Enter to EXIT" -NoNewline
 
     try {
         do {
@@ -43,10 +121,10 @@ function Pause-End {
         }
         until ($key.VirtualKeyCode -eq 13)
 
-        Write-Host ""
+        Write-FKReportLine ""
     }
     catch {
-        Write-Host ""
+        Write-FKReportLine ""
         Read-Host "Press Enter to EXIT" | Out-Null
     }
 }
@@ -54,8 +132,8 @@ function Pause-End {
 function Write-Section {
     param([string]$Title)
 
-    Write-Host ""
-    Write-Host $Title
+    Write-FKReportLine ""
+    Write-FKReportLine $Title
 }
 
 function Get-ShortError {
@@ -209,7 +287,7 @@ function Connect-GraphAuto {
         }
     }
 
-    Write-Host "Graph: Connecting..."
+    Write-FKReportLine "Graph: Connecting..."
 
     $command = Get-Command Connect-MgGraph -ErrorAction Stop
     $parameters = @{
@@ -414,9 +492,9 @@ function Get-SignInResult {
 }
 
 try {
-    Write-Host "USER SNAPSHOT"
-    Write-Host "READ-ONLY. NO CHANGES MADE."
-    Write-Host ""
+    Write-FKReportLine "USER SNAPSHOT"
+    Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
+    Write-FKReportLine ""
 
     if ([string]::IsNullOrWhiteSpace($UPN)) {
         $UPN = (Read-Host "UPN").Trim()
@@ -441,19 +519,19 @@ try {
     $user = Get-GraphUser -UPN $UPN
     $dataGaps = @()
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "USER"
-    Write-Host (
+    Write-FKReportLine (
         "User: {0} <{1}>" -f
         $user.displayName,
         $user.userPrincipalName
     )
-    Write-Host ("Tenant: {0}" -f $tenant.DisplayName)
-    Write-Host (
+    Write-FKReportLine ("Tenant: {0}" -f $tenant.DisplayName)
+    Write-FKReportLine (
         "Status: {0}" -f
         $(if ($user.accountEnabled) { "Enabled" } else { "Disabled" })
     )
-    Write-Host (
+    Write-FKReportLine (
         "Source: {0}" -f
         $(if ($user.onPremisesSyncEnabled -eq $true) {
             "Active Directory"
@@ -470,18 +548,18 @@ try {
         $changed = [datetime]$user.lastPasswordChangeDateTime
         $age = [int]((Get-Date) - $changed).TotalDays
 
-        Write-Host (
+        Write-FKReportLine (
             "Password: Changed {0} ({1} days ago)" -f
             $changed.ToLocalTime().ToString("yyyy-MM-dd"),
             $age
         )
     }
     else {
-        Write-Host "Password: Not available"
+        Write-FKReportLine "Password: Not available"
         $dataGaps += "Password last-changed data not available."
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "AUTHENTICATION"
 
     try {
@@ -511,23 +589,23 @@ try {
         )
 
         if ($mfaMethods.Count -gt 0) {
-            Write-Host "Registered MFA: Yes"
-            Write-Host ("Methods: {0}" -f ($mfaMethods -join "; "))
+            Write-FKReportLine "Registered MFA: Yes"
+            Write-FKReportLine ("Methods: {0}" -f ($mfaMethods -join "; "))
         }
         else {
-            Write-Host "Registered MFA: No"
+            Write-FKReportLine "Registered MFA: No"
         }
 
         if ($recoveryMethods.Count -gt 0) {
-            Write-Host ("Recovery: {0}" -f ($recoveryMethods -join "; "))
+            Write-FKReportLine ("Recovery: {0}" -f ($recoveryMethods -join "; "))
         }
     }
     catch {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
         $dataGaps += "Authentication methods: $(Get-ShortError $_)"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "PRIVILEGED ROLES"
 
     try {
@@ -548,19 +626,19 @@ try {
         )
 
         if ($roles.Count -eq 0) {
-            Write-Host "Status: No"
+            Write-FKReportLine "Status: No"
         }
         else {
-            Write-Host "Status: Yes"
-            $roles | ForEach-Object { Write-Host ("Role: {0}" -f $_) }
+            Write-FKReportLine "Status: Yes"
+            $roles | ForEach-Object { Write-FKReportLine ("Role: {0}" -f $_) }
         }
     }
     catch {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
         $dataGaps += "Privileged roles: $(Get-ShortError $_)"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "DIRECT GROUPS"
 
     try {
@@ -570,22 +648,22 @@ try {
         )
 
         if ($groups.Count -eq 0) {
-            Write-Host "Status: No"
+            Write-FKReportLine "Status: No"
         }
         else {
-            Write-Host ("Status: {0} group(s)" -f $groups.Count)
+            Write-FKReportLine ("Status: {0} group(s)" -f $groups.Count)
 
             foreach ($group in ($groups | Sort-Object displayName)) {
-                Write-Host ("Group: {0}" -f $group.displayName)
+                Write-FKReportLine ("Group: {0}" -f $group.displayName)
             }
         }
     }
     catch {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
         $dataGaps += "Direct groups: $(Get-ShortError $_)"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "LICENSES"
 
     try {
@@ -600,22 +678,22 @@ try {
         )
 
         if ($licenses.Count -eq 0) {
-            Write-Host "Status: No"
+            Write-FKReportLine "Status: No"
         }
         else {
-            Write-Host ("Status: {0} assigned" -f $licenses.Count)
+            Write-FKReportLine ("Status: {0} assigned" -f $licenses.Count)
 
             foreach ($license in $licenses) {
-                Write-Host ("License: {0}" -f $license)
+                Write-FKReportLine ("License: {0}" -f $license)
             }
         }
     }
     catch {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
         $dataGaps += "Licenses: $(Get-ShortError $_)"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "SIGN-INS 48H"
 
     try {
@@ -660,7 +738,7 @@ try {
         }
 
         if ($signIns.Count -eq 0) {
-            Write-Host "Status: No"
+            Write-FKReportLine "Status: No"
         }
         else {
             $successCount = @(
@@ -680,7 +758,7 @@ try {
                 [string]$signIns.Count
             }
 
-            Write-Host (
+            Write-FKReportLine (
                 "Status: {0} total | {1} success | {2} failed" -f
                 $totalText,
                 $successCount,
@@ -738,16 +816,16 @@ try {
                 }
 
                 $line = "$line | Result: $($row.Result)"
-                Write-Host $line
+                Write-FKReportLine $line
             }
         }
     }
     catch {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
         $dataGaps += "Sign-ins: $(Get-ShortError $_)"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "DATA GAPS"
 
     $uniqueDataGaps = @(
@@ -756,22 +834,24 @@ try {
     )
 
     if ($uniqueDataGaps.Count -eq 0) {
-        Write-Host "Status: No"
+        Write-FKReportLine "Status: No"
     }
     else {
-        Write-Host "Status: Yes"
+        Write-FKReportLine "Status: Yes"
         $uniqueDataGaps |
-            ForEach-Object { Write-Host ("- {0}" -f $_) }
+            ForEach-Object { Write-FKReportLine ("- {0}" -f $_) }
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-OK "Complete. No changes made."
 
 }
 catch {
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Fail (Get-ShortError $_)
 }
 finally {
+    Offer-FKDesktopReport -Title 'GET-USER-SECURITY-SNAPSHOT'
+
     Pause-End
 }

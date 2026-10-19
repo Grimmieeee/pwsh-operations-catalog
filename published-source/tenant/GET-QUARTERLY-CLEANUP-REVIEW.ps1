@@ -1,3 +1,4 @@
+﻿# .VERSION 1.0.0
 #Requires -Version 5.1
 
 <#
@@ -19,7 +20,7 @@ DEFAULT STALE THRESHOLD
 SAFETY
 Read-only.
 No changes are made.
-No export is created.
+Optional Desktop HTML report; default is No.
 Query failures are reported as data gaps and are never treated as clean results.
 #>
 
@@ -36,27 +37,104 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 }
 
-function Write-FieldKitFooter {
-    Write-Host ""
-    Write-Host "F I E L D  //  K I T"
-    Write-Host ""
+# Embedded into standalone report scripts by tools/reporting/build.ps1.
+$script:FKReportLines = New-Object 'Collections.Generic.List[string]'
+$script:FKReportWarnings = @()
+$script:FKReportStartedUtc = [DateTime]::UtcNow.ToString('o')
+
+function Write-FKReportLine {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0,ValueFromRemainingArguments=$true)][object[]]$Object,
+        [object]$Separator=' ',[switch]$NoNewline,
+        [ConsoleColor]$ForegroundColor,[ConsoleColor]$BackgroundColor
+    )
+    $line=($Object | ForEach-Object {[string]$_}) -join [string]$Separator
+    $script:FKReportLines.Add($line)
+    Write-Host @PSBoundParameters
 }
 
-function Write-OK   { param($m) Write-Host "[OK]   $m" -ForegroundColor Green }
-function Write-Info { param($m) Write-Host "[INFO] $m" }
-function Write-Warn { param($m) Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
+function ConvertTo-FKDesktopReport {
+    param([string]$Title,[string[]]$Lines,[string]$StartedUtc,[string]$ScopeNote)
+    $encode={param($Text) [Net.WebUtility]::HtmlEncode([string]$Text)}
+    $blocks=New-Object 'Collections.Generic.List[string]'
+    $section=New-Object 'Collections.Generic.List[string]'
+    foreach($line in @($Lines)) {
+        if($line -match '^\s*[A-Z][A-Z /+&:()-]{2,}\s*$' -and $line.Trim().Length -lt 90) {
+            if($section.Count) {$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>');$section.Clear()}
+            $blocks.Add('<h2>'+(& $encode $line.Trim())+'</h2>')
+        } else {$section.Add([string]$line)}
+    }
+    if($section.Count){$blocks.Add('<pre>'+(& $encode ($section.ToArray() -join "`n"))+'</pre>')}
+    $safeTitle=& $encode $Title
+    return @"
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>$safeTitle</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f5f7f7;color:#172524;margin:0}main{max-width:1000px;margin:32px auto;padding:32px;background:white;border-top:4px solid #168779}header{border-bottom:1px solid #d1ddda;padding-bottom:20px}small{letter-spacing:.12em;color:#52716b}h1{font-size:28px;margin:12px 0}h2{font-size:15px;letter-spacing:.1em;color:#166b60;margin:28px 0 10px;border-bottom:1px solid #d1ddda;padding-bottom:8px}pre{font:14px/1.6 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}aside{background:#eef5f2;padding:12px 16px;margin:20px 0}footer{font-size:12px;color:#52716b;margin-top:32px}@media print{body{background:white}main{margin:0;padding:0;max-width:none}h2{break-after:avoid}pre{font-size:11px}}</style></head>
+<body><main><header><small>F I E L D // K I T</small><h1>$safeTitle</h1><p>Collection started (UTC): $(& $encode $StartedUtc)</p></header><aside>$(& $encode $ScopeNote) Findings, unavailable checks, and displayed limits below are preserved from this run. Absence of a finding does not establish complete coverage.</aside>$($blocks.ToArray() -join "`n")<footer>Read-only report. No remote content or executable scripts. Review findings in context before taking action.</footer></main></body></html>
+"@
+}
+
+function Save-FKDesktopReport {
+    param([string]$Folder,[string]$Title,[string]$Content)
+    if([string]::IsNullOrWhiteSpace($Folder) -or -not [IO.Directory]::Exists($Folder)){throw 'Report folder does not exist.'}
+    $stem=($Title -replace '[^a-zA-Z0-9._-]','-').Trim('-')
+    if(-not $stem){$stem='field-kit-report'}
+    $stem=$stem.Substring(0,[Math]::Min(80,$stem.Length))
+    $name=$stem+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8)+'.html'
+    $path=Join-Path $Folder $name
+    $bytes=(New-Object Text.UTF8Encoding($false)).GetBytes($Content)
+    $stream=New-Object IO.FileStream($path,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$stream.Write($bytes,0,$bytes.Length)}finally{$stream.Dispose()}
+    $actual=[IO.File]::ReadAllBytes($path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try {
+        if([Convert]::ToBase64String($sha.ComputeHash($bytes)) -cne [Convert]::ToBase64String($sha.ComputeHash($actual))){throw 'Report readback did not match the collected content.'}
+    }finally{$sha.Dispose()}
+    return $path
+}
+
+function Offer-FKDesktopReport {
+    param([string]$Title,[string]$ScopeNote='Scope matches the console output; only displayed rows are included.',[string]$DesktopFolder=[Environment]::GetFolderPath([Environment+SpecialFolder]::DesktopDirectory))
+    if(-not $script:FKReportLines.Count){return}
+    try {
+        if((Read-Host 'Save report to Desktop? [Y/N]').Trim() -notmatch '^(?i)y$'){return}
+        $folder=$DesktopFolder
+        $reportLines=@($script:FKReportLines.ToArray())
+        if(@($script:FKReportWarnings).Count){$reportLines+=@('','SERVICE WARNINGS');$reportLines+=@($script:FKReportWarnings|ForEach-Object {[string]$_})}
+        $content=ConvertTo-FKDesktopReport -Title $Title -Lines $reportLines -StartedUtc $script:FKReportStartedUtc -ScopeNote $ScopeNote
+        try {$saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content}
+        catch {
+            Write-Host '[WARN] Desktop report could not be saved. Choose another existing folder or cancel.' -ForegroundColor Yellow
+            $folder=(Read-Host 'Report folder (ENTER cancels)').Trim().Trim('"')
+            if(-not $folder){return}
+            $saved=Save-FKDesktopReport -Folder $folder -Title $Title -Content $content
+        }
+        Write-Host ('[OK] Report saved and readback checked: '+$saved)
+    }catch{Write-Host ('[WARN] Report export failed: '+$_.Exception.Message) -ForegroundColor Yellow}
+}
+
+function Write-FieldKitFooter {
+    Write-FKReportLine ""
+    Write-FKReportLine "F I E L D  //  K I T"
+    Write-FKReportLine ""
+}
+
+function Write-OK   { param($m) Write-FKReportLine "[OK]   $m" -ForegroundColor Green }
+function Write-Info { param($m) Write-FKReportLine "[INFO] $m" }
+function Write-Warn { param($m) Write-FKReportLine "[WARN] $m" -ForegroundColor Yellow }
+function Write-Fail { param($m) Write-FKReportLine "[FAIL] $m" -ForegroundColor Red }
 
 function Write-Section {
     param([string]$Title)
 
-    Write-Host $Title
+    Write-FKReportLine $Title
 }
 
 function Pause-End {
     Write-FieldKitFooter
-    Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine ""
+    Write-FKReportLine "Press Enter to EXIT" -NoNewline
 
     try {
         do {
@@ -66,10 +144,10 @@ function Pause-End {
         }
         until ($key.VirtualKeyCode -eq 13)
 
-        Write-Host ""
+        Write-FKReportLine ""
     }
     catch {
-        Write-Host ""
+        Write-FKReportLine ""
         Read-Host "Press Enter to EXIT" | Out-Null
     }
 }
@@ -283,7 +361,7 @@ function Connect-GraphAuto {
         }
     }
 
-    Write-Host "Graph: Connecting..."
+    Write-FKReportLine "Graph: Connecting..."
 
     $command = Get-Command `
         Connect-MgGraph `
@@ -400,7 +478,7 @@ function Connect-ExchangeAuto {
         return
     }
 
-    Write-Host "Exchange Online: Connecting..."
+    Write-FKReportLine "Exchange Online: Connecting..."
 
     $command = Get-Command `
         Connect-ExchangeOnline `
@@ -506,7 +584,7 @@ function Get-AdminRoleReview {
 
     $roles = @(
         Get-GraphPaged `
-            -Uri "https://graph.microsoft.com/v1.0/directoryRoles?`$select=id,displayName&`$top=999"
+            -Uri "https://graph.microsoft.com/v1.0/directoryRoles?`$select=id,displayName"
     )
 
     foreach ($role in $roles) {
@@ -515,7 +593,7 @@ function Get-AdminRoleReview {
                 Get-GraphPaged `
                     -Uri (
                         "https://graph.microsoft.com/v1.0/directoryRoles/" +
-                        "$($role.id)/members?`$select=displayName,userPrincipalName&`$top=999"
+                        "$($role.id)/members?`$select=displayName,userPrincipalName"
                     )
             )
 
@@ -631,7 +709,7 @@ function Get-FriendlyForwardingDestination {
         try {
             $recipient = Get-Recipient `
                 -Identity $Mailbox.ForwardingAddress `
-                -ErrorAction Stop
+                -ErrorAction Stop -WarningVariable +script:FKReportWarnings
 
             if ($recipient.PrimarySmtpAddress) {
                 return [string]$recipient.PrimarySmtpAddress
@@ -695,7 +773,7 @@ function Get-MailboxForwardingReview {
         $mailboxes = @(
             Get-Mailbox `
                 -ResultSize Unlimited `
-                -ErrorAction Stop
+                -ErrorAction Stop -WarningVariable +script:FKReportWarnings
         )
     }
     catch {
@@ -773,9 +851,9 @@ function Get-MailboxForwardingReview {
 }
 
 try {
-    Write-Host "QUARTERLY CLEANUP REVIEW"
-    Write-Host "READ-ONLY. NO CHANGES MADE."
-    Write-Host ""
+    Write-FKReportLine "QUARTERLY CLEANUP REVIEW"
+    Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
+    Write-FKReportLine ""
 
     if ([string]::IsNullOrWhiteSpace($TenantDomain)) {
         $TenantDomain = (Read-Host "Tenant domain").Trim()
@@ -824,25 +902,25 @@ try {
         )
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "TENANT"
 
     if ($tenant) {
-        Write-Host ("Name: {0}" -f $tenant.DisplayName)
+        Write-FKReportLine ("Name: {0}" -f $tenant.DisplayName)
     }
     else {
-        Write-Host "Name: Not available"
+        Write-FKReportLine "Name: Not available"
     }
 
-    Write-Host ("Domain: {0}" -f $TenantDomain)
-    Write-Host ("Stale Threshold: {0} days" -f $StaleDays)
+    Write-FKReportLine ("Domain: {0}" -f $TenantDomain)
+    Write-FKReportLine ("Stale Threshold: {0} days" -f $StaleDays)
 
     $staleReview = $null
     $adminReview = $null
     $ownerReview = $null
     $forwardingReview = $null
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "STALE ENABLED USERS"
 
     if ($graphAvailable) {
@@ -851,10 +929,10 @@ try {
                 -Days $StaleDays
 
             if ($staleReview.Stale.Count -eq 0) {
-                Write-Host "Status: No"
+                Write-FKReportLine "Status: No"
             }
             else {
-                Write-Host (
+                Write-FKReportLine (
                     "Status: Yes | {0} user(s)" -f
                     $staleReview.Stale.Count
                 )
@@ -864,7 +942,7 @@ try {
                     ($staleReview.Stale |
                         Sort-Object Days -Descending)
                 ) {
-                    Write-Host (
+                    Write-FKReportLine (
                         "{0} | Last Sign-In: {1} | Age: {2} days" -f
                         $row.UPN,
                         $row.LastSignIn.ToString("yyyy-MM-dd"),
@@ -874,25 +952,25 @@ try {
             }
         }
         catch {
-            Write-Host "Status: Not available"
+            Write-FKReportLine "Status: Not available"
             $dataGaps.Add(
                 "Stale users: $(Get-ShortError $_)"
             )
         }
     }
     else {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "ACTIVITY NOT AVAILABLE"
 
     if ($staleReview) {
         if ($staleReview.Unavailable.Count -eq 0) {
-            Write-Host "Status: No"
+            Write-FKReportLine "Status: No"
         }
         else {
-            Write-Host (
+            Write-FKReportLine (
                 "Status: Yes | {0} user(s)" -f
                 $staleReview.Unavailable.Count
             )
@@ -902,7 +980,7 @@ try {
                 ($staleReview.Unavailable |
                     Sort-Object UPN)
             ) {
-                Write-Host (
+                Write-FKReportLine (
                     "{0} | {1}" -f
                     $row.UPN,
                     $row.Reason
@@ -911,10 +989,10 @@ try {
         }
     }
     else {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "ADMIN ROLES"
 
     if ($graphAvailable) {
@@ -922,10 +1000,11 @@ try {
             $adminReview = Get-AdminRoleReview
 
             if ($adminReview.Rows.Count -eq 0) {
-                Write-Host "Status: No"
+                if ($adminReview.Gaps.Count -gt 0) { Write-FKReportLine "Status: Not available" }
+                else { Write-FKReportLine "Status: No" }
             }
             else {
-                Write-Host (
+                Write-FKReportLine (
                     "Status: {0} active role(s)" -f
                     $adminReview.Rows.Count
                 )
@@ -935,7 +1014,7 @@ try {
                     ($adminReview.Rows |
                         Sort-Object Role)
                 ) {
-                    Write-Host (
+                    Write-FKReportLine (
                         "Role: {0} | Members: {1}" -f
                         $row.Role,
                         $row.Count
@@ -948,17 +1027,17 @@ try {
             }
         }
         catch {
-            Write-Host "Status: Not available"
+            Write-FKReportLine "Status: Not available"
             $dataGaps.Add(
                 "Admin roles: $(Get-ShortError $_)"
             )
         }
     }
     else {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "OWNERLESS ENTRA GROUPS"
 
     if ($graphAvailable) {
@@ -966,16 +1045,16 @@ try {
             $ownerReview = Get-OwnerlessGroupReview
 
             if ($ownerReview.Ownerless.Count -eq 0) {
-                Write-Host "Status: No"
+                Write-FKReportLine "Status: No"
             }
             else {
-                Write-Host (
+                Write-FKReportLine (
                     "Status: Yes | {0} group(s)" -f
                     $ownerReview.Ownerless.Count
                 )
 
                 foreach ($name in $ownerReview.Ownerless) {
-                    Write-Host $name
+                    Write-FKReportLine $name
                 }
             }
 
@@ -984,17 +1063,17 @@ try {
             }
         }
         catch {
-            Write-Host "Status: Not available"
+            Write-FKReportLine "Status: Not available"
             $dataGaps.Add(
                 "Ownerless groups: $(Get-ShortError $_)"
             )
         }
     }
     else {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "EXTERNAL MAILBOX FORWARDING"
 
     if ($exchangeAvailable) {
@@ -1002,10 +1081,10 @@ try {
             $forwardingReview = Get-MailboxForwardingReview
 
             if ($forwardingReview.Rows.Count -eq 0) {
-                Write-Host "Status: No"
+                Write-FKReportLine "Status: No"
             }
             else {
-                Write-Host (
+                Write-FKReportLine (
                     "Status: Yes | {0} mailbox(es)" -f
                     $forwardingReview.Rows.Count
                 )
@@ -1022,7 +1101,7 @@ try {
                         "No"
                     }
 
-                    Write-Host (
+                    Write-FKReportLine (
                         "{0} -> {1} | Deliver Copy: {2}" -f
                         $row.UPN,
                         $row.Destination,
@@ -1036,17 +1115,17 @@ try {
             }
         }
         catch {
-            Write-Host "Status: Not available"
+            Write-FKReportLine "Status: Not available"
             $dataGaps.Add(
                 "External forwarding: $(Get-ShortError $_)"
             )
         }
     }
     else {
-        Write-Host "Status: Not available"
+        Write-FKReportLine "Status: Not available"
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Section "DATA GAPS"
 
     $uniqueDataGaps = @(
@@ -1055,24 +1134,26 @@ try {
     )
 
     if ($uniqueDataGaps.Count -eq 0) {
-        Write-Host "Status: No"
+        Write-FKReportLine "Status: No"
     }
     else {
-        Write-Host "Status: Yes"
+        Write-FKReportLine "Status: Yes"
 
         foreach ($gap in $uniqueDataGaps) {
-            Write-Host ("- {0}" -f $gap)
+            Write-FKReportLine ("- {0}" -f $gap)
         }
     }
 
-    Write-Host ""
+    Write-FKReportLine ""
     Write-OK "Complete. No changes made."
 
 }
 catch {
-    Write-Host ""
+    Write-FKReportLine ""
     Write-Fail (Get-ShortError $_)
 }
 finally {
+    Offer-FKDesktopReport -Title 'GET-QUARTERLY-CLEANUP-REVIEW'
+
     Pause-End
 }
