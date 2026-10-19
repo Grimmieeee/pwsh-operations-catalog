@@ -44,3 +44,5 @@ Preview visual changes in chat before publishing. Run site and required security
 - Card wording follows docs/qa/CARD-LANGUAGE-REVIEW.md. Existing-terminal and administrator launch exceptions must match the exact source; keep ordinary right-click launch for compatible standalone scripts.
 
 - Owner brightness refinement: brighter menu options, navigation section labels/counts, catalog/card section headings and text-only status/verification flags. Preserve font sizes, layout, risk colors, and softened wordmarks.
+
+- Completion refinement: standalone scripts use the existing compact dropdown treatment for WHEN FINISHED, with tool-specific result/follow-up and blocked/cancelled guidance. The three IR steps retain visible EXPECTED RESULT and NEXT. Inputs state actual defaults. Release checks require source-bound copy, concrete inputs, requirements, launch mode and completion guidance.
