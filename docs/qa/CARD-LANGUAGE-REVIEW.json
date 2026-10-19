@@ -3051,5 +3051,13 @@
       "status": "Ready",
       "languageReviewed": true
     }
-  ]
+  ],
+  "cardContract": {
+    "sourceBoundReviews": 92,
+    "commandBoundReviews": 235,
+    "scriptInputsAndLaunchModes": 80,
+    "scriptCompletionGuides": 80,
+    "siteTests": 36,
+    "gate": "tools/card-contract.mjs via tools/check-site.mjs"
+  }
 }

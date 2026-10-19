@@ -6,6 +6,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog,FixtureElement } from '../tools/site-test-harness.mjs';
+import { validateCardContract } from '../tools/card-contract.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
@@ -494,4 +495,37 @@ test('cards preserve investigative limits and do not promise unavailable searche
   }
   f.api.openItem(f.api.ITEMS.find(x=>x.name==='Set Local User Password'));
   assert.ok(f.elements.get('drawerBody').innerHTML.includes('command history or recordings'));
+});
+
+
+test('release card contract covers every source, command, default and completion path',()=>{
+  const f=loadCatalog(root);
+  const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
+  assert.deepEqual(validateCardContract({...f,hashes}),{sources:92,scripts:80,commands:235,pending:11});
+  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes(item.workflow?'EXPECTED RESULT':'WHEN FINISHED'),item.file);
+  }
+});
+
+test('release card contract rejects missing inputs, requirements, launch and completion guidance',()=>{
+  for(const field of ['input','requires','startMode','completion']){
+    const f=loadCatalog(root),review=f.window.FIELD_KIT_CARD_GUIDANCE['GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1'];
+    delete review[field];
+    if(field==='completion')delete f.api.ITEMS.find(x=>x.file==='GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1').completion;
+    const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
+    assert.throws(()=>validateCardContract({...f,hashes}),/Card needs/,field);
+  }
+});
+
+test('release card contract rejects stale source and command guidance and missing reviews',()=>{
+  for(const kind of ['source','command','missing','launch']){
+    const f=loadCatalog(root);
+    const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
+    if(kind==='source')hashes['published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1']='0'.repeat(64);
+    if(kind==='command')f.window.FIELD_KIT_COMMAND_GUIDANCE['Get User'].code+='; Get-Date';
+    if(kind==='missing')f.window.FIELD_KIT_COMMAND_GUIDANCE={};
+    if(kind==='launch')f.window.FIELD_KIT_START=undefined;
+    assert.throws(()=>validateCardContract({...f,hashes}),/stale|Missing|launch guidance/,kind);
+  }
 });

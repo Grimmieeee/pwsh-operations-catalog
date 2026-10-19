@@ -2700,9 +2700,14 @@
     </section>`;
   }
 
+  function completionInfo(item){
+    return window.FIELD_KIT_START?.stages[item.file] || item.completion || null;
+  }
+
   function finishMarkup(item){
-    const step=window.FIELD_KIT_START?.stages[item.file];
+    const step=completionInfo(item);
     if(!step)return '';
+    if (!item.workflow) return `<details class="workflow-guide completion-guide"><summary>WHEN FINISHED</summary><p>${esc(step.result)}</p><p>${esc(step.next)}</p><details class="workflow-guide"><summary>If blocked or cancelled</summary><p>${esc(step.blocked)}</p></details></details>`;
     return `<section class="guided-finish"><div class="section-label">EXPECTED RESULT</div><p>${esc(step.result)}</p><div class="section-label">NEXT</div><p>${esc(step.next)}</p><details class="workflow-guide"><summary>If blocked or cancelled</summary><p>${esc(step.blocked)}</p></details></section>`;
   }
 
@@ -2882,7 +2887,7 @@
 
   function inputInfo(item){
     const value = String(item.input || "").trim();
-    if (item.type === "Quick Command") return [commandInputInfo(item.code || ""), item.inputExtra || value].filter(Boolean).join(" ") || "No values to enter; uses the computer or session where you run it.";
+    if (item.type === "Quick Command") return value || commandInputInfo(item.code || "");
     if (!value) return "";
 
     const bucket = primaryBucket(item);

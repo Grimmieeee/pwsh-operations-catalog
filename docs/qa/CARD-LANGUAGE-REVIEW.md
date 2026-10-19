@@ -37,3 +37,11 @@ Reviewed all 338 entries: 80 published PowerShell scripts, 235 quick commands, 1
 No client or Windows authentication tests were performed in this wording pass. Existing exact-version verification is unchanged. The 13 tenant audit scripts that require a tenant GUID still require it; cards now explain where to find it. The separate domain-only batch runner is a different workflow. Known app-name resolution limits in the IR assessment remain visible. No claim of full-tenant pagination or comprehensive incident clearance was added.
 
 The separate candidate report-export changes and read-only validation runner remain outside this UI release.
+
+## Defaults and completion follow-up
+
+All 80 script cards now include source-matched result, next-step, and blocked/cancelled guidance. The 77 standalone tools use a closed WHEN FINISHED disclosure; the three IR steps retain visible workflow outcomes. Input descriptions expose relevant targets, limits, folders, time periods and other defaults from the script parameters or prompts. Command cards explicitly identify the local computer, domain, or current service connection when no target value is supplied.
+
+The release gate in tools/card-contract.mjs runs through the existing tools/check-site.mjs CI command. It rejects a missing or stale review for any published source or quick command; published scripts also need an explicit purpose, concrete inputs/default context, requirements, reviewed launch mode and full completion guidance. Missing launch-helper data blocks the release. Script source hashes and exact quick-command example text bind the review.
+
+Validation now includes 36 site tests. Negative cases remove inputs, requirements, launch modes, completion text or review records, change source/command bindings, or remove launch-helper data; each fails the gate. All published source hashes and executable quick-command bytes remain unchanged. This adds no runtime verification or VERIFIED marks.
