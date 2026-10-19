@@ -2533,9 +2533,8 @@
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
-          ${isVerifiedRelease(item) ? '<span class="verification-seal" aria-hidden="true">V</span>' : ""}
         </span>
-        <span class="result-flags">${rowTags(item)}</span>
+        <span class="result-flags">${rowTags(item)}${isVerifiedRelease(item) ? '<span class="result-verification">VERIFIED</span>' : ''}</span>
         <span class="result-arrow">›</span>
       </button>
     `;
