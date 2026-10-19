@@ -61,7 +61,7 @@ button{cursor:pointer}
 }
 .brand-main::after{display:none}
 .brand-field{font-weight:600;letter-spacing:.19em}
-.brand-slash{margin:0 .65em 0 .30em;font-weight:400;letter-spacing:.08em;color:#ffffff}
+.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:#ffffff}
 .brand-kit{font-weight:200;letter-spacing:.22em;color:#ffffff}
 .nav{padding:7px 11px 24px}
 .nav button{
@@ -90,7 +90,7 @@ button{cursor:pointer}
 .signature-mark{white-space:nowrap;font-size:calc(var(--signature-size) * var(--signature-scale));line-height:1.2;letter-spacing:.16em}
 .signature-mark{font-weight:600}
 .signature-muted{color:#ffffff;font-weight:200}
-.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:400}
+.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:200}
 .signature-established{margin-left:auto;white-space:nowrap;font-size:calc(10px * var(--signature-scale));line-height:1.2;letter-spacing:.22em;color:var(--signature-muted)}
 .signature-established strong{color:#ffffff;font-weight:500}
 .workspace{min-width:0;background:linear-gradient(180deg,#141a1d 0%,#161e20 100%)}
@@ -1108,6 +1108,12 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .workflow-guide,.individual-source,.scope-review{margin-top:14px;width:100%}
 .workflow-guide summary,.individual-source summary,.scope-review>summary{color:var(--mint-soft);font-size:14px;cursor:pointer}
 .individual-source .actions{margin-top:12px}
+/* Approved softened wordmarks and shared card disclosure treatment. */
+.brand-main,.signature-mark{opacity:.70}
+.drawer-body .section-label,.drawer-body :is(.card-disclosure,.requirements,.more-details,.workflow-guide,.individual-source,.scope-review)>summary{font:500 11px/1.5 var(--mono);letter-spacing:.12em;color:var(--mint)}
+.card-disclosure,.drawer-body :is(.requirements,.more-details,.workflow-guide,.individual-source,.scope-review){margin-top:22px}
+.drawer-body :is(.card-disclosure,.requirements,.more-details,.workflow-guide,.individual-source,.scope-review)>summary{cursor:pointer;padding:10px 0;text-transform:uppercase}
+.drawer-body :is(.card-disclosure,.requirements,.more-details,.workflow-guide,.individual-source,.scope-review)>summary:focus-visible{outline:1px solid var(--mint);outline-offset:4px}
 </style>
 </head>
 <body>
@@ -1175,12 +1181,12 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   <div id="drawerBody" class="drawer-body"></div>
 </aside>
 
-<script src="catalog-data.js?v=brand-verified-1"></script>
-<script src="source-integrity.js?v=brand-verified-1"></script>
-<script src="connection-guidance.js?v=brand-verified-1"></script>
-<script src="card-guidance.js?v=brand-verified-1"></script>
-<script src="workflow-start.js?v=brand-verified-1"></script>
-<script src="field-kit-app.js?v=brand-verified-1"></script>
-<script src="site-brand.js?v=brand-verified-1"></script>
+<script src="catalog-data.js?v=cohesive-cards-1"></script>
+<script src="source-integrity.js?v=cohesive-cards-1"></script>
+<script src="connection-guidance.js?v=cohesive-cards-1"></script>
+<script src="card-guidance.js?v=cohesive-cards-1"></script>
+<script src="workflow-start.js?v=cohesive-cards-1"></script>
+<script src="field-kit-app.js?v=cohesive-cards-1"></script>
+<script src="site-brand.js?v=cohesive-cards-1"></script>
 </body>
 </html>
