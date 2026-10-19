@@ -2684,10 +2684,8 @@
     const code = window.FIELD_KIT_START.launch(item.file);
     return `<section class="guided-start"><div class="section-label">START</div>
       ${ir ? '<p>Download the workflow once. It includes all three scripts and the IR workflow guide.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div><p>Extract the ZIP into one folder on the client jumpbox.</p>' : '<p>Download the script below and save it on the computer where it should run.</p>'}
-      <p>Open PowerShell${ir ? ' on the jumpbox and keep that window open' : ''}. Copy the script’s full path${ir ? ' from the extracted folder' : ''}; on Windows, right-click the file and choose <strong>Copy as path</strong>.</p>
-      <div class="connect-line"><details class="connect-command"><summary>Launch in PowerShell <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
-      <p>Paste the launch command into PowerShell, press Enter, then paste the file path when asked. If execution is blocked, use the approved signing/policy process.</p>
-      ${ir ? `<details class="workflow-guide"><summary>IR workflow guide</summary><div class="guide-copy">${window.FIELD_KIT_START.preparation.map(text=>`<p>${esc(text)}</p>`).join('')}<p>Start with ir-risk-assessment. Use the script’s handoff to continue in the same window. The guide in the ZIP includes expected results and blocked/cancelled paths for all three steps.</p></div></details>` : ''}
+      ${ir ? `<p>Open PowerShell on the jumpbox and keep that window open. Right-click the extracted file and choose <strong>Copy as path</strong>.</p><div class="connect-line"><details class="connect-command"><summary>Launch in the same PowerShell window <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div><p>Paste the launch command into that window, press Enter, then paste the file path when asked.</p>` : '<p>Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>.</p>'}
+      ${ir ? `<details class="workflow-guide"><summary>IR workflow guide</summary><div class="guide-copy">${window.FIELD_KIT_START.preparation.filter(text=>!/^The first sign-in/.test(text)).map(text=>`<p>${esc(text.replace(' Cloud sign-in does not grant local AD rights.',''))}</p>`).join('')}<p>Start with ir-risk-assessment. Use the script’s handoff to continue in the same window. The guide in the ZIP includes expected results and blocked/cancelled paths for all three steps.</p></div></details>` : ''}
     </section>`;
   }
 
@@ -2866,7 +2864,7 @@
   }
 
   function requirementInfo(item){
-    const value = String(item.requires || "").trim();
+    const value = String(item.requires || "").replace(/\s*First sign-in requests[^.]*\./ig, "").trim();
     if (!value) return "";
     if (/^(?:none|n\/a|powerShell\s*5\.1\+?)$/i.test(value)) return "";
     if (/^optional\b/i.test(value)) return "";
@@ -2917,7 +2915,7 @@
     const badge = platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : "";
     if (profile?.mode === "auto"){
       const workflow = IR_STEPS.some(step => step.file === item.file);
-      return `<section class="run-info-block"><div class="run-info-subhead">AUTO-CONNECT</div>${badge}<p class="connection-direction">Sign in when the script asks.</p>${workflow ? '<p class="connection-direction">First sign-in requests read/change permissions for all three steps. Assessment makes no tenant changes; response actions require approval.</p><p class="connection-direction">Before starting: approved Windows jumpbox, Graph Authentication 2.x, Exchange Online module 3.2+, and authorized tenant access. Keep all three files together and use the same PowerShell window.</p><button type="button" class="copy-mini" data-related-file="TEST-POWERSHELL-READINESS.ps1">CHECK POWERSHELL READINESS</button>' : ''}</section>`;
+      return `<section class="run-info-block">${badge}${workflow ? '<p class="connection-direction">Before starting: approved Windows jumpbox, Graph Authentication 2.x, Exchange Online module 3.2+, and authorized tenant access. Keep all three files together and use the same PowerShell window.</p><button type="button" class="copy-mini" data-related-file="TEST-POWERSHELL-READINESS.ps1">CHECK POWERSHELL READINESS</button>' : ''}</section>`;
     }
     if (profile?.mode === "local") return badge ? `<section class="run-info-block">${badge}</section>` : "";
     if (item.status === "Source pending") return "";
@@ -2990,10 +2988,10 @@
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
       ${useForMarkup(item)}
+      ${shortNote(item)}
       ${runInfoMarkup(item)}
       ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
-      ${shortNote(item)}
       ${finishMarkup(item)}
 
       <div class="actions">

@@ -16,7 +16,8 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 
 - Minimal list: task name, exact-version operator-verification mark when earned, and plain colored access labels. No access-label boxes, row versions or platform badges. Destructive text uses the approved coral red.
 - Full catalog total appears in About as catalog entries (scripts, commands and guides), not as a search-box or Full Library navigation total. Parenthetical result counts appear only during search or filtered browsing. Verification meaning is in About, without a repeated header legend. No redundant controls below search.
-- Card order: USE FOR, INPUT, CHECKS, GUARDS, connection commands, useful Details, source actions. Omit empty sections.
+- Card order: USE FOR, INPUT, CHECKS, GUARDS, useful Details, START, source actions. Omit empty sections. Show required input and technical prerequisites without a repeated automatic-sign-in note.
+- Standard script START: Right-click the downloaded .ps1 > Run with PowerShell. The three coupled IR steps retain the same-window launch command and session-reuse guidance. Quick commands retain their required preparation commands.
 - INPUT distinguishes what the technician brings from script-provided choices. CHECKS and GUARDS describe the exact script, not generic assurances.
 - Compact REQUIRES supports hover, tap and keyboard. Connection section starts with small mint AUTO-CONNECT or CONNECT FIRST, followed by smaller boxed mint service names. Built-in sign-in gets directions, without redundant connection commands. Manual preparation shows the needed commands and direction in the same PowerShell window. Source changes invalidate the reviewed connection profile until reviewed again.
 - Use a small raised circled V beside the selected title only when exact-version evidence qualifies. Its explanation lives in About. Clicking the mark opens About.
