@@ -2,24 +2,24 @@
 (() => {
   const stages = {
     'ir-risk-assessment.ps1': {
-      result:'Findings and unavailable checks for the selected account. This is an assessment, not an incident-closure verdict.',
-      next:'If findings justify containment and you have authorization, continue with ir-contain-eradicate. Otherwise document the findings and follow your incident process.',
-      blocked:'If required checks are unavailable, stop and resolve access or collection gaps. Do not treat missing data as clear.'
+      result:'Findings and checks that could not run for the selected account. Review the evidence before deciding whether the incident is resolved.',
+      next:'If containment is needed and approved, continue with ir-contain-eradicate. Otherwise record the findings and follow your incident process.',
+      blocked:'If a required check cannot run, resolve the missing access or data before deciding the account is clear.'
     },
     'ir-contain-eradicate.ps1': {
-      result:'Completed, failed and skipped response actions, with the remaining scope and persistence work visible.',
-      next:'Continue with ir-recover-validate to review recovery readiness. Restore access only after remediation and approval; keep the account contained while unresolved work remains.',
+      result:'Completed, failed, and skipped actions, plus any remaining investigation or unwanted access to remove.',
+      next:'Continue with ir-recover-validate before restoring access. Keep the account contained until cleanup is complete and recovery is approved.',
       blocked:'A failed or cancelled action is not completed. Review the action results and maintain containment until the incident owner approves the next step.'
     },
     'ir-recover-validate.ps1': {
-      result:'Recovery readiness and the account enable result. Pending synchronization remains unverified.',
+      result:'Recovery checks and whether the account was enabled. A pending sync is not confirmed recovery.',
       next:'Verify the user can sign in with MFA, record the result, and monitor for new suspicious activity for 48 hours. Unresolved issues remain open.',
       blocked:'If readiness or restored access cannot be verified, stop and return to the incident owner. Do not repeatedly enable the account to bypass a failed check.'
     }
   };
   const preparation = [
-    'Use the approved client Windows jumpbox and an authorized tenant account. Cloud sign-in does not grant local AD rights.',
-    'Have the exact target UPN and expected tenant domain or ID ready. Use Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.',
+    'Use the approved client Windows jumpbox and an authorized account. Synced-user changes also need local Active Directory permissions.',
+    'Have the exact user sign-in name (UPN) and tenant domain or ID ready. Required modules: Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.',
     'Extract all three scripts into one folder. Open Windows PowerShell 5.1 or PowerShell 7 on the jumpbox and keep that window open for the workflow.',
     'The first sign-in requests permissions for assessment, containment and recovery. The assessment itself makes no tenant changes; change actions still require approval.'
   ];

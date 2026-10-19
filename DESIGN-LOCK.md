@@ -40,3 +40,5 @@ Preview visual changes in chat before publishing. Run site and required security
 - All secondary card disclosures use the same type size, weight, spacing and focus treatment. Omit empty sections and preserve exact-script facts.
 
 - Owner refinement: FIELD and BURN use 85% white; KIT, SID and both slash sets retain 70% white. Keep type weights and layout unchanged.
+
+- Card wording follows docs/qa/CARD-LANGUAGE-REVIEW.md. Existing-terminal and administrator launch exceptions must match the exact source; keep ordinary right-click launch for compatible standalone scripts.

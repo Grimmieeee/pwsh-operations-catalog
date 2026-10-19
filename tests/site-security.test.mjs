@@ -16,8 +16,8 @@ test('reviewed tenant audits disclose expected tenant before launch',()=>{
   assert.equal(items.length,13);
   for(const item of items){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('Expected tenant ID (GUID)'),item.file);
-    assert.ok(html.indexOf('Expected tenant ID (GUID)')<html.indexOf('guided-start'),item.file);
+    assert.ok(html.includes('Tenant ID (GUID)'),item.file);
+    assert.ok(html.indexOf('Tenant ID (GUID)')<html.indexOf('guided-start'),item.file);
     assert.equal(f.api.isVerifiedRelease(item),false,item.file);
   }
 });
@@ -52,7 +52,7 @@ test('license removal card discloses tenant input and exact target approval with
   const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');
   f.api.openItem(item);
   const html=f.elements.get('drawerBody').innerHTML;
-  for(const text of ['Expected tenant ID (GUID)','Each target UPN','Failed and unverified','Typed REMOVE'])assert.ok(html.includes(text),text);
+  for(const text of ['Tenant ID (GUID)','Shows each user and selected license','Shows failed or unconfirmed results','Type REMOVE'])assert.ok(html.includes(text),text);
   assert.equal(f.api.isVerifiedRelease(item),false);
 });
 
@@ -154,7 +154,7 @@ test('every released script has operational coverage and reviewed prerequisites'
   const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');
   f.api.openItem(removal);
   const html=f.elements.get('drawerBody').innerHTML;
-  for(const text of ['Typed REMOVE GROUPS confirmation','Dynamic, role-assignable and Exchange-managed groups skipped','Group.Read.All'])assert.ok(html.includes(text));
+  for(const text of ['Typed REMOVE GROUPS confirmation','Skips dynamic groups, groups used for admin roles, and Exchange-managed groups','Group.Read.All'])assert.ok(html.includes(text));
   const snapshot=f.api.ITEMS.find(x=>x.file==='GET-MAILBOX-SECURITY-SNAPSHOT.ps1');
   assert.ok(snapshot.requires.includes('Microsoft Graph is not used'));
   for(const [file,review] of Object.entries(f.window.FIELD_KIT_CARD_GUIDANCE)){
@@ -206,7 +206,7 @@ test('minimal cards keep full copy commands and explicit safety caveats',()=>{
   assert.ok(!html.includes('data-copy="Connect-MgGraph'));
   assert.ok(html.includes('User.ReadWrite.All'));
   assert.ok(!html.includes('<summary>Details</summary>'));
-  assert.ok(html.includes('Typed ASSIGN confirmation'));
+  assert.ok(html.includes('Type ASSIGN to approve'));
   assert.ok(html.includes('<details class="requirements"><summary title='));
   assert.ok(!html.includes('run-info-label">REQUIRES'));
   assert.ok(html.includes('Choose a license from the numbered list'));
@@ -240,11 +240,11 @@ test('cards separate operational checks from inputs and safety guards without ov
   const html=f.elements.get('drawerBody').innerHTML;
   const checks=html.slice(html.indexOf('>CHECKS</summary>'),html.indexOf('>GUARDS</summary>'));
   const guards=html.slice(html.indexOf('>GUARDS</summary>'),html.indexOf('<section class="run-info-block">'));
-  for(const text of ['Pre-change hold-state review','Unlimited duration target','Post-change mailbox re-read','Optional CSV evidence']) assert.ok(checks.includes(text),text);
-  for(const text of ['Typed HOLD confirmation','Changes only noncompliant mailboxes','REQUIRES']) assert.ok(guards.includes(text),text);
+  for(const text of ['Current mailbox hold settings','Checks for a hold with no expiry date','Reads mailbox settings again after the change','Optional CSV report']) assert.ok(checks.includes(text),text);
+  for(const text of ['Typed HOLD confirmation','Changes only mailboxes not already on the requested hold','REQUIRES']) assert.ok(guards.includes(text),text);
   const inputStart=html.indexOf('>INPUT</div>');
   assert.ok(inputStart>=0 && inputStart<html.indexOf('>CHECKS</summary>'));
-  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</summary>')).includes('TXT/CSV mailbox list'));
+  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</summary>')).includes('TXT/CSV file'));
   assert.ok(!guards.includes('>INPUT</div>'));
   assert.ok(!checks.includes('Typed HOLD confirmation'));
   assert.ok(!html.includes('More guards'));
@@ -426,6 +426,7 @@ test('global search includes every scope regardless of navigation selection',()=
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     if(html.includes('<summary>Details</summary>'))assert.ok(html.indexOf('<summary>Details</summary>')<html.indexOf('class="guided-start"'),item.file);
     if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
+    else if(/^terminal/.test(item.startMode || '')) { assert.ok(html.includes('PowerShell window') || html.includes('PowerShell as administrator'),item.file); assert.ok(!html.includes('Run with PowerShell'),item.file); }
     else assert.ok(html.includes('Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>'),item.file);
     assert.ok(!html.includes('First sign-in requests read/change permissions'),item.file);
   }
@@ -441,4 +442,56 @@ test('verified rows use quiet text at the right; footer matches header colors an
   assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:#ffffff}'));
   assert.ok(css.includes('.signature-muted{color:#ffffff;font-weight:200}'));
   assert.ok(css.includes('.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:200}'));
+});
+
+test('quick-command copy matches its exact example and local commands have no cloud preparation',()=>{
+  const f=loadCatalog(root);
+  const commands=f.api.ITEMS.filter(x=>x.type==='Quick Command');
+  assert.equal(commands.length,235);
+  for(const item of commands){
+    const review=f.window.FIELD_KIT_COMMAND_GUIDANCE[item.name];
+    assert.ok(review,item.name);assert.equal(review.code,item.code,item.name);
+    assert.ok(item.useFor?.length>10,item.name);
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.indexOf('USE FOR')<html.indexOf('>INPUT</div>'),item.name);
+    assert.ok(html.includes('START') || html.includes('CONNECT FIRST'),item.name);
+    if(item.platform==='Local Windows'){
+      assert.deepEqual([...item.connect],[],item.name);
+      assert.ok(!/Connect-MgGraph|Connect-ExchangeOnline/.test(item.requires),item.name);
+    }
+  }
+});
+
+test('terminal tools preserve session context and prompt for required launch parameters',()=>{
+  const f=loadCatalog(root);
+  for(const file of ['git-repo.ps1','git-handoff.ps1','git-security.ps1','RESET-M365-SESSION.ps1','INVOKE-SESSION-RESET.ps1']){
+    const item=f.api.ITEMS.find(x=>x.file===file);f.api.openItem(item);
+    const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('existing PowerShell window'),file);
+    assert.ok(!html.includes('Run with PowerShell'),file);
+    if(file==='git-security.ps1')assert.ok(html.includes('-Account (Read-Host'),file);
+    if(['git-repo.ps1','git-handoff.ps1'].includes(file))assert.ok(html.includes('-Path (Read-Host'),file);
+  }
+  const join=f.api.ITEMS.find(x=>x.file==='JOIN-COMPUTER-TO-DOMAIN.ps1');f.api.openItem(join);
+  assert.ok(f.elements.get('drawerBody').innerHTML.includes('Open PowerShell as administrator'));
+});
+
+test('cards preserve investigative limits and do not promise unavailable searches or tools',()=>{
+  const f=loadCatalog(root);
+  const intel=f.api.ITEMS.find(x=>x.file==='IR-GET-THREAT-INTEL-ACTIVITY.ps1');
+  assert.ok(!intel.objective.includes('tenant activity'));
+  const mail=f.api.ITEMS.find(x=>x.file==='IR-GET-TENANT-EMAIL-SEARCH.ps1');
+  assert.ok(!mail.objective.includes('subject'));
+  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('Planned tool:'),item.file);
+    assert.ok(!html.includes('class="guided-start"'),item.file);
+    assert.ok(!html.includes('id="downloadSource"'),item.file);
+  }
+  for(const name of ['Isolate Device - Disable Enabled Adapters','Restart Adapter','Release And Renew Dhcp']){
+    f.api.openItem(f.api.ITEMS.find(x=>x.name===name));
+    assert.ok(f.elements.get('drawerBody').innerHTML.includes('Can disconnect your remote session'),name);
+  }
+  f.api.openItem(f.api.ITEMS.find(x=>x.name==='Set Local User Password'));
+  assert.ok(f.elements.get('drawerBody').innerHTML.includes('command history or recordings'));
 });

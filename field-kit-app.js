@@ -1729,6 +1729,7 @@
   }
 
   function connectCommands(item){
+    if (Array.isArray(item.connectFirst)) return [...item.connectFirst];
     if (/^Connect Microsoft Graph$/i.test(displayName(item))) return [];
     if (item.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,item.name)){
       const scopes = QUICK_GRAPH_SCOPES[item.name];
@@ -1887,8 +1888,18 @@
         ? 'Microsoft.Graph modules for this command; delegated scopes: '+scopes.join(', ')+'. Consent and a supported Entra role for the target are required.'+(scopes.includes('AuditLog.Read.All') ? ' Sign-in logs also require tenant licensing and log-read access.' : '')
         : 'Microsoft.Graph.Authentication; uses or inspects only the current session. No new sign-in required.';
     }
+    const commandReview = window.FIELD_KIT_COMMAND_GUIDANCE?.[source.name];
+    if (source.type === "Quick Command" && commandReview?.code === source.code) {
+      const {code: reviewedCode, ...copy} = commandReview;
+      source = {...source, ...copy};
+    }
     if (source.type === "Quick Command" && /\bRemove-(?:ADUser|MgUser|LocalUser)\b|\bNew-ComplianceSearchAction\b[^\n]*\bHardDelete\b/i.test(source.code || "")) source.access = "Destructive";
     if (source.type !== "Quick Command" && !source.publishedPath && !String(source.code || "").trim()) source.status = "Source pending";
+    if (source.status === "Source pending") {
+      source = {...source, objective:"Planned tool: " + (source.objective || source.notes || source.name),
+        checks:[], guards:["Source is not published; this tool cannot be run from the catalog yet."],
+        input:"Final inputs and requirements will be confirmed when the source is published.", requires:"", notes:""};
+    }
     const area = logicalArea(source);
     return {
       ...source,
@@ -2672,7 +2683,7 @@
 
   function workflowMarkup(workflow){
     if (!workflow) return "";
-    const note = workflow.current === '1' ? 'Start here. Continue to containment only when findings and authorization justify it.' : workflow.current === '2' ? 'After containment, review recovery readiness before restoring access.' : 'Restore only approved access, then verify the user can sign in with MFA.';
+    const note = workflow.current === '1' ? 'Start here. Continue to containment only if needed and approved.' : workflow.current === '2' ? 'After containment, review recovery readiness before restoring access.' : 'Restore only approved access, then verify the user can sign in with MFA.';
     return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^IR: /,""))}</span></button>`).join("")}</div></section>`;
   }
 
@@ -2680,10 +2691,11 @@
     if (!item.publishedPath?.endsWith('.ps1')) return '';
     if (!window.FIELD_KIT_START) return '<section class="guided-start"><div class="section-label">START</div><p>Start guidance could not load. Reload the site before proceeding. Individual source controls remain below.</p></section>';
     const ir = Boolean(window.FIELD_KIT_START.stages[item.file]);
-    const code = window.FIELD_KIT_START.launch(item.file);
+    const terminal = /^terminal(?:-admin)?$/.test(item.startMode || '');
+    const code = window.FIELD_KIT_START.launch(item.file) + (item.launchArgs || '');
     return `<section class="guided-start"><div class="section-label">START</div>
       ${ir ? '<p>Download the workflow once. It includes all three scripts and the IR workflow guide.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div><p>Extract the ZIP into one folder on the client jumpbox.</p>' : '<p>Download the script below and save it on the computer where it should run.</p>'}
-      ${ir ? `<p>Open PowerShell on the jumpbox and keep that window open. Right-click the extracted file and choose <strong>Copy as path</strong>.</p><div class="connect-line"><details class="connect-command"><summary>Launch in the same PowerShell window <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div><p>Paste the launch command into that window, press Enter, then paste the file path when asked.</p>` : '<p>Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>.</p>'}
+      ${ir || terminal ? `<p>${ir ? 'Open PowerShell on the jumpbox and keep that window open.' : item.startMode === 'terminal-admin' ? 'Open PowerShell as administrator on the target computer.' : 'Use an existing PowerShell window on the target computer.'} Right-click the downloaded or extracted file (Shift + right-click on older Windows) and choose <strong>Copy as path</strong>.</p><div class="connect-line"><details class="connect-command"><summary>Launch in the same PowerShell window <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div><p>Paste the launch command into that window, press Enter, then paste the file path when asked.${item.launchArgs ? ' Enter the requested account or repository path at the next prompt.' : ''}</p>` : '<p>Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>.</p>'}
       ${ir ? `<details class="workflow-guide"><summary>IR workflow guide</summary><div class="guide-copy">${window.FIELD_KIT_START.preparation.filter(text=>!/^The first sign-in/.test(text)).map(text=>`<p>${esc(text.replace(' Cloud sign-in does not grant local AD rights.',''))}</p>`).join('')}<p>Start with ir-risk-assessment. Use the script’s handoff to continue in the same window. The guide in the ZIP includes expected results and blocked/cancelled paths for all three steps.</p></div></details>` : ''}
     </section>`;
   }
@@ -2761,7 +2773,7 @@
     const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
     const guards = item.guards || facts.filter(isGuard).filter(text => !inputFacts.includes(text));
     const requires = requirementInfo(item);
-    const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(text)}</div>`).join("")}</div>`;
+    const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(window.FIELD_KIT_PLAIN_PHRASES?.[text] || text)}</div>`).join("")}</div>`;
     const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
     const review = `${checks.length ? `<details class="card-disclosure"><summary>CHECKS</summary>${list(checks)}</details>` : ""}
       ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}
@@ -2846,7 +2858,7 @@
       "GET-CONDITIONAL-ACCESS-GAPS.ps1":"", "TEST-POWERSHELL-READINESS.ps1":"",
       "INSTALL-M365-MODULES.ps1":"", "GET-FOLDER-INVENTORY.ps1":"Does not enforce a fixed folder structure."
     };
-    const note = String(Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || "")).trim();
+    const note = String(item.details ?? (Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || ""))).trim();
     if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return reviewNote;
     return reviewNote + `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
   }
@@ -2870,7 +2882,7 @@
 
   function inputInfo(item){
     const value = String(item.input || "").trim();
-    if (!value && item.type === "Quick Command") return commandInputInfo(item.code || "");
+    if (item.type === "Quick Command") return [commandInputInfo(item.code || ""), item.inputExtra || value].filter(Boolean).join(" ") || "No values to enter; uses the computer or session where you run it.";
     if (!value) return "";
 
     const bucket = primaryBucket(item);
@@ -2889,7 +2901,7 @@
       [/Jane Doe/, "exact display name"],
       [/APP-ID|AUTH-METHOD-ID|OAUTH-GRANT-ID|MESSAGE-TRACE-ID/, "record ID from a prior lookup"],
       [/THUMBPRINT/, "certificate thumbprint"],
-      [/SEARCH-NAME|EmailSubject|phishing subject|Rule Name|Task Name/, "target search, rule, task or subject"],
+      [/SEARCH-NAME|phishing subject|Rule Name|Task Name/, "target search, rule, task or subject"],
       [/1\.2\.3\.4|8\.8\.8\.8|example\.com|server01/, "target IP address, domain or host"],
       [/C:\\\\(?:Temp|Scripts)|C:\\(?:Temp|Scripts)/, "local file or folder path"],
       [/badguy@evil\.com/, "suspect sender address"],
@@ -2921,8 +2933,8 @@
     }
     // Quick commands are their own source. Do not duplicate connection commands
     // when the selected command already performs that connection.
-    if (/^\s*(?:Connect-|Import-Module)/i.test(item.code || "")) return "";
-    if (!item.connect.length) return "";
+    if (/^\s*(?:Connect-|Import-Module)/i.test(item.code || "")) return '<section class="run-info-block"><div class="run-info-subhead">START</div><p class="connection-direction">Open PowerShell on the target computer. Replace any example values, then paste the command below.</p></section>';
+    if (!item.connect.length) return item.type === "Quick Command" ? `<section class="run-info-block"><div class="run-info-subhead">START</div><p class="connection-direction">Open PowerShell on the target computer. Replace any example values, then paste the command below.</p></section>` : "";
     return `<section class="run-info-block"><div class="run-info-subhead">CONNECT FIRST</div>${badge}<p class="connection-direction">Run these commands in the same PowerShell window before running the selected command.</p>${connectMarkup(item)}</section>`;
   }
 
@@ -2980,11 +2992,11 @@
       </section>
 
       ${objectiveMarkup(item)}
+      ${useForMarkup(item)}
       ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${factsMarkup(item)}
-      ${useForMarkup(item)}
       ${shortNote(item)}
       ${runInfoMarkup(item)}
       ${startMarkup(item)}
