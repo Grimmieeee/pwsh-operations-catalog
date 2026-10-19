@@ -1,5 +1,10 @@
 # Catalog alignment plan
 
+Current checkpoint: [PROJECT-STATUS.md](PROJECT-STATUS.md). Batch 1 is closed,
+including its final report/export cleanup. The sequence below is the original
+alignment framework, not an instruction to repeat completed work. Reconcile
+existing evidence and owner confirmation before selecting the next batch.
+
 The repository is the source of truth. Start each batch from current main and
 read the executable source, not remembered uploads or card descriptions.
 Inventory: [CATALOG-REVIEW-INVENTORY.json](qa/CATALOG-REVIEW-INVENTORY.json).

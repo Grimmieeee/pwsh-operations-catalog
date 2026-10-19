@@ -8,7 +8,7 @@ The public site is intentionally static: plain HTML, JavaScript, catalog data, a
 
 Read [`OPERATING-STANDARDS.md`](OPERATING-STANDARDS.md) before adding, replacing, consolidating, or publishing scripts. It defines the canonical-source model, 1-to-N input standard, hybrid authority rules, auth/module behavior, public-safety requirements, validation expectations, and release workflow.
 
-For the current continuation state, read [`tools/PROJECT-HANDOFF.md`](tools/PROJECT-HANDOFF.md).
+For the current continuation state, read [`docs/PROJECT-STATUS.md`](docs/PROJECT-STATUS.md), then [`tools/PROJECT-HANDOFF.md`](tools/PROJECT-HANDOFF.md).
 
 The approved site design is locked in [`DESIGN-LOCK.md`](DESIGN-LOCK.md). Preview and approve visual changes before publishing them.
 
@@ -72,7 +72,9 @@ main
 
 The interactive three-step IR tools are available with an
 [execution and safety guide](docs/IR-WORKFLOW.md). The published baseline is
-0.4.0; newer test candidates are not substituted into public downloads.
+1.0.0. Batch 1 is closed; eight accepted read-only report releases are also
+VERIFIED, bringing the total to 11. See the [project status](docs/PROJECT-STATUS.md)
+and [release evidence](docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md).
 
 ```text
 https://grimmieeee.github.io/pwsh-operations-catalog/
