@@ -42,3 +42,5 @@ Preview visual changes in chat before publishing. Run site and required security
 - Owner refinement: FIELD and BURN use 85% white; KIT, SID and both slash sets retain 70% white. Keep type weights and layout unchanged.
 
 - Card wording follows docs/qa/CARD-LANGUAGE-REVIEW.md. Existing-terminal and administrator launch exceptions must match the exact source; keep ordinary right-click launch for compatible standalone scripts.
+
+- Owner brightness refinement: brighter menu options, navigation section labels/counts, catalog/card section headings and text-only status/verification flags. Preserve font sizes, layout, risk colors, and softened wordmarks.
