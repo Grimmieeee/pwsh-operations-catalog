@@ -2589,7 +2589,7 @@
   }
 
   function releaseTag(item){
-    return isVerifiedRelease(item) ? '<button class="verification-seal title-verification" type="button" data-verification-about aria-label="Operator verified; read About">V</button>' : "";
+    return isVerifiedRelease(item) ? '<button class="verification-check title-verification" type="button" data-verification-about aria-label="Operator verified; read About">✓</button>' : "";
   }
 
   function rowTags(item){
@@ -2624,8 +2624,8 @@
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
         </span>
-        <span class="result-flags">${isVerifiedRelease(item) ? '<span class="result-verification"><span class="verification-seal" aria-hidden="true">V</span> VERIFIED</span>' : ''}<span class="result-risk-flags">${rowTags(item)}</span></span>
-        <span class="result-arrow">›</span>
+        <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
+        ${isVerifiedRelease(item) ? '<span class="result-check verification-check" aria-hidden="true">✓</span>' : '<span class="result-arrow" aria-hidden="true">›</span>'}
       </button>
     `;
   }
@@ -2664,7 +2664,7 @@
 
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
-            <p><span class="verification-seal" aria-hidden="true">V</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
+            <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
           </section>
 
           <section class="about-library">
@@ -3445,6 +3445,10 @@
 
     return result;
   }
+
+  document.getElementById("showVerificationAbout")?.addEventListener("click",()=>{
+    state.area="About";state.query="";search.value="";renderNav();renderResults();
+  });
 
   areaNav.addEventListener("click", event => {
     const incidentSubgroup = event.target.closest("[data-incident-source]");
