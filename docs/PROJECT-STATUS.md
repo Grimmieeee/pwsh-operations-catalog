@@ -5,7 +5,7 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
-- Batch 3 live license pair is complete: assignment and removal are VERIFIED at 1.0.2. Successful 1.0.1 client runs carry forward through the owner-accepted product-name-only update. See [evidence](qa/LICENSE-1.0.2-VERIFICATION.md). Remaining batch 3 live workflows are still pending.
+- Batch 3 live license pair is complete: assignment and removal are VERIFIED at 1.0.2. Successful 1.0.1 client runs carry forward through the owner-accepted product-name-only update. See [evidence](qa/LICENSE-1.0.2-VERIFICATION.md). Batch 3 is closed per owner acceptance; its offline and live evidence retain their stated scopes.
 
 - Batch 1 is closed: the main 28-script sampled read-only run plus its final
   report/export cleanup. No additional operator rerun is required to close it.
@@ -16,8 +16,8 @@ dated notes remain historical; they do not reopen accepted testing.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
 - Batch 3 offline safety checks passed 85/85 on Windows PowerShell 5.1, matching
-  the supplied package. This completes the synthetic safety stage; the license pair has since passed live testing; other
-  live account/device changes remain pending. The catalog retains 24 VERIFIED
+  the supplied package. This completes the synthetic safety stage; the license pair has since passed live testing. The owner closed batch 3;
+  no repeat batch-3 run is queued. The catalog retains 24 VERIFIED
   releases. See [the batch-3 safety record](qa/BATCH-3-OFFLINE-RESULTS.md).
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
@@ -54,19 +54,14 @@ Batch-2 implementation hashes match the returned runner metadata. The published
 1.0.0 files add a version comment only. See [batch-2 release evidence](qa/BATCH-2-1.0.0-VERIFICATION.md)
 for its eleven releases, exact source attribution and the resource exception.
 
-## Next work — batch 3
+## Next work — batch 4
 
-1. Compare remaining inventory with existing tests and owner confirmation.
-   An absent badge or HTML report alone does not mean a tool was untested.
-   Secure Score was bundled with the report retests; do not automatically rerun it.
-2. Prepare the remaining change workflows with offline preview/cancel/failure
-   tests first. Live changes need approved test objects and deliberate approval.
-   Those offline tests alone do not establish successful tenant changes.
-3. Keep the next upload minimal, reuse validated authentication, retain the
-   10-record/40-read safety bounds and save test metadata clearly. State sample
-   limits; do not infer full-tenant pagination from ten records.
-4. Test change/destructive tools only with explicitly approved test objects.
-   Preserve one approval per section, cancellation and resulting-state checks.
+1. Run one offline package covering 16 remaining tools and 103 cases. See
+   [batch-4 scope and instructions](../tools/batch-four/README.md).
+2. Review returned source hashes, case counts and the explicit per-tool scope.
+   These tests add behavioral evidence without claiming live authentication or
+   untested branches. Do not repeat accepted batches.
+3. Reconcile owner acceptance before changing VERIFIED records. Current total: 24.
 
 ## Remaining known work
 

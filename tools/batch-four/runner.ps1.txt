@@ -1,0 +1,101 @@
+#Requires -Version 5.1
+<#
+.SYNOPSIS
+FIELD KIT batch 4: one offline bundle, 16 tools, 103 behavioral checks.
+.DESCRIPTION
+Run with PowerShell from the jumpbox. No tenant input, sign-in, API key or admin
+rights are needed. Service/device operations use synthetic fixtures. A small
+temporary folder and JSON files are created and removed. Tests extract reviewed
+source functions/main blocks; the report records the tested scope per tool.
+Passing does not claim live authentication, permissions, or full tenant/device
+workflow verification. Existing batches are not repeated. One metadata-only JSON
+is saved under Desktop/FIELD-KIT-TESTS; raw output remains in this window.
+#>
+[CmdletBinding()]
+param([string]$ReportPath,[switch]$NoPause,[switch]$InventoryOnly)
+$ErrorActionPreference='Stop'
+$encoded='__PAYLOAD__'
+$packageHash='__HASH__'
+function Get-FKHash([byte[]]$Bytes){$sha=[Security.Cryptography.SHA256]::Create();try{return ([BitConverter]::ToString($sha.ComputeHash($Bytes))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}}
+function Save-FKReport {
+ $script:report.results=@($script:results.ToArray())
+ $text=$script:report|ConvertTo-Json -Depth 12
+ $temp=$script:reportPath+'.writing'
+ [IO.File]::WriteAllText($temp,$text,(New-Object Text.UTF8Encoding($false)))
+ Move-Item -LiteralPath $temp -Destination $script:reportPath -Force -ErrorAction Stop
+}
+function Invoke-FKBundle {
+ $work=$null;$script:report=$null
+ try {
+  Write-Host '';Write-Host 'F I E L D  //  K I T';Write-Host 'BATCH 4 / OFFLINE CHECKS 0.1.0';Write-Host ''
+  $inputStream=New-Object IO.MemoryStream(,[Convert]::FromBase64String($encoded));$gzip=New-Object IO.Compression.GzipStream($inputStream,[IO.Compression.CompressionMode]::Decompress);$output=New-Object IO.MemoryStream
+  try{$gzip.CopyTo($output);$bytes=$output.ToArray()}finally{$gzip.Dispose();$inputStream.Dispose();$output.Dispose()}
+  if((Get-FKHash $bytes) -cne $packageHash){throw 'Package integrity check failed.'}
+  $payload=[Text.Encoding]::UTF8.GetString($bytes)|ConvertFrom-Json
+  if($payload.schema -ne 1 -or $payload.suites.Count -ne __SUITE_COUNT__ -or ($payload.suites|Measure-Object cases -Sum).Sum -ne 103){throw 'Unexpected package inventory.'}
+  foreach($file in $payload.files){
+   if($file.path -notmatch '^(published-source/(identity|mailbox|incident-response|tenant|utility|endpoint)/|tools/|tests/)[A-Za-z0-9.-]+\.ps1$'){throw 'Invalid embedded path.'}
+   $bytes=[Convert]::FromBase64String($file.source)
+   if((Get-FKHash $bytes) -cne $file.sha256){throw ('Source integrity check failed: '+$file.path)}
+   $tokens=$null;$errors=$null;[void][Management.Automation.Language.Parser]::ParseInput(([Text.Encoding]::UTF8.GetString($bytes).TrimStart([char]0xFEFF)),[ref]$tokens,[ref]$errors)
+   if($errors.Count){throw ('Unsupported syntax: '+$file.path)}
+  }
+  Write-Host '16 tools / 103 cases. No tenant or device changes. No sign-in.'
+  Write-Host 'Service operations are simulated. Scope is recorded for each tool.'
+  Write-Host 'Only temporary fixtures and the small results JSON are written.'
+  if($InventoryOnly){Write-Host '[OK] Embedded source hashes and syntax checked. Tests were not run.';return}
+  if((Read-Host 'Run this offline batch? Type RUN').Trim() -cne 'RUN'){Write-Host 'Cancelled. Tests were not run.';return}
+  if(-not $ReportPath){$desktop=[Environment]::GetFolderPath('Desktop');if(-not $desktop){$desktop=[IO.Path]::GetTempPath()};$ReportPath=Join-Path (Join-Path $desktop 'FIELD-KIT-TESTS') ('batch-4-'+[guid]::NewGuid().ToString('N')+'.json')}
+  $script:reportPath=[IO.Path]::GetFullPath($ReportPath)
+  if(Test-Path -LiteralPath $script:reportPath){throw 'Report already exists. Choose a new filename.'}
+  $parent=Split-Path $script:reportPath -Parent
+  if(-not(Test-Path -LiteralPath $parent)){[void](New-Item -ItemType Directory -Path $parent -Force)}
+  $work=Join-Path ([IO.Path]::GetTempPath()) ('FIELD-KIT-B4-'+[guid]::NewGuid().ToString('N'))
+  [void](New-Item -ItemType Directory -Path $work)
+  foreach($file in $payload.files){
+   $destination=Join-Path $work $file.path;$folder=Split-Path $destination -Parent
+   if(-not(Test-Path -LiteralPath $folder)){[void](New-Item -ItemType Directory -Path $folder -Force)}
+   [IO.File]::WriteAllBytes($destination,[Convert]::FromBase64String($file.source))
+  }
+  $script:results=New-Object 'Collections.Generic.List[object]'
+  $script:report=[pscustomobject]@{runnerVersion='0.1.0';packageSha256=$packageHash;batch=4;mode='Offline behavioral checks';powershell=$PSVersionTable.PSVersion.ToString();liveChangesTested=$false;expectedTools=16;expectedCases=103;completedUtc=$null;batchIssue=$null;results=@()}
+  Save-FKReport
+  $details=@{};$index=0
+  foreach($suite in $payload.suites){
+   $index++;Write-Host '';Write-Host ('[{0}/{1}] {2}' -f $index,$payload.suites.Count,([IO.Path]::GetFileName($suite.source)))
+   $source=$payload.files|Where-Object {$_.path -eq $suite.source}|Select-Object -First 1
+   $status='Failed';$passed=0;$errorType=$null;$lines=New-Object 'Collections.Generic.List[string]';$watch=[Diagnostics.Stopwatch]::StartNew()
+   try{
+    & (Join-Path $work 'tests/batch-four.test.ps1') -Root $work -Focus $suite.id *>&1 |ForEach-Object {$lines.Add([string]$_)}
+    $passed=@($lines|Where-Object {$_ -like 'PASS: *'}).Count
+    if($passed -ne $suite.cases){throw ('Expected {0} cases; got {1}.' -f $suite.cases,$passed)}
+    $status='Passed'
+   }catch{$passed=@($lines|Where-Object {$_ -like 'PASS: *'}).Count;$errorType=$_.Exception.GetType().Name;$lines.Add($_.Exception.Message)}
+   $watch.Stop();$details[$index]=@($lines.ToArray())
+   [void]$script:results.Add([pscustomobject]@{file=[IO.Path]::GetFileName($suite.source);sourcePath=$suite.source;sourceSha256=$source.sha256;scope=$suite.scope;status=$status;passedCases=$passed;expectedCases=$suite.cases;errorType=$errorType;durationSeconds=[math]::Round($watch.Elapsed.TotalSeconds,2)})
+   Save-FKReport
+   if($status -eq 'Passed'){Write-Host ('[PASS] {0}/{1} cases' -f $passed,$suite.cases) -ForegroundColor Green}
+   else{Write-Host ('[FAIL] {0}/{1} cases. Details: D {2}' -f $passed,$suite.cases,$index) -ForegroundColor Red;Write-Host ($lines|Select-Object -Last 1)}
+  }
+  $script:report.completedUtc=[datetime]::UtcNow.ToString('o');Save-FKReport
+  Write-Host '';Write-Host '----- RESULTS -----'
+  for($i=0;$i -lt $script:results.Count;$i++){Write-Host ('{0,2}  {1,-6}  {2}' -f ($i+1),$script:results[$i].status,$script:results[$i].file)}
+  $failed=@($script:results|Where-Object {$_.status -ne 'Passed'}).Count
+  Write-Host '';Write-Host ('Complete: {0}/16 tools passed the listed offline checks.' -f (16-$failed))
+  Write-Host 'Live authentication, permissions and unlisted branches were not tested.'
+  Write-Host ('Report saved: '+$script:reportPath)
+  if(-not $NoPause){
+   Write-Host 'D <number> = details; ENTER = finish.'
+   do{$choice=(Read-Host 'Review').Trim();if(-not $choice){break};if($choice -match '^(?i)D\s*(\d+)$' -and $details.ContainsKey([int]$Matches[1])){$details[[int]$Matches[1]]|ForEach-Object {Write-Host $_}}else{Write-Host 'Use D 1 or press ENTER to finish.'}}while($true)
+  }
+  Write-Host '';Write-Host 'Batch 4 checks finished. Send back the results JSON.'
+ }catch{
+  Write-Host ('[FAIL] '+$_.Exception.Message) -ForegroundColor Red
+  if($script:report){$script:report.batchIssue=$_.Exception.GetType().Name;try{Save-FKReport}catch{Write-Host 'Could not save report.' -ForegroundColor Red}}
+ }finally{
+  if($work -and (Test-Path -LiteralPath $work)){Remove-Item -LiteralPath $work -Recurse -Force -ErrorAction SilentlyContinue}
+ }
+}
+if($MyInvocation.InvocationName -eq '.'){return}
+Invoke-FKBundle
+if(-not $NoPause){[void](Read-Host 'Press ENTER to close')}
