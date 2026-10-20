@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 #Requires -Version 5.1
 # =============================================================================
 # MSSP FIELD KIT — SET-SILICONVALLEYTHEME

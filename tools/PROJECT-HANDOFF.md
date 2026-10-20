@@ -1,3 +1,9 @@
+# Current checkpoint — native closeout accepted
+
+78/80 standalone scripts have owner-accepted, source-bound evidence. Seven visuals and both signing utilities passed native local review. The tested single-certificate array fixes are released; no other implementation change is bundled. See docs/qa/NATIVE-1.0.0-VERIFICATION.md.
+
+Git Security and the client-dependent resource-mailbox check remain available and unverified. Do not schedule another personal-PC resource test. Quick commands remain separate from runtime script verification. The lighter flag treatment is preview-only pending owner selection; live typography has not been changed by this release. Earlier checkpoints are historical.
+
 # Current checkpoint — accepted passes reconciled
 
 69 owner-accepted scoped VERIFIED releases. The reconciliation reuses matching earlier evidence; no new client runs are claimed. See docs/qa/ACCEPTED-TEST-RECONCILIATION.md. Secure Score has owner-reported attribution explicitly distinguished from the returned batch-1 manifest.

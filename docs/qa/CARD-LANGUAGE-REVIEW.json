@@ -2894,7 +2894,7 @@
       "file": "PROJECT-HANDOFF.md",
       "type": "Documentation",
       "path": "tools/PROJECT-HANDOFF.md",
-      "sha256": "f02f005cf7616fd322e25b4557134bd79949f79d431a3de9d8bb9f8bf0e49bdf",
+      "sha256": "dbe0182fa8563b8bd01262cdd53da2b84134c13adb6c76d2871d47b3fa6ac7b9",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -2939,7 +2939,7 @@
       "file": "attractor.ps1",
       "type": "Tool",
       "path": "toys/attractor.ps1",
-      "sha256": "2adc04c32a4d20820577933c463d07642c8be18f9de17c739a617ffcc55c68a5",
+      "sha256": "62820d67085b65d230bb28c4954259bd32bffd29f30aee8a6f9a2cdfcdfdc5aa",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -2948,7 +2948,7 @@
       "file": "rain.ps1",
       "type": "Tool",
       "path": "toys/rain.ps1",
-      "sha256": "46d67ed7200597e89de91d76dbbceedb63f202852972070f18db6ea13f56a53c",
+      "sha256": "67ff5ccad0eb69510576920fd8b36accfb606a2b1cd3ddeb1ae75f021fda9bc9",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -2957,7 +2957,7 @@
       "file": "static.ps1",
       "type": "Tool",
       "path": "toys/static.ps1",
-      "sha256": "4e4db77166ad4f60ceb3e50b5aa3685719d9d84805ec93dbd729005074d86e1f",
+      "sha256": "75f06611710a84f21522226fffebb3bf2e6a6b5d58383baf507ba6c69ddf19ca",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -2966,7 +2966,7 @@
       "file": "SIGN-FOLDER-SCRIPTS.ps1",
       "type": "Tool",
       "path": "tools/SIGN-FOLDER-SCRIPTS.ps1",
-      "sha256": "b8a7e1411654e6f9aa358cf6def278b5df4d1f4ccef8c4d18549609a32f50b27",
+      "sha256": "9b2d82c75017899485b76d227e323deca66c6660534e83c1238938f058d454a1",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -3011,7 +3011,7 @@
       "file": "SET-THEME-BASIC.ps1",
       "type": "Tool",
       "path": "toys/SET-THEME-BASIC.ps1",
-      "sha256": "a3959c764ee2c0b4e155f89b5cf28faed7db74f54f2b277e2152b453c392827f",
+      "sha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -3020,7 +3020,7 @@
       "file": "SET-THEME-COBALT.ps1",
       "type": "Tool",
       "path": "toys/SET-THEME-COBALT.ps1",
-      "sha256": "01b14b7f32a176f6f107ea73c1421a40d967dd634957f2fb849e94bedab92347",
+      "sha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -3029,7 +3029,7 @@
       "file": "SET-THEME-SEAGLASS.ps1",
       "type": "Tool",
       "path": "toys/SET-THEME-SEAGLASS.ps1",
-      "sha256": "4b67f87297ce80e2f4f34d4bade7f784005ee4788686046968022e075df167c0",
+      "sha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -3038,7 +3038,7 @@
       "file": "SET-THEME-SILICON-VALLEY.ps1",
       "type": "Tool",
       "path": "toys/SET-THEME-SILICON-VALLEY.ps1",
-      "sha256": "f8de1e1fc05f78dbabfdaf6d156ebbdd13049cc2ff7067e177e3c80bb63050aa",
+      "sha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -3047,7 +3047,7 @@
       "file": "MANAGE-CERT-SIGNATURES.ps1",
       "type": "Tool",
       "path": "tools/MANAGE-CERT-SIGNATURES.ps1",
-      "sha256": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
+      "sha256": "11544fc1bdedfe8e1e7ff69c1abb084cd5001132c40178782bd21281150c2cb8",
       "status": "Ready",
       "languageReviewed": true
     }

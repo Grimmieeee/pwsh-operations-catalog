@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 $script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # static.ps1
 # Standalone custom text terminal screensaver. Press Ctrl+C to stop.

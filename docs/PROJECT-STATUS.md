@@ -10,14 +10,14 @@ dated notes remain historical; they do not reopen accepted testing.
 - Batch 1 is closed: the main 28-script sampled read-only run plus its final
   report/export cleanup. No additional operator rerun is required to close it.
 - Batch 2 is closed with eleven completed workflows accepted by the owner.
-  Together with batch 1 and the IR trio, this brings the total to **69 VERIFIED
+  Together with batch 1 and the IR trio, this brings the total to **78 VERIFIED
   tools**. Room/Resource Access remains unverified: its supplied security-group
   target was not an active resource mailbox. Only that successful path remains.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
 - Batch 3 offline safety checks passed 85/85 on Windows PowerShell 5.1, matching
   the supplied package. This completes the synthetic safety stage; the license pair has since passed live testing. The owner closed batch 3;
-  no repeat batch-3 run is queued. The catalog retains 69 VERIFIED
+  no repeat batch-3 run is queued. The catalog retains 78 VERIFIED
   releases. See [the batch-3 safety record](qa/BATCH-3-OFFLINE-RESULTS.md).
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
@@ -56,9 +56,9 @@ for its eleven releases, exact source attribution and the resource exception.
 
 ## Current queue
 
-Accepted-pass reconciliation is complete: **69 VERIFIED tools**, each with recorded scope. See [evidence](qa/ACCEPTED-TEST-RECONCILIATION.md). No repeat upload is needed for these accepted cases.
+**78 VERIFIED standalone scripts**, each bound to its recorded test scope. Nine native passes are recorded in [local closeout evidence](qa/NATIVE-1.0.0-VERIFICATION.md). Both signing candidates include the tested single-certificate array fix.
 
-Deferred: six passing visual/theme tools for native local review; Rain; both certificate/signing wizards; Git Security; and Room/Resource Access with a valid mailbox target. That is 11 available tools, not missing downloads. Keep their current categories and return to them after operational passes are closed.
+Git Security remains skipped/deferred. Room/Resource Access remains client-dependent and unverified after a failed run; no repeat from the owner’s personal PC is queued. Both remain available with clear prerequisites. The 235 quick commands remain parsed/reviewed, not runtime verified.
 
 ## Remaining known work
 

@@ -1,0 +1,144 @@
+{
+  "basis": "Owner returned native closeout results and accepted the nine passes.",
+  "reportSha256": "dec45906f7fa8ed851afcea2c5c278fb71a6aafc2979530163229cf2feb39432",
+  "packageSha256": "9c0652b95adcb80d328ae59dac0b5b7379835b5acb92ff8fb53e8ea01c6bd146",
+  "launcherPowerShell": "5.1.26100.9711",
+  "childPowerShellVersion": "Not recorded; launcher prefers installed PowerShell 7, otherwise Windows PowerShell.",
+  "records": [
+    {
+      "file": "SET-THEME-BASIC.ps1",
+      "sourceSha256": "a3959c764ee2c0b4e155f89b5cf28faed7db74f54f2b277e2152b453c392827f",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/SET-THEME-BASIC.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
+      "previousPublicSha256": "a3959c764ee2c0b4e155f89b5cf28faed7db74f54f2b277e2152b453c392827f",
+      "ownerAccepted": true
+    },
+    {
+      "file": "SET-THEME-COBALT.ps1",
+      "sourceSha256": "01b14b7f32a176f6f107ea73c1421a40d967dd634957f2fb849e94bedab92347",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/SET-THEME-COBALT.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
+      "previousPublicSha256": "01b14b7f32a176f6f107ea73c1421a40d967dd634957f2fb849e94bedab92347",
+      "ownerAccepted": true
+    },
+    {
+      "file": "SET-THEME-SEAGLASS.ps1",
+      "sourceSha256": "4b67f87297ce80e2f4f34d4bade7f784005ee4788686046968022e075df167c0",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/SET-THEME-SEAGLASS.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
+      "previousPublicSha256": "4b67f87297ce80e2f4f34d4bade7f784005ee4788686046968022e075df167c0",
+      "ownerAccepted": true
+    },
+    {
+      "file": "SET-THEME-SILICON-VALLEY.ps1",
+      "sourceSha256": "f8de1e1fc05f78dbabfdaf6d156ebbdd13049cc2ff7067e177e3c80bb63050aa",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/SET-THEME-SILICON-VALLEY.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
+      "previousPublicSha256": "f8de1e1fc05f78dbabfdaf6d156ebbdd13049cc2ff7067e177e3c80bb63050aa",
+      "ownerAccepted": true
+    },
+    {
+      "file": "rain.ps1",
+      "sourceSha256": "46d67ed7200597e89de91d76dbbceedb63f202852972070f18db6ea13f56a53c",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": -1073741510,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/rain.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "67ff5ccad0eb69510576920fd8b36accfb606a2b1cd3ddeb1ae75f021fda9bc9",
+      "previousPublicSha256": "46d67ed7200597e89de91d76dbbceedb63f202852972070f18db6ea13f56a53c",
+      "ownerAccepted": true
+    },
+    {
+      "file": "static.ps1",
+      "sourceSha256": "4e4db77166ad4f60ceb3e50b5aa3685719d9d84805ec93dbd729005074d86e1f",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": -1073741510,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/static.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "75f06611710a84f21522226fffebb3bf2e6a6b5d58383baf507ba6c69ddf19ca",
+      "previousPublicSha256": "4e4db77166ad4f60ceb3e50b5aa3685719d9d84805ec93dbd729005074d86e1f",
+      "ownerAccepted": true
+    },
+    {
+      "file": "attractor.ps1",
+      "sourceSha256": "2adc04c32a4d20820577933c463d07642c8be18f9de17c739a617ffcc55c68a5",
+      "candidate": false,
+      "operatorVerdict": "Passed",
+      "childExitCode": -1073741510,
+      "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
+      "path": "toys/attractor.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "62820d67085b65d230bb28c4954259bd32bffd29f30aee8a6f9a2cdfcdfdc5aa",
+      "previousPublicSha256": "2adc04c32a4d20820577933c463d07642c8be18f9de17c739a617ffcc55c68a5",
+      "ownerAccepted": true
+    },
+    {
+      "file": "MANAGE-CERT-SIGNATURES.ps1",
+      "sourceSha256": "2f9c03cef0b13b273118f14635ca41f6065de0e2d29b602f2f0d846136e13ea3",
+      "candidate": true,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Operator-selected certificate/signing wizard steps; dummy signing folder; native approvals preserved.",
+      "path": "tools/MANAGE-CERT-SIGNATURES.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "11544fc1bdedfe8e1e7ff69c1abb084cd5001132c40178782bd21281150c2cb8",
+      "previousPublicSha256": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
+      "ownerAccepted": true
+    },
+    {
+      "file": "SIGN-FOLDER-SCRIPTS.ps1",
+      "sourceSha256": "320b592637badea8d8295797b05fa1b39373d087c51a06396d78cd397ee480bd",
+      "candidate": true,
+      "operatorVerdict": "Passed",
+      "childExitCode": 0,
+      "scope": "Operator-selected certificate/signing wizard steps; dummy signing folder; native approvals preserved.",
+      "path": "tools/SIGN-FOLDER-SCRIPTS.ps1",
+      "version": "1.0.0",
+      "releaseSha256": "9b2d82c75017899485b76d227e323deca66c6660534e83c1238938f058d454a1",
+      "previousPublicSha256": "b8a7e1411654e6f9aa358cf6def278b5df4d1f4ccef8c4d18549609a32f50b27",
+      "ownerAccepted": true
+    }
+  ],
+  "exceptions": [
+    {
+      "file": "git-security.ps1",
+      "sourceSha256": "3cba00d77603ffe94401fbda18953579b90492012be0446b08c6de806d5fe1e8",
+      "candidate": false,
+      "operatorVerdict": "Skipped",
+      "childExitCode": null,
+      "scope": "Native review of supplied export; temporary reviewed-history path."
+    },
+    {
+      "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+      "sourceSha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",
+      "candidate": false,
+      "operatorVerdict": "Failed",
+      "childExitCode": 0,
+      "scope": "Native read-only resource-mailbox review using supplied target."
+    }
+  ]
+}

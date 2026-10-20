@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 manage-code-signing-cert.ps1
 
 Code-signing certificate helper for jumpbox PowerShell tooling.
@@ -97,7 +100,7 @@ function Get-CodeSigningCerts {
 function Show-CodeSigningCerts {
     Section "CODE-SIGNING CERTIFICATES"
 
-    $certs = Get-CodeSigningCerts
+    $certs = @(Get-CodeSigningCerts)
 
     if ($certs.Count -eq 0) {
         WARN "No code-signing certificates found in CurrentUser\My"
@@ -118,7 +121,7 @@ function Show-CodeSigningCerts {
 }
 
 function Select-CodeSigningCert {
-    $certs = Show-CodeSigningCerts
+    $certs = @(Show-CodeSigningCerts)
 
     if ($certs.Count -eq 0) {
         return $null

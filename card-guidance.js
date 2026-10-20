@@ -124,7 +124,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
     "objective": "Shows who belongs to one or more Exchange Online distribution groups.",
     "input": "Distribution group names or email addresses, entered directly or in a TXT/CSV file.",
-    "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
+    "requires": "Exchange Online PowerShell and permission to read the target client tenant. Technical requirements: ExchangeOnlineManagement",
     "notes": "Focused Exchange Online lookup for one or more distribution groups. Accepts a direct group name/address or TXT/CSV input and can export verified member detail.",
     "startMode": "right-click",
     "completion": {
@@ -872,7 +872,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Does not change the terminal; output is demonstration data"
     ],
-    "sourceSha256": "a3959c764ee2c0b4e155f89b5cf28faed7db74f54f2b277e2152b453c392827f",
+    "sourceSha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
     "objective": "Preview plain terminal output and reusable message helpers.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Prints example messages and waits for Enter. No persistent theme changes. Example output is demonstration data.",
@@ -891,7 +891,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Changes this terminal and its execution policy; does not install a startup theme"
     ],
-    "sourceSha256": "01b14b7f32a176f6f107ea73c1421a40d967dd634957f2fb849e94bedab92347",
+    "sourceSha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
     "objective": "Preview the Cobalt color palette and message styles.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Changes this terminal’s appearance and sets Process execution policy to Bypass. Prints a palette reference; does not install a persistent theme. Requires an ANSI-capable terminal.",
@@ -912,7 +912,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Writes a startup theme to your PowerShell profile",
       "Changes execution policy for this PowerShell window"
     ],
-    "sourceSha256": "4b67f87297ce80e2f4f34d4bade7f784005ee4788686046968022e075df167c0",
+    "sourceSha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
     "objective": "Apply Sea Glass colors now and when PowerShell starts.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Writes CurrentUserAllHosts profile and replaces recognized theme blocks. Also sets Process execution policy to Bypass. Review your profile before running; remove the SEA GLASS THEME block to undo persistence.",
@@ -932,7 +932,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Writes a startup theme to your PowerShell profile"
     ],
-    "sourceSha256": "f8de1e1fc05f78dbabfdaf6d156ebbdd13049cc2ff7067e177e3c80bb63050aa",
+    "sourceSha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
     "objective": "Apply Silicon Valley colors, keyboard shortcuts, and a startup banner.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Rewrites recognized theme blocks in CurrentUserAllHosts profile. Also installs and displays a date-seeded daily password generator. Its output is predictable: do not use it as a password. Remove the SILICON VALLEY THEME block to undo persistence.",
@@ -1224,7 +1224,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "sourceSha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",
     "objective": "Shows who can access or book one or more room and equipment mailboxes.",
-    "input": "Room or equipment mailbox addresses; separate multiple addresses with commas.",
+    "input": "A real room or equipment mailbox address in the client tenant; separate multiple addresses with commas. A security group is not a mailbox.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
     "notes": "Focused review of room and equipment mailbox Full Access, in-policy booking principals, and resource delegates.",
     "startMode": "right-click",
@@ -1340,7 +1340,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "f02f005cf7616fd322e25b4557134bd79949f79d431a3de9d8bb9f8bf0e49bdf",
+    "sourceSha256": "dbe0182fa8563b8bd01262cdd53da2b84134c13adb6c76d2871d47b3fa6ac7b9",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
@@ -1392,7 +1392,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "notes": "Commands and operating boundaries for the standalone repository, security, handoff and execution-setup helpers."
   },
   "attractor.ps1": {
-    "sourceSha256": "2adc04c32a4d20820577933c463d07642c8be18f9de17c739a617ffcc55c68a5",
+    "sourceSha256": "62820d67085b65d230bb28c4954259bd32bffd29f30aee8a6f9a2cdfcdfdc5aa",
     "objective": "Run a slowly evolving fractal animation with a floating label and clock.",
     "notes": "Slowly evolving Clifford attractor with floating branding and a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
     "input": "No input needed. Use an interactive terminal; Ctrl+C stops the animation.",
@@ -1405,7 +1405,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "rain.ps1": {
-    "sourceSha256": "46d67ed7200597e89de91d76dbbceedb63f202852972070f18db6ea13f56a53c",
+    "sourceSha256": "67ff5ccad0eb69510576920fd8b36accfb606a2b1cd3ddeb1ae75f021fda9bc9",
     "objective": "Run colorful terminal rain with a floating label and clock.",
     "notes": "Dense neon character rain, intermittent signal effects and a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
     "input": "No input needed. Use an interactive terminal; Ctrl+C stops the animation.",
@@ -1418,7 +1418,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "static.ps1": {
-    "sourceSha256": "4e4db77166ad4f60ceb3e50b5aa3685719d9d84805ec93dbd729005074d86e1f",
+    "sourceSha256": "75f06611710a84f21522226fffebb3bf2e6a6b5d58383baf507ba6c69ddf19ca",
     "objective": "Run drifting dots and static with a floating label and clock.",
     "notes": "Sparse pulsing dots, subtle static and drifting branding with a 24-hour clock. Run in an interactive terminal, ideally 60 columns by 22 rows or larger. Ctrl+C stops it. Cosmetic terminal effects only; no network access or file writes. Not a screen lock.",
     "input": "No input needed. Use an interactive terminal; Ctrl+C stops the animation.",
@@ -1431,7 +1431,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "SIGN-FOLDER-SCRIPTS.ps1": {
-    "sourceSha256": "b8a7e1411654e6f9aa358cf6def278b5df4d1f4ccef8c4d18549609a32f50b27",
+    "sourceSha256": "9b2d82c75017899485b76d227e323deca66c6660534e83c1238938f058d454a1",
     "objective": "Sign reviewed PowerShell scripts with a certificate you choose.",
     "input": "Folder of reviewed scripts and a signing certificate; the script can offer to create a self-signed certificate.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
@@ -1457,7 +1457,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
-    "sourceSha256": "1ce17ac14c10b3af62b553e2fde13423c039f24edea5e55eb2a86133cd5d7066",
+    "sourceSha256": "11544fc1bdedfe8e1e7ff69c1abb084cd5001132c40178782bd21281150c2cb8",
     "objective": "Create and manage certificates used to sign PowerShell scripts.",
     "input": "Choose a certificate action. Have the certificate/file path and password ready when importing or exporting a private key.",
     "requires": "Windows PowerShell 5.1 or later",
