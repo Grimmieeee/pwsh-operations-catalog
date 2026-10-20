@@ -20,8 +20,8 @@ suite passed with 236 PASS assertions, including license selection and write/
 readback failure handling, result reporting, batch 4 safety paths, and batch 5
 setup/rendering functions. These tests use offline fixtures and mocks.
 
-Appearance refinements: FIELD, “The right tool”, and every part of BURNSID// use
-the same .85 wordmark color; “quickly.” and // KIT use the same .70 tone. Row
+Final appearance refinements: FIELD and every part of BURNSID// use
+the same .85 wordmark color; the entire tagline uses one muted .70 tone. Row
 hover/focus fades to the right while retaining the tracking line. Footer
 tracking is widened, and the browser title is “F I E L D  //  K I T”.
 

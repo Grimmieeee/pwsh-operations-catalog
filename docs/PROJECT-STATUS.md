@@ -17,8 +17,8 @@ dated notes remain historical; they do not reopen accepted testing.
   12px flags, 60px rows, centered shared search/catalog bounds and teal row
   guidance. Full Library and search align vertically. This replaces the
   oversized desktop experiment; see DESIGN-LOCK.md.
-- “The right tool quickly.” spans the FIELD // KIT wordmark width. The two
-  tagline tones match FIELD and // KIT exactly. The longer purpose statement
+- “The right tool quickly.” spans the FIELD // KIT wordmark width in one
+  solid muted tone, quieter than FIELD. The longer purpose statement
   is in About. On phones the tagline remains with the logo in the menu.
 - BURNSID// is one brighter text color with its size and weight preserved.
   No executable source or verification record changed; 78 marks remain.
