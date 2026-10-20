@@ -12,8 +12,11 @@ a version comment. See `docs/qa/BATCH-2-1.0.0-VERIFICATION.md`. Room/Resource
 Access remains unverified after an expected security-group/resource-mailbox
 target mismatch. Do not repeat the eleven accepted tools for that one gap.
 Next work is batch-3 preparation; the older batch-2 planning below is historical.
-Flags are brighter, with mint VERIFIED text. Alternative mark treatments are
-preview work and require owner selection before replacing the current design.
+The approved row flag group stays right-aligned: mint circled V + VERIFIED
+first, then extra space before the brighter risk labels. See DESIGN-LOCK.md.
+Batch 3's 85 offline safety cases passed on Windows PowerShell 5.1. The evidence
+is in docs/qa/BATCH-3-OFFLINE-RESULTS.json/.md. Live-change testing is the next
+stage; the offline run adds no functional VERIFIED release marks.
 
 Read [the current project status](../docs/PROJECT-STATUS.md) first. It supersedes
 older pending-testing instructions and test counts below; those dated sections

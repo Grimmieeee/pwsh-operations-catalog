@@ -1,0 +1,74 @@
+{
+  "basis": "Owner returned batch-3 offline safety report",
+  "reportSha256": "3929f39ab9325aa2ed55ce8d14820423dcd209816ec3359d9a2570464bab1dc8",
+  "packageSha256": "4326f9516da5ce5ce64c44dc50a5123d5ccb6621a7e02e2c2cb912367b44dc63",
+  "runnerVersion": "0.1.0",
+  "powershell": "5.1.14393.9611",
+  "mode": "Offline synthetic regression",
+  "liveChangesTested": false,
+  "passedCases": 85,
+  "results": [
+    {
+      "suite": "License removal",
+      "expectedCases": 19,
+      "passed": true,
+      "seconds": 1.6,
+      "errorType": null
+    },
+    {
+      "suite": "License assignment",
+      "expectedCases": 22,
+      "passed": true,
+      "seconds": 1.1,
+      "errorType": null
+    },
+    {
+      "suite": "Backup / printer / application update results",
+      "expectedCases": 15,
+      "passed": true,
+      "seconds": 0.4,
+      "errorType": null
+    },
+    {
+      "suite": "Dynamic group / password readback / expiry helper",
+      "expectedCases": 29,
+      "passed": true,
+      "seconds": 0.6,
+      "errorType": null
+    }
+  ],
+  "sources": [
+    {
+      "path": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
+      "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e"
+    },
+    {
+      "path": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
+      "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928"
+    },
+    {
+      "path": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+      "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153"
+    },
+    {
+      "path": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+      "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11"
+    },
+    {
+      "path": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
+      "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6"
+    },
+    {
+      "path": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
+      "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649"
+    },
+    {
+      "path": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
+      "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b"
+    },
+    {
+      "path": "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1",
+      "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3"
+    }
+  ]
+}

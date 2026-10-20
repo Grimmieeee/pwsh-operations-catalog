@@ -2554,7 +2554,7 @@
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
         </span>
-        <span class="result-flags">${rowTags(item)}${isVerifiedRelease(item) ? '<span class="result-verification">VERIFIED</span>' : ''}</span>
+        <span class="result-flags">${isVerifiedRelease(item) ? '<span class="result-verification"><span class="verification-seal" aria-hidden="true">V</span> VERIFIED</span>' : ''}<span class="result-risk-flags">${rowTags(item)}</span></span>
         <span class="result-arrow">›</span>
       </button>
     `;
