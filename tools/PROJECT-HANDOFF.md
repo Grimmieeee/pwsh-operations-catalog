@@ -1,3 +1,9 @@
+# Current checkpoint — accepted passes reconciled
+
+69 owner-accepted scoped VERIFIED releases. The reconciliation reuses matching earlier evidence; no new client runs are claimed. See docs/qa/ACCEPTED-TEST-RECONCILIATION.md. Secure Score has owner-reported attribution explicitly distinguished from the returned batch-1 manifest.
+
+11 deferred tools remain available: six passing theme/visual tools reserved for local native review, Rain, both certificate/signing wizards, Git Security and Room/Resource Access with a valid mailbox target. Do not rerun accepted operational batches. Visual tools stay in Toys; setup utilities stay available. Earlier checkpoints below are historical.
+
 # Current checkpoint — batch 4 accepted / batch 5 prepared
 
 39 VERIFIED tools. Batch 4: 15 passing sources accepted with explicit offline/function-level scope; Git Security failed and is deferred at the owner’s request. Published 1.0.0 sources add a version comment only. See docs/qa/BATCH-4-1.0.0-VERIFICATION.md. Batches 1–4 are closed except that named exception.

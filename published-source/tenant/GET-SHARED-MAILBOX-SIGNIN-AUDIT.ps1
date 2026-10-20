@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 shared-mailbox-signin-audit-clean.ps1
 
 Read-only shared mailbox sign-in audit.

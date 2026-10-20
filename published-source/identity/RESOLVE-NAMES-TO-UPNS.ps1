@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 .SYNOPSIS
     Resolve display names, UPNs, or email-style entries to Entra ID user principal names.
 

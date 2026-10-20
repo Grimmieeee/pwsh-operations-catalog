@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1
 
 Read-only tenant mailbox access audit.

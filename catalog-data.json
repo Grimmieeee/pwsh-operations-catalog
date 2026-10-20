@@ -3193,7 +3193,17 @@
     "objective": "Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.",
     "publishedPath": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
     "csv": "YES",
-    "summary": "YES"
+    "summary": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Disabled User Group Debt",
@@ -3455,7 +3465,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Account Status Review",
@@ -3483,7 +3503,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Find Accounts by Name or Email",
@@ -3607,7 +3637,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Remove User Group Memberships",
@@ -3668,7 +3708,16 @@
     "_order": 176,
     "objective": "Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.",
     "publishedPath": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
-    "summary": "YES"
+    "summary": "YES",
+    "verification": {
+      "version": "1.0.1",
+      "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped safety checks",
+      "scope": "15 synthetic group-creation cases: preview/cancel, tenant/context/scope checks, request failure and readback. No real group creation or auth tested.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Tenant Group Owners Review",
@@ -3796,7 +3845,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Shared Mailbox Membership Review",
@@ -4359,7 +4418,17 @@
     "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
     "summary": "NO",
     "objective": "Shows whether shared mailboxes are being signed into directly.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "App Registration Audit",
@@ -4383,7 +4452,17 @@
     "_order": 206,
     "summary": "NO",
     "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Conditional Access Gaps",
@@ -4407,7 +4486,17 @@
     "objective": "Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.",
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
-    "summary": "YES"
+    "summary": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Device Code Exposure Audit",
@@ -4431,7 +4520,17 @@
     "_order": 208,
     "summary": "NO",
     "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Guest App Consent Audit",
@@ -4455,7 +4554,17 @@
     "_order": 209,
     "summary": "NO",
     "objective": "Finds guest app consent and access that may need review.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "MFA Security Audit",
@@ -4479,7 +4588,17 @@
     "_order": 210,
     "summary": "NO",
     "objective": "Shows where MFA coverage or registered methods may leave gaps.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Secure Score Snapshot",
@@ -4503,7 +4622,17 @@
     "_order": 211,
     "summary": "NO",
     "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Owner-reported sampled follow-up acceptance",
+      "scope": "Owner-reported acceptance of the supplied sampled report follow-up. Secure Score was included in that bundle; no separate returned execution manifest or HTML report is available. Not a full-tenant or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Service Principal Owners Audit",
@@ -4527,7 +4656,17 @@
     "_order": 212,
     "summary": "NO",
     "objective": "Finds service principals with missing or unclear owners.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4551,7 +4690,17 @@
     "_order": 213,
     "summary": "NO",
     "objective": "Surfaces unusual sign-ins that deserve a closer look.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Transport Rules Audit",
@@ -4575,7 +4724,17 @@
     "objective": "Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.",
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
-    "summary": "YES"
+    "summary": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Join Computer to Domain",
@@ -4598,7 +4757,17 @@
     "_order": 215,
     "publishedPath": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
     "objective": "Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped local/setup checks",
+      "scope": "Simulated approved join workflow success/failure and reboot-pending messaging; no actual join or reboot.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Deploy Printer",
@@ -4620,7 +4789,17 @@
     "url": "",
     "_order": 216,
     "publishedPath": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
-    "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state."
+    "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped safety checks",
+      "scope": "5 synthetic default-printer method/result checks. No actual printer installation or device tested.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Back Up User Profile",
@@ -4642,7 +4821,17 @@
     "url": "",
     "_order": 217,
     "publishedPath": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
-    "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log."
+    "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped safety checks",
+      "scope": "6 synthetic Robocopy outcome/coverage cases. No actual profile backup or restore tested.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "PowerShell Readiness Check",
@@ -4987,7 +5176,17 @@
     "_order": 231,
     "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
     "summary": "NO",
-    "objective": "Shows available app updates and installs them after confirmation."
+    "objective": "Shows available app updates and installs them after confirmation.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped safety checks",
+      "scope": "4 simulated WinGet completion/review/cancellation cases. No actual application updates tested.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "PowerShell Script Template",
@@ -5521,7 +5720,17 @@
     "_order": 264,
     "summary": "NO",
     "objective": "Shows who has active Entra admin roles and flags disabled or stale admin accounts.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "OAuth Consent Audit",
@@ -5545,7 +5754,17 @@
     "_order": 265,
     "summary": "NO",
     "objective": "Shows delegated OAuth consent across the tenant and flags grants with high-risk scopes.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Guest User Hygiene Audit",
@@ -5569,7 +5788,17 @@
     "_order": 266,
     "summary": "NO",
     "objective": "Finds guest accounts that are stale, disabled, never used, or still waiting on invitation acceptance.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Tenant Licensing Audit",
@@ -5593,7 +5822,17 @@
     "_order": 267,
     "summary": "NO",
     "objective": "Shows tenant license usage and finds disabled users still licensed or enabled users with no license.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Tenant Inbox Rules Audit",
@@ -5617,7 +5856,17 @@
     "_order": 268,
     "summary": "NO",
     "objective": "Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "User Security Snapshot",
@@ -5735,7 +5984,17 @@
     "_order": 272,
     "summary": "NO",
     "objective": "Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled functional read-only batch",
+      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "Disabled User Mailbox Access Cleanup",
@@ -5852,7 +6111,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped safety checks",
+      "scope": "4 accepted-reset timestamp readback cases only: changed, unchanged, missing and denied. No actual reset, password generation or delivery tested.",
+      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
+    }
   },
   {
     "name": "IR: Recovery and Validation",

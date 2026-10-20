@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-ADMIN-ROLE-AUDIT.ps1
 
 Read-only tenant admin role audit.

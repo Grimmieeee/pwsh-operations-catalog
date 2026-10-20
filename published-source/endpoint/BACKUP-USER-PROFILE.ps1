@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 BACKUP-USER-PROFILE.ps1
 
 Endpoint profile backup helper.

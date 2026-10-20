@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-secure-score-snapshot-clean.ps1
 
 Read-only Microsoft Secure Score snapshot.

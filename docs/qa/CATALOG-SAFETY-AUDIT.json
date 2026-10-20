@@ -6,7 +6,7 @@
     "commands": 235,
     "references": 12,
     "pending": 11,
-    "operatorVerified": 39,
+    "operatorVerified": 69,
     "scopedReviews": 42
   },
   "entries": [
@@ -2897,39 +2897,39 @@
       "path": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "2c962dbc7d1ab56ef3a9968636e679c99ca482680ea7af4bdf859fb8a3c063ac",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 125,
+          "line": 128,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 371,
+          "line": 374,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 80,
+          "line": 83,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 90,
+          "line": 93,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 135,
+          "line": 138,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 85,
+          "line": 88,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3280,29 +3280,29 @@
       "path": "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "9f0560d35c0941ff0723d400129f20b345673e0d9b6e4c751de48529ca6f232c",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 102,
+          "line": 105,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 107,
+          "line": 110,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 112,
+          "line": 115,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 104,
+          "line": 107,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3319,34 +3319,34 @@
       "path": "published-source/identity/GET-ACCOUNT-STATUS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "4a6e6aed3b612556706c107b667911ef79a4c6a47074d7054ab907cc3ca3dbfc",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 333,
+          "line": 336,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 146,
+          "line": 149,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 157,
+          "line": 160,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 180,
+          "line": 183,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 151,
+          "line": 154,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3534,39 +3534,39 @@
       "path": "published-source/identity/GET-USER-GROUPS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "a423d1f10e9bcfee903c646d95cf5dbf2142eda04d014e0521a29114c1b55469",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 703,
+          "line": 706,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 77,
+          "line": 80,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 140,
+          "line": 143,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 157,
+          "line": 160,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 244,
+          "line": 247,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 82,
+          "line": 85,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3647,8 +3647,8 @@
       "kind": "PowerShell",
       "access": "Change",
       "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
         "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
         "state": "Automated tests passed",
@@ -3966,34 +3966,34 @@
       "path": "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 339,
+          "line": 342,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 59,
+          "line": 62,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 74,
+          "line": 77,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 75,
+          "line": 78,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 64,
+          "line": 67,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4632,11 +4632,11 @@
       "path": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+        "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -4656,72 +4656,72 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 236,
+          "line": 239,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 388,
+          "line": 391,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 329,
+          "line": 332,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 334,
+          "line": 337,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 138,
+          "line": 141,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 150,
+          "line": 153,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 166,
+          "line": 169,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 273,
+          "line": 276,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 275,
+          "line": 278,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 283,
+          "line": 286,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 284,
+          "line": 287,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 339,
+          "line": 342,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 144,
+          "line": 147,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 277,
+          "line": 280,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4738,11 +4738,11 @@
       "path": "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+        "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -4763,37 +4763,37 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 245,
+          "line": 248,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 384,
+          "line": 387,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 291,
+          "line": 294,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 147,
+          "line": 150,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 159,
+          "line": 162,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 175,
+          "line": 178,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 153,
+          "line": 156,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4810,11 +4810,11 @@
       "path": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+        "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -4834,52 +4834,52 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 262,
+          "line": 265,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 405,
+          "line": 408,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 306,
+          "line": 309,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 143,
+          "line": 146,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 153,
+          "line": 156,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 165,
+          "line": 168,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 177,
+          "line": 180,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 193,
+          "line": 196,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 148,
+          "line": 151,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 171,
+          "line": 174,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4896,269 +4896,11 @@
       "path": "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
-        "state": "Automated tests passed",
-        "scope": [
-          "Tenant/account binding and process-scoped delegated authentication",
-          "Successful empty, malformed, denied and interrupted collection reads",
-          "Graph URI interpolation and card input alignment"
-        ],
-        "tests": [
-          "7 offline tenant/account cases",
-          "4 offline collection cases",
-          "1 user resolver fixture"
-        ],
-        "remaining": [
-          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
-        ]
-      },
-      "signals": [
-        {
-          "id": "FIRST_MATCH",
-          "line": 264,
-          "note": "Review identity ambiguity and actual call sites."
-        },
-        {
-          "id": "COMPLETION_MESSAGE",
-          "line": 387,
-          "note": "Review whether failure and unavailable states remain visible."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 311,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 141,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 155,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 167,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 179,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 195,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 150,
-          "note": "Distinguish printed directions from executable installs."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 173,
-          "note": "Distinguish printed directions from executable installs."
-        }
-      ],
-      "authentication": {
-        "graph": true,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Guest App Consent Audit",
-      "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
-      "path": "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1",
-      "kind": "PowerShell",
-      "access": "Read-only",
-      "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
-      "review": {
-        "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
-        "state": "Automated tests passed",
-        "scope": [
-          "Tenant/account binding and process-scoped delegated authentication",
-          "Successful empty, malformed, denied and interrupted collection reads",
-          "Graph URI interpolation and card input alignment"
-        ],
-        "tests": [
-          "7 offline tenant/account cases",
-          "4 offline collection cases",
-          "1 user resolver fixture"
-        ],
-        "remaining": [
-          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
-        ]
-      },
-      "signals": [
-        {
-          "id": "FIRST_MATCH",
-          "line": 262,
-          "note": "Review identity ambiguity and actual call sites."
-        },
-        {
-          "id": "COMPLETION_MESSAGE",
-          "line": 405,
-          "note": "Review whether failure and unavailable states remain visible."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 306,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 139,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 153,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 165,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 177,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 193,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 148,
-          "note": "Distinguish printed directions from executable installs."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 171,
-          "note": "Distinguish printed directions from executable installs."
-        }
-      ],
-      "authentication": {
-        "graph": true,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "MFA Security Audit",
-      "file": "GET-MFA-SECURITY-AUDIT.ps1",
-      "path": "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1",
-      "kind": "PowerShell",
-      "access": "Read-only",
-      "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
-      "review": {
-        "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
-        "state": "Automated tests passed",
-        "scope": [
-          "Tenant/account binding and process-scoped delegated authentication",
-          "Successful empty, malformed, denied and interrupted collection reads",
-          "Graph URI interpolation and card input alignment"
-        ],
-        "tests": [
-          "7 offline tenant/account cases",
-          "4 offline collection cases",
-          "1 user resolver fixture"
-        ],
-        "remaining": [
-          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
-        ]
-      },
-      "signals": [
-        {
-          "id": "FIRST_MATCH",
-          "line": 270,
-          "note": "Review identity ambiguity and actual call sites."
-        },
-        {
-          "id": "COMPLETION_MESSAGE",
-          "line": 493,
-          "note": "Review whether failure and unavailable states remain visible."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 353,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 147,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 161,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 173,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 185,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 201,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 156,
-          "note": "Distinguish printed directions from executable installs."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 179,
-          "note": "Distinguish printed directions from executable installs."
-        }
-      ],
-      "authentication": {
-        "graph": true,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Secure Score Snapshot",
-      "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
-      "path": "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1",
-      "kind": "PowerShell",
-      "access": "Read-only",
-      "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
-      "review": {
-        "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+        "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -5183,17 +4925,12 @@
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 406,
+          "line": 390,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 317,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 328,
+          "line": 314,
           "note": "Review interactive host lifetime."
         },
         {
@@ -5240,16 +4977,16 @@
       "resultStates": []
     },
     {
-      "name": "Service Principal Owners Audit",
-      "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
-      "path": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "name": "Guest App Consent Audit",
+      "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+      "path": "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+        "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -5269,7 +5006,179 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 263,
+          "line": 265,
+          "note": "Review identity ambiguity and actual call sites."
+        },
+        {
+          "id": "COMPLETION_MESSAGE",
+          "line": 408,
+          "note": "Review whether failure and unavailable states remain visible."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 309,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 142,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 156,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 168,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 180,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 196,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 151,
+          "note": "Distinguish printed directions from executable installs."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 174,
+          "note": "Distinguish printed directions from executable installs."
+        }
+      ],
+      "authentication": {
+        "graph": true,
+        "exchange": false,
+        "ad": false
+      },
+      "resultStates": []
+    },
+    {
+      "name": "MFA Security Audit",
+      "file": "GET-MFA-SECURITY-AUDIT.ps1",
+      "path": "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1",
+      "kind": "PowerShell",
+      "access": "Read-only",
+      "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
+        "state": "Automated tests passed",
+        "scope": [
+          "Tenant/account binding and process-scoped delegated authentication",
+          "Successful empty, malformed, denied and interrupted collection reads",
+          "Graph URI interpolation and card input alignment"
+        ],
+        "tests": [
+          "7 offline tenant/account cases",
+          "4 offline collection cases",
+          "1 user resolver fixture"
+        ],
+        "remaining": [
+          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+        ]
+      },
+      "signals": [
+        {
+          "id": "FIRST_MATCH",
+          "line": 273,
+          "note": "Review identity ambiguity and actual call sites."
+        },
+        {
+          "id": "COMPLETION_MESSAGE",
+          "line": 496,
+          "note": "Review whether failure and unavailable states remain visible."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 356,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 150,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 164,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 176,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 188,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 204,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 159,
+          "note": "Distinguish printed directions from executable installs."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 182,
+          "note": "Distinguish printed directions from executable installs."
+        }
+      ],
+      "authentication": {
+        "graph": true,
+        "exchange": false,
+        "ad": false
+      },
+      "resultStates": []
+    },
+    {
+      "name": "Secure Score Snapshot",
+      "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+      "path": "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1",
+      "kind": "PowerShell",
+      "access": "Read-only",
+      "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
+        "state": "Automated tests passed",
+        "scope": [
+          "Tenant/account binding and process-scoped delegated authentication",
+          "Successful empty, malformed, denied and interrupted collection reads",
+          "Graph URI interpolation and card input alignment"
+        ],
+        "tests": [
+          "7 offline tenant/account cases",
+          "4 offline collection cases",
+          "1 user resolver fixture"
+        ],
+        "remaining": [
+          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+        ]
+      },
+      "signals": [
+        {
+          "id": "FIRST_MATCH",
+          "line": 270,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
@@ -5279,42 +5188,133 @@
         },
         {
           "id": "HOST_EXIT",
-          "line": 307,
+          "line": 320,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 331,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 140,
+          "line": 147,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 154,
+          "line": 161,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 166,
+          "line": 173,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 178,
+          "line": 185,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 194,
+          "line": 201,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 149,
+          "line": 156,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 172,
+          "line": 179,
+          "note": "Distinguish printed directions from executable installs."
+        }
+      ],
+      "authentication": {
+        "graph": true,
+        "exchange": false,
+        "ad": false
+      },
+      "resultStates": []
+    },
+    {
+      "name": "Service Principal Owners Audit",
+      "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "path": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "kind": "PowerShell",
+      "access": "Read-only",
+      "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
+      "review": {
+        "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
+        "state": "Automated tests passed",
+        "scope": [
+          "Tenant/account binding and process-scoped delegated authentication",
+          "Successful empty, malformed, denied and interrupted collection reads",
+          "Graph URI interpolation and card input alignment"
+        ],
+        "tests": [
+          "7 offline tenant/account cases",
+          "4 offline collection cases",
+          "1 user resolver fixture"
+        ],
+        "remaining": [
+          "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+          "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+        ]
+      },
+      "signals": [
+        {
+          "id": "FIRST_MATCH",
+          "line": 266,
+          "note": "Review identity ambiguity and actual call sites."
+        },
+        {
+          "id": "COMPLETION_MESSAGE",
+          "line": 412,
+          "note": "Review whether failure and unavailable states remain visible."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 310,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 143,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 157,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 169,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 181,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 197,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 152,
+          "note": "Distinguish printed directions from executable installs."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 175,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -5331,11 +5331,11 @@
       "path": "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+        "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -5356,47 +5356,47 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 271,
+          "line": 274,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "HOST_EXIT",
-          "line": 346,
+          "line": 349,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 148,
+          "line": 151,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 162,
+          "line": 165,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 174,
+          "line": 177,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 186,
+          "line": 189,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 202,
+          "line": 205,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 157,
+          "line": 160,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 180,
+          "line": 183,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -5413,39 +5413,39 @@
       "path": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "38ca6289d157f33a57a60b316a3a0f1de15de8f07310b71eb977d1efbe86609f",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 234,
+          "line": 237,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 195,
+          "line": 198,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 132,
+          "line": 135,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 143,
+          "line": 146,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 144,
+          "line": 147,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 137,
+          "line": 140,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -5462,34 +5462,34 @@
       "path": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "5e089c864ee6a869b050ccdfd7b6666b683eae845d188f8d1e3ba3c27d4d8f12",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 180,
+          "line": 183,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "HOST_EXIT",
-          "line": 200,
+          "line": 203,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 289,
+          "line": 292,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 297,
+          "line": 300,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 263,
+          "line": 266,
           "note": "Distinguish optional probes from hidden failures."
         }
       ],
@@ -5510,11 +5510,11 @@
       "path": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+        "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
         "state": "Automated tests passed",
         "scope": [
           "Default printer API and return values",
@@ -5532,62 +5532,62 @@
       "signals": [
         {
           "id": "HOST_EXIT",
-          "line": 212,
+          "line": 215,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 238,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 247,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 257,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 278,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 292,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "HOST_EXIT",
-          "line": 306,
-          "note": "Review interactive host lifetime."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 217,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
-          "line": 227,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
           "line": 241,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 250,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 260,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 281,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 295,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "HOST_EXIT",
+          "line": 309,
+          "note": "Review interactive host lifetime."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 220,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 252,
+          "line": 230,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 261,
+          "line": 244,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 255,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 264,
           "note": "Distinguish optional probes from hidden failures."
         }
       ],
@@ -5604,11 +5604,11 @@
       "path": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+        "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
         "state": "Automated tests passed",
         "scope": [
           "Native Robocopy invocation and return-code classification",
@@ -5625,22 +5625,22 @@
       "signals": [
         {
           "id": "HOST_EXIT",
-          "line": 241,
+          "line": 244,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 251,
+          "line": 254,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 263,
+          "line": 266,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 284,
+          "line": 287,
           "note": "Review interactive host lifetime."
         }
       ],
@@ -5980,11 +5980,11 @@
       "path": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+        "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
         "state": "Automated tests passed",
         "scope": [
           "Update and post-update command results",
@@ -6123,11 +6123,11 @@
       "path": "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+        "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -6147,42 +6147,42 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 289,
+          "line": 292,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "FIRST_MATCH",
-          "line": 304,
+          "line": 307,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 408,
+          "line": 411,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 350,
+          "line": 353,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 189,
+          "line": 192,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 201,
+          "line": 204,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 217,
+          "line": 220,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 195,
+          "line": 198,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6199,11 +6199,11 @@
       "path": "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+        "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -6223,42 +6223,42 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 288,
+          "line": 291,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "FIRST_MATCH",
-          "line": 303,
+          "line": 306,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 400,
+          "line": 403,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 349,
+          "line": 352,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 188,
+          "line": 191,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 200,
+          "line": 203,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 216,
+          "line": 219,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 194,
+          "line": 197,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6275,11 +6275,11 @@
       "path": "published-source/tenant/GET-GUEST-USER-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+        "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -6299,42 +6299,42 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 289,
+          "line": 292,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "FIRST_MATCH",
-          "line": 304,
+          "line": 307,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 410,
+          "line": 413,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 350,
+          "line": 353,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 189,
+          "line": 192,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 201,
+          "line": 204,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 217,
+          "line": 220,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 195,
+          "line": 198,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6351,11 +6351,11 @@
       "path": "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
-      "family": "Read-only workflows",
-      "state": "Automated tests passed",
+      "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+        "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
         "state": "Automated tests passed",
         "scope": [
           "Tenant/account binding and process-scoped delegated authentication",
@@ -6375,42 +6375,42 @@
       "signals": [
         {
           "id": "FIRST_MATCH",
-          "line": 287,
+          "line": 290,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "FIRST_MATCH",
-          "line": 302,
+          "line": 305,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 419,
+          "line": 422,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 350,
+          "line": 353,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 187,
+          "line": 190,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 199,
+          "line": 202,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 215,
+          "line": 218,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 193,
+          "line": 196,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6427,49 +6427,49 @@
       "path": "published-source/tenant/GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "85a1c9164ba0d0c0661b6c3e7ecb197f4ac7ab2865d3436de3a5f48f76844880",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 334,
+          "line": 337,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "HOST_EXIT",
-          "line": 266,
+          "line": 269,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 177,
+          "line": 180,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 179,
+          "line": 182,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 187,
+          "line": 190,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 188,
+          "line": 191,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 274,
+          "line": 277,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 181,
+          "line": 184,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6664,24 +6664,24 @@
       "path": "published-source/tenant/GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "79cf872432e023f6eb0036e355a71fab156ec79489e84344be7eee0b82e68c15",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 59,
+          "line": 62,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 60,
+          "line": 63,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 54,
+          "line": 57,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6886,11 +6886,11 @@
       "path": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
-      "family": "Change workflows",
-      "state": "Source reviewed",
+      "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+        "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
         "state": "Source reviewed",
         "scope": [
           "Accepted reset with unavailable timestamp read",
@@ -6908,22 +6908,22 @@
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 155,
-          "note": "Distinguish optional probes from hidden failures."
-        },
-        {
-          "id": "QUIET_ERROR",
           "line": 158,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 417,
+          "line": 161,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 420,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 65,
+          "line": 68,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -8687,14 +8687,14 @@
       "path": "tools/git-handoff.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "6783255cf5418e432da3677406f281460ab6538a1628f47b5c9ea3b558de70a6",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "PROCESS_START",
-          "line": 251,
+          "line": 254,
           "note": "Review external input and invocation arguments."
         }
       ],
@@ -8711,7 +8711,7 @@
       "path": "tools/PROJECT-HANDOFF.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "39ca490e7b85c45cd0fa183680e732bffeab4003105b5fbf340cc477a1687dac",
+      "sha256": "f02f005cf7616fd322e25b4557134bd79949f79d431a3de9d8bb9f8bf0e49bdf",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -8729,9 +8729,9 @@
       "path": "tools/git-repo.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "4ec1ebc30c976a410c5dc616f0671727c34278b777b323e671189553f0b1aa7a",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [],
       "authentication": {
@@ -8951,49 +8951,49 @@
       "path": "tools/GET-TERMINAL-READINESS-CHECK.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "e9d4d5f1974f2af40c01c23e4e4cf925f232baba8bd7f9b063f0c78110958c01",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 330,
+          "line": 333,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 351,
+          "line": 354,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 364,
+          "line": 367,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 373,
+          "line": 376,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 392,
+          "line": 395,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 364,
-          "note": "Distinguish printed directions from executable installs."
-        },
-        {
-          "id": "LOCAL_INSTALL",
-          "line": 365,
+          "line": 367,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
           "line": 368,
+          "note": "Distinguish printed directions from executable installs."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 371,
           "note": "Distinguish printed directions from executable installs."
         }
       ],

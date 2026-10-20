@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-GUEST-USER-AUDIT.ps1
 
 Read-only guest user audit.

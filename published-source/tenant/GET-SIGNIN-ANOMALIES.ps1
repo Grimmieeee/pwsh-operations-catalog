@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-signin-anomalies-audit-clean.ps1
 
 Read-only tenant sign-in anomaly audit.

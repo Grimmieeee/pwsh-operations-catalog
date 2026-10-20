@@ -1,6 +1,6 @@
 {
   "BACKUP-USER-PROFILE.ps1": {
-    "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+    "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
     "state": "Automated tests passed",
     "scope": [
       "Native Robocopy invocation and return-code classification",
@@ -30,7 +30,7 @@
     ]
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
-    "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+    "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
     "state": "Automated tests passed",
     "scope": [
       "Default printer API and return values",
@@ -46,7 +46,7 @@
     ]
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
-    "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+    "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -64,7 +64,7 @@
     ]
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
-    "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+    "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -83,7 +83,7 @@
     ]
   },
   "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
-    "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+    "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -101,7 +101,7 @@
     ]
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
-    "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
+    "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -119,7 +119,7 @@
     ]
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
-    "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
+    "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -137,7 +137,7 @@
     ]
   },
   "GET-GUEST-USER-AUDIT.ps1": {
-    "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+    "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -155,7 +155,7 @@
     ]
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
-    "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
+    "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -173,7 +173,7 @@
     ]
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
-    "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+    "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -191,7 +191,7 @@
     ]
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
-    "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+    "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -209,7 +209,7 @@
     ]
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
-    "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+    "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -227,7 +227,7 @@
     ]
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
-    "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+    "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -245,7 +245,7 @@
     ]
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
-    "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+    "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -264,7 +264,7 @@
     ]
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
-    "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+    "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
     "state": "Automated tests passed",
     "scope": [
       "Tenant/account binding and process-scoped delegated authentication",
@@ -389,7 +389,7 @@
     ]
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
-    "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+    "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
     "state": "Source reviewed",
     "scope": [
       "Accepted reset with unavailable timestamp read",
@@ -432,7 +432,7 @@
     }
   },
   "UPDATE-WINDOWS-APPS.ps1": {
-    "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+    "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
     "state": "Automated tests passed",
     "scope": [
       "Update and post-update command results",

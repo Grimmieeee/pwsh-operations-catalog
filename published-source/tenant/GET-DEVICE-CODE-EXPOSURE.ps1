@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-device-code-exposure-audit-clean.ps1
 
 Read-only device code exposure audit.

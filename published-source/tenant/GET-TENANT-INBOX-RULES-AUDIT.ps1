@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-TENANT-INBOX-RULES-AUDIT.ps1
 
 Read-only tenant mailbox inbox rules audit.
