@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 $script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # Standalone terminal fractal screensaver with floating/flickering custom text logo + clock. Ctrl+C exits.
 $ErrorActionPreference = 'Stop'

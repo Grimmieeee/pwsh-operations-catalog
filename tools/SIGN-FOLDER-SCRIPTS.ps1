@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 sign-folder-scripts.ps1
 
 Signs all .ps1 files under a selected folder.
@@ -72,7 +75,7 @@ function Select-CodeSigningCert {
         WARN "Certificate thumbprint not found in CurrentUser\My"
     }
 
-    $certs = Get-CodeSigningCerts
+    $certs = @(Get-CodeSigningCerts)
 
     if ($certs.Count -eq 0) {
         return $null

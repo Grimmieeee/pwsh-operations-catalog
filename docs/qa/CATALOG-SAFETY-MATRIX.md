@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":69,"scopedReviews":42}
+{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":78,"scopedReviews":42}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|
@@ -73,16 +73,16 @@ Generated from current source hashes. Automated-test states describe the listed 
 | git-repo.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
 | git-security.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
 | set-execution.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
-| attractor.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| rain.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| static.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| SIGN-FOLDER-SCRIPTS.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
+| attractor.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| rain.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| static.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| SIGN-FOLDER-SCRIPTS.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
 | GET-TERMINAL-READINESS-CHECK.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
 | INVOKE-FILE-INVENTORY.ps1 | Verified read-only workflows | Operator verified — exact version | Synthetic local fixture or host prerequisite inspection; Test source matched returned runner manifest; release adds a version comment only |
 | INVOKE-MAP-KIT.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
 | INVOKE-SESSION-RESET.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
-| SET-THEME-BASIC.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| SET-THEME-COBALT.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| SET-THEME-SEAGLASS.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| SET-THEME-SILICON-VALLEY.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
-| MANAGE-CERT-SIGNATURES.ps1 | Local tools / toys | Needs review | Parser/integrity screening; detailed source review remains |
+| SET-THEME-BASIC.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| SET-THEME-COBALT.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| SET-THEME-SEAGLASS.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| SET-THEME-SILICON-VALLEY.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| MANAGE-CERT-SIGNATURES.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |

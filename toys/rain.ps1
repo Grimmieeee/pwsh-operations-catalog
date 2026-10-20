@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 $script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # rain.ps1
 # PowerShell 7.6.6 / Windows Terminal
