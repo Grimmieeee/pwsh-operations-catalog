@@ -4,7 +4,16 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
-## October 19, 2026 — current state: batch 1 closed
+## October 19, 2026 — current state: batches 1 and 2 closed
+
+Batch 2 adds eleven owner-accepted VERIFIED releases: 22 total. The supplied
+runner metadata identifies their tested source hashes; release 1.0.0 adds only
+a version comment. See `docs/qa/BATCH-2-1.0.0-VERIFICATION.md`. Room/Resource
+Access remains unverified after an expected security-group/resource-mailbox
+target mismatch. Do not repeat the eleven accepted tools for that one gap.
+Next work is batch-3 preparation; the older batch-2 planning below is historical.
+Flags are brighter, with mint VERIFIED text. Alternative mark treatments are
+preview work and require owner selection before replacing the current design.
 
 Read [the current project status](../docs/PROJECT-STATUS.md) first. It supersedes
 older pending-testing instructions and test counts below; those dated sections

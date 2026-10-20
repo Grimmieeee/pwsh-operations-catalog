@@ -1195,7 +1195,16 @@
     "output": "",
     "code": "",
     "related": [],
-    "url": ""
+    "url": "",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Folder Map",
@@ -1267,7 +1276,7 @@
     "area": "Toys",
     "subarea": "Themes",
     "objective": "Preview the Cobalt color palette and message styles.",
-    "notes": "Changes this terminal\u2019s appearance and sets Process execution policy to Bypass. Prints a palette reference; does not install a persistent theme. Requires an ANSI-capable terminal.",
+    "notes": "Changes this terminal’s appearance and sets Process execution policy to Bypass. Prints a palette reference; does not install a persistent theme. Requires an ANSI-capable terminal.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "toolFacts": [],
     "access": "Change",

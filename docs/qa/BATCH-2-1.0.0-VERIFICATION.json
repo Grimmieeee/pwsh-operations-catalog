@@ -1,0 +1,163 @@
+{
+  "basis": "Owner explicitly accepted eleven completed batch-2 workflows as VERIFIED.",
+  "runnerVersion": "0.5.0",
+  "packageSha256": "9c608095c3743b804728bb9de82be68a3dee7045df332a4a4dba256543194dd8",
+  "reportSha256": "006e973aaab9edf3c473a84434a3cfd188036fa7b1d173c76d4a9e579187022e",
+  "sampleLimit": 10,
+  "requestBudget": 40,
+  "rawClientDataIncluded": false,
+  "records": [
+    {
+      "file": "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "path": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "e4046dacdf671ce73b213bc570b74cc238b9ea60d1bf5ba5a3c5f50dc65f07a9",
+      "releaseSha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 2,
+      "readFailures": 0,
+      "scope": "Adapted sampled read-only workflow; ten records / forty reads",
+      "ownerAccepted": true
+    },
+    {
+      "file": "GET-GROUP-MEMBERS.ps1",
+      "path": "published-source/identity/GET-GROUP-MEMBERS.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "ba29a8c30f170c87b08a453fdfe73f6108bddfc69033f17a6270875ecc684dbd",
+      "releaseSha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 2,
+      "readFailures": 0,
+      "scope": "Adapted sampled read-only workflow; ten records / forty reads",
+      "ownerAccepted": true
+    },
+    {
+      "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "path": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "76338d697f76d557d8f6e9ff4399e9c2569de8f78d565e79579e00026c72c28f",
+      "releaseSha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 2,
+      "readFailures": 0,
+      "scope": "Adapted sampled read-only workflow; ten records / forty reads",
+      "ownerAccepted": true
+    },
+    {
+      "file": "IR-GET-IP-TRACE.ps1",
+      "path": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "cbb713d514fa4bef79374e051e68cd384e73caff62775e8194fa624b3197386c",
+      "releaseSha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 2,
+      "readFailures": 0,
+      "scope": "Adapted sampled read-only workflow; ten records / forty reads",
+      "ownerAccepted": true
+    },
+    {
+      "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "path": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "dbb53c592a523fdf2a2c94dd166296afe6a9f482ec4372c2d3f551af56ea797e",
+      "releaseSha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 2,
+      "readFailures": 0,
+      "scope": "Adapted sampled read-only workflow; ten records / forty reads",
+      "ownerAccepted": true
+    },
+    {
+      "file": "IR-GET-TIMELINE-BUILDER.ps1",
+      "path": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "fb6e000a57b548f59fbc4f9317df3dac0ab61756c97223784d7b2e54a6d70c40",
+      "releaseSha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    },
+    {
+      "file": "IR-GET-TOKEN-DECODE.ps1",
+      "path": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "179e01c20af4ad72faabd69c2567ccff9fa1d40a5ca3acf497544ba6d4849372",
+      "releaseSha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    },
+    {
+      "file": "TEST-POWERSHELL-READINESS.ps1",
+      "path": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "b38f3eb165ac360eef390990dd6d2b4ee89f41916d3da54822f625b7d2c77612",
+      "releaseSha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    },
+    {
+      "file": "GET-FOLDER-INVENTORY.ps1",
+      "path": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "fce9d9db96b42fe9b352b867afdd1a370c400f4d6f67c1a58dd7d50aefde9ec6",
+      "releaseSha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    },
+    {
+      "file": "TEST-SENSITIVE-DATA.ps1",
+      "path": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "2c28a71fe9195f3e032c0386ed10c3ee5d7fcdd2385839b8b74ee95dc8ba20d0",
+      "releaseSha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    },
+    {
+      "file": "INVOKE-FILE-INVENTORY.ps1",
+      "path": "tools/INVOKE-FILE-INVENTORY.ps1",
+      "version": "1.0.0",
+      "testedSourceSha256": "c50633fd4f92e32f2401bf25c056d88dab2afee2296de1abf3976a32ef2e73d4",
+      "releaseSha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
+      "releaseDifference": "Leading version comment only; executable body preserved",
+      "observed": "Completed",
+      "reads": 0,
+      "readFailures": 0,
+      "scope": "Synthetic local fixture or host prerequisite inspection",
+      "ownerAccepted": true
+    }
+  ],
+  "excluded": [
+    {
+      "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+      "observed": "Failed",
+      "classification": "Owner-confirmed expected target mismatch: supplied security group is not an active resource mailbox",
+      "verified": false,
+      "remaining": "Successful room/equipment mailbox read path not exercised"
+    }
+  ]
+}

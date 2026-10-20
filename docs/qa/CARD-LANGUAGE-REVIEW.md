@@ -49,3 +49,10 @@ Validation now includes 36 site tests. Negative cases remove inputs, requirement
 ## Accepted report release follow-up
 
 The owner subsequently accepted the eight read-only report candidates for the existing VERIFIED mark. These eight source revisions add the tested optional Desktop HTML reports and include previously tested read-only fixes. Their card and connection hashes were refreshed, and report directions were added. See READONLY-REPORTS-1.0.0-VERIFICATION.md for the accepted scope and source attribution. Earlier statements that the language-only pass changed no scripts describe that earlier pass.
+
+## Batch 2 release follow-up
+
+Eleven completed workflows were accepted by the owner. Release version comments
+leave their tested executable bodies unchanged; source/card/connection hashes
+were refreshed. Two audit list-conversion fixes were included in the tested
+bundle. See BATCH-2-1.0.0-VERIFICATION.md. Room/Resource Access remains unverified.

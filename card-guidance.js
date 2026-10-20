@@ -121,7 +121,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Shows failed lookups and groups with more than one match"
     ],
-    "sourceSha256": "e4046dacdf671ce73b213bc570b74cc238b9ea60d1bf5ba5a3c5f50dc65f07a9",
+    "sourceSha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
     "objective": "Shows who belongs to one or more Exchange Online distribution groups.",
     "input": "Distribution group names or email addresses, entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -289,7 +289,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Unusual activity needs review; it does not prove data was stolen"
     ],
-    "sourceSha256": "5f80f8a9a3af0a250963e48deeebb6ce278b392140a7fc82a01da396c3e3bf73",
+    "sourceSha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
     "objective": "Looks for unusual file activity that could indicate data was copied or taken.",
     "notes": "Reviews SharePoint/OneDrive activity for possible download, sharing, or exfiltration behavior.",
     "startMode": "right-click",
@@ -309,7 +309,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Shows failed search periods and results cut short by limits"
     ],
-    "sourceSha256": "30ea759b710a12b3650b48191b2fe3dc123ebbed4c7798d4c6a934d0702689d3",
+    "sourceSha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
     "objective": "Finds tenant activity tied to an IP address.",
     "notes": "Pivots on a source IP across tenant audit activity.",
     "startMode": "right-click",
@@ -329,7 +329,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Searches in periods of up to 10 days; reports results cut short by limits"
     ],
-    "sourceSha256": "dbb53c592a523fdf2a2c94dd166296afe6a9f482ec4372c2d3f551af56ea797e",
+    "sourceSha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
     "objective": "Find email delivery records by sender, recipient, or source IP address.",
     "notes": "Searches tenant message trace by sender, recipient, source IP, or combination.",
     "startMode": "right-click",
@@ -370,7 +370,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Labels events that use a file modification time instead of an event time",
       "Source evidence is never modified"
     ],
-    "sourceSha256": "fb6e000a57b548f59fbc4f9317df3dac0ab61756c97223784d7b2e54a6d70c40",
+    "sourceSha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
     "objective": "Builds a simple incident timeline from collected events.",
     "requires": "Local case outputs",
     "notes": "Builds a simple chronology from IR notes, logs, JSON, or manual entries.",
@@ -389,7 +389,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "No network or export",
       "Does not check whether the token is signed, trusted, or usable"
     ],
-    "sourceSha256": "179e01c20af4ad72faabd69c2567ccff9fa1d40a5ca3acf497544ba6d4849372",
+    "sourceSha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
     "objective": "Decodes a JWT locally so you can inspect its claims.",
     "input": "JWT token",
     "requires": "PowerShell on this computer.",
@@ -1011,7 +1011,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-GROUP-MEMBERS.ps1": {
-    "sourceSha256": "ba29a8c30f170c87b08a453fdfe73f6108bddfc69033f17a6270875ecc684dbd",
+    "sourceSha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
     "objective": "Shows direct members of one or more groups after resolving the appropriate source.",
     "input": "Group names or email addresses, entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement + Microsoft Graph group read access + Active Directory reachability when applicable",
@@ -1110,7 +1110,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "TEST-POWERSHELL-READINESS.ps1": {
-    "sourceSha256": "b38f3eb165ac360eef390990dd6d2b4ee89f41916d3da54822f625b7d2c77612",
+    "sourceSha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
     "objective": "Checks whether this computer is ready to run the PowerShell tools.",
     "input": "Checks the Windows computer and PowerShell session where you run it. No target list or tenant ID is needed.",
     "requires": "PowerShell 5.1+",
@@ -1123,7 +1123,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-FOLDER-INVENTORY.ps1": {
-    "sourceSha256": "fce9d9db96b42fe9b352b867afdd1a370c400f4d6f67c1a58dd7d50aefde9ec6",
+    "sourceSha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
     "objective": "Review a folder’s contents, script signatures, and Git status.",
     "input": "Confirm the detected folder or enter a folder/repository path. Default folder depth: 10; includes files and signature checks.",
     "requires": "PowerShell 5.1+",
@@ -1149,7 +1149,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "TEST-SENSITIVE-DATA.ps1": {
-    "sourceSha256": "2c28a71fe9195f3e032c0386ed10c3ee5d7fcdd2385839b8b74ee95dc8ba20d0",
+    "sourceSha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
     "objective": "Finds obvious secrets or internal details before you publish or share files.",
     "input": "Enter a file or folder path; blank uses the current PowerShell working folder. Optional extra search terms.",
     "requires": "PowerShell 5.1+",
@@ -1340,7 +1340,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "ed1fc57ef53d968035cfc0adc2f48c7d8838a69f9c185990c759c92000c3c6a1",
+    "sourceSha256": "6d122f63af031c190cc56382da5816fed574eabc0f3d45a35e8e4d2031ebc6d4",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
@@ -1444,7 +1444,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-FILE-INVENTORY.ps1": {
-    "sourceSha256": "c50633fd4f92e32f2401bf25c056d88dab2afee2296de1abf3976a32ef2e73d4",
+    "sourceSha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
     "objective": "Find duplicate scripts, signature problems, and leftover working copies.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Groups files into Active, Testing, and Archive; compares duplicate filenames by SHA256. Optional CSV export includes local paths and signer details. Root defaults to C:\\Field-Kit; keep reports private.",

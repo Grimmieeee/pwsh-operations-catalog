@@ -1,3 +1,4 @@
+# .VERSION 1.0.0
 #Requires -Version 5.1
 
 <#
@@ -259,7 +260,7 @@ function Search-UALWindow {
 
         return [PSCustomObject]@{
             Success = $true
-            Items   = @($items)
+            Items   = $items.ToArray()
             HitCap  = $hitCap
             Error   = ""
         }
@@ -267,7 +268,7 @@ function Search-UALWindow {
     catch {
         return [PSCustomObject]@{
             Success = $false
-            Items   = @($items)
+            Items   = $items.ToArray()
             HitCap  = $false
             Error   = Get-ShortError $_
         }

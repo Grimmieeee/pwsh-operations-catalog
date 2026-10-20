@@ -282,7 +282,7 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===11);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===22);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 
@@ -543,4 +543,21 @@ test('the eight owner-accepted report releases have source-bound VERIFIED flags'
     assert.ok(fs.readFileSync(path.join(root,item.publishedPath),'utf8').includes('function Offer-FKDesktopReport'),file);
     assert.equal(f.api.isVerifiedRelease({...item,verification:{...item.verification,sha256:'0'.repeat(64)}}),false,file);
   }
+});
+
+test('batch two binds eleven accepted implementations and excludes the resource target mismatch',()=>{
+  const f=loadCatalog(root);
+  const evidence=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/BATCH-2-1.0.0-VERIFICATION.json'),'utf8'));
+  assert.equal(evidence.records.length,11);
+  for(const record of evidence.records){
+    const item=f.api.ITEMS.find(x=>x.file===record.file);
+    assert.ok(f.api.isVerifiedRelease(item),record.file);
+    const bytes=fs.readFileSync(path.join(root,record.path));
+    assert.equal(digest(bytes),record.releaseSha256,record.file);
+    const tested=bytes.toString('utf8').replace(/^(\ufeff?)# \.VERSION 1\.0\.0\r?\n/,'$1');
+    assert.equal(digest(Buffer.from(tested)),record.testedSourceSha256,record.file+' executable body');
+    assert.equal(record.readFailures,0);
+    assert.equal(f.api.isVerifiedRelease({...item,verification:{...item.verification,sha256:'0'.repeat(64)}}),false);
+  }
+  assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1')),false);
 });
