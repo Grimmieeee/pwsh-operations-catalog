@@ -2,6 +2,11 @@
 
 These are review findings, not verified runtime results. No script receives a VERIFIED flag from this list.
 
+Current release status is in [docs/PROJECT-STATUS.md](docs/PROJECT-STATUS.md).
+Batch 1 is closed and eight read-only releases earned VERIFIED through owner
+acceptance and recorded test evidence, not through this static-review list.
+The specific remaining source gaps below are not reopened batch-1 tests.
+
 ## License product names
 
 - `published-source/identity/INVOKE-REMOVE-LICENSES.ps1`: maps subscribed SKU IDs to `skuPartNumber`; falls back to the raw SKU ID if no mapping exists. Operator selects a numbered option or ALL. It does not guarantee friendly product display names.

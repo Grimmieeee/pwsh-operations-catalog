@@ -4,6 +4,30 @@ Current continuation record for the FIELD // KIT PowerShell Operations Catalog.
 
 This file records the current project state so a new session can resume without reconstructing prior conversations. Project-wide rules still come from `OPERATING-STANDARDS.md`; this handoff records where the work currently stands.
 
+## October 19, 2026 — current state: batch 1 closed
+
+Read [the current project status](../docs/PROJECT-STATUS.md) first. It supersedes
+older pending-testing instructions and test counts below; those dated sections
+are retained as history, not a new work queue.
+
+- The main 28-script sampled read-only run and final eight HTML-export retests
+  belong to the same batch 1. The owner accepted completion. Do not repeat them
+  or request a missing execution manifest as a new release prerequisite.
+- Eight read-only report releases are VERIFIED and published in PR #55, in
+  addition to the three unchanged IR releases: 11 VERIFIED tools total.
+- Exact versions, hashes, scope and provenance are recorded in
+  `docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md` and its JSON companion.
+  Sample coverage does not establish pagination or every environment.
+- Reconcile remaining tools against existing evidence and owner confirmation
+  before defining batch 2. Secure Score was included in the next-group runner;
+  absence of an HTML report does not establish that it was untested.
+- Keep candidate branches separate. Do not publish all development changes or
+  treat unbadged tools as necessarily untested. No next batch is finalized.
+- Preserve the approved design, plain-language card contract, source-bound
+  verification and client-data privacy. No raw client reports belong in Git.
+
+## Historical updates
+
 ## October 18, 2026 — catalog-wide safety review
 
 See `docs/qa/CATALOG-SAFETY-REVIEW.md`, `CATALOG-SAFETY-MATRIX.md`, `CATALOG-SAFETY-AUDIT.json` and `SOURCE-REVIEW-LEDGER.json`. The full 338-entry screen covers 80 scripts, 235 commands, 12 references and 11 pending entries. Scoped fixes cover 24 script sources; offline checks cover 265 cases plus 28 site tests. Thirteen tenant audits now require the expected tenant GUID and reject wrong-tenant reuse. Assignment and dynamic-group creation also require it. Source/card/connection evidence must be refreshed after each source edit.
