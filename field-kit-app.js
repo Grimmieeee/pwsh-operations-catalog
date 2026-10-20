@@ -2657,7 +2657,8 @@
 
           <div class="about-rule"></div>
 
-          <p class="about-lede">PowerShell scripts and commands for everyday IT work.</p>
+          <p class="about-lede">FIELD // KIT helps you choose the right tool and understand its impact before you begin.</p>
+          <p>Each entry explains what you’ll need, what it does, who may be affected, and what a finished run should look like. Clear directions guide you through the work. If something gets in the way, you’ll know what happened and where to go next.</p>
           <p>Choose a section or search the whole catalog. Setup tools come first where useful; other items are A–Z. Follow the numbered order for incident-response steps.</p>
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
           <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
