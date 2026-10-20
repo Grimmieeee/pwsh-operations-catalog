@@ -5,6 +5,12 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
+- Owner-selected desktop readability update: approximately 125% catalog and
+  navigation scale above 1100px, 22.5px task names, a 320px sidebar, bounded
+  content and richer teal surfaces with a clearer row hover/focus track.
+  Mobile retains its existing layout. This supersedes the earlier full-width
+  desktop experiment; see the current selection in DESIGN-LOCK.md.
+
 - Footer correction: BURNSID// uses one regular weight and solid muted color;
   EST. 2026 is removed. The main FIELD // KIT wordmark is unchanged.
 
