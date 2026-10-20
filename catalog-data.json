@@ -3497,7 +3497,16 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Group Members",
@@ -3525,7 +3534,16 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "User Group Memberships",
@@ -3926,7 +3944,16 @@
     "_order": 192,
     "summary": "NO",
     "objective": "Looks for unusual file activity that could indicate data was copied or taken.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -3950,7 +3977,16 @@
     "_order": 193,
     "summary": "NO",
     "objective": "Finds tenant activity tied to an IP address.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Tenant Email Search",
@@ -3974,7 +4010,16 @@
     "_order": 194,
     "summary": "NO",
     "objective": "Searches the tenant for email tied to an address, sender, subject, or other indicator.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Sampled read-only batch",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Threat Intel IP Check",
@@ -4021,7 +4066,16 @@
     "url": "",
     "_order": 196,
     "summary": "NO",
-    "objective": "Builds a simple incident timeline from collected events."
+    "objective": "Builds a simple incident timeline from collected events.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "JWT Token Decode",
@@ -4044,7 +4098,16 @@
     "url": "",
     "_order": 197,
     "summary": "NO",
-    "objective": "Decodes a JWT locally so you can inspect its claims."
+    "objective": "Decodes a JWT locally so you can inspect its claims.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -4526,7 +4589,16 @@
     "_order": 218,
     "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
     "summary": "NO",
-    "objective": "Checks whether this computer is ready to run the PowerShell tools."
+    "objective": "Checks whether this computer is ready to run the PowerShell tools.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Folder Inventory",
@@ -4549,7 +4621,16 @@
     "_order": 219,
     "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
     "summary": "NO",
-    "objective": "Maps a folder or repo so you can quickly see what is in it and what may need review."
+    "objective": "Maps a folder or repo so you can quickly see what is in it and what may need review.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "M365 Module Setup",
@@ -4595,7 +4676,16 @@
     "_order": 221,
     "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
     "summary": "NO",
-    "objective": "Finds obvious secrets or internal details before you publish or share files."
+    "objective": "Finds obvious secrets or internal details before you publish or share files.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Synthetic local fixture / host read-only check",
+      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Hybrid Smoke Test",

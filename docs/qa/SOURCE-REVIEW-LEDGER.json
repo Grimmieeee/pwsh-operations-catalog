@@ -589,5 +589,181 @@
     "tests": [
       "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
     ]
+  },
+  "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
+    "sha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Adapted sampled read-only workflow; ten records / forty reads",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "GET-GROUP-MEMBERS.ps1": {
+    "sha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Adapted sampled read-only workflow; ten records / forty reads",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Adapted sampled read-only workflow; ten records / forty reads",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "IR-GET-IP-TRACE.ps1": {
+    "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Adapted sampled read-only workflow; ten records / forty reads",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "IR-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Adapted sampled read-only workflow; ten records / forty reads",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "IR-GET-TIMELINE-BUILDER.ps1": {
+    "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "IR-GET-TOKEN-DECODE.ps1": {
+    "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "TEST-POWERSHELL-READINESS.ps1": {
+    "sha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "GET-FOLDER-INVENTORY.ps1": {
+    "sha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "TEST-SENSITIVE-DATA.ps1": {
+    "sha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
+  },
+  "INVOKE-FILE-INVENTORY.ps1": {
+    "sha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
+    "state": "Owner accepted operator test",
+    "scope": [
+      "Synthetic local fixture or host prerequisite inspection",
+      "Test source matched returned runner manifest; release adds a version comment only"
+    ],
+    "tests": [
+      "Owner batch-2 completion confirmed",
+      "397 runner regression checks and batch-2 mock/local tests"
+    ],
+    "remaining": [
+      "Standalone sign-in and unexercised branches remain outside the sampled test.",
+      "Pagination and full-tenant coverage were not tested."
+    ]
   }
 }

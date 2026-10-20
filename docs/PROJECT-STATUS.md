@@ -7,16 +7,17 @@ dated notes remain historical; they do not reopen accepted testing.
 
 - Batch 1 is closed: the main 28-script sampled read-only run plus its final
   report/export cleanup. No additional operator rerun is required to close it.
-- Eight accepted read-only report releases are VERIFIED, alongside the three
-  IR 1.0.0 tools: **11 VERIFIED tools total**. PR #55 published the eight releases;
-  Pages deployment and all eight exact download hashes were checked.
+- Batch 2 is closed with eleven completed workflows accepted by the owner.
+  Together with batch 1 and the IR trio, this brings the total to **22 VERIFIED
+  tools**. Room/Resource Access remains unverified: its supplied security-group
+  target was not an active resource mailbox. Only that successful path remains.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
   Version details stay in source; VERIFIED remains bound to exact release bytes.
 - Release checks cover card/source alignment, integrity, safe rendering and
-  parsing. The last published site suite passed 37 tests. Static checks are not
+  parsing. The batch-2 site suite contains 38 tests. Static checks are not
   substitutes for operator acceptance.
 
 ## Verified releases
@@ -43,13 +44,18 @@ Returned reports did not independently capture execution-source hashes; the
 evidence records owner acceptance and the matching supplied release bundle.
 Raw client reports and findings remain private.
 
-## Next work — reconcile before building
+Batch-2 implementation hashes match the returned runner metadata. The published
+1.0.0 files add a version comment only. See [batch-2 release evidence](qa/BATCH-2-1.0.0-VERIFICATION.md)
+for its eleven releases, exact source attribution and the resource exception.
+
+## Next work — batch 3
 
 1. Compare remaining inventory with existing tests and owner confirmation.
    An absent badge or HTML report alone does not mean a tool was untested.
    Secure Score was bundled with the report retests; do not automatically rerun it.
-2. Define only the genuinely remaining test group. No batch-2 list is final yet.
-   Group/resource tools need explicit target handling before joining the runner.
+2. Prepare the remaining change workflows with offline preview/cancel/failure
+   tests first. Live changes need approved test objects and deliberate approval.
+   Those offline tests alone do not establish successful tenant changes.
 3. Keep the next upload minimal, reuse validated authentication, retain the
    10-record/40-read safety bounds and save test metadata clearly. State sample
    limits; do not infer full-tenant pagination from ten records.
