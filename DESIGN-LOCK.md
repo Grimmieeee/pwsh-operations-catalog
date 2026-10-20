@@ -16,6 +16,11 @@ left gutter instead of centering within wide windows. Retain their existing
 maximum widths. The footer uses the exact same color token as the About menu
 item in each theme, with its unified regular weight and existing spacing.
 
+October 20 fullscreen correction: remove the desktop search/catalog width caps
+so flags reach the right edge of the available workspace. Align the search's
+left border with the group heading's vertical pipe (14px beyond the catalog
+gutter). Keep mobile layout and type sizes unchanged.
+
 - Retain the existing Raleway FIELD // KIT wordmark, its weights and spacing.
 - BY, every part of BURNSID//, and EST. 2026 use the same solid muted white
   (`#c2c9c7`) in dark mode and the same dark muted ink (`#53665e`) in light mode.
