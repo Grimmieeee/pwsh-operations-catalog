@@ -13,6 +13,10 @@ dated notes remain historical; they do not reopen accepted testing.
   target was not an active resource mailbox. Only that successful path remains.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
+- Batch 3 offline safety checks passed 85/85 on Windows PowerShell 5.1, matching
+  the supplied package. This completes the synthetic safety stage; successful
+  live account/device changes remain untested. The catalog retains 22 VERIFIED
+  releases. See [the batch-3 safety record](qa/BATCH-3-OFFLINE-RESULTS.md).
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
   Version details stay in source; VERIFIED remains bound to exact release bytes.

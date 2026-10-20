@@ -433,11 +433,11 @@ test('global search includes every scope regardless of navigation selection',()=
   }
 });
 
-test('verified rows use quiet text at the right; footer matches header colors and weights',()=>{
+test('right-aligned flags put the verification seal before the risk labels; footer keeps its approved treatment',()=>{
   const f=loadCatalog(root);f.api.state.query='ir';f.api.renderResults();
   const html=f.elements.get('results').innerHTML;
-  assert.ok(html.includes('class="result-verification">VERIFIED'));
-  assert.ok(!html.includes('class="verification-seal"'));
+  assert.ok(html.includes('class="result-verification"><span class="verification-seal" aria-hidden="true">V</span> VERIFIED'));
+  assert.ok(html.indexOf('class="result-verification"')<html.indexOf('class="result-risk-flags"'));
   const css=fs.readFileSync(path.join(root,'index.html'),'utf8');
   assert.ok(css.includes('.signature-mark{font-weight:600}'));
   assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:#ffffff}'));
