@@ -6,6 +6,11 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 
 This selection supersedes the earlier conflicting mark/color notes below.
 
+October 20 footer correction: omit EST. 2026 entirely. Render the complete
+BURNSID// footer in one 400 weight and one solid muted color, including the
+slashes. Keep BY, existing size, spacing and low placement. FIELD // KIT retains
+its own existing two-weight treatment.
+
 - Retain the existing Raleway FIELD // KIT wordmark, its weights and spacing.
 - BY, every part of BURNSID//, and EST. 2026 use the same solid muted white
   (`#c2c9c7`) in dark mode and the same dark muted ink (`#53665e`) in light mode.

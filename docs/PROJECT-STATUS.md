@@ -5,6 +5,9 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
+- Footer correction: BURNSID// uses one regular weight and solid muted color;
+  EST. 2026 is removed. The main FIELD // KIT wordmark is unchanged.
+
 - October 20 appearance release: Auto/Light/Dark with saved preference, 18px
   catalog names, compact mobile risk labels, a far-right verification check and
   one About-linked key. Desktop navigation is wider and results are centered.
