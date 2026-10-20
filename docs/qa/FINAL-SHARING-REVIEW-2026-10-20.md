@@ -23,7 +23,8 @@ setup/rendering functions. These tests use offline fixtures and mocks.
 Final appearance refinements: FIELD and every part of BURNSID// use
 the same .85 wordmark color; the entire tagline uses one muted .70 tone. Row
 hover/focus fades to the right while retaining the tracking line. Footer
-tracking is widened, and the browser title is “F I E L D  //  K I T”.
+tracking is widened. The final browser title is “F I E L D  K I T”, with two
+nonbreaking spaces between words; the teal // favicon is unchanged.
 
 ## Limits and remaining items
 

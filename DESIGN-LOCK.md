@@ -9,7 +9,8 @@ Final refinements: row hover/focus fades gently from left to right; keep the
 left tracking line visible. BURNSID// uses wider .65em tracking, including its
 slashes, and exactly the same .85 wordmark color as FIELD. The entire tagline
 uses one muted .70 wordmark tone, quieter than FIELD. No split or gradient in
-the tagline. Browser title: “F I E L D  //  K I T”.
+the tagline. Browser title: “F I E L D  K I T”, with two nonbreaking spaces
+between D and K. The teal // favicon supplies the tab's only slash mark.
 
 Restore the 280px desktop sidebar and earlier navigation/logo scale; use 20px
 task names, 12px flags, 60px rows and a 64px search box above 1100px. Center the
