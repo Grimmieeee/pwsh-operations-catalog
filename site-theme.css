@@ -202,8 +202,7 @@ html[data-theme="light"] .drawer-overlay{background:rgba(20,40,30,.28)}
 }
 
 .brand-lockup{display:inline-grid;grid-template-columns:minmax(0,max-content);max-width:100%}
-.brand-tagline{width:0;min-width:100%;margin-top:10px;color:rgb(var(--wordmark-rgb,255 255 255) / .85);font:400 12px/1.5 var(--ui);letter-spacing:.29em;white-space:nowrap;text-align:justify;text-align-last:justify}
-.tagline-quickly{color:rgb(var(--wordmark-rgb,255 255 255) / .70)}
+.brand-tagline{width:0;min-width:100%;margin-top:10px;color:rgb(var(--wordmark-rgb,255 255 255) / .70);font:400 12px/1.5 var(--ui);letter-spacing:.29em;white-space:nowrap;text-align:justify;text-align-last:justify}
 .signature-mark,.signature-mark .signature-slash{color:rgb(var(--wordmark-rgb,255 255 255) / .85)}
 .signature-mark{letter-spacing:.65em}
 .signature-mark .signature-slash{letter-spacing:inherit;margin-left:0}

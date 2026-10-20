@@ -7,17 +7,17 @@ Locked by the owner on October 17, 2026. Future visual changes require an in-cha
 Final October 20 selection supersedes the earlier desktop-scale notes below:
 Final refinements: row hover/focus fades gently from left to right; keep the
 left tracking line visible. BURNSID// uses wider .65em tracking, including its
-slashes, and exactly the same .85 wordmark color as FIELD and “The right tool”.
-“quickly.” retains the .70 // KIT tone. Browser title: “F I E L D  //  K I T”.
+slashes, and exactly the same .85 wordmark color as FIELD. The entire tagline
+uses one muted .70 wordmark tone, quieter than FIELD. No split or gradient in
+the tagline. Browser title: “F I E L D  //  K I T”.
 
-restore the 280px desktop sidebar and earlier navigation/logo scale; use 20px
+Restore the 280px desktop sidebar and earlier navigation/logo scale; use 20px
 task names, 12px flags, 60px rows and a 64px search box above 1100px. Center the
 search and catalog in a shared 1560px outer maximum with 32px gutters. Keep the
 approved teal surfaces and stronger row hover/focus track.
 
 Place “The right tool quickly.” beneath FIELD // KIT, spread across the wordmark
-width. Match “The right tool” to FIELD's brighter tone and “quickly.” to the exact
-softer // KIT tone; use solid tones, no gradient. Give the logo block more space
+width. Use one solid muted tone for the entire tagline. Give the logo block more space
 below it and align the desktop Full Library item with the top of search. On
 phones the tagline stays with the logo in the navigation drawer. Move the
 introductory paragraph into About. Render all of BURNSID// in one brighter text
