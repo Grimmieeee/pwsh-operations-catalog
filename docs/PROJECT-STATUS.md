@@ -5,17 +5,15 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
-- Approved welcome copy explains the purpose and contents of each card above
-  search. No script source or verification records changed.
-- Sharing follow-up: the owner found the enlarged desktop treatment too large.
-  A smaller responsive treatment still needs a preview and approval; this copy
-  release does not claim that sizing issue is resolved.
-
-- Owner-selected desktop readability update: approximately 125% catalog and
-  navigation scale above 1100px, 22.5px task names, a 320px sidebar, bounded
-  content and richer teal surfaces with a clearer row hover/focus track.
-  Mobile retains its existing layout. This supersedes the earlier full-width
-  desktop experiment; see the current selection in DESIGN-LOCK.md.
+- Final approved compact layout: 280px desktop navigation, 20px task names,
+  12px flags, 60px rows, centered shared search/catalog bounds and teal row
+  guidance. Full Library and search align vertically. This replaces the
+  oversized desktop experiment; see DESIGN-LOCK.md.
+- “The right tool quickly.” spans the FIELD // KIT wordmark width. The two
+  tagline tones match FIELD and // KIT exactly. The longer purpose statement
+  is in About. On phones the tagline remains with the logo in the menu.
+- BURNSID// is one brighter text color with its size and weight preserved.
+  No executable source or verification record changed; 78 marks remain.
 
 - Footer correction: BURNSID// uses one regular weight and solid muted color;
   EST. 2026 is removed. The main FIELD // KIT wordmark is unchanged.
