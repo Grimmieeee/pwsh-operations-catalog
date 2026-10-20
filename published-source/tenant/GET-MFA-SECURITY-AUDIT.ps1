@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-mfa-security-audit-clean.ps1
 
 Read-only MFA security audit.

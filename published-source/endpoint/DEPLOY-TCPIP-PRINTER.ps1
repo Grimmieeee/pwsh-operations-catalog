@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 DEPLOY-TCPIP-PRINTER.ps1
 
 Endpoint printer deployment helper.

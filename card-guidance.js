@@ -14,7 +14,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "sourceSha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+    "sourceSha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
     "objective": "Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.Read.All + Directory.Read.All",
     "notes": "Read-only Conditional Access posture review that flags disabled/report-only policies, exclusions, device-code gaps, location conditions, and other weak-coverage indicators.",
@@ -436,7 +436,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "App and service names when they can be found",
       "Granted app permissions that may create risk"
     ],
-    "sourceSha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
+    "sourceSha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
     "objective": "Finds guest app consent and access that may need review.",
     "notes": "Reviews guest/application consent exposure.",
     "startMode": "right-click",
@@ -453,7 +453,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: ExchangeOnlineManagement with recipient-read access; Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+    "sourceSha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
     "objective": "Shows whether shared mailboxes are being signed into directly.",
     "notes": "Finds shared mailboxes with direct sign-in exposure.",
     "startMode": "right-click",
@@ -470,7 +470,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All.",
-    "sourceSha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+    "sourceSha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
     "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners.",
     "notes": "Reviews app registrations and related security posture.",
     "startMode": "right-click",
@@ -487,7 +487,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All; policy/sign-in log role and licensing access.",
-    "sourceSha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
+    "sourceSha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
     "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently.",
     "notes": "Reviews device-code authentication exposure.",
     "startMode": "right-click",
@@ -504,7 +504,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All; Policy.Read.ConditionalAccess when CA review is requested; appropriate report-read role.",
-    "sourceSha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
+    "sourceSha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
     "objective": "Shows where MFA coverage or registered methods may leave gaps.",
     "notes": "Reviews MFA coverage and security gaps.",
     "details": "Default review covers MFA registration and methods. To include Conditional Access policy review, launch in a terminal with -IncludeConditionalAccess. Policy settings alone do not prove protection for every user.",
@@ -522,7 +522,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All; Secure Score read access.",
-    "sourceSha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+    "sourceSha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
     "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it.",
     "notes": "Captures Microsoft Secure Score posture.",
     "startMode": "right-click",
@@ -539,7 +539,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All, User.Read.All.",
-    "sourceSha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+    "sourceSha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
     "objective": "Find enterprise apps (service principals) with missing or unclear owners.",
     "notes": "Reviews enterprise/service principal ownership.",
     "startMode": "right-click",
@@ -557,7 +557,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data is missing or cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+    "sourceSha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
     "objective": "Surfaces unusual sign-ins that deserve a closer look.",
     "notes": "Reviews suspicious or anomalous tenant sign-ins.",
     "startMode": "right-click",
@@ -577,7 +577,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Typed JOIN confirmation",
       "Restart only when approved"
     ],
-    "sourceSha256": "5e089c864ee6a869b050ccdfd7b6666b683eae845d188f8d1e3ba3c27d4d8f12",
+    "sourceSha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
     "objective": "Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.",
     "input": "Target domain and domain-join credentials. Optional organizational-unit path (OU) and ticket number.",
     "requires": "Local administrator + domain join credentials",
@@ -598,7 +598,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed ADD confirmation before adding the printer"
     ],
-    "sourceSha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+    "sourceSha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
     "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.",
     "input": "Printer display name and IP address or host name. Select an installed driver by its exact name; the script can list drivers.",
     "requires": "An installed printer driver and Windows permission to manage printers. The script does not download a driver.",
@@ -618,7 +618,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed BACKUP confirmation before copying profile data"
     ],
-    "sourceSha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+    "sourceSha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
     "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log.",
     "input": "Profile folder to back up (blank uses your profile), backup destination, and whether to include Downloads.",
     "requires": "Read access to the profile folders and write access to the backup destination.",
@@ -665,7 +665,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Account status, where it is managed, and recorded last sign-in",
       "Optional role-review CSV"
     ],
-    "sourceSha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+    "sourceSha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
     "objective": "Shows who has active Entra admin roles and flags disabled or stale admin accounts.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Directory.Read.All + RoleManagement.Read.Directory + User.Read.All + AuditLog.Read.All",
     "notes": "Reviews active Entra admin-role assignments with account state, hybrid status, and recent sign-in context.",
@@ -687,7 +687,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "App and service names when available",
       "Permissions that may create risk; optional CSV report"
     ],
-    "sourceSha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+    "sourceSha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
     "objective": "Review app permissions approved on behalf of users and flag permissions that may create risk.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Application.Read.All + Directory.Read.All",
     "notes": "Reviews delegated OAuth grants, resolves application/resource names, and flags high-risk scopes.",
@@ -709,7 +709,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stale guests and unavailable sign-in history",
       "Optional guest-review CSV"
     ],
-    "sourceSha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+    "sourceSha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
     "objective": "Find guest accounts with old or missing sign-in records, disabled accounts, and unaccepted invitations.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + AuditLog.Read.All",
     "notes": "Reviews guest accounts for disabled state, stale/no sign-in, and unaccepted invitations.",
@@ -730,7 +730,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Purchased license types and licenses assigned to users",
       "Disabled licensed and enabled unlicensed users"
     ],
-    "sourceSha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+    "sourceSha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
     "objective": "Review license use, including disabled users with licenses and enabled users without one.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + Organization.Read.All",
     "notes": "Reviews subscribed SKUs and user license assignments, including disabled licensed users and enabled unlicensed users.",
@@ -747,7 +747,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Forward, redirect, delete, move and hidden-rule indicators",
       "Optional suspicious-only results and CSV"
     ],
-    "sourceSha256": "85a1c9164ba0d0c0661b6c3e7ecb197f4ac7ab2865d3436de3a5f48f76844880",
+    "sourceSha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
     "objective": "Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.",
     "input": "Defaults: user mailboxes only and all rules, not just flagged rules. Use -IncludeShared or -SuspiciousOnly in a terminal to change the review scope.",
     "requires": "Exchange Online read access",
@@ -792,7 +792,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed RESET confirmation",
       "Temporary passwords shown only after successful reset; never exported"
     ],
-    "sourceSha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+    "sourceSha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
     "input": "Cloud-only user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional tenant domain. Default generated password: 20 characters; the script asks whether to require a change at next sign-in (default Yes).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication | Delegated: User.Read.All + User-PasswordProfile.ReadWrite.All",
     "notes": "Refuses synced users so Active Directory remains authoritative. Generated passwords are never exported.",
@@ -813,7 +813,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Reports against a fixed expected layout; makes no changes"
     ],
-    "sourceSha256": "e9d4d5f1974f2af40c01c23e4e4cf925f232baba8bd7f9b063f0c78110958c01",
+    "sourceSha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
     "objective": "Check the shell, modules, signing certificates, and expected toolkit files.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "This checks a fixed toolkit layout, not just PowerShell. Review $ExpectedFolders and $ExpectedFiles for your installation. Missing layout files are reported as failures. Root defaults to C:\\Field-Kit and can be changed at the prompt.",
@@ -946,7 +946,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
-    "sourceSha256": "2c962dbc7d1ab56ef3a9968636e679c99ca482680ea7af4bdf859fb8a3c063ac",
+    "sourceSha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
     "objective": "Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.",
     "input": "No user list needed. Reviews enabled member accounts in the signed-in tenant; default inactivity threshold: 90 days. Use -Days in a terminal to change it.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -985,7 +985,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
-    "sourceSha256": "9f0560d35c0941ff0723d400129f20b345673e0d9b6e4c751de48529ca6f232c",
+    "sourceSha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
     "objective": "Resolves one or more names, emails, or UPNs to reviewed Entra ID UPN matches.",
     "input": "Tenant domain, plus names, email addresses, or sign-in names (UPNs). Direct entries and TXT/CSV lists are supported.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All",
@@ -998,7 +998,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-ACCOUNT-STATUS.ps1": {
-    "sourceSha256": "4a6e6aed3b612556706c107b667911ef79a4c6a47074d7054ab907cc3ca3dbfc",
+    "sourceSha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
     "objective": "Reviews account enabled state and available Entra sign-in activity for one or more users.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. The script uses their shared domain unless a tenant domain is supplied.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -1024,7 +1024,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-GROUPS.ps1": {
-    "sourceSha256": "a423d1f10e9bcfee903c646d95cf5dbf2142eda04d014e0521a29114c1b55469",
+    "sourceSha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
     "objective": "Show each user’s direct groups in Active Directory and Entra ID, with both systems reported separately.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
@@ -1071,7 +1071,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "GET-MAILBOX-FORWARDING.ps1": {
-    "sourceSha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
+    "sourceSha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
     "objective": "Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1097,7 +1097,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
-    "sourceSha256": "38ca6289d157f33a57a60b316a3a0f1de15de8f07310b71eb977d1efbe86609f",
+    "sourceSha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
     "objective": "Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.",
     "input": "No rule list needed. Reviews mail-flow rules in the tenant you sign in to.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1175,7 +1175,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "UPDATE-WINDOWS-APPS.ps1": {
-    "sourceSha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+    "sourceSha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
     "objective": "Shows available app updates and installs them after confirmation.",
     "input": "Choose review-only mode or approve updates to eligible apps on this computer.",
     "requires": "WinGet",
@@ -1235,7 +1235,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
-    "sourceSha256": "79cf872432e023f6eb0036e355a71fab156ec79489e84344be7eee0b82e68c15",
+    "sourceSha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
     "objective": "Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.",
     "input": "No mailbox list needed. Reviews user and shared mailboxes in the tenant you sign in to.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1324,7 +1324,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Use standard spelling words for clear verbal communication."
   },
   "git-handoff.ps1": {
-    "sourceSha256": "6783255cf5418e432da3677406f281460ab6538a1628f47b5c9ea3b558de70a6",
+    "sourceSha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
     "objective": "Save the current Git project state for your next session.",
     "notes": "Generates a repeatable context-state artifact from the Git repository containing the selected path. Captures branch, HEAD, upstream state, working-tree changes, stashes, recent commits, changes since the previous snapshot, and common project-document presence with readable names and best-effort sensitive-value redaction. Creates a local snapshot and local Git exclusion; does not stage, commit, fetch, or push. Review output before sharing. Run from a terminal; Windows validation pending.",
     "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push.",
@@ -1340,12 +1340,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "39ca490e7b85c45cd0fa183680e732bffeab4003105b5fbf340cc477a1687dac",
+    "sourceSha256": "f02f005cf7616fd322e25b4557134bd79949f79d431a3de9d8bb9f8bf0e49bdf",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
   "git-repo.ps1": {
-    "sourceSha256": "4ec1ebc30c976a410c5dc616f0671727c34278b777b323e671189553f0b1aa7a",
+    "sourceSha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
     "objective": "Check repository changes, push reviewed work, or pull updates.",
     "requires": "Git for Windows; run from an existing terminal",
     "notes": "Standalone Git check, push and pull using the current repository or -Path. Default: -Action Check; add -Details for file names. -Action Push previews changes and requires typed approval before staging, committing and pushing. -Action Pull refuses a dirty tree and only fast-forwards. Run in a terminal; no profile dependency. File-name checks are not a secret scanner.",

@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 #requires -Version 5.1
 
 <#

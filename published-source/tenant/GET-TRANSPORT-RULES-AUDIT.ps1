@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-TRANSPORT-RULES-AUDIT.ps1
 
 Read-only Exchange transport rule audit.

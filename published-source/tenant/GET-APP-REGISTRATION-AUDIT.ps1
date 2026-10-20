@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-app-registrations-audit-clean.ps1
 
 Read-only app registration security audit.

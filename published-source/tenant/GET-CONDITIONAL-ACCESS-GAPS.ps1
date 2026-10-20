@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-cap-gaps-audit-clean.ps1
 
 Read-only Conditional Access gap audit.

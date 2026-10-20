@@ -19,7 +19,7 @@ test('reviewed tenant audits disclose expected tenant before launch',()=>{
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(html.includes('Tenant ID (GUID)'),item.file);
     assert.ok(html.indexOf('Tenant ID (GUID)')<html.indexOf('guided-start'),item.file);
-    assert.equal(f.api.isVerifiedRelease(item),false,item.file);
+    assert.equal(f.api.isVerifiedRelease(item),true,item.file);
   }
 });
 
@@ -282,7 +282,7 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===39);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===69);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 

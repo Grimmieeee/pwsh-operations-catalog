@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 JOIN-COMPUTER-TO-DOMAIN.ps1
 
 Endpoint domain join helper.

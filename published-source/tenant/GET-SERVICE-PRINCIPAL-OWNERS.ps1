@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-service-principal-owners-audit-clean.ps1
 
 Read-only service principal owner audit.

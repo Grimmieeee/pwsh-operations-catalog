@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 tenant-guest-app-consent-audit-clean.ps1
 
 Read-only guest app consent audit.

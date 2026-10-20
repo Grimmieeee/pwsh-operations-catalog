@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 #Requires -Version 5.1
 <#
 Standalone versions of the FIELD KIT profile's Git check/send/grab commands.

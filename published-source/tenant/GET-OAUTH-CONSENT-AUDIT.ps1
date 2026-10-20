@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-OAUTH-CONSENT-AUDIT.ps1
 
 Read-only tenant OAuth consent audit.

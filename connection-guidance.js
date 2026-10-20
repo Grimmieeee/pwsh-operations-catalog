@@ -10,7 +10,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1": {
-    "sha256": "2c962dbc7d1ab56ef3a9968636e679c99ca482680ea7af4bdf859fb8a3c063ac",
+    "sha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -47,14 +47,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1": {
-    "sha256": "9f0560d35c0941ff0723d400129f20b345673e0d9b6e4c751de48529ca6f232c",
+    "sha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/identity/GET-ACCOUNT-STATUS.ps1": {
-    "sha256": "4a6e6aed3b612556706c107b667911ef79a4c6a47074d7054ab907cc3ca3dbfc",
+    "sha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -77,7 +77,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/GET-USER-GROUPS.ps1": {
-    "sha256": "a423d1f10e9bcfee903c646d95cf5dbf2142eda04d014e0521a29114c1b55469",
+    "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -122,7 +122,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1": {
-    "sha256": "b99f2dc2c2b3eb9e4feff190f3fae7951dee4bfa2d95909eaad582457f9f768a",
+    "sha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
     "mode": "auto",
     "services": [
       "EXO"
@@ -203,7 +203,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
-    "sha256": "6ebe7be5484bca187bd5182753057874c43daa87a55956e40e4ccdef74f97f0a",
+    "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -211,82 +211,82 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1": {
-    "sha256": "8d82e57d695c5ee034525d3664dd4d6dc257c2c9345b49cfbbed24a526c942c3",
+    "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1": {
-    "sha256": "133e3a33c7a988c5e3ec93344355feb034c9fec685253f45aa27bf617d9549c3",
+    "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1": {
-    "sha256": "2a064c402cd8dda51e4f7ade3a9c3ed7645784ffc9f63804820dec3dc8aca2db",
+    "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1": {
-    "sha256": "4eda293e510d60604da0508715db31807223de1cd5cfa9f3b356393d715f6c18",
+    "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1": {
-    "sha256": "6eb755d2b8190da12132b30eb0080b2367a35a28129ac1f239d3c098571b444d",
+    "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1": {
-    "sha256": "707321b6f1ae7285ae0ccb03b2061ae36280432bf6b296d72bde8ad93ba03db0",
+    "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
-    "sha256": "15c73ae6c21e78fc694aa3b0f20b4a6c941a9c5a7dbb5b328935eb77dfeb6a5f",
+    "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1": {
-    "sha256": "bbc41b082ff6daff44f853527b6afe0a609b8ae29cecea4ad5c4bc22f2e77782",
+    "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1": {
-    "sha256": "38ca6289d157f33a57a60b316a3a0f1de15de8f07310b71eb977d1efbe86609f",
+    "sha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1": {
-    "sha256": "5e089c864ee6a869b050ccdfd7b6666b683eae845d188f8d1e3ba3c27d4d8f12",
+    "sha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
     "mode": "local",
     "services": [
       "AD"
     ]
   },
   "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1": {
-    "sha256": "2bed1d7391d8bf6a27b2127c806c246fd93b2fe7e62d8b91268b17a31bf79649",
+    "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
     "mode": "local",
     "services": []
   },
   "published-source/endpoint/BACKUP-USER-PROFILE.ps1": {
-    "sha256": "f51c3c9ff843c5a569765c635a2e57a71b221d11f3bf64266775701a7af6abb6",
+    "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
     "mode": "local",
     "services": []
   },
@@ -316,7 +316,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/utility/UPDATE-WINDOWS-APPS.ps1": {
-    "sha256": "e85573f369093020e66ae8ff1c33aeed71df83f7d579c4d7f888f4bab4d25a3b",
+    "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
     "mode": "local",
     "services": []
   },
@@ -337,35 +337,35 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1": {
-    "sha256": "58862647a3ffb1bb3b7b1e3d3879ca671de475ee7da90183af9247f0a54bd696",
+    "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1": {
-    "sha256": "c1a55d472ac898b856b1c93bb7ea1c945d62600dc2849bd7828381d2e0e5a6d4",
+    "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-GUEST-USER-AUDIT.ps1": {
-    "sha256": "ff9f8a39d9e7c102a6bb303c22bd10e00dce16a2603d1ed41cbb845158b941f6",
+    "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1": {
-    "sha256": "7b7dba5740af97019b5fd2f969f5891dcd52ec0a8d6180bbff29f914411f0bf3",
+    "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/tenant/GET-TENANT-INBOX-RULES-AUDIT.ps1": {
-    "sha256": "85a1c9164ba0d0c0661b6c3e7ecb197f4ac7ab2865d3436de3a5f48f76844880",
+    "sha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
     "mode": "auto",
     "services": [
       "EXO"
@@ -393,7 +393,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
-    "sha256": "79cf872432e023f6eb0036e355a71fab156ec79489e84344be7eee0b82e68c15",
+    "sha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
     "mode": "auto",
     "services": [
       "EXO"
@@ -421,7 +421,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
-    "sha256": "5bf0df403969f64e2d7dd0787487dabf0abe183dce870dbf82b7b041da93bd11",
+    "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -437,12 +437,12 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "tools/git-handoff.ps1": {
-    "sha256": "6783255cf5418e432da3677406f281460ab6538a1628f47b5c9ea3b558de70a6",
+    "sha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
     "mode": "local",
     "services": []
   },
   "tools/git-repo.ps1": {
-    "sha256": "4ec1ebc30c976a410c5dc616f0671727c34278b777b323e671189553f0b1aa7a",
+    "sha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
     "mode": "local",
     "services": []
   },
@@ -477,7 +477,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "tools/GET-TERMINAL-READINESS-CHECK.ps1": {
-    "sha256": "e9d4d5f1974f2af40c01c23e4e4cf925f232baba8bd7f9b063f0c78110958c01",
+    "sha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
     "mode": "local",
     "services": []
   },
