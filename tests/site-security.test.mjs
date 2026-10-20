@@ -433,15 +433,16 @@ test('global search includes every scope regardless of navigation selection',()=
   }
 });
 
-test('right-aligned flags put the verification seal before the risk labels; footer keeps its approved treatment',()=>{
+test('verified rows end in a check after visible risk labels; footer retains its typography',()=>{
   const f=loadCatalog(root);f.api.state.query='ir';f.api.renderResults();
   const html=f.elements.get('results').innerHTML;
-  assert.ok(html.includes('class="result-verification"><span class="verification-seal" aria-hidden="true">V</span> VERIFIED'));
-  assert.ok(html.indexOf('class="result-verification"')<html.indexOf('class="result-risk-flags"'));
+  assert.ok(html.includes('class="result-check verification-check" aria-hidden="true">✓</span>'));
+  assert.ok(html.indexOf('class="result-risk-flags"')<html.indexOf('class="result-check verification-check"'));
+  assert.ok(!html.includes('> VERIFIED</span>'));
   const css=fs.readFileSync(path.join(root,'index.html'),'utf8');
   assert.ok(css.includes('.signature-mark{font-weight:600}'));
-  assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:#ffffff}'));
-  assert.ok(css.includes('.signature-muted{color:#ffffff;font-weight:200}'));
+  assert.ok(css.includes('.brand-slash{margin:0 .65em 0 .30em;font-weight:200;letter-spacing:.08em;color:var(--fk-ffffff,#ffffff)}'));
+  assert.ok(css.includes('.signature-muted{color:var(--fk-ffffff,#ffffff);font-weight:200}'));
   assert.ok(css.includes('.signature-slash{margin-left:.08em;letter-spacing:.08em;color:inherit;font-weight:200}'));
 });
 

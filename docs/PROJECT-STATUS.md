@@ -1,9 +1,20 @@
 # FIELD // KIT — project status
 
-Updated October 19, 2026. This is the current continuation checkpoint. Older
+Updated October 20, 2026. This is the current continuation checkpoint. Older
 dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
+
+- October 20 appearance release: Auto/Light/Dark with saved preference, 18px
+  catalog names, compact mobile risk labels, a far-right verification check and
+  one About-linked key. Desktop navigation is wider and results are centered.
+  The footer uses one solid muted color with its established type and spacing.
+  See the current selection in [DESIGN-LOCK.md](../DESIGN-LOCK.md).
+  Site/security/theme tests pass 44/44 and the 338-entry inventory is unchanged.
+  Script bytes and the 78 exact-release verification records are unchanged.
+  Automated checks do not substitute for browser inspection; browser rendering
+  was unavailable in this editing environment. Owner-approved illustrations
+  established the design, with live browser spot checks still needed.
 
 - Batch 3 live license pair is complete: assignment and removal are VERIFIED at 1.0.2. Successful 1.0.1 client runs carry forward through the owner-accepted product-name-only update. See [evidence](qa/LICENSE-1.0.2-VERIFICATION.md). Batch 3 is closed per owner acceptance; its offline and live evidence retain their stated scopes.
 
@@ -23,7 +34,7 @@ dated notes remain historical; they do not reopen accepted testing.
   required input, checks, guards, requirements, clear start and completion steps.
   Version details stay in source; VERIFIED remains bound to exact release bytes.
 - Release checks cover card/source alignment, integrity, safe rendering and
-  parsing. The batch-2 site suite contains 38 tests. Static checks are not
+  parsing. The site/security/theme suite contains 44 tests. Static checks are not
   substitutes for operator acceptance.
 
 ## Verified releases

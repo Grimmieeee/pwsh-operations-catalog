@@ -2,6 +2,26 @@
 
 Locked by the owner on October 17, 2026. Future visual changes require an in-chat preview and explicit approval before publication. Routine bug fixes may restore this baseline; do not redesign while working on scripts.
 
+## October 20 approved appearance update
+
+This selection supersedes the earlier conflicting mark/color notes below.
+
+- Retain the existing Raleway FIELD // KIT wordmark, its weights and spacing.
+- BY, every part of BURNSID//, and EST. 2026 use the same solid muted white
+  (`#c2c9c7`) in dark mode and the same dark muted ink (`#53665e`) in light mode.
+  Preserve the current footer font sizes, weights, spacing and position. No fade.
+- Catalog names use 18px with their existing Source Sans 3 family and weight.
+- Earned verification uses one small check at the far-right edge, after all risk
+  labels. Remove the repeated circled V and VERIFIED text. A single small
+  clickable “✓ Verified” key near search opens the verification explanation in About.
+  Preserve exact release/version/checksum eligibility; quick commands gain no mark.
+- Mobile uses the name first and one compact wrapping risk line underneath,
+  with the check at the right. Keep destructive and source-pending labels visible.
+- Desktop navigation is 280px, with 250px retained on narrower desktop widths.
+  Center the results within a 1040px content area and distinguish the sidebar subtly.
+- Auto, Light and Dark appearance choices are remembered. Auto follows the OS;
+  light mode changes colors while preserving the same typography and geometry.
+
 ## Identity
 
 - Home Screen name: `F I E L D //  K I T`; dark icon with mint `//`.
