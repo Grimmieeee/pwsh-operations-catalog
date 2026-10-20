@@ -38,9 +38,8 @@ html[data-theme="light"]{color-scheme:light;--wordmark-rgb:25 51 43;--flag-read:
 .result-change,.result:hover .result-change,.access-tag.access-change,.about-key .access-change{color:var(--flag-change)}
 .result-danger,.result:hover .result-danger,.access-tag.access-danger,.about-key .access-danger{color:var(--flag-danger)}
 .result-verification .verification-seal{color:var(--flag-verified)}
-.signature-note,.signature-mark,.signature-muted,.signature-established,.signature-established strong{color:#c2c9c7}
+.signature-note,.signature-mark,.signature-muted,.signature-established,.signature-established strong{color:var(--fk-d8f3eb,#d8f3eb)}
 .signature-mark,.signature-mark .signature-slash{font-weight:400}
-html[data-theme="light"] :is(.signature-note,.signature-mark,.signature-muted,.signature-established,.signature-established strong){color:#53665e}
 .result-name{font-size:18px}
 .verification-check{display:inline-flex;align-items:center;justify-content:center;flex:none;width:16px;color:var(--flag-verified);font:400 15px/1 var(--ui);border:0;border-radius:0;background:transparent;letter-spacing:0}
 .result-check{grid-column:3;justify-self:end}
@@ -52,8 +51,9 @@ html[data-theme="light"] :is(.signature-note,.signature-mark,.signature-muted,.s
 @media(min-width:761px){
   .shell{grid-template-columns:280px minmax(0,1fr)}
   .sidebar{background:var(--fk-0e1517,#0b1214)}
-  .catalog{width:100%;max-width:1084px;margin-inline:auto}
-  .search-box{max-width:1040px;margin-inline:auto}
+  .catalog{width:100%;max-width:1084px;margin-inline:0}
+  .search-box{max-width:1040px;margin-inline:0}
+  .verification-key{margin-left:0;margin-right:0}
 }
 @media(min-width:761px) and (max-width:1100px){
   .shell{grid-template-columns:250px minmax(0,1fr)}

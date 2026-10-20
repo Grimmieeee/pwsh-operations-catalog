@@ -11,6 +11,11 @@ BURNSID// footer in one 400 weight and one solid muted color, including the
 slashes. Keep BY, existing size, spacing and low placement. FIELD // KIT retains
 its own existing two-weight treatment.
 
+October 20 alignment refinement: desktop search and catalog share the workspace's
+left gutter instead of centering within wide windows. Retain their existing
+maximum widths. The footer uses the exact same color token as the About menu
+item in each theme, with its unified regular weight and existing spacing.
+
 - Retain the existing Raleway FIELD // KIT wordmark, its weights and spacing.
 - BY, every part of BURNSID//, and EST. 2026 use the same solid muted white
   (`#c2c9c7`) in dark mode and the same dark muted ink (`#53665e`) in light mode.
