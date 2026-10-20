@@ -117,4 +117,5 @@ html[data-theme="light"] .drawer-overlay{background:rgba(20,40,30,.28)}
 }
 `;
 fs.writeFileSync(path.join(root,'site-theme.css'),'/* Light palette for legacy color fallbacks. Dark colors remain in index.html. */\nhtml[data-theme="light"]{\n'+palette+'\n}\n'+tail);
+fs.appendFileSync(path.join(root,'site-theme.css'), '\n.catalog-intro{max-width:78ch;margin:0 0 22px 14px;color:var(--body)}\n.catalog-intro h1{margin:0 0 8px;font:500 20px/1.35 var(--ui)}\n.catalog-intro p{margin:0;font:400 16px/1.6 var(--ui)}\n@media(max-width:760px){.catalog-intro{margin-left:0;margin-bottom:18px}.catalog-intro h1{font-size:18px}.catalog-intro p{font-size:15px}}\n');
 console.log(`Theme-enabled ${colors.size} legacy colors.`);

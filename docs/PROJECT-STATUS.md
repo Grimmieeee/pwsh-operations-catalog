@@ -5,6 +5,12 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
+- Approved welcome copy explains the purpose and contents of each card above
+  search. No script source or verification records changed.
+- Sharing follow-up: the owner found the enlarged desktop treatment too large.
+  A smaller responsive treatment still needs a preview and approval; this copy
+  release does not claim that sizing issue is resolved.
+
 - Owner-selected desktop readability update: approximately 125% catalog and
   navigation scale above 1100px, 22.5px task names, a 320px sidebar, bounded
   content and richer teal surfaces with a clearer row hover/focus track.
