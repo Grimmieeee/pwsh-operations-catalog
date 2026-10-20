@@ -1,6 +1,14 @@
+# Current checkpoint — batch 4 prepared
+
+Batches 1–3 are closed per owner acceptance. Batch 4 is one offline upload with 16 sources and 103 scoped behavioral cases; see tools/batch-four/README.md. No new functional VERIFIED marks are granted by building or running synthetic tests. The catalog retains 24 VERIFIED releases. Source hashes and coverage are embedded in the package and returned report.
+
+Site flags now use 12px bold type; the row verification seal is slightly larger. Plain labels, right alignment, spacing, colors and title seal remain as approved.
+
+Earlier checkpoints below are historical.
+
 # Current checkpoint — October 20, 2026
 
-24 VERIFIED tools. License assignment and removal passed live at 1.0.1; the owner accepted the display-only Microsoft product-name update in 1.0.2 without a repeat live run. Exact tested and released hashes are recorded separately in docs/qa/LICENSE-1.0.2-VERIFICATION.md. Other batch 3 live workflows remain pending. Earlier checkpoints below are historical.
+24 VERIFIED tools. License assignment and removal passed live at 1.0.1; the owner accepted the display-only Microsoft product-name update in 1.0.2 without a repeat live run. Exact tested and released hashes are recorded separately in docs/qa/LICENSE-1.0.2-VERIFICATION.md. Batch 3 is closed per owner acceptance; the underlying evidence retains its recorded scope. Earlier checkpoints below are historical.
 
 # FIELD // KIT Project Handoff
 

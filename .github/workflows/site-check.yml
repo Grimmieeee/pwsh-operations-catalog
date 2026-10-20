@@ -49,3 +49,9 @@ jobs:
         run: ./tests/change-safety.test.ps1
       - name: Exercise download, clipboard and keyboard failure paths
         run: node --test tests/site-security.test.mjs
+      - name: Exercise batch 4 scoped behavioral checks without live services
+        shell: pwsh
+        run: |
+          foreach ($focus in @('Disable','MFA','Hold','Delete','Groups','Cleanup','Recovery','Drift','Modules','Session','JumpboxSession','Execution','ThreatIntel','GitSecurity','MapKit','Storage')) {
+            ./tests/batch-four.test.ps1 -Focus $focus
+          }
