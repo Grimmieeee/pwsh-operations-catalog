@@ -37,7 +37,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Shows each user, selected license, and country/region change before approval",
       "Type ASSIGN to approve; stops preparation if a user cannot be read"
     ],
-    "sourceSha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+    "sourceSha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
     "objective": "Assigns one selected Microsoft 365 license to one or more approved users and verifies the final assignment state.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
@@ -78,7 +78,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Shows each user and selected license before approval",
       "Type REMOVE to approve; cancelling makes no changes"
     ],
-    "sourceSha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+    "sourceSha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
     "objective": "Removes one selected license or all licenses from one or more approved users and verifies the final state.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
@@ -1340,7 +1340,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "b17f05a7db15262d4256cdc5a0de0114e3084fa8ad14412bd9c109aa55281aa7",
+    "sourceSha256": "023b34f8460cdf2714f17e60542916227e20bc8c387c490c8019e3a1e37199a3",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },

@@ -1,0 +1,31 @@
+{
+  "scope": "Live single-user assignment and removal with original approvals and post-change verification. Display-only 1.0.2 update accepted retroactively by owner; not represented as an exact-byte live test.",
+  "liveVersion": "1.0.1",
+  "releasedVersion": "1.0.2",
+  "reportSha256": "e589a26b75a57b635b7cf309d87a2f665a2b0185661c3111a314f6928ca2450a",
+  "ownerAccepted": true,
+  "sources": [
+    {
+      "file": "INVOKE-ASSIGN-LICENSES.ps1",
+      "liveTestedSha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+      "releasedSha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5"
+    },
+    {
+      "file": "INVOKE-REMOVE-LICENSES.ps1",
+      "liveTestedSha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+      "releasedSha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450"
+    }
+  ],
+  "exports": [
+    {
+      "sha256": "e26e6c0ec57312ee7578c242d4aa066ec07b84e73f69f55ef71c79ea4a0c4a7a",
+      "rows": 1,
+      "result": "Verified"
+    },
+    {
+      "sha256": "b987ecc0459b263d0187b692e829d35d4d4ba0eaa27ab985c4c3cd4458451aee",
+      "rows": 1,
+      "result": "Verified"
+    }
+  ]
+}

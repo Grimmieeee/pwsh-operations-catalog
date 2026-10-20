@@ -5,17 +5,19 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
+- Batch 3 live license pair is complete: assignment and removal are VERIFIED at 1.0.2. Successful 1.0.1 client runs carry forward through the owner-accepted product-name-only update. See [evidence](qa/LICENSE-1.0.2-VERIFICATION.md). Remaining batch 3 live workflows are still pending.
+
 - Batch 1 is closed: the main 28-script sampled read-only run plus its final
   report/export cleanup. No additional operator rerun is required to close it.
 - Batch 2 is closed with eleven completed workflows accepted by the owner.
-  Together with batch 1 and the IR trio, this brings the total to **22 VERIFIED
+  Together with batch 1 and the IR trio, this brings the total to **24 VERIFIED
   tools**. Room/Resource Access remains unverified: its supplied security-group
   target was not an active resource mailbox. Only that successful path remains.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
 - Batch 3 offline safety checks passed 85/85 on Windows PowerShell 5.1, matching
-  the supplied package. This completes the synthetic safety stage; successful
-  live account/device changes remain untested. The catalog retains 22 VERIFIED
+  the supplied package. This completes the synthetic safety stage; the license pair has since passed live testing; other
+  live account/device changes remain pending. The catalog retains 24 VERIFIED
   releases. See [the batch-3 safety record](qa/BATCH-3-OFFLINE-RESULTS.md).
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
@@ -70,7 +72,7 @@ for its eleven releases, exact source attribution and the resource exception.
 
 - IR application-name lookup has an unreleased candidate patch; preserve the
   accepted IR source until a deliberate revision is tested and accepted.
-- Friendly license-name resolution and other source-specific gaps remain
+- License-name resolution is released in 1.0.2; remaining source-specific gaps are
   tracked in [CARD-VERIFICATION-GAPS.md](../CARD-VERIFICATION-GAPS.md).
 - Eleven source-pending entries remain planned, not downloadable verified tools.
 - Development candidates are separate from public main. Reconcile them before

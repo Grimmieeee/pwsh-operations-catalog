@@ -35,6 +35,7 @@ jobs:
       - name: Exercise license-removal safety with offline Graph and prompt mocks
         shell: pwsh
         run: |
+          ./tests/license-product-names.test.ps1
           ./tests/license-removal.test.ps1
           ./tests/license-removal.test.ps1 -Mode Assign
       - name: Screen catalog sources and shared Graph URI helpers

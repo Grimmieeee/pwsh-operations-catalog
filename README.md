@@ -72,7 +72,7 @@ main
 
 The interactive three-step IR tools are available with an
 [execution and safety guide](docs/IR-WORKFLOW.md). The published baseline is
-1.0.0. Batches 1 and 2 are closed, with 22 VERIFIED tools total. Batch 2 accepted
+1.0.0. Batches 1 and 2 are closed, with 24 VERIFIED tools total. Batch 2 accepted
 11 completed workflows; the resource-mailbox target mismatch remains a separate
 untested path. See the [project status](docs/PROJECT-STATUS.md) and
 [batch-2 evidence](docs/qa/BATCH-2-1.0.0-VERIFICATION.md).

@@ -1463,7 +1463,7 @@
       "file": "INVOKE-ASSIGN-LICENSES.ps1",
       "type": "Automation",
       "path": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
-      "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+      "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -1472,7 +1472,7 @@
       "file": "INVOKE-REMOVE-LICENSES.ps1",
       "type": "Automation",
       "path": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
-      "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+      "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
       "status": "Ready",
       "languageReviewed": true
     },
@@ -2894,7 +2894,7 @@
       "file": "PROJECT-HANDOFF.md",
       "type": "Documentation",
       "path": "tools/PROJECT-HANDOFF.md",
-      "sha256": "b17f05a7db15262d4256cdc5a0de0114e3084fa8ad14412bd9c109aa55281aa7",
+      "sha256": "023b34f8460cdf2714f17e60542916227e20bc8c387c490c8019e3a1e37199a3",
       "status": "Ready",
       "languageReviewed": true
     },
