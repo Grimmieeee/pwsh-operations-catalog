@@ -55,3 +55,9 @@ jobs:
           foreach ($focus in @('Disable','MFA','Hold','Delete','Groups','Cleanup','Recovery','Drift','Modules','Session','JumpboxSession','Execution','ThreatIntel','GitSecurity','MapKit','Storage')) {
             ./tests/batch-four.test.ps1 -Focus $focus
           }
+      - name: Exercise batch 5 local setup and rendering functions offline
+        shell: pwsh
+        run: |
+          foreach ($focus in @('Cert','Sign','GitRepo','Handoff','Preflight','Join','Basic','SeaGlass','Silicon','Cobalt','Rain','Static','Attractor')) {
+            ./tests/batch-five.test.ps1 -Focus $focus
+          }

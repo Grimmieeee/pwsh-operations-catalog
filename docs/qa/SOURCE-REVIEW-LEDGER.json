@@ -15,7 +15,7 @@
     ]
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+    "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
     "state": "Source reviewed",
     "scope": [
       "Changed control path review",
@@ -342,7 +342,7 @@
     ]
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
-    "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+    "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
     "state": "Source reviewed",
     "scope": [
       "Changed control path review",
@@ -374,7 +374,7 @@
     ]
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
-    "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+    "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
     "state": "Source reviewed",
     "scope": [
       "Changed control path review",

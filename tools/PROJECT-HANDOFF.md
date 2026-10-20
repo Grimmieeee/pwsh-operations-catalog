@@ -1,3 +1,9 @@
+# Current checkpoint — batch 4 accepted / batch 5 prepared
+
+39 VERIFIED tools. Batch 4: 15 passing sources accepted with explicit offline/function-level scope; Git Security failed and is deferred at the owner’s request. Published 1.0.0 sources add a version comment only. See docs/qa/BATCH-4-1.0.0-VERIFICATION.md. Batches 1–4 are closed except that named exception.
+
+Next: one batch-5 package for 13 local/setup/visual sources. No real trust, profile, domain, signing or repository changes execute. Prior checkpoints below are historical.
+
 # Current checkpoint — batch 4 prepared
 
 Batches 1–3 are closed per owner acceptance. Batch 4 is one offline upload with 16 sources and 103 scoped behavioral cases; see tools/batch-four/README.md. No new functional VERIFIED marks are granted by building or running synthetic tests. The catalog retains 24 VERIFIED releases. Source hashes and coverage are embedded in the package and returned report.

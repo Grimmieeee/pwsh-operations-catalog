@@ -6,7 +6,7 @@
     "commands": 235,
     "references": 12,
     "pending": 11,
-    "operatorVerified": 24,
+    "operatorVerified": 39,
     "scopedReviews": 42
   },
   "entries": [
@@ -3022,11 +3022,11 @@
       "path": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
-      "family": "Change workflows",
-      "state": "Source reviewed",
+      "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+        "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
         "state": "Source reviewed",
         "scope": [
           "Changed control path review",
@@ -3043,27 +3043,27 @@
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 210,
+          "line": 213,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 107,
+          "line": 110,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 224,
+          "line": 227,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 243,
+          "line": 246,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 112,
+          "line": 115,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3089,44 +3089,44 @@
       "path": "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1",
       "kind": "PowerShell",
       "access": "Destructive",
-      "sha256": "0fbb42bb1db268b3f6e4b74a21af7008528b5acc2e684cccdf3696122fcb6bd2",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 273,
+          "line": 276,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 1572,
+          "line": 1575,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 1582,
+          "line": 1585,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 106,
+          "line": 109,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 407,
+          "line": 410,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 422,
+          "line": 425,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 115,
+          "line": 118,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3583,11 +3583,11 @@
       "path": "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
-      "family": "Change workflows",
-      "state": "Source reviewed",
+      "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+        "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
         "state": "Source reviewed",
         "scope": [
           "Changed control path review",
@@ -3604,27 +3604,27 @@
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 184,
+          "line": 187,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 247,
+          "line": 250,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 264,
+          "line": 267,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 350,
+          "line": 353,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 189,
+          "line": 192,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4049,54 +4049,54 @@
       "path": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "c0d3bb2f0bf4857f45d6f6d52afb80b8171f4fc700d2e2999ec716b21df2cccf",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 240,
+          "line": 243,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 260,
+          "line": 263,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 212,
+          "line": 215,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 222,
+          "line": 225,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 228,
+          "line": 231,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 233,
+          "line": 236,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 316,
+          "line": 319,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 346,
+          "line": 349,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 217,
+          "line": 220,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4118,29 +4118,29 @@
       "path": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 120,
+          "line": 123,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 155,
+          "line": 158,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 167,
+          "line": 170,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 125,
+          "line": 128,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -4451,9 +4451,9 @@
       "path": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "a9126fcc537a71b9471d49ecfe5f714ede93bc5e1306b3eee9fe9ea7f014859a",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [],
       "authentication": {
@@ -5817,34 +5817,34 @@
       "path": "published-source/utility/INSTALL-M365-MODULES.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "a143a317bb85b76c39a5768b7b5cad4096d4acce4d5509465c01be820b37ff24",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 36,
+          "line": 39,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 49,
+          "line": 52,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 49,
+          "line": 52,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 50,
+          "line": 53,
           "note": "Distinguish printed directions from executable installs."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 86,
+          "line": 89,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -5905,29 +5905,29 @@
       "path": "published-source/utility/RESET-M365-SESSION.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "203ba913f1d8d1d72544ecf950c0b346e4e92244a9e6b75730095339c858a16a",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 42,
+          "line": 45,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 68,
+          "line": 71,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 83,
+          "line": 86,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "PROCESS_START",
-          "line": 44,
+          "line": 47,
           "note": "Review external input and invocation arguments."
         }
       ],
@@ -6082,29 +6082,29 @@
       "path": "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "52c6ce8dc1af2323b9dcc6c831cdd211b555ae44280417181599290212fcf7bd",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 109,
+          "line": 112,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 125,
+          "line": 128,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 141,
+          "line": 144,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 114,
+          "line": 117,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6698,11 +6698,11 @@
       "path": "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
-      "family": "Change workflows",
-      "state": "Source reviewed",
+      "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+        "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
         "state": "Source reviewed",
         "scope": [
           "Changed control path review",
@@ -6719,72 +6719,72 @@
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 165,
+          "line": 168,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 201,
+          "line": 204,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 466,
+          "line": 469,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 486,
+          "line": 489,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 103,
+          "line": 106,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 113,
+          "line": 116,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 217,
+          "line": 220,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 240,
+          "line": 243,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 454,
+          "line": 457,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 459,
+          "line": 462,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 542,
+          "line": 545,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 572,
+          "line": 575,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 672,
+          "line": 675,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 108,
+          "line": 111,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6801,39 +6801,39 @@
       "path": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "668267cbadfc88d212a8708c77f0a5454343a0e4222e2e1cfaff2a44e84afb54",
-      "family": "Change workflows",
-      "state": "Needs review",
+      "sha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "HOST_EXIT",
-          "line": 666,
+          "line": 669,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "HOST_EXIT",
-          "line": 675,
+          "line": 678,
           "note": "Review interactive host lifetime."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 101,
+          "line": 104,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 188,
+          "line": 191,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 205,
+          "line": 208,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 106,
+          "line": 109,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -6850,24 +6850,24 @@
       "path": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "c795ac5d107db35eed303dff231cedbee577824c6fe8b93285ad5895a97cd44b",
-      "family": "Read-only workflows",
-      "state": "Needs review",
+      "sha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 286,
+          "line": 289,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 99,
+          "line": 102,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 145,
+          "line": 148,
           "note": "Distinguish optional probes from hidden failures."
         }
       ],
@@ -8711,7 +8711,7 @@
       "path": "tools/PROJECT-HANDOFF.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "68189498e3177acd4abf145f777ddef5b872c9655819b695370b773782f5732d",
+      "sha256": "39ca490e7b85c45cd0fa183680e732bffeab4003105b5fbf340cc477a1687dac",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -8776,14 +8776,14 @@
       "path": "tools/set-execution.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "fe6e46d409518b856bf52ee985d4298e41376676d2e984af8092c0ef316bf09f",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "POLICY_CHANGE",
-          "line": 25,
+          "line": 28,
           "note": "Check explicit setup/theme purpose and disclosure."
         }
       ],
@@ -9049,34 +9049,34 @@
       "path": "tools/INVOKE-MAP-KIT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "22046718b32efd8f0d8d5e27bbccb78836ee52262159aa215796e6df5ff7e418",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "COMPLETION_MESSAGE",
-          "line": 544,
+          "line": 547,
           "note": "Review whether failure and unavailable states remain visible."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 178,
+          "line": 181,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 188,
+          "line": 191,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 348,
+          "line": 351,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 508,
+          "line": 511,
           "note": "Distinguish optional probes from hidden failures."
         }
       ],
@@ -9095,29 +9095,29 @@
       "path": "tools/INVOKE-SESSION-RESET.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "0f183c52bd1ca24dcccba318913eac70eb89848cbe32ef42fe631c6270744446",
-      "family": "Local tools / toys",
-      "state": "Needs review",
+      "sha256": "4de135e684e778e091292f7fe56610ddee47739c15d34dda5367cbe3112a15bc",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": null,
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 127,
+          "line": 130,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 172,
+          "line": 175,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 206,
+          "line": 209,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "PROCESS_START",
-          "line": 94,
+          "line": 97,
           "note": "Review external input and invocation arguments."
         }
       ],

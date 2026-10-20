@@ -10,14 +10,14 @@ dated notes remain historical; they do not reopen accepted testing.
 - Batch 1 is closed: the main 28-script sampled read-only run plus its final
   report/export cleanup. No additional operator rerun is required to close it.
 - Batch 2 is closed with eleven completed workflows accepted by the owner.
-  Together with batch 1 and the IR trio, this brings the total to **24 VERIFIED
+  Together with batch 1 and the IR trio, this brings the total to **39 VERIFIED
   tools**. Room/Resource Access remains unverified: its supplied security-group
   target was not an active resource mailbox. Only that successful path remains.
 - The catalog contains 338 entries: 80 scripts, 235 commands, 12 references and
   11 source-pending entries. Catalog entries are not all standalone scripts.
 - Batch 3 offline safety checks passed 85/85 on Windows PowerShell 5.1, matching
   the supplied package. This completes the synthetic safety stage; the license pair has since passed live testing. The owner closed batch 3;
-  no repeat batch-3 run is queued. The catalog retains 24 VERIFIED
+  no repeat batch-3 run is queued. The catalog retains 39 VERIFIED
   releases. See [the batch-3 safety record](qa/BATCH-3-OFFLINE-RESULTS.md).
 - The approved minimal design and card language are established: purpose,
   required input, checks, guards, requirements, clear start and completion steps.
@@ -54,14 +54,11 @@ Batch-2 implementation hashes match the returned runner metadata. The published
 1.0.0 files add a version comment only. See [batch-2 release evidence](qa/BATCH-2-1.0.0-VERIFICATION.md)
 for its eleven releases, exact source attribution and the resource exception.
 
-## Next work — batch 4
+## Next work — batch 5
 
-1. Run one offline package covering 16 remaining tools and 103 cases. See
-   [batch-4 scope and instructions](../tools/batch-four/README.md).
-2. Review returned source hashes, case counts and the explicit per-tool scope.
-   These tests add behavioral evidence without claiming live authentication or
-   untested branches. Do not repeat accepted batches.
-3. Reconcile owner acceptance before changing VERIFIED records. Current total: 24.
+Batch 4 is closed with 15 owner-accepted scoped releases; Git Security remains failed and deferred at the owner’s request. See [evidence](qa/BATCH-4-1.0.0-VERIFICATION.md).
+
+Batch 5 covers 13 local/setup/visual tools in one offline package. Tests preserve their exact per-tool scope; they do not modify real certificates, profiles, domain membership or Git repositories. Earlier accepted batches are not repeated.
 
 ## Remaining known work
 
