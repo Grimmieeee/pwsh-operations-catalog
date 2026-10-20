@@ -49,12 +49,12 @@ test('offboarding language leads to read-only preparation without enabling missi
   assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/No matches\. Try a task name[\s\S]*browse a section/);
 });
 
-test('license removal card discloses tenant input and exact target approval without a verified mark',()=>{
+test('verified license removal retains tenant input and exact target approval',()=>{
   const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');
   f.api.openItem(item);
   const html=f.elements.get('drawerBody').innerHTML;
   for(const text of ['Tenant ID (GUID)','Shows each user and selected license','Shows failed or unconfirmed results','Type REMOVE'])assert.ok(html.includes(text),text);
-  assert.equal(f.api.isVerifiedRelease(item),false);
+  assert.equal(f.api.isVerifiedRelease(item),true);
 });
 
 test('investigation searches lead to assessment without hijacking explicit actions',()=>{
@@ -282,7 +282,7 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===22);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===24);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 

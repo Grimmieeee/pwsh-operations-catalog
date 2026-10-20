@@ -1,3 +1,7 @@
+# Current checkpoint — October 20, 2026
+
+24 VERIFIED tools. License assignment and removal passed live at 1.0.1; the owner accepted the display-only Microsoft product-name update in 1.0.2 without a repeat live run. Exact tested and released hashes are recorded separately in docs/qa/LICENSE-1.0.2-VERIFICATION.md. Other batch 3 live workflows remain pending. Earlier checkpoints below are historical.
+
 # FIELD // KIT Project Handoff
 
 Current continuation record for the FIELD // KIT PowerShell Operations Catalog.

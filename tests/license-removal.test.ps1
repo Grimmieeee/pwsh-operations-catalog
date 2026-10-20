@@ -95,7 +95,8 @@ function Run-Case {
     if ($Name -eq 'missing-scope') { $script:ctx.Scopes=@('User.Read.All') }
     if ($Name -eq 'invalid-tenant') { $ExpectedTenantId='not-a-tenant' }
     $script:lastOutput=(& $main 6>&1 | ForEach-Object { [string]$_ }) -join "`n"
-    $planText=if ($Mode -eq 'Assign') { '-> Assign TEST_PRODUCT' } else { '-> TEST_PRODUCT' }
+    $planName=Get-LicenseProductName -SkuId $script:sku -SkuPartNumber 'TEST_PRODUCT'
+    $planText=if ($Mode -eq 'Assign') { '-> Assign '+$planName } else { '-> '+$planName }
     if ($Name -in @('success','new-session','current-user-session','missing-scope','location-write')) {
         Assert-Test ($script:posts -eq 1) "$Name must make one mocked request. Output: $script:lastOutput"
         Assert-Test ($script:lastOutput -match 'STATUS: Completed' -and $script:lastOutput -match 'Verified\s+: 1') "$Name must verify completion."

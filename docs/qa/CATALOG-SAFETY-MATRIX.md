@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":22,"scopedReviews":42}
+{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":24,"scopedReviews":42}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|
@@ -10,8 +10,8 @@ Generated from current source hashes. Automated-test states describe the listed 
 | GET-STALE-SIGNIN-REVIEW.ps1 | Read-only workflows | Needs review | Parser/integrity screening; detailed source review remains |
 | INVOKE-DISABLE-ACCOUNTS.ps1 | Change workflows | Source reviewed | Changed control path review; No verified result is no longer described as no change |
 | INVOKE-DELETE-ACCOUNTS.ps1 | Change workflows | Needs review | Parser/integrity screening; detailed source review remains |
-| INVOKE-ASSIGN-LICENSES.ps1 | Change workflows | Automated tests passed | Exact-UPN resolution and complete target preview; Expected tenant/account before reads and writes; One typed change approval; Missing state and failed/unverified completion reporting |
-| INVOKE-REMOVE-LICENSES.ps1 | Change workflows | Automated tests passed | Exact-UPN resolution and complete target preview; Expected tenant/account before reads and writes; One typed change approval; Missing state and failed/unverified completion reporting |
+| INVOKE-ASSIGN-LICENSES.ps1 | Verified read-only workflows | Operator verified — exact version | Exact-UPN resolution and complete target preview; Expected tenant/account before reads and writes; One typed change approval; Missing state and failed/unverified completion reporting |
+| INVOKE-REMOVE-LICENSES.ps1 | Verified read-only workflows | Operator verified — exact version | Exact-UPN resolution and complete target preview; Expected tenant/account before reads and writes; One typed change approval; Missing state and failed/unverified completion reporting |
 | RESOLVE-NAMES-TO-UPNS.ps1 | Read-only workflows | Needs review | Parser/integrity screening; detailed source review remains |
 | GET-ACCOUNT-STATUS.ps1 | Read-only workflows | Needs review | Parser/integrity screening; detailed source review remains |
 | GET-DISTRIBUTION-GROUP-MEMBERS.ps1 | Verified read-only workflows | Operator verified — exact version | Adapted sampled read-only workflow; ten records / forty reads; Test source matched returned runner manifest; release adds a version comment only |

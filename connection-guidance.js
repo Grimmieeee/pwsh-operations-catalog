@@ -33,14 +33,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1": {
-    "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+    "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/identity/INVOKE-REMOVE-LICENSES.ps1": {
-    "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+    "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
     "mode": "auto",
     "services": [
       "GRAPH"

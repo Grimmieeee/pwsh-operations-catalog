@@ -6,7 +6,7 @@
     "commands": 235,
     "references": 12,
     "pending": 11,
-    "operatorVerified": 22,
+    "operatorVerified": 24,
     "scopedReviews": 42
   },
   "entries": [
@@ -3148,11 +3148,11 @@
       "path": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "f5585715db56fc58a71cc518221eeb367eb6e143e90df9a50259f9b07455312e",
+        "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
         "state": "Automated tests passed",
         "scope": [
           "Exact-UPN resolution and complete target preview",
@@ -3171,22 +3171,22 @@
       "signals": [
         {
           "id": "QUIET_ERROR",
-          "line": 169,
+          "line": 203,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 181,
+          "line": 215,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 197,
+          "line": 231,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 175,
+          "line": 209,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3206,11 +3206,11 @@
       "path": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
-      "family": "Change workflows",
-      "state": "Automated tests passed",
+      "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
+      "family": "Verified read-only workflows",
+      "state": "Operator verified — exact version",
       "review": {
-        "sha256": "4ca7d831f460991251a5a0fe980b17e537f96e48df906c4db576f3f43e623928",
+        "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
         "state": "Automated tests passed",
         "scope": [
           "Exact-UPN resolution and complete target preview",
@@ -3229,37 +3229,37 @@
       "signals": [
         {
           "id": "SWALLOWED_ERROR",
-          "line": 200,
+          "line": 234,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "SWALLOWED_ERROR",
-          "line": 211,
+          "line": 245,
           "note": "Trace callers: a swallowed error can become missing/clean data."
         },
         {
           "id": "FIRST_MATCH",
-          "line": 333,
+          "line": 367,
           "note": "Review identity ambiguity and actual call sites."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 219,
+          "line": 253,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 231,
+          "line": 265,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 247,
+          "line": 281,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 225,
+          "line": 259,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -8711,7 +8711,7 @@
       "path": "tools/PROJECT-HANDOFF.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "b17f05a7db15262d4256cdc5a0de0114e3084fa8ad14412bd9c109aa55281aa7",
+      "sha256": "023b34f8460cdf2714f17e60542916227e20bc8c387c490c8019e3a1e37199a3",
       "family": "Reference",
       "state": "Needs review",
       "review": null,

@@ -3348,7 +3348,7 @@
     "input": "User UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list; a country code may be requested for missing UsageLocation.",
     "output": "Per-user verified assignment results + optional verified CSV",
     "file": "INVOKE-ASSIGN-LICENSES.ps1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "code": "",
     "related": [],
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
@@ -3362,7 +3362,15 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "verification": {
+      "version": "1.0.2",
+      "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Live assignment/removal; owner-accepted product-name display update",
+      "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
+    }
   },
   {
     "name": "Remove User Licenses",
@@ -3377,7 +3385,7 @@
     "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list, or ALL.",
     "output": "Per-user verified removal results + optional verified CSV",
     "file": "INVOKE-REMOVE-LICENSES.ps1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "code": "",
     "related": [],
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
@@ -3391,7 +3399,15 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "verification": {
+      "version": "1.0.2",
+      "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Live assignment/removal; owner-accepted product-name display update",
+      "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
+    }
   },
   {
     "name": "Resolve Names to UPNs",

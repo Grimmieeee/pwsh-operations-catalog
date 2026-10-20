@@ -1,0 +1,32 @@
+function Get-LicenseProductName {
+    param([string]$SkuId,[string]$SkuPartNumber)
+    if(-not $script:LicenseNamesById){
+        $script:LicenseNamesById=@{};$script:LicenseNamesByPart=@{}
+        # Microsoft product-name reference snapshot. No runtime download needed.
+        $data=@'
+__LICENSE_NAMES__
+'@
+        foreach($row in @($data|ConvertFrom-Json)){
+            $id=([string]$row[0]).ToLowerInvariant();$part=([string]$row[1]).ToUpperInvariant();$name=[string]$row[2]
+            if(-not $script:LicenseNamesById.ContainsKey($id)){$script:LicenseNamesById[$id]=@()}
+            if(-not $script:LicenseNamesByPart.ContainsKey($part)){$script:LicenseNamesByPart[$part]=@()}
+            $script:LicenseNamesById[$id]=@($script:LicenseNamesById[$id]+$name|Sort-Object -Unique)
+            $script:LicenseNamesByPart[$part]=@($script:LicenseNamesByPart[$part]+$name|Sort-Object -Unique)
+        }
+    }
+    $id=([string]$SkuId).ToLowerInvariant();$part=([string]$SkuPartNumber).ToUpperInvariant()
+    if($id -and $script:LicenseNamesById.ContainsKey($id)){
+        $names=@($script:LicenseNamesById[$id])
+        # Same GUID, documented old/new product aliases: prefer Microsoft's current brand.
+        $current=@($names|Where-Object {$_ -like 'Microsoft Copilot Studio*'})
+        if($current.Count -eq 1){return [string]$current[0]}
+        if($names.Count -eq 1){return [string]$names[0]}
+    }
+    if($part -and $script:LicenseNamesByPart.ContainsKey($part)){
+        $names=@($script:LicenseNamesByPart[$part])
+        if($names.Count -eq 1){return [string]$names[0]}
+    }
+    if($SkuPartNumber){return ('Name unavailable: '+$SkuPartNumber)}
+    if($SkuId){return ('Name unavailable: '+$SkuId)}
+    return 'Name unavailable'
+}
