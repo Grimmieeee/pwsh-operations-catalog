@@ -11,7 +11,8 @@ dated notes remain historical; they do not reopen accepted testing.
   Markdown links across 46 tracked Markdown files resolved. See
   [final sharing review](qa/FINAL-SHARING-REVIEW-2026-10-20.md) for scope and limits.
 - Row hover/focus now fades gently, BURNSID// uses wider tracking and exactly
-  FIELD's brighter tone, and the spaced browser title includes //.
+  FIELD's brighter tone. The browser title is “F I E L D  K I T” with two spaces
+  between the words; only the teal favicon supplies // in the tab.
 
 - Final approved compact layout: 280px desktop navigation, 20px task names,
   12px flags, 60px rows, centered shared search/catalog bounds and teal row
