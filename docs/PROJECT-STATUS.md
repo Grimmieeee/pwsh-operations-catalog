@@ -5,6 +5,14 @@ dated notes remain historical; they do not reopen accepted testing.
 
 ## Published and complete
 
+- Final sharing sweep: all 92 live downloadable sources matched their release
+  checksums; 338 cards opened in the fixture and all 235 inline sources matched.
+  All 44 site tests and 236 offline PowerShell assertions passed. All 27 local
+  Markdown links across 46 tracked Markdown files resolved. See
+  [final sharing review](qa/FINAL-SHARING-REVIEW-2026-10-20.md) for scope and limits.
+- Row hover/focus now fades gently, BURNSID// uses wider tracking and exactly
+  FIELD's brighter tone, and the spaced browser title includes //.
+
 - Final approved compact layout: 280px desktop navigation, 20px task names,
   12px flags, 60px rows, centered shared search/catalog bounds and teal row
   guidance. Full Library and search align vertically. This replaces the
@@ -85,6 +93,11 @@ for its eleven releases, exact source attribution and the resource exception.
 Git Security remains skipped/deferred. Room/Resource Access remains client-dependent and unverified after a failed run; no repeat from the owner’s personal PC is queued. Both remain available with clear prerequisites. The 235 quick commands remain parsed/reviewed, not runtime verified.
 
 ## Remaining known work
+
+- Objective-header cleanup for all 80 scripts is a separate unpublished
+  candidate. Its executable tokens were checked unchanged, but source bytes
+  differ. Do not fold it into this appearance release or rewrite verification
+  evidence as though those new bytes were runtime tested.
 
 - IR application-name lookup has an unreleased candidate patch; preserve the
   accepted IR source until a deliberate revision is tested and accepted.

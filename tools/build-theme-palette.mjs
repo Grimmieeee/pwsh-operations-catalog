@@ -54,8 +54,8 @@ html[data-theme="light"]{color-scheme:light;--wordmark-rgb:25 51 43;--flag-read:
   .catalog{width:100%;max-width:1364px;margin-inline:0}
   .search-box{max-width:1306px;margin-left:14px;margin-right:0}
   .verification-key{max-width:1306px;margin-left:14px;margin-right:0}
-  .result:hover,.result:focus-visible{background:rgba(0,240,181,.10);box-shadow:inset 3px 0 0 rgba(0,240,181,.5)}
-  html[data-theme="light"] .result:hover,html[data-theme="light"] .result:focus-visible{background:rgba(0,111,97,.09);box-shadow:inset 3px 0 0 rgba(0,111,97,.5)}
+  .result:hover,.result:focus-visible{background:linear-gradient(90deg,rgba(0,240,181,.10),rgba(0,240,181,.015));box-shadow:inset 3px 0 0 rgba(0,240,181,.5)}
+  html[data-theme="light"] .result:hover,html[data-theme="light"] .result:focus-visible{background:linear-gradient(90deg,rgba(0,111,97,.09),rgba(0,111,97,.015));box-shadow:inset 3px 0 0 rgba(0,111,97,.5)}
 }
 @media(min-width:761px) and (max-width:1100px){
   .shell{grid-template-columns:250px minmax(0,1fr)}
@@ -100,10 +100,10 @@ html[data-theme="light"] .drawer-overlay{background:rgba(20,40,30,.28)}
   html[data-theme="dark"] .topbar,html[data-theme="dark"] .search-wrap{background:transparent}
   html[data-theme="dark"] .search-box{background:#16312e;border-color:#5b8e80}
   html[data-theme="dark"] .area-button.active{background:linear-gradient(90deg,#16473d,#102f2a)}
-  html[data-theme="dark"] .result:hover,html[data-theme="dark"] .result:focus-visible{background:#1b3b33;box-shadow:inset 3px 0 0 #1ad8ae}
+  html[data-theme="dark"] .result:hover,html[data-theme="dark"] .result:focus-visible{background:linear-gradient(90deg,#1b3b33,rgba(27,59,51,.12));box-shadow:inset 3px 0 0 #1ad8ae}
   html[data-theme="light"] .area-button.active{background:linear-gradient(90deg,rgba(0,111,97,.13),rgba(0,111,97,.04))}
 }
 `;
 fs.writeFileSync(path.join(root,'site-theme.css'),'/* Light palette for legacy color fallbacks. Dark colors remain in index.html. */\nhtml[data-theme="light"]{\n'+palette+'\n}\n'+tail);
-fs.appendFileSync(path.join(root,'site-theme.css'), '\n.brand-lockup{display:inline-grid;grid-template-columns:minmax(0,max-content);max-width:100%}\n.brand-tagline{width:0;min-width:100%;margin-top:10px;color:rgb(var(--wordmark-rgb,255 255 255) / .85);font:400 12px/1.5 var(--ui);letter-spacing:.29em;white-space:nowrap;text-align:justify;text-align-last:justify}\n.tagline-quickly{color:rgb(var(--wordmark-rgb,255 255 255) / .70)}\n.signature-mark,.signature-mark .signature-slash{color:var(--text)}\n@media(min-width:761px){.brand{height:112px;padding:27px 20px 0}.nav{padding-top:8px}.search-wrap{padding-top:62px}}\n@media(max-width:760px){.brand{padding-bottom:32px}}\n');
+fs.appendFileSync(path.join(root,'site-theme.css'), '\n.brand-lockup{display:inline-grid;grid-template-columns:minmax(0,max-content);max-width:100%}\n.brand-tagline{width:0;min-width:100%;margin-top:10px;color:rgb(var(--wordmark-rgb,255 255 255) / .85);font:400 12px/1.5 var(--ui);letter-spacing:.29em;white-space:nowrap;text-align:justify;text-align-last:justify}\n.tagline-quickly{color:rgb(var(--wordmark-rgb,255 255 255) / .70)}\n.signature-mark,.signature-mark .signature-slash{color:rgb(var(--wordmark-rgb,255 255 255) / .85)}\n.signature-mark{letter-spacing:.65em}\n.signature-mark .signature-slash{letter-spacing:inherit;margin-left:0}\n@media(min-width:761px){.brand{height:112px;padding:27px 20px 0}.nav{padding-top:8px}.search-wrap{padding-top:62px}}\n@media(max-width:760px){.brand{padding-bottom:32px}}\n');
 console.log(`Theme-enabled ${colors.size} legacy colors.`);
