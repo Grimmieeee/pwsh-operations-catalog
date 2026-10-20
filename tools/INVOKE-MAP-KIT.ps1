@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 .SYNOPSIS
 Read-only Jumpbox map reporter.
 

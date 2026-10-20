@@ -146,7 +146,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Skips dynamic groups, groups used for admin roles, and Exchange-managed groups",
       "Changes synced group memberships in Active Directory"
     ],
-    "sourceSha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+    "sourceSha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
     "objective": "Remove the reviewed, removable group memberships for approved users; skip protected and unsupported groups.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "notes": "Offboarding-style cleanup for one or many users. Shows Active Directory and Entra memberships independently, keeps synced Entra observations visible, acts once at the authoritative source, skips dynamic/role-assignable/Exchange-managed memberships, requires typed REMOVE GROUPS confirmation, and validates removals.",
@@ -167,7 +167,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Typed ENFORCE confirmation",
       "Does not replace Conditional Access or Security Defaults"
     ],
-    "sourceSha256": "52c6ce8dc1af2323b9dcc6c831cdd211b555ae44280417181599290212fcf7bd",
+    "sourceSha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
     "objective": "Enforces legacy per-user MFA for one or more approved accounts and verifies the final state.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.ReadWrite.AuthenticationMethod + UserAuthenticationMethod.Read.All + User.Read.All",
@@ -208,7 +208,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed MOVE confirmation",
       "Target folder creation requires approval"
     ],
-    "sourceSha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf",
+    "sourceSha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
     "objective": "Moves email back to the mailbox location you choose after an incident.",
     "notes": "Moves messages back from attacker-hidden or incorrect folders.",
     "startMode": "right-click",
@@ -350,7 +350,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Selected public IPs are sent to enabled providers",
       "API keys are not written to disk by this script"
     ],
-    "sourceSha256": "a9126fcc537a71b9471d49ecfe5f714ede93bc5e1306b3eee9fe9ea7f014859a",
+    "sourceSha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
     "objective": "Check public IP addresses against VirusTotal or AbuseIPDB reputation reports.",
     "notes": "Adds reputation context to suspicious IP addresses.",
     "startMode": "right-click",
@@ -770,7 +770,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Largest files are evidence, not automatically safe to delete",
       "Scanning the whole drive can take minutes and slow disk access"
     ],
-    "sourceSha256": "c795ac5d107db35eed303dff231cedbee577824c6fe8b93285ad5895a97cd44b",
+    "sourceSha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
     "input": "Default scan: this Windows computer, C: drive, 10 largest files. Use -ComputerName, -DriveLetter, or -TopFiles in a terminal to change the target or count.",
     "requires": "PowerShell 5.1+ | Remote targets: PowerShell remoting / WinRM",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
@@ -833,7 +833,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Reports findings; does not reorganize or change files"
     ],
-    "sourceSha256": "22046718b32efd8f0d8d5e27bbccb78836ee52262159aa215796e6df5ff7e418",
+    "sourceSha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
     "objective": "Show a folder tree, script counts, signatures, and file warnings.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Uses root detection or -RootPath; confirms the selected folder. Reports naming and file-extension warnings, not a full secret scan. Does not enforce a fixed layout or export files.",
@@ -853,7 +853,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Unrelated remoting sessions remain intact",
       "Clearing the profile password variable and opening a new window are optional"
     ],
-    "sourceSha256": "0f183c52bd1ca24dcccba318913eac70eb89848cbe32ef42fe631c6270744446",
+    "sourceSha256": "4de135e684e778e091292f7fe56610ddee47739c15d34dda5367cbe3112a15bc",
     "objective": "Disconnect local Graph and Exchange sessions and clear session errors.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Run in the terminal you want to reset. Asks before cleanup; can clear the optional JumpboxSessionPassword profile variable and open a fresh PowerShell 7 window. Does not change tenant settings.",
@@ -959,7 +959,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
-    "sourceSha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+    "sourceSha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
     "objective": "Disable approved users in Active Directory or Entra ID, then check each account’s status.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Graph account-change rights + Active Directory reachability for synced users",
@@ -972,7 +972,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
-    "sourceSha256": "0fbb42bb1db268b3f6e4b74a21af7008528b5acc2e684cccdf3696122fcb6bd2",
+    "sourceSha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
     "objective": "Delete approved users in Active Directory or Entra ID after you review the plan and type confirmation.",
     "input": "Exact user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "requires": "Microsoft Graph user-write rights + ActiveDirectory module / writable DC reachability for synced users",
@@ -1084,7 +1084,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
-    "sourceSha256": "c0d3bb2f0bf4857f45d6f6d52afb80b8171f4fc700d2e2999ec716b21df2cccf",
+    "sourceSha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
     "objective": "Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement + rights to read and set mailbox Litigation Hold",
@@ -1136,7 +1136,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INSTALL-M365-MODULES.ps1": {
-    "sourceSha256": "a143a317bb85b76c39a5768b7b5cad4096d4acce4d5509465c01be820b37ff24",
+    "sourceSha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
     "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose.",
     "input": "Choose Graph, Exchange Online, or both when prompted.",
     "requires": "PowerShellGet / PSGallery",
@@ -1162,7 +1162,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "RESET-M365-SESSION.ps1": {
-    "sourceSha256": "203ba913f1d8d1d72544ecf950c0b346e4e92244a9e6b75730095339c858a16a",
+    "sourceSha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
     "objective": "Disconnects Graph and Exchange and clears local PowerShell session state.",
     "input": "No account list needed. Use the PowerShell window whose connections you want to close.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Optional Microsoft.Graph / ExchangeOnlineManagement",
@@ -1248,7 +1248,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sourceSha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+    "sourceSha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
     "objective": "Remove a disabled user’s Full Access, Send As, and Send on Behalf permissions after reviewing the removal plan.",
     "input": "The disabled user’s exact sign-in name (UPN).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + Exchange Online permission-management rights + directory reachability for synced-user validation",
@@ -1261,7 +1261,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
-    "sourceSha256": "668267cbadfc88d212a8708c77f0a5454343a0e4222e2e1cfaff2a44e84afb54",
+    "sourceSha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
     "objective": "Compare selected tenant settings with a saved local baseline and report changes.",
     "input": "Optional local JSON comparison file (baseline). By default, uses a tenant-specific file in the script’s BASELINES folder; offers to create one when missing.",
     "requires": "Microsoft Graph PowerShell with tenant read access. Permissions: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
@@ -1340,7 +1340,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "68189498e3177acd4abf145f777ddef5b872c9655819b695370b773782f5732d",
+    "sourceSha256": "39ca490e7b85c45cd0fa183680e732bffeab4003105b5fbf340cc477a1687dac",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
@@ -1375,7 +1375,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "set-execution.ps1": {
-    "sourceSha256": "fe6e46d409518b856bf52ee985d4298e41376676d2e984af8092c0ef316bf09f",
+    "sourceSha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
     "objective": "Prepare reviewed scripts to run under your current-user execution policy.",
     "notes": "Explicit local setup utility. Checks effective execution policy, sets CurrentUser RemoteSigned only when needed and not managed, and unblocks adjacent .ps1 files. Run only in a folder of scripts you have reviewed. Does not sign files or install modules. Colored result; Enter to exit.",
     "input": "Place this file beside only the reviewed .ps1 files you intend to unblock.",

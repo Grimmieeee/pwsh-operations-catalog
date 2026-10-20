@@ -3305,7 +3305,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Simulated cloud disable workflow: preview, approval, mutation and readback; auth and AD are fixtures.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Delete User Accounts",
@@ -3333,7 +3343,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Exact Graph lookup and post-delete absence verification functions only; no account deletion.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Assign User Licenses",
@@ -3614,7 +3634,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Membership DELETE route and eventual removal readback functions only; no actual group changes.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Create Dynamic License Group",
@@ -3835,7 +3865,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Simulated hold enforcement workflow: approval, mutation and readback; Exchange/auth are fixtures.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Restore Moved Email",
@@ -3858,7 +3898,17 @@
     "_order": 188,
     "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
     "summary": "NO",
-    "objective": "Moves email back to the mailbox location you choose after an incident."
+    "objective": "Moves email back to the mailbox location you choose after an incident.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Encoded message-move request and root-folder creation functions only; no mailbox access or message changes.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "IR: Risk Assessment",
@@ -4059,7 +4109,17 @@
     "_order": 195,
     "summary": "NO",
     "objective": "Checks an IP address for threat indicators and related tenant activity.",
-    "csv": "YES"
+    "csv": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "IP input guards only; provider API calls, credentials and reputation findings are not tested.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Incident Timeline Builder",
@@ -4669,7 +4729,17 @@
     "_order": 220,
     "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
     "summary": "NO",
-    "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose."
+    "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Simulated module installation workflow with cancellation, scope and failure checks; nothing is installed.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Sensitive Data Check",
@@ -4744,7 +4814,17 @@
     "_order": 223,
     "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
     "summary": "NO",
-    "objective": "Disconnects Graph and Exchange and clears local PowerShell session state."
+    "objective": "Disconnects Graph and Exchange and clears local PowerShell session state.",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Simulated reset workflow; checks unrelated sessions are preserved; no real disconnections.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Sign Folder Scripts",
@@ -4987,7 +5067,17 @@
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Simulated per-user MFA workflow: approval, mutation and readback; auth is a fixture.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "RMM Onboarding Summary",
@@ -5669,7 +5759,17 @@
     "_order": 273,
     "summary": "YES",
     "objective": "Removes lingering Full Access, Send As, and Send on Behalf rights only after authoritative disabled-state validation and an explicit reviewed removal plan.",
-    "csv": "NO"
+    "csv": "NO",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Principal matching and SendOnBehalf target isolation only; disabled-state/auth and removal are not exercised.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "name": "Tenant Drift Review",
@@ -5692,7 +5792,17 @@
     "_order": 274,
     "objective": "Compares selected high-value tenant security configuration against an approved local baseline and reports tracked drift.",
     "publishedPath": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
-    "summary": "YES"
+    "summary": "YES",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Synthetic added/removed/changed comparisons and real temporary JSON write/read; no tenant queries.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "_order": 275,
@@ -5710,7 +5820,17 @@
     "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
     "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
-    "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space"
+    "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space",
+    "version": "1.0.0",
+    "verification": {
+      "version": "1.0.0",
+      "sha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
+      "operatorTested": true,
+      "ownerAccepted": true,
+      "testMode": "Offline scoped behavioral checks; no live-service claim",
+      "scope": "Storage collector with synthetic CIM/file records; top-file ranking and skip option; no real drive walk.",
+      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "_order": 276,

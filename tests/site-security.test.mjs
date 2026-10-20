@@ -282,7 +282,7 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===24);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===39);
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 

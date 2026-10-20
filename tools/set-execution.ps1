@@ -1,3 +1,6 @@
+<#
+.VERSION 1.0.0
+#>
 #Requires -Version 5.1
 # FIELD KIT setup: current-user execution policy and local script unblock.
 # Re-sign this file after editing if your environment requires signed scripts.

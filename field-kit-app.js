@@ -990,32 +990,42 @@
     "_order": 32001
   },
   {
-    "name": "Script Setup",
-    "area": "Tools",
-    "subarea": "Setup",
-    "platform": "PowerShell",
-    "access": "Change",
-    "file": "set-execution.ps1",
-    "publishedPath": "tools/set-execution.ps1",
-    "notes": "Explicit local setup utility. Checks effective execution policy, sets CurrentUser RemoteSigned only when needed and not managed, and unblocks adjacent .ps1 files. Run only in a folder of scripts you have reviewed. Does not sign files or install modules. Colored result; Enter to exit.",
-    "keywords": "set execution policy remotesigned unblock scripts local setup signing preparation",
-    "toolFacts": [
-      "Checks effective policy before changing it",
-      "Respects managed execution policy",
-      "Unblocks .ps1 files beside this script",
-      "No module installs or digital signing"
-    ],
-    "type": "Tool",
-    "status": "Ready",
-    "source": "FIELD // KIT",
-    "requires": "",
-    "input": "",
-    "output": "",
-    "code": "",
-    "related": [],
-    "url": "",
-    "_order": 32002
-  },
+  "name": "Script Setup",
+  "area": "Tools",
+  "subarea": "Setup",
+  "platform": "PowerShell",
+  "access": "Change",
+  "file": "set-execution.ps1",
+  "publishedPath": "tools/set-execution.ps1",
+  "notes": "Explicit local setup utility. Checks effective execution policy, sets CurrentUser RemoteSigned only when needed and not managed, and unblocks adjacent .ps1 files. Run only in a folder of scripts you have reviewed. Does not sign files or install modules. Colored result; Enter to exit.",
+  "keywords": "set execution policy remotesigned unblock scripts local setup signing preparation",
+  "toolFacts": [
+    "Checks effective policy before changing it",
+    "Respects managed execution policy",
+    "Unblocks .ps1 files beside this script",
+    "No module installs or digital signing"
+  ],
+  "type": "Tool",
+  "status": "Ready",
+  "source": "FIELD // KIT",
+  "requires": "",
+  "input": "",
+  "output": "",
+  "code": "",
+  "related": [],
+  "url": "",
+  "_order": 32002,
+  "version": "1.0.0",
+  "verification": {
+    "version": "1.0.0",
+    "sha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
+    "operatorTested": true,
+    "ownerAccepted": true,
+    "testMode": "Offline scoped behavioral checks; no live-service claim",
+    "scope": "Simulated execution-policy/unblock workflow; managed policy preserved; no real policy/unblock changes.",
+    "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+  }
+},
   {
     "name": "Git Tools Quick Start",
     "area": "Tools",
@@ -1207,47 +1217,67 @@
     }
   },
   {
-    "name": "Folder Map",
-    "file": "INVOKE-MAP-KIT.ps1",
-    "publishedPath": "tools/INVOKE-MAP-KIT.ps1",
-    "area": "Tools",
-    "subarea": "Repository",
-    "objective": "Show a folder tree, script counts, signatures, and file warnings.",
-    "notes": "Uses root detection or -RootPath; confirms the selected folder. Reports naming and file-extension warnings, not a full secret scan. Does not enforce a fixed layout or export files.",
-    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
-    "toolFacts": [],
-    "access": "Read-only",
-    "type": "Tool",
-    "status": "Ready",
-    "source": "FIELD // KIT",
-    "keywords": "Folder Map tools/INVOKE-MAP-KIT.ps1",
-    "input": "",
-    "output": "",
-    "code": "",
-    "related": [],
-    "url": ""
-  },
+  "name": "Folder Map",
+  "file": "INVOKE-MAP-KIT.ps1",
+  "publishedPath": "tools/INVOKE-MAP-KIT.ps1",
+  "area": "Tools",
+  "subarea": "Repository",
+  "objective": "Show a folder tree, script counts, signatures, and file warnings.",
+  "notes": "Uses root detection or -RootPath; confirms the selected folder. Reports naming and file-extension warnings, not a full secret scan. Does not enforce a fixed layout or export files.",
+  "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+  "toolFacts": [],
+  "access": "Read-only",
+  "type": "Tool",
+  "status": "Ready",
+  "source": "FIELD // KIT",
+  "keywords": "Folder Map tools/INVOKE-MAP-KIT.ps1",
+  "input": "",
+  "output": "",
+  "code": "",
+  "related": [],
+  "url": "",
+  "version": "1.0.0",
+  "verification": {
+    "version": "1.0.0",
+    "sha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
+    "operatorTested": true,
+    "ownerAccepted": true,
+    "testMode": "Offline scoped behavioral checks; no live-service claim",
+    "scope": "Actual map workflow against a tiny disposable folder, including missing path; signatures skipped.",
+    "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+  }
+},
   {
-    "name": "Session Reset",
-    "file": "INVOKE-SESSION-RESET.ps1",
-    "publishedPath": "tools/INVOKE-SESSION-RESET.ps1",
-    "area": "Tools",
-    "subarea": "Setup",
-    "objective": "Disconnect local Graph and Exchange sessions and clear session errors.",
-    "notes": "Run in the terminal you want to reset. Asks before cleanup; can clear the optional JumpboxSessionPassword profile variable and open a fresh PowerShell 7 window. Does not change tenant settings.",
-    "requires": "Windows PowerShell 5.1+ or PowerShell 7",
-    "toolFacts": [],
-    "access": "Change",
-    "type": "Tool",
-    "status": "Ready",
-    "source": "FIELD // KIT",
-    "keywords": "Session Reset tools/INVOKE-SESSION-RESET.ps1",
-    "input": "",
-    "output": "",
-    "code": "",
-    "related": [],
-    "url": ""
-  },
+  "name": "Session Reset",
+  "file": "INVOKE-SESSION-RESET.ps1",
+  "publishedPath": "tools/INVOKE-SESSION-RESET.ps1",
+  "area": "Tools",
+  "subarea": "Setup",
+  "objective": "Disconnect local Graph and Exchange sessions and clear session errors.",
+  "notes": "Run in the terminal you want to reset. Asks before cleanup; can clear the optional JumpboxSessionPassword profile variable and open a fresh PowerShell 7 window. Does not change tenant settings.",
+  "requires": "Windows PowerShell 5.1+ or PowerShell 7",
+  "toolFacts": [],
+  "access": "Change",
+  "type": "Tool",
+  "status": "Ready",
+  "source": "FIELD // KIT",
+  "keywords": "Session Reset tools/INVOKE-SESSION-RESET.ps1",
+  "input": "",
+  "output": "",
+  "code": "",
+  "related": [],
+  "url": "",
+  "version": "1.0.0",
+  "verification": {
+    "version": "1.0.0",
+    "sha256": "4de135e684e778e091292f7fe56610ddee47739c15d34dda5367cbe3112a15bc",
+    "operatorTested": true,
+    "ownerAccepted": true,
+    "testMode": "Offline scoped behavioral checks; no live-service claim",
+    "scope": "Simulated jumpbox reset workflow; no password variable removal, disconnections or new windows.",
+    "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
+  }
+},
   {
     "name": "Basic",
     "file": "SET-THEME-BASIC.ps1",
@@ -2594,7 +2624,7 @@
 
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
-            <p><span class="verification-seal" aria-hidden="true">V</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled; release evidence records its scope and limits. A changed script needs testing and acceptance before retaining the mark.</p>
+            <p><span class="verification-seal" aria-hidden="true">V</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
           </section>
 
           <section class="about-library">
@@ -2873,8 +2903,10 @@
       "INSTALL-M365-MODULES.ps1":"", "GET-FOLDER-INVENTORY.ps1":"Does not enforce a fixed folder structure."
     };
     const note = String(item.details ?? (Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || ""))).trim();
-    if (!note || note === item.objective || note === item.changeNote || item.type === "Quick Command") return reviewNote;
-    return reviewNote + `<details class="more-details"><summary>Details</summary><p>${esc(note)}</p></details>`;
+    const verificationScope = isVerifiedRelease(item) && item.verification.scope ? `<p><strong>Tested scope:</strong> ${esc(item.verification.scope)}</p>` : "";
+    const noteText = note && note !== item.objective && note !== item.changeNote && item.type !== "Quick Command" ? `<p>${esc(note)}</p>` : "";
+    if (!noteText && !verificationScope) return reviewNote;
+    return reviewNote + `<details class="more-details"><summary>Details</summary>${noteText}${verificationScope}</details>`;
   }
 
   function csvCapability(item){

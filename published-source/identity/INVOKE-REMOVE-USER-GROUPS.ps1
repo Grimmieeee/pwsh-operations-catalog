@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 INVOKE-REMOVE-USER-GROUPS.ps1
 
 Shows Active Directory and Entra ID groups for one or more users and removes

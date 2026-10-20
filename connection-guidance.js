@@ -17,7 +17,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1": {
-    "sha256": "591c0dad82f02548b19d7a664ea5b2c70db85e0a6afac4f7e49b562c2dd244a4",
+    "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -25,7 +25,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1": {
-    "sha256": "0fbb42bb1db268b3f6e4b74a21af7008528b5acc2e684cccdf3696122fcb6bd2",
+    "sha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -85,7 +85,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1": {
-    "sha256": "a813ab576da5f82eb11ae0d1ee6e26134b03997e73692c9e5d6181ed20d09b55",
+    "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -129,14 +129,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1": {
-    "sha256": "c0d3bb2f0bf4857f45d6f6d52afb80b8171f4fc700d2e2999ec716b21df2cccf",
+    "sha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1": {
-    "sha256": "e00946f377bdd4b0e9eb87d04025906763bb8c7307ecdaf87f5016f006ea6aaf",
+    "sha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -181,7 +181,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
-    "sha256": "a9126fcc537a71b9471d49ecfe5f714ede93bc5e1306b3eee9fe9ea7f014859a",
+    "sha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
     "mode": "local",
     "services": []
   },
@@ -301,7 +301,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/utility/INSTALL-M365-MODULES.ps1": {
-    "sha256": "a143a317bb85b76c39a5768b7b5cad4096d4acce4d5509465c01be820b37ff24",
+    "sha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
     "mode": "local",
     "services": []
   },
@@ -311,7 +311,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/utility/RESET-M365-SESSION.ps1": {
-    "sha256": "203ba913f1d8d1d72544ecf950c0b346e4e92244a9e6b75730095339c858a16a",
+    "sha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
     "mode": "local",
     "services": []
   },
@@ -330,7 +330,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1": {
-    "sha256": "52c6ce8dc1af2323b9dcc6c831cdd211b555ae44280417181599290212fcf7bd",
+    "sha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -400,7 +400,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sha256": "8a48dd3160a4bd5228ac4490e081b3e49b7ff1a163d09878f1d9881766ae9bcb",
+    "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -409,14 +409,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1": {
-    "sha256": "668267cbadfc88d212a8708c77f0a5454343a0e4222e2e1cfaff2a44e84afb54",
+    "sha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
-    "sha256": "c795ac5d107db35eed303dff231cedbee577824c6fe8b93285ad5895a97cd44b",
+    "sha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
     "mode": "local",
     "services": []
   },
@@ -452,7 +452,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "tools/set-execution.ps1": {
-    "sha256": "fe6e46d409518b856bf52ee985d4298e41376676d2e984af8092c0ef316bf09f",
+    "sha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
     "mode": "local",
     "services": []
   },
@@ -487,12 +487,12 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "tools/INVOKE-MAP-KIT.ps1": {
-    "sha256": "22046718b32efd8f0d8d5e27bbccb78836ee52262159aa215796e6df5ff7e418",
+    "sha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
     "mode": "local",
     "services": []
   },
   "tools/INVOKE-SESSION-RESET.ps1": {
-    "sha256": "0f183c52bd1ca24dcccba318913eac70eb89848cbe32ef42fe631c6270744446",
+    "sha256": "4de135e684e778e091292f7fe56610ddee47739c15d34dda5367cbe3112a15bc",
     "mode": "local",
     "services": []
   },

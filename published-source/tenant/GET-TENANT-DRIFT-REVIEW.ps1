@@ -1,4 +1,7 @@
 <#
+.VERSION 1.0.0
+#>
+<#
 GET-TENANT-DRIFT-REVIEW.ps1
 
 Read-only tenant change detector.
