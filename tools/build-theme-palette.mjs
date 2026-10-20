@@ -39,6 +39,7 @@ html[data-theme="light"]{color-scheme:light;--wordmark-rgb:25 51 43;--flag-read:
 .result-danger,.result:hover .result-danger,.access-tag.access-danger,.about-key .access-danger{color:var(--flag-danger)}
 .result-verification .verification-seal{color:var(--flag-verified)}
 .signature-note,.signature-mark,.signature-muted,.signature-established,.signature-established strong{color:#c2c9c7}
+.signature-mark,.signature-mark .signature-slash{font-weight:400}
 html[data-theme="light"] :is(.signature-note,.signature-mark,.signature-muted,.signature-established,.signature-established strong){color:#53665e}
 .result-name{font-size:18px}
 .verification-check{display:inline-flex;align-items:center;justify-content:center;flex:none;width:16px;color:var(--flag-verified);font:400 15px/1 var(--ui);border:0;border-radius:0;background:transparent;letter-spacing:0}
