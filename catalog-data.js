@@ -3160,8 +3160,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 157,
     "summary": "NO",
-    "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.",
-    "version": "1.0.1"
+    "objective": "Review accounts, mailbox access, and licenses for cleanup.",
+    "version": "1.0.2"
   },
   {
     "name": "Stale Entra Sign-in Review",
@@ -3182,11 +3182,11 @@ window.CATALOG_DATA = [
     "keywords": "tenant stale inactive sign in signin enabled users auditlog activity unavailable 90 days review",
     "url": "",
     "_order": 158,
-    "objective": "Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.",
+    "objective": "Find enabled accounts with old or unavailable Entra sign-in activity.",
     "publishedPath": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
     "csv": "YES",
     "summary": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Disabled User Group Debt",
@@ -3291,7 +3291,7 @@ window.CATALOG_DATA = [
     "keywords": "disable user users one multiple bulk txt csv active directory synced entra cloud only authoritative source revoke sessions delta sync validation typed confirmation",
     "url": "",
     "_order": 163,
-    "objective": "Disables one or more approved users at the authoritative identity source and verifies the resulting account state.",
+    "objective": "Disable selected user accounts in AD or Entra after approval.",
     "csv": "YES",
     "publishedPath": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1",
     "summary": "YES",
@@ -3299,7 +3299,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Delete User Accounts",
@@ -3320,7 +3320,7 @@ window.CATALOG_DATA = [
     "keywords": "delete user users one multiple txt csv destructive active directory synced entra cloud guest authoritative source validation evidence",
     "url": "",
     "_order": 164,
-    "objective": "Deletes one or more explicitly approved identities at the authoritative source after a reviewed plan and typed confirmation.",
+    "objective": "Delete approved user accounts from their authoritative directory.",
     "publishedPath": "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3328,7 +3328,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Assign User Licenses",
@@ -3343,14 +3343,14 @@ window.CATALOG_DATA = [
     "input": "User UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list; a country code may be requested for missing UsageLocation.",
     "output": "Per-user verified assignment results + optional verified CSV",
     "file": "INVOKE-ASSIGN-LICENSES.ps1",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "code": "",
     "related": [],
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
     "keywords": "assign license licenses user users one multiple txt csv sku usage location graph verified",
     "url": "",
     "_order": 165,
-    "objective": "Assigns one selected Microsoft 365 license to one or more approved users and verifies the final assignment state.",
+    "objective": "Assign a selected Microsoft 365 license to approved users.",
     "csv": "YES",
     "publishedPath": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1",
     "summary": "YES",
@@ -3372,14 +3372,14 @@ window.CATALOG_DATA = [
     "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list, or ALL.",
     "output": "Per-user verified removal results + optional verified CSV",
     "file": "INVOKE-REMOVE-LICENSES.ps1",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "code": "",
     "related": [],
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
     "keywords": "remove license licenses user users one multiple txt csv sku all graph verified",
     "url": "",
     "_order": 166,
-    "objective": "Removes one selected license or all licenses from one or more approved users and verifies the final state.",
+    "objective": "Remove selected Microsoft 365 licenses from approved users.",
     "csv": "YES",
     "publishedPath": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1",
     "summary": "YES",
@@ -3407,7 +3407,7 @@ window.CATALOG_DATA = [
     "keywords": "resolve name names email emails upn upns single multiple bulk txt csv tenant graph exact likely ambiguous review",
     "url": "",
     "_order": 167,
-    "objective": "Resolves one or more names, emails, or UPNs to reviewed Entra ID UPN matches.",
+    "objective": "Find user sign-in names from names, email addresses, or a list.",
     "publishedPath": "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3415,7 +3415,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Account Status Review",
@@ -3436,7 +3436,7 @@ window.CATALOG_DATA = [
     "keywords": "account status enabled disabled sign in signin one multiple txt csv graph verify user",
     "url": "",
     "_order": 168,
-    "objective": "Reviews account enabled state and available Entra sign-in activity for one or more users.",
+    "objective": "Show whether selected accounts are enabled and when they last signed in.",
     "publishedPath": "published-source/identity/GET-ACCOUNT-STATUS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3444,7 +3444,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Find Accounts by Name or Email",
@@ -3489,13 +3489,13 @@ window.CATALOG_DATA = [
     "_order": 170,
     "publishedPath": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
     "summary": "YES",
-    "objective": "Shows who belongs to one or more Exchange Online distribution groups.",
+    "objective": "List direct members of selected Exchange distribution groups.",
     "csv": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Group Members",
@@ -3518,13 +3518,13 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 171,
     "summary": "YES",
-    "objective": "Shows direct members of one or more groups after resolving the appropriate source.",
+    "objective": "List direct members of selected groups.",
     "csv": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Group Memberships",
@@ -3545,7 +3545,7 @@ window.CATALOG_DATA = [
     "keywords": "user groups memberships active directory ad entra synced cloud dynamic one multiple txt csv access review",
     "url": "",
     "_order": 173,
-    "objective": "Find a user's direct group memberships in AD and Entra ID.",
+    "objective": "List the selected users' direct groups in AD and Entra.",
     "publishedPath": "published-source/identity/GET-USER-GROUPS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3553,7 +3553,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Remove User Group Memberships",
@@ -3574,14 +3574,14 @@ window.CATALOG_DATA = [
     "keywords": "remove user group memberships one multiple txt csv active directory entra synced cloud dynamic offboarding cleanup authoritative source",
     "url": "",
     "_order": 175,
-    "objective": "Removes every removable reviewed group membership for one or more users while preserving source authority and protected/non-removable exceptions.",
+    "objective": "Remove selected users from eligible AD and Entra groups.",
     "publishedPath": "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1",
     "summary": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Create Dynamic License Group",
@@ -3596,14 +3596,14 @@ window.CATALOG_DATA = [
     "input": "Group display name + mail nickname",
     "output": "Verified Entra dynamic security group",
     "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "code": "",
     "related": [],
     "notes": "Creates one Entra dynamic security group for enabled users with an active license/service plan. Shows the membership rule, requires typed CREATE confirmation, and re-reads the group to verify its dynamic configuration.",
     "keywords": "entra dynamic security group licensed users active license service plan create group verified licensing",
     "url": "",
     "_order": 176,
-    "objective": "Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.",
+    "objective": "Create a group that automatically includes users with assigned licenses.",
     "publishedPath": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
     "summary": "YES"
   },
@@ -3626,10 +3626,10 @@ window.CATALOG_DATA = [
     "keywords": "tenant group owners teams microsoft 365 security distribution mail enabled ownerless ownership graph exchange",
     "url": "",
     "_order": 177,
-    "objective": "Shows owners for tenant groups across major Entra and Exchange group types and keeps unresolved ownership visible.",
+    "objective": "List group owners and identify groups without an assigned owner.",
     "publishedPath": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
     "summary": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Mailbox Permissions Review",
@@ -3652,12 +3652,12 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 178,
     "summary": "NO",
-    "objective": "Reviews forwarding, delegates, and inbox rules for one or more mailboxes.",
+    "objective": "Review mailbox forwarding, delegated access, and inbox rules for selected users.",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Mailbox Security Snapshot",
@@ -3680,8 +3680,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 180,
     "summary": "NO",
-    "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.",
-    "version": "1.0.1"
+    "objective": "Review one mailbox for unexpected access, forwarding, and suspicious rules.",
+    "version": "1.0.2"
   },
   {
     "name": "Mailbox Forwarding Check",
@@ -3704,13 +3704,13 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 181,
     "summary": "YES",
-    "objective": "Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.",
+    "objective": "Show where selected mailboxes forward incoming email.",
     "csv": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Shared Mailbox Membership Review",
@@ -3773,14 +3773,14 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 187,
     "publishedPath": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1",
-    "objective": "Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.",
+    "objective": "Enable an unlimited litigation hold on approved mailboxes.",
     "csv": "YES",
     "summary": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Restore Moved Email",
@@ -3803,8 +3803,8 @@ window.CATALOG_DATA = [
     "_order": 188,
     "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
     "summary": "NO",
-    "objective": "Moves email back to the mailbox location you choose after an incident.",
-    "version": "1.0.1"
+    "objective": "Restore previously moved email to the selected mailbox.",
+    "version": "1.0.2"
   },
   {
     "name": "IR: Risk Assessment",
@@ -3827,7 +3827,7 @@ window.CATALOG_DATA = [
     "_order": 189,
     "version": "1.0.0",
     "publishedPath": "published-source/incident-response/ir-risk-assessment.ps1",
-    "objective": "Check an account and mailbox for suspicious activity before deciding on containment.",
+    "objective": "Read-only identity risk assessment for the operator-guided IR workflow.",
     "verification": {
       "version": "1.0.0",
       "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
@@ -3856,7 +3856,7 @@ window.CATALOG_DATA = [
     "_order": 190,
     "version": "1.0.0",
     "publishedPath": "published-source/incident-response/ir-contain-eradicate.ps1",
-    "objective": "Contain one approved account and remove selected mailbox and OAuth persistence.",
+    "objective": "Selective containment and eradication workflow for operator-approved response.",
     "verification": {
       "version": "1.0.0",
       "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
@@ -3905,9 +3905,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 192,
     "summary": "NO",
-    "objective": "Looks for unusual file activity that could indicate data was copied or taken.",
+    "objective": "Review a user's file activity for possible data exposure.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -3930,9 +3930,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 193,
     "summary": "NO",
-    "objective": "Finds tenant activity tied to an IP address.",
+    "objective": "Find tenant audit activity associated with a selected IP address.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Email Search",
@@ -3955,9 +3955,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 194,
     "summary": "NO",
-    "objective": "Searches the tenant for email tied to an address, sender, subject, or other indicator.",
+    "objective": "Search tenant email using the selected criteria and time range.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Threat Intel IP Check",
@@ -3980,9 +3980,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 195,
     "summary": "NO",
-    "objective": "Checks an IP address for threat indicators and related tenant activity.",
+    "objective": "Check a public IP address against external reputation services.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Incident Timeline Builder",
@@ -4005,8 +4005,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 196,
     "summary": "NO",
-    "objective": "Builds a simple incident timeline from collected events.",
-    "version": "1.0.1"
+    "objective": "Combine supplied incident evidence into a timeline.",
+    "version": "1.0.2"
   },
   {
     "name": "JWT Token Decode",
@@ -4029,8 +4029,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 197,
     "summary": "NO",
-    "objective": "Decodes a JWT locally so you can inspect its claims.",
-    "version": "1.0.1"
+    "objective": "Read a token's contents locally without sending it online.",
+    "version": "1.0.2"
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -4053,8 +4053,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 198,
     "summary": "NO",
-    "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack.",
-    "version": "1.0.1"
+    "objective": "Review sign-ins for indicators of token replay or session theft.",
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Security Hardening",
@@ -4197,9 +4197,9 @@ window.CATALOG_DATA = [
     "_order": 205,
     "publishedPath": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
     "summary": "NO",
-    "objective": "Shows whether shared mailboxes are being signed into directly.",
+    "objective": "Find sign-in activity associated with shared mailboxes.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "App Registration Audit",
@@ -4222,9 +4222,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 206,
     "summary": "NO",
-    "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners.",
+    "objective": "Review registered apps, ownership, and credential expiry dates.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Conditional Access Gaps",
@@ -4245,11 +4245,11 @@ window.CATALOG_DATA = [
     "keywords": "conditional access ca gaps policies disabled report only exclusions device code location controls tenant audit",
     "url": "",
     "_order": 207,
-    "objective": "Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.",
+    "objective": "Find Conditional Access settings and exclusions that need review.",
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
     "summary": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Device Code Exposure Audit",
@@ -4272,9 +4272,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 208,
     "summary": "NO",
-    "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently.",
+    "objective": "Review policies for gaps in device-code sign-in protection.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Guest App Consent Audit",
@@ -4297,9 +4297,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 209,
     "summary": "NO",
-    "objective": "Finds guest app consent and access that may need review.",
+    "objective": "Review guest users and their app permissions.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "MFA Security Audit",
@@ -4322,9 +4322,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 210,
     "summary": "NO",
-    "objective": "Shows where MFA coverage or registered methods may leave gaps.",
+    "objective": "Review MFA registration and the policies intended to protect sign-ins.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Secure Score Snapshot",
@@ -4347,9 +4347,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 211,
     "summary": "NO",
-    "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it.",
+    "objective": "Show the tenant's latest Microsoft Secure Score.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Service Principal Owners Audit",
@@ -4372,9 +4372,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 212,
     "summary": "NO",
-    "objective": "Finds service principals with missing or unclear owners.",
+    "objective": "Identify enterprise apps without an assigned owner.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4397,9 +4397,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 213,
     "summary": "NO",
-    "objective": "Surfaces unusual sign-ins that deserve a closer look.",
+    "objective": "Find unusual sign-in activity that needs investigation.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Transport Rules Audit",
@@ -4420,11 +4420,11 @@ window.CATALOG_DATA = [
     "keywords": "tenant transport mail flow rules bcc redirect delete quarantine moderation forwarding audit exchange",
     "url": "",
     "_order": 214,
-    "objective": "Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.",
+    "objective": "Review mail flow rules for settings that need attention.",
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
     "summary": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Join Computer to Domain",
@@ -4446,9 +4446,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 215,
     "publishedPath": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
-    "objective": "Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.",
+    "objective": "Join the current computer to the selected AD domain.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Deploy Printer",
@@ -4470,8 +4470,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 216,
     "publishedPath": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
-    "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.",
-    "version": "1.0.1"
+    "objective": "Install a network printer using its address and selected driver.",
+    "version": "1.0.2"
   },
   {
     "name": "Back Up User Profile",
@@ -4493,8 +4493,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 217,
     "publishedPath": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
-    "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log.",
-    "version": "1.0.1"
+    "objective": "Copy selected user-profile folders to a backup location.",
+    "version": "1.0.2"
   },
   {
     "name": "PowerShell Readiness Check",
@@ -4517,8 +4517,8 @@ window.CATALOG_DATA = [
     "_order": 218,
     "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
     "summary": "NO",
-    "objective": "Checks whether this computer is ready to run the PowerShell tools.",
-    "version": "1.0.1"
+    "objective": "Check whether this computer has the PowerShell tools needed to proceed.",
+    "version": "1.0.2"
   },
   {
     "name": "Folder Inventory",
@@ -4541,8 +4541,8 @@ window.CATALOG_DATA = [
     "_order": 219,
     "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
     "summary": "NO",
-    "objective": "Maps a folder or repo so you can quickly see what is in it and what may need review.",
-    "version": "1.0.1"
+    "objective": "Review a folder's files, script signatures, and Git status.",
+    "version": "1.0.2"
   },
   {
     "name": "M365 Module Setup",
@@ -4565,8 +4565,8 @@ window.CATALOG_DATA = [
     "_order": 220,
     "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
     "summary": "NO",
-    "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose.",
-    "version": "1.0.1"
+    "objective": "Install or update the selected Microsoft 365 PowerShell modules.",
+    "version": "1.0.2"
   },
   {
     "name": "Sensitive Data Check",
@@ -4589,8 +4589,8 @@ window.CATALOG_DATA = [
     "_order": 221,
     "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
     "summary": "NO",
-    "objective": "Finds obvious secrets or internal details before you publish or share files.",
-    "version": "1.0.1"
+    "objective": "Scan selected files for potentially sensitive information before sharing.",
+    "version": "1.0.2"
   },
   {
     "name": "Hybrid Smoke Test",
@@ -4633,8 +4633,8 @@ window.CATALOG_DATA = [
     "_order": 223,
     "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
     "summary": "NO",
-    "objective": "Disconnects Graph and Exchange and clears local PowerShell session state.",
-    "version": "1.0.1"
+    "objective": "Disconnect Microsoft 365 services in the current PowerShell window.",
+    "version": "1.0.2"
   },
   {
     "name": "Sign Folder Scripts",
@@ -4797,8 +4797,8 @@ window.CATALOG_DATA = [
     "_order": 231,
     "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
     "summary": "NO",
-    "objective": "Shows available app updates and installs them after confirmation.",
-    "version": "1.0.1"
+    "objective": "Review and update installed applications using WinGet.",
+    "version": "1.0.2"
   },
   {
     "name": "PowerShell Script Template",
@@ -4841,8 +4841,8 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 233,
     "summary": "NO",
-    "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.",
-    "version": "1.0.1"
+    "objective": "Review a user's mailbox, memberships, and access before deletion.",
+    "version": "1.0.2"
   },
   {
     "name": "Enforce Per-user MFA",
@@ -4864,14 +4864,14 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 234,
     "publishedPath": "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1",
-    "objective": "Enforces legacy per-user MFA for one or more approved accounts and verifies the final state.",
+    "objective": "Require per-user MFA for selected accounts after approval.",
     "csv": "YES",
     "summary": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "RMM Onboarding Summary",
@@ -5314,9 +5314,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 264,
     "summary": "NO",
-    "objective": "Shows who has active Entra admin roles and flags disabled or stale admin accounts.",
+    "objective": "List tenant admin-role assignments for review.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "OAuth Consent Audit",
@@ -5339,9 +5339,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 265,
     "summary": "NO",
-    "objective": "Shows delegated OAuth consent across the tenant and flags grants with high-risk scopes.",
+    "objective": "Review app permissions granted in the tenant.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Guest User Hygiene Audit",
@@ -5364,9 +5364,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 266,
     "summary": "NO",
-    "objective": "Finds guest accounts that are stale, disabled, never used, or still waiting on invitation acceptance.",
+    "objective": "Find guest accounts that need an ownership or activity review.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Licensing Audit",
@@ -5389,9 +5389,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 267,
     "summary": "NO",
-    "objective": "Shows tenant license usage and finds disabled users still licensed or enabled users with no license.",
+    "objective": "Review Microsoft 365 license capacity and user assignments.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Inbox Rules Audit",
@@ -5414,9 +5414,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 268,
     "summary": "NO",
-    "objective": "Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.",
+    "objective": "Find mailbox inbox rules that need review across the tenant.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "User Security Snapshot",
@@ -5439,9 +5439,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 269,
     "summary": "NO",
-    "objective": "Shows the security state around one user before you decide what needs deeper review.",
+    "objective": "Review one user's account, authentication, access, and recent sign-ins.",
     "csv": "NO",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Security Snapshot",
@@ -5464,9 +5464,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 270,
     "summary": "NO",
-    "objective": "Gives a fast tenant security overview before you open the deeper focused audits.",
+    "objective": "Get a broad overview of the tenant's security settings and review areas.",
     "csv": "NO",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Room & Resource Access Review",
@@ -5489,13 +5489,13 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 271,
     "summary": "NO",
-    "objective": "Shows who can access or book one or more room and equipment mailboxes.",
+    "objective": "Review delegated access and booking permissions for resource mailboxes.",
     "csv": "YES",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Mailbox Access Audit",
@@ -5518,9 +5518,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 272,
     "summary": "NO",
-    "objective": "Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.",
+    "objective": "Review mailbox forwarding and delegated access across the tenant.",
     "csv": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Disabled User Mailbox Access Cleanup",
@@ -5543,9 +5543,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 273,
     "summary": "YES",
-    "objective": "Removes lingering Full Access, Send As, and Send on Behalf rights only after authoritative disabled-state validation and an explicit reviewed removal plan.",
+    "objective": "Remove approved mailbox access held by disabled users.",
     "csv": "NO",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "name": "Tenant Drift Review",
@@ -5566,10 +5566,10 @@ window.CATALOG_DATA = [
     "keywords": "tenant drift baseline change detector privileged roles eligible roles conditional access app registrations credentials oauth grants baseline json compare",
     "url": "",
     "_order": 274,
-    "objective": "Compares selected high-value tenant security configuration against an approved local baseline and reports tracked drift.",
+    "objective": "Compare tenant settings with a saved baseline and review changes.",
     "publishedPath": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
     "summary": "YES",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   {
     "_order": 275,
@@ -5588,7 +5588,8 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
     "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space",
-    "version": "1.0.1"
+    "version": "1.0.2",
+    "objective": "Find Windows storage that may be reclaimable without deleting files."
   },
   {
     "_order": 276,
@@ -5611,7 +5612,8 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.1"
+    "version": "1.0.2",
+    "objective": "Reset passwords for selected cloud-only users after approval."
   },
   {
     "name": "IR: Recovery and Validation",
@@ -5622,7 +5624,7 @@ window.CATALOG_DATA = [
     "access": "Change",
     "status": "Ready",
     "platform": "Microsoft Graph + Exchange Online + Active Directory",
-    "objective": "Confirm recovery readiness and restore approved account access.",
+    "objective": "Verify response readiness and restore one approved identity.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "keywords": "ir incident response recovery recover restore validate account compromise bec IR-INVOKE-RECOVERY-VALIDATION.ps1",
     "code": "",

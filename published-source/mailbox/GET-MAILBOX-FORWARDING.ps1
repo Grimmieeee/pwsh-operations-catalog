@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #requires -Version 5.1
 
@@ -7,7 +7,7 @@
 GET-MAILBOX-FORWARDING.ps1
 
 OBJECTIVE
-Review mailbox-level and inbox-rule forwarding for one or more Microsoft 365 mailboxes.
+Show where selected mailboxes forward incoming email.
 
 INPUT
 - One mailbox UPN
@@ -209,7 +209,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Get Mailbox Forwarding'
-    Write-Host 'Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.'
+    Write-Host 'Show where selected mailboxes forward incoming email.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

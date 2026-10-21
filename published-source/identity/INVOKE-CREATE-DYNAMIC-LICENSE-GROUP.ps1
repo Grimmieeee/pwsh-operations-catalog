@@ -1,6 +1,6 @@
 <#
 INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1
-.VERSION 1.0.2
+.VERSION 1.0.3
 
 Create dynamic Entra group for licensed users.
 
@@ -12,6 +12,8 @@ Purpose:
 Change-making.
 Requires Graph write permissions.
 #>
+# OBJECTIVE: Create a group that automatically includes users with assigned licenses.
+
 
 param(
     [string]$DisplayName = "Dynamic-Group-AnyLicense",
@@ -347,7 +349,7 @@ try {
 
     Clear-Host
     Write-Host 'Create Dynamic License Group'
-    Write-Host 'Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.'
+    Write-Host 'Create a group that automatically includes users with assigned licenses.'
     Write-Host "Change-making"
     Write-Host ""
 

@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find unusual sign-in activity that needs investigation.
+
 <#
 tenant-signin-anomalies-audit-clean.ps1
 
@@ -330,7 +332,7 @@ function Get-EventType {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Sign-in Anomalies Audit" } catch {}
 Write-Host 'Review Sign-in Anomalies'
-Write-Host 'Surfaces unusual sign-ins that deserve a closer look.'
+Write-Host 'Find unusual sign-in activity that needs investigation.'
     Write-Host "Read-only"
     Write-Host ""
 

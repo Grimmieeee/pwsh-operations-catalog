@@ -1,9 +1,9 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 <#
 MULTI MAILBOX PERMISSIONS AUDIT
 
 OBJECTIVE
-Review forwarding, mailbox delegates, and inbox rules for one or more mailboxes.
+Review mailbox forwarding, delegated access, and inbox rules for selected users.
 
 INPUT
 One UPN, multiple UPNs, or a TXT/CSV path.
@@ -341,7 +341,7 @@ function Write-QueryFailure {
 
 try {
     Write-FKReportLine 'Get Mailbox Permissions'
-    Write-FKReportLine 'Reviews forwarding, delegates, and inbox rules for one or more mailboxes.'
+    Write-FKReportLine 'Review mailbox forwarding, delegated access, and inbox rules for selected users.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Run animated terminal rain with a floating label and clock.
+
 $script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # rain.ps1
 # PowerShell 7.6.6 / Windows Terminal

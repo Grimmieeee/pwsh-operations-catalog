@@ -240,3 +240,6 @@ html[data-theme="light"] .drawer-overlay{background:rgba(20,40,30,.28)}
 .related-item>.access-state{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin:0;flex-shrink:0}
 .related-item .access-tag{font-size:10px;min-height:0;padding:0;letter-spacing:.025em}
 @media(max-width:600px){.drawer{width:100vw}.drawer-body{padding:23px 18px 36px}.item-title{font-size:25px}.related-item{flex-wrap:wrap;gap:6px 12px}.related-item>.access-state{justify-content:flex-start}}
+
+/* A shared, source-matched purpose sentence confirms the selected tool. */
+.operator-purpose{margin:13px 0 18px;max-width:45ch;color:var(--fk-ffffff,#ffffff);font-size:15px;font-weight:400;line-height:1.6}

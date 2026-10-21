@@ -1,11 +1,11 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 <#
 DISABLE USER ACCOUNTS
 
 OBJECTIVE
-Disable one or more Microsoft 365 user accounts from a direct UPN or TXT/CSV input.
+Disable selected user accounts in AD or Entra after approval.
 
 IDENTITY AUTHORITY
 - Synced user: Active Directory
@@ -648,7 +648,7 @@ function Offer-ExportCsv {
 
 try {
     Write-Host 'Disable User Accounts'
-    Write-Host 'Disable approved users in Active Directory or Entra ID, then check each account''s status.'
+    Write-Host 'Disable selected user accounts in AD or Entra after approval.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host "Synced users are changed in Active Directory. Cloud-only users are changed in Entra ID."
     Write-Host ""

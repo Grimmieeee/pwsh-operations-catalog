@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Check whether this computer has the PowerShell tools needed to proceed.
 #Requires -Version 5.1
 
 <#
@@ -37,6 +39,7 @@ function Get-LatestModule {
 
 try {
     Write-Host 'Check PowerShell Readiness'
+    Write-Host 'Check whether this computer has the PowerShell tools needed to proceed.'
     Write-Host 'READ ONLY. No settings or modules are changed.'
 
     Show-Section 'POWERSHELL'

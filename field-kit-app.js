@@ -3131,6 +3131,7 @@
       <section class="item-head">
         <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family.replace(/^ir-/, 'IR / ') : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
+        ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
         <div class="operator-meta">${accessMarkup(item)}${item.operatorCard ? `<span class="operator-platform">${esc(moduleLabel(item).replace(/GRAPH/g,'Entra').replace(/EXO|EXCHANGE/g,'Exchange').replace(/ACTIVE DIRECTORY/g,'AD'))}</span>` : ''}</div>
         ${scopeMarkup(item)}
         ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}

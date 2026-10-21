@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 JUMPBOX SESSION RESET
 
 OBJECTIVE
-Reset local Microsoft 365 PowerShell authentication state.
+Clear supported service connections from the current PowerShell session.
 
 ACTIONS
 - Disconnect Exchange Online
@@ -110,7 +110,7 @@ function Start-FreshShell {
 
 try {
     Write-Host 'Reset Terminal Session'
-    Write-Host 'Disconnect local Graph and Exchange sessions and clear session errors.'
+    Write-Host 'Clear supported service connections from the current PowerShell session.'
     Write-Host "LOCAL SESSION CLEANUP"
     Write-Host ""
 

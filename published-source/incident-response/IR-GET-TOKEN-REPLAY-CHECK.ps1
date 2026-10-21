@@ -1,12 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - TOKEN REPLAY CHECK
 
 OBJECTIVE
-Review Entra sign-ins and Identity Protection risk detections for evidence that
-supports a token-theft / token-replay concern.
+Review sign-ins for indicators of token replay or session theft.
 
 READ-ONLY
 No containment actions.
@@ -412,7 +411,7 @@ function Get-DeviceText {
 
 try {
     Write-FKReportLine 'IR: Review Token Replay'
-    Write-FKReportLine 'Looks for sign-in patterns that may indicate a stolen session or AiTM attack.'
+    Write-FKReportLine 'Review sign-ins for indicators of token replay or session theft.'
     Write-FKReportLine "READ-ONLY INDICATOR REVIEW"
     Write-FKReportLine ""
 

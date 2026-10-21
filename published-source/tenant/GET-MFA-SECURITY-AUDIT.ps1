@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review MFA registration and the policies intended to protect sign-ins.
+
 <#
 tenant-mfa-security-audit-clean.ps1
 
@@ -341,7 +343,7 @@ function Classify-Methods {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant MFA Security Audit" } catch {}
 Write-Host 'Audit MFA Security'
-Write-Host 'Shows where MFA coverage or registered methods may leave gaps.'
+Write-Host 'Review MFA registration and the policies intended to protect sign-ins.'
     Write-Host "Read-only"
     Write-Host ""
 

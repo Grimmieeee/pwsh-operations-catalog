@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Prepare selected scripts to run under local execution settings.
+
 #Requires -Version 5.1
 # FIELD KIT setup: current-user execution policy and local script unblock.
 # Re-sign this file after editing if your environment requires signed scripts.

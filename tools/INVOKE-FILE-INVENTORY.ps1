@@ -1,11 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 JUMPBOX FILE INVENTORY
 
 OBJECTIVE
-Read-only inventory and version-sanity review for the current Jumpbox tree.
+Review files, script versions, and signatures in the selected folder.
 
 REVIEWS
 - Active / Testing / Archive PowerShell counts
@@ -109,7 +109,7 @@ function Get-Scope {
 
 try {
     Write-Host 'Get File Inventory'
-    Write-Host 'Find duplicate scripts, signature problems, and leftover working copies.'
+    Write-Host 'Review files, script versions, and signatures in the selected folder.'
     Write-Host "READ-ONLY VERSION SANITY REVIEW"
     Write-Host ""
 

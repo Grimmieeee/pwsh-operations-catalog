@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 IDENTITY ACCOUNT DELETION
 
 OBJECTIVE
-Delete one or more explicitly approved identity accounts from direct UPN or TXT/CSV input.
+Delete approved user accounts from their authoritative directory.
 
 AUTHORITATIVE SOURCE
 - Synced user: delete in Active Directory. Entra removal occurs through sync.
@@ -847,7 +847,7 @@ function Export-Evidence {
 try {
     Write-Host ""
     Write-Host 'Delete User Accounts'
-    Write-Host 'Delete approved users in Active Directory or Entra ID after you review the plan and type confirmation.'
+    Write-Host 'Delete approved user accounts from their authoritative directory.'
     Write-Host (
         "Delete approved AD-synced, cloud-only, or guest identities " +
         "from a TXT or CSV UPN list."

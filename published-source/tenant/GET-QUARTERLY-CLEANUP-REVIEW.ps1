@@ -1,11 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 QUARTERLY CLEANUP REVIEW
 
 OBJECTIVE
-Provide a read-only Microsoft 365 hygiene/debt review for periodic maintenance.
+Review accounts, mailbox access, and licenses for cleanup.
 
 REVIEWS
 - Enabled Entra member accounts with recorded sign-in activity older than the threshold
@@ -854,7 +854,7 @@ function Get-MailboxForwardingReview {
 
 try {
     Write-FKReportLine 'Review Account Cleanup'
-    Write-FKReportLine 'Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.'
+    Write-FKReportLine 'Review accounts, mailbox access, and licenses for cleanup.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

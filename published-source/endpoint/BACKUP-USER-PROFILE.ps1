@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Copy selected user-profile folders to a backup location.
+
 <#
 BACKUP-USER-PROFILE.ps1
 
@@ -229,7 +231,7 @@ try {
 
     Clear-Host
     Write-Host 'Back Up User Profile'
-    Write-Host 'Copies common Windows profile folders to a dated backup location and writes a local backup log.'
+    Write-Host 'Copy selected user-profile folders to a backup location.'
     Write-Host "Local file-write tool"
     Write-Host ""
 

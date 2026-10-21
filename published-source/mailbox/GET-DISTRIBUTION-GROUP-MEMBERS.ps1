@@ -1,9 +1,9 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 <#
 DISTRIBUTION GROUP MEMBERS
 
 OBJECTIVE
-Look up members of one or more Exchange Online distribution groups.
+List direct members of selected Exchange distribution groups.
 
 CHANGES
 Read-only. No changes are made.
@@ -199,7 +199,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Get Distribution Group Members'
-    Write-Host 'Shows who belongs to one or more Exchange Online distribution groups.'
+    Write-Host 'List direct members of selected Exchange distribution groups.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

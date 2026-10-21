@@ -1,12 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - TIMELINE BUILDER
 
 OBJECTIVE
-Build a local chronological incident timeline from JSON evidence, text/log/MD
-sources, and optional manual analyst entries.
+Combine supplied incident evidence into a timeline.
 
 READ-ONLY
 Source files are never modified.
@@ -381,7 +380,7 @@ function Add-ManualEvents {
 
 try {
     Write-Host 'IR: Build Incident Timeline'
-    Write-Host 'Builds a simple incident timeline from collected events.'
+    Write-Host 'Combine supplied incident evidence into a timeline.'
     Write-Host "LOCAL / READ-ONLY"
     Write-Host ""
 

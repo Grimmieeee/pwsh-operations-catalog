@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1
 
 OBJECTIVE
-Read-only storage review for a local or remote Windows endpoint.
+Find Windows storage that may be reclaimable without deleting files.
 
 REPORTS
 - OS and drive utilization.
@@ -214,7 +214,7 @@ function Get-StorageData {
 
 try {
     Write-Host 'Review Windows Storage'
-    Write-Host 'Review drive space, cleanup locations, and the largest files before deciding what to remove.'
+    Write-Host 'Find Windows storage that may be reclaimable without deleting files.'
     Write-Host "READ-ONLY. NO FILES WILL BE DELETED."
     Write-Host ""
 

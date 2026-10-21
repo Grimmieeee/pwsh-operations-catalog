@@ -1,12 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - IP TRACE / UNIFIED AUDIT LOG
 
 OBJECTIVE
-Search the Microsoft 365 Unified Audit Log for tenant activity associated with
-a suspect source IP.
+Find tenant audit activity associated with a selected IP address.
 
 READ-ONLY
 No tenant changes.
@@ -359,7 +358,7 @@ function Test-IP {
 
 try {
     Write-Host 'IR: Trace IP Activity'
-    Write-Host 'Finds tenant activity tied to an IP address.'
+    Write-Host 'Find tenant audit activity associated with a selected IP address.'
     Write-Host "READ-ONLY"
     Write-Host ""
 

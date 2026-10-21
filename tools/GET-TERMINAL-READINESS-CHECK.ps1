@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 KIT PREFLIGHT
 
 OBJECTIVE
-Confirm the local Jumpbox package and PowerShell environment are ready for use.
+Check this computer against the expected terminal and toolkit setup.
 
 REVIEWS
 - PowerShell version and execution policy
@@ -102,7 +102,7 @@ function Get-RelativePath {
 
 try {
     Write-Host 'Check Terminal Readiness'
-    Write-Host 'Check the shell, modules, signing certificates, and expected toolkit files.'
+    Write-Host 'Check this computer against the expected terminal and toolkit setup.'
     Write-Host "READ-ONLY LOCAL READINESS CHECK"
     Write-Host ""
 

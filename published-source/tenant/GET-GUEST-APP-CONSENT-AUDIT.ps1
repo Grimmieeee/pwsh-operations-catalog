@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review guest users and their app permissions.
+
 <#
 tenant-guest-app-consent-audit-clean.ps1
 
@@ -303,7 +305,7 @@ function Is-RiskyScope {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Guest App Consent Audit" } catch {}
 Write-Host 'Audit Guest App Consent'
-Write-Host 'Finds guest app consent and access that may need review.'
+Write-Host 'Review guest users and their app permissions.'
     Write-Host "Read-only"
     Write-Host ""
 

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 IR RECOVERY - RESTORE EMAILS
 
 OBJECTIVE
-Move messages from an attacker-used mailbox folder to a recovery folder.
+Restore previously moved email to the selected mailbox.
 
 CHANGE-MAKING
 - Can create one target folder at the mailbox root
@@ -416,7 +416,7 @@ function Move-MailMessage {
 
 try {
     Write-Host 'Restore Email'
-    Write-Host 'Moves email back to the mailbox location you choose after an incident.'
+    Write-Host 'Restore previously moved email to the selected mailbox.'
     Write-Host "CHANGE-MAKING"
     Write-Host ""
 

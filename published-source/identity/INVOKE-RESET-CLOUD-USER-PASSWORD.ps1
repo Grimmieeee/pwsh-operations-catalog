@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 INVOKE-RESET-CLOUD-USER-PASSWORD.ps1
 
 OBJECTIVE
-Reset one or more cloud-only Entra user passwords.
+Reset passwords for selected cloud-only users after approval.
 
 INPUT
 - One UPN.
@@ -269,7 +269,7 @@ function New-TemporaryPassword {
 
 try {
     Write-Host 'Reset Cloud User Password'
-    Write-Host 'Reset passwords for approved cloud-only users and report each result.'
+    Write-Host 'Reset passwords for selected cloud-only users after approval.'
     Write-Host "MAKES CHANGES. CLOUD-ONLY USERS ONLY."
     Write-Host ""
 

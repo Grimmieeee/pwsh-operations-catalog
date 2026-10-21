@@ -1,12 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - TENANT EMAIL SEARCH
 
 OBJECTIVE
-Search Exchange Online message trace for mail matching a sender, recipient,
-source IP, or combination of indicators.
+Search tenant email using the selected criteria and time range.
 
 READ-ONLY
 No tenant changes.
@@ -246,7 +245,7 @@ function Get-TraceChunk {
 
 try {
     Write-Host 'IR: Search Tenant Email'
-    Write-Host 'Find email delivery records by sender, recipient, or source IP address.'
+    Write-Host 'Search tenant email using the selected criteria and time range.'
     Write-Host "READ-ONLY"
     Write-Host ""
 

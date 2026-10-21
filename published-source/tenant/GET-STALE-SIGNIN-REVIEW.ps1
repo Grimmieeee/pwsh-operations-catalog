@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -9,7 +9,7 @@ GET-STALE-SIGNIN-REVIEW.ps1
 STALE LOGIN STATUS
 
 OBJECTIVE
-Read-only tenant-wide review of enabled Entra member accounts.
+Find enabled accounts with old or unavailable Entra sign-in activity.
 
 Shows:
 - Accounts whose recorded Entra sign-in is older than the selected threshold
@@ -237,7 +237,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Review Stale Sign-ins'
-    Write-Host 'Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.'
+    Write-Host 'Find enabled accounts with old or unavailable Entra sign-in activity.'
     Write-Host "READ-ONLY. ENABLED ENTRA MEMBER ACCOUNTS."
     Write-Host ""
 

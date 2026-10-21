@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #requires -Version 5.1
 
@@ -7,7 +7,7 @@
 INVOKE-ENFORCE-PER-USER-MFA.ps1
 
 OBJECTIVE
-Enforce legacy per-user Microsoft Entra MFA for one or more approved users.
+Require per-user MFA for selected accounts after approval.
 
 INPUT
 - One UPN
@@ -225,6 +225,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Set Per-user MFA'
+    Write-Host 'Require per-user MFA for selected accounts after approval.'
     Write-Host "Change-making. Per-user MFA is separate from Conditional Access."
     Write-Host ""
 

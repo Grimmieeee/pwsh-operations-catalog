@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find Conditional Access settings and exclusions that need review.
+
 <#
 tenant-cap-gaps-audit-clean.ps1
 
@@ -303,7 +305,7 @@ function Is-RiskyScope {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant CAP Gaps Audit" } catch {}
 Write-Host 'Review Conditional Access'
-Write-Host 'Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.'
+Write-Host 'Find Conditional Access settings and exclusions that need review.'
     Write-Host "Read-only"
     Write-Host ""
 

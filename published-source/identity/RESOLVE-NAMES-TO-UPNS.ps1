@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find user sign-in names from names, email addresses, or a list.
+
 <#
 .SYNOPSIS
     Resolve display names, UPNs, or email-style entries to Entra ID user principal names.
@@ -476,7 +478,7 @@ function Export-VerifiedUpnTxt {
 try {
     Clear-Host
     Write-Host 'Find User UPNs'
-    Write-Host 'Resolves one or more names, emails, or UPNs to reviewed Entra ID UPN matches.'
+    Write-Host 'Find user sign-in names from names, email addresses, or a list.'
     Write-Host "Read-only"
     Write-Host ""
     Write-Host "Purpose: Convert display names, UPNs, or emails into a clean review list."

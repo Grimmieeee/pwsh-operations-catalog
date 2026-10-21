@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Review a user's mailbox, memberships, and access before deletion.
 #requires -Version 5.1
 
 <#
@@ -279,7 +281,7 @@ try {
 
     Write-FKReportLine ""
     Write-FKReportLine 'Check User Before Deletion'
-    Write-FKReportLine 'Checks a user''s identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.'
+    Write-FKReportLine 'Review a user''s mailbox, memberships, and access before deletion.'
     Write-FKReportLine "---------------------"
     Write-FKReportLine "Target: $UPN"
     Write-FKReportLine "Mode:   READ-ONLY"

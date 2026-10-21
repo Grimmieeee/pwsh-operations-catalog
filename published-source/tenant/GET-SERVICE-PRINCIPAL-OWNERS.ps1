@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Identify enterprise apps without an assigned owner.
+
 <#
 tenant-service-principal-owners-audit-clean.ps1
 
@@ -304,7 +306,7 @@ function Is-RiskyScope {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Service Principal Owners Audit" } catch {}
 Write-Host 'Get App Owners'
-Write-Host 'Find enterprise apps (service principals) with missing or unclear owners.'
+Write-Host 'Identify enterprise apps without an assigned owner.'
     Write-Host "Read-only"
     Write-Host ""
 

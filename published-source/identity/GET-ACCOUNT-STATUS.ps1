@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #requires -Version 5.1
 
@@ -7,7 +7,7 @@
 GET-ACCOUNT-STATUS.ps1
 
 OBJECTIVE
-Review account state and recorded Entra sign-in activity for one or more users.
+Show whether selected accounts are enabled and when they last signed in.
 
 INPUT
 - One UPN
@@ -285,7 +285,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Get User Account Status'
-    Write-Host 'Reviews account enabled state and available Entra sign-in activity for one or more users.'
+    Write-Host 'Show whether selected accounts are enabled and when they last signed in.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

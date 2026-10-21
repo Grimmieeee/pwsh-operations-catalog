@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Install a network printer using its address and selected driver.
+
 <#
 DEPLOY-TCPIP-PRINTER.ps1
 
@@ -196,7 +198,7 @@ try {
 
     Clear-Host
     Write-Host 'Install Network Printer'
-    Write-Host 'Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.'
+    Write-Host 'Install a network printer using its address and selected driver.'
     Write-Host "Local change-making"
     Write-Host ""
 

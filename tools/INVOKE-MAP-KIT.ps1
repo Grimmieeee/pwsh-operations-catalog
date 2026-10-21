@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Show the folder structure and files beneath a selected location.
+
 <#
 .SYNOPSIS
 Read-only Jumpbox map reporter.

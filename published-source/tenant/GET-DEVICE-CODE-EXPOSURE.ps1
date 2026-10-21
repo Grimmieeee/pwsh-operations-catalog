@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review policies for gaps in device-code sign-in protection.
+
 <#
 tenant-device-code-exposure-audit-clean.ps1
 
@@ -305,7 +307,7 @@ function Is-RiskyScope {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Device Code Exposure Audit" } catch {}
 Write-Host 'Review Device Code Exposure'
-Write-Host 'Checks whether device-code sign-in is exposed and whether it has been used recently.'
+Write-Host 'Review policies for gaps in device-code sign-in protection.'
     Write-Host "Read-only"
     Write-Host ""
 

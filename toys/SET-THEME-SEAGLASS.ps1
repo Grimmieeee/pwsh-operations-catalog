@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Preview a sea-green PowerShell theme and output helpers.
+
 #Requires -Version 5.1
 
 # seaglass.ps1
