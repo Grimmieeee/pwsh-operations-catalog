@@ -3612,7 +3612,7 @@ window.CATALOG_DATA = [
     }
   },
   {
-    "name": "User Group Memberships",
+    "name": "Group Memberships",
     "type": "Tool",
     "area": "Groups",
     "subarea": "User Access",
@@ -3630,7 +3630,7 @@ window.CATALOG_DATA = [
     "keywords": "user groups memberships active directory ad entra synced cloud dynamic one multiple txt csv access review",
     "url": "",
     "_order": 173,
-    "objective": "Shows direct Active Directory and Entra group memberships for one or more users without cross-source deduplication.",
+    "objective": "Find a user's direct group memberships in AD and Entra ID.",
     "publishedPath": "published-source/identity/GET-USER-GROUPS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3638,16 +3638,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Remove User Group Memberships",

@@ -6,7 +6,7 @@
     "commands": 235,
     "references": 12,
     "pending": 11,
-    "operatorVerified": 78,
+    "operatorVerified": 77,
     "scopedReviews": 42
   },
   "entries": [
@@ -3529,44 +3529,39 @@
       ]
     },
     {
-      "name": "User Group Memberships",
+      "name": "Group Memberships",
       "file": "GET-USER-GROUPS.ps1",
       "path": "published-source/identity/GET-USER-GROUPS.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
-      "family": "Verified read-only workflows",
-      "state": "Operator verified — exact version",
+      "sha256": "c2a1d01f3a9597b8c67cfd9ed69a20ffc4c83e6d8557c17cc6bbaf4390ef2b40",
+      "family": "Read-only workflows",
+      "state": "Needs review",
       "review": null,
       "signals": [
         {
-          "id": "COMPLETION_MESSAGE",
-          "line": 706,
-          "note": "Review whether failure and unavailable states remain visible."
-        },
-        {
           "id": "QUIET_ERROR",
-          "line": 80,
+          "line": 87,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 143,
+          "line": 150,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 160,
+          "line": 167,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "QUIET_ERROR",
-          "line": 247,
+          "line": 254,
           "note": "Distinguish optional probes from hidden failures."
         },
         {
           "id": "LOCAL_INSTALL",
-          "line": 85,
+          "line": 92,
           "note": "Distinguish printed directions from executable installs."
         }
       ],
@@ -3575,7 +3570,12 @@
         "exchange": false,
         "ad": true
       },
-      "resultStates": []
+      "resultStates": [
+        "Unavailable",
+        "User not found",
+        "Checked",
+        "Failed"
+      ]
     },
     {
       "name": "Remove User Group Memberships",
@@ -8503,7 +8503,7 @@
       "path": "OPERATING-STANDARDS.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "ade5ec3a333026e8811ea749d5c6df9f2cec95e77a044cf4c05f87d35ac26229",
+      "sha256": "0360f5cac03a1ff1e78ed0139335a1851054f4091130bf3bd0c6b3d63a961925",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -8515,7 +8515,7 @@
         },
         {
           "id": "POLICY_CHANGE",
-          "line": 586,
+          "line": 599,
           "note": "Check explicit setup/theme purpose and disclosure."
         }
       ],
@@ -8568,7 +8568,7 @@
       "path": "tools/powershell-standards.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "78146e39af76b07c6fb945013d0971b45cd646c7bc0007bd678324aedd399785",
+      "sha256": "9cf1ad38b6016eb2ddb48b3f66b0118dba33de788a1719d9a1c9f96a283909f0",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -8580,7 +8580,7 @@
         },
         {
           "id": "PROCESS_START",
-          "line": 130,
+          "line": 132,
           "note": "Review external input and invocation arguments."
         }
       ],

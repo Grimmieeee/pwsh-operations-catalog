@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":78,"scopedReviews":42}
+{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":77,"scopedReviews":42}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|
@@ -16,7 +16,7 @@ Generated from current source hashes. Automated-test states describe the listed 
 | GET-ACCOUNT-STATUS.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
 | GET-DISTRIBUTION-GROUP-MEMBERS.ps1 | Verified read-only workflows | Operator verified — exact version | Adapted sampled read-only workflow; ten records / forty reads; Test source matched returned runner manifest; release adds a version comment only |
 | GET-GROUP-MEMBERS.ps1 | Verified read-only workflows | Operator verified — exact version | Adapted sampled read-only workflow; ten records / forty reads; Test source matched returned runner manifest; release adds a version comment only |
-| GET-USER-GROUPS.ps1 | Verified read-only workflows | Operator verified — exact version | Parser/integrity screening; detailed source review remains |
+| GET-USER-GROUPS.ps1 | Read-only workflows | Needs review | Parser/integrity screening; detailed source review remains |
 | INVOKE-REMOVE-USER-GROUPS.ps1 | Verified read-only workflows | Operator verified — exact version | Changed control path review; No verified result is no longer described as no change |
 | INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1 | Verified read-only workflows | Operator verified — exact version | Tenant binding and least required group/directory scopes; Existing-group ambiguity and failed-read blocking; Creation and post-change configuration validation |
 | GET-TENANT-GROUP-OWNERS.ps1 | Verified read-only workflows | Operator verified — exact version | Exact-hash bounded read-only service queries; export and standalone paths separately scoped. |

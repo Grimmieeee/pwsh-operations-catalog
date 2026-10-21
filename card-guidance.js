@@ -1024,16 +1024,16 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-GROUPS.ps1": {
-    "sourceSha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
-    "objective": "Show each user’s direct groups in Active Directory and Entra ID, with both systems reported separately.",
+    "sourceSha256": "c2a1d01f3a9597b8c67cfd9ed69a20ffc4c83e6d8557c17cc6bbaf4390ef2b40",
+    "objective": "Find a user's direct group memberships in AD and Entra ID.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
+    "requires": "Access to read users and groups in the connected tenant. For AD results, run on a domain-connected computer with RSAT. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
     "notes": "User-to-groups review that independently checks Active Directory and Entra ID. Synced groups remain visible in Entra as [Synced] even when the same group is also observed in AD.",
     "startMode": "right-click",
     "completion": {
-      "result": "Direct memberships from Active Directory and Entra ID, with each system’s coverage shown.",
+      "result": "Direct memberships shown separately for AD and Entra, with missing users and unavailable or failed checks clearly identified.",
       "next": "Follow up on systems that could not be checked. A synced group appearing in both systems is expected.",
-      "blocked": "Resolve failed or unavailable checks before treating the review as complete."
+      "blocked": "Review any partial or unsuccessful outcome. A missing user is different from a user with no groups."
     }
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
@@ -1279,7 +1279,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Choose the right Graph, Exchange Online, or hybrid connection approach."
   },
   "OPERATING-STANDARDS.md": {
-    "sourceSha256": "ade5ec3a333026e8811ea749d5c6df9f2cec95e77a044cf4c05f87d35ac26229",
+    "sourceSha256": "0360f5cac03a1ff1e78ed0139335a1851054f4091130bf3bd0c6b3d63a961925",
     "notes": "Top-level project decision contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
     "objective": "Read the project rules for building, reviewing, and releasing tools."
   },
@@ -1294,7 +1294,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Check lessons from earlier scripting and publishing problems."
   },
   "powershell-standards.md": {
-    "sourceSha256": "78146e39af76b07c6fb945013d0971b45cd646c7bc0007bd678324aedd399785",
+    "sourceSha256": "9cf1ad38b6016eb2ddb48b3f66b0118dba33de788a1719d9a1c9f96a283909f0",
     "notes": "Script implementation baseline for interactive FIELD // KIT PowerShell tools.",
     "objective": "Read the coding, safety, and output standards for these PowerShell tools."
   },

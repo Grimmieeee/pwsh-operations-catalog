@@ -44,7 +44,9 @@ jobs:
         run: ./tests/catalog-safety.test.ps1
       - name: Test endpoint failure reporting offline
         shell: pwsh
-        run: ./tests/result-safety.test.ps1
+        run: |
+          ./tests/result-safety.test.ps1
+          ./tests/group-memberships.test.ps1
       - name: Test group creation and accepted-reset failure paths offline
         shell: pwsh
         run: ./tests/change-safety.test.ps1
