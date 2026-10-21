@@ -3161,15 +3161,7 @@ window.CATALOG_DATA = [
     "_order": 157,
     "summary": "NO",
     "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Stale Entra Sign-in Review",
@@ -3194,16 +3186,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1",
     "csv": "YES",
     "summary": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Disabled User Group Debt",
@@ -3316,16 +3299,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Simulated cloud disable workflow: preview, approval, mutation and readback; auth and AD are fixtures.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Delete User Accounts",
@@ -3354,16 +3328,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Exact Graph lookup and post-delete absence verification functions only; no account deletion.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Assign User Licenses",
@@ -3378,7 +3343,7 @@ window.CATALOG_DATA = [
     "input": "User UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list; a country code may be requested for missing UsageLocation.",
     "output": "Per-user verified assignment results + optional verified CSV",
     "file": "INVOKE-ASSIGN-LICENSES.ps1",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "code": "",
     "related": [],
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
@@ -3392,15 +3357,7 @@ window.CATALOG_DATA = [
     "scopes": [
       "Single User",
       "Multi User"
-    ],
-    "verification": {
-      "version": "1.0.2",
-      "sha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Live assignment/removal; owner-accepted product-name display update",
-      "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
-    }
+    ]
   },
   {
     "name": "Remove User Licenses",
@@ -3415,7 +3372,7 @@ window.CATALOG_DATA = [
     "input": "Expected tenant ID (GUID) and exact user UPNs or a TXT/CSV user list. Choose a license from the script’s numbered list, or ALL.",
     "output": "Per-user verified removal results + optional verified CSV",
     "file": "INVOKE-REMOVE-LICENSES.ps1",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "code": "",
     "related": [],
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
@@ -3429,15 +3386,7 @@ window.CATALOG_DATA = [
     "scopes": [
       "Single User",
       "Multi User"
-    ],
-    "verification": {
-      "version": "1.0.2",
-      "sha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Live assignment/removal; owner-accepted product-name display update",
-      "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
-    }
+    ]
   },
   {
     "name": "Resolve Names to UPNs",
@@ -3466,16 +3415,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Account Status Review",
@@ -3504,16 +3444,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Find Accounts by Name or Email",
@@ -3564,15 +3495,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Group Members",
@@ -3601,18 +3524,10 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
-    "name": "User Group Memberships",
+    "name": "Group Memberships",
     "type": "Tool",
     "area": "Groups",
     "subarea": "User Access",
@@ -3630,7 +3545,7 @@ window.CATALOG_DATA = [
     "keywords": "user groups memberships active directory ad entra synced cloud dynamic one multiple txt csv access review",
     "url": "",
     "_order": 173,
-    "objective": "Shows direct Active Directory and Entra group memberships for one or more users without cross-source deduplication.",
+    "objective": "Find a user's direct group memberships in AD and Entra ID.",
     "publishedPath": "published-source/identity/GET-USER-GROUPS.ps1",
     "csv": "YES",
     "summary": "YES",
@@ -3638,16 +3553,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Remove User Group Memberships",
@@ -3675,16 +3581,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Membership DELETE route and eventual removal readback functions only; no actual group changes.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Create Dynamic License Group",
@@ -3699,7 +3596,7 @@ window.CATALOG_DATA = [
     "input": "Group display name + mail nickname",
     "output": "Verified Entra dynamic security group",
     "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "code": "",
     "related": [],
     "notes": "Creates one Entra dynamic security group for enabled users with an active license/service plan. Shows the membership rule, requires typed CREATE confirmation, and re-reads the group to verify its dynamic configuration.",
@@ -3708,16 +3605,7 @@ window.CATALOG_DATA = [
     "_order": 176,
     "objective": "Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.",
     "publishedPath": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
-    "summary": "YES",
-    "verification": {
-      "version": "1.0.1",
-      "sha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped safety checks",
-      "scope": "15 synthetic group-creation cases: preview/cancel, tenant/context/scope checks, request failure and readback. No real group creation or auth tested.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "summary": "YES"
   },
   {
     "name": "Tenant Group Owners Review",
@@ -3741,15 +3629,7 @@ window.CATALOG_DATA = [
     "objective": "Shows owners for tenant groups across major Entra and Exchange group types and keeps unresolved ownership visible.",
     "publishedPath": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
     "summary": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Mailbox Permissions Review",
@@ -3777,15 +3657,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Mailbox Security Snapshot",
@@ -3809,15 +3681,7 @@ window.CATALOG_DATA = [
     "_order": 180,
     "summary": "NO",
     "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Mailbox Forwarding Check",
@@ -3846,16 +3710,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Shared Mailbox Membership Review",
@@ -3925,16 +3780,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Simulated hold enforcement workflow: approval, mutation and readback; Exchange/auth are fixtures.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Restore Moved Email",
@@ -3958,16 +3804,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
     "summary": "NO",
     "objective": "Moves email back to the mailbox location you choose after an incident.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Encoded message-move request and root-folder creation functions only; no mailbox access or message changes.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "IR: Risk Assessment",
@@ -4070,15 +3907,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Looks for unusual file activity that could indicate data was copied or taken.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -4103,15 +3932,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds tenant activity tied to an IP address.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Email Search",
@@ -4136,15 +3957,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Searches the tenant for email tied to an address, sender, subject, or other indicator.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Threat Intel IP Check",
@@ -4169,16 +3982,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Checks an IP address for threat indicators and related tenant activity.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "IP input guards only; provider API calls, credentials and reputation findings are not tested.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Incident Timeline Builder",
@@ -4202,15 +4006,7 @@ window.CATALOG_DATA = [
     "_order": 196,
     "summary": "NO",
     "objective": "Builds a simple incident timeline from collected events.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Synthetic local fixture / host read-only check",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "JWT Token Decode",
@@ -4234,15 +4030,7 @@ window.CATALOG_DATA = [
     "_order": 197,
     "summary": "NO",
     "objective": "Decodes a JWT locally so you can inspect its claims.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Synthetic local fixture / host read-only check",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -4266,15 +4054,7 @@ window.CATALOG_DATA = [
     "_order": 198,
     "summary": "NO",
     "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Security Hardening",
@@ -4419,16 +4199,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows whether shared mailboxes are being signed into directly.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "App Registration Audit",
@@ -4453,16 +4224,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Conditional Access Gaps",
@@ -4487,16 +4249,7 @@ window.CATALOG_DATA = [
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1",
     "summary": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Device Code Exposure Audit",
@@ -4521,16 +4274,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Guest App Consent Audit",
@@ -4555,16 +4299,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds guest app consent and access that may need review.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "MFA Security Audit",
@@ -4589,16 +4324,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows where MFA coverage or registered methods may leave gaps.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Secure Score Snapshot",
@@ -4623,16 +4349,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Owner-reported sampled follow-up acceptance",
-      "scope": "Owner-reported acceptance of the supplied sampled report follow-up. Secure Score was included in that bundle; no separate returned execution manifest or HTML report is available. Not a full-tenant or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Service Principal Owners Audit",
@@ -4657,16 +4374,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds service principals with missing or unclear owners.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4691,16 +4399,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Surfaces unusual sign-ins that deserve a closer look.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Transport Rules Audit",
@@ -4725,16 +4424,7 @@ window.CATALOG_DATA = [
     "csv": "YES",
     "publishedPath": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1",
     "summary": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Join Computer to Domain",
@@ -4758,16 +4448,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1",
     "objective": "Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped local/setup checks",
-      "scope": "Simulated approved join workflow success/failure and reboot-pending messaging; no actual join or reboot.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Deploy Printer",
@@ -4790,16 +4471,7 @@ window.CATALOG_DATA = [
     "_order": 216,
     "publishedPath": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1",
     "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped safety checks",
-      "scope": "5 synthetic default-printer method/result checks. No actual printer installation or device tested.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Back Up User Profile",
@@ -4822,16 +4494,7 @@ window.CATALOG_DATA = [
     "_order": 217,
     "publishedPath": "published-source/endpoint/BACKUP-USER-PROFILE.ps1",
     "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped safety checks",
-      "scope": "6 synthetic Robocopy outcome/coverage cases. No actual profile backup or restore tested.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "PowerShell Readiness Check",
@@ -4855,15 +4518,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
     "summary": "NO",
     "objective": "Checks whether this computer is ready to run the PowerShell tools.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Synthetic local fixture / host read-only check",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Folder Inventory",
@@ -4887,15 +4542,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
     "summary": "NO",
     "objective": "Maps a folder or repo so you can quickly see what is in it and what may need review.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Synthetic local fixture / host read-only check",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "M365 Module Setup",
@@ -4919,16 +4566,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/INSTALL-M365-MODULES.ps1",
     "summary": "NO",
     "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Simulated module installation workflow with cancellation, scope and failure checks; nothing is installed.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Sensitive Data Check",
@@ -4952,15 +4590,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/TEST-SENSITIVE-DATA.ps1",
     "summary": "NO",
     "objective": "Finds obvious secrets or internal details before you publish or share files.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Synthetic local fixture / host read-only check",
-      "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Hybrid Smoke Test",
@@ -5004,16 +4634,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/RESET-M365-SESSION.ps1",
     "summary": "NO",
     "objective": "Disconnects Graph and Exchange and clears local PowerShell session state.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Simulated reset workflow; checks unrelated sessions are preserved; no real disconnections.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Sign Folder Scripts",
@@ -5177,16 +4798,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
     "summary": "NO",
     "objective": "Shows available app updates and installs them after confirmation.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped safety checks",
-      "scope": "4 simulated WinGet completion/review/cancellation cases. No actual application updates tested.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "PowerShell Script Template",
@@ -5230,15 +4842,7 @@ window.CATALOG_DATA = [
     "_order": 233,
     "summary": "NO",
     "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Enforce Per-user MFA",
@@ -5267,16 +4871,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Simulated per-user MFA workflow: approval, mutation and readback; auth is a fixture.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "RMM Onboarding Summary",
@@ -5721,16 +5316,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows who has active Entra admin roles and flags disabled or stale admin accounts.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "OAuth Consent Audit",
@@ -5755,16 +5341,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows delegated OAuth consent across the tenant and flags grants with high-risk scopes.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Guest User Hygiene Audit",
@@ -5789,16 +5366,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds guest accounts that are stale, disabled, never used, or still waiting on invitation acceptance.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Licensing Audit",
@@ -5823,16 +5391,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows tenant license usage and finds disabled users still licensed or enabled users with no license.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Inbox Rules Audit",
@@ -5857,16 +5416,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "User Security Snapshot",
@@ -5891,15 +5441,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Shows the security state around one user before you decide what needs deeper review.",
     "csv": "NO",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Security Snapshot",
@@ -5924,15 +5466,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Gives a fast tenant security overview before you open the deeper focused audits.",
     "csv": "NO",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled read-only batch and HTML export",
-      "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Room & Resource Access Review",
@@ -5960,7 +5494,8 @@ window.CATALOG_DATA = [
     "scopes": [
       "Single User",
       "Multi User"
-    ]
+    ],
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Mailbox Access Audit",
@@ -5985,16 +5520,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.",
     "csv": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Sampled functional read-only batch",
-      "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Disabled User Mailbox Access Cleanup",
@@ -6019,16 +5545,7 @@ window.CATALOG_DATA = [
     "summary": "YES",
     "objective": "Removes lingering Full Access, Send As, and Send on Behalf rights only after authoritative disabled-state validation and an explicit reviewed removal plan.",
     "csv": "NO",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Principal matching and SendOnBehalf target isolation only; disabled-state/auth and removal are not exercised.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "Tenant Drift Review",
@@ -6052,16 +5569,7 @@ window.CATALOG_DATA = [
     "objective": "Compares selected high-value tenant security configuration against an approved local baseline and reports tracked drift.",
     "publishedPath": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1",
     "summary": "YES",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Synthetic added/removed/changed comparisons and real temporary JSON write/read; no tenant queries.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "_order": 275,
@@ -6080,16 +5588,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
     "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space",
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped behavioral checks; no live-service claim",
-      "scope": "Storage collector with synthetic CIM/file records; top-file ranking and skip option; no real drive walk.",
-      "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "_order": 276,
@@ -6112,16 +5611,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.0",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
-      "operatorTested": true,
-      "ownerAccepted": true,
-      "testMode": "Offline scoped safety checks",
-      "scope": "4 accepted-reset timestamp readback cases only: changed, unchanged, missing and denied. No actual reset, password generation or delivery tested.",
-      "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
-    }
+    "version": "1.0.1"
   },
   {
     "name": "IR: Recovery and Validation",

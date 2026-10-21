@@ -1,3 +1,4 @@
+# .VERSION 1.0.1
 <#
 GET-ROOM-RESOURCE-ACCESS.ps1
 
@@ -29,8 +30,10 @@ function Write-Warn { param($Message) Write-Host "[WARN] $Message" -ForegroundCo
 function Write-Fail { param($Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Get-ShortError {
@@ -151,7 +154,8 @@ try {
     try { $Host.UI.RawUI.WindowTitle = "Room & Resource Access Review" } catch {}
 
     Clear-Host
-    Write-Host "ROOM & RESOURCE ACCESS REVIEW"
+    Write-Host 'Get Resource Mailbox Access'
+    Write-Host 'Shows who can access or book one or more room and equipment mailboxes.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

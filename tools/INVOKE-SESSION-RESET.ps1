@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -40,8 +40,10 @@ function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Section {
@@ -107,7 +109,8 @@ function Start-FreshShell {
 }
 
 try {
-    Write-Host "JUMPBOX SESSION RESET"
+    Write-Host 'Reset Terminal Session'
+    Write-Host 'Disconnect local Graph and Exchange sessions and clear session errors.'
     Write-Host "LOCAL SESSION CLEANUP"
     Write-Host ""
 

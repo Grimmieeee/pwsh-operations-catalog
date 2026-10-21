@@ -77,7 +77,7 @@ function Read-Host {
         if ($Mode -eq 'Assign') { return 'ASSIGN' }; return 'REMOVE'
     }
     if ($Prompt -like 'Export results to CSV*') { return 'N' }
-    if ($Prompt -eq 'Press Enter to close') { return '' }
+    if ($Prompt -eq 'Press Enter to close session.') { return '' }
     throw "Unexpected offline prompt: $Prompt"
 }
 function Clear-Host {}

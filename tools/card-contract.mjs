@@ -17,6 +17,11 @@ export function validateCardContract({api,window,hashes}){
       assert.equal(review.sourceSha256,hashes[item.publishedPath],`Card review is stale: ${label}`);
       if(!item.publishedPath.endsWith('.ps1'))continue;
       counts.scripts++;
+      const operator=window.FIELD_KIT_OPERATOR_CARDS?.[item.file];
+      assert(operator && meaningful(operator.name) && meaningful(operator.scope) && meaningful(operator.input),`Missing approved operator card: ${label}`);
+      assert.equal(operator.sourceSha256,hashes[item.publishedPath],`Operator copy is stale: ${label}`);
+      assert(Array.isArray(operator.details) && operator.details.length>0,`Operational details missing: ${label}`);
+      assert.equal(api.relatedItems(item).length,3,`Three usable related items required: ${label}`);
       assert(meaningful(review.objective),`Card needs a purpose: ${label}`);
       assert(concreteInput(review.input) && concreteInput(api.inputInfo(item)),`Card needs explicit inputs or default context: ${label}`);
       assert(meaningful(review.requires),`Card needs reviewed requirements: ${label}`);

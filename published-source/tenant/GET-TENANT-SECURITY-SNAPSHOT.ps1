@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 <#
 GET-TENANT-SECURITY-SNAPSHOT.ps1
 
@@ -107,8 +107,10 @@ function Write-Warn { param($Message) Write-FKReportLine "[WARN] $Message" -Fore
 function Write-Fail { param($Message) Write-FKReportLine "[FAIL] $Message" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Get-ShortError {
@@ -224,7 +226,8 @@ try {
     try { $Host.UI.RawUI.WindowTitle = "Tenant Security Snapshot" } catch {}
 
     Clear-Host
-    Write-FKReportLine "TENANT SECURITY SNAPSHOT"
+    Write-FKReportLine 'Get Tenant Security'
+    Write-FKReportLine 'Gives a fast tenant security overview before you open the deeper focused audits.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine "Fast overview only. Use focused audits for deeper review."
     Write-FKReportLine ""

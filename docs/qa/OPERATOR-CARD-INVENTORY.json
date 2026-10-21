@@ -1,0 +1,7335 @@
+[
+  {
+    "file": null,
+    "name": "Get User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete User"
+      },
+      {
+        "file": null,
+        "name": "Disable User"
+      },
+      {
+        "file": null,
+        "name": "Enable User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Password Expiry",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Force Password Change Next Logon"
+      },
+      {
+        "file": null,
+        "name": "Reset Password"
+      },
+      {
+        "file": null,
+        "name": "Delete User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Delete User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable User"
+      },
+      {
+        "file": null,
+        "name": "Enable User"
+      },
+      {
+        "file": null,
+        "name": "Get User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete User"
+      },
+      {
+        "file": null,
+        "name": "Enable User"
+      },
+      {
+        "file": null,
+        "name": "Get User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Enable User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete User"
+      },
+      {
+        "file": null,
+        "name": "Disable User"
+      },
+      {
+        "file": null,
+        "name": "Get User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Force Password Change Next Logon",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Reset Password"
+      },
+      {
+        "file": null,
+        "name": "Show Password Expiry"
+      },
+      {
+        "file": null,
+        "name": "Delete User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Reset Password",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Force Password Change Next Logon"
+      },
+      {
+        "file": null,
+        "name": "Show Password Expiry"
+      },
+      {
+        "file": null,
+        "name": "Delete User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Unlock User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete User"
+      },
+      {
+        "file": null,
+        "name": "Disable User"
+      },
+      {
+        "file": null,
+        "name": "Enable User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Find User By Exact Display Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete Cloud User"
+      },
+      {
+        "file": null,
+        "name": "Find Exact Group"
+      },
+      {
+        "file": null,
+        "name": "Get User By Upn"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Get User By Upn",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete Cloud User"
+      },
+      {
+        "file": null,
+        "name": "Find User By Exact Display Name"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Assigned Licenses",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Manager"
+      },
+      {
+        "file": null,
+        "name": "Show Password Age"
+      },
+      {
+        "file": null,
+        "name": "Show Sync Source"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Manager",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      },
+      {
+        "file": null,
+        "name": "Show Password Age"
+      },
+      {
+        "file": null,
+        "name": "Show Sync Source"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Password Age",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      },
+      {
+        "file": null,
+        "name": "Show Manager"
+      },
+      {
+        "file": null,
+        "name": "Show Sync Source"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Sync Source",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      },
+      {
+        "file": null,
+        "name": "Show Manager"
+      },
+      {
+        "file": null,
+        "name": "Show Password Age"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Delete Cloud User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find User By Exact Display Name"
+      },
+      {
+        "file": null,
+        "name": "Get User By Upn"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable Sign-In",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Enable Sign-In"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Enable Sign-In",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Sign-In"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "IR: Revoke Sessions",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "ir-risk-assessment.ps1",
+        "name": "IR: Assess User Risk"
+      },
+      {
+        "file": "ir-contain-eradicate.ps1",
+        "name": "IR: Contain and Clean Up"
+      },
+      {
+        "file": "ir-recover-validate.ps1",
+        "name": "IR: Restore and Validate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Cached Tickets",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Purge Cached Tickets"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Purge Cached Tickets",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Cached Tickets"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Local Administrators",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Remove User From Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Local Users",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Remove User From Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Add User To Administrators",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove User From Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove User From Administrators",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show MFA Methods",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Microsoft Authenticator Methods"
+      },
+      {
+        "file": null,
+        "name": "Show Phone Methods"
+      },
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Microsoft Authenticator Methods",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show MFA Methods"
+      },
+      {
+        "file": null,
+        "name": "Show Phone Methods"
+      },
+      {
+        "file": null,
+        "name": "Connect Microsoft Graph"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Phone Methods",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show MFA Methods"
+      },
+      {
+        "file": null,
+        "name": "Show Microsoft Authenticator Methods"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Phone Method"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Registration Status For One User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Show Risk Detections For One User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Specific Authenticator Method",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Specific Phone Method"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Delegated Grant"
+      },
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Specific Phone Method",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Specific Authenticator Method"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Delegated Grant"
+      },
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Delegated Grants For One User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Potentially High-Impact Delegated Scopes"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Delegated Grant"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Potentially High-Impact Delegated Scopes",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Delegated Grant"
+      },
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Specific Delegated Grant",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Specific Authenticator Method"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Phone Method"
+      },
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Distribution Group Members",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Distribution Group Owners"
+      },
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Remove Distribution Group Member"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Distribution Group Owners",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Distribution Group Members"
+      },
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Remove Distribution Group Member"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Add Distribution Group Member",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Members"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Owners"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Distribution Group Member",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Members"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Owners"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show AD Group Members",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      },
+      {
+        "file": null,
+        "name": "Remove User from AD Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show AD User Group Memberships",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      },
+      {
+        "file": null,
+        "name": "Remove User from AD Group"
+      },
+      {
+        "file": null,
+        "name": "Show AD Group Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Add User to AD Group",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove User from AD Group"
+      },
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Delete User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove User from AD Group",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      },
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Delete User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Find Exact Group",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find User By Exact Display Name"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Entra Group Direct Members",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Group Owners"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Entra Group Owners",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Group Direct Members"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Entra User Group Memberships",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Group Direct Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Add User to Entra Group",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Group Direct Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove User from Entra Group",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Group Direct Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Protocol State",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Mailbox Summary"
+      },
+      {
+        "file": null,
+        "name": "Disable Mailbox POP / IMAP"
+      },
+      {
+        "file": null,
+        "name": "Disable Mailbox SMTP AUTH"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Summary",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Mailbox Protocol State"
+      },
+      {
+        "file": null,
+        "name": "Disable Mailbox POP / IMAP"
+      },
+      {
+        "file": null,
+        "name": "Disable Mailbox SMTP AUTH"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable Mailbox SMTP AUTH",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Mailbox POP / IMAP"
+      },
+      {
+        "file": null,
+        "name": "Find Exchange Service Principal By Appid"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Protocol State"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable Mailbox POP / IMAP",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Mailbox SMTP AUTH"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Protocol State"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Summary"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Full Access Delegates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Mailbox Full Access Delegate"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Forwarding"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Send As Delegates"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Forwarding",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Mailbox Full Access Delegates"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Forwarding"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Full Access Delegate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Send As Delegates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Mailbox Full Access Delegates"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Send on Behalf Delegates"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Forwarding"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Mailbox Send on Behalf Delegates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Mailbox Full Access Delegates"
+      },
+      {
+        "file": null,
+        "name": "Show Mailbox Send As Delegates"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send on Behalf Delegate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Mailbox Full Access Delegate",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Mailbox Forwarding"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send As Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send on Behalf Delegate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Mailbox Forwarding",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Mailbox Full Access Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send As Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send on Behalf Delegate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Mailbox Send As Delegate",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Mailbox Full Access Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send on Behalf Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Forwarding"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Mailbox Send on Behalf Delegate",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Mailbox Full Access Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Send As Delegate"
+      },
+      {
+        "file": null,
+        "name": "Remove Mailbox Forwarding"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Specific Transport Rule",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Transport Rules"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Inbox Rule"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Transport Rules",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Specific Transport Rule"
+      },
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Inbox Rules - Including Hidden",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Inbox Rule"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Suspicious Inbox Rules",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Remove Specific Inbox Rule"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove All Inbox Rules",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Specific Inbox Rule"
+      },
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Specific Inbox Rule",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show BitLocker Recovery Protectors",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show BitLocker Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Resume Protection",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Suspend For One Reboot",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Resume Protection"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Find By Thumbprint",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      },
+      {
+        "file": null,
+        "name": "Export Pfx"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Expiring Certificates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Verify Script Signature",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Sign Script"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Create Self-Signed App-Auth Certificate",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Export Pfx"
+      },
+      {
+        "file": null,
+        "name": "Export Public Cer"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Export Pfx",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Export Public Cer"
+      },
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Export Public Cer",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Export Pfx"
+      },
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Sign Script",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Expiring Certificates"
+      },
+      {
+        "file": null,
+        "name": "Verify Script Signature"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Find Exchange Service Principal By Appid",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Mailbox SMTP AUTH"
+      },
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Calculate Sha256 Hash",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Compliance Search Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Start Compliance Search"
+      },
+      {
+        "file": null,
+        "name": "Create Phishing Search By Subject"
+      },
+      {
+        "file": null,
+        "name": "Hard-Delete Search Results"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Create Phishing Search By Subject",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Hard-Delete Search Results"
+      },
+      {
+        "file": null,
+        "name": "Show Compliance Search Status"
+      },
+      {
+        "file": null,
+        "name": "Start Compliance Search"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Hard-Delete Search Results",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Create Phishing Search By Subject"
+      },
+      {
+        "file": null,
+        "name": "Show Compliance Search Status"
+      },
+      {
+        "file": null,
+        "name": "Start Compliance Search"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Start Compliance Search",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Compliance Search Status"
+      },
+      {
+        "file": null,
+        "name": "Create Phishing Search By Subject"
+      },
+      {
+        "file": null,
+        "name": "Hard-Delete Search Results"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Run Quick Scan",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Update Signatures"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Update Signatures",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Run Quick Scan"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Audit Inbox Rule Changes",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Specific Inbox Rule"
+      },
+      {
+        "file": null,
+        "name": "Mail Delete And Move Audit"
+      },
+      {
+        "file": null,
+        "name": "Mail Items Accessed Audit"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Mail Delete And Move Audit",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Mail Items Accessed Audit"
+      },
+      {
+        "file": null,
+        "name": "Parse Mail Audit Subject, Ip, And Destination Folder"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Mail Items Accessed Audit",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Mail Delete And Move Audit"
+      },
+      {
+        "file": null,
+        "name": "Parse Mail Audit Subject, Ip, And Destination Folder"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Parse Mail Audit Subject, Ip, And Destination Folder",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Mail Delete And Move Audit"
+      },
+      {
+        "file": null,
+        "name": "Mail Items Accessed Audit"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Search Query Audit",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      },
+      {
+        "file": null,
+        "name": "Mail Delete And Move Audit"
+      },
+      {
+        "file": null,
+        "name": "Mail Items Accessed Audit"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Unified Audit Log For One User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      },
+      {
+        "file": null,
+        "name": "Mail Delete And Move Audit"
+      },
+      {
+        "file": null,
+        "name": "Mail Items Accessed Audit"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Risk Detections For One User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Risky User State"
+      },
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Risky User State",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Risk Detections For One User"
+      },
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      },
+      {
+        "file": null,
+        "name": "Show Entra User Group Memberships"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Recipient",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Message Trace Events"
+      },
+      {
+        "file": null,
+        "name": "Show Message Trace Search Jobs"
+      },
+      {
+        "file": null,
+        "name": "Sender"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Sender",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Message Trace Events"
+      },
+      {
+        "file": null,
+        "name": "Show Message Trace Search Jobs"
+      },
+      {
+        "file": null,
+        "name": "Who Received Mail From Suspicious Sender"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Message Trace Events",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Message Trace Search Jobs"
+      },
+      {
+        "file": null,
+        "name": "Recipient"
+      },
+      {
+        "file": null,
+        "name": "Sender"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Message Trace Search Jobs",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Message Trace Events"
+      },
+      {
+        "file": null,
+        "name": "Recipient"
+      },
+      {
+        "file": null,
+        "name": "Sender"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Who Received Mail From Suspicious Sender",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Message Trace Events"
+      },
+      {
+        "file": null,
+        "name": "Show Message Trace Search Jobs"
+      },
+      {
+        "file": null,
+        "name": "Sender"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Failed Sign-Ins",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Last 10 Entra Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Legacy / Other-client Sign-ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Last 10 Entra Sign-Ins",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Legacy / Other-client Sign-ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Entra Sign-ins - Last 48 Hours",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Last 10 Entra Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Legacy / Other-client Sign-ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Legacy / Other-client Sign-ins",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Last 10 Entra Sign-Ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Successful Sign-Ins",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Entra Sign-ins - Last 48 Hours"
+      },
+      {
+        "file": null,
+        "name": "Show Failed Sign-Ins"
+      },
+      {
+        "file": null,
+        "name": "Show Last 10 Entra Sign-Ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Recent Application Errors",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Recent System Errors"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Recent System Errors",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Recent Application Errors"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Resolve Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Windows Firewall Rules by Name"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Configured Dns Servers",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Flush Resolver Cache",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Flush DNS"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Windows Firewall Profiles",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Windows Firewall Rules by Name"
+      },
+      {
+        "file": null,
+        "name": "Show Saved Wi-Fi Profiles"
+      },
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Windows Firewall Rules by Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Windows Firewall Profiles"
+      },
+      {
+        "file": null,
+        "name": "Resolve Name"
+      },
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Ping Host",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      },
+      {
+        "file": null,
+        "name": "Path Ping"
+      },
+      {
+        "file": null,
+        "name": "Release And Renew Dhcp"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Active Adapters",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      },
+      {
+        "file": null,
+        "name": "Show Ip Configuration"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Arp Neighbor Cache",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      },
+      {
+        "file": null,
+        "name": "Show Ip Configuration"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Established Tcp Connections",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Ip Configuration"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Ip Configuration",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Listening Tcp Ports",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Routing Table",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Routing Table (route print)"
+      },
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Test Tcp Port",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "Port 443 Connections"
+      },
+      {
+        "file": null,
+        "name": "Release And Renew Dhcp"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Trace Route",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "Release And Renew Dhcp"
+      },
+      {
+        "file": null,
+        "name": "Reset Tcp/Ip Stack"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Release And Renew Dhcp",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "Reset Tcp/Ip Stack"
+      },
+      {
+        "file": null,
+        "name": "Reset Winsock"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Reset Tcp/Ip Stack",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Reset Winsock"
+      },
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "Release And Renew Dhcp"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Reset Winsock",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Reset Tcp/Ip Stack"
+      },
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "Release And Renew Dhcp"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Restart Adapter",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Restart Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Disable Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Ping Host"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Configured Windows Vpn Connections",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Wi-Fi Connection",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Configured Dns Servers"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Saved Wi-Fi Profiles",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Windows Firewall Profiles"
+      },
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Problem Devices",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Cached Tickets"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Free Space",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Physical Disk Health"
+      },
+      {
+        "file": null,
+        "name": "Launch Disk Cleanup"
+      },
+      {
+        "file": null,
+        "name": "Open Storage Settings"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Physical Disk Health",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Free Space"
+      },
+      {
+        "file": null,
+        "name": "Dism Restore Health"
+      },
+      {
+        "file": null,
+        "name": "Launch Disk Cleanup"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Find Files Modified In Last 24 Hours",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find By Thumbprint"
+      },
+      {
+        "file": null,
+        "name": "Show Last Boot And Uptime"
+      },
+      {
+        "file": null,
+        "name": "Show Scheduled Task Last Run Result"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Computer Model And Serial Number",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Hostname And Current User"
+      },
+      {
+        "file": null,
+        "name": "Show Last Boot And Uptime"
+      },
+      {
+        "file": null,
+        "name": "Show Os And Build"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Hostname And Current User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Computer Model And Serial Number"
+      },
+      {
+        "file": null,
+        "name": "Show Last Boot And Uptime"
+      },
+      {
+        "file": null,
+        "name": "Show Os And Build"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Last Boot And Uptime",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Computer Model And Serial Number"
+      },
+      {
+        "file": null,
+        "name": "Show Hostname And Current User"
+      },
+      {
+        "file": null,
+        "name": "Show Os And Build"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Os And Build",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Computer Model And Serial Number"
+      },
+      {
+        "file": null,
+        "name": "Show Hostname And Current User"
+      },
+      {
+        "file": null,
+        "name": "Show Last Boot And Uptime"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Top Cpu Consumers",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Top Memory Consumers"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Top Memory Consumers",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Top Cpu Consumers"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Stop Process By Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Top Cpu Consumers"
+      },
+      {
+        "file": null,
+        "name": "Show Top Memory Consumers"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Whether Remote Desktop Is Enabled",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Windows Firewall Profiles"
+      },
+      {
+        "file": null,
+        "name": "Show Windows Firewall Rules by Name"
+      },
+      {
+        "file": null,
+        "name": "Show Listening Tcp Ports"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Chkdsk Online Scan",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Dism Component Store Scan"
+      },
+      {
+        "file": null,
+        "name": "Dism Restore Health"
+      },
+      {
+        "file": null,
+        "name": "Run Quick Scan"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Dism Component Store Scan",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "DISM Analyze Component Store"
+      },
+      {
+        "file": null,
+        "name": "DISM Component Store Cleanup"
+      },
+      {
+        "file": null,
+        "name": "Chkdsk Online Scan"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Dism Restore Health",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Dism Component Store Scan"
+      },
+      {
+        "file": null,
+        "name": "Chkdsk Online Scan"
+      },
+      {
+        "file": null,
+        "name": "DISM Analyze Component Store"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "System File Checker",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Chkdsk Online Scan"
+      },
+      {
+        "file": null,
+        "name": "Dism Component Store Scan"
+      },
+      {
+        "file": null,
+        "name": "Dism Restore Health"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Reboot Computer",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Restart Service"
+      },
+      {
+        "file": null,
+        "name": "Show Computer Model And Serial Number"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Service Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Restart Service"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Defender Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Restart Service",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Service Status"
+      },
+      {
+        "file": null,
+        "name": "Reboot Computer"
+      },
+      {
+        "file": null,
+        "name": "Set Startup Type"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Set Startup Type",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Restart Service"
+      },
+      {
+        "file": null,
+        "name": "Show Service Status"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Locally Logged-On Users",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Logged-On Users"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Show SMB Sessions"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show SMB Sessions",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Locally Logged-On Users"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show SMB Shares",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Cached Tickets"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Scheduled Task",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Scheduled Task Last Run Result"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Scheduled Task Last Run Result",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Scheduled Task"
+      },
+      {
+        "file": null,
+        "name": "Show Group Policy Result"
+      },
+      {
+        "file": null,
+        "name": "Show Last Boot And Uptime"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Check Common Pending Reboot Flags",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Open Windows Update"
+      },
+      {
+        "file": null,
+        "name": "Show Installed Hotfixes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Installed Hotfixes",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Open Windows Update"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Recent Windows Update History",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Installed Hotfixes"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Open Windows Update"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+    "name": "Review Account Cleanup",
+    "type": "Workflow",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1"
+  },
+  {
+    "file": "GET-STALE-SIGNIN-REVIEW.ps1",
+    "name": "Review Stale Sign-ins",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/tenant/GET-STALE-SIGNIN-REVIEW.ps1"
+  },
+  {
+    "file": "get-inactive-group-debt.ps1",
+    "name": "Disabled User Group Debt",
+    "type": "Tool",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "get-inactive-mailbox-debt.ps1",
+    "name": "Disabled User Mailbox Access Review",
+    "type": "Tool",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "invoke-user-onboard.ps1",
+    "name": "User Onboarding",
+    "type": "Workflow",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "invoke-user-offboard.ps1",
+    "name": "User Offboarding",
+    "type": "Workflow",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+    "name": "Disable User Accounts",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "RESOLVE-NAMES-TO-UPNS.ps1",
+        "name": "Find User UPNs"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1"
+  },
+  {
+    "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+    "name": "Delete User Accounts",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      },
+      {
+        "file": "RESOLVE-NAMES-TO-UPNS.ps1",
+        "name": "Find User UPNs"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-DELETE-ACCOUNTS.ps1"
+  },
+  {
+    "file": "INVOKE-ASSIGN-LICENSES.ps1",
+    "name": "Assign User Licenses",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-TENANT-LICENSING-AUDIT.ps1",
+        "name": "Audit Tenant Licenses"
+      },
+      {
+        "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+        "name": "Create Dynamic License Group"
+      },
+      {
+        "file": "INVOKE-REMOVE-LICENSES.ps1",
+        "name": "Remove User Licenses"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1"
+  },
+  {
+    "file": "INVOKE-REMOVE-LICENSES.ps1",
+    "name": "Remove User Licenses",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "INVOKE-ASSIGN-LICENSES.ps1",
+        "name": "Assign User Licenses"
+      },
+      {
+        "file": "GET-TENANT-LICENSING-AUDIT.ps1",
+        "name": "Audit Tenant Licenses"
+      },
+      {
+        "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+        "name": "Create Dynamic License Group"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-REMOVE-LICENSES.ps1"
+  },
+  {
+    "file": "RESOLVE-NAMES-TO-UPNS.ps1",
+    "name": "Find User UPNs",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/identity/RESOLVE-NAMES-TO-UPNS.ps1"
+  },
+  {
+    "file": "GET-ACCOUNT-STATUS.ps1",
+    "name": "Get User Account Status",
+    "type": "Tool",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/identity/GET-ACCOUNT-STATUS.ps1"
+  },
+  {
+    "file": "find-accounts-by-name-clean.ps1",
+    "name": "Find Accounts by Name or Email",
+    "type": "Tool",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "GET-ACCOUNT-STATUS.ps1",
+        "name": "Get User Account Status"
+      },
+      {
+        "file": "GET-USER-SECURITY-SNAPSHOT.ps1",
+        "name": "Get User Security"
+      },
+      {
+        "file": "GET-STALE-SIGNIN-REVIEW.ps1",
+        "name": "Review Stale Sign-ins"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+    "name": "Get Distribution Group Members",
+    "type": "Script",
+    "scope": "SINGLE or MULTI-GROUP",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-GROUPS.ps1",
+        "name": "Get User Groups"
+      },
+      {
+        "file": "GET-GROUP-MEMBERS.ps1",
+        "name": "Get Group Members"
+      },
+      {
+        "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+        "name": "Remove User Groups"
+      }
+    ],
+    "source": "published-source/mailbox/GET-DISTRIBUTION-GROUP-MEMBERS.ps1"
+  },
+  {
+    "file": "GET-GROUP-MEMBERS.ps1",
+    "name": "Get Group Members",
+    "type": "Script",
+    "scope": "SINGLE or MULTI-GROUP",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-GROUPS.ps1",
+        "name": "Get User Groups"
+      },
+      {
+        "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+        "name": "Remove User Groups"
+      },
+      {
+        "file": "GET-TENANT-GROUP-OWNERS.ps1",
+        "name": "Get Group Owners"
+      }
+    ],
+    "source": "published-source/identity/GET-GROUP-MEMBERS.ps1"
+  },
+  {
+    "file": "GET-USER-GROUPS.ps1",
+    "name": "Get User Groups",
+    "type": "Tool",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-GROUP-MEMBERS.ps1",
+        "name": "Get Group Members"
+      },
+      {
+        "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+        "name": "Remove User Groups"
+      },
+      {
+        "file": "GET-TENANT-GROUP-OWNERS.ps1",
+        "name": "Get Group Owners"
+      }
+    ],
+    "source": "published-source/identity/GET-USER-GROUPS.ps1"
+  },
+  {
+    "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+    "name": "Remove User Groups",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-GROUPS.ps1",
+        "name": "Get User Groups"
+      },
+      {
+        "file": "GET-GROUP-MEMBERS.ps1",
+        "name": "Get Group Members"
+      },
+      {
+        "file": "GET-TENANT-GROUP-OWNERS.ps1",
+        "name": "Get Group Owners"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-REMOVE-USER-GROUPS.ps1"
+  },
+  {
+    "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+    "name": "Create Dynamic License Group",
+    "type": "Automation",
+    "scope": "SINGLE-GROUP",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "INVOKE-ASSIGN-LICENSES.ps1",
+        "name": "Assign User Licenses"
+      },
+      {
+        "file": "GET-TENANT-LICENSING-AUDIT.ps1",
+        "name": "Audit Tenant Licenses"
+      },
+      {
+        "file": "INVOKE-REMOVE-LICENSES.ps1",
+        "name": "Remove User Licenses"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1"
+  },
+  {
+    "file": "GET-TENANT-GROUP-OWNERS.ps1",
+    "name": "Get Group Owners",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-GROUPS.ps1",
+        "name": "Get User Groups"
+      },
+      {
+        "file": "GET-GROUP-MEMBERS.ps1",
+        "name": "Get Group Members"
+      },
+      {
+        "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
+        "name": "Remove User Groups"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1"
+  },
+  {
+    "file": "GET-MAILBOX-PERMISSIONS.ps1",
+    "name": "Get Mailbox Permissions",
+    "type": "Tool",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Mailbox Security"
+      },
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      }
+    ],
+    "source": "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1"
+  },
+  {
+    "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+    "name": "Get Mailbox Security",
+    "type": "Tool",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      }
+    ],
+    "source": "published-source/mailbox/GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+  },
+  {
+    "file": "GET-MAILBOX-FORWARDING.ps1",
+    "name": "Get Mailbox Forwarding",
+    "type": "Script",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Mailbox Security"
+      },
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      }
+    ],
+    "source": "published-source/mailbox/GET-MAILBOX-FORWARDING.ps1"
+  },
+  {
+    "file": "shared-mailbox-members.ps1",
+    "name": "Shared Mailbox Membership Review",
+    "type": "Tool",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "distro-group-members.ps1",
+    "name": "Distribution Group Inventory",
+    "type": "Tool",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+        "name": "Get Resource Mailbox Access"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "INVOKE-LITIGATION-HOLD.ps1",
+    "name": "Set Litigation Hold",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Mailbox Security"
+      }
+    ],
+    "source": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1"
+  },
+  {
+    "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
+    "name": "Restore Email",
+    "type": "Workflow",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+        "name": "IR: Search Tenant Email"
+      },
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      }
+    ],
+    "source": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1"
+  },
+  {
+    "file": "ir-risk-assessment.ps1",
+    "name": "IR: Assess User Risk",
+    "type": "Workflow",
+    "scope": "SINGLE-USER",
+    "launch": "workflow",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/ir-risk-assessment.ps1"
+  },
+  {
+    "file": "ir-contain-eradicate.ps1",
+    "name": "IR: Contain and Clean Up",
+    "type": "Workflow",
+    "scope": "SINGLE-USER",
+    "launch": "workflow",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/ir-contain-eradicate.ps1"
+  },
+  {
+    "file": "get-graph-session-user-check.ps1",
+    "name": "Graph Session and User Check",
+    "type": "Script",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+    "name": "IR: Review File Activity",
+    "type": "Tool",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1"
+  },
+  {
+    "file": "IR-GET-IP-TRACE.ps1",
+    "name": "IR: Trace IP Activity",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-IP-TRACE.ps1"
+  },
+  {
+    "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+    "name": "IR: Search Tenant Email",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
+        "name": "Restore Email"
+      },
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1"
+  },
+  {
+    "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+    "name": "IR: Check IP Reputation",
+    "type": "Tool",
+    "scope": "SINGLE-IP",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      },
+      {
+        "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+        "name": "IR: Review File Activity"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1"
+  },
+  {
+    "file": "IR-GET-TIMELINE-BUILDER.ps1",
+    "name": "IR: Build Incident Timeline",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      },
+      {
+        "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+        "name": "IR: Review File Activity"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1"
+  },
+  {
+    "file": "IR-GET-TOKEN-DECODE.ps1",
+    "name": "IR: Decode Token",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+        "name": "IR: Review File Activity"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1"
+  },
+  {
+    "file": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+    "name": "IR: Review Token Replay",
+    "type": "Tool",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1"
+  },
+  {
+    "file": "tenant-security-hardening-guided.ps1",
+    "name": "Tenant Security Hardening",
+    "type": "Workflow",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+    "name": "Audit Shared Mailbox Sign-ins",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
+        "name": "Audit Mail Flow Rules"
+      },
+      {
+        "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+        "name": "Audit Tenant Inbox Rules"
+      },
+      {
+        "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+        "name": "Audit Tenant Mailbox Access"
+      }
+    ],
+    "source": "published-source/tenant/GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1"
+  },
+  {
+    "file": "GET-APP-REGISTRATION-AUDIT.ps1",
+    "name": "Audit App Registrations",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
+        "name": "Audit App Consent"
+      },
+      {
+        "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+        "name": "Audit Guest App Consent"
+      },
+      {
+        "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+        "name": "Get App Owners"
+      }
+    ],
+    "source": "published-source/tenant/GET-APP-REGISTRATION-AUDIT.ps1"
+  },
+  {
+    "file": "GET-CONDITIONAL-ACCESS-GAPS.ps1",
+    "name": "Review Conditional Access",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/tenant/GET-CONDITIONAL-ACCESS-GAPS.ps1"
+  },
+  {
+    "file": "GET-DEVICE-CODE-EXPOSURE.ps1",
+    "name": "Review Device Code Exposure",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1"
+  },
+  {
+    "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+    "name": "Audit Guest App Consent",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
+        "name": "Audit App Consent"
+      },
+      {
+        "file": "GET-APP-REGISTRATION-AUDIT.ps1",
+        "name": "Audit App Registrations"
+      },
+      {
+        "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+        "name": "Get App Owners"
+      }
+    ],
+    "source": "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1"
+  },
+  {
+    "file": "GET-MFA-SECURITY-AUDIT.ps1",
+    "name": "Audit MFA Security",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      },
+      {
+        "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Tenant Security"
+      }
+    ],
+    "source": "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1"
+  },
+  {
+    "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+    "name": "Get Secure Score",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Tenant Security"
+      }
+    ],
+    "source": "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1"
+  },
+  {
+    "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+    "name": "Get App Owners",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
+        "name": "Audit App Consent"
+      },
+      {
+        "file": "GET-APP-REGISTRATION-AUDIT.ps1",
+        "name": "Audit App Registrations"
+      },
+      {
+        "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+        "name": "Audit Guest App Consent"
+      }
+    ],
+    "source": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1"
+  },
+  {
+    "file": "GET-SIGNIN-ANOMALIES.ps1",
+    "name": "Review Sign-in Anomalies",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/tenant/GET-SIGNIN-ANOMALIES.ps1"
+  },
+  {
+    "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
+    "name": "Audit Mail Flow Rules",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+        "name": "Audit Shared Mailbox Sign-ins"
+      },
+      {
+        "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+        "name": "Audit Tenant Inbox Rules"
+      },
+      {
+        "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+        "name": "Audit Tenant Mailbox Access"
+      }
+    ],
+    "source": "published-source/tenant/GET-TRANSPORT-RULES-AUDIT.ps1"
+  },
+  {
+    "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+    "name": "Join Computer to Domain",
+    "type": "Script",
+    "scope": "LOCAL",
+    "launch": "terminal-admin",
+    "related": [
+      {
+        "file": "BACKUP-USER-PROFILE.ps1",
+        "name": "Back Up User Profile"
+      },
+      {
+        "file": "DEPLOY-TCPIP-PRINTER.ps1",
+        "name": "Install Network Printer"
+      },
+      {
+        "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+        "name": "Review Windows Storage"
+      }
+    ],
+    "source": "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1"
+  },
+  {
+    "file": "DEPLOY-TCPIP-PRINTER.ps1",
+    "name": "Install Network Printer",
+    "type": "Script",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "BACKUP-USER-PROFILE.ps1",
+        "name": "Back Up User Profile"
+      },
+      {
+        "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+        "name": "Join Computer to Domain"
+      },
+      {
+        "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+        "name": "Review Windows Storage"
+      }
+    ],
+    "source": "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1"
+  },
+  {
+    "file": "BACKUP-USER-PROFILE.ps1",
+    "name": "Back Up User Profile",
+    "type": "Script",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "DEPLOY-TCPIP-PRINTER.ps1",
+        "name": "Install Network Printer"
+      },
+      {
+        "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+        "name": "Join Computer to Domain"
+      },
+      {
+        "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+        "name": "Review Windows Storage"
+      }
+    ],
+    "source": "published-source/endpoint/BACKUP-USER-PROFILE.ps1"
+  },
+  {
+    "file": "TEST-POWERSHELL-READINESS.ps1",
+    "name": "Check PowerShell Readiness",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+        "name": "Check Terminal Readiness"
+      },
+      {
+        "file": "INSTALL-M365-MODULES.ps1",
+        "name": "Install M365 Modules"
+      },
+      {
+        "file": "RESET-M365-SESSION.ps1",
+        "name": "Reset M365 Session"
+      }
+    ],
+    "source": "published-source/utility/TEST-POWERSHELL-READINESS.ps1"
+  },
+  {
+    "file": "GET-FOLDER-INVENTORY.ps1",
+    "name": "Get Folder Inventory",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      },
+      {
+        "file": "INVOKE-FILE-INVENTORY.ps1",
+        "name": "Get File Inventory"
+      },
+      {
+        "file": "INVOKE-MAP-KIT.ps1",
+        "name": "Map Folders"
+      }
+    ],
+    "source": "published-source/utility/GET-FOLDER-INVENTORY.ps1"
+  },
+  {
+    "file": "INSTALL-M365-MODULES.ps1",
+    "name": "Install M365 Modules",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+        "name": "Check Terminal Readiness"
+      },
+      {
+        "file": "RESET-M365-SESSION.ps1",
+        "name": "Reset M365 Session"
+      }
+    ],
+    "source": "published-source/utility/INSTALL-M365-MODULES.ps1"
+  },
+  {
+    "file": "TEST-SENSITIVE-DATA.ps1",
+    "name": "Check Sensitive Data",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "INVOKE-FILE-INVENTORY.ps1",
+        "name": "Get File Inventory"
+      },
+      {
+        "file": "GET-FOLDER-INVENTORY.ps1",
+        "name": "Get Folder Inventory"
+      },
+      {
+        "file": "INVOKE-MAP-KIT.ps1",
+        "name": "Map Folders"
+      }
+    ],
+    "source": "published-source/utility/TEST-SENSITIVE-DATA.ps1"
+  },
+  {
+    "file": "RESET-M365-SESSION.ps1",
+    "name": "Reset M365 Session",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+        "name": "Check Terminal Readiness"
+      },
+      {
+        "file": "INSTALL-M365-MODULES.ps1",
+        "name": "Install M365 Modules"
+      }
+    ],
+    "source": "published-source/utility/RESET-M365-SESSION.ps1"
+  },
+  {
+    "file": "csv-combine.ps1",
+    "name": "Combine CSV Reports",
+    "type": "Script",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "csv-graph-send-bulk-emails.ps1",
+    "name": "Send Bulk Graph Email",
+    "type": "Automation",
+    "scope": null,
+    "launch": null,
+    "related": [],
+    "source": null
+  },
+  {
+    "file": "UPDATE-WINDOWS-APPS.ps1",
+    "name": "Update Windows Apps",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "BACKUP-USER-PROFILE.ps1",
+        "name": "Back Up User Profile"
+      },
+      {
+        "file": "DEPLOY-TCPIP-PRINTER.ps1",
+        "name": "Install Network Printer"
+      },
+      {
+        "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+        "name": "Join Computer to Domain"
+      }
+    ],
+    "source": "published-source/utility/UPDATE-WINDOWS-APPS.ps1"
+  },
+  {
+    "file": "GET-USER-PREDELETE-CHECK.ps1",
+    "name": "Check User Before Deletion",
+    "type": "Tool",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      },
+      {
+        "file": "RESOLVE-NAMES-TO-UPNS.ps1",
+        "name": "Find User UPNs"
+      }
+    ],
+    "source": "published-source/identity/GET-USER-PREDELETE-CHECK.ps1"
+  },
+  {
+    "file": "INVOKE-ENFORCE-PER-USER-MFA.ps1",
+    "name": "Set Per-user MFA",
+    "type": "Automation",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-ENFORCE-PER-USER-MFA.ps1"
+  },
+  {
+    "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+    "name": "Audit Admin Roles",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      },
+      {
+        "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Tenant Security"
+      }
+    ],
+    "source": "published-source/tenant/GET-ADMIN-ROLE-AUDIT.ps1"
+  },
+  {
+    "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
+    "name": "Audit App Consent",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-APP-REGISTRATION-AUDIT.ps1",
+        "name": "Audit App Registrations"
+      },
+      {
+        "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
+        "name": "Audit Guest App Consent"
+      },
+      {
+        "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+        "name": "Get App Owners"
+      }
+    ],
+    "source": "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1"
+  },
+  {
+    "file": "GET-GUEST-USER-AUDIT.ps1",
+    "name": "Review Guest Users",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/tenant/GET-GUEST-USER-AUDIT.ps1"
+  },
+  {
+    "file": "GET-TENANT-LICENSING-AUDIT.ps1",
+    "name": "Audit Tenant Licenses",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "INVOKE-ASSIGN-LICENSES.ps1",
+        "name": "Assign User Licenses"
+      },
+      {
+        "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+        "name": "Create Dynamic License Group"
+      },
+      {
+        "file": "INVOKE-REMOVE-LICENSES.ps1",
+        "name": "Remove User Licenses"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-LICENSING-AUDIT.ps1"
+  },
+  {
+    "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+    "name": "Audit Tenant Inbox Rules",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
+        "name": "Audit Mail Flow Rules"
+      },
+      {
+        "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+        "name": "Audit Shared Mailbox Sign-ins"
+      },
+      {
+        "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+        "name": "Audit Tenant Mailbox Access"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-INBOX-RULES-AUDIT.ps1"
+  },
+  {
+    "file": "GET-USER-SECURITY-SNAPSHOT.ps1",
+    "name": "Get User Security",
+    "type": "Tool",
+    "scope": "SINGLE-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1"
+  },
+  {
+    "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+    "name": "Get Tenant Security",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-SECURITY-SNAPSHOT.ps1"
+  },
+  {
+    "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
+    "name": "Get Resource Mailbox Access",
+    "type": "Tool",
+    "scope": "SINGLE or MULTI-MAILBOX",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Mailbox Security"
+      }
+    ],
+    "source": "published-source/mailbox/GET-ROOM-RESOURCE-ACCESS.ps1"
+  },
+  {
+    "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+    "name": "Audit Tenant Mailbox Access",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
+        "name": "Audit Mail Flow Rules"
+      },
+      {
+        "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+        "name": "Audit Shared Mailbox Sign-ins"
+      },
+      {
+        "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+        "name": "Audit Tenant Inbox Rules"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1"
+  },
+  {
+    "file": "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
+    "name": "Remove Disabled User Mailbox Access",
+    "type": "Workflow",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-MAILBOX-FORWARDING.ps1",
+        "name": "Get Mailbox Forwarding"
+      },
+      {
+        "file": "GET-MAILBOX-PERMISSIONS.ps1",
+        "name": "Get Mailbox Permissions"
+      },
+      {
+        "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+        "name": "Get Mailbox Security"
+      }
+    ],
+    "source": "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
+  },
+  {
+    "file": "GET-TENANT-DRIFT-REVIEW.ps1",
+    "name": "Review Tenant Changes",
+    "type": "Tool",
+    "scope": "TENANT",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-ADMIN-ROLE-AUDIT.ps1",
+        "name": "Audit Admin Roles"
+      },
+      {
+        "file": "GET-MFA-SECURITY-AUDIT.ps1",
+        "name": "Audit MFA Security"
+      },
+      {
+        "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
+        "name": "Get Secure Score"
+      }
+    ],
+    "source": "published-source/tenant/GET-TENANT-DRIFT-REVIEW.ps1"
+  },
+  {
+    "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+    "name": "Review Windows Storage",
+    "type": "Script",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "BACKUP-USER-PROFILE.ps1",
+        "name": "Back Up User Profile"
+      },
+      {
+        "file": "DEPLOY-TCPIP-PRINTER.ps1",
+        "name": "Install Network Printer"
+      },
+      {
+        "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
+        "name": "Join Computer to Domain"
+      }
+    ],
+    "source": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1"
+  },
+  {
+    "file": "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+    "name": "Reset Cloud User Password",
+    "type": "Script",
+    "scope": "SINGLE or MULTI-USER",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "GET-USER-PREDELETE-CHECK.ps1",
+        "name": "Check User Before Deletion"
+      },
+      {
+        "file": "INVOKE-DELETE-ACCOUNTS.ps1",
+        "name": "Delete User Accounts"
+      },
+      {
+        "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
+        "name": "Disable User Accounts"
+      }
+    ],
+    "source": "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1"
+  },
+  {
+    "file": "ir-recover-validate.ps1",
+    "name": "IR: Restore and Validate",
+    "type": "Workflow",
+    "scope": "SINGLE-USER",
+    "launch": "workflow",
+    "related": [
+      {
+        "file": "IR-GET-TIMELINE-BUILDER.ps1",
+        "name": "IR: Build Incident Timeline"
+      },
+      {
+        "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+        "name": "IR: Check IP Reputation"
+      },
+      {
+        "file": "IR-GET-TOKEN-DECODE.ps1",
+        "name": "IR: Decode Token"
+      }
+    ],
+    "source": "published-source/incident-response/ir-recover-validate.ps1"
+  },
+  {
+    "file": null,
+    "name": "Add Calendar Permission",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove Calendar Permission"
+      },
+      {
+        "file": null,
+        "name": "Add Contacts Permission"
+      },
+      {
+        "file": null,
+        "name": "Show Calendar Permissions"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Remove Calendar Permission",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add Calendar Permission"
+      },
+      {
+        "file": null,
+        "name": "Add Contacts Permission"
+      },
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Calendar Permissions",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Contacts Permissions"
+      },
+      {
+        "file": null,
+        "name": "Add Calendar Permission"
+      },
+      {
+        "file": null,
+        "name": "Remove Calendar Permission"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Contacts Permissions",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Calendar Permissions"
+      },
+      {
+        "file": null,
+        "name": "Add Contacts Permission"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Add Contacts Permission",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add Calendar Permission"
+      },
+      {
+        "file": null,
+        "name": "Remove Calendar Permission"
+      },
+      {
+        "file": null,
+        "name": "Show Contacts Permissions"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Send-To Restrictions / authOrig",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Account Enabled"
+      },
+      {
+        "file": null,
+        "name": "Show AD Group Members"
+      },
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Account Enabled",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show AD Group Members"
+      },
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Show Default Domain Password Policy"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show User Principal Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Show Distinguished Name"
+      },
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Password Last Set",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Default Domain Password Policy"
+      },
+      {
+        "file": null,
+        "name": "Show Password Expiry"
+      },
+      {
+        "file": null,
+        "name": "Force Password Change Next Logon"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Distinguished Name",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show User Principal Name"
+      },
+      {
+        "file": null,
+        "name": "Show Account Enabled"
+      },
+      {
+        "file": null,
+        "name": "Show AD Group Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Default Domain Password Policy",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Password Expiry"
+      },
+      {
+        "file": null,
+        "name": "Show Password Last Set"
+      },
+      {
+        "file": null,
+        "name": "Force Password Change Next Logon"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Force Group Policy Update",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Group Policy Result"
+      },
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Group Policy Result",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Force Group Policy Update"
+      },
+      {
+        "file": null,
+        "name": "Show Scheduled Task Last Run Result"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Recovery Protectors"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable Hibernation",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Domain Account Details",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Local Account Details"
+      },
+      {
+        "file": null,
+        "name": "Domain Trust Check"
+      },
+      {
+        "file": null,
+        "name": "Enable Local Account"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Create Local User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Create Self-Signed App-Auth Certificate"
+      },
+      {
+        "file": null,
+        "name": "Delete Local User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Delete Local User",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Create Local User"
+      },
+      {
+        "file": null,
+        "name": "Remove User From Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Set Local User Password",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Create Local User"
+      },
+      {
+        "file": null,
+        "name": "Delete Local User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Enable Local Account",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Local Account Details"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Open Local Users and Groups",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Logged-On Users",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Locally Logged-On Users"
+      },
+      {
+        "file": null,
+        "name": "Show Local Users"
+      },
+      {
+        "file": null,
+        "name": "Open Local Users and Groups"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disable Network Adapter",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Restart Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Isolate Device - Disable Enabled Adapters"
+      },
+      {
+        "file": null,
+        "name": "Network Profile"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Restart Network Adapter",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Restart Adapter"
+      },
+      {
+        "file": null,
+        "name": "Network Profile"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Isolate Device - Disable Enabled Adapters",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disable Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Resync Windows Time",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Windows Time Source"
+      },
+      {
+        "file": null,
+        "name": "Windows Time Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Open Windows Update",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Show Installed Hotfixes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Wi-Fi Interface",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Active Adapters"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Configured Dns Servers"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Delete Wi-Fi Profile",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Network Profile"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "DISM Analyze Component Store",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "DISM Component Store Cleanup"
+      },
+      {
+        "file": null,
+        "name": "Dism Component Store Scan"
+      },
+      {
+        "file": null,
+        "name": "Dism Restore Health"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "DISM Component Store Cleanup",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "DISM Analyze Component Store"
+      },
+      {
+        "file": null,
+        "name": "Dism Component Store Scan"
+      },
+      {
+        "file": null,
+        "name": "Dism Restore Health"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Launch Disk Cleanup",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Physical Disk Health"
+      },
+      {
+        "file": null,
+        "name": "DISM Component Store Cleanup"
+      },
+      {
+        "file": null,
+        "name": "Show Free Space"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Defragment Volume",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Available WinGet Updates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show WinGet Package Information"
+      },
+      {
+        "file": null,
+        "name": "Update All Eligible WinGet Packages"
+      },
+      {
+        "file": null,
+        "name": "Update Specific WinGet Package"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Update All Eligible WinGet Packages",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Update Specific WinGet Package"
+      },
+      {
+        "file": null,
+        "name": "Update WinGet Sources"
+      },
+      {
+        "file": null,
+        "name": "Show Available WinGet Updates"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show WinGet Package Information",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Available WinGet Updates"
+      },
+      {
+        "file": null,
+        "name": "Update Specific WinGet Package"
+      },
+      {
+        "file": null,
+        "name": "Update All Eligible WinGet Packages"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Update Specific WinGet Package",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show WinGet Package Information"
+      },
+      {
+        "file": null,
+        "name": "Update All Eligible WinGet Packages"
+      },
+      {
+        "file": null,
+        "name": "Update WinGet Sources"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Update WinGet Sources",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Update All Eligible WinGet Packages"
+      },
+      {
+        "file": null,
+        "name": "Update Specific WinGet Package"
+      },
+      {
+        "file": null,
+        "name": "Show Available WinGet Updates"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show PowerShell Version",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Installed ExchangeOnlineManagement Version"
+      },
+      {
+        "file": null,
+        "name": "Show Installed Microsoft Graph Module Version"
+      },
+      {
+        "file": null,
+        "name": "Show Code-Signing Certificates"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Execution Policies",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Set Current User Execution Policy - RemoteSigned"
+      },
+      {
+        "file": null,
+        "name": "Show Code-Signing Certificates"
+      },
+      {
+        "file": null,
+        "name": "Show Installed ExchangeOnlineManagement Version"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Set Current User Execution Policy - RemoteSigned",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Execution Policies"
+      },
+      {
+        "file": null,
+        "name": "Install Exchange Online Module"
+      },
+      {
+        "file": null,
+        "name": "Install Microsoft Graph Module"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Installed Microsoft Graph Module Version",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Install Microsoft Graph Module"
+      },
+      {
+        "file": null,
+        "name": "Show Installed ExchangeOnlineManagement Version"
+      },
+      {
+        "file": null,
+        "name": "Show PowerShell Version"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Installed ExchangeOnlineManagement Version",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Installed Microsoft Graph Module Version"
+      },
+      {
+        "file": null,
+        "name": "Show PowerShell Version"
+      },
+      {
+        "file": null,
+        "name": "Show Code-Signing Certificates"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Graph Context",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      },
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      },
+      {
+        "file": null,
+        "name": "Show Entra Group Direct Members"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Exchange Connection",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find Exchange Service Principal By Appid"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Members"
+      },
+      {
+        "file": null,
+        "name": "Show Distribution Group Owners"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disconnect Microsoft Graph",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Connect Microsoft Graph"
+      },
+      {
+        "file": null,
+        "name": "Show Microsoft Authenticator Methods"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Disconnect Exchange Online",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find Exchange Service Principal By Appid"
+      },
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Activity From One IP",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove User from Entra Group"
+      },
+      {
+        "file": null,
+        "name": "Show Assigned Licenses"
+      },
+      {
+        "file": null,
+        "name": "Show Delegated Grants For One User"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Look Up ISP And Location",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "AD Group Memberships",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show AD User Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "AD Group Members"
+      },
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "AD Group Members",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show AD Group Members"
+      },
+      {
+        "file": null,
+        "name": "AD Group Memberships"
+      },
+      {
+        "file": null,
+        "name": "Add User to AD Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Connect Exchange Online",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Find Exchange Service Principal By Appid"
+      },
+      {
+        "file": null,
+        "name": "Add Distribution Group Member"
+      },
+      {
+        "file": null,
+        "name": "Audit Inbox Rule Changes"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Install Exchange Online Module",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Install Microsoft Graph Module"
+      },
+      {
+        "file": null,
+        "name": "Show Installed Microsoft Graph Module Version"
+      },
+      {
+        "file": null,
+        "name": "Set Current User Execution Policy - RemoteSigned"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Install Microsoft Graph Module",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Installed Microsoft Graph Module Version"
+      },
+      {
+        "file": null,
+        "name": "Install Exchange Online Module"
+      },
+      {
+        "file": null,
+        "name": "Set Current User Execution Policy - RemoteSigned"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Hidden Inbox Rules",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Delete All Inbox Rules",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Remove All Inbox Rules"
+      },
+      {
+        "file": null,
+        "name": "Show Inbox Rules - Including Hidden"
+      },
+      {
+        "file": null,
+        "name": "Show Suspicious Inbox Rules"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "IP Configuration (ipconfig)",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Ip Configuration"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Flush DNS",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Flush Resolver Cache"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "DNS Lookup",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      },
+      {
+        "file": null,
+        "name": "Delete Wi-Fi Profile"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Continuous Ping",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Path Ping"
+      },
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Traceroute",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      },
+      {
+        "file": null,
+        "name": "Delete Wi-Fi Profile"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Path Ping",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      },
+      {
+        "file": null,
+        "name": "Ping Host"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Routing Table (route print)",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Routing Table"
+      },
+      {
+        "file": null,
+        "name": "Trace Route"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "ARP Cache",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Flush Resolver Cache"
+      },
+      {
+        "file": null,
+        "name": "Show Arp Neighbor Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "TCP Connections (netstat)",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Port 443 Connections"
+      },
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      },
+      {
+        "file": null,
+        "name": "ARP Cache"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Port 443 Connections",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Established Tcp Connections"
+      },
+      {
+        "file": null,
+        "name": "TCP Connections (netstat)"
+      },
+      {
+        "file": null,
+        "name": "Test Tcp Port"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Local Account Details",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Enable Local Account"
+      },
+      {
+        "file": null,
+        "name": "Show Domain Account Details"
+      },
+      {
+        "file": null,
+        "name": "Show Local Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Windows Time Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Resync Windows Time"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Windows Time Source",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Resync Windows Time"
+      },
+      {
+        "file": null,
+        "name": "Show Recent Windows Update History"
+      },
+      {
+        "file": null,
+        "name": "Windows Time Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "WinHTTP Proxy",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "ARP Cache"
+      },
+      {
+        "file": null,
+        "name": "Continuous Ping"
+      },
+      {
+        "file": null,
+        "name": "Delete Wi-Fi Profile"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Domain Trust Check",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Printer Check"
+      },
+      {
+        "file": null,
+        "name": "Show Domain Account Details"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Printer Check",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      },
+      {
+        "file": null,
+        "name": "Domain Trust Check"
+      },
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Open Storage Settings",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Open Local Users and Groups"
+      },
+      {
+        "file": null,
+        "name": "Open Windows Update"
+      },
+      {
+        "file": null,
+        "name": "Show Free Space"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Clear Delivery Optimization Cache",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Identity and Privileges",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Entra Join Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Defender Status"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      },
+      {
+        "file": null,
+        "name": "Show Service Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Mapped Drives",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Network Profile",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Delete Wi-Fi Profile"
+      },
+      {
+        "file": null,
+        "name": "Disable Network Adapter"
+      },
+      {
+        "file": null,
+        "name": "Restart Network Adapter"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Defender Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Entra Join Status"
+      },
+      {
+        "file": null,
+        "name": "Run Quick Scan"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Print Jobs",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Add User To Administrators"
+      },
+      {
+        "file": null,
+        "name": "Calculate Sha256 Hash"
+      },
+      {
+        "file": null,
+        "name": "Check Common Pending Reboot Flags"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Spooler Status",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Defender Status"
+      },
+      {
+        "file": null,
+        "name": "Entra Join Status"
+      },
+      {
+        "file": null,
+        "name": "Show BitLocker Status"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Connect Microsoft Graph",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Disconnect Microsoft Graph"
+      },
+      {
+        "file": null,
+        "name": "Show Microsoft Authenticator Methods"
+      },
+      {
+        "file": null,
+        "name": "Add User to Entra Group"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": null,
+    "name": "Show Code-Signing Certificates",
+    "type": "Quick Command",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": null,
+        "name": "Show Execution Policies"
+      },
+      {
+        "file": null,
+        "name": "Show Installed ExchangeOnlineManagement Version"
+      },
+      {
+        "file": null,
+        "name": "Show Installed Microsoft Graph Module Version"
+      }
+    ],
+    "source": null
+  },
+  {
+    "file": "connection-patterns.md",
+    "name": "Connection Patterns",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      },
+      {
+        "file": "lessons-learned.md",
+        "name": "Lessons Learned"
+      }
+    ],
+    "source": "tools/connection-patterns.md"
+  },
+  {
+    "file": "OPERATING-STANDARDS.md",
+    "name": "Operating Standards",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      },
+      {
+        "file": "lessons-learned.md",
+        "name": "Lessons Learned"
+      }
+    ],
+    "source": "OPERATING-STANDARDS.md"
+  },
+  {
+    "file": "field-kit-build-standard.md",
+    "name": "FIELD // KIT Build Standard",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "lessons-learned.md",
+        "name": "Lessons Learned"
+      }
+    ],
+    "source": "tools/field-kit-build-standard.md"
+  },
+  {
+    "file": "lessons-learned.md",
+    "name": "Lessons Learned",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/lessons-learned.md"
+  },
+  {
+    "file": "powershell-standards.md",
+    "name": "PowerShell Standards",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/powershell-standards.md"
+  },
+  {
+    "file": "publishing-checklist.md",
+    "name": "Publishing Checklist",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/publishing-checklist.md"
+  },
+  {
+    "file": "script-review-checklist.md",
+    "name": "Script Review Checklist",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/script-review-checklist.md"
+  },
+  {
+    "file": "skills.md",
+    "name": "Reusable Skills",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/skills.md"
+  },
+  {
+    "file": "script-template-guide.md",
+    "name": "Script Template Guide",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/script-template-guide.md"
+  },
+  {
+    "file": "nato-phonetic-alphabet.md",
+    "name": "NATO Phonetic Alphabet",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/nato-phonetic-alphabet.md"
+  },
+  {
+    "file": "git-handoff.ps1",
+    "name": "Save Project Handoff",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "git-repo.ps1",
+        "name": "Manage Git Repository"
+      },
+      {
+        "file": "git-security.ps1",
+        "name": "Review GitHub Security"
+      },
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      }
+    ],
+    "source": "tools/git-handoff.ps1"
+  },
+  {
+    "file": "PROJECT-HANDOFF.md",
+    "name": "Project Handoff",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/PROJECT-HANDOFF.md"
+  },
+  {
+    "file": "git-repo.ps1",
+    "name": "Manage Git Repository",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "git-security.ps1",
+        "name": "Review GitHub Security"
+      },
+      {
+        "file": "git-handoff.ps1",
+        "name": "Save Project Handoff"
+      },
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      }
+    ],
+    "source": "tools/git-repo.ps1"
+  },
+  {
+    "file": "git-security.ps1",
+    "name": "Review GitHub Security",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "git-repo.ps1",
+        "name": "Manage Git Repository"
+      },
+      {
+        "file": "git-handoff.ps1",
+        "name": "Save Project Handoff"
+      },
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      }
+    ],
+    "source": "tools/git-security.ps1"
+  },
+  {
+    "file": "set-execution.ps1",
+    "name": "Set Up Script Execution",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+        "name": "Check Terminal Readiness"
+      },
+      {
+        "file": "INSTALL-M365-MODULES.ps1",
+        "name": "Install M365 Modules"
+      }
+    ],
+    "source": "tools/set-execution.ps1"
+  },
+  {
+    "file": "git-tools.md",
+    "name": "Git Tools Quick Start",
+    "type": "Documentation",
+    "scope": null,
+    "launch": null,
+    "related": [
+      {
+        "file": "connection-patterns.md",
+        "name": "Connection Patterns"
+      },
+      {
+        "file": "OPERATING-STANDARDS.md",
+        "name": "Operating Standards"
+      },
+      {
+        "file": "field-kit-build-standard.md",
+        "name": "FIELD // KIT Build Standard"
+      }
+    ],
+    "source": "tools/git-tools.md"
+  },
+  {
+    "file": "attractor.ps1",
+    "name": "Attractor",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      },
+      {
+        "file": "rain.ps1",
+        "name": "Rain"
+      }
+    ],
+    "source": "toys/attractor.ps1"
+  },
+  {
+    "file": "rain.ps1",
+    "name": "Rain",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      }
+    ],
+    "source": "toys/rain.ps1"
+  },
+  {
+    "file": "static.ps1",
+    "name": "Static",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      }
+    ],
+    "source": "toys/static.ps1"
+  },
+  {
+    "file": "SIGN-FOLDER-SCRIPTS.ps1",
+    "name": "Sign Scripts",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "MANAGE-CERT-SIGNATURES.ps1",
+        "name": "Manage Signing Certificates"
+      },
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      }
+    ],
+    "source": "tools/SIGN-FOLDER-SCRIPTS.ps1"
+  },
+  {
+    "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+    "name": "Check Terminal Readiness",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "INSTALL-M365-MODULES.ps1",
+        "name": "Install M365 Modules"
+      },
+      {
+        "file": "RESET-M365-SESSION.ps1",
+        "name": "Reset M365 Session"
+      }
+    ],
+    "source": "tools/GET-TERMINAL-READINESS-CHECK.ps1"
+  },
+  {
+    "file": "INVOKE-FILE-INVENTORY.ps1",
+    "name": "Get File Inventory",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      },
+      {
+        "file": "GET-FOLDER-INVENTORY.ps1",
+        "name": "Get Folder Inventory"
+      },
+      {
+        "file": "INVOKE-MAP-KIT.ps1",
+        "name": "Map Folders"
+      }
+    ],
+    "source": "tools/INVOKE-FILE-INVENTORY.ps1"
+  },
+  {
+    "file": "INVOKE-MAP-KIT.ps1",
+    "name": "Map Folders",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      },
+      {
+        "file": "INVOKE-FILE-INVENTORY.ps1",
+        "name": "Get File Inventory"
+      },
+      {
+        "file": "GET-FOLDER-INVENTORY.ps1",
+        "name": "Get Folder Inventory"
+      }
+    ],
+    "source": "tools/INVOKE-MAP-KIT.ps1"
+  },
+  {
+    "file": "INVOKE-SESSION-RESET.ps1",
+    "name": "Reset Terminal Session",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "GET-TERMINAL-READINESS-CHECK.ps1",
+        "name": "Check Terminal Readiness"
+      },
+      {
+        "file": "INSTALL-M365-MODULES.ps1",
+        "name": "Install M365 Modules"
+      }
+    ],
+    "source": "tools/INVOKE-SESSION-RESET.ps1"
+  },
+  {
+    "file": "SET-THEME-BASIC.ps1",
+    "name": "Basic Theme",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      },
+      {
+        "file": "rain.ps1",
+        "name": "Rain"
+      }
+    ],
+    "source": "toys/SET-THEME-BASIC.ps1"
+  },
+  {
+    "file": "SET-THEME-COBALT.ps1",
+    "name": "Cobalt Theme",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "rain.ps1",
+        "name": "Rain"
+      }
+    ],
+    "source": "toys/SET-THEME-COBALT.ps1"
+  },
+  {
+    "file": "SET-THEME-SEAGLASS.ps1",
+    "name": "Sea Glass Theme",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      }
+    ],
+    "source": "toys/SET-THEME-SEAGLASS.ps1"
+  },
+  {
+    "file": "SET-THEME-SILICON-VALLEY.ps1",
+    "name": "Silicon Valley Theme",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "terminal",
+    "related": [
+      {
+        "file": "attractor.ps1",
+        "name": "Attractor"
+      },
+      {
+        "file": "SET-THEME-BASIC.ps1",
+        "name": "Basic Theme"
+      },
+      {
+        "file": "SET-THEME-COBALT.ps1",
+        "name": "Cobalt Theme"
+      }
+    ],
+    "source": "toys/SET-THEME-SILICON-VALLEY.ps1"
+  },
+  {
+    "file": "MANAGE-CERT-SIGNATURES.ps1",
+    "name": "Manage Signing Certificates",
+    "type": "Tool",
+    "scope": "LOCAL",
+    "launch": "right-click",
+    "related": [
+      {
+        "file": "SIGN-FOLDER-SCRIPTS.ps1",
+        "name": "Sign Scripts"
+      },
+      {
+        "file": "TEST-POWERSHELL-READINESS.ps1",
+        "name": "Check PowerShell Readiness"
+      },
+      {
+        "file": "TEST-SENSITIVE-DATA.ps1",
+        "name": "Check Sensitive Data"
+      }
+    ],
+    "source": "tools/MANAGE-CERT-SIGNATURES.ps1"
+  }
+]

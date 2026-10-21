@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -25,7 +25,9 @@ function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
 function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow; $script:Warn++ }
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red; $script:Fail++ }
 function Show-Section { param([string]$Title) Write-Host ''; Write-Host (" {0} " -f $Title) -ForegroundColor White -BackgroundColor DarkGray }
-function Pause-End { if (-not $NoPause) { Write-Host ''; Read-Host 'Press Enter to EXIT' | Out-Null } }
+function Pause-End { if (-not $NoPause) { Write-Host ''
+                                          Write-Host 'SESSION COMPLETE'
+                                          Write-Host ''; Read-Host 'Press Enter to close session.' | Out-Null } }
 
 function Get-LatestModule {
     param([string]$Name)
@@ -34,7 +36,7 @@ function Get-LatestModule {
 }
 
 try {
-    Write-Host 'POWERSHELL READINESS CHECK'
+    Write-Host 'Check PowerShell Readiness'
     Write-Host 'READ ONLY. No settings or modules are changed.'
 
     Show-Section 'POWERSHELL'

@@ -415,9 +415,13 @@ TICKET SUMMARY
 ...
 
 NEXT STEP
-One concise objective for the operator.
-Press ENTER to continue: <exact next filename without extension>
-Press ESC to close
+Only when a concrete follow-up is needed.
+
+SESSION COMPLETE // <SUCCESS / PARTIAL / USER NOT FOUND / UNSUCCESSFUL>
+One concise explanation of what the result establishes.
+No directory changes made. (Read-only directory tools only.)
+
+Press Enter to close session.
 ```
 
 Prefer plain names and addresses over raw IDs unless an ID materially helps investigation or follow-up.
@@ -431,6 +435,16 @@ contained-account/recovery-required states. Avoid decorative color. Use one
 approval per operational section; retain numbered item selection for cleanup.
 An asynchronous operation may be reported as submitted, never as a completed
 effect without evidence. Do not apply pauses or navigation to unattended jobs.
+
+The script title must match the catalog title. Use one objective statement and
+consistent task-specific results. SESSION COMPLETE marks the end of execution;
+its result must reflect incomplete queries, missing identities, skipped inputs,
+and requested export failures. It is not a success assurance. Use the agreed
+Enter prompt for interactive tools; do not add a mandatory next-tool handoff.
+An Enter prompt waits for review; it must not close an existing caller's host.
+Apply this contract to suitable interactive tools. Preserve specialized IR, terminal,
+and unattended workflows. Keep accepted operational evidence and presentation
+revision checks separately attributable.
 
 Mark source/state rather than hiding overlap.
 
@@ -493,7 +507,7 @@ When importing Windows-only modules from PowerShell 7, compatibility mechanisms 
 
 ## 18. Catalog Metadata Standard
 
-Every full script card should accurately describe:
+Internal catalog metadata should accurately describe the following. These are source-review fields, not mandatory visible card sections:
 
 - Name.
 - Operational area / subarea.

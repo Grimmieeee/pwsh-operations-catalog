@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-app-registrations-audit-clean.ps1
@@ -30,8 +30,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -285,7 +287,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Tenant App Registrations Audit" } catch {}
 
     Clear-Host
-    Write-Host "TENANT APP REGISTRATIONS AUDIT"
+    Write-Host 'Audit App Registrations'
+    Write-Host 'Finds app registrations with risky permissions, expiring credentials, or missing owners.'
     Write-Host "Read-only"
     Write-Host ""
 

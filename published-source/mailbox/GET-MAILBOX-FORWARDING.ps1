@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #requires -Version 5.1
 
@@ -39,15 +39,17 @@ function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -Fore
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
     try {
         do { $key=$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") } until ($key.VirtualKeyCode -eq 13)
         Write-Host ""
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -206,7 +208,8 @@ function Offer-VerifiedCsv {
 }
 
 try {
-    Write-Host "MAILBOX FORWARDING CHECK"
+    Write-Host 'Get Mailbox Forwarding'
+    Write-Host 'Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

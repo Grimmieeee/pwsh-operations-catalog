@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 GET-ADMIN-ROLE-AUDIT.ps1
@@ -29,8 +29,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -344,7 +346,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Admin Roles Audit" } catch {}
 
     Clear-Host
-    Write-Host "TENANT ADMIN ROLES AUDIT"
+    Write-Host 'Audit Admin Roles'
+    Write-Host 'Shows who has active Entra admin roles and flags disabled or stale admin accounts.'
     Write-Host "Read-only"
     Write-Host ""
 

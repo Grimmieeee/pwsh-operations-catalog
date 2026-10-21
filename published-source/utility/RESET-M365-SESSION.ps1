@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -26,7 +26,9 @@ function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
 function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 function Show-Section { param([string]$Title) Write-Host ''; Write-Host (" {0} " -f $Title) -ForegroundColor White -BackgroundColor DarkGray }
-function Pause-End { if (-not $NoPause) { Write-Host ''; Read-Host 'Press Enter to EXIT' | Out-Null } }
+function Pause-End { if (-not $NoPause) { Write-Host ''
+                                          Write-Host 'SESSION COMPLETE'
+                                          Write-Host ''; Read-Host 'Press Enter to close session.' | Out-Null } }
 
 function Confirm-Yes {
     param([string]$Prompt)
@@ -52,7 +54,7 @@ function Start-FreshPowerShell {
 }
 
 try {
-    Write-Host 'M365 SESSION RESET'
+    Write-Host 'Reset M365 Session'
     Write-Host 'LOCAL SESSION CLEANUP. No tenant configuration is changed.'
 
     Show-Section 'PLAN'

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 ENFORCE LITIGATION HOLD
@@ -54,8 +54,10 @@ function Write-Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -69,7 +71,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -464,7 +466,8 @@ function Offer-ExportCsv {
 }
 
 try {
-    Write-Host "ENFORCE LITIGATION HOLD"
+    Write-Host 'Set Litigation Hold'
+    Write-Host 'Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host "Target state: Litigation Hold enabled with Unlimited duration."
     Write-Host ""

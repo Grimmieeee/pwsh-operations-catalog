@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -47,8 +47,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -413,7 +415,8 @@ function Move-MailMessage {
 }
 
 try {
-    Write-Host "IR RECOVERY - RESTORE EMAILS"
+    Write-Host 'Restore Email'
+    Write-Host 'Moves email back to the mailbox location you choose after an incident.'
     Write-Host "CHANGE-MAKING"
     Write-Host ""
 

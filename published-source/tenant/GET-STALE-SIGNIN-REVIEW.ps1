@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -47,8 +47,10 @@ function Write-Fail { param($m) Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -62,7 +64,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -234,7 +236,8 @@ function Offer-VerifiedCsv {
 }
 
 try {
-    Write-Host "TENANT STALE SIGN-IN REVIEW"
+    Write-Host 'Review Stale Sign-ins'
+    Write-Host 'Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.'
     Write-Host "READ-ONLY. ENABLED ENTRA MEMBER ACCOUNTS."
     Write-Host ""
 

@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -47,8 +47,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -243,7 +245,8 @@ function Get-TraceChunk {
 }
 
 try {
-    Write-Host "IR AUDIT - TENANT EMAIL SEARCH"
+    Write-Host 'IR: Search Tenant Email'
+    Write-Host 'Find email delivery records by sender, recipient, or source IP address.'
     Write-Host "READ-ONLY"
     Write-Host ""
 

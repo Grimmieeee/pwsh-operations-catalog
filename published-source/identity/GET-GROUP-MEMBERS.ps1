@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -54,8 +54,10 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -69,7 +71,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -449,7 +451,8 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host ""
-    Write-Host "GROUP MEMBERS LOOKUP"
+    Write-Host 'Get Group Members'
+    Write-Host 'Shows direct members of one or more groups after resolving the appropriate source.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

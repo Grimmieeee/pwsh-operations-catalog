@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -72,8 +72,10 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -87,7 +89,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -844,7 +846,8 @@ function Export-Evidence {
 
 try {
     Write-Host ""
-    Write-Host "IDENTITY ACCOUNT DELETION"
+    Write-Host 'Delete User Accounts'
+    Write-Host 'Delete approved users in Active Directory or Entra ID after you review the plan and type confirmation.'
     Write-Host (
         "Delete approved AD-synced, cloud-only, or guest identities " +
         "from a TXT or CSV UPN list."

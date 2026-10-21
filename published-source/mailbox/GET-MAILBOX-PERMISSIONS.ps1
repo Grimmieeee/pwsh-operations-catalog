@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 <#
 MULTI MAILBOX PERMISSIONS AUDIT
 
@@ -123,8 +123,10 @@ function Write-Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Write-FKReportLine "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -138,7 +140,7 @@ function Pause-End {
     }
     catch {
         Write-FKReportLine ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -338,7 +340,8 @@ function Write-QueryFailure {
 }
 
 try {
-    Write-FKReportLine "MAILBOX PERMISSIONS AUDIT"
+    Write-FKReportLine 'Get Mailbox Permissions'
+    Write-FKReportLine 'Reviews forwarding, delegates, and inbox rules for one or more mailboxes.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

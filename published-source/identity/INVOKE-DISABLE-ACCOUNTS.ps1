@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 DISABLE USER ACCOUNTS
@@ -50,8 +50,10 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -65,7 +67,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -645,7 +647,8 @@ function Offer-ExportCsv {
 }
 
 try {
-    Write-Host "DISABLE USER ACCOUNTS"
+    Write-Host 'Disable User Accounts'
+    Write-Host 'Disable approved users in Active Directory or Entra ID, then check each account''s status.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host "Synced users are changed in Active Directory. Cloud-only users are changed in Entra ID."
     Write-Host ""

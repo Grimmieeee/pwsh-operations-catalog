@@ -14,7 +14,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "sourceSha256": "700cda3659ae2f556b599105ea4505dd036fee12488f8dc62542105765342942",
+    "sourceSha256": "7baf885bdbe28cdbc46d90929aee6ace804a31466ac65fd7a03000ad631e3d76",
     "objective": "Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.Read.All + Directory.Read.All",
     "notes": "Read-only Conditional Access posture review that flags disabled/report-only policies, exclusions, device-code gaps, location conditions, and other weak-coverage indicators.",
@@ -37,7 +37,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Shows each user, selected license, and country/region change before approval",
       "Type ASSIGN to approve; stops preparation if a user cannot be read"
     ],
-    "sourceSha256": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
+    "sourceSha256": "5757f3d963128d81f078295d3e38ed0db237bac34a867821cfbadd134afda330",
     "objective": "Assigns one selected Microsoft 365 license to one or more approved users and verifies the final assignment state.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
@@ -56,7 +56,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops creation if an existing-group lookup fails or has more than one match",
       "Type CREATE to approve the displayed group and membership rule"
     ],
-    "sourceSha256": "7068d41c2fecf17249bbcb888534987f046c68ebcbc51133b9c23186daf37153",
+    "sourceSha256": "d163c3acd3603d42f0b637337d6fc61f98e464dc14c84f81677b7c3ecc38c9b8",
     "objective": "Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.",
     "notes": "Creates one Entra dynamic security group for enabled users with an active license/service plan. Shows the membership rule, requires typed CREATE confirmation, and re-reads the group to verify its dynamic configuration.",
     "startMode": "right-click",
@@ -78,7 +78,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Shows each user and selected license before approval",
       "Type REMOVE to approve; cancelling makes no changes"
     ],
-    "sourceSha256": "eedbc44f46a0078347ebe4b7ac414b197ba47e6449a7ee8162b40ba9aeb13450",
+    "sourceSha256": "b65296af7b9d7681acd091ba30d70127a67989bfc4844af4977396a164b6316d",
     "objective": "Removes one selected license or all licenses from one or more approved users and verifies the final state.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
@@ -101,7 +101,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Shows failed checks; exports only when requested",
       "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "dfc7e8526aea4a3bfd36d934dad90378fde0800514fd597aa6ad6e2da6288093",
+    "sourceSha256": "47731f7015c3a846cbd100667adaacbb34b4f7b79b6cefec7bf7674527c173ce",
     "objective": "Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.",
     "notes": "Periodic read-only tenant hygiene review covering stale enabled users, active admin-role counts, ownerless cloud-manageable groups, and external mailbox forwarding.",
     "startMode": "right-click",
@@ -121,7 +121,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Shows failed lookups and groups with more than one match"
     ],
-    "sourceSha256": "9e7862eefbdb1c7c89177f076d2c8030b26b65869623d6414f9ebf005d16f0ea",
+    "sourceSha256": "98af58ff264c5f41bd9de530fd4dc62c13bd967466c778a43fe90cc1b8091142",
     "objective": "Shows who belongs to one or more Exchange Online distribution groups.",
     "input": "Distribution group names or email addresses, entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and permission to read the target client tenant. Technical requirements: ExchangeOnlineManagement",
@@ -146,7 +146,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Skips dynamic groups, groups used for admin roles, and Exchange-managed groups",
       "Changes synced group memberships in Active Directory"
     ],
-    "sourceSha256": "18e441456d7201daf0985ad776e012a86248f40fc8de8026536c27ea1b60cf31",
+    "sourceSha256": "6c7b4c60cd9368a3bd5bb652eade3a4ed642f83b5f8c3759548f2d64d8eea7e7",
     "objective": "Remove the reviewed, removable group memberships for approved users; skip protected and unsupported groups.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "notes": "Offboarding-style cleanup for one or many users. Shows Active Directory and Entra memberships independently, keeps synced Entra observations visible, acts once at the authoritative source, skips dynamic/role-assignable/Exchange-managed memberships, requires typed REMOVE GROUPS confirmation, and validates removals.",
@@ -167,7 +167,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Typed ENFORCE confirmation",
       "Does not replace Conditional Access or Security Defaults"
     ],
-    "sourceSha256": "3270e9e8879fa3b0c7da913adc88d96edb484f92ad4a2fd6e06970f303d0874e",
+    "sourceSha256": "80679840ee2878dcb54a795395ed169065c82d21d1c54f16f16fffeee614c51d",
     "objective": "Enforces legacy per-user MFA for one or more approved accounts and verifies the final state.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.ReadWrite.AuthenticationMethod + UserAuthenticationMethod.Read.All + User.Read.All",
@@ -181,7 +181,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement; rights to read recipient, mailbox configuration, inbox rules and mailbox permissions. Microsoft Graph is not used.",
-    "sourceSha256": "10e8a2aae2fff3b4a3708510008ac6a1f9b7892358256480c7a57d6a8dfabe2c",
+    "sourceSha256": "0775c2c7d1db0a3ad095a93667a0dac8189ed7b4f22a582d7c03e9fa59ae5aac",
     "objective": "Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.",
     "input": "One mailbox sign-in name (UPN).",
     "notes": "Reviews forwarding, inbox rules, permissions, and legacy protocol state.",
@@ -208,7 +208,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed MOVE confirmation",
       "Target folder creation requires approval"
     ],
-    "sourceSha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
+    "sourceSha256": "42d6400dc9381a7be3e14573bd5ca60199b099224853cf49e7bb410dc42fb829",
     "objective": "Moves email back to the mailbox location you choose after an incident.",
     "notes": "Moves messages back from attacker-hidden or incorrect folders.",
     "startMode": "right-click",
@@ -289,7 +289,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Unusual activity needs review; it does not prove data was stolen"
     ],
-    "sourceSha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
+    "sourceSha256": "ac7647ebb8f82cc31637c5a03c22847ce6082ec94a63df995f0e6243156f0e1a",
     "objective": "Looks for unusual file activity that could indicate data was copied or taken.",
     "notes": "Reviews SharePoint/OneDrive activity for possible download, sharing, or exfiltration behavior.",
     "startMode": "right-click",
@@ -309,7 +309,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Shows failed search periods and results cut short by limits"
     ],
-    "sourceSha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
+    "sourceSha256": "bc20f462ee16d7df2fd70f7984c2503acfa823c2bb5a6d482305e00ef0f3eeaa",
     "objective": "Finds tenant activity tied to an IP address.",
     "notes": "Pivots on a source IP across tenant audit activity.",
     "startMode": "right-click",
@@ -329,7 +329,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Searches in periods of up to 10 days; reports results cut short by limits"
     ],
-    "sourceSha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
+    "sourceSha256": "609adcefda10bc1f02fc040141a11cabc494dd8b78c795b36b1d050b939e5edd",
     "objective": "Find email delivery records by sender, recipient, or source IP address.",
     "notes": "Searches tenant message trace by sender, recipient, source IP, or combination.",
     "startMode": "right-click",
@@ -350,7 +350,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Selected public IPs are sent to enabled providers",
       "API keys are not written to disk by this script"
     ],
-    "sourceSha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
+    "sourceSha256": "c7cafb2a070acf00512356ec7adf9567ccb21523fd6f9bf6966e5f97fc7519fe",
     "objective": "Check public IP addresses against VirusTotal or AbuseIPDB reputation reports.",
     "notes": "Adds reputation context to suspicious IP addresses.",
     "startMode": "right-click",
@@ -370,7 +370,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Labels events that use a file modification time instead of an event time",
       "Source evidence is never modified"
     ],
-    "sourceSha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
+    "sourceSha256": "9c0121dff77342f37c68d80f73304fe1c472c11f5251f8912d67519c1f892ec2",
     "objective": "Builds a simple incident timeline from collected events.",
     "requires": "Local case outputs",
     "notes": "Builds a simple chronology from IR notes, logs, JSON, or manual entries.",
@@ -389,7 +389,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "No network or export",
       "Does not check whether the token is signed, trusted, or usable"
     ],
-    "sourceSha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
+    "sourceSha256": "f5272d98b5bc1532832215237c10822c22ca7e21833be0175623ce4e9a49de2c",
     "objective": "Decodes a JWT locally so you can inspect its claims.",
     "input": "JWT token",
     "requires": "PowerShell on this computer.",
@@ -413,7 +413,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "An unexpected location alone does not prove a stolen session",
       "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+    "sourceSha256": "d7f15be210646268958f8e0bd78c1c1a72c4bf92fe24883d10a9f27bc57a4646",
     "objective": "Looks for sign-in patterns that may indicate a stolen session or AiTM attack.",
     "notes": "Looks for suspicious sign-in patterns consistent with token replay/AiTM.",
     "startMode": "right-click",
@@ -436,7 +436,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "App and service names when they can be found",
       "Granted app permissions that may create risk"
     ],
-    "sourceSha256": "7668e2da42b22a226ae01c5b04fc20ff94db666e03fee586bf79ffcfb260f504",
+    "sourceSha256": "cccfbe64f94ede1520f9a67dfd3a62f8e5e9aa8b82a79687adb0cf7b19a893c3",
     "objective": "Finds guest app consent and access that may need review.",
     "notes": "Reviews guest/application consent exposure.",
     "startMode": "right-click",
@@ -453,7 +453,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: ExchangeOnlineManagement with recipient-read access; Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "0d4eadce8535af2eb5817f455f2130070fee32f2fa6d619b0fc777b02786d0ac",
+    "sourceSha256": "4cdd1a7ef3130cb0db8d79257ea95fd39ad7ed090c46cb023b256738ff8819d5",
     "objective": "Shows whether shared mailboxes are being signed into directly.",
     "notes": "Finds shared mailboxes with direct sign-in exposure.",
     "startMode": "right-click",
@@ -470,7 +470,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All.",
-    "sourceSha256": "c1664f389dc41c33a2d5c361344f3ee187543acf235563ba334dd4b5dc398494",
+    "sourceSha256": "1e1707ca192fb4695f4b0cf80c31da1b38481b454e398d5ca4bceacdd903aa1d",
     "objective": "Finds app registrations with risky permissions, expiring credentials, or missing owners.",
     "notes": "Reviews app registrations and related security posture.",
     "startMode": "right-click",
@@ -487,7 +487,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All; policy/sign-in log role and licensing access.",
-    "sourceSha256": "a6394a47c1a6056ee7287dd74377399c2b93f88aeb8ab3ac4ad1c8507adde595",
+    "sourceSha256": "4a75fa6452ec104be4beeedcb89d43262b4edba1e97f49ffa332f81e139f53c7",
     "objective": "Checks whether device-code sign-in is exposed and whether it has been used recently.",
     "notes": "Reviews device-code authentication exposure.",
     "startMode": "right-click",
@@ -504,7 +504,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All; Policy.Read.ConditionalAccess when CA review is requested; appropriate report-read role.",
-    "sourceSha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
+    "sourceSha256": "23d724f8a7af9c0effb335631381db8c5f6728939a047586b278168fe9bf2039",
     "objective": "Shows where MFA coverage or registered methods may leave gaps.",
     "notes": "Reviews MFA coverage and security gaps.",
     "details": "Default review covers MFA registration and methods. To include Conditional Access policy review, launch in a terminal with -IncludeConditionalAccess. Policy settings alone do not prove protection for every user.",
@@ -522,7 +522,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All; Secure Score read access.",
-    "sourceSha256": "fda432b38f4ff200641ece8fe361282484e60be3ea0285fc3df9b17dd2479ecb",
+    "sourceSha256": "7bb0c0de4206333cdf515673dc2014c491191659a061857fe3ea714a69b16d02",
     "objective": "Shows the tenant's current Microsoft Secure Score and the areas affecting it.",
     "notes": "Captures Microsoft Secure Score posture.",
     "startMode": "right-click",
@@ -539,7 +539,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All, User.Read.All.",
-    "sourceSha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
+    "sourceSha256": "de1a1370e57e2248196830cba2c5d5e4b7103d9da61e1e560fbbac230e60025c",
     "objective": "Find enterprise apps (service principals) with missing or unclear owners.",
     "notes": "Reviews enterprise/service principal ownership.",
     "startMode": "right-click",
@@ -557,7 +557,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stops if required data is missing or cannot be read"
     ],
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
-    "sourceSha256": "1688aabd095a8b2dac4e078739227c375901c078f200626a7bf5c1536169dcb7",
+    "sourceSha256": "d681d0a569702c878e6e1eea8af913601b54b076aecfd1e2b77956ea15ccd19c",
     "objective": "Surfaces unusual sign-ins that deserve a closer look.",
     "notes": "Reviews suspicious or anomalous tenant sign-ins.",
     "startMode": "right-click",
@@ -577,7 +577,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Typed JOIN confirmation",
       "Restart only when approved"
     ],
-    "sourceSha256": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
+    "sourceSha256": "e7cdcd69eace3e60055d20b4fadf550b0920052accb36e2cd2bb478b68f024d0",
     "objective": "Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.",
     "input": "Target domain and domain-join credentials. Optional organizational-unit path (OU) and ticket number.",
     "requires": "Local administrator + domain join credentials",
@@ -598,7 +598,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed ADD confirmation before adding the printer"
     ],
-    "sourceSha256": "fd3b71fe485ec15242bf10fef5293a10b48934abc657fb4e97b5395faeb81bac",
+    "sourceSha256": "abe2a9fdfdaf6e7f3e6c8a65213c069c4d298264bd56c8dc427c48f8d28a0b89",
     "objective": "Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.",
     "input": "Printer display name and IP address or host name. Select an installed driver by its exact name; the script can list drivers.",
     "requires": "An installed printer driver and Windows permission to manage printers. The script does not download a driver.",
@@ -618,7 +618,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Typed BACKUP confirmation before copying profile data"
     ],
-    "sourceSha256": "4ba55933de25533cd3e523048cfc259bf850243ba3d6ab3e1e8b5f383256c3af",
+    "sourceSha256": "e5505021367ca5ae1730c1de17e8a9a285a0fc12e28bbf0481362498e3b92758",
     "objective": "Copies common Windows profile folders to a dated backup location and writes a local backup log.",
     "input": "Profile folder to back up (blank uses your profile), backup destination, and whether to include Downloads.",
     "requires": "Read access to the profile folders and write access to the backup destination.",
@@ -643,7 +643,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Review only; does not delete the user",
       "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
+    "sourceSha256": "3ab4f2a30234e2d7203284a30d304b22c9bc7c1c33ffae53b3e2710b2ea33218",
     "objective": "Checks a user's identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.",
     "notes": "Read-only dependency review before deleting an on-premises AD user object; does not prove third-party or local-system dependencies are safe.",
     "startMode": "right-click",
@@ -665,7 +665,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Account status, where it is managed, and recorded last sign-in",
       "Optional role-review CSV"
     ],
-    "sourceSha256": "ccb2cffcb4a7a685782f5602868f338784f36f6b9557fc395182b4f1540941bb",
+    "sourceSha256": "bdcc51ac5be6599d8a00f53350811a8a737b9fce65f824ccb9efdceb5ea9918e",
     "objective": "Shows who has active Entra admin roles and flags disabled or stale admin accounts.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Directory.Read.All + RoleManagement.Read.Directory + User.Read.All + AuditLog.Read.All",
     "notes": "Reviews active Entra admin-role assignments with account state, hybrid status, and recent sign-in context.",
@@ -687,7 +687,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "App and service names when available",
       "Permissions that may create risk; optional CSV report"
     ],
-    "sourceSha256": "2680aea2ddca4bdabc0e203535f5982bf11685199e76895fdda61a964fa56e25",
+    "sourceSha256": "47416bc77a4929fc831d3381de9f2ff53996d7921eee9c029e015eaf3100d4b0",
     "objective": "Review app permissions approved on behalf of users and flag permissions that may create risk.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Application.Read.All + Directory.Read.All",
     "notes": "Reviews delegated OAuth grants, resolves application/resource names, and flags high-risk scopes.",
@@ -709,7 +709,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Stale guests and unavailable sign-in history",
       "Optional guest-review CSV"
     ],
-    "sourceSha256": "482e2632abcf13141fabab0266ca1ad3496628b48bd56072d21507054ecc2a95",
+    "sourceSha256": "ca493f98fe2b1648a7df775901bbce1eb43aec61d63b226c242b5560b7ac8ada",
     "objective": "Find guest accounts with old or missing sign-in records, disabled accounts, and unaccepted invitations.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + AuditLog.Read.All",
     "notes": "Reviews guest accounts for disabled state, stale/no sign-in, and unaccepted invitations.",
@@ -730,7 +730,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Purchased license types and licenses assigned to users",
       "Disabled licensed and enabled unlicensed users"
     ],
-    "sourceSha256": "4bcffc030d5f4bb26ef3f9349f7a215f7a6b2b6f58e3784713f1a038e5b785be",
+    "sourceSha256": "82e09267477c193402c915065d659989568816d22169cc29562fab854a45814b",
     "objective": "Review license use, including disabled users with licenses and enabled users without one.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + Organization.Read.All",
     "notes": "Reviews subscribed SKUs and user license assignments, including disabled licensed users and enabled unlicensed users.",
@@ -747,7 +747,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Forward, redirect, delete, move and hidden-rule indicators",
       "Optional suspicious-only results and CSV"
     ],
-    "sourceSha256": "ead045dcca94d9cb5dd623be7e29b1563fc3716370f32fffc7e85b71d82a8ca7",
+    "sourceSha256": "2a4d6cf0b770833b64ddb23034ca1ca6f9e8c76678fd059a0bc654f263166234",
     "objective": "Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.",
     "input": "Defaults: user mailboxes only and all rules, not just flagged rules. Use -IncludeShared or -SuspiciousOnly in a terminal to change the review scope.",
     "requires": "Exchange Online read access",
@@ -770,7 +770,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Largest files are evidence, not automatically safe to delete",
       "Scanning the whole drive can take minutes and slow disk access"
     ],
-    "sourceSha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
+    "sourceSha256": "222ef1c7705b65c13a31fe2eb5c5ded11e34ecc156fdcf8c38a061eb805eb250",
     "input": "Default scan: this Windows computer, C: drive, 10 largest files. Use -ComputerName, -DriveLetter, or -TopFiles in a terminal to change the target or count.",
     "requires": "PowerShell 5.1+ | Remote targets: PowerShell remoting / WinRM",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
@@ -792,7 +792,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed RESET confirmation",
       "Temporary passwords shown only after successful reset; never exported"
     ],
-    "sourceSha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
+    "sourceSha256": "5280fbfc9f059ebbe072d3a4f6b03e323b2f031daeb362dd0eab6f37953debf8",
     "input": "Cloud-only user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional tenant domain. Default generated password: 20 characters; the script asks whether to require a change at next sign-in (default Yes).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication | Delegated: User.Read.All + User-PasswordProfile.ReadWrite.All",
     "notes": "Refuses synced users so Active Directory remains authoritative. Generated passwords are never exported.",
@@ -813,7 +813,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Reports against a fixed expected layout; makes no changes"
     ],
-    "sourceSha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
+    "sourceSha256": "1c0b4e564cf6f8fa821fbe76e632c7bf9d2e1e8269f107f54d646b8680bc8164",
     "objective": "Check the shell, modules, signing certificates, and expected toolkit files.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "This checks a fixed toolkit layout, not just PowerShell. Review $ExpectedFolders and $ExpectedFiles for your installation. Missing layout files are reported as failures. Root defaults to C:\\Field-Kit and can be changed at the prompt.",
@@ -853,7 +853,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Unrelated remoting sessions remain intact",
       "Clearing the profile password variable and opening a new window are optional"
     ],
-    "sourceSha256": "4de135e684e778e091292f7fe56610ddee47739c15d34dda5367cbe3112a15bc",
+    "sourceSha256": "3b15375fe2f05b1543e5f90e081cd6d8c28360cf1eaa3423b60ef5498e7f0af8",
     "objective": "Disconnect local Graph and Exchange sessions and clear session errors.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Run in the terminal you want to reset. Asks before cleanup; can clear the optional JumpboxSessionPassword profile variable and open a fresh PowerShell 7 window. Does not change tenant settings.",
@@ -946,7 +946,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
-    "sourceSha256": "42ebf997eeef17e7970ba4d08c65203c0343f9799d0a28be10800bef16f089fd",
+    "sourceSha256": "21b5e4be1b126e6a91fad89a4d15221a9d12e098dceee501823f535490216b35",
     "objective": "Finds enabled member accounts with recorded Entra sign-in activity older than the selected threshold while keeping missing activity data separate.",
     "input": "No user list needed. Reviews enabled member accounts in the signed-in tenant; default inactivity threshold: 90 days. Use -Days in a terminal to change it.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -959,7 +959,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
-    "sourceSha256": "e973c60df895a359aa983525e8aa47650036e0db369168bffd7803d2b8a4f572",
+    "sourceSha256": "af846df0d2aa709adfcbb9cfa0329d1b7552718d248edae9e42d1a63bbf79754",
     "objective": "Disable approved users in Active Directory or Entra ID, then check each account’s status.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Graph account-change rights + Active Directory reachability for synced users",
@@ -972,7 +972,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
-    "sourceSha256": "5cff2cc13a1db4e40fb260f63eddcfe87871ae152400103ce19ef0f691988d66",
+    "sourceSha256": "05ad7fed05ef0422196bd61d31e723360bdf1af19b2fba4b05132fa71b62e720",
     "objective": "Delete approved users in Active Directory or Entra ID after you review the plan and type confirmation.",
     "input": "Exact user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
     "requires": "Microsoft Graph user-write rights + ActiveDirectory module / writable DC reachability for synced users",
@@ -985,7 +985,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
-    "sourceSha256": "cf9c443a440d8e7dc6e03072553129808458c1bd481e8258860e4d409198c7a6",
+    "sourceSha256": "2cfff044c55146afc4d6d69605504071410ded8f1707189baec249079df12c47",
     "objective": "Resolves one or more names, emails, or UPNs to reviewed Entra ID UPN matches.",
     "input": "Tenant domain, plus names, email addresses, or sign-in names (UPNs). Direct entries and TXT/CSV lists are supported.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All",
@@ -998,7 +998,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-ACCOUNT-STATUS.ps1": {
-    "sourceSha256": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
+    "sourceSha256": "65499c4b3bb05cca720af589ca8f9c85c3ad5e5c1edeff0d2115c53935c45222",
     "objective": "Reviews account enabled state and available Entra sign-in activity for one or more users.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. The script uses their shared domain unless a tenant domain is supplied.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -1011,7 +1011,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-GROUP-MEMBERS.ps1": {
-    "sourceSha256": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
+    "sourceSha256": "8d2da056b964bc7d1a14feec61d902cdf909be08f108a297efdcafcc55e3baac",
     "objective": "Shows direct members of one or more groups after resolving the appropriate source.",
     "input": "Group names or email addresses, entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement + Microsoft Graph group read access + Active Directory reachability when applicable",
@@ -1024,20 +1024,20 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-GROUPS.ps1": {
-    "sourceSha256": "6ec61564ef8e42cf9c906d3a066a214e294b30d1fe8107344303a505f235e9c5",
-    "objective": "Show each user’s direct groups in Active Directory and Entra ID, with both systems reported separately.",
+    "sourceSha256": "4c473ca51503dac84b65a460879c38b46622813a1eb2f33aeb117abe15fc80b3",
+    "objective": "Find a user's direct group memberships in AD and Entra ID.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
+    "requires": "Access to read users and groups in the connected tenant. For AD results, run on a domain-connected computer with RSAT. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
     "notes": "User-to-groups review that independently checks Active Directory and Entra ID. Synced groups remain visible in Entra as [Synced] even when the same group is also observed in AD.",
     "startMode": "right-click",
     "completion": {
-      "result": "Direct memberships from Active Directory and Entra ID, with each system’s coverage shown.",
+      "result": "Direct memberships shown separately for AD and Entra, with missing users and unavailable or failed checks clearly identified.",
       "next": "Follow up on systems that could not be checked. A synced group appearing in both systems is expected.",
-      "blocked": "Resolve failed or unavailable checks before treating the review as complete."
+      "blocked": "Review any partial or unsuccessful outcome. A missing user is different from a user with no groups."
     }
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
-    "sourceSha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
+    "sourceSha256": "61d7d424bf8a4277659b56c59157790b12189385855e1387c2720bf11dd76136",
     "objective": "Shows owners for tenant groups across major Entra and Exchange group types and keeps unresolved ownership visible.",
     "input": "No group list needed. Reviews groups in the tenant you sign in to.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Microsoft.Graph.Groups + Group.Read.All + User.Read.All + ExchangeOnlineManagement",
@@ -1054,7 +1054,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
-    "sourceSha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
+    "sourceSha256": "47f0c28a851d611edafcf3e32f3053b09c48276243507c10d7929ee49feeeb78",
     "objective": "Reviews forwarding, delegates, and inbox rules for one or more mailboxes.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1071,7 +1071,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "GET-MAILBOX-FORWARDING.ps1": {
-    "sourceSha256": "211c8d36fe0c258d787fea3229315b32aa38a3e636e430218045e19e9c3dd306",
+    "sourceSha256": "d965c3eee6703d8860961fe4aae0c5afcc3ec0ec0941cbde7d5ba987f607f14f",
     "objective": "Shows mailbox-level and inbox-rule forwarding for one or more mailboxes without hiding query failures.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1084,7 +1084,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
-    "sourceSha256": "e084346e37bb4575a5be123fd99cd5ed6c30b463beea38827296ba5e6b6fe72b",
+    "sourceSha256": "047a46e0ecb0161f052c9a2db4753d48b11a15d9df9e09a4895129d818652b62",
     "objective": "Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.",
     "input": "Mailbox sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement + rights to read and set mailbox Litigation Hold",
@@ -1097,7 +1097,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
-    "sourceSha256": "f8a2b77f30cc74153258b85aa86c2ac231debe523ab82caa298131d9b412fb68",
+    "sourceSha256": "b2c9088c8fd4b5757d17c24c8f53a65589fbb2dbfc79df771aad16e60ddbb79f",
     "objective": "Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.",
     "input": "No rule list needed. Reviews mail-flow rules in the tenant you sign in to.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1110,7 +1110,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "TEST-POWERSHELL-READINESS.ps1": {
-    "sourceSha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
+    "sourceSha256": "d04e3adc34ea8392a2e66fc8f5b79a47773ae607f4f38cb2a15de6182851e097",
     "objective": "Checks whether this computer is ready to run the PowerShell tools.",
     "input": "Checks the Windows computer and PowerShell session where you run it. No target list or tenant ID is needed.",
     "requires": "PowerShell 5.1+",
@@ -1123,7 +1123,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-FOLDER-INVENTORY.ps1": {
-    "sourceSha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
+    "sourceSha256": "c5a171de8d48e5c23d9489e5179c2fd61db009f4f464a4ea59236cfd0239c2a9",
     "objective": "Review a folder’s contents, script signatures, and Git status.",
     "input": "Confirm the detected folder or enter a folder/repository path. Default folder depth: 10; includes files and signature checks.",
     "requires": "PowerShell 5.1+",
@@ -1136,7 +1136,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INSTALL-M365-MODULES.ps1": {
-    "sourceSha256": "a652531a49e22d4f8c243676075b07cf9f22c90953cf615c8fd8e1d900665181",
+    "sourceSha256": "e1654925ffe80c15c498ae3b50553231dafc5997f3233d073fa46b6366bff224",
     "objective": "Installs or updates the Graph and Exchange PowerShell modules you choose.",
     "input": "Choose Graph, Exchange Online, or both when prompted.",
     "requires": "PowerShellGet / PSGallery",
@@ -1149,7 +1149,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "TEST-SENSITIVE-DATA.ps1": {
-    "sourceSha256": "9543c614e26b54a6bb8776e5e6ccc23a04c644710f609cd192030cfd35b1f606",
+    "sourceSha256": "ddf10651da76431b41222e3dbb9ced0f87c787852e620b849677ea1651944690",
     "objective": "Finds obvious secrets or internal details before you publish or share files.",
     "input": "Enter a file or folder path; blank uses the current PowerShell working folder. Optional extra search terms.",
     "requires": "PowerShell 5.1+",
@@ -1162,7 +1162,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "RESET-M365-SESSION.ps1": {
-    "sourceSha256": "a4c2a5f0c5b7decfccccc50fb3b3ec1a213d562edf00a28ff04233e22502d680",
+    "sourceSha256": "ccc759664b198a2c535c2cdbfbbeb3c6123aedd6d13a63664d050c330710e5b0",
     "objective": "Disconnects Graph and Exchange and clears local PowerShell session state.",
     "input": "No account list needed. Use the PowerShell window whose connections you want to close.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Optional Microsoft.Graph / ExchangeOnlineManagement",
@@ -1175,7 +1175,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "UPDATE-WINDOWS-APPS.ps1": {
-    "sourceSha256": "f0f5554fbd8925901f6b02a65401a437dccafa27462b820c751493898c532e4a",
+    "sourceSha256": "147336249dc84badc6e3730c6d2347869c9f9fe6e23b0916fa4474211e5a9316",
     "objective": "Shows available app updates and installs them after confirmation.",
     "input": "Choose review-only mode or approve updates to eligible apps on this computer.",
     "requires": "WinGet",
@@ -1188,7 +1188,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
-    "sourceSha256": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
+    "sourceSha256": "547c6c06988c6d2a4b3c5e7953379b89b5706db4d198b3b41cd9ec02f943917c",
     "objective": "Shows the security state around one user before you decide what needs deeper review.",
     "input": "One user sign-in name (UPN).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + UserAuthenticationMethod.Read.All + Directory.Read.All + AuditLog.Read.All",
@@ -1205,7 +1205,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
-    "sourceSha256": "b4fbb3ad10dcde3e5beb1c414890597de2fd969a4e9fe4149f70b7bea2c5f44c",
+    "sourceSha256": "43eb5cb87621630ed3f0dee9dd03b083fc833f5e965ec87e73433fca3d96f9e5",
     "objective": "Gives a fast tenant security overview before you open the deeper focused audits.",
     "input": "Reviews the tenant you sign in to; no user list needed. Default old-sign-in threshold: 90 days.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Organization.Read.All + User.Read.All + AuditLog.Read.All + Directory.Read.All + RoleManagement.Read.Directory + Policy.Read.ConditionalAccess + DelegatedPermissionGrant.Read.All",
@@ -1222,7 +1222,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
-    "sourceSha256": "b7c2e01ae09248a8cfd83e997afaa9a17ef338d85d188ea6f96c83bc759c6cb0",
+    "sourceSha256": "331f661fb28bef543096f26ca763db3ad2758353e8312bd56f3a410698281e3b",
     "objective": "Shows who can access or book one or more room and equipment mailboxes.",
     "input": "A real room or equipment mailbox address in the client tenant; separate multiple addresses with commas. A security group is not a mailbox.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1235,7 +1235,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
-    "sourceSha256": "ea78878fbb017dbbdf095955c983904cbac2141d6a10293077b7f7bcdd056626",
+    "sourceSha256": "0bdb156a9bf30fdfaae95c41fc7a81aa656b5d98e036af0625bc718e25e0854f",
     "objective": "Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.",
     "input": "No mailbox list needed. Reviews user and shared mailboxes in the tenant you sign in to.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement",
@@ -1248,7 +1248,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sourceSha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
+    "sourceSha256": "8e6724f1831c5733335665c46b2efc04a7eaed40aaeb134f8f11276e5b48ddf6",
     "objective": "Remove a disabled user’s Full Access, Send As, and Send on Behalf permissions after reviewing the removal plan.",
     "input": "The disabled user’s exact sign-in name (UPN).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + Exchange Online permission-management rights + directory reachability for synced-user validation",
@@ -1261,7 +1261,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
-    "sourceSha256": "f473f3fffdf501b2b04604db04268f75670be319734b8c32da66bd1df45183ed",
+    "sourceSha256": "8cacff71acc3a4a9f359f4fe419ec7170829857a59b26d39a8bd6124b91e0403",
     "objective": "Compare selected tenant settings with a saved local baseline and report changes.",
     "input": "Optional local JSON comparison file (baseline). By default, uses a tenant-specific file in the script’s BASELINES folder; offers to create one when missing.",
     "requires": "Microsoft Graph PowerShell with tenant read access. Permissions: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
@@ -1279,12 +1279,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Choose the right Graph, Exchange Online, or hybrid connection approach."
   },
   "OPERATING-STANDARDS.md": {
-    "sourceSha256": "ade5ec3a333026e8811ea749d5c6df9f2cec95e77a044cf4c05f87d35ac26229",
+    "sourceSha256": "dd8eddd73faba6dac8d4c9953436c54cbd13bb288848844e22534653d1262cef",
     "notes": "Top-level project decision contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
     "objective": "Read the project rules for building, reviewing, and releasing tools."
   },
   "field-kit-build-standard.md": {
-    "sourceSha256": "c3802c7cb2cf32b7285c4b16c5cdb976f4b2e062709b58db06de324f3a01d5d0",
+    "sourceSha256": "57764518fe2aaa5798d824a775e271fcf6e744500026febdaa41f9231efa0d1c",
     "notes": "Locked baseline for FIELD // KIT visual design, navigation, sorting, card behavior, source publication, and release validation.",
     "objective": "Read the agreed site layout, card, and publishing standards."
   },
@@ -1294,7 +1294,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Check lessons from earlier scripting and publishing problems."
   },
   "powershell-standards.md": {
-    "sourceSha256": "78146e39af76b07c6fb945013d0971b45cd646c7bc0007bd678324aedd399785",
+    "sourceSha256": "4b19a55bdf61eb195b10abfe178363de97140fb1a156019b28d4aafaa03891e6",
     "notes": "Script implementation baseline for interactive FIELD // KIT PowerShell tools.",
     "objective": "Read the coding, safety, and output standards for these PowerShell tools."
   },
@@ -1431,7 +1431,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "SIGN-FOLDER-SCRIPTS.ps1": {
-    "sourceSha256": "9b2d82c75017899485b76d227e323deca66c6660534e83c1238938f058d454a1",
+    "sourceSha256": "997cabfc93947e35b80e99d11053ce3f704b0e0a44fb30524606ed49b0f87b86",
     "objective": "Sign reviewed PowerShell scripts with a certificate you choose.",
     "input": "Folder of reviewed scripts and a signing certificate; the script can offer to create a self-signed certificate.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
@@ -1444,7 +1444,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "INVOKE-FILE-INVENTORY.ps1": {
-    "sourceSha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
+    "sourceSha256": "ad5af3b5f30146d26ae6a94c11da242d49960fe622f7bac6c8123fbfbc1795e3",
     "objective": "Find duplicate scripts, signature problems, and leftover working copies.",
     "requires": "Windows PowerShell 5.1+ or PowerShell 7",
     "notes": "Groups files into Active, Testing, and Archive; compares duplicate filenames by SHA256. Optional CSV export includes local paths and signer details. Root defaults to C:\\Field-Kit; keep reports private.",
@@ -1457,7 +1457,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
-    "sourceSha256": "11544fc1bdedfe8e1e7ff69c1abb084cd5001132c40178782bd21281150c2cb8",
+    "sourceSha256": "2728fc9d57cc00b334db1f60c9fd3e6fdf84f5a090ea3a2434a94ee206fe9407",
     "objective": "Create and manage certificates used to sign PowerShell scripts.",
     "input": "Choose a certificate action. Have the certificate/file path and password ready when importing or exporting a private key.",
     "requires": "Windows PowerShell 5.1 or later",
@@ -4185,5 +4185,1009 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [],
     "requires": "Windows PowerShell. ",
     "input": "Uses this Windows user and PowerShell session on the current computer."
+  }
+});
+
+// Approved compact operator cards. Generated from operator-card-specs.json.
+window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
+  "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
+    "name": "Review Account Cleanup",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "A review list, not approval to delete accounts or remove access.",
+      "Missing checks remain unresolved."
+    ],
+    "family": "accounts",
+    "sourceSha256": "47731f7015c3a846cbd100667adaacbb34b4f7b79b6cefec7bf7674527c173ce",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-STALE-SIGNIN-REVIEW.ps1": {
+    "name": "Review Stale Sign-ins",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Uses recorded Entra activity, not proof that an account is unused.",
+      "Missing sign-in history stays unknown."
+    ],
+    "family": "accounts",
+    "sourceSha256": "21b5e4be1b126e6a91fad89a4d15221a9d12e098dceee501823f535490216b35",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-DISABLE-ACCOUNTS.ps1": {
+    "name": "Disable User Accounts",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Synced accounts are disabled in AD; cloud accounts in Entra.",
+      "Review the targets before confirming."
+    ],
+    "family": "accounts",
+    "sourceSha256": "af846df0d2aa709adfcbb9cfa0329d1b7552718d248edae9e42d1a63bbf79754",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-DELETE-ACCOUNTS.ps1": {
+    "name": "Delete User Accounts",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Review dependencies and retention before deleting an account.",
+      "Deletion requires explicit confirmation."
+    ],
+    "family": "accounts",
+    "sourceSha256": "05ad7fed05ef0422196bd61d31e723360bdf1af19b2fba4b05132fa71b62e720",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-ASSIGN-LICENSES.ps1": {
+    "name": "Assign User Licenses",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT + tenant ID",
+    "details": [
+      "Choose a license and review the affected users before confirming.",
+      "Review failed assignments separately."
+    ],
+    "family": "licenses",
+    "sourceSha256": "5757f3d963128d81f078295d3e38ed0db237bac34a867821cfbadd134afda330",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.3"
+  },
+  "INVOKE-REMOVE-LICENSES.ps1": {
+    "name": "Remove User Licenses",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT + tenant ID",
+    "details": [
+      "License removal can affect services and retained data.",
+      "Review the selected licenses and users before confirming."
+    ],
+    "family": "licenses",
+    "sourceSha256": "b65296af7b9d7681acd091ba30d70127a67989bfc4844af4977396a164b6316d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.3"
+  },
+  "RESOLVE-NAMES-TO-UPNS.ps1": {
+    "name": "Find User UPNs",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "Name / email / CSV / TXT",
+    "details": [
+      "Review ambiguous or missing matches before using the list in another tool."
+    ],
+    "family": "accounts",
+    "sourceSha256": "2cfff044c55146afc4d6d69605504071410ded8f1707189baec249079df12c47",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ACCOUNT-STATUS.ps1": {
+    "name": "Get User Account Status",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Missing sign-in history does not mean an account is inactive."
+    ],
+    "family": "accounts",
+    "sourceSha256": "65499c4b3bb05cca720af589ca8f9c85c3ad5e5c1edeff0d2115c53935c45222",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
+    "name": "Get Distribution Group Members",
+    "scope": "SINGLE or MULTI-GROUP",
+    "input": "Group / CSV / TXT",
+    "details": [
+      "For distribution groups in Exchange Online.",
+      "Nested groups are not a complete access review."
+    ],
+    "family": "groups",
+    "sourceSha256": "98af58ff264c5f41bd9de530fd4dc62c13bd967466c778a43fe90cc1b8091142",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GROUP-MEMBERS.ps1": {
+    "name": "Get Group Members",
+    "scope": "SINGLE or MULTI-GROUP",
+    "input": "Group / CSV / TXT",
+    "details": [
+      "Checks the group in Exchange, Entra or AD.",
+      "Shows direct members, not a complete access review."
+    ],
+    "family": "groups",
+    "sourceSha256": "8d2da056b964bc7d1a14feec61d902cdf909be08f108a297efdcafcc55e3baac",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-GROUPS.ps1": {
+    "name": "Get User Groups",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "For AD results, use a computer connected to the user's domain.",
+      "Lists direct groups, not every source of access."
+    ],
+    "family": "groups",
+    "sourceSha256": "4c473ca51503dac84b65a460879c38b46622813a1eb2f33aeb117abe15fc80b3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-REMOVE-USER-GROUPS.ps1": {
+    "name": "Remove User Groups",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Removes memberships, not the groups themselves.",
+      "Some managed or protected memberships must be handled separately."
+    ],
+    "family": "groups",
+    "sourceSha256": "6c7b4c60cd9368a3bd5bb652eade3a4ed642f83b5f8c3759548f2d64d8eea7e7",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
+    "name": "Create Dynamic License Group",
+    "scope": "SINGLE-GROUP",
+    "input": "Tenant and group settings + tenant ID",
+    "details": [
+      "Creates a group whose membership follows a rule.",
+      "Review the rule before creating the group."
+    ],
+    "family": "licenses",
+    "sourceSha256": "d163c3acd3603d42f0b637337d6fc61f98e464dc14c84f81677b7c3ecc38c9b8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.2"
+  },
+  "GET-TENANT-GROUP-OWNERS.ps1": {
+    "name": "Get Group Owners",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Missing owners and failed checks are different findings."
+    ],
+    "family": "groups",
+    "sourceSha256": "61d7d424bf8a4277659b56c59157790b12189385855e1387c2720bf11dd76136",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-PERMISSIONS.ps1": {
+    "name": "Get Mailbox Permissions",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Reviews forwarding, delegates and inbox rules.",
+      "Investigate unexpected access before removing it."
+    ],
+    "family": "mail",
+    "sourceSha256": "47f0c28a851d611edafcf3e32f3053b09c48276243507c10d7929ee49feeeb78",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get Mailbox Security",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "Use for a focused review of one mailbox.",
+      "Unresolved checks are not evidence that the mailbox is clear."
+    ],
+    "family": "mail",
+    "sourceSha256": "0775c2c7d1db0a3ad095a93667a0dac8189ed7b4f22a582d7c03e9fa59ae5aac",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-FORWARDING.ps1": {
+    "name": "Get Mailbox Forwarding",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Unexpected forwarding needs investigation before changes."
+    ],
+    "family": "mail",
+    "sourceSha256": "d965c3eee6703d8860961fe4aae0c5afcc3ec0ec0941cbde7d5ba987f607f14f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-LITIGATION-HOLD.ps1": {
+    "name": "Set Litigation Hold",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Confirm the retention decision and required licensing first.",
+      "Applies an unlimited hold after review."
+    ],
+    "family": "mail",
+    "sourceSha256": "047a46e0ecb0161f052c9a2db4753d48b11a15d9df9e09a4895129d818652b62",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-INVOKE-EMAIL-RECOVERY.ps1": {
+    "name": "Restore Email",
+    "scope": "SINGLE-USER",
+    "input": "Mailbox and recovery source",
+    "details": [
+      "Review the mailbox and recovery source before restoring messages.",
+      "Use a recovery source produced by the supported search workflow."
+    ],
+    "family": "ir-mail",
+    "sourceSha256": "42d6400dc9381a7be3e14573bd5ca60199b099224853cf49e7bb410dc42fb829",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "ir-risk-assessment.ps1": {
+    "name": "IR: Assess User Risk",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the approved jumpbox and keep the workflow in one PowerShell window.",
+      "Review findings and unavailable checks before deciding on containment."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "ir-contain-eradicate.ps1": {
+    "name": "IR: Contain and Clean Up",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the same PowerShell window as assessment.",
+      "Maintain containment until cleanup and recovery are approved.",
+      "Temporary passwords can remain in terminal capture/transcripts. The operator confirms trusted MFA methods."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "name": "IR: Review File Activity",
+    "scope": "SINGLE-USER",
+    "input": "UPN and time range",
+    "details": [
+      "Activity can suggest exposure; it does not prove data theft.",
+      "Log availability limits the review."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "ac7647ebb8f82cc31637c5a03c22847ce6082ec94a63df995f0e6243156f0e1a",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-IP-TRACE.ps1": {
+    "name": "IR: Trace IP Activity",
+    "scope": "TENANT",
+    "input": "IP address and time range",
+    "details": [
+      "An IP match needs context before attributing activity to a person."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "bc20f462ee16d7df2fd70f7984c2503acfa823c2bb5a6d482305e00ef0f3eeaa",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "name": "IR: Search Tenant Email",
+    "scope": "TENANT",
+    "input": "Search terms and time range",
+    "details": [
+      "Review the search scope before collecting results.",
+      "Search results do not remove or restore messages."
+    ],
+    "family": "ir-mail",
+    "sourceSha256": "609adcefda10bc1f02fc040141a11cabc494dd8b78c795b36b1d050b939e5edd",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
+    "name": "IR: Check IP Reputation",
+    "scope": "SINGLE-IP",
+    "input": "IP address",
+    "details": [
+      "Sends the selected public IP to external reputation services.",
+      "Reputation is context, not a verdict on compromise."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "c7cafb2a070acf00512356ec7adf9567ccb21523fd6f9bf6966e5f97fc7519fe",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TIMELINE-BUILDER.ps1": {
+    "name": "IR: Build Incident Timeline",
+    "scope": "LOCAL",
+    "input": "Evidence files",
+    "details": [
+      "Combines supplied evidence; it does not collect missing events.",
+      "Check time zones and gaps before drawing conclusions."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "9c0121dff77342f37c68d80f73304fe1c472c11f5251f8912d67519c1f892ec2",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TOKEN-DECODE.ps1": {
+    "name": "IR: Decode Token",
+    "scope": "LOCAL",
+    "input": "Token",
+    "details": [
+      "Decodes locally without sending the token to a service.",
+      "A decoded token is not proof of authenticity or current access."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "f5272d98b5bc1532832215237c10822c22ca7e21833be0175623ce4e9a49de2c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "name": "IR: Review Token Replay",
+    "scope": "SINGLE-USER",
+    "input": "UPN and time range",
+    "details": [
+      "Looks for indicators that need investigation, not a definitive compromise verdict.",
+      "Missing logs limit the result."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "d7f15be210646268958f8e0bd78c1c1a72c4bf92fe24883d10a9f27bc57a4646",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
+    "name": "Audit Shared Mailbox Sign-ins",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unexpected direct sign-ins separately from delegated mailbox use."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "4cdd1a7ef3130cb0db8d79257ea95fd39ad7ed090c46cb023b256738ff8819d5",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-APP-REGISTRATION-AUDIT.ps1": {
+    "name": "Audit App Registrations",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unfamiliar apps and expiring credentials with their owners."
+    ],
+    "family": "apps",
+    "sourceSha256": "1e1707ca192fb4695f4b0cf80c31da1b38481b454e398d5ca4bceacdd903aa1d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
+    "name": "Review Conditional Access",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Use the tenant ID requested by the script, not just a domain name.",
+      "Findings identify review areas; they do not prove policy coverage."
+    ],
+    "family": "security",
+    "sourceSha256": "7baf885bdbe28cdbc46d90929aee6ace804a31466ac65fd7a03000ad631e3d76",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-DEVICE-CODE-EXPOSURE.ps1": {
+    "name": "Review Device Code Exposure",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Reviews policy exposure rather than proving an attack occurred."
+    ],
+    "family": "security",
+    "sourceSha256": "4a75fa6452ec104be4beeedcb89d43262b4edba1e97f49ffa332f81e139f53c7",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
+    "name": "Audit Guest App Consent",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review permissions with an owner before removing consent."
+    ],
+    "family": "apps",
+    "sourceSha256": "cccfbe64f94ede1520f9a67dfd3a62f8e5e9aa8b82a79687adb0cf7b19a893c3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MFA-SECURITY-AUDIT.ps1": {
+    "name": "Audit MFA Security",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review registration and policy findings together.",
+      "Missing evidence is not a clean MFA result."
+    ],
+    "family": "security",
+    "sourceSha256": "23d724f8a7af9c0effb335631381db8c5f6728939a047586b278168fe9bf2039",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SECURE-SCORE-SNAPSHOT.ps1": {
+    "name": "Get Secure Score",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "A score is a prioritization aid, not proof that the tenant is secure."
+    ],
+    "family": "security",
+    "sourceSha256": "7bb0c0de4206333cdf515673dc2014c491191659a061857fe3ea714a69b16d02",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
+    "name": "Get App Owners",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Ownerless apps need an accountable owner before changes."
+    ],
+    "family": "apps",
+    "sourceSha256": "de1a1370e57e2248196830cba2c5d5e4b7103d9da61e1e560fbbac230e60025c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SIGNIN-ANOMALIES.ps1": {
+    "name": "Review Sign-in Anomalies",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unusual activity in context before containment."
+    ],
+    "family": "security",
+    "sourceSha256": "d681d0a569702c878e6e1eea8af913601b54b076aecfd1e2b77956ea15ccd19c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TRANSPORT-RULES-AUDIT.ps1": {
+    "name": "Audit Mail Flow Rules",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review rule intent and business impact before making changes."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "b2c9088c8fd4b5757d17c24c8f53a65589fbb2dbfc79df771aad16e60ddbb79f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "JOIN-COMPUTER-TO-DOMAIN.ps1": {
+    "name": "Join Computer to Domain",
+    "scope": "LOCAL",
+    "input": "Computer and domain",
+    "details": [
+      "Run as administrator; the computer must reach the domain.",
+      "Plan for restart and sign-in changes."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "e7cdcd69eace3e60055d20b4fadf550b0920052accb36e2cd2bb478b68f024d0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "DEPLOY-TCPIP-PRINTER.ps1": {
+    "name": "Install Network Printer",
+    "scope": "LOCAL",
+    "input": "Printer address and driver",
+    "details": [
+      "Have the approved driver and printer address ready."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "abe2a9fdfdaf6e7f3e6c8a65213c069c4d298264bd56c8dc427c48f8d28a0b89",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "BACKUP-USER-PROFILE.ps1": {
+    "name": "Back Up User Profile",
+    "scope": "LOCAL",
+    "input": "Profile and backup location",
+    "details": [
+      "Check the destination and available space before starting.",
+      "Review skipped and failed copies before relying on the backup."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "e5505021367ca5ae1730c1de17e8a9a285a0fc12e28bbf0481362498e3b92758",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "TEST-POWERSHELL-READINESS.ps1": {
+    "name": "Check PowerShell Readiness",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Reviews prerequisites without installing them."
+    ],
+    "family": "setup",
+    "sourceSha256": "d04e3adc34ea8392a2e66fc8f5b79a47773ae607f4f38cb2a15de6182851e097",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-FOLDER-INVENTORY.ps1": {
+    "name": "Get Folder Inventory",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reports the selected folder; does not enforce a structure."
+    ],
+    "family": "files",
+    "sourceSha256": "c5a171de8d48e5c23d9489e5179c2fd61db009f4f464a4ea59236cfd0239c2a9",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INSTALL-M365-MODULES.ps1": {
+    "name": "Install M365 Modules",
+    "scope": "LOCAL",
+    "input": "Module selection",
+    "details": [
+      "Installs or updates modules for the current Windows user.",
+      "No tenant configuration is changed."
+    ],
+    "family": "setup",
+    "sourceSha256": "e1654925ffe80c15c498ae3b50553231dafc5997f3233d073fa46b6366bff224",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "TEST-SENSITIVE-DATA.ps1": {
+    "name": "Check Sensitive Data",
+    "scope": "LOCAL",
+    "input": "Files or folder",
+    "details": [
+      "Findings need review; a clean scan is not proof that all sensitive information is absent."
+    ],
+    "family": "files",
+    "sourceSha256": "ddf10651da76431b41222e3dbb9ced0f87c787852e620b849677ea1651944690",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "RESET-M365-SESSION.ps1": {
+    "name": "Reset M365 Session",
+    "scope": "LOCAL",
+    "input": "Current PowerShell window",
+    "details": [
+      "Run in the session you want to disconnect.",
+      "Tenant configuration is not changed."
+    ],
+    "family": "setup",
+    "sourceSha256": "ccc759664b198a2c535c2cdbfbbeb3c6123aedd6d13a63664d050c330710e5b0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "UPDATE-WINDOWS-APPS.ps1": {
+    "name": "Update Windows Apps",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Review available updates and allow for app restarts."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "147336249dc84badc6e3730c6d2347869c9f9fe6e23b0916fa4474211e5a9316",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-PREDELETE-CHECK.ps1": {
+    "name": "Check User Before Deletion",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "Collects dependencies to review before deletion.",
+      "Does not authorize or perform deletion."
+    ],
+    "family": "accounts",
+    "sourceSha256": "3ab4f2a30234e2d7203284a30d304b22c9bc7c1c33ffae53b3e2710b2ea33218",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
+    "name": "Set Per-user MFA",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Per-user MFA is separate from Conditional Access.",
+      "Review the tenant's MFA approach before changing it."
+    ],
+    "family": "security",
+    "sourceSha256": "80679840ee2878dcb54a795395ed169065c82d21d1c54f16f16fffeee614c51d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ADMIN-ROLE-AUDIT.ps1": {
+    "name": "Audit Admin Roles",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review privileged assignments and their business owners."
+    ],
+    "family": "security",
+    "sourceSha256": "bdcc51ac5be6599d8a00f53350811a8a737b9fce65f824ccb9efdceb5ea9918e",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-OAUTH-CONSENT-AUDIT.ps1": {
+    "name": "Audit App Consent",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review granted access and app ownership before removing consent."
+    ],
+    "family": "apps",
+    "sourceSha256": "47416bc77a4929fc831d3381de9f2ff53996d7921eee9c029e015eaf3100d4b0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GUEST-USER-AUDIT.ps1": {
+    "name": "Review Guest Users",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Confirm the business relationship before removing a guest.",
+      "Missing activity is not proof that access is unused."
+    ],
+    "family": "accounts",
+    "sourceSha256": "ca493f98fe2b1648a7df775901bbce1eb43aec61d63b226c242b5560b7ac8ada",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-LICENSING-AUDIT.ps1": {
+    "name": "Audit Tenant Licenses",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Reviews assignments and capacity; does not change licenses."
+    ],
+    "family": "licenses",
+    "sourceSha256": "82e09267477c193402c915065d659989568816d22169cc29562fab854a45814b",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
+    "name": "Audit Tenant Inbox Rules",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Investigate suspicious rules before removing them."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "2a4d6cf0b770833b64ddb23034ca1ca6f9e8c76678fd059a0bc654f263166234",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get User Security",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "A starting point for investigation, not an all-clear verdict."
+    ],
+    "family": "security",
+    "sourceSha256": "547c6c06988c6d2a4b3c5e7953379b89b5706db4d198b3b41cd9ec02f943917c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get Tenant Security",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "A broad starting point; use focused audits for follow-up."
+    ],
+    "family": "security",
+    "sourceSha256": "43eb5cb87621630ed3f0dee9dd03b083fc833f5e965ec87e73433fca3d96f9e5",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ROOM-RESOURCE-ACCESS.ps1": {
+    "name": "Get Resource Mailbox Access",
+    "scope": "SINGLE or MULTI-MAILBOX",
+    "input": "Resource mailbox / CSV / TXT",
+    "details": [
+      "Use an actual room or equipment mailbox, not a security group."
+    ],
+    "family": "mail",
+    "sourceSha256": "331f661fb28bef543096f26ca763db3ad2758353e8312bd56f3a410698281e3b",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
+    "name": "Audit Tenant Mailbox Access",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review unexpected forwarding or delegated access before changes."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "0bdb156a9bf30fdfaae95c41fc7a81aa656b5d98e036af0625bc718e25e0854f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
+    "name": "Remove Disabled User Mailbox Access",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review the removal plan before confirming.",
+      "Disabled accounts can still have access that needs separate review."
+    ],
+    "family": "mail",
+    "sourceSha256": "8e6724f1831c5733335665c46b2efc04a7eaed40aaeb134f8f11276e5b48ddf6",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-DRIFT-REVIEW.ps1": {
+    "name": "Review Tenant Changes",
+    "scope": "TENANT",
+    "input": "Tenant and saved baseline",
+    "details": [
+      "Compare with the approved baseline before accepting a new one.",
+      "A changed setting is not automatically an incident."
+    ],
+    "family": "security",
+    "sourceSha256": "8cacff71acc3a4a9f359f4fe419ec7170829857a59b26d39a8bd6124b91e0403",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
+    "name": "Review Windows Storage",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Review only; no files are deleted."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "222ef1c7705b65c13a31fe2eb5c5ded11e34ecc156fdcf8c38a061eb805eb250",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
+    "name": "Reset Cloud User Password",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Cloud-only accounts; synced accounts require their own identity process.",
+      "Handle temporary passwords securely; terminal recording may capture them."
+    ],
+    "family": "accounts",
+    "sourceSha256": "5280fbfc9f059ebbe072d3a4f6b03e323b2f031daeb362dd0eab6f37953debf8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "ir-recover-validate.ps1": {
+    "name": "IR: Restore and Validate",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the same workflow window and approved recovery decision.",
+      "Confirm sign-in and MFA before closing the incident."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-handoff.ps1": {
+    "name": "Save Project Handoff",
+    "scope": "LOCAL",
+    "input": "Repository",
+    "details": [
+      "Creates a screened project snapshot; review it before sharing."
+    ],
+    "family": "git",
+    "sourceSha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-repo.ps1": {
+    "name": "Manage Git Repository",
+    "scope": "LOCAL",
+    "input": "Repository",
+    "details": [
+      "Review the repository and selected action before changes."
+    ],
+    "family": "git",
+    "sourceSha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-security.ps1": {
+    "name": "Review GitHub Security",
+    "scope": "LOCAL",
+    "input": "Repository and exported security log",
+    "details": [
+      "Reviews supplied GitHub evidence; missing evidence stays unknown."
+    ],
+    "family": "git",
+    "sourceSha256": "3cba00d77603ffe94401fbda18953579b90492012be0446b08c6de806d5fe1e8",
+    "presentationRevision": false,
+    "releaseVersion": ""
+  },
+  "set-execution.ps1": {
+    "name": "Set Up Script Execution",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Changes local execution settings and unblocks selected files.",
+      "Managed policies still apply."
+    ],
+    "family": "setup",
+    "sourceSha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "attractor.ps1": {
+    "name": "Attractor",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "62820d67085b65d230bb28c4954259bd32bffd29f30aee8a6f9a2cdfcdfdc5aa",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "rain.ps1": {
+    "name": "Rain",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "67ff5ccad0eb69510576920fd8b36accfb606a2b1cd3ddeb1ae75f021fda9bc9",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "static.ps1": {
+    "name": "Static",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "75f06611710a84f21522226fffebb3bf2e6a6b5d58383baf507ba6c69ddf19ca",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SIGN-FOLDER-SCRIPTS.ps1": {
+    "name": "Sign Scripts",
+    "scope": "LOCAL",
+    "input": "Folder and signing certificate",
+    "details": [
+      "Review the selected certificate and files before signing.",
+      "A signature identifies the signer; it is not a code review."
+    ],
+    "family": "signing",
+    "sourceSha256": "997cabfc93947e35b80e99d11053ce3f704b0e0a44fb30524606ed49b0f87b86",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TERMINAL-READINESS-CHECK.ps1": {
+    "name": "Check Terminal Readiness",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Reviews local terminal requirements without repairing them."
+    ],
+    "family": "setup",
+    "sourceSha256": "1c0b4e564cf6f8fa821fbe76e632c7bf9d2e1e8269f107f54d646b8680bc8164",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-FILE-INVENTORY.ps1": {
+    "name": "Get File Inventory",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reviews files and versions without changing them."
+    ],
+    "family": "files",
+    "sourceSha256": "ad5af3b5f30146d26ae6a94c11da242d49960fe622f7bac6c8123fbfbc1795e3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-MAP-KIT.ps1": {
+    "name": "Map Folders",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reports the selected folder structure without enforcing a baseline."
+    ],
+    "family": "files",
+    "sourceSha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "INVOKE-SESSION-RESET.ps1": {
+    "name": "Reset Terminal Session",
+    "scope": "LOCAL",
+    "input": "Current PowerShell window",
+    "details": [
+      "Run in the session you want to reset."
+    ],
+    "family": "setup",
+    "sourceSha256": "3b15375fe2f05b1543e5f90e081cd6d8c28360cf1eaa3423b60ef5498e7f0af8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "SET-THEME-BASIC.ps1": {
+    "name": "Basic Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-COBALT.ps1": {
+    "name": "Cobalt Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Changes this session and its process execution setting."
+    ],
+    "family": "terminal",
+    "sourceSha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-SEAGLASS.ps1": {
+    "name": "Sea Glass Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-SILICON-VALLEY.ps1": {
+    "name": "Silicon Valley Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "MANAGE-CERT-SIGNATURES.ps1": {
+    "name": "Manage Signing Certificates",
+    "scope": "LOCAL",
+    "input": "Certificate selection",
+    "details": [
+      "Manages current-user signing certificates and related files.",
+      "Review the certificate before removal or export."
+    ],
+    "family": "signing",
+    "sourceSha256": "2728fc9d57cc00b334db1f60c9fd3e6fdf84f5a090ea3a2434a94ee206fe9407",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
   }
 });

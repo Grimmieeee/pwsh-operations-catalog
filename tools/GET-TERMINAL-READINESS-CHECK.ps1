@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -60,8 +60,10 @@ function FAIL($m) {
 
 function Pause-End {
     if (-not $NoPause) {
+        Write-Host ''
+        Write-Host 'SESSION COMPLETE'
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -99,7 +101,8 @@ function Get-RelativePath {
 }
 
 try {
-    Write-Host "JUMPBOX PREFLIGHT"
+    Write-Host 'Check Terminal Readiness'
+    Write-Host 'Check the shell, modules, signing certificates, and expected toolkit files.'
     Write-Host "READ-ONLY LOCAL READINESS CHECK"
     Write-Host ""
 

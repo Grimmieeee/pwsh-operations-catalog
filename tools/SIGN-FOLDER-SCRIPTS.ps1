@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 sign-folder-scripts.ps1
@@ -35,8 +35,10 @@ function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Section {
@@ -171,7 +173,8 @@ try {
     } catch {}
 
     Clear-Host
-    Write-Host "SIGN FOLDER SCRIPTS"
+    Write-Host 'Sign Scripts'
+    Write-Host 'Sign reviewed PowerShell scripts with a certificate you choose.'
     Write-Host ""
 
     if (-not $RootPath) {

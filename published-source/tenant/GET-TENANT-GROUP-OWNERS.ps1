@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -145,8 +145,10 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Get-ShortError {
@@ -666,7 +668,9 @@ finally {
     Write-FKReportLine ""
 
     try {
-        Read-Host "Press ENTER to EXIT" | Out-Null
+        Write-Host ''
+        Write-Host 'SESSION COMPLETE'
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
     catch {
         Write-FKReportLine "Closing in 15 seconds..."

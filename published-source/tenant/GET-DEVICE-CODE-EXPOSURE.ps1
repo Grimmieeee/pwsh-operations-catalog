@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-device-code-exposure-audit-clean.ps1
@@ -37,8 +37,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -302,7 +304,8 @@ function Is-RiskyScope {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Device Code Exposure Audit" } catch {}
-Write-Host "TENANT DEVICE CODE EXPOSURE AUDIT"
+Write-Host 'Review Device Code Exposure'
+Write-Host 'Checks whether device-code sign-in is exposed and whether it has been used recently.'
     Write-Host "Read-only"
     Write-Host ""
 

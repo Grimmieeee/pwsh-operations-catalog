@@ -95,8 +95,10 @@ For destructive or high-impact actions:
 Use TITLE, a one-sentence objective, a start timestamp, connection results,
 TARGET, task-specific sections, STATUS, and NEXT STEP where useful. Keep the
 same labels and spacing across tools. TICKET SUMMARY is the concise record,
-not another status label. Show exact companion filenames in ENTER handoffs;
-use Press ESC to close. Do not close the caller's existing PowerShell window.
+not another status label. Show exact companion filenames only when a handoff is useful. Finish with
+SESSION COMPLETE (with the actual result when available), a short outcome explanation when useful, and
+Press Enter to close session. The completion marker must not imply success.
+Apply the approved operator card and script contract wherever the tool supports it. Do not close the caller's existing PowerShell window.
 Automation must not gain interactive pauses. One approval per action section
 is enough; keep numbered cleanup choices. Never shorten a skipped result to
 None found unless the query actually succeeded and returned no items.

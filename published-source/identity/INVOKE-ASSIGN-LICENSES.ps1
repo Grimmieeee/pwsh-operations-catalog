@@ -1,6 +1,6 @@
 <#
 INVOKE-ASSIGN-LICENSES.ps1
-.VERSION 1.0.2
+.VERSION 1.0.3
 Assign one selected tenant license to approved exact UPNs.
 Requires expected tenant GUID; previews every user and any UsageLocation change.
 #>
@@ -56,8 +56,10 @@ function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -307,7 +309,7 @@ function Get-GraphUserByUPN {
 
 try {
     try { $host.UI.RawUI.WindowTitle='Assign User Licenses' } catch {}
-    Write-Host 'ASSIGN USER LICENSES'
+    Write-Host 'Assign User Licenses'
     Write-Host 'Assign one approved license to exact users after tenant and target review.'
     $upns=@(Get-InputUPNs -Values $InputObject -Path $InputPath)
     if (-not $upns.Count) { throw 'At least one exact UPN is required.' }

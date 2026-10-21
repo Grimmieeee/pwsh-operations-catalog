@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 CLEANUP DISABLED USER MAILBOX ACCESS
@@ -42,8 +42,10 @@ function Write-Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -57,7 +59,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -804,7 +806,8 @@ function Get-SendAsPermission {
 }
 
 try {
-    Write-Host "DISABLED USER MAILBOX ACCESS CLEANUP"
+    Write-Host 'Remove Disabled User Mailbox Access'
+    Write-Host 'Remove a disabled user''s Full Access, Send As, and Send on Behalf permissions after reviewing the removal plan.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host ""
 

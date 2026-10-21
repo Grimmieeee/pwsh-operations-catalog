@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -47,7 +47,9 @@ function Show-Field {
 function Pause-End {
     if (-not $NoPause) {
         Write-Host ''
-        Read-Host 'Press Enter to EXIT' | Out-Null
+        Write-Host 'SESSION COMPLETE'
+        Write-Host ''
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -150,7 +152,8 @@ function Get-GitSummary {
 }
 
 try {
-    Write-Host 'FOLDER INVENTORY'
+    Write-Host 'Get Folder Inventory'
+    Write-Host 'Review a folder''s contents, script signatures, and Git status.'
     Write-Host 'READ ONLY. No files are changed.'
 
     $root = Resolve-InventoryRoot -InputPath $Path

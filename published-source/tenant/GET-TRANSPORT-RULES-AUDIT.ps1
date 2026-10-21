@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 GET-TRANSPORT-RULES-AUDIT.ps1
@@ -34,8 +34,10 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -189,7 +191,8 @@ function Get-RuleRisk {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Transport Rules Audit" } catch {}
 
-    Write-Host "TENANT TRANSPORT RULES AUDIT"
+    Write-Host 'Audit Mail Flow Rules'
+    Write-Host 'Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.'
     Write-Host "Read-only"
     Write-Host ""
 

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-service-principal-owners-audit-clean.ps1
@@ -36,8 +36,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -301,7 +303,8 @@ function Is-RiskyScope {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Service Principal Owners Audit" } catch {}
-Write-Host "TENANT SERVICE PRINCIPAL OWNERS AUDIT"
+Write-Host 'Get App Owners'
+Write-Host 'Find enterprise apps (service principals) with missing or unclear owners.'
     Write-Host "Read-only"
     Write-Host ""
 

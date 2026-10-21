@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 #requires -Version 5.1
 
 <#
@@ -248,10 +248,12 @@ function Test-ExoIdentityMatch {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
 
     try {
-        Read-Host "Press ENTER to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
         return
     }
     catch {}
@@ -276,7 +278,8 @@ try {
     $UPN = $UPN.Trim()
 
     Write-FKReportLine ""
-    Write-FKReportLine "USER PRE-DELETE CHECK"
+    Write-FKReportLine 'Check User Before Deletion'
+    Write-FKReportLine 'Checks a user''s identity, mailbox, ownership, app access, licenses, and retention dependencies before the AD object is removed.'
     Write-FKReportLine "---------------------"
     Write-FKReportLine "Target: $UPN"
     Write-FKReportLine "Mode:   READ-ONLY"

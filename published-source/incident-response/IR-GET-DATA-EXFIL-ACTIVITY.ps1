@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -45,8 +45,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -374,7 +376,8 @@ function Get-RiskLabel {
 }
 
 try {
-    Write-Host "IR AUDIT - FILE ACTIVITY / EXFIL REVIEW"
+    Write-Host 'IR: Review File Activity'
+    Write-Host 'Looks for unusual file activity that could indicate data was copied or taken.'
     Write-Host "READ-ONLY"
     Write-Host ""
 

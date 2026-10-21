@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -56,7 +56,7 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Ensure-GraphAuthentication {
@@ -268,7 +268,8 @@ function New-TemporaryPassword {
 }
 
 try {
-    Write-Host "RESET CLOUD USER PASSWORD"
+    Write-Host 'Reset Cloud User Password'
+    Write-Host 'Reset passwords for approved cloud-only users and report each result.'
     Write-Host "MAKES CHANGES. CLOUD-ONLY USERS ONLY."
     Write-Host ""
 

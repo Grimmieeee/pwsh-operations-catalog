@@ -1,3 +1,16 @@
+# Current rollout — approved compact operator cards
+
+October 20, 2026. The owner authorized broad card/script alignment and publication. The approved card contract is at the top of DESIGN-LOCK.md. Main dashboard and navigation remain unchanged.
+
+- 80 script cards use clear action names, explicit scope, short STEPS, Download / View Code, operational DETAILS and three related tools.
+- 65 scripts receive presentation-only titles, objectives and/or completion prompts; non-presentation token fingerprints compare unchanged against the prior source. The separate Group Memberships pilot retains its already-recorded behavior changes.
+- 15 specialized IR, terminal and reusable command sources remain byte-for-byte unchanged. Their cards adopt the same presentation while retaining their launch requirements.
+- Quick-command text and preparation remain intact; references and source-pending tools keep their correct types and availability.
+- Prior operational acceptance remains historical, not reopened. Revised presentation bytes are not marked as newly runtime tested. There are 14 unchanged exact-source VERIFIED marks in this rollout; 65 revised sources have parser/offline/presentation evidence, with Windows acceptance tracked separately.
+- See qa/OPERATOR-ALIGNMENT-CHANGELOG.md and qa/OPERATOR-SCRIPT-ALIGNMENT.json for every item and follow-up.
+
+Earlier release notes below describe the preceding release and retain their original scope.
+
 # FIELD // KIT — project status
 
 Updated October 20, 2026. This is the current continuation checkpoint. Older

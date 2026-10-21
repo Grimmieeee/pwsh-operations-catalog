@@ -1,0 +1,1002 @@
+{
+  "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
+    "name": "Review Account Cleanup",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "A review list, not approval to delete accounts or remove access.",
+      "Missing checks remain unresolved."
+    ],
+    "family": "accounts",
+    "sourceSha256": "47731f7015c3a846cbd100667adaacbb34b4f7b79b6cefec7bf7674527c173ce",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-STALE-SIGNIN-REVIEW.ps1": {
+    "name": "Review Stale Sign-ins",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Uses recorded Entra activity, not proof that an account is unused.",
+      "Missing sign-in history stays unknown."
+    ],
+    "family": "accounts",
+    "sourceSha256": "21b5e4be1b126e6a91fad89a4d15221a9d12e098dceee501823f535490216b35",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-DISABLE-ACCOUNTS.ps1": {
+    "name": "Disable User Accounts",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Synced accounts are disabled in AD; cloud accounts in Entra.",
+      "Review the targets before confirming."
+    ],
+    "family": "accounts",
+    "sourceSha256": "af846df0d2aa709adfcbb9cfa0329d1b7552718d248edae9e42d1a63bbf79754",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-DELETE-ACCOUNTS.ps1": {
+    "name": "Delete User Accounts",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Review dependencies and retention before deleting an account.",
+      "Deletion requires explicit confirmation."
+    ],
+    "family": "accounts",
+    "sourceSha256": "05ad7fed05ef0422196bd61d31e723360bdf1af19b2fba4b05132fa71b62e720",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-ASSIGN-LICENSES.ps1": {
+    "name": "Assign User Licenses",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT + tenant ID",
+    "details": [
+      "Choose a license and review the affected users before confirming.",
+      "Review failed assignments separately."
+    ],
+    "family": "licenses",
+    "sourceSha256": "5757f3d963128d81f078295d3e38ed0db237bac34a867821cfbadd134afda330",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.3"
+  },
+  "INVOKE-REMOVE-LICENSES.ps1": {
+    "name": "Remove User Licenses",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT + tenant ID",
+    "details": [
+      "License removal can affect services and retained data.",
+      "Review the selected licenses and users before confirming."
+    ],
+    "family": "licenses",
+    "sourceSha256": "b65296af7b9d7681acd091ba30d70127a67989bfc4844af4977396a164b6316d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.3"
+  },
+  "RESOLVE-NAMES-TO-UPNS.ps1": {
+    "name": "Find User UPNs",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "Name / email / CSV / TXT",
+    "details": [
+      "Review ambiguous or missing matches before using the list in another tool."
+    ],
+    "family": "accounts",
+    "sourceSha256": "2cfff044c55146afc4d6d69605504071410ded8f1707189baec249079df12c47",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ACCOUNT-STATUS.ps1": {
+    "name": "Get User Account Status",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Missing sign-in history does not mean an account is inactive."
+    ],
+    "family": "accounts",
+    "sourceSha256": "65499c4b3bb05cca720af589ca8f9c85c3ad5e5c1edeff0d2115c53935c45222",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
+    "name": "Get Distribution Group Members",
+    "scope": "SINGLE or MULTI-GROUP",
+    "input": "Group / CSV / TXT",
+    "details": [
+      "For distribution groups in Exchange Online.",
+      "Nested groups are not a complete access review."
+    ],
+    "family": "groups",
+    "sourceSha256": "98af58ff264c5f41bd9de530fd4dc62c13bd967466c778a43fe90cc1b8091142",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GROUP-MEMBERS.ps1": {
+    "name": "Get Group Members",
+    "scope": "SINGLE or MULTI-GROUP",
+    "input": "Group / CSV / TXT",
+    "details": [
+      "Checks the group in Exchange, Entra or AD.",
+      "Shows direct members, not a complete access review."
+    ],
+    "family": "groups",
+    "sourceSha256": "8d2da056b964bc7d1a14feec61d902cdf909be08f108a297efdcafcc55e3baac",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-GROUPS.ps1": {
+    "name": "Get User Groups",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "For AD results, use a computer connected to the user's domain.",
+      "Lists direct groups, not every source of access."
+    ],
+    "family": "groups",
+    "sourceSha256": "4c473ca51503dac84b65a460879c38b46622813a1eb2f33aeb117abe15fc80b3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-REMOVE-USER-GROUPS.ps1": {
+    "name": "Remove User Groups",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Removes memberships, not the groups themselves.",
+      "Some managed or protected memberships must be handled separately."
+    ],
+    "family": "groups",
+    "sourceSha256": "6c7b4c60cd9368a3bd5bb652eade3a4ed642f83b5f8c3759548f2d64d8eea7e7",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
+    "name": "Create Dynamic License Group",
+    "scope": "SINGLE-GROUP",
+    "input": "Tenant and group settings + tenant ID",
+    "details": [
+      "Creates a group whose membership follows a rule.",
+      "Review the rule before creating the group."
+    ],
+    "family": "licenses",
+    "sourceSha256": "d163c3acd3603d42f0b637337d6fc61f98e464dc14c84f81677b7c3ecc38c9b8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.2"
+  },
+  "GET-TENANT-GROUP-OWNERS.ps1": {
+    "name": "Get Group Owners",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Missing owners and failed checks are different findings."
+    ],
+    "family": "groups",
+    "sourceSha256": "61d7d424bf8a4277659b56c59157790b12189385855e1387c2720bf11dd76136",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-PERMISSIONS.ps1": {
+    "name": "Get Mailbox Permissions",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Reviews forwarding, delegates and inbox rules.",
+      "Investigate unexpected access before removing it."
+    ],
+    "family": "mail",
+    "sourceSha256": "47f0c28a851d611edafcf3e32f3053b09c48276243507c10d7929ee49feeeb78",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get Mailbox Security",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "Use for a focused review of one mailbox.",
+      "Unresolved checks are not evidence that the mailbox is clear."
+    ],
+    "family": "mail",
+    "sourceSha256": "0775c2c7d1db0a3ad095a93667a0dac8189ed7b4f22a582d7c03e9fa59ae5aac",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MAILBOX-FORWARDING.ps1": {
+    "name": "Get Mailbox Forwarding",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Unexpected forwarding needs investigation before changes."
+    ],
+    "family": "mail",
+    "sourceSha256": "d965c3eee6703d8860961fe4aae0c5afcc3ec0ec0941cbde7d5ba987f607f14f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-LITIGATION-HOLD.ps1": {
+    "name": "Set Litigation Hold",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Confirm the retention decision and required licensing first.",
+      "Applies an unlimited hold after review."
+    ],
+    "family": "mail",
+    "sourceSha256": "047a46e0ecb0161f052c9a2db4753d48b11a15d9df9e09a4895129d818652b62",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-INVOKE-EMAIL-RECOVERY.ps1": {
+    "name": "Restore Email",
+    "scope": "SINGLE-USER",
+    "input": "Mailbox and recovery source",
+    "details": [
+      "Review the mailbox and recovery source before restoring messages.",
+      "Use a recovery source produced by the supported search workflow."
+    ],
+    "family": "ir-mail",
+    "sourceSha256": "42d6400dc9381a7be3e14573bd5ca60199b099224853cf49e7bb410dc42fb829",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "ir-risk-assessment.ps1": {
+    "name": "IR: Assess User Risk",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the approved jumpbox and keep the workflow in one PowerShell window.",
+      "Review findings and unavailable checks before deciding on containment."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "ir-contain-eradicate.ps1": {
+    "name": "IR: Contain and Clean Up",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the same PowerShell window as assessment.",
+      "Maintain containment until cleanup and recovery are approved.",
+      "Temporary passwords can remain in terminal capture/transcripts. The operator confirms trusted MFA methods."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "name": "IR: Review File Activity",
+    "scope": "SINGLE-USER",
+    "input": "UPN and time range",
+    "details": [
+      "Activity can suggest exposure; it does not prove data theft.",
+      "Log availability limits the review."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "ac7647ebb8f82cc31637c5a03c22847ce6082ec94a63df995f0e6243156f0e1a",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-IP-TRACE.ps1": {
+    "name": "IR: Trace IP Activity",
+    "scope": "TENANT",
+    "input": "IP address and time range",
+    "details": [
+      "An IP match needs context before attributing activity to a person."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "bc20f462ee16d7df2fd70f7984c2503acfa823c2bb5a6d482305e00ef0f3eeaa",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "name": "IR: Search Tenant Email",
+    "scope": "TENANT",
+    "input": "Search terms and time range",
+    "details": [
+      "Review the search scope before collecting results.",
+      "Search results do not remove or restore messages."
+    ],
+    "family": "ir-mail",
+    "sourceSha256": "609adcefda10bc1f02fc040141a11cabc494dd8b78c795b36b1d050b939e5edd",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
+    "name": "IR: Check IP Reputation",
+    "scope": "SINGLE-IP",
+    "input": "IP address",
+    "details": [
+      "Sends the selected public IP to external reputation services.",
+      "Reputation is context, not a verdict on compromise."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "c7cafb2a070acf00512356ec7adf9567ccb21523fd6f9bf6966e5f97fc7519fe",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TIMELINE-BUILDER.ps1": {
+    "name": "IR: Build Incident Timeline",
+    "scope": "LOCAL",
+    "input": "Evidence files",
+    "details": [
+      "Combines supplied evidence; it does not collect missing events.",
+      "Check time zones and gaps before drawing conclusions."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "9c0121dff77342f37c68d80f73304fe1c472c11f5251f8912d67519c1f892ec2",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TOKEN-DECODE.ps1": {
+    "name": "IR: Decode Token",
+    "scope": "LOCAL",
+    "input": "Token",
+    "details": [
+      "Decodes locally without sending the token to a service.",
+      "A decoded token is not proof of authenticity or current access."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "f5272d98b5bc1532832215237c10822c22ca7e21833be0175623ce4e9a49de2c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "IR-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "name": "IR: Review Token Replay",
+    "scope": "SINGLE-USER",
+    "input": "UPN and time range",
+    "details": [
+      "Looks for indicators that need investigation, not a definitive compromise verdict.",
+      "Missing logs limit the result."
+    ],
+    "family": "ir-investigate",
+    "sourceSha256": "d7f15be210646268958f8e0bd78c1c1a72c4bf92fe24883d10a9f27bc57a4646",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
+    "name": "Audit Shared Mailbox Sign-ins",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unexpected direct sign-ins separately from delegated mailbox use."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "4cdd1a7ef3130cb0db8d79257ea95fd39ad7ed090c46cb023b256738ff8819d5",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-APP-REGISTRATION-AUDIT.ps1": {
+    "name": "Audit App Registrations",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unfamiliar apps and expiring credentials with their owners."
+    ],
+    "family": "apps",
+    "sourceSha256": "1e1707ca192fb4695f4b0cf80c31da1b38481b454e398d5ca4bceacdd903aa1d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
+    "name": "Review Conditional Access",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Use the tenant ID requested by the script, not just a domain name.",
+      "Findings identify review areas; they do not prove policy coverage."
+    ],
+    "family": "security",
+    "sourceSha256": "7baf885bdbe28cdbc46d90929aee6ace804a31466ac65fd7a03000ad631e3d76",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-DEVICE-CODE-EXPOSURE.ps1": {
+    "name": "Review Device Code Exposure",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Reviews policy exposure rather than proving an attack occurred."
+    ],
+    "family": "security",
+    "sourceSha256": "4a75fa6452ec104be4beeedcb89d43262b4edba1e97f49ffa332f81e139f53c7",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
+    "name": "Audit Guest App Consent",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review permissions with an owner before removing consent."
+    ],
+    "family": "apps",
+    "sourceSha256": "cccfbe64f94ede1520f9a67dfd3a62f8e5e9aa8b82a79687adb0cf7b19a893c3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-MFA-SECURITY-AUDIT.ps1": {
+    "name": "Audit MFA Security",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review registration and policy findings together.",
+      "Missing evidence is not a clean MFA result."
+    ],
+    "family": "security",
+    "sourceSha256": "23d724f8a7af9c0effb335631381db8c5f6728939a047586b278168fe9bf2039",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SECURE-SCORE-SNAPSHOT.ps1": {
+    "name": "Get Secure Score",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "A score is a prioritization aid, not proof that the tenant is secure."
+    ],
+    "family": "security",
+    "sourceSha256": "7bb0c0de4206333cdf515673dc2014c491191659a061857fe3ea714a69b16d02",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
+    "name": "Get App Owners",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Ownerless apps need an accountable owner before changes."
+    ],
+    "family": "apps",
+    "sourceSha256": "de1a1370e57e2248196830cba2c5d5e4b7103d9da61e1e560fbbac230e60025c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-SIGNIN-ANOMALIES.ps1": {
+    "name": "Review Sign-in Anomalies",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review unusual activity in context before containment."
+    ],
+    "family": "security",
+    "sourceSha256": "d681d0a569702c878e6e1eea8af913601b54b076aecfd1e2b77956ea15ccd19c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TRANSPORT-RULES-AUDIT.ps1": {
+    "name": "Audit Mail Flow Rules",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review rule intent and business impact before making changes."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "b2c9088c8fd4b5757d17c24c8f53a65589fbb2dbfc79df771aad16e60ddbb79f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "JOIN-COMPUTER-TO-DOMAIN.ps1": {
+    "name": "Join Computer to Domain",
+    "scope": "LOCAL",
+    "input": "Computer and domain",
+    "details": [
+      "Run as administrator; the computer must reach the domain.",
+      "Plan for restart and sign-in changes."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "e7cdcd69eace3e60055d20b4fadf550b0920052accb36e2cd2bb478b68f024d0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "DEPLOY-TCPIP-PRINTER.ps1": {
+    "name": "Install Network Printer",
+    "scope": "LOCAL",
+    "input": "Printer address and driver",
+    "details": [
+      "Have the approved driver and printer address ready."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "abe2a9fdfdaf6e7f3e6c8a65213c069c4d298264bd56c8dc427c48f8d28a0b89",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "BACKUP-USER-PROFILE.ps1": {
+    "name": "Back Up User Profile",
+    "scope": "LOCAL",
+    "input": "Profile and backup location",
+    "details": [
+      "Check the destination and available space before starting.",
+      "Review skipped and failed copies before relying on the backup."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "e5505021367ca5ae1730c1de17e8a9a285a0fc12e28bbf0481362498e3b92758",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "TEST-POWERSHELL-READINESS.ps1": {
+    "name": "Check PowerShell Readiness",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Reviews prerequisites without installing them."
+    ],
+    "family": "setup",
+    "sourceSha256": "d04e3adc34ea8392a2e66fc8f5b79a47773ae607f4f38cb2a15de6182851e097",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-FOLDER-INVENTORY.ps1": {
+    "name": "Get Folder Inventory",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reports the selected folder; does not enforce a structure."
+    ],
+    "family": "files",
+    "sourceSha256": "c5a171de8d48e5c23d9489e5179c2fd61db009f4f464a4ea59236cfd0239c2a9",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INSTALL-M365-MODULES.ps1": {
+    "name": "Install M365 Modules",
+    "scope": "LOCAL",
+    "input": "Module selection",
+    "details": [
+      "Installs or updates modules for the current Windows user.",
+      "No tenant configuration is changed."
+    ],
+    "family": "setup",
+    "sourceSha256": "e1654925ffe80c15c498ae3b50553231dafc5997f3233d073fa46b6366bff224",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "TEST-SENSITIVE-DATA.ps1": {
+    "name": "Check Sensitive Data",
+    "scope": "LOCAL",
+    "input": "Files or folder",
+    "details": [
+      "Findings need review; a clean scan is not proof that all sensitive information is absent."
+    ],
+    "family": "files",
+    "sourceSha256": "ddf10651da76431b41222e3dbb9ced0f87c787852e620b849677ea1651944690",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "RESET-M365-SESSION.ps1": {
+    "name": "Reset M365 Session",
+    "scope": "LOCAL",
+    "input": "Current PowerShell window",
+    "details": [
+      "Run in the session you want to disconnect.",
+      "Tenant configuration is not changed."
+    ],
+    "family": "setup",
+    "sourceSha256": "ccc759664b198a2c535c2cdbfbbeb3c6123aedd6d13a63664d050c330710e5b0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "UPDATE-WINDOWS-APPS.ps1": {
+    "name": "Update Windows Apps",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Review available updates and allow for app restarts."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "147336249dc84badc6e3730c6d2347869c9f9fe6e23b0916fa4474211e5a9316",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-PREDELETE-CHECK.ps1": {
+    "name": "Check User Before Deletion",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "Collects dependencies to review before deletion.",
+      "Does not authorize or perform deletion."
+    ],
+    "family": "accounts",
+    "sourceSha256": "3ab4f2a30234e2d7203284a30d304b22c9bc7c1c33ffae53b3e2710b2ea33218",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
+    "name": "Set Per-user MFA",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Per-user MFA is separate from Conditional Access.",
+      "Review the tenant's MFA approach before changing it."
+    ],
+    "family": "security",
+    "sourceSha256": "80679840ee2878dcb54a795395ed169065c82d21d1c54f16f16fffeee614c51d",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ADMIN-ROLE-AUDIT.ps1": {
+    "name": "Audit Admin Roles",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review privileged assignments and their business owners."
+    ],
+    "family": "security",
+    "sourceSha256": "bdcc51ac5be6599d8a00f53350811a8a737b9fce65f824ccb9efdceb5ea9918e",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-OAUTH-CONSENT-AUDIT.ps1": {
+    "name": "Audit App Consent",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Review granted access and app ownership before removing consent."
+    ],
+    "family": "apps",
+    "sourceSha256": "47416bc77a4929fc831d3381de9f2ff53996d7921eee9c029e015eaf3100d4b0",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-GUEST-USER-AUDIT.ps1": {
+    "name": "Review Guest Users",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Confirm the business relationship before removing a guest.",
+      "Missing activity is not proof that access is unused."
+    ],
+    "family": "accounts",
+    "sourceSha256": "ca493f98fe2b1648a7df775901bbce1eb43aec61d63b226c242b5560b7ac8ada",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-LICENSING-AUDIT.ps1": {
+    "name": "Audit Tenant Licenses",
+    "scope": "TENANT",
+    "input": "Tenant ID",
+    "details": [
+      "Reviews assignments and capacity; does not change licenses."
+    ],
+    "family": "licenses",
+    "sourceSha256": "82e09267477c193402c915065d659989568816d22169cc29562fab854a45814b",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
+    "name": "Audit Tenant Inbox Rules",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Investigate suspicious rules before removing them."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "2a4d6cf0b770833b64ddb23034ca1ca6f9e8c76678fd059a0bc654f263166234",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-USER-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get User Security",
+    "scope": "SINGLE-USER",
+    "input": "UPN",
+    "details": [
+      "A starting point for investigation, not an all-clear verdict."
+    ],
+    "family": "security",
+    "sourceSha256": "547c6c06988c6d2a4b3c5e7953379b89b5706db4d198b3b41cd9ec02f943917c",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
+    "name": "Get Tenant Security",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "A broad starting point; use focused audits for follow-up."
+    ],
+    "family": "security",
+    "sourceSha256": "43eb5cb87621630ed3f0dee9dd03b083fc833f5e965ec87e73433fca3d96f9e5",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-ROOM-RESOURCE-ACCESS.ps1": {
+    "name": "Get Resource Mailbox Access",
+    "scope": "SINGLE or MULTI-MAILBOX",
+    "input": "Resource mailbox / CSV / TXT",
+    "details": [
+      "Use an actual room or equipment mailbox, not a security group."
+    ],
+    "family": "mail",
+    "sourceSha256": "331f661fb28bef543096f26ca763db3ad2758353e8312bd56f3a410698281e3b",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
+    "name": "Audit Tenant Mailbox Access",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review unexpected forwarding or delegated access before changes."
+    ],
+    "family": "mail-audit",
+    "sourceSha256": "0bdb156a9bf30fdfaae95c41fc7a81aa656b5d98e036af0625bc718e25e0854f",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
+    "name": "Remove Disabled User Mailbox Access",
+    "scope": "TENANT",
+    "input": "Tenant",
+    "details": [
+      "Review the removal plan before confirming.",
+      "Disabled accounts can still have access that needs separate review."
+    ],
+    "family": "mail",
+    "sourceSha256": "8e6724f1831c5733335665c46b2efc04a7eaed40aaeb134f8f11276e5b48ddf6",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TENANT-DRIFT-REVIEW.ps1": {
+    "name": "Review Tenant Changes",
+    "scope": "TENANT",
+    "input": "Tenant and saved baseline",
+    "details": [
+      "Compare with the approved baseline before accepting a new one.",
+      "A changed setting is not automatically an incident."
+    ],
+    "family": "security",
+    "sourceSha256": "8cacff71acc3a4a9f359f4fe419ec7170829857a59b26d39a8bd6124b91e0403",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
+    "name": "Review Windows Storage",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Review only; no files are deleted."
+    ],
+    "family": "endpoint",
+    "sourceSha256": "222ef1c7705b65c13a31fe2eb5c5ded11e34ecc156fdcf8c38a061eb805eb250",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
+    "name": "Reset Cloud User Password",
+    "scope": "SINGLE or MULTI-USER",
+    "input": "UPN / CSV / TXT",
+    "details": [
+      "Cloud-only accounts; synced accounts require their own identity process.",
+      "Handle temporary passwords securely; terminal recording may capture them."
+    ],
+    "family": "accounts",
+    "sourceSha256": "5280fbfc9f059ebbe072d3a4f6b03e323b2f031daeb362dd0eab6f37953debf8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "ir-recover-validate.ps1": {
+    "name": "IR: Restore and Validate",
+    "scope": "SINGLE-USER",
+    "input": "UPN and tenant",
+    "details": [
+      "Use the same workflow window and approved recovery decision.",
+      "Confirm sign-in and MFA before closing the incident."
+    ],
+    "family": "ir-workflow",
+    "sourceSha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-handoff.ps1": {
+    "name": "Save Project Handoff",
+    "scope": "LOCAL",
+    "input": "Repository",
+    "details": [
+      "Creates a screened project snapshot; review it before sharing."
+    ],
+    "family": "git",
+    "sourceSha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-repo.ps1": {
+    "name": "Manage Git Repository",
+    "scope": "LOCAL",
+    "input": "Repository",
+    "details": [
+      "Review the repository and selected action before changes."
+    ],
+    "family": "git",
+    "sourceSha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "git-security.ps1": {
+    "name": "Review GitHub Security",
+    "scope": "LOCAL",
+    "input": "Repository and exported security log",
+    "details": [
+      "Reviews supplied GitHub evidence; missing evidence stays unknown."
+    ],
+    "family": "git",
+    "sourceSha256": "3cba00d77603ffe94401fbda18953579b90492012be0446b08c6de806d5fe1e8",
+    "presentationRevision": false,
+    "releaseVersion": ""
+  },
+  "set-execution.ps1": {
+    "name": "Set Up Script Execution",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Changes local execution settings and unblocks selected files.",
+      "Managed policies still apply."
+    ],
+    "family": "setup",
+    "sourceSha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "attractor.ps1": {
+    "name": "Attractor",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "62820d67085b65d230bb28c4954259bd32bffd29f30aee8a6f9a2cdfcdfdc5aa",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "rain.ps1": {
+    "name": "Rain",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "67ff5ccad0eb69510576920fd8b36accfb606a2b1cd3ddeb1ae75f021fda9bc9",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "static.ps1": {
+    "name": "Static",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Run in an existing terminal; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "75f06611710a84f21522226fffebb3bf2e6a6b5d58383baf507ba6c69ddf19ca",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SIGN-FOLDER-SCRIPTS.ps1": {
+    "name": "Sign Scripts",
+    "scope": "LOCAL",
+    "input": "Folder and signing certificate",
+    "details": [
+      "Review the selected certificate and files before signing.",
+      "A signature identifies the signer; it is not a code review."
+    ],
+    "family": "signing",
+    "sourceSha256": "997cabfc93947e35b80e99d11053ce3f704b0e0a44fb30524606ed49b0f87b86",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "GET-TERMINAL-READINESS-CHECK.ps1": {
+    "name": "Check Terminal Readiness",
+    "scope": "LOCAL",
+    "input": "Current computer",
+    "details": [
+      "Reviews local terminal requirements without repairing them."
+    ],
+    "family": "setup",
+    "sourceSha256": "1c0b4e564cf6f8fa821fbe76e632c7bf9d2e1e8269f107f54d646b8680bc8164",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-FILE-INVENTORY.ps1": {
+    "name": "Get File Inventory",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reviews files and versions without changing them."
+    ],
+    "family": "files",
+    "sourceSha256": "ad5af3b5f30146d26ae6a94c11da242d49960fe622f7bac6c8123fbfbc1795e3",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "INVOKE-MAP-KIT.ps1": {
+    "name": "Map Folders",
+    "scope": "LOCAL",
+    "input": "Folder",
+    "details": [
+      "Reports the selected folder structure without enforcing a baseline."
+    ],
+    "family": "files",
+    "sourceSha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "INVOKE-SESSION-RESET.ps1": {
+    "name": "Reset Terminal Session",
+    "scope": "LOCAL",
+    "input": "Current PowerShell window",
+    "details": [
+      "Run in the session you want to reset."
+    ],
+    "family": "setup",
+    "sourceSha256": "3b15375fe2f05b1543e5f90e081cd6d8c28360cf1eaa3423b60ef5498e7f0af8",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  },
+  "SET-THEME-BASIC.ps1": {
+    "name": "Basic Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-COBALT.ps1": {
+    "name": "Cobalt Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Changes this session and its process execution setting."
+    ],
+    "family": "terminal",
+    "sourceSha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-SEAGLASS.ps1": {
+    "name": "Sea Glass Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "SET-THEME-SILICON-VALLEY.ps1": {
+    "name": "Silicon Valley Theme",
+    "scope": "LOCAL",
+    "input": "Current terminal",
+    "details": [
+      "Applies a terminal style; use its own exit controls."
+    ],
+    "family": "terminal",
+    "sourceSha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0"
+  },
+  "MANAGE-CERT-SIGNATURES.ps1": {
+    "name": "Manage Signing Certificates",
+    "scope": "LOCAL",
+    "input": "Certificate selection",
+    "details": [
+      "Manages current-user signing certificates and related files.",
+      "Review the certificate before removal or export."
+    ],
+    "family": "signing",
+    "sourceSha256": "2728fc9d57cc00b334db1f60c9fd3e6fdf84f5a090ea3a2434a94ee206fe9407",
+    "presentationRevision": true,
+    "releaseVersion": "1.0.1"
+  }
+}

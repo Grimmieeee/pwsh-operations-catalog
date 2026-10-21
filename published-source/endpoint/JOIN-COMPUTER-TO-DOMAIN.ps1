@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 JOIN-COMPUTER-TO-DOMAIN.ps1
@@ -34,8 +34,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -189,7 +191,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Endpoint Domain Join" } catch {}
 
     Clear-Host
-    Write-Host "ENDPOINT DOMAIN JOIN"
+    Write-Host 'Join Computer to Domain'
+    Write-Host 'Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.'
     Write-Host "Change-making"
     Write-Host ""
 
