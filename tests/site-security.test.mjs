@@ -629,7 +629,7 @@ test('file input examples use supported columns and resource mailboxes do not ad
     assert.ok(source.includes('Import-Csv'),item.file);
     assert.ok(source.includes("'"+sample.header+"'") || source.includes('"'+sample.header+'"'),item.file);
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('TXT: one entry per line.'));
+    assert.ok(!html.includes('TXT: one entry per line.'));
     assert.ok(html.includes('Multiple entries: separate with commas when typing into the script.'));
     assert.ok(html.includes(sample.values.join(',')));
   }

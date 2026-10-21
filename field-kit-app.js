@@ -2887,7 +2887,7 @@
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
     const sample=spec.inputExample;
-    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>TXT: one entry per line.</p><pre>${esc(sample.values.join('\n'))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
+    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
     return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}</details>`:'';
   }
 

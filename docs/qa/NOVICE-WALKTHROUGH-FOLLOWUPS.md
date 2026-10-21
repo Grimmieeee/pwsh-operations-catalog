@@ -20,3 +20,5 @@ Remaining follow-ups: the 11 planned tools still need source publication. Full f
 Live verification: the first publication passed all 100 source/asset comparisons. A returning-browser check caught stale JavaScript because asset version tags were unchanged; the release tags were then advanced to novice-followups-1.
 
 Input clarification: all 15 CSV/TXT example disclosures now also show comma-separated multiple entries for direct typing. TXT remains one entry per line and CSV retains its supported column header. Script behavior is unchanged.
+
+Owner refinement: removed the separate TXT example block from all 15 bulk-input cards. The comma-separated direct-entry example and CSV column example remain.
