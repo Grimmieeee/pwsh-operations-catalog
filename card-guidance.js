@@ -1024,7 +1024,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "GET-USER-GROUPS.ps1": {
-    "sourceSha256": "c2a1d01f3a9597b8c67cfd9ed69a20ffc4c83e6d8557c17cc6bbaf4390ef2b40",
+    "sourceSha256": "fb1a0872e2282f6e945bc222ea16134e7b1b1d68c6f0ea8a677f53e4d0575d7a",
     "objective": "Find a user's direct group memberships in AD and Entra ID.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
     "requires": "Access to read users and groups in the connected tenant. For AD results, run on a domain-connected computer with RSAT. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",

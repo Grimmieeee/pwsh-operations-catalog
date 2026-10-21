@@ -77,7 +77,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/identity/GET-USER-GROUPS.ps1": {
-    "sha256": "c2a1d01f3a9597b8c67cfd9ed69a20ffc4c83e6d8557c17cc6bbaf4390ef2b40",
+    "sha256": "fb1a0872e2282f6e945bc222ea16134e7b1b1d68c6f0ea8a677f53e4d0575d7a",
     "mode": "auto",
     "services": [
       "GRAPH",

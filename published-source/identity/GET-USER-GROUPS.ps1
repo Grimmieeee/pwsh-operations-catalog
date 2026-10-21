@@ -661,31 +661,31 @@ try {
     $complete=@($outcomes | Where-Object { $_ -eq 'Checked' }).Count
     $notFound=@($outcomes | Where-Object { $_ -eq 'User not found' }).Count
     $status='UNSUCCESSFUL'
-    $detail='No membership check completed. Review the source results above.'
+    $detail='No membership checks completed. Review errors above.'
     if ($outcomes.Count -gt 0 -and $complete -eq $outcomes.Count -and $invalid -eq 0) {
         $status='SUCCESS'
-        $detail='AD and Entra membership checks completed for every supplied user.'
+        $detail='AD and Entra checks complete for all supplied users.'
     }
     elseif ($complete -gt 0) {
         $status='PARTIAL'
-        $detail='Some source checks completed. Review missing coverage before drawing conclusions.'
+        $detail='Some checks incomplete. Review results above.'
     }
     elseif ($outcomes.Count -gt 0 -and $notFound -eq $outcomes.Count -and $invalid -eq 0) {
         $status='USER NOT FOUND'
-        $detail='No matching user found in either directory for any supplied UPN.'
+        $detail='No supplied users found in either directory.'
     }
     if ($invalid -gt 0) { $detail += " Invalid inputs skipped: $invalid." }
     try { Offer-VerifiedCsv -Rows @($exportRows) }
     catch {
         Write-Fail ("CSV export failed: {0}" -f $_.Exception.Message)
         $status='PARTIAL'
-        $detail='Requested CSV export failed. Review the source results above; export is unverified.'
+        $detail='CSV export failed; export is unverified. Review results above.'
     }
     Write-SessionComplete -Status $status -Detail $detail
 }
 catch {
     Write-Fail $_.Exception.Message
-    Write-SessionComplete -Status 'UNSUCCESSFUL' -Detail 'The lookup could not finish. Review the error above.'
+    Write-SessionComplete -Status 'UNSUCCESSFUL' -Detail 'Lookup incomplete. Review the error above.'
 }
 finally {
     Pause-End

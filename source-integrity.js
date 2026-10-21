@@ -7,7 +7,7 @@ window.FIELD_KIT_SOURCE_INTEGRITY = Object.freeze({
   "published-source/endpoint/JOIN-COMPUTER-TO-DOMAIN.ps1": "ceb45d86f50b2e220690edc42b923e79963484b3e860cfa6c9b9800e4f990867",
   "published-source/identity/GET-ACCOUNT-STATUS.ps1": "137ad42ab42a9739ceab2123570f2dc50c2cb258c087f48431c2204fb86e69b9",
   "published-source/identity/GET-GROUP-MEMBERS.ps1": "744ac9b55488b0b96f22f0ce886aee25698eb39cb15a82cbb1fb291d063d3478",
-  "published-source/identity/GET-USER-GROUPS.ps1": "c2a1d01f3a9597b8c67cfd9ed69a20ffc4c83e6d8557c17cc6bbaf4390ef2b40",
+  "published-source/identity/GET-USER-GROUPS.ps1": "fb1a0872e2282f6e945bc222ea16134e7b1b1d68c6f0ea8a677f53e4d0575d7a",
   "published-source/identity/GET-USER-PREDELETE-CHECK.ps1": "e7e86d7ae9e59ba32a7752feb55562b782fc5cf6623b3f33d7c584ef6d945f0f",
   "published-source/identity/GET-USER-SECURITY-SNAPSHOT.ps1": "52ac45625a7a12b01d9f1a27d34636423b791ec78d77ea7640d86edb66af2ff6",
   "published-source/identity/INVOKE-ASSIGN-LICENSES.ps1": "289d921e47af9ba0d05c0ecaef218a25101c704529e9aa31c85e4aa5d1e158b5",
