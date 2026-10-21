@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 GET-TENANT-DRIFT-REVIEW.ps1
@@ -48,8 +48,10 @@ function Write-Fail {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Get-FriendlyGraphError {
@@ -618,7 +620,7 @@ function Write-ChangeSection {
 }
 
 try {
-    Write-Host "TENANT DRIFT REVIEW"
+    Write-Host 'Review Tenant Changes'
     Write-Host "Shows high-value tenant changes since the last approved baseline."
     Write-Host ""
 

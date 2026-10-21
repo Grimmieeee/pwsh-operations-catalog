@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 shared-mailbox-signin-audit-clean.ps1
@@ -30,8 +30,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -318,7 +320,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Shared Mailbox Sign-in Audit" } catch {}
 
     Clear-Host
-    Write-Host "SHARED MAILBOX SIGN-IN AUDIT"
+    Write-Host 'Audit Shared Mailbox Sign-ins'
+    Write-Host 'Shows whether shared mailboxes are being signed into directly.'
     Write-Host "Read-only"
     Write-Host ""
 

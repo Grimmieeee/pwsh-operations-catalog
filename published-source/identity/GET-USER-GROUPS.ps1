@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 GET-USER-GROUPS.ps1
 
 OBJECTIVE
-Show direct Active Directory and Entra ID group memberships for one or more users.
+Find a user's direct group memberships in AD and Entra ID.
 
 INPUT
 - One UPN
@@ -57,23 +57,30 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host 'Press Enter to close session.' -NoNewline
+    Read-Host | Out-Null
+}
+
+function Write-SessionComplete {
+    param([string]$Status,[string]$Detail)
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host ("SESSION COMPLETE // {0}" -f $Status)
+    if ($Detail) { Write-Host $Detail }
+    Write-Host "No directory changes made."
+}
 
-    try {
-        do {
-            $key = $Host.UI.RawUI.ReadKey(
-                "NoEcho,IncludeKeyDown"
-            )
-        }
-        until ($key.VirtualKeyCode -eq 13)
-
-        Write-Host ""
+function Get-GraphFailureState {
+    param([System.Management.Automation.ErrorRecord]$Record)
+    foreach ($code in @($Record.Exception.ResponseStatusCode,
+                        $Record.Exception.StatusCode,
+                        $Record.Exception.Response.StatusCode)) {
+        if ($null -ne $code -and [int]$code -eq 404) { return 'User not found' }
     }
-    catch {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+    if ($Record.Exception -is [System.IO.FileNotFoundException]) { return 'Unavailable' }
+    if ($Record.Exception.Message -eq 'The user was not found in the connected tenant.') {
+        return 'User not found'
     }
+    return 'Failed'
 }
 
 function Ensure-GraphAuthenticationModule {
@@ -82,7 +89,7 @@ function Ensure-GraphAuthenticationModule {
         Select-Object -First 1
 
     if (-not $module) {
-        throw "Microsoft.Graph.Authentication is required but is not installed. Install with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser"
+        throw [System.IO.FileNotFoundException]::new("Microsoft.Graph.Authentication is required but is not installed. Install with: Install-Module Microsoft.Graph.Authentication -Scope CurrentUser")
     }
 
     Import-Module $module.Path -Force -ErrorAction Stop
@@ -347,12 +354,6 @@ function Resolve-AuthoritativeADUser {
         'mail','proxyAddresses','sAMAccountName'
     )
 
-    if ($GraphUser -and -not [string]::IsNullOrWhiteSpace([string]$GraphUser.onPremisesSamAccountName)) {
-        $safeSam = Escape-ADFilterValue -Value ([string]$GraphUser.onPremisesSamAccountName)
-        $user = Get-UniqueADUserMatch -Filter "SamAccountName -eq '$safeSam'" -Server $Server -Properties $properties -Method 'Graph onPremisesSamAccountName'
-        if ($user) { return $user }
-    }
-
     $upnCandidates = @($UserPrincipalName,$(if ($GraphUser) { [string]$GraphUser.userPrincipalName })) | Where-Object { $_ } | Sort-Object -Unique
     foreach ($candidate in $upnCandidates) {
         $safe = Escape-ADFilterValue -Value $candidate
@@ -379,13 +380,6 @@ function Resolve-AuthoritativeADUser {
         if ($user) { return $user }
     }
 
-    if ($UserPrincipalName -match '^([^@]+)@') {
-        $fallbackSam = [string]$Matches[1]
-        $safe = Escape-ADFilterValue -Value $fallbackSam
-        $user = Get-UniqueADUserMatch -Filter "SamAccountName -eq '$safe'" -Server $Server -Properties $properties -Method 'sAMAccountName fallback'
-        if ($user) { return $user }
-    }
-
     return $null
 }
 
@@ -397,6 +391,7 @@ function Get-ADUserAndGroups {
 
     $result = [pscustomobject]@{
         Available = $false
+        Status = 'Unavailable'
         DomainController = ''
         User = $null
         Groups = @()
@@ -419,14 +414,16 @@ function Get-ADUserAndGroups {
         $result.Available = $true
         $result.DomainController = $server
         $result.User = $user
-        if (-not $user) { return $result }
+        if (-not $user) { $result.Status = 'User not found'; return $result }
 
         $result.Groups = @(
             Get-ADPrincipalGroupMembership -Identity $user.DistinguishedName -Server $server -ErrorAction Stop -WarningAction SilentlyContinue
         )
+        $result.Status = 'Checked'
         return $result
     }
     catch {
+        $result.Status = 'Failed'
         $result.Error = $_.Exception.Message
         return $result
     }
@@ -497,16 +494,18 @@ function Get-GroupMarkers {
 }
 
 function Write-GroupSection {
-    param([string]$Title,[object[]]$Rows)
-
+    param([string]$Title,[object[]]$Rows,[string]$Status,[string]$Detail)
     Write-Host ""
     Write-Host $Title
-
-    if (-not $Rows -or $Rows.Count -eq 0) {
-        Write-Host "None found"
+    if ($Status -ne 'Checked') {
+        Write-Host $Status
+        if ($Detail) { Write-Host ("Reason: {0}" -f $Detail) }
         return
     }
-
+    if (-not $Rows -or $Rows.Count -eq 0) {
+        Write-Host "Checked - no groups found"
+        return
+    }
     foreach ($row in $Rows) {
         Write-Host ("- {0}{1}" -f $row.Name,(Get-GroupMarkers -Row $row))
     }
@@ -567,8 +566,13 @@ function Offer-VerifiedCsv {
     if (-not $Rows -or $Rows.Count -eq 0) { return }
     if ((Read-Host "Export results to CSV [Y/N]").Trim() -notmatch '^(?i)y$') { return }
 
-    $path=(Read-Host "CSV output path [blank for .\$DefaultName]").Trim().Trim('"')
-    if (-not $path) { $path=Join-Path (Get-Location).Path $DefaultName }
+    $desktop=[Environment]::GetFolderPath('Desktop')
+    if (-not $desktop -or -not (Test-Path -LiteralPath $desktop -PathType Container)) {
+        $desktop=(Get-Location).Path
+    }
+    $defaultPath=Join-Path $desktop $DefaultName
+    $path=(Read-Host "CSV output path [blank for $defaultPath]").Trim().Trim('"')
+    if (-not $path) { $path=$defaultPath }
 
     $Rows | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8 -ErrorAction Stop
     $check=@(Import-Csv -LiteralPath $path -ErrorAction Stop)
@@ -577,137 +581,112 @@ function Offer-VerifiedCsv {
         throw "CSV verification failed. Expected $($Rows.Count) row(s); read back $($check.Count)."
     }
 
+    $columns=@($Rows[0].PSObject.Properties.Name)
+    $expected=@($Rows | ConvertTo-Csv -NoTypeInformation | ConvertFrom-Csv)
+    if (Compare-Object -ReferenceObject $expected -DifferenceObject $check -Property $columns) {
+        throw "CSV verification failed. Exported fields differ from the displayed results."
+    }
     Write-OK "Exported and verified: $path"
 }
 
-function Get-GraphFailureAction {
-    param([string]$Domain)
-
-    return (
-        "Sign in with an account that can read users and groups in {0}, then run the script again." -f
-        $Domain
-    )
-}
-
 try {
-    Write-Host "USER GROUP LOOKUP"
-    Write-Host "Read-only. Active Directory and Entra ID are checked independently."
+    Write-Host 'Get User Groups'
+    Write-Host "Find a user's direct group memberships in AD and Entra ID."
+    Write-Host "Read only. Direct membership does not establish effective access."
+    Write-Host ("Started: {0}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'))
     Write-Host ""
 
     $usersToCheck=@(Get-InputUsers -Values $InputObject)
     if ($usersToCheck.Count -eq 0) { throw "No users were provided." }
-
     $exportRows=New-Object System.Collections.ArrayList
-    $checked=0
-    $graphFailures=0
-    $adFailures=0
+    $outcomes=New-Object System.Collections.ArrayList
+    $invalid=0
 
     foreach ($UPN in $usersToCheck) {
         $UPN=([string]$UPN).Trim()
-
         if ($UPN -notmatch '^[^@\s]+@[^@\s]+$') {
-            Write-Host ""
-            Write-Warn "Skipping invalid UPN: $UPN"
+            Write-Warn "Skipped invalid UPN: $UPN"
+            $invalid++
             continue
         }
-
-        $checked++
-        $domain=($UPN -split '@')[-1]
         $graphUser=$null
         $graphGroups=@()
-        $graphAvailable=$true
-
+        $graphStatus='Checked'
+        $graphError=''
+        $resolvingUser=$true
         try {
             $graphUser=Connect-GraphForUser -UserPrincipalName $UPN -Scopes @('User.Read.All','Group.Read.All')
+            $resolvingUser=$false
             $graphGroups=@(Get-GraphGroups -UserId ([string]$graphUser.id))
         }
         catch {
-            $graphAvailable=$false
-            $graphFailures++
+            $graphStatus=Get-GraphFailureState -Record $_
+            # A 404 during group retrieval does not mean the user was not found.
+            if (-not $resolvingUser -and $graphStatus -eq 'User not found') { $graphStatus='Failed' }
+            $graphError=$_.Exception.Message
         }
-
         $adResult=Get-ADUserAndGroups -UserPrincipalName $UPN -GraphUser $graphUser
-        if (-not $adResult.Available -or $adResult.Error) { $adFailures++ }
-
         $groupSections=Get-SeparatedGroupRows -ADGroups @($adResult.Groups) -EntraGroups @($graphGroups)
-        $adRows=@($groupSections.AD)
-        $entraRows=@($groupSections.Entra)
-
         $displayName=$UPN
         if ($graphUser -and $graphUser.displayName) { $displayName=[string]$graphUser.displayName }
         elseif ($adResult.User -and $adResult.User.DisplayName) { $displayName=[string]$adResult.User.DisplayName }
 
         Write-Host ""
-        Write-Host "USER"
-        Write-Host ("Name: {0}" -f $displayName)
-        Write-Host ("UPN : {0}" -f $UPN)
-
-        Write-GroupSection -Title "ACTIVE DIRECTORY GROUPS" -Rows $adRows
-        Write-GroupSection -Title "ENTRA ID GROUPS" -Rows $entraRows
-
-        Write-Host ""
-        Write-Host "COVERAGE"
-        Write-Host ("Active Directory : {0}" -f $(if ($adResult.Available -and -not $adResult.Error) { 'Checked' } else { 'Not checked' }))
-        Write-Host ("Entra ID         : {0}" -f $(if ($graphAvailable) { 'Checked' } else { 'Not checked' }))
-
-        if (-not $graphAvailable) {
-            Write-Warn "Entra groups could not be checked."
-            Write-Host ("Action: {0}" -f (Get-GraphFailureAction -Domain $domain))
-        }
-
-        if (-not $adResult.Available -or $adResult.Error) {
-            Write-Warn "AD groups could not be checked."
-            if ($adResult.Error) { Write-Host ("Action: {0}" -f $adResult.Error) }
-            else { Write-Host "Action: Run from a domain-connected computer with the ActiveDirectory module available." }
-        }
-
-        foreach ($row in $adRows) {
-            [void]$exportRows.Add([pscustomobject]@{
-                UserUPN=$UPN; UserName=$displayName; Source='Active Directory'; Group=$row.Name
-                SyncState=''; Dynamic=$false; Microsoft365=$false; Protected=[bool]$row.Protected
-                Coverage=$(if ($adResult.Available -and -not $adResult.Error) { 'Checked' } else { 'Not checked' })
-            })
-        }
-
-        foreach ($row in $entraRows) {
-            [void]$exportRows.Add([pscustomobject]@{
-                UserUPN=$UPN; UserName=$displayName; Source='Entra ID'; Group=$row.Name
-                SyncState=$row.SyncState; Dynamic=[bool]$row.IsDynamic; Microsoft365=[bool]$row.IsMicrosoft365
-                Protected=[bool]$row.Protected; Coverage=$(if ($graphAvailable) { 'Checked' } else { 'Not checked' })
-            })
-        }
-
-        if ($adRows.Count -eq 0) {
-            [void]$exportRows.Add([pscustomobject]@{
-                UserUPN=$UPN; UserName=$displayName; Source='Active Directory'; Group=''; SyncState=''
-                Dynamic=$false; Microsoft365=$false; Protected=$false
-                Coverage=$(if ($adResult.Available -and -not $adResult.Error) { 'Checked - no groups found' } else { 'Not checked' })
-            })
-        }
-
-        if ($entraRows.Count -eq 0) {
-            [void]$exportRows.Add([pscustomobject]@{
-                UserUPN=$UPN; UserName=$displayName; Source='Entra ID'; Group=''; SyncState=''
-                Dynamic=$false; Microsoft365=$false; Protected=$false
-                Coverage=$(if ($graphAvailable) { 'Checked - no groups found' } else { 'Not checked' })
-            })
+        Write-Host ("USER // {0}" -f $displayName)
+        Write-Host $UPN
+        $sources=@(
+            [pscustomobject]@{Name='Active Directory';Title='ACTIVE DIRECTORY GROUPS';Status=$adResult.Status;Error=$adResult.Error;Rows=@($groupSections.AD)},
+            [pscustomobject]@{Name='Entra ID';Title='ENTRA ID GROUPS';Status=$graphStatus;Error=$graphError;Rows=@($groupSections.Entra)}
+        )
+        foreach ($source in $sources) {
+            Write-GroupSection -Title $source.Title -Rows $source.Rows -Status $source.Status -Detail $source.Error
+            [void]$outcomes.Add($source.Status)
+            $coverage=$source.Status
+            if ($source.Status -eq 'Checked' -and $source.Rows.Count -eq 0) { $coverage='Checked - no groups found' }
+            $rows=@($source.Rows)
+            if ($source.Status -ne 'Checked' -or $rows.Count -eq 0) { $rows=@($null) }
+            foreach ($row in $rows) {
+                [void]$exportRows.Add([pscustomobject]@{
+                    UserUPN=$UPN; UserName=$displayName; Source=$source.Name
+                    Group=$(if ($row) { $row.Name } else { '' })
+                    SyncState=$(if ($row) { $row.SyncState } else { '' })
+                    Dynamic=[bool]($row -and $row.IsDynamic)
+                    Microsoft365=[bool]($row -and $row.IsMicrosoft365)
+                    Protected=[bool]($row -and $row.Protected)
+                    Coverage=$coverage; Error=$source.Error
+                })
+            }
         }
     }
-
-    Write-Host ""
-    Write-Host "SUMMARY"
-    Write-Host ("Users checked        : {0}" -f $checked)
-    Write-Host ("Entra check failures : {0}" -f $graphFailures)
-    Write-Host ("AD check failures    : {0}" -f $adFailures)
-
-    Offer-VerifiedCsv -Rows @($exportRows)
-
-    Write-Host ""
-    Write-OK "Complete. No changes made."
-    Pause-End
+    $complete=@($outcomes | Where-Object { $_ -eq 'Checked' }).Count
+    $notFound=@($outcomes | Where-Object { $_ -eq 'User not found' }).Count
+    $status='UNSUCCESSFUL'
+    $detail='No membership checks completed. Review errors above.'
+    if ($outcomes.Count -gt 0 -and $complete -eq $outcomes.Count -and $invalid -eq 0) {
+        $status='SUCCESS'
+        $detail='AD and Entra checks complete for all supplied users.'
+    }
+    elseif ($complete -gt 0) {
+        $status='PARTIAL'
+        $detail='Some checks incomplete. Review results above.'
+    }
+    elseif ($outcomes.Count -gt 0 -and $notFound -eq $outcomes.Count -and $invalid -eq 0) {
+        $status='USER NOT FOUND'
+        $detail='No supplied users found in either directory.'
+    }
+    if ($invalid -gt 0) { $detail += " Invalid inputs skipped: $invalid." }
+    try { Offer-VerifiedCsv -Rows @($exportRows) }
+    catch {
+        Write-Fail ("CSV export failed: {0}" -f $_.Exception.Message)
+        $status='PARTIAL'
+        $detail='CSV export failed; export is unverified. Review results above.'
+    }
+    Write-SessionComplete -Status $status -Detail $detail
 }
 catch {
-    Write-Host ""
     Write-Fail $_.Exception.Message
+    Write-SessionComplete -Status 'UNSUCCESSFUL' -Detail 'Lookup incomplete. Review the error above.'
+}
+finally {
     Pause-End
 }

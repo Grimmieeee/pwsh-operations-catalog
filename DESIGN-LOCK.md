@@ -1,3 +1,19 @@
+## Approved operator cards — October 20, 2026
+
+The owner approved this card design and broad rollout in the current conversation. It supersedes older card/drawer instructions below. The main dashboard/navigation is not being redesigned.
+
+- Use a short action/object name. Mirror pairs such as Get User Groups / Remove User Groups; use stable filenames for source and handoffs.
+- Show impact, platform and accurate scope up front: SINGLE-USER, MULTI-USER, SINGLE or MULTI-USER, TENANT or LOCAL. Use GROUP/MAILBOX where the target is not a user. Never imply bulk support the source does not have.
+- Keep input format brief: UPN / CSV / TXT where supported. Surface extra preparation such as a required tenant ID when it changes what the operator must bring.
+- STEPS comes before Download / View Code. Ordinary interactive tools use: Download file. Select Run with PowerShell. Press Enter to close session when complete.
+- Preserve existing-session, administrator, IR and terminal controls as explicit launch exceptions. Never imply automatic closing or force-close a caller's window. Unattended jobs must remain noninteractive.
+- DETAILS is one optional disclosure of operational necessity and limits. Avoid duplicating script notes, module lists, generic use cases, or every prompt. Important destructive impact remains visible in the impact labels.
+- Related Items uses clear tool names and impact labels, without repeated use-case captions or decorative symbols. Script cards have three valid task-related destinations. Never link to missing source as a working tool.
+- Keep exact command preparation, target placeholders and safety warnings for quick commands. These are execution requirements, not removable decoration.
+- Script presentation uses a matching title, one objective, useful results, a neutral SESSION COMPLETE marker and the agreed Enter prompt where compatible. A completion marker does not establish successful results.
+- Preserve authentication, target resolution, service calls, confirmations, outcomes and exports during a presentation-only change. Behavior changes need their own evidence and follow-up.
+- Existing operational tests remain accepted for their recorded source and scope. Presentation comparisons do not invent live runtime testing of revised bytes; retain history and apply the exact-source verification gate.
+
 # FIELD // KIT — approved design baseline
 
 Locked by the owner on October 17, 2026. Future visual changes require an in-chat preview and explicit approval before publication. Routine bug fixes may restore this baseline; do not redesign while working on scripts.

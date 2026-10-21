@@ -1,6 +1,6 @@
 <#
 INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1
-.VERSION 1.0.1
+.VERSION 1.0.2
 
 Create dynamic Entra group for licensed users.
 
@@ -32,8 +32,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -344,7 +346,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Create Dynamic Licensed Users Group" } catch {}
 
     Clear-Host
-    Write-Host "CREATE DYNAMIC LICENSED USERS GROUP"
+    Write-Host 'Create Dynamic License Group'
+    Write-Host 'Creates and verifies an Entra dynamic security group for enabled users with an active license or service plan.'
     Write-Host "Change-making"
     Write-Host ""
 

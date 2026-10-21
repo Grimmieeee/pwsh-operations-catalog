@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-guest-app-consent-audit-clean.ps1
@@ -35,8 +35,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -300,7 +302,8 @@ function Is-RiskyScope {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Guest App Consent Audit" } catch {}
-Write-Host "TENANT GUEST APP CONSENT AUDIT"
+Write-Host 'Audit Guest App Consent'
+Write-Host 'Finds guest app consent and access that may need review.'
     Write-Host "Read-only"
     Write-Host ""
 

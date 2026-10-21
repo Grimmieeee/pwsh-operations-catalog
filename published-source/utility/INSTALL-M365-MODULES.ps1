@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -26,7 +26,9 @@ function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
 function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 function Show-Section { param([string]$Title) Write-Host ''; Write-Host (" {0} " -f $Title) -ForegroundColor White -BackgroundColor DarkGray }
-function Pause-End { if (-not $NoPause) { Write-Host ''; Read-Host 'Press Enter to EXIT' | Out-Null } }
+function Pause-End { if (-not $NoPause) { Write-Host ''
+                                          Write-Host 'SESSION COMPLETE'
+                                          Write-Host ''; Read-Host 'Press Enter to close session.' | Out-Null } }
 
 function Confirm-Type {
     param([string]$Required)
@@ -41,7 +43,7 @@ function Get-LatestModule {
 }
 
 try {
-    Write-Host 'M365 MODULE SETUP'
+    Write-Host 'Install M365 Modules'
     Write-Host 'Installs or updates PowerShell modules for the current user.'
     Write-Host 'No tenant connection is made.'
 

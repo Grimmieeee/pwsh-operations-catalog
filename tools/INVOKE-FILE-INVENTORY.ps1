@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -38,8 +38,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     if (-not $NoPause) {
+        Write-Host ''
+        Write-Host 'SESSION COMPLETE'
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -106,7 +108,8 @@ function Get-Scope {
 }
 
 try {
-    Write-Host "JUMPBOX FILE INVENTORY"
+    Write-Host 'Get File Inventory'
+    Write-Host 'Find duplicate scripts, signature problems, and leftover working copies.'
     Write-Host "READ-ONLY VERSION SANITY REVIEW"
     Write-Host ""
 

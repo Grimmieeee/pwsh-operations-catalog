@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -42,8 +42,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -378,7 +380,8 @@ function Add-ManualEvents {
 }
 
 try {
-    Write-Host "IR AUDIT - TIMELINE BUILDER"
+    Write-Host 'IR: Build Incident Timeline'
+    Write-Host 'Builds a simple incident timeline from collected events.'
     Write-Host "LOCAL / READ-ONLY"
     Write-Host ""
 

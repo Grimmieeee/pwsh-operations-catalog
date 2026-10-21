@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 DEPLOY-TCPIP-PRINTER.ps1
@@ -37,8 +37,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -193,7 +195,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Endpoint Printer Deployment" } catch {}
 
     Clear-Host
-    Write-Host "ENDPOINT PRINTER DEPLOYMENT"
+    Write-Host 'Install Network Printer'
+    Write-Host 'Adds a direct TCP/IP printer after checking reachability, driver availability, and existing printer state.'
     Write-Host "Local change-making"
     Write-Host ""
 

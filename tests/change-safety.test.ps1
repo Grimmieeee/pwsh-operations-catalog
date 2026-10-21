@@ -51,7 +51,7 @@ function Assert-Change([bool]$Ok,[string]$Message) { if (-not $Ok) { throw $Mess
             if ($script:groupCase -eq 'context-changed') { $script:groupContext.TenantId='22222222-2222-4222-8222-222222222222' }
             return 'CREATE'
         }
-        if ($Prompt -eq 'Press Enter to close') { return '' }
+        if ($Prompt -eq 'Press Enter to close session.') { return '' }
         throw "Unexpected group prompt: $Prompt"
     }
     function Clear-Host {}

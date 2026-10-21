@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 manage-code-signing-cert.ps1
@@ -45,8 +45,10 @@ function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Section {
@@ -477,7 +479,8 @@ try {
     catch {}
 
     Clear-Host
-    Write-Host "MANAGE CODE-SIGNING CERT"
+    Write-Host 'Manage Signing Certificates'
+    Write-Host 'Create and manage certificates used to sign PowerShell scripts.'
     Write-Host ""
 
     do {

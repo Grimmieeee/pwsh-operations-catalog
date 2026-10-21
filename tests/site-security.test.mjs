@@ -11,16 +11,14 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
-test('reviewed tenant audits disclose expected tenant before launch',()=>{
-  const f=loadCatalog(root);
-  const items=f.api.ITEMS.filter(x=>x.publishedPath?.startsWith('published-source/tenant/')&&fs.readFileSync(path.join(root,x.publishedPath),'utf8').includes('Graph read failed; review incomplete.'));
-  assert.equal(items.length,13);
-  for(const item of items){
-    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('Tenant ID (GUID)'),item.file);
-    assert.ok(html.indexOf('Tenant ID (GUID)')<html.indexOf('guided-start'),item.file);
-    assert.equal(f.api.isVerifiedRelease(item),true,item.file);
-  }
+test('reviewed tenant audits disclose the required tenant ID before launch',()=>{
+ const f=loadCatalog(root);
+ const items=f.api.ITEMS.filter(x=>x.publishedPath?.startsWith('published-source/tenant/')&&fs.readFileSync(path.join(root,x.publishedPath),'utf8').includes('Graph read failed; review incomplete.'));
+ assert.equal(items.length,13);
+ for(const item of items){f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('Tenant ID'),item.file);assert.ok(html.indexOf('Tenant ID')<html.indexOf('guided-start'),item.file);
+  assert.equal(item.operatorCard.presentationRevision,true);assert.equal(f.api.isVerifiedRelease(item),false);
+ }
 });
 
 test('known IR lookup limitation is visible without changing exact-version release evidence',()=>{
@@ -35,7 +33,7 @@ test('offboarding language leads to read-only preparation without enabling missi
   for(const query of ['employee left','departing employee','user leaving','offboarding','leaver']){
     f.api.state.query=query;
     const list=f.api.filteredItems();
-    assert.equal(list[0].displayName,'Pre-delete User Check',query);
+    assert.equal(list[0].displayName,'Check User Before Deletion',query);
     assert.equal(list[0].access,'Read-only');
     assert.ok(list.some(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1'));
     assert.equal(list.find(x=>x.displayName==='User Offboarding').status,'Source pending');
@@ -49,12 +47,11 @@ test('offboarding language leads to read-only preparation without enabling missi
   assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/No matches\. Try a task name[\s\S]*browse a section/);
 });
 
-test('verified license removal retains tenant input and exact target approval',()=>{
-  const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');
-  f.api.openItem(item);
-  const html=f.elements.get('drawerBody').innerHTML;
-  for(const text of ['Tenant ID (GUID)','Shows each user and selected license','Shows failed or unconfirmed results','Type REMOVE'])assert.ok(html.includes(text),text);
-  assert.equal(f.api.isVerifiedRelease(item),true);
+test('license removal keeps visible impact and the source retains exact target approval',()=>{
+ const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');f.api.openItem(item);
+ const html=f.elements.get('drawerBody').innerHTML,source=fs.readFileSync(path.join(root,item.publishedPath),'utf8');
+ for(const text of ['MAKES CHANGES','SINGLE or MULTI-USER','UPN / CSV / TXT','License removal can affect services'])assert.ok(html.includes(text),text);
+ assert.match(source,/ExpectedTenantId/);assert.match(source,/REMOVE/);assert.equal(f.api.isVerifiedRelease(item),false);
 });
 
 test('investigation searches lead to assessment without hijacking explicit actions',()=>{
@@ -67,18 +64,15 @@ test('investigation searches lead to assessment without hijacking explicit actio
   assert.equal(f.api.filteredItems()[0].name,'Disable Sign-In');
 });
 
-test('IR cards show preparation, exact launch, expected results and explicit handoffs',()=>{
-  const f=loadCatalog(root);
-  for(const item of f.api.ITEMS.filter(x=>x.workflow)){
-    f.api.openItem(item);
-    const html=f.elements.get('drawerBody').innerHTML;
-    for(const text of ['DOWNLOAD IR WORKFLOW','IR workflow guide','EXPECTED RESULT','If blocked or cancelled','Paste the full path to '+item.file])assert.ok(html.includes(text),item.file+': '+text);
-    assert.ok(html.includes('CHECK POWERSHELL READINESS'));
-    assert.ok(html.indexOf('Before starting:')<html.indexOf('DOWNLOAD IR WORKFLOW'));
-  }
-  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){
-    f.api.openItem(item);assert.ok(!f.elements.get('drawerBody').innerHTML.includes('guided-start'));
-  }
+test('IR cards retain the exact launch, preparation and incident handoff',()=>{
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(x=>x.workflow)){
+  f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  for(const text of ['DOWNLOAD IR WORKFLOW','Workflow preparation','DETAILS','Paste the full path to '+item.file,'same PowerShell window'])assert.ok(html.includes(text),item.file+': '+text);
+  const completion=f.api.completionInfo(item);for(const key of ['result','next','blocked'])assert.ok(html.includes(completion[key].replaceAll('&','&amp;')),item.file+': '+key);
+  assert.equal(f.api.isVerifiedRelease(item),true);
+ }
+ for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){f.api.openItem(item);assert.ok(!f.elements.get('drawerBody').innerHTML.includes('guided-start'));}
 });
 
 test('IR package is a readable ZIP with exact reviewed script bytes and a guide',async()=>{
@@ -144,25 +138,20 @@ test('quick command risk, scoped preparation and missing-source readiness stay a
   }
 });
 
-test('every released script has operational coverage and reviewed prerequisites',()=>{
-  const f=loadCatalog(root);
-  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
-    f.api.openItem(item);
-    const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('<summary>CHECKS</summary>'),item.file);
-    assert.ok(!/Read-only tenant permissions|preferred authentication flow/.test(html),item.file);
-  }
-  const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');
-  f.api.openItem(removal);
-  const html=f.elements.get('drawerBody').innerHTML;
-  for(const text of ['Typed REMOVE GROUPS confirmation','Skips dynamic groups, groups used for admin roles, and Exchange-managed groups','Group.Read.All'])assert.ok(html.includes(text));
-  const snapshot=f.api.ITEMS.find(x=>x.file==='GET-MAILBOX-SECURITY-SNAPSHOT.ps1');
-  assert.ok(snapshot.requires.includes('Microsoft Graph is not used'));
-  for(const [file,review] of Object.entries(f.window.FIELD_KIT_CARD_GUIDANCE)){
-    const item=f.api.ITEMS.find(x=>x.file===file);
-    assert.ok(item,file);
-    assert.equal(review.sourceSha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
-  }
+test('every script has compact operational details and source-reviewed prerequisites',()=>{
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
+  f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
+  assert.ok(!html.includes('<summary>CHECKS</summary>'),item.file);
+  assert.ok(!html.includes('Technical requirements:'),item.file);
+  assert.ok(item.requires,item.file);
+ }
+ const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');f.api.openItem(removal);
+ const html=f.elements.get('drawerBody').innerHTML;assert.ok(html.includes('Removes memberships, not the groups themselves.'));assert.ok(html.includes('managed or protected'));
+ for(const [file,review] of Object.entries(f.window.FIELD_KIT_CARD_GUIDANCE)){
+  const item=f.api.ITEMS.find(x=>x.file===file);assert.ok(item,file);assert.equal(review.sourceSha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
+ }
 });
 
 test('quick command examples disclose replacement inputs before preparation or command',()=>{
@@ -197,58 +186,30 @@ test('library total lives in About while result counts appear only for search or
   assert.ok(f.elements.get('results').innerHTML.includes(`${f.api.ITEMS.length} catalog entries`));
 });
 
-test('minimal cards keep full copy commands and explicit safety caveats',()=>{
-  const f=loadCatalog(root);
-  const license=f.api.ITEMS.find(item=>item.file==='INVOKE-ASSIGN-LICENSES.ps1');
-  f.api.openItem(license);
-  let html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(!html.includes('AUTO-CONNECT'));
-  assert.ok(html.includes('Run with PowerShell'));
-  assert.ok(!html.includes('data-copy="Connect-MgGraph'));
-  assert.ok(html.includes('User.ReadWrite.All'));
-  assert.ok(!html.includes('<summary>Details</summary>'));
-  assert.ok(html.includes('Type ASSIGN to approve'));
-  assert.ok(html.includes('<details class="requirements"><summary title='));
-  assert.ok(!html.includes('run-info-label">REQUIRES'));
-  assert.ok(html.includes('Choose a license from the numbered list'));
-  const removal=f.api.ITEMS.find(item=>item.file==='INVOKE-REMOVE-LICENSES.ps1');
-  f.api.openItem(removal);
-  html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('Choose a license from the numbered list, or ALL'));
-  assert.ok(!html.includes('selected SKU or ALL'));
-  const ir=f.api.ITEMS.find(item=>item.file==='ir-contain-eradicate.ps1');
-  f.api.openItem(ir);
-  html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('terminal capture/transcripts'));
-  const theme=f.api.ITEMS.find(item=>item.file==='SET-THEME-COBALT.ps1');
-  f.api.openItem(theme);
-  assert.ok(f.elements.get('drawerBody').innerHTML.includes('sets Process execution policy to Bypass'));
+test('compact cards retain change impact, operational warnings and exact source controls',()=>{
+ const f=loadCatalog(root);
+ for(const file of ['INVOKE-ASSIGN-LICENSES.ps1','INVOKE-REMOVE-LICENSES.ps1']){
+  const item=f.api.ITEMS.find(x=>x.file===file);f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  for(const text of ['MAKES CHANGES','Run with PowerShell','id="downloadSource"','id="showSource"','DETAILS'])assert.ok(html.includes(text),file+': '+text);
+  assert.ok(!html.includes('AUTO-CONNECT'));assert.ok(!html.includes('data-copy="Connect-MgGraph'));assert.ok(!html.includes('User.ReadWrite.All'));
+ }
+ const ir=f.api.ITEMS.find(x=>x.file==='ir-contain-eradicate.ps1');f.api.openItem(ir);
+ assert.ok(f.elements.get('drawerBody').innerHTML.includes('terminal capture/transcripts'));
+ const theme=f.api.ITEMS.find(x=>x.file==='SET-THEME-COBALT.ps1');f.api.openItem(theme);
+ assert.ok(f.elements.get('drawerBody').innerHTML.includes('sets Process execution policy to Bypass'));
 });
 
-test('cards separate operational checks from inputs and safety guards without overflow groups',()=>{
-  const f=loadCatalog(root);
-  for(const item of f.api.ITEMS){
-    f.api.openItem(item);
-    const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(!/More (?:checks|guards)/.test(html),item.displayName);
-    for(const label of ['INPUT','CHECKS','GUARDS']){
-      assert.ok(html.split(`<div class="section-label">${label}</div>`).length<=2,item.displayName);
-    }
-  }
-  const hold=f.api.ITEMS.find(item=>/Enforce Litigation Hold/.test(item.displayName));
-  assert.ok(hold);
-  f.api.openItem(hold);
-  const html=f.elements.get('drawerBody').innerHTML;
-  const checks=html.slice(html.indexOf('>CHECKS</summary>'),html.indexOf('>GUARDS</summary>'));
-  const guards=html.slice(html.indexOf('>GUARDS</summary>'),html.indexOf('<section class="run-info-block">'));
-  for(const text of ['Current mailbox hold settings','Checks for a hold with no expiry date','Reads mailbox settings again after the change','Optional CSV report']) assert.ok(checks.includes(text),text);
-  for(const text of ['Typed HOLD confirmation','Changes only mailboxes not already on the requested hold','REQUIRES']) assert.ok(guards.includes(text),text);
-  const inputStart=html.indexOf('>INPUT</div>');
-  assert.ok(inputStart>=0 && inputStart<html.indexOf('>CHECKS</summary>'));
-  assert.ok(html.slice(inputStart,html.indexOf('>CHECKS</summary>')).includes('TXT/CSV file'));
-  assert.ok(!guards.includes('>INPUT</div>'));
-  assert.ok(!checks.includes('Typed HOLD confirmation'));
-  assert.ok(!html.includes('More guards'));
+test('all script cards lead with scope, then steps, actions, details and related items',()=>{
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(x=>x.operatorCard)){
+  f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  const scope=html.indexOf('class="operator-scope"'),steps=html.indexOf('guided-start'),actions=html.indexOf('operator-actions'),details=html.indexOf('class="operator-details"'),related=html.indexOf('class="related-block"');
+  assert.ok(scope>=0&&scope<steps&&steps<actions&&actions<details&&details<related,item.file);
+  assert.equal(f.api.relatedItems(item).length,3,item.file);
+  assert.ok(!/More (?:checks|guards)|>GUARDS<|>REQUIRES</.test(html),item.file);
+ }
+ const groups=f.api.ITEMS.find(x=>x.file==='GET-USER-GROUPS.ps1');
+ assert.deepEqual([...f.api.relatedItems(groups)].map(x=>x.displayName),['Get Group Members','Remove User Groups','Get Group Owners']);
 });
 
 test('three tested IR workflow steps expose checksum-verified canonical source',async()=>{
@@ -282,7 +243,12 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
-  assert(f.api.ITEMS.filter(item=>item.verification).length===78);
+  const ledger=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json'),'utf8'));
+  for(const row of ledger.filter(x=>x.changed))assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file===row.file)),false,row.file);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===14);
+  const pilot=f.api.ITEMS.find(item=>item.file==='GET-USER-GROUPS.ps1');
+  assert.equal(pilot.version,'1.0.1');
+  assert.equal(f.api.releaseTag(pilot),'');
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
 
@@ -421,16 +387,14 @@ test('global search includes every scope regardless of navigation selection',()=
   f.api.state.area='Single User';assert.deepEqual(f.api.filteredItems().map(x=>x.file||x.name),toysResults);assert(toysResults.length>0);
 });
 
- test('script cards place Details before START and preserve the IR shared window',()=>{
-  const f=loadCatalog(root);
-  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
-    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    if(html.includes('<summary>Details</summary>'))assert.ok(html.indexOf('<summary>Details</summary>')<html.indexOf('class="guided-start"'),item.file);
-    if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
-    else if(/^terminal/.test(item.startMode || '')) { assert.ok(html.includes('PowerShell window') || html.includes('PowerShell as administrator'),item.file); assert.ok(!html.includes('Run with PowerShell'),item.file); }
-    else assert.ok(html.includes('Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>'),item.file);
-    assert.ok(!html.includes('First sign-in requests read/change permissions'),item.file);
-  }
+ test('script cards preserve launch exceptions and use the agreed Enter wording',()=>{
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(x=>x.operatorCard)){
+  f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+  if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
+  else if(/^terminal/.test(item.startMode||'')){assert.ok(html.includes('PowerShell window')||html.includes('PowerShell as administrator'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
+  else{assert.ok(html.includes('Select <strong>Run with PowerShell.</strong>'),item.file);assert.ok(html.includes('Press Enter to close session when complete.'),item.file);}
+ }
 });
 
 test('verified rows end in a check after visible risk labels; footer retains its typography',()=>{
@@ -505,7 +469,7 @@ test('release card contract covers every source, command, default and completion
   assert.deepEqual(validateCardContract({...f,hashes}),{sources:92,scripts:80,commands:235,pending:11});
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes(item.workflow?'EXPECTED RESULT':'WHEN FINISHED'),item.file);
+    assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
   }
 });
 
@@ -532,33 +496,24 @@ test('release card contract rejects stale source and command guidance and missin
 });
 
 
-test('the eight owner-accepted report releases have source-bound VERIFIED flags',()=>{
-  const f=loadCatalog(root);
-  const names=['GET-QUARTERLY-CLEANUP-REVIEW.ps1','GET-TENANT-GROUP-OWNERS.ps1','GET-MAILBOX-PERMISSIONS.ps1','GET-MAILBOX-SECURITY-SNAPSHOT.ps1','IR-GET-TOKEN-REPLAY-CHECK.ps1','GET-USER-PREDELETE-CHECK.ps1','GET-USER-SECURITY-SNAPSHOT.ps1','GET-TENANT-SECURITY-SNAPSHOT.ps1'];
-  for(const file of names){
-    const item=f.api.ITEMS.find(x=>x.file===file);
-    assert.ok(f.api.isVerifiedRelease(item),file);
-    assert.equal(item.verification.ownerAccepted,true,file);
-    assert.equal(item.verification.testMode,'Sampled read-only batch and HTML export',file);
-    assert.equal(item.verification.sha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
-    assert.ok(fs.readFileSync(path.join(root,item.publishedPath),'utf8').includes('function Offer-FKDesktopReport'),file);
-    assert.equal(f.api.isVerifiedRelease({...item,verification:{...item.verification,sha256:'0'.repeat(64)}}),false,file);
-  }
+test('the eight accepted report releases retain historical acceptance without inheriting it for changed bytes',()=>{
+ const f=loadCatalog(root),ledger=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json'),'utf8'));
+ const names=['GET-QUARTERLY-CLEANUP-REVIEW.ps1','GET-TENANT-GROUP-OWNERS.ps1','GET-MAILBOX-PERMISSIONS.ps1','GET-MAILBOX-SECURITY-SNAPSHOT.ps1','IR-GET-TOKEN-REPLAY-CHECK.ps1','GET-USER-PREDELETE-CHECK.ps1','GET-USER-SECURITY-SNAPSHOT.ps1','GET-TENANT-SECURITY-SNAPSHOT.ps1'];
+ for(const file of names){const item=f.api.ITEMS.find(x=>x.file===file),row=ledger.find(x=>x.file===file);
+  assert.equal(row.priorVerification.ownerAccepted,true,file);assert.equal(row.priorVerification.testMode,'Sampled read-only batch and HTML export',file);
+  assert.equal(row.priorVerification.sha256,row.oldSha256,file);assert.equal(f.api.isVerifiedRelease(item),false,file);
+  assert.equal(row.newSha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
+  assert.ok(fs.readFileSync(path.join(root,item.publishedPath),'utf8').includes('function Offer-FKDesktopReport'));
+ }
 });
 
-test('batch two binds eleven accepted implementations and excludes the resource target mismatch',()=>{
-  const f=loadCatalog(root);
-  const evidence=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/BATCH-2-1.0.0-VERIFICATION.json'),'utf8'));
-  assert.equal(evidence.records.length,11);
-  for(const record of evidence.records){
-    const item=f.api.ITEMS.find(x=>x.file===record.file);
-    assert.ok(f.api.isVerifiedRelease(item),record.file);
-    const bytes=fs.readFileSync(path.join(root,record.path));
-    assert.equal(digest(bytes),record.releaseSha256,record.file);
-    const tested=bytes.toString('utf8').replace(/^(\ufeff?)# \.VERSION 1\.0\.0\r?\n/,'$1');
-    assert.equal(digest(Buffer.from(tested)),record.testedSourceSha256,record.file+' executable body');
-    assert.equal(record.readFailures,0);
-    assert.equal(f.api.isVerifiedRelease({...item,verification:{...item.verification,sha256:'0'.repeat(64)}}),false);
-  }
-  assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1')),false);
+test('batch two acceptance remains tied to original bytes and resource acceptance is not invented',()=>{
+ const f=loadCatalog(root),ledger=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json'),'utf8'));
+ const evidence=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/BATCH-2-1.0.0-VERIFICATION.json'),'utf8'));
+ assert.equal(evidence.records.length,11);
+ for(const record of evidence.records){const item=f.api.ITEMS.find(x=>x.file===record.file),row=ledger.find(x=>x.file===record.file);
+  assert.equal(row.oldSha256,record.releaseSha256,record.file);assert.equal(row.priorVerification.sha256,record.releaseSha256,record.file);
+  assert.equal(record.readFailures,0);assert.equal(f.api.isVerifiedRelease(item),false,record.file);
+ }
+ assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1')),false);
 });

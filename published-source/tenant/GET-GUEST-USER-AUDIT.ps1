@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 GET-GUEST-USER-AUDIT.ps1
@@ -29,8 +29,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -344,7 +346,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Guest Audit" } catch {}
 
     Clear-Host
-    Write-Host "TENANT GUEST AUDIT"
+    Write-Host 'Review Guest Users'
+    Write-Host 'Find guest accounts with old or missing sign-in records, disabled accounts, and unaccepted invitations.'
     Write-Host "Read-only"
     Write-Host ""
 

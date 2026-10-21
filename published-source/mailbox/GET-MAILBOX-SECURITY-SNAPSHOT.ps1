@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 <#
 GET USER MAILBOX SNAPSHOT
 
@@ -104,8 +104,10 @@ function Write-Warn { param($m) Write-FKReportLine "[WARN] $m" -ForegroundColor 
 function Write-Fail { param($m) Write-FKReportLine "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Write-FKReportLine "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -119,7 +121,7 @@ function Pause-End {
     }
     catch {
         Write-FKReportLine ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -501,7 +503,8 @@ function Show-InboxRule {
 }
 
 try {
-    Write-FKReportLine "MAILBOX SNAPSHOT"
+    Write-FKReportLine 'Get Mailbox Security'
+    Write-FKReportLine 'Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

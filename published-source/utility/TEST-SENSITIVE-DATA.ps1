@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -27,7 +27,9 @@ function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
 function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 function Show-Section { param([string]$Title) Write-Host ''; Write-Host (" {0} " -f $Title) -ForegroundColor White -BackgroundColor DarkGray }
-function Pause-End { if (-not $NoPause) { Write-Host ''; Read-Host 'Press Enter to EXIT' | Out-Null } }
+function Pause-End { if (-not $NoPause) { Write-Host ''
+                                          Write-Host 'SESSION COMPLETE'
+                                          Write-Host ''; Read-Host 'Press Enter to close session.' | Out-Null } }
 
 function Get-RelativePath {
     param([string]$FullName,[string]$Root)
@@ -62,7 +64,7 @@ function Add-Finding {
 }
 
 try {
-    Write-Host 'SENSITIVE DATA CHECK'
+    Write-Host 'Check Sensitive Data'
     Write-Host 'READ ONLY. Finds information you may not want to publish.'
 
     if (-not $Path) {

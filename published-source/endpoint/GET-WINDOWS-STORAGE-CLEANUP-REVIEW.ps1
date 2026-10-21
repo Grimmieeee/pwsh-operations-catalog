@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -50,7 +50,7 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Format-Bytes {
@@ -213,7 +213,8 @@ function Get-StorageData {
 }
 
 try {
-    Write-Host "WINDOWS STORAGE CLEANUP REVIEW"
+    Write-Host 'Review Windows Storage'
+    Write-Host 'Review drive space, cleanup locations, and the largest files before deciding what to remove.'
     Write-Host "READ-ONLY. NO FILES WILL BE DELETED."
     Write-Host ""
 

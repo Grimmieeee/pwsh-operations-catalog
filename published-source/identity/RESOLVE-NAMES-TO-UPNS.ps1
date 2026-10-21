@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 .SYNOPSIS
@@ -32,8 +32,10 @@ function WARN($m) { Write-Host "[WARN] $m" -ForegroundColor Yellow }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Write-Section($Title) {
@@ -473,7 +475,8 @@ function Export-VerifiedUpnTxt {
 
 try {
     Clear-Host
-    Write-Host "RESOLVE NAMES TO UPNs"
+    Write-Host 'Find User UPNs'
+    Write-Host 'Resolves one or more names, emails, or UPNs to reviewed Entra ID UPN matches.'
     Write-Host "Read-only"
     Write-Host ""
     Write-Host "Purpose: Convert display names, UPNs, or emails into a clean review list."

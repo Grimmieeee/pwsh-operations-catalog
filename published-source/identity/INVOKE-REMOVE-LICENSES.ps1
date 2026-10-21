@@ -1,6 +1,6 @@
 <#
 INVOKE-REMOVE-LICENSES.ps1
-.VERSION 1.0.2
+.VERSION 1.0.3
 
 User license removal for one or more users.
 
@@ -67,8 +67,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -374,7 +376,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Remove User Licenses" } catch {}
 
     Clear-Host
-    Write-Host "REMOVE USER LICENSES"
+    Write-Host 'Remove User Licenses'
+    Write-Host 'Removes one selected license or all licenses from one or more approved users and verifies the final state.'
     Write-Host "Change-making"
     Write-Host ""
 

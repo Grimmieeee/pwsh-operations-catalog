@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 INVOKE-REMOVE-USER-GROUPS.ps1
@@ -49,8 +49,10 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Write-Host "Press Enter to EXIT" -NoNewline
+    Write-Host 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -64,7 +66,7 @@ function Pause-End {
     }
     catch {
         Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -835,7 +837,7 @@ function Get-FriendlyRemovalFailure {
 }
 
 try {
-    Write-Host "USER GROUP MEMBERSHIP CLEANUP"
+    Write-Host 'Remove User Groups'
     Write-Host "Shows AD and Entra groups for one or more users and removes all removable memberships after review."
     Write-Host ""
 

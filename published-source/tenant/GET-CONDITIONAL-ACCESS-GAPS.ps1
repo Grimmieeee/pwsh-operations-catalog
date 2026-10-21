@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-cap-gaps-audit-clean.ps1
@@ -35,8 +35,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -300,7 +302,8 @@ function Is-RiskyScope {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant CAP Gaps Audit" } catch {}
-Write-Host "TENANT CONDITIONAL ACCESS GAP AUDIT"
+Write-Host 'Review Conditional Access'
+Write-Host 'Reviews Conditional Access configuration for common coverage gaps and exceptions that warrant operator review.'
     Write-Host "Read-only"
     Write-Host ""
 

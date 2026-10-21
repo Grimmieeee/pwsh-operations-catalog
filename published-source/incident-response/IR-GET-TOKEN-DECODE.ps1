@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -40,8 +40,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -212,7 +214,8 @@ function Show-Claim {
 }
 
 try {
-    Write-Host "IR AUDIT - TOKEN DECODE"
+    Write-Host 'IR: Decode Token'
+    Write-Host 'Decodes a JWT locally so you can inspect its claims.'
     Write-Host "LOCAL ONLY / NO NETWORK"
     Write-Host ""
 

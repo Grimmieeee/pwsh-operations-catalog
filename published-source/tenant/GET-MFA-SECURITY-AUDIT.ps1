@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 tenant-mfa-security-audit-clean.ps1
@@ -43,8 +43,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -338,7 +340,8 @@ function Classify-Methods {
 
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant MFA Security Audit" } catch {}
-Write-Host "TENANT MFA SECURITY AUDIT"
+Write-Host 'Audit MFA Security'
+Write-Host 'Shows where MFA coverage or registered methods may leave gaps.'
     Write-Host "Read-only"
     Write-Host ""
 

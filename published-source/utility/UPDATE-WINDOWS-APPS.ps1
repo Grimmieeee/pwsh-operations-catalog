@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -26,7 +26,9 @@ function Write-Info { param([string]$Message) Write-Host "[INFO] $Message" }
 function Write-Warn { param([string]$Message) Write-Host "[WARN] $Message" -ForegroundColor Yellow }
 function Write-Fail { param([string]$Message) Write-Host "[FAIL] $Message" -ForegroundColor Red }
 function Show-Section { param([string]$Title) Write-Host ''; Write-Host (" {0} " -f $Title) -ForegroundColor White -BackgroundColor DarkGray }
-function Pause-End { if (-not $NoPause) { Write-Host ''; Read-Host 'Press Enter to EXIT' | Out-Null } }
+function Pause-End { if (-not $NoPause) { Write-Host ''
+                                          Write-Host 'SESSION COMPLETE'
+                                          Write-Host ''; Read-Host 'Press Enter to close session.' | Out-Null } }
 
 function Confirm-Type {
     param([string]$Required)
@@ -35,7 +37,7 @@ function Confirm-Type {
 }
 
 try {
-    Write-Host 'WINDOWS APP UPDATES'
+    Write-Host 'Update Windows Apps'
     Write-Host 'Uses WinGet to review and update installed applications.'
 
     $wingetCommand = Get-Command winget -ErrorAction Stop

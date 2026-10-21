@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 #Requires -Version 5.1
 
@@ -39,8 +39,10 @@ function Section {
 }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to EXIT" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Confirm-Yes {
@@ -394,7 +396,8 @@ function Get-AbuseIPDBReport {
 }
 
 try {
-    Write-Host "IR AUDIT - THREAT INTEL"
+    Write-Host 'IR: Check IP Reputation'
+    Write-Host 'Check public IP addresses against VirusTotal or AbuseIPDB reputation reports.'
     Write-Host "READ-ONLY / EXTERNAL REPUTATION LOOKUP"
     Write-Host ""
 

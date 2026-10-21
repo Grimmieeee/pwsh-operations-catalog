@@ -1464,6 +1464,8 @@
   }
 
   function displayName(item){
+    const approved = window.FIELD_KIT_OPERATOR_CARDS?.[item.file];
+    if (approved) return approved.name;
     let name = String(item.name || item.file || "Untitled").trim();
     name = name.replace(/^1[-_ ]+/i,"").replace(/^2[-_ ]+/i,"");
     name = name.replace(/-CHR\b/ig,"").replace(/\s{2,}/g," ").trim();
@@ -1921,11 +1923,42 @@
     ["GET-USER-GROUPS.ps1","GET-GROUP-MEMBERS.ps1","INVOKE-REMOVE-USER-GROUPS.ps1"],
     ["GET-MAILBOX-FORWARDING.ps1","GET-MAILBOX-PERMISSIONS.ps1","GET-MAILBOX-SECURITY-SNAPSHOT.ps1"]
   ];
+  function relatedItems(item){
+    const cards=window.FIELD_KIT_OPERATOR_CARDS || {};
+    const spec=cards[item.file];
+    const candidates=ITEMS.filter(other=>other!==item && (!item.file || other.file!==item.file) && other.status!=="Source pending");
+    let ranked=[];
+    if(item.name==='Revoke Active Sessions')return ['ir-risk-assessment.ps1','ir-contain-eradicate.ps1','ir-recover-validate.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
+    if(item.name==='Show Whether Remote Desktop Is Enabled')return ['Show Windows Firewall Profiles','Show Windows Firewall Rules by Name','Show Listening Tcp Ports'].map(name=>candidates.find(x=>x.name===name)).filter(Boolean);
+    if(spec){
+      const family=spec.family;
+      const adjoining={signing:['setup','files'],git:['files','signing'],licenses:['groups','accounts'],
+        'ir-mail':['ir-workflow','mail'],'ir-workflow':['ir-investigate','ir-mail'],
+        'ir-investigate':['ir-workflow','security'],groups:['licenses'],mail:['mail-audit'],
+        'mail-audit':['mail'],accounts:['licenses'],apps:['security'],security:['apps'],
+        endpoint:['files'],setup:['signing'],files:['git'],terminal:['setup']};
+      const explicit = family==='groups' ? ['GET-USER-GROUPS.ps1','GET-GROUP-MEMBERS.ps1','INVOKE-REMOVE-USER-GROUPS.ps1','GET-TENANT-GROUP-OWNERS.ps1','GET-DISTRIBUTION-GROUP-MEMBERS.ps1'] : [];
+      ranked=candidates.filter(other=>cards[other.file] && ((cards[other.file].family===family && family!=='ir-workflow') || adjoining[family]?.includes(cards[other.file].family)))
+        .sort((a,b)=>{
+          const rank=x=>explicit.includes(x.file)?explicit.indexOf(x.file):cards[x.file].family===family?10:20;
+          return rank(a)-rank(b)||a.displayName.localeCompare(b.displayName);
+        });
+    }else{
+      // Atomic commands relate within their actual platform and task group.
+      ranked=candidates.filter(other=>other.type===item.type && other.platform===item.platform && other.group===item.group)
+        .sort((a,b)=>{
+          const words=new Set(norm([item.displayName,item.subarea].join(' ')).split(' ').filter(x=>x.length>3));
+          const relevance=x=>norm([x.displayName,x.subarea].join(' ')).split(' ').filter(x=>words.has(x)).length;
+          return relevance(b)-relevance(a)||a.displayName.localeCompare(b.displayName);
+        });
+      if(isDocument(item))ranked=candidates.filter(isDocument).filter(other=>other.logicalArea===item.logicalArea);
+    }
+    return ranked.slice(0,3);
+  }
   function relatedMarkup(item){
-    const files = new Set(RELATED_SETS.filter(set=>set.includes(item.file)).flat());
-    const links = ITEMS.filter(other=>other.file!==item.file && files.has(other.file)).slice(0,3);
-    if (!links.length) return "";
-    return '<section class="related-block"><div class="section-label">RELATED TOOLS</div><div class="actions">'+links.map(other=>`<button type="button" class="action" data-related-file="${esc(other.file)}">${esc(other.displayName)}</button>`).join("")+'</div></section>';
+    const links=relatedItems(item);
+    if(!links.length)return '';
+    return '<section class="related-block"><div class="section-label">RELATED ITEMS</div><div class="related-list">'+links.map(other=>`<button type="button" class="related-item" data-related-file="${esc(other.file)}" ${other.type==='Quick Command'?`data-related-name="${esc(other.name)}"`:''}><span>${esc(other.displayName)}</span>${accessMarkup(other).replaceAll('<div','<span').replaceAll('</div>','</span>')}</button>`).join('')+'</div></section>';
   }
 
   // Delegated preparation for these atomic commands; roles and consent remain
@@ -1978,6 +2011,11 @@
       source = {...source, objective:"Planned tool: " + (source.objective || source.notes || source.name),
         checks:[], guards:["Source is not published; this tool cannot be run from the catalog yet."],
         input:"Final inputs and requirements will be confirmed when the source is published.", requires:"", notes:""};
+    }
+    const operatorCard=window.FIELD_KIT_OPERATOR_CARDS?.[source.file];
+    if (operatorCard && operatorCard.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) {
+      source.operatorCard=operatorCard;
+      if(operatorCard.presentationRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
     }
     const area = logicalArea(source);
     return {
@@ -2236,7 +2274,7 @@
     const intent = norm(query);
     const offboardingIntent = /^(?:offboarding|offboard(?: user| employee)?|employee left|(?:employee|user) (?:leaving|departed)|departing (?:employee|user)|leaver)$/.test(intent);
     if (offboardingIntent) {
-      if (item.displayName === 'Pre-delete User Check') return 1000;
+      if (item.file === 'GET-USER-PREDELETE-CHECK.ps1') return 1000;
       if (item.displayName === 'User Offboarding') return 900;
       if (item.file === 'INVOKE-REMOVE-LICENSES.ps1') return 800;
       return 0;
@@ -2769,15 +2807,34 @@
 
   function startMarkup(item){
     if (!item.publishedPath?.endsWith('.ps1')) return '';
-    if (!window.FIELD_KIT_START) return '<section class="guided-start"><div class="section-label">START</div><p>Start guidance could not load. Reload the site before proceeding. Individual source controls remain below.</p></section>';
-    const ir = Boolean(window.FIELD_KIT_START.stages[item.file]);
-    const terminal = /^terminal(?:-admin)?$/.test(item.startMode || '');
-    const code = window.FIELD_KIT_START.launch(item.file) + (item.launchArgs || '');
-    return `<section class="guided-start"><div class="section-label">START</div>
-      ${ir ? '<p>Download the workflow once. It includes all three scripts and the IR workflow guide.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div><p>Extract the ZIP into one folder on the client jumpbox.</p>' : '<p>Download the script below and save it on the computer where it should run.</p>'}
-      ${ir || terminal ? `<p>${ir ? 'Open PowerShell on the jumpbox and keep that window open.' : item.startMode === 'terminal-admin' ? 'Open PowerShell as administrator on the target computer.' : 'Use an existing PowerShell window on the target computer.'} Right-click the downloaded or extracted file (Shift + right-click on older Windows) and choose <strong>Copy as path</strong>.</p><div class="connect-line"><details class="connect-command"><summary>Launch in the same PowerShell window <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div><p>Paste the launch command into that window, press Enter, then paste the file path when asked.${item.launchArgs ? ' Enter the requested account or repository path at the next prompt.' : ''}</p>` : '<p>Right-click the downloaded .ps1 &gt; <strong>Run with PowerShell</strong>.</p>'}
-      ${ir ? `<details class="workflow-guide"><summary>IR workflow guide</summary><div class="guide-copy">${window.FIELD_KIT_START.preparation.filter(text=>!/^The first sign-in/.test(text)).map(text=>`<p>${esc(text.replace(' Cloud sign-in does not grant local AD rights.',''))}</p>`).join('')}<p>Start with ir-risk-assessment. Use the script’s handoff to continue in the same window. The guide in the ZIP includes expected results and blocked/cancelled paths for all three steps.</p></div></details>` : ''}
+    if (!window.FIELD_KIT_START) return '<section class="guided-start"><div class="section-label">STEPS</div><p>Start guidance could not load. Reload the site before proceeding. Individual source controls remain below.</p></section>';
+    const ir=Boolean(window.FIELD_KIT_START.stages[item.file]);
+    const terminal=/^terminal(?:-admin)?$/.test(item.startMode || '');
+    const code=window.FIELD_KIT_START.launch(item.file)+(item.launchArgs || '');
+    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
+    return `<section class="guided-start operator-steps"><div class="section-label">STEPS</div>
+      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on the jumpbox.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
+      <p>${ir ? 'Keep the workflow in the same PowerShell window.' : item.startMode==='terminal-admin' ? 'Open PowerShell as administrator.' : 'Use the PowerShell window where this tool should run.'}</p>
+      <div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
+      <p>Copy the command into that window. Select <strong>Copy as path</strong> for the downloaded file and paste the path when asked.</p>
+      ${ir ? '<p>Use the script handoff to continue. Keep the workflow window open.</p>' : '<p>Use the tool’s own finish controls; the existing PowerShell window stays open.</p>'}
+      ${ir ? `<details class="workflow-guide"><summary>Workflow preparation</summary>${window.FIELD_KIT_START.preparation.map(text=>`<p>${esc(text)}</p>`).join('')}</details>` : ''}
     </section>`;
+  }
+  function scopeMarkup(item){
+    if(item.operatorCard)return `<div class="operator-scope">${esc(item.operatorCard.scope)}<span>${esc(item.operatorCard.input)}</span></div>`;
+    if(item.type==='Quick Command')return '<div class="operator-scope">QUICK COMMAND</div>';
+    if(isDocument(item))return '';
+    return `<div class="operator-scope">${esc(primaryBucket(item).toUpperCase())}</div>`;
+  }
+  function operatorDetailsMarkup(item){
+    const spec=item.operatorCard;
+    if(!spec)return shortNote(item);
+    const notes=[...spec.details];
+    if(item.reviewNote)notes.push(item.reviewNote);
+    if(item.changeNote && !notes.includes(item.changeNote))notes.push(item.changeNote);
+    if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
+    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></details>`:'';
   }
 
   function completionInfo(item){
@@ -3029,7 +3086,7 @@
     if (item.type === "Quick Command") return "";
     if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
     const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
-    const buttons = `<button id="downloadSource" class="action ${item.workflow ? '' : 'primary'}" type="button">DOWNLOAD ${ext}</button><button id="showSource" class="action" type="button">VIEW CODE</button>`;
+    const buttons = `<button id="downloadSource" class="action ${item.workflow ? '' : 'primary'}" type="button">Download</button><button id="showSource" class="action" type="button">View Code</button>`;
     return (item.workflow ? `<details class="individual-source"><summary>Individual script / source</summary><div class="actions">${buttons}</div></details>` : buttons)+'<span id="sourceStatus" role="status"></span>';
   }
 
@@ -3072,31 +3129,25 @@
 
     drawerBody.innerHTML = `
       <section class="item-head">
-        <div class="item-context">${esc(primaryBucket(item))} / ${esc(["Single User","Multi User","Tenant Wide"].includes(primaryBucket(item)) ? scopeSubgroup(item) : item.group)}</div>
+        <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family.replace(/^ir-/, 'IR / ') : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
-        ${accessMarkup(item)}
-        ${item.status === "Source pending" ? '<div class="source-note">SOURCE PENDING — interactive script not yet available.</div>' : ""}
+        <div class="operator-meta">${accessMarkup(item)}${item.operatorCard ? `<span class="operator-platform">${esc(moduleLabel(item).replace(/GRAPH/g,'Entra').replace(/EXO|EXCHANGE/g,'Exchange').replace(/ACTIVE DIRECTORY/g,'AD'))}</span>` : ''}</div>
+        ${scopeMarkup(item)}
+        ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}
       </section>
-
-      ${objectiveMarkup(item)}
-      ${useForMarkup(item)}
-      ${item.changeNote ? `<div class="change-note ${/destructive/i.test(item.access || "") ? "danger" : ""}">${esc(item.changeNote)}</div>` : ""}
+      ${item.operatorCard ? '' : objectiveMarkup(item)}
+      ${item.operatorCard ? '' : useForMarkup(item)}
+      ${item.changeNote && !item.operatorCard ? `<div class="change-note">${esc(item.changeNote)}</div>` : ''}
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
-      ${factsMarkup(item)}
-      ${shortNote(item)}
-      ${runInfoMarkup(item)}
+      ${item.operatorCard ? '' : factsMarkup(item)}
+      ${item.operatorCard ? '' : runInfoMarkup(item)}
       ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
-      ${finishMarkup(item)}
-
-      <div class="actions">
-        ${sourceButton(item)}
-        ${referenceButtons(item)}
-      </div>
-
+      <div class="actions operator-actions">${sourceButton(item)}${referenceButtons(item)}</div>
       <div id="sourceMount"></div>
       <div id="copyStatus" role="status" aria-live="polite"></div>
+      ${operatorDetailsMarkup(item)}
       ${relatedMarkup(item)}
     `;
 
@@ -3121,7 +3172,7 @@
       closeItem();state.area="About";state.query="";search.value="";renderNav();renderResults();
     });
     drawerBody.querySelectorAll("[data-related-file]").forEach(button=>button.addEventListener("click",()=>{
-      const target=ITEMS.find(other=>other.file===button.dataset.relatedFile);
+      const target=button.dataset.relatedName ? ITEMS.find(other=>other.type==='Quick Command' && other.name===button.dataset.relatedName) : ITEMS.find(other=>other.file===button.dataset.relatedFile);
       if (target) {openItem(target);drawerBody.scrollTop=0;}
     }));
     for (const id of ["downloadSource"]){

@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 <#
 GET USER SECURITY SNAPSHOT
 
@@ -110,8 +110,10 @@ function Write-FieldKitFooter {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Write-FKReportLine "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -125,7 +127,7 @@ function Pause-End {
     }
     catch {
         Write-FKReportLine ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -492,7 +494,8 @@ function Get-SignInResult {
 }
 
 try {
-    Write-FKReportLine "USER SNAPSHOT"
+    Write-FKReportLine 'Get User Security'
+    Write-FKReportLine 'Shows the security state around one user before you decide what needs deeper review.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

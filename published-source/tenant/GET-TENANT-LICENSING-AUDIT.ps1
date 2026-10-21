@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 GET-TENANT-LICENSING-AUDIT.ps1
@@ -27,8 +27,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -342,7 +344,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Licensing Audit" } catch {}
 
     Clear-Host
-    Write-Host "TENANT LICENSING AUDIT"
+    Write-Host 'Audit Tenant Licenses'
+    Write-Host 'Review license use, including disabled users with licenses and enabled users without one.'
     Write-Host "Read-only"
     Write-Host ""
 

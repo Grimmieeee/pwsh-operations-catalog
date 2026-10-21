@@ -1,4 +1,4 @@
-﻿# .VERSION 1.0.0
+# .VERSION 1.0.1
 #Requires -Version 5.1
 
 <#
@@ -133,8 +133,10 @@ function Write-Section {
 
 function Pause-End {
     Write-FieldKitFooter
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-FKReportLine ""
-    Write-FKReportLine "Press Enter to EXIT" -NoNewline
+    Write-FKReportLine 'Press Enter to close session.' -NoNewline
 
     try {
         do {
@@ -148,7 +150,7 @@ function Pause-End {
     }
     catch {
         Write-FKReportLine ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 
@@ -851,7 +853,8 @@ function Get-MailboxForwardingReview {
 }
 
 try {
-    Write-FKReportLine "QUARTERLY CLEANUP REVIEW"
+    Write-FKReportLine 'Review Account Cleanup'
+    Write-FKReportLine 'Reviews stale enabled users, admin roles, ownerless cloud groups, and external mailbox forwarding across a tenant.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
 <#
 BACKUP-USER-PROFILE.ps1
@@ -35,8 +35,10 @@ function RISK($m) { Write-Host "[RISK] $m" -ForegroundColor Red }
 function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
+    Write-Host ''
+    Write-Host 'SESSION COMPLETE'
     Write-Host ""
-    Read-Host "Press Enter to close" | Out-Null
+    Read-Host 'Press Enter to close session.' | Out-Null
 }
 
 function Now {
@@ -226,7 +228,8 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Endpoint Profile Backup" } catch {}
 
     Clear-Host
-    Write-Host "ENDPOINT PROFILE BACKUP"
+    Write-Host 'Back Up User Profile'
+    Write-Host 'Copies common Windows profile folders to a dated backup location and writes a local backup log.'
     Write-Host "Local file-write tool"
     Write-Host ""
 
