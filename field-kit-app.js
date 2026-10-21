@@ -1916,11 +1916,60 @@
   function documentLabel(item){
     return /guide|runbook|checklist|standard|handoff|how to/i.test([item.name,item.file].join(" ")) ? "GUIDE" : "REFERENCE";
   }
+  const PENDING_NEXT_STEPS = {
+  "invoke-user-offboard.ps1": [
+    "GET-USER-PREDELETE-CHECK.ps1",
+    "INVOKE-DISABLE-ACCOUNTS.ps1",
+    "INVOKE-REMOVE-LICENSES.ps1"
+  ],
+  "invoke-user-onboard.ps1": [
+    "RESOLVE-NAMES-TO-UPNS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "INVOKE-ASSIGN-LICENSES.ps1"
+  ],
+  "get-inactive-group-debt.ps1": [
+    "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+    "GET-USER-GROUPS.ps1",
+    "GET-ACCOUNT-STATUS.ps1"
+  ],
+  "get-inactive-mailbox-debt.ps1": [
+    "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+    "GET-MAILBOX-PERMISSIONS.ps1",
+    "GET-ACCOUNT-STATUS.ps1"
+  ],
+  "find-accounts-by-name-clean.ps1": [
+    "RESOLVE-NAMES-TO-UPNS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "GET-USER-PREDELETE-CHECK.ps1"
+  ],
+  "shared-mailbox-members.ps1": [
+    "GET-MAILBOX-PERMISSIONS.ps1",
+    "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+    "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+  ],
+  "distro-group-members.ps1": [
+    "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+    "GET-GROUP-MEMBERS.ps1",
+    "GET-TENANT-GROUP-OWNERS.ps1"
+  ],
+  "get-graph-session-user-check.ps1": [
+    "TEST-POWERSHELL-READINESS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "RESET-M365-SESSION.ps1"
+  ],
+  "tenant-security-hardening-guided.ps1": [
+    "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+    "GET-CONDITIONAL-ACCESS-GAPS.ps1",
+    "GET-MFA-SECURITY-AUDIT.ps1"
+  ]
+};
+
   function relatedItems(item){
     const cards=window.FIELD_KIT_OPERATOR_CARDS || {};
     const spec=cards[item.file];
     const candidates=ITEMS.filter(other=>other!==item && (!item.file || other.file!==item.file) && other.status!=="Source pending");
-    if(spec?.related)return spec.related.map(key=>key.startsWith('command:')
+    const reviewedLinks=item.status==="Source pending" ? PENDING_NEXT_STEPS[item.file] : spec?.related;
+    if(reviewedLinks)return reviewedLinks.map(key=>key.startsWith('command:')
       ? candidates.find(other=>other.type==='Quick Command' && other.name===key.slice(8))
       : candidates.find(other=>other.file===key)).filter(Boolean);
     let ranked=[];
@@ -1996,6 +2045,7 @@
     const operatorCard=window.FIELD_KIT_OPERATOR_CARDS?.[source.file];
     if (operatorCard && operatorCard.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) {
       source.operatorCard=operatorCard;
+      source.input=operatorCard.input;
       if(operatorCard.presentationRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
     }
     const area = logicalArea(source);
@@ -2307,6 +2357,12 @@
       if (!matched) return 0;
     }
 
+    // Prefer a tool whose actual title matches the task over incidental mentions.
+    const titleWords=words(item.displayName);
+    if(q.every(token=>titleWords.some(w=>w===token || w.startsWith(token)))) score+=40;
+    if(norm(item.displayName)===intent) score+=100;
+    if(item.operatorCard) score+=12;
+    if(item.status==='Source pending') score-=2;
     return score;
   }
 
@@ -2588,6 +2644,7 @@
     // Only show it when global search mixes scopes together.
     if (!state.query.trim()) return "";
 
+    if(item.operatorCard)return '<span class="result-tag result-scope">'+esc(item.operatorCard.scope)+'</span>';
     const labels = {
       "Single User":"SINGLE USER",
       "Multi User":"MULTI USER",
@@ -2655,6 +2712,7 @@
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
+          <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
         ${isVerifiedRelease(item) ? '<span class="result-check verification-check" aria-hidden="true">✓</span>' : '<span class="result-arrow" aria-hidden="true">›</span>'}
@@ -2805,7 +2863,7 @@
     const ir=Boolean(window.FIELD_KIT_START.stages[item.file]);
     const terminal=/^terminal(?:-admin)?$/.test(item.startMode || '');
     const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
-    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
+    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Right-click the downloaded file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
     return `<section class="guided-start operator-steps"><div class="section-label">STEPS</div>
       ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on the jumpbox.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
       <p>${ir ? 'Keep the workflow in the same PowerShell window.' : item.startMode==='terminal-admin' ? 'Open PowerShell as administrator.' : 'Use the PowerShell window where this tool should run.'}</p>
@@ -2828,7 +2886,9 @@
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
-    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></details>`:'';
+    const sample=spec.inputExample;
+    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>TXT: one entry per line.</p><pre>${esc(sample.values.join('\n'))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
+    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}</details>`:'';
   }
 
   function completionInfo(item){
@@ -3144,6 +3204,7 @@
       <div id="sourceMount"></div>
       <div id="copyStatus" role="status" aria-live="polite"></div>
       ${operatorDetailsMarkup(item)}
+      ${item.status==='Source pending' ? '<p class="source-note">'+(PENDING_NEXT_STEPS[item.file] ? 'The tools below cover individual tasks; they do not replace the complete planned workflow. Review each tool’s scope before continuing.' : 'No working replacement is published. Use your approved process for this task until this tool is available.')+'</p>' : ''}
       ${relatedMarkup(item)}
     `;
 

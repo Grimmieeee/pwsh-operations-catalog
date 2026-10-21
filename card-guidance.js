@@ -4254,7 +4254,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "name": "Delete User Accounts",
@@ -4276,7 +4283,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-ACCOUNT-STATUS.ps1",
       "INVOKE-DISABLE-ACCOUNTS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "name": "Assign User Licenses",
@@ -4298,7 +4312,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "INVOKE-REMOVE-LICENSES.ps1",
       "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "name": "Remove User Licenses",
@@ -4320,7 +4341,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "INVOKE-ASSIGN-LICENSES.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "name": "Find User UPNs",
@@ -4341,7 +4369,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "name": "Get User Account Status",
@@ -4362,7 +4397,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-STALE-SIGNIN-REVIEW.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "INVOKE-DISABLE-ACCOUNTS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "name": "Get Distribution Group Members",
@@ -4384,7 +4426,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1",
       "GET-USER-GROUPS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "Group",
+      "values": [
+        "Finance",
+        "Support"
+      ]
+    }
   },
   "GET-GROUP-MEMBERS.ps1": {
     "name": "Get Group Members",
@@ -4406,7 +4455,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-GROUPS.ps1",
       "INVOKE-REMOVE-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "Group",
+      "values": [
+        "Finance",
+        "Support"
+      ]
+    }
   },
   "GET-USER-GROUPS.ps1": {
     "name": "Get User Groups",
@@ -4429,7 +4485,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "INVOKE-REMOVE-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
     "name": "Remove User Groups",
@@ -4451,7 +4514,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-GROUPS.ps1",
       "GET-GROUP-MEMBERS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "name": "Create Dynamic License Group",
@@ -4516,7 +4586,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Mailbox Security",
@@ -4559,7 +4636,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "name": "Set Litigation Hold",
@@ -4581,7 +4665,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-ACCOUNT-STATUS.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "IR-INVOKE-EMAIL-RECOVERY.ps1": {
     "name": "Incident Response: Restore Email",
@@ -4770,7 +4861,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "input": "Evidence files",
     "details": [
       "Combines supplied evidence; it does not collect missing events.",
-      "When event time is unavailable, labels the file’s modified time separately. Check time zones and gaps before drawing conclusions."
+      "When event time is unavailable, labels the file\u2019s modified time separately. Check time zones and gaps before drawing conclusions."
     ],
     "family": "ir-investigate",
     "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
@@ -5063,7 +5154,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "scope": "LOCAL",
     "input": "Printer address and driver",
     "details": [
-      "Have the approved driver and printer address ready."
+      "Have the printer address ready."
     ],
     "family": "endpoint",
     "sourceSha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",
@@ -5258,7 +5349,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "name": "Audit Admin Roles",
@@ -5413,9 +5511,10 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "name": "Get Resource Mailbox Access",
     "scope": "SINGLE or MULTI-MAILBOX",
-    "input": "Resource mailbox / CSV / TXT",
+    "input": "Resource mailbox names or addresses",
     "details": [
-      "Use an actual room or equipment mailbox, not a security group."
+      "Use an actual room or equipment mailbox, not a security group.",
+      "Enter one or more mailbox names or addresses, separated by commas. File input is not supported."
     ],
     "family": "mail",
     "sourceSha256": "476e8e8458b73432ec3c1e5d90be596b6472cece0e43c79cddc4b1de1693e1ad",
@@ -5536,7 +5635,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "INVOKE-ENFORCE-PER-USER-MFA.ps1"
-    ]
+    ],
+    "inputExample": {
+      "header": "UPN",
+      "values": [
+        "alex@example.com",
+        "sam@example.com"
+      ]
+    }
   },
   "ir-recover-validate.ps1": {
     "name": "BEC: Restore and Validate",
@@ -5847,7 +5953,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Preview a blue PowerShell theme and output helpers.",
-    "notice": "Changes this session’s appearance and sets Process execution policy to Bypass.",
+    "notice": "Changes this session\u2019s appearance and sets Process execution policy to Bypass.",
     "preparation": [],
     "related": [
       "SET-THEME-BASIC.ps1",
@@ -5868,7 +5974,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Install a sea-green PowerShell theme in your startup profile.",
-    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session’s execution setting.",
+    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session\u2019s execution setting.",
     "preparation": [],
     "related": [
       "SET-THEME-COBALT.ps1",

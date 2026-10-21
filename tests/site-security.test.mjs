@@ -589,3 +589,48 @@ test('presentation package approval cannot become operator verification or accep
   await assert.rejects(()=>f.api.buildIRBundle(),/release review/);
  }
 });
+
+test('novice searches prioritize matching complete tools and preserve exact command choices',()=>{
+  const f=loadCatalog(root);
+  for(const [query,name] of [['groups','Get User Groups'],['forwarding','Get Mailbox Forwarding'],['readiness','Check M365 PowerShell Readiness'],['Show Mailbox Forwarding','Show Mailbox Forwarding']]){
+    f.api.state.query=query;
+    assert.equal(f.api.filteredItems()[0].displayName,name,query);
+  }
+});
+
+test('search rows show purposes and the same entity scope as opened cards',()=>{
+  const f=loadCatalog(root);f.api.state.query='forwarding';f.api.renderResults();
+  const item=f.api.ITEMS.find(x=>x.file==='GET-MAILBOX-FORWARDING.ps1');
+  assert.ok(f.elements.get('results').innerHTML.includes(item.operatorCard.objective));
+  assert.ok(f.api.rowTags(item).includes('SINGLE or MULTI-MAILBOX'));
+  assert.ok(!f.api.rowTags(item).includes('MULTI USER'));
+  assert.ok(f.api.startMarkup(item).includes('Right-click the downloaded file.'));
+});
+
+test('pending tools provide available next steps without claiming a complete replacement',()=>{
+  const f=loadCatalog(root);
+  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.match(html,/do not replace the complete planned workflow|No working replacement is published/);
+    const links=f.api.relatedItems(item);
+    assert.ok(links.every(x=>x.status!=='Source pending' && x.publishedPath));
+    if(!/^csv-/.test(item.file))assert.equal(links.length,3,item.file);
+  }
+});
+
+test('file input examples use supported columns and resource mailboxes do not advertise file input',()=>{
+  const f=loadCatalog(root);
+  const bulk=f.api.ITEMS.filter(x=>x.operatorCard?.input.includes('CSV'));
+  assert.equal(bulk.length,15);
+  for(const item of bulk){
+    const sample=item.operatorCard.inputExample;
+    assert.ok(sample && ['UPN','Group'].includes(sample.header),item.file);
+    const source=fs.readFileSync(path.join(root,item.publishedPath),'utf8');
+    assert.ok(source.includes('Import-Csv'),item.file);
+    assert.ok(source.includes("'"+sample.header+"'") || source.includes('"'+sample.header+'"'),item.file);
+    f.api.openItem(item);assert.ok(f.elements.get('drawerBody').innerHTML.includes('TXT: one entry per line.'));
+  }
+  const resource=f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1');
+  assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
+  f.api.openItem(resource);assert.ok(f.elements.get('drawerBody').innerHTML.includes('File input is not supported.'));
+});
