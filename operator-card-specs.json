@@ -509,18 +509,18 @@
   "ir-risk-assessment.ps1": {
     "name": "BEC: Assess User Risk",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
-      "Use the approved jumpbox and keep the workflow in one PowerShell window.",
+      "Use the approved support computer and keep the workflow in one PowerShell window.",
       "Review findings and unavailable checks before deciding on containment."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-contain-eradicate.ps1",
@@ -528,35 +528,35 @@
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
     "workflowReview": {
-      "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+      "kind": "uri-boundary-fix",
+      "version": "1.0.2",
+      "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
         "operatorTested": true,
         "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
       },
-      "nonPresentationSha256": "10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",
-      "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
+      "nonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
+      "evidence": "docs/qa/BEC-APP-LOOKUP-FIX.md"
     }
   },
   "ir-contain-eradicate.ps1": {
     "name": "BEC: Contain and Clean Up",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
       "Use the same PowerShell window as assessment.",
       "Maintain containment until cleanup and recovery are approved.",
       "Temporary passwords can remain in terminal capture/transcripts. The operator confirms trusted MFA methods."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Contain and clean up one compromised account after approval.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-risk-assessment.ps1",
@@ -565,8 +565,8 @@
     ],
     "workflowReview": {
       "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+      "version": "1.0.2",
+      "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
@@ -670,7 +670,7 @@
     "input": "Evidence files",
     "details": [
       "Combines supplied evidence; it does not collect missing events.",
-      "When event time is unavailable, labels the file\u2019s modified time separately. Check time zones and gaps before drawing conclusions."
+      "When event time is unavailable, labels the file’s modified time separately. Check time zones and gaps before drawing conclusions."
     ],
     "family": "ir-investigate",
     "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
@@ -1456,18 +1456,18 @@
   "ir-recover-validate.ps1": {
     "name": "BEC: Restore and Validate",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
       "Use the same workflow window and approved recovery decision.",
       "Confirm sign-in and MFA before closing the incident."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Check recovery readiness and restore approved account access.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-contain-eradicate.ps1",
@@ -1476,8 +1476,8 @@
     ],
     "workflowReview": {
       "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+      "version": "1.0.2",
+      "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
@@ -1762,7 +1762,7 @@
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Preview a blue PowerShell theme and output helpers.",
-    "notice": "Changes this session\u2019s appearance and sets Process execution policy to Bypass.",
+    "notice": "Changes this session’s appearance and sets Process execution policy to Bypass.",
     "preparation": [],
     "related": [
       "SET-THEME-BASIC.ps1",
@@ -1783,7 +1783,7 @@
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Install a sea-green PowerShell theme in your startup profile.",
-    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session\u2019s execution setting.",
+    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session’s execution setting.",
     "preparation": [],
     "related": [
       "SET-THEME-COBALT.ps1",

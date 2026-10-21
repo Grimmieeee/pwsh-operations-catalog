@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.1
+.VERSION 1.0.2
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
 .DESCRIPTION Contain and clean up one compromised account after approval.

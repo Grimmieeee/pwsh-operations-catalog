@@ -143,7 +143,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/ir-risk-assessment.ps1": {
-    "sha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -151,7 +151,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/ir-contain-eradicate.ps1": {
-    "sha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -428,7 +428,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/ir-recover-validate.ps1": {
-    "sha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
     "mode": "auto",
     "services": [
       "GRAPH",

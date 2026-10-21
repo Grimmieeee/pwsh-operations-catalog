@@ -21,10 +21,11 @@ test('reviewed tenant audits disclose the required tenant ID before launch',()=>
  }
 });
 
-test('known BEC limitation stays visible with separately bound display evidence',()=>{
+test('BEC lookup fix has source-bound review without claiming operator verification',()=>{
   const f=loadCatalog(root),risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');
   f.api.openItem(risk);
-  assert.ok(f.elements.get('drawerBody').innerHTML.includes('Known limitation: app display names may be unresolved'));
+  assert.ok(!f.elements.get('drawerBody').innerHTML.includes('Known limitation: app display names may be unresolved'));
+  assert.equal(risk.operatorCard.workflowReview.kind,'uri-boundary-fix');
   assert.equal(digest(fs.readFileSync(path.join(root,risk.publishedPath))),risk.operatorCard.workflowReview.sourceSha256);
   assert.equal(f.api.isVerifiedRelease(risk),false);
 });
@@ -37,7 +38,8 @@ test('offboarding language leads to read-only preparation without enabling missi
     assert.equal(list[0].displayName,'Check User Before Deletion',query);
     assert.equal(list[0].access,'Read-only');
     assert.ok(list.some(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1'));
-    assert.equal(list.find(x=>x.displayName==='User Offboarding').status,'Source pending');
+    assert.ok(!list.some(x=>x.displayName==='User Offboarding'));
+    assert.ok(f.api.PLANNED_ITEMS.some(x=>x.displayName==='User Offboarding'));
   }
   for(const query of ['remove license','Disable Sign-In']){
     f.api.state.query=query;
@@ -226,7 +228,7 @@ test('three BEC workflow display revisions expose checksum-verified canonical so
     assert.equal(item.publishedPath,'published-source/incident-response/'+file);
     const bytes=fs.readFileSync(path.join(root,item.publishedPath));
     assert.deepEqual(Buffer.from(await f.api.resolveSource(item),'utf8'),bytes);
-    assert.match(bytes.toString('utf8'),/\.VERSION 1\.0\.1/);
+    assert.match(bytes.toString('utf8'),/\.VERSION 1\.0\.2/);
     assert.equal(f.api.isVerifiedRelease(item),false);
     assert(item.workflow);
   }
@@ -473,7 +475,7 @@ test('cards preserve investigative limits and do not promise unavailable searche
 test('release card contract covers every source, command, default and completion path',()=>{
   const f=loadCatalog(root);
   const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
-  assert.deepEqual(validateCardContract({...f,hashes}),{sources:92,scripts:80,commands:235,pending:11});
+  assert.deepEqual(validateCardContract({...f,hashes}),{sources:92,scripts:80,commands:235,pending:0});
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
@@ -578,7 +580,7 @@ test('rendered cards retain source-supported target scope and required preparati
 });
 
 test('presentation package approval cannot become operator verification or accept unbound evidence',async()=>{
- for(const mutation of ['hash','version','baseline','fingerprint']){
+ for(const mutation of ['hash','version','baseline','fingerprint','kind','evidence']){
   const f=loadCatalog(root,{fetchImpl:async()=>{throw Error('Unapproved package must not fetch source');}});
   const item=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1'),review=item.operatorCard.workflowReview;
   assert.equal(f.api.isVerifiedRelease(item),false);
@@ -586,6 +588,8 @@ test('presentation package approval cannot become operator verification or accep
   if(mutation==='version')review.version='99.0.0';
   if(mutation==='baseline')review.baselineVerification.sha256='0'.repeat(64);
   if(mutation==='fingerprint')review.nonPresentationSha256='0'.repeat(64);
+  if(mutation==='kind')review.kind='presentation-only';
+  if(mutation==='evidence')review.evidence='other-review.md';
   await assert.rejects(()=>f.api.buildIRBundle(),/release review/);
  }
 });
@@ -607,14 +611,39 @@ test('search rows show purposes and the same entity scope as opened cards',()=>{
   assert.ok(f.api.startMarkup(item).includes('Right-click the downloaded file.'));
 });
 
-test('pending tools provide available next steps without claiming a complete replacement',()=>{
+test('unpublished plans stay out of working searches, counts and cards',()=>{
   const f=loadCatalog(root);
-  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){
-    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.match(html,/do not replace the complete planned workflow|No working replacement is published/);
-    const links=f.api.relatedItems(item);
-    assert.ok(links.every(x=>x.status!=='Source pending' && x.publishedPath));
-    if(!/^csv-/.test(item.file))assert.equal(links.length,3,item.file);
+  assert.equal(f.api.PLANNED_ITEMS.length,11);
+  assert.equal(f.api.ITEMS.length,327);
+  assert.ok(f.api.ITEMS.every(x=>x.publishedPath || x.code));
+  for(const item of f.api.PLANNED_ITEMS){
+    f.api.state.query=item.displayName;
+    assert.ok(!f.api.filteredItems().some(x=>x.file===item.file));
+  }
+  f.api.state.area='About';f.api.renderResults();
+  const html=f.elements.get('results').innerHTML;
+  assert.ok(html.includes('PLANNED TOOLS (11)'));
+  for(const item of f.api.PLANNED_ITEMS)assert.ok(html.includes(item.displayName));
+});
+
+test('every quick command has three source-bound reviewed relationships',()=>{
+  const f=loadCatalog(root);
+  const records=JSON.parse(fs.readFileSync(path.join(root,'command-relationship-specs.json'),'utf8'));
+  const commands=f.api.ITEMS.filter(x=>x.type==='Quick Command');assert.equal(commands.length,235);
+  for(const item of commands){
+    const record=records[item.name];assert.equal(record.code,item.code,item.name);
+    const links=Array.from(f.api.relatedItems(item));
+    assert.equal(links.length,3,item.name);assert.equal(new Set(links).size,3,item.name);
+    assert.ok(links.every(x=>x!==item && (x.publishedPath || x.code)),item.name);
+    assert.deepEqual(links.map(x=>x.type==='Quick Command'?'command:'+x.name:x.file),record.related,item.name);
+    item.code+='\n# Changed source';assert.equal(f.api.relatedItems(item).length,0,'Stale relationship review must not bind');
+  }
+});
+
+test('task searches exclude incidental mentions in code, setup and broad subareas',()=>{
+  const f=loadCatalog(root);
+  for(const [query,excluded] of [['groups','Compare Script Files'],['printer','Restart Service'],['forwarding','Remove Mailbox Full Access Delegate']]){
+    f.api.state.query=query;assert.ok(!f.api.filteredItems().some(x=>x.displayName===excluded),query);
   }
 });
 

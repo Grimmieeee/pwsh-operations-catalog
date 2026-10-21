@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.1
+.VERSION 1.0.2
 .GUID d77fb13d-5860-46ad-bc7e-2ef0df3a458d
 .AUTHOR FIELD // KIT
 .DESCRIPTION Check recovery readiness and restore approved account access.

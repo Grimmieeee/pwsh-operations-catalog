@@ -1,0 +1,2117 @@
+{
+  "Get User": {
+    "family": "AD account review",
+    "code": "Get-ADUser \"username\" -Properties Enabled,UserPrincipalName,DisplayName,LockedOut,PasswordLastSet,PasswordNeverExpires |\n  Select-Object DisplayName,SamAccountName,UserPrincipalName,Enabled,LockedOut,PasswordLastSet,PasswordNeverExpires",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-GROUPS.ps1"
+    ]
+  },
+  "Show Password Expiry": {
+    "family": "AD account review",
+    "code": "Get-ADUser \"username\" -Properties msDS-UserPasswordExpiryTimeComputed |\n  Select-Object SamAccountName,@{N=\"PasswordExpires\";E={[datetime]::FromFileTime($_.\"msDS-UserPasswordExpiryTimeComputed\")}}",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Delete User": {
+    "family": "AD account review",
+    "code": "Remove-ADUser -Identity \"username\" -Confirm:$true",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Disable User": {
+    "family": "AD account review",
+    "code": "Disable-ADAccount -Identity \"username\"",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Enable User": {
+    "family": "AD account review",
+    "code": "Enable-ADAccount -Identity \"username\"",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Force Password Change Next Logon": {
+    "family": "AD account review",
+    "code": "Set-ADUser -Identity \"username\" -ChangePasswordAtLogon $true",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Reset Password": {
+    "family": "AD account review",
+    "code": "$Password = Read-Host \"Temporary password\" -AsSecureString\nSet-ADAccountPassword -Identity \"username\" -Reset -NewPassword $Password",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Unlock User": {
+    "family": "AD account review",
+    "code": "Unlock-ADAccount -Identity \"username\"",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Find User By Exact Display Name": {
+    "family": "Cloud account review",
+    "code": "$Name = \"Jane Doe\"\nGet-MgUser -Filter \"displayName eq '$Name'\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Get User By Upn": {
+    "family": "Cloud account review",
+    "code": "Get-MgUser -UserId \"user@domain.com\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Assigned Licenses": {
+    "family": "Cloud account review",
+    "code": "Get-MgUserLicenseDetail -UserId \"user@domain.com\" |\n  Select-Object SkuPartNumber,SkuId",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Manager": {
+    "family": "Cloud account review",
+    "code": "Invoke-MgGraphRequest -Method GET -Uri \"https://graph.microsoft.com/v1.0/users/user@domain.com/manager?`$select=displayName,userPrincipalName\" |\n  Select-Object displayName,userPrincipalName",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Password Last Changed And Age": {
+    "family": "Cloud account review",
+    "code": "$u = Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,LastPasswordChangeDateTime\n[pscustomobject]@{\n  User = $u.UserPrincipalName\n  LastPasswordChange = $u.LastPasswordChangeDateTime\n  PasswordAgeDays = if($u.LastPasswordChangeDateTime){ [math]::Floor(((Get-Date) - $u.LastPasswordChangeDateTime).TotalDays) } else { $null }\n}",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Sync Source": {
+    "family": "Cloud account review",
+    "code": "Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName |\n  Select-Object UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Delete Cloud User": {
+    "family": "Cloud account review",
+    "code": "Remove-MgUser -UserId \"user@domain.com\"",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Disable Sign-In": {
+    "family": "Sign-in investigation",
+    "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$false",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Enable Sign-In": {
+    "family": "Sign-in investigation",
+    "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$true",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Revoke Active Sessions": {
+    "family": "Sign-in investigation",
+    "code": "Revoke-MgUserSignInSession -UserId \"user@domain.com\"",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Cached Tickets": {
+    "family": "Windows sessions and shares",
+    "code": "klist",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ]
+  },
+  "Purge Cached Tickets": {
+    "family": "Windows sessions and shares",
+    "code": "klist purge",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ]
+  },
+  "Show Local Administrators": {
+    "family": "Local accounts",
+    "code": "Get-LocalGroupMember -Group \"Administrators\" |\n  Select-Object Name,ObjectClass,PrincipalSource",
+    "related": [
+      "command:Show Local Users",
+      "command:Identity and Privileges",
+      "command:Local Account Details"
+    ]
+  },
+  "Show Local Users": {
+    "family": "Local accounts",
+    "code": "Get-LocalUser |\n  Select-Object Name,Enabled,LastLogon,PasswordExpires,UserMayChangePassword",
+    "related": [
+      "command:Show Local Administrators",
+      "command:Identity and Privileges",
+      "command:Local Account Details"
+    ]
+  },
+  "Add User To Administrators": {
+    "family": "Local accounts",
+    "code": "Add-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Remove User From Administrators": {
+    "family": "Local accounts",
+    "code": "Remove-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Show All Authentication Methods For One User": {
+    "family": "MFA methods",
+    "code": "Get-MgUserAuthenticationMethod -UserId \"user@domain.com\" |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}}",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show Registration Status For One User"
+    ]
+  },
+  "Show Microsoft Authenticator Methods": {
+    "family": "MFA methods",
+    "code": "Get-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" |\n  Select-Object Id,DisplayName,DeviceTag,PhoneAppVersion",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ]
+  },
+  "Show Phone Methods": {
+    "family": "MFA methods",
+    "code": "Get-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" |\n  Select-Object Id,PhoneNumber,PhoneType,SmsSignInState",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ]
+  },
+  "Show Registration Status For One User": {
+    "family": "MFA methods",
+    "code": "Get-MgReportAuthenticationMethodUserRegistrationDetail -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,IsMfaRegistered,IsMfaCapable,DefaultMfaMethod,MethodsRegistered",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ]
+  },
+  "Remove Specific Authenticator Method": {
+    "family": "MFA methods",
+    "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" -MicrosoftAuthenticatorAuthenticationMethodId $MethodId",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ]
+  },
+  "Remove Specific Phone Method": {
+    "family": "MFA methods",
+    "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" -PhoneAuthenticationMethodId $MethodId",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ]
+  },
+  "Show Delegated Grants For One User": {
+    "family": "App access",
+    "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Select-Object Id,ClientId,ConsentType,Scope",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Potentially High-Impact Delegated Scopes": {
+    "family": "App access",
+    "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Where-Object {\n    $_.Scope -match '(^| )(offline_access|User.ReadWrite|Mail\\.|MailboxSettings\\.|Files\\.|Sites\\.|Calendars\\.|Contacts\\.|Directory\\.)' -or\n    $_.Scope -match '\\.All($| )'\n  } |\n  Select-Object Id,ClientId,ConsentType,Scope",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Remove Specific Delegated Grant": {
+    "family": "App access",
+    "code": "$GrantId = \"OAUTH-GRANT-ID\"\nRemove-MgOauth2PermissionGrant -OAuth2PermissionGrantId $GrantId",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Distribution Group Members": {
+    "family": "Distribution groups",
+    "code": "$Group = \"group@domain.com\"\nGet-DistributionGroupMember -Identity $Group -ResultSize Unlimited |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientType",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ]
+  },
+  "Show Distribution Group Owners": {
+    "family": "Distribution groups",
+    "code": "$Group = \"group@domain.com\"\nGet-DistributionGroup -Identity $Group |\n  Select-Object -ExpandProperty ManagedBy",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "GET-GROUP-MEMBERS.ps1"
+    ]
+  },
+  "Add Distribution Group Member": {
+    "family": "Distribution groups",
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nAdd-DistributionGroupMember -Identity $Group -Member $Member",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ]
+  },
+  "Remove Distribution Group Member": {
+    "family": "Distribution groups",
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$false",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ]
+  },
+  "Show AD Group Members": {
+    "family": "AD groups",
+    "code": "$Group = \"Group Name\"\nGet-ADGroupMember -Identity $Group |\n  Select-Object Name,SamAccountName,ObjectClass",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD User Group Memberships"
+    ]
+  },
+  "Show AD User Group Memberships": {
+    "family": "AD groups",
+    "code": "Get-ADPrincipalGroupMembership -Identity \"username\" |\n  Select-Object Name,GroupCategory,GroupScope",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "Add User to AD Group": {
+    "family": "AD groups",
+    "code": "$Group = \"Group Name\"\nAdd-ADGroupMember -Identity $Group -Members \"username\"",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "Remove User from AD Group": {
+    "family": "AD groups",
+    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$false",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "Find Exact Group": {
+    "family": "Entra groups",
+    "code": "$GroupName = \"Group Name\"\nGet-MgGroup -Filter \"displayName eq '$GroupName'\" -Property Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled |\n  Select-Object Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Show Entra Group Direct Members": {
+    "family": "Entra groups",
+    "code": "Get-MgGroupMember -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Show Entra Group Owners": {
+    "family": "Entra groups",
+    "code": "Get-MgGroupOwner -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Show Entra User Group Memberships": {
+    "family": "Entra groups",
+    "code": "Get-MgUserMemberOf -UserId \"user@domain.com\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}}",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Add User to Entra Group": {
+    "family": "Entra groups",
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nNew-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -OdataId \"https://graph.microsoft.com/v1.0/directoryObjects/$UserId\"",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Remove User from Entra Group": {
+    "family": "Entra groups",
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nRemove-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -DirectoryObjectId $UserId",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ]
+  },
+  "Show Mailbox Protocol State": {
+    "family": "Mailbox protocols",
+    "code": "Get-CASMailbox -Identity \"user@domain.com\" |\n  Select-Object PopEnabled,ImapEnabled,SmtpClientAuthenticationDisabled,MAPIEnabled,OWAEnabled,ActiveSyncEnabled",
+    "related": [
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ]
+  },
+  "Show Mailbox Summary": {
+    "family": "Mailbox access and forwarding",
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientTypeDetails,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Disable Mailbox SMTP AUTH": {
+    "family": "Mailbox protocols",
+    "code": "Set-CASMailbox -Identity \"user@domain.com\" -SmtpClientAuthenticationDisabled $true",
+    "related": [
+      "command:Show Mailbox Protocol State",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary"
+    ]
+  },
+  "Disable Mailbox POP / IMAP": {
+    "family": "Mailbox protocols",
+    "code": "Set-CASMailbox -Identity \"user@domain.com\" -PopEnabled $false -ImapEnabled $false",
+    "related": [
+      "command:Show Mailbox Protocol State",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary"
+    ]
+  },
+  "Show Mailbox Full Access Delegates": {
+    "family": "Mailbox access and forwarding",
+    "code": "Get-MailboxPermission -Identity \"user@domain.com\" |\n  Where-Object { -not $_.IsInherited -and $_.User -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object User,AccessRights,Deny",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Mailbox Forwarding": {
+    "family": "Mailbox access and forwarding",
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object PrimarySmtpAddress,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Mailbox Send As Delegates": {
+    "family": "Mailbox access and forwarding",
+    "code": "Get-RecipientPermission -Identity \"user@domain.com\" |\n  Where-Object { $_.Trustee -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object Trustee,AccessRights",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Mailbox Send on Behalf Delegates": {
+    "family": "Mailbox access and forwarding",
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object -ExpandProperty GrantSendOnBehalfTo",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Remove Mailbox Full Access Delegate": {
+    "family": "Mailbox access and forwarding",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$false",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Remove Mailbox Forwarding": {
+    "family": "Mailbox access and forwarding",
+    "code": "Set-Mailbox -Identity \"user@domain.com\" -ForwardingAddress $null -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Remove Mailbox Send As Delegate": {
+    "family": "Mailbox access and forwarding",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$false",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Remove Mailbox Send on Behalf Delegate": {
+    "family": "Mailbox access and forwarding",
+    "code": "$Delegate = \"delegate@domain.com\"\nSet-Mailbox -Identity \"user@domain.com\" -GrantSendOnBehalfTo @{Remove=$Delegate}",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Show Specific Transport Rule": {
+    "family": "Mail transport",
+    "code": "$Rule = \"Rule Name\"\nGet-TransportRule -Identity $Rule | Format-List *",
+    "related": [
+      "GET-TRANSPORT-RULES-AUDIT.ps1",
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ]
+  },
+  "Show Transport Rules": {
+    "family": "Mail transport",
+    "code": "Get-TransportRule |\n  Select-Object Name,State,Mode,Priority",
+    "related": [
+      "GET-TRANSPORT-RULES-AUDIT.ps1",
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ]
+  },
+  "Show Inbox Rules - Including Hidden": {
+    "family": "Inbox rules",
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Select-Object Name,Enabled,Priority,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "Show Suspicious Inbox Rules": {
+    "family": "Inbox rules",
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Where-Object { $_.ForwardTo -or $_.RedirectTo -or $_.DeleteMessage -or $_.StopProcessingRules } |\n  Select-Object Name,Enabled,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "Remove All Inbox Rules": {
+    "family": "Inbox rules",
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Remove-InboxRule -Confirm:$false",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "Remove Specific Inbox Rule": {
+    "family": "Inbox rules",
+    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$false",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "Show BitLocker Recovery Protectors": {
+    "family": "Endpoint protection",
+    "code": "Get-BitLockerVolume -MountPoint \"C:\" |\n  Select-Object -ExpandProperty KeyProtector |\n  Select-Object KeyProtectorType,KeyProtectorId,RecoveryPassword",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show Physical Disk Health",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show BitLocker Status": {
+    "family": "Endpoint protection",
+    "code": "Get-BitLockerVolume |\n  Select-Object MountPoint,VolumeStatus,ProtectionStatus,EncryptionPercentage,EncryptionMethod",
+    "related": [
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Resume Protection": {
+    "family": "Endpoint protection",
+    "code": "Resume-BitLocker -MountPoint \"C:\"",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Suspend For One Reboot": {
+    "family": "Endpoint protection",
+    "code": "Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Find By Thumbprint": {
+    "family": "Signing and certificates",
+    "code": "Get-ChildItem Cert:\\CurrentUser\\My,Cert:\\LocalMachine\\My |\n  Where-Object Thumbprint -eq \"THUMBPRINT\" |\n  Select-Object Subject,Thumbprint,NotBefore,NotAfter,HasPrivateKey",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Show Expiring Certificates": {
+    "family": "Signing and certificates",
+    "code": "Get-ChildItem Cert:\\LocalMachine\\My |\n  Where-Object { $_.NotAfter -le (Get-Date).AddDays(30) } |\n  Select-Object Subject,Thumbprint,NotAfter",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Verify Script Signature": {
+    "family": "Signing and certificates",
+    "code": "$Path = \"C:\\Scripts\\script.ps1\"\nGet-AuthenticodeSignature -FilePath $Path |\n  Select-Object Status,StatusMessage,SignerCertificate",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Show Code-Signing Certificates"
+    ]
+  },
+  "Create Self-Signed App-Auth Certificate": {
+    "family": "Signing and certificates",
+    "code": "$Name = \"M365-AppAuth\"\nNew-SelfSignedCertificate `\n  -Subject \"CN=$Name\" `\n  -CertStoreLocation \"Cert:\\CurrentUser\\My\" `\n  -KeySpec KeyExchange `\n  -KeyExportPolicy Exportable `\n  -KeyLength 2048 `\n  -HashAlgorithm SHA256 `\n  -NotAfter (Get-Date).AddYears(2)",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Export Pfx": {
+    "family": "Signing and certificates",
+    "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.pfx\"\n$Password = Read-Host \"PFX password\" -AsSecureString\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-PfxCertificate -Cert $Cert -FilePath $Path -Password $Password",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Export Public Cer": {
+    "family": "Signing and certificates",
+    "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.cer\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-Certificate -Cert $Cert -FilePath $Path",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Sign Script": {
+    "family": "Signing and certificates",
+    "code": "$Path = \"C:\\Scripts\\script.ps1\"\n$Thumbprint = \"THUMBPRINT\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nSet-AuthenticodeSignature -FilePath $Path -Certificate $Cert -TimestampServer \"http://timestamp.digicert.com\"",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Find Exchange Service Principal By Appid": {
+    "family": "App access",
+    "code": "$AppId = \"APP-ID\"\nGet-ServicePrincipal |\n  Where-Object AppId -eq $AppId |\n  Select-Object DisplayName,AppId,ObjectId",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ]
+  },
+  "Calculate Sha256 Hash": {
+    "family": "Signing and certificates",
+    "code": "$Path = \"C:\\Temp\\file.exe\"\nGet-FileHash -Path $Path -Algorithm SHA256",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  },
+  "Show Compliance Search Status": {
+    "family": "Content search",
+    "code": "$SearchName = \"SEARCH-NAME\"\nGet-ComplianceSearch -Identity $SearchName |\n  Select-Object Name,Status,Items,Size,SuccessResults",
+    "related": [
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Search Jobs"
+    ]
+  },
+  "Create Phishing Search By Subject": {
+    "family": "Content search",
+    "code": "$SearchName = \"IR_Clawback_$(Get-Date -Format 'yyyyMMdd_HHmmss')\"\n$Subject = \"phishing subject\"\nNew-ComplianceSearch `\n  -Name $SearchName `\n  -ExchangeLocation All `\n  -ContentMatchQuery \"subject:`\"$Subject`\"\"",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ]
+  },
+  "Hard-Delete Search Results": {
+    "family": "Content search",
+    "code": "$SearchName = \"SEARCH-NAME\"\nNew-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ]
+  },
+  "Start Compliance Search": {
+    "family": "Content search",
+    "code": "$SearchName = \"SEARCH-NAME\"\nStart-ComplianceSearch -Identity $SearchName",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ]
+  },
+  "Run Quick Scan": {
+    "family": "Antivirus",
+    "code": "Start-MpScan -ScanType QuickScan",
+    "related": [
+      "command:Defender Status",
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status"
+    ]
+  },
+  "Update Signatures": {
+    "family": "Antivirus",
+    "code": "Update-MpSignature",
+    "related": [
+      "command:Defender Status",
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status"
+    ]
+  },
+  "Audit Inbox Rule Changes": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations New-InboxRule,Set-InboxRule `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Mail Delete And Move Audit": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Mailitemsaccessed Audit": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Parse Mail Audit Subject, Ip, And Destination Folder": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed,SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,Operation,\n    @{N=\"EmailSubject\";E={(ConvertFrom-Json $_.AuditData).Item.Subject}},\n    @{N=\"ClientIP\";E={(ConvertFrom-Json $_.AuditData).ClientIP}},\n    @{N=\"DestFolder\";E={(ConvertFrom-Json $_.AuditData).DestinationFolder.Name}}",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Search Query Audit": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog -Operations SearchQueryInitiated -UserIds \"user@domain.com\" |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Unified Audit Log For One User": {
+    "family": "Mail investigation",
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ]
+  },
+  "Show Risk Detections For One User": {
+    "family": "Sign-in investigation",
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nGet-MgRiskDetection -Filter \"userId eq '$UserId'\" -All |\n  Select-Object ActivityDateTime,RiskEventType,RiskLevel,RiskState,IPAddress,Location,Source",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Risky User State": {
+    "family": "Sign-in investigation",
+    "code": "Get-MgRiskyUser -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,RiskLevel,RiskState,RiskDetail,RiskLastUpdatedDateTime",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Recipient": {
+    "family": "Mail delivery",
+    "code": "Get-MessageTraceV2 `\n  -RecipientAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ]
+  },
+  "Sender": {
+    "family": "Mail delivery",
+    "code": "Get-MessageTraceV2 `\n  -SenderAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ]
+  },
+  "Show Message Trace Events": {
+    "family": "Mail delivery",
+    "code": "$TraceId = \"MESSAGE-TRACE-ID\"\nGet-MessageTraceDetailV2 -MessageTraceId $TraceId -RecipientAddress \"recipient@domain.com\" |\n  Select-Object Date,Event,Action,Detail,Data",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Search Jobs",
+      "command:Who Received Mail From Suspicious Sender"
+    ]
+  },
+  "Show Message Trace Search Jobs": {
+    "family": "Mail delivery",
+    "code": "Get-HistoricalSearch |\n  Sort-Object SubmitDate -Descending |\n  Select-Object -First 5 ReportTitle,Status,Rows,FileUrl,SubmitDate",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Who Received Mail From Suspicious Sender"
+    ]
+  },
+  "Who Received Mail From Suspicious Sender": {
+    "family": "Mail delivery",
+    "code": "Get-MessageTraceV2 `\n  -SenderAddress \"badguy@evil.com\" `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object -ExpandProperty RecipientAddress |\n  Sort-Object -Unique",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ]
+  },
+  "Show Failed Sign-Ins": {
+    "family": "Sign-in investigation",
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -ne 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"ErrorCode\";E={$_.Status.ErrorCode}},\n    @{N=\"FailureReason\";E={$_.Status.FailureReason}}",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Last 10 Entra Sign-Ins": {
+    "family": "Sign-in investigation",
+    "code": "Get-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com'\" -Top 10 -Sort \"createdDateTime desc\" |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}},\n    @{N=\"Location\";E={\"$($_.Location.City), $($_.Location.State), $($_.Location.CountryOrRegion)\"}}",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Entra Sign-ins - Last 48 Hours": {
+    "family": "Sign-in investigation",
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}}",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Legacy / Other-client Sign-ins": {
+    "family": "Sign-in investigation",
+    "code": "$Since = (Get-Date).ToUniversalTime().AddDays(-7).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.ClientAppUsed -eq \"Other clients\" } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Show Successful Sign-Ins": {
+    "family": "Sign-in investigation",
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -eq 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Recent Application Errors": {
+    "family": "Windows event review",
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"Application\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
+    "related": [
+      "command:Recent System Errors",
+      "command:Show Last Boot And Uptime",
+      "command:Show Service Status"
+    ]
+  },
+  "Recent System Errors": {
+    "family": "Windows event review",
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
+    "related": [
+      "command:Recent Application Errors",
+      "command:Show Last Boot And Uptime",
+      "command:Show Service Status"
+    ]
+  },
+  "Resolve Name": {
+    "family": "DNS",
+    "code": "$Name = \"example.com\"\nResolve-DnsName $Name",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ]
+  },
+  "Show Configured Dns Servers": {
+    "family": "DNS",
+    "code": "Get-DnsClientServerAddress -AddressFamily IPv4 |\n  Select-Object InterfaceAlias,ServerAddresses",
+    "related": [
+      "command:DNS Lookup",
+      "command:Show Ip Configuration",
+      "command:Resolve Name"
+    ]
+  },
+  "Flush Resolver Cache": {
+    "family": "DNS",
+    "code": "Clear-DnsClientCache",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ]
+  },
+  "Show Windows Firewall Profiles": {
+    "family": "Firewall and remote access",
+    "code": "Get-NetFirewallProfile |\n  Select-Object Name,Enabled,DefaultInboundAction,DefaultOutboundAction",
+    "related": [
+      "command:Show Windows Firewall Rules by Name",
+      "command:Show Listening Tcp Ports",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Windows Firewall Rules by Name": {
+    "family": "Firewall and remote access",
+    "code": "$Name = \"*Remote Desktop*\"\nGet-NetFirewallRule -DisplayName $Name |\n  Select-Object DisplayName,Enabled,Direction,Action,Profile",
+    "related": [
+      "command:Show Windows Firewall Profiles",
+      "command:Show Listening Tcp Ports",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Ping Host": {
+    "family": "Network paths",
+    "code": "Test-Connection -ComputerName \"server01\" -Count 4",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Active Adapters": {
+    "family": "Network changes",
+    "code": "Get-NetAdapter |\n  Where-Object Status -eq \"Up\" |\n  Select-Object Name,InterfaceDescription,MacAddress,LinkSpeed",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Network Profile"
+    ]
+  },
+  "Show Arp Neighbor Cache": {
+    "family": "Network paths",
+    "code": "Get-NetNeighbor -AddressFamily IPv4 |\n  Select-Object IPAddress,LinkLayerAddress,State,InterfaceAlias",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Established Tcp Connections": {
+    "family": "Network paths",
+    "code": "Get-NetTCPConnection -State Established |\n  Select-Object LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Ip Configuration": {
+    "family": "Network paths",
+    "code": "Get-NetIPConfiguration |\n  Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer",
+    "related": [
+      "command:Show Routing Table",
+      "command:Test Tcp Port",
+      "command:Ping Host"
+    ]
+  },
+  "Show Listening Tcp Ports": {
+    "family": "Network paths",
+    "code": "Get-NetTCPConnection -State Listen |\n  Sort-Object LocalPort |\n  Select-Object LocalAddress,LocalPort,OwningProcess",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Routing Table": {
+    "family": "Network paths",
+    "code": "Get-NetRoute -AddressFamily IPv4 |\n  Sort-Object RouteMetric |\n  Select-Object DestinationPrefix,NextHop,InterfaceAlias,RouteMetric",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Test Tcp Port",
+      "command:Ping Host"
+    ]
+  },
+  "Test Tcp Port": {
+    "family": "Network paths",
+    "code": "Test-NetConnection -ComputerName \"server01\" -Port 443",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Ping Host"
+    ]
+  },
+  "Trace Route": {
+    "family": "Network paths",
+    "code": "Test-NetConnection -ComputerName \"example.com\" -TraceRoute",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Release And Renew Dhcp": {
+    "family": "Network changes",
+    "code": "ipconfig /release\nipconfig /renew",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Reset Tcp/Ip Stack": {
+    "family": "Network changes",
+    "code": "netsh int ip reset",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Reset Winsock": {
+    "family": "Network changes",
+    "code": "netsh winsock reset",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Restart Adapter": {
+    "family": "Network changes",
+    "code": "Restart-NetAdapter -Name \"Ethernet\" -Confirm:$false",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Show Configured Windows Vpn Connections": {
+    "family": "Network paths",
+    "code": "Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue |\n  Select-Object Name,ServerAddress,TunnelType,AuthenticationMethod,ConnectionStatus",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Show Wi-Fi Connection": {
+    "family": "Wi-Fi",
+    "code": "netsh wlan show interfaces",
+    "related": [
+      "command:Show Wi-Fi Interface",
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
+    ]
+  },
+  "Show Saved Wi-Fi Profiles": {
+    "family": "Wi-Fi",
+    "code": "netsh wlan show profiles",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Wi-Fi Interface",
+      "command:Network Profile"
+    ]
+  },
+  "Show Problem Devices": {
+    "family": "Computer information",
+    "code": "Get-PnpDevice -PresentOnly |\n  Where-Object Status -ne \"OK\" |\n  Select-Object Class,FriendlyName,InstanceId,Status",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime"
+    ]
+  },
+  "Show Free Space": {
+    "family": "Storage",
+    "code": "Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" |\n  Select-Object DeviceID,\n    @{N=\"SizeGB\";E={[math]::Round($_.Size/1GB,1)}},\n    @{N=\"FreeGB\";E={[math]::Round($_.FreeSpace/1GB,1)}},\n    @{N=\"FreePct\";E={[math]::Round(($_.FreeSpace/$_.Size)*100,1)}}",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Physical Disk Health",
+      "command:Open Storage Settings"
+    ]
+  },
+  "Show Physical Disk Health": {
+    "family": "Storage",
+    "code": "Get-PhysicalDisk |\n  Select-Object FriendlyName,MediaType,HealthStatus,OperationalStatus,Size",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Open Storage Settings"
+    ]
+  },
+  "Find Files Modified In Last 24 Hours": {
+    "family": "Storage",
+    "code": "$Path = \"C:\\Temp\"\nGet-ChildItem $Path -File -Recurse -ErrorAction SilentlyContinue |\n  Where-Object LastWriteTime -ge (Get-Date).AddHours(-24) |\n  Select-Object FullName,Length,LastWriteTime",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Show Computer Model And Serial Number": {
+    "family": "Computer information",
+    "code": "$System = Get-CimInstance Win32_ComputerSystem\n$Bios = Get-CimInstance Win32_BIOS\n[pscustomobject]@{\n  Manufacturer = $System.Manufacturer\n  Model = $System.Model\n  SerialNumber = $Bios.SerialNumber\n}",
+    "related": [
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime",
+      "command:Show Problem Devices"
+    ]
+  },
+  "Show Hostname And Current User": {
+    "family": "Computer information",
+    "code": "[pscustomobject]@{\n  ComputerName = $env:COMPUTERNAME\n  User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name\n}",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime"
+    ]
+  },
+  "Show Last Boot And Uptime": {
+    "family": "Computer information",
+    "code": "$OS = Get-CimInstance Win32_OperatingSystem\n[pscustomobject]@{\n  LastBoot = $OS.LastBootUpTime\n  Uptime = (Get-Date) - $OS.LastBootUpTime\n}",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Problem Devices"
+    ]
+  },
+  "Show Os And Build": {
+    "family": "Computer information",
+    "code": "Get-CimInstance Win32_OperatingSystem |\n  Select-Object Caption,Version,BuildNumber,OSArchitecture",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Last Boot And Uptime",
+      "command:Show Problem Devices"
+    ]
+  },
+  "Show Top Cpu Consumers": {
+    "family": "Performance",
+    "code": "Get-Process |\n  Sort-Object CPU -Descending |\n  Select-Object -First 15 Name,Id,CPU",
+    "related": [
+      "command:Show Top Memory Consumers",
+      "command:Show Service Status",
+      "command:Recent Application Errors"
+    ]
+  },
+  "Show Top Memory Consumers": {
+    "family": "Performance",
+    "code": "Get-Process |\n  Sort-Object WorkingSet64 -Descending |\n  Select-Object -First 15 Name,Id,@{N=\"MemoryMB\";E={[math]::Round($_.WorkingSet64/1MB,1)}}",
+    "related": [
+      "command:Show Top Cpu Consumers",
+      "command:Show Service Status",
+      "command:Recent Application Errors"
+    ]
+  },
+  "Stop Process By Name": {
+    "family": "Performance",
+    "code": "$Name = \"notepad\"\nStop-Process -Name $Name -Force",
+    "related": [
+      "command:Show Top Cpu Consumers",
+      "command:Show Top Memory Consumers",
+      "command:Show Service Status"
+    ]
+  },
+  "Show Whether Remote Desktop Is Enabled": {
+    "family": "Firewall and remote access",
+    "code": "$Value = (Get-ItemProperty \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\" -Name fDenyTSConnections).fDenyTSConnections\n[pscustomobject]@{ RDPEnabled = ($Value -eq 0) }",
+    "related": [
+      "command:Show Windows Firewall Profiles",
+      "command:Show Windows Firewall Rules by Name",
+      "command:Show Listening Tcp Ports"
+    ]
+  },
+  "Chkdsk Online Scan": {
+    "family": "Windows repair",
+    "code": "chkdsk C: /scan",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ]
+  },
+  "Dism Component Store Scan": {
+    "family": "Windows repair",
+    "code": "DISM.exe /Online /Cleanup-Image /ScanHealth",
+    "related": [
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Dism Restore Health": {
+    "family": "Windows repair",
+    "code": "DISM.exe /Online /Cleanup-Image /RestoreHealth",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ]
+  },
+  "System File Checker": {
+    "family": "Windows repair",
+    "code": "sfc.exe /scannow",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ]
+  },
+  "Reboot Computer": {
+    "family": "Apps and updates",
+    "code": "Restart-Computer -Force",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show Service Status": {
+    "family": "Services and scheduled tasks",
+    "code": "Get-Service -Name \"Spooler\" |\n  Select-Object Name,DisplayName,Status,StartType",
+    "related": [
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result",
+      "command:Recent System Errors"
+    ]
+  },
+  "Restart Service": {
+    "family": "Services and scheduled tasks",
+    "code": "Restart-Service -Name \"Spooler\" -Force",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result"
+    ]
+  },
+  "Set Startup Type": {
+    "family": "Services and scheduled tasks",
+    "code": "Set-Service -Name \"Spooler\" -StartupType Automatic",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result"
+    ]
+  },
+  "Show Locally Logged-On Users": {
+    "family": "Windows sessions and shares",
+    "code": "quser",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ]
+  },
+  "Show SMB Sessions": {
+    "family": "Windows sessions and shares",
+    "code": "Get-SmbSession |\n  Select-Object ClientComputerName,ClientUserName,NumOpens,Dialect",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Shares",
+      "command:Mapped Drives"
+    ]
+  },
+  "Show SMB Shares": {
+    "family": "Windows sessions and shares",
+    "code": "Get-SmbShare |\n  Select-Object Name,Path,Description",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Mapped Drives"
+    ]
+  },
+  "Show Scheduled Task": {
+    "family": "Services and scheduled tasks",
+    "code": "Get-ScheduledTask -TaskName \"Task Name\" |\n  Select-Object TaskName,TaskPath,State",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task Last Run Result",
+      "command:Recent System Errors"
+    ]
+  },
+  "Show Scheduled Task Last Run Result": {
+    "family": "Services and scheduled tasks",
+    "code": "Get-ScheduledTaskInfo -TaskName \"Task Name\" |\n  Select-Object LastRunTime,LastTaskResult,NextRunTime,NumberOfMissedRuns",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Recent System Errors"
+    ]
+  },
+  "Check Common Pending Reboot Flags": {
+    "family": "Apps and updates",
+    "code": "$Pending = $false\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending\"){ $Pending = $true }\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired\"){ $Pending = $true }\n[pscustomobject]@{ PendingReboot = $Pending }",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Show Installed Hotfixes"
+    ]
+  },
+  "Show Installed Hotfixes": {
+    "family": "Apps and updates",
+    "code": "Get-HotFix |\n  Sort-Object InstalledOn -Descending |\n  Select-Object HotFixID,Description,InstalledOn,InstalledBy",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show Recent Windows Update History": {
+    "family": "Apps and updates",
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";ProviderName=\"Microsoft-Windows-WindowsUpdateClient\";StartTime=(Get-Date).AddDays(-30)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,Id,LevelDisplayName,Message",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Check Common Pending Reboot Flags",
+      "command:Show Installed Hotfixes"
+    ]
+  },
+  "Add Calendar Permission": {
+    "family": "Calendar and contacts",
+    "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -AccessRights $AccessRights",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ]
+  },
+  "Remove Calendar Permission": {
+    "family": "Calendar and contacts",
+    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$false",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ]
+  },
+  "Show Calendar Permissions": {
+    "family": "Calendar and contacts",
+    "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Calendar\"",
+    "related": [
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-ROOM-RESOURCE-ACCESS.ps1"
+    ]
+  },
+  "Show Contacts Permissions": {
+    "family": "Calendar and contacts",
+    "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Contacts\"",
+    "related": [
+      "command:Show Calendar Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-ROOM-RESOURCE-ACCESS.ps1"
+    ]
+  },
+  "Add Contacts Permission": {
+    "family": "Calendar and contacts",
+    "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Contacts\" -User \"user@domain.com\" -AccessRights $AccessRights",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ]
+  },
+  "Show Send-To Restrictions / authOrig": {
+    "family": "AD groups",
+    "code": "Get-ADGroup 'GroupName' -Properties authOrig | Select-Object -ExpandProperty authOrig",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "Show Account Enabled": {
+    "family": "AD account review",
+    "code": "Get-ADUser \"username\" -Properties Enabled | Select-Object SamAccountName,Enabled",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Show User Principal Name": {
+    "family": "AD account review",
+    "code": "Get-ADUser -Identity \"username\" -Properties UserPrincipalName | Select-Object UserPrincipalName",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Show Password Last Set": {
+    "family": "AD account review",
+    "code": "Get-ADUser -Identity \"username\" -Properties PasswordLastSet | Select-Object Name,PasswordLastSet",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Show Distinguished Name": {
+    "family": "AD account review",
+    "code": "Get-ADUser -Identity \"username\" | Select-Object DistinguishedName",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Show Default Domain Password Policy": {
+    "family": "AD account review",
+    "code": "Get-ADDefaultDomainPasswordPolicy",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ]
+  },
+  "Force Group Policy Update": {
+    "family": "Domain and device identity",
+    "code": "gpupdate /force",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Group Policy Result"
+    ]
+  },
+  "Show Group Policy Result": {
+    "family": "Domain and device identity",
+    "code": "gpresult /r",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Configured Dns Servers"
+    ]
+  },
+  "Disable Hibernation": {
+    "family": "Storage",
+    "code": "powercfg.exe /hibernate off",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Show Domain Account Details": {
+    "family": "Domain and device identity",
+    "code": "net user username /domain",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Group Policy Result"
+    ]
+  },
+  "Create Local User": {
+    "family": "Local accounts",
+    "code": "net user username /add",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Delete Local User": {
+    "family": "Local accounts",
+    "code": "net user username /delete",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Set Local User Password": {
+    "family": "Local accounts",
+    "code": "net user \"username\" \"temporary password\"",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Enable Local Account": {
+    "family": "Local accounts",
+    "code": "net user \"username\" /active:yes",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Open Local Users and Groups": {
+    "family": "Local accounts",
+    "code": "lusrmgr.msc",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Show Logged-On Users": {
+    "family": "Windows sessions and shares",
+    "code": "quser",
+    "related": [
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares",
+      "command:Mapped Drives"
+    ]
+  },
+  "Disable Network Adapter": {
+    "family": "Network changes",
+    "code": "netsh interface set interface \"Wi-Fi\" admin=disabled",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Restart Network Adapter": {
+    "family": "Network changes",
+    "code": "Restart-NetAdapter -Name \"Wi-Fi\"",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Isolate Device - Disable Enabled Adapters": {
+    "family": "Network changes",
+    "code": "Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$false",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ]
+  },
+  "Resync Windows Time": {
+    "family": "Windows time",
+    "code": "w32tm /resync /force",
+    "related": [
+      "command:Windows Time Status",
+      "command:Windows Time Source",
+      "command:Show Last Boot And Uptime"
+    ]
+  },
+  "Open Windows Update": {
+    "family": "Apps and updates",
+    "code": "start ms-settings:windowsupdate-action",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show Wi-Fi Interface": {
+    "family": "Wi-Fi",
+    "code": "netsh wlan show interfaces",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
+    ]
+  },
+  "Delete Wi-Fi Profile": {
+    "family": "Wi-Fi",
+    "code": "netsh wlan delete profile name=\"ProfileName\"",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Wi-Fi Interface",
+      "command:Show Saved Wi-Fi Profiles"
+    ]
+  },
+  "DISM Analyze Component Store": {
+    "family": "Windows repair",
+    "code": "DISM /Online /Cleanup-Image /AnalyzeComponentStore",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:Recent System Errors",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "DISM Component Store Cleanup": {
+    "family": "Windows repair",
+    "code": "DISM /Online /Cleanup-Image /StartComponentCleanup",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ]
+  },
+  "Launch Disk Cleanup": {
+    "family": "Storage",
+    "code": "cleanmgr.exe",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Defragment Volume": {
+    "family": "Storage",
+    "code": "Optimize-Volume -DriveLetter C -Defrag -Verbose",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Show Available WinGet Updates": {
+    "family": "Apps and updates",
+    "code": "winget upgrade --accept-source-agreements",
+    "related": [
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags",
+      "command:Show Installed Hotfixes"
+    ]
+  },
+  "Update All Eligible WinGet Packages": {
+    "family": "Apps and updates",
+    "code": "winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show WinGet Package Information": {
+    "family": "Apps and updates",
+    "code": "$PackageId = \"Package.Id\"\nwinget show --id $PackageId --exact",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Update Specific WinGet Package": {
+    "family": "Apps and updates",
+    "code": "$PackageId = \"Package.Id\"\nwinget upgrade --id $PackageId --exact --accept-source-agreements --accept-package-agreements",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Update WinGet Sources": {
+    "family": "Apps and updates",
+    "code": "winget source update",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ]
+  },
+  "Show PowerShell Version": {
+    "family": "PowerShell setup",
+    "code": "$PSVersionTable.PSVersion",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Show Execution Policies": {
+    "family": "PowerShell setup",
+    "code": "Get-ExecutionPolicy -List",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show PowerShell Version"
+    ]
+  },
+  "Set Current User Execution Policy - RemoteSigned": {
+    "family": "PowerShell setup",
+    "code": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Show Installed Microsoft Graph Module Version": {
+    "family": "PowerShell setup",
+    "code": "Get-Module Microsoft.Graph.Authentication -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Show Installed ExchangeOnlineManagement Version": {
+    "family": "PowerShell setup",
+    "code": "Get-Module ExchangeOnlineManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Show Graph Context": {
+    "family": "Graph connection",
+    "code": "Get-MgContext",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Get User By Upn"
+    ]
+  },
+  "Show Exchange Connection": {
+    "family": "Exchange connection",
+    "code": "Get-ConnectionInformation",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Mailbox Summary"
+    ]
+  },
+  "Disconnect Microsoft Graph": {
+    "family": "Graph connection",
+    "code": "Disconnect-MgGraph",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Graph Context"
+    ]
+  },
+  "Disconnect Exchange Online": {
+    "family": "Exchange connection",
+    "code": "Disconnect-ExchangeOnline -Confirm:$false",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Exchange Connection"
+    ]
+  },
+  "Show Activity From One IP": {
+    "family": "Sign-in investigation",
+    "code": "$Ip = \"1.2.3.4\"\nGet-MgAuditLogSignIn -Filter \"ipAddress eq '$Ip'\" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ]
+  },
+  "Look Up ISP And Location": {
+    "family": "Network paths",
+    "code": "$Ip = \"8.8.8.8\"\nInvoke-RestMethod \"https://ipinfo.io/$Ip/json\" |\n  Select-Object ip,city,region,country,org",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "AD Group Memberships": {
+    "family": "AD groups",
+    "code": "Get-ADPrincipalGroupMembership -Identity \"username\" | Select-Object Name",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "AD Group Members": {
+    "family": "AD groups",
+    "code": "Get-ADGroupMember -Identity \"GroupName\" | Select-Object Name,SamAccountName,ObjectClass",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ]
+  },
+  "Connect Exchange Online": {
+    "family": "Exchange connection",
+    "code": "Connect-ExchangeOnline",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Exchange Connection"
+    ]
+  },
+  "Install Exchange Online Module": {
+    "family": "PowerShell setup",
+    "code": "Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force -AllowClobber",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Install Microsoft Graph Module": {
+    "family": "PowerShell setup",
+    "code": "Install-Module -Name Microsoft.Graph -Scope CurrentUser -Force -AllowClobber",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ]
+  },
+  "Show Hidden Inbox Rules": {
+    "family": "Inbox rules",
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "Delete All Inbox Rules": {
+    "family": "Inbox rules",
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden | Remove-InboxRule -Confirm:$true",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ]
+  },
+  "IP Configuration (ipconfig)": {
+    "family": "Network paths",
+    "code": "ipconfig /all",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Flush DNS": {
+    "family": "DNS",
+    "code": "ipconfig /flushdns",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ]
+  },
+  "DNS Lookup": {
+    "family": "DNS",
+    "code": "nslookup example.com",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:Show Ip Configuration",
+      "command:Resolve Name"
+    ]
+  },
+  "Continuous Ping": {
+    "family": "Network paths",
+    "code": "ping -t example.com",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Traceroute": {
+    "family": "Network paths",
+    "code": "tracert example.com",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Path Ping": {
+    "family": "Network paths",
+    "code": "pathping example.com",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Routing Table (route print)": {
+    "family": "Network paths",
+    "code": "route print",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "ARP Cache": {
+    "family": "Network paths",
+    "code": "arp -a",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "TCP Connections (netstat)": {
+    "family": "Network paths",
+    "code": "netstat -ano",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Port 443 Connections": {
+    "family": "Network paths",
+    "code": "netstat -ano | findstr :443",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Local Account Details": {
+    "family": "Local accounts",
+    "code": "net user username",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ]
+  },
+  "Windows Time Status": {
+    "family": "Windows time",
+    "code": "w32tm /query /status",
+    "related": [
+      "command:Windows Time Source",
+      "command:Show Last Boot And Uptime",
+      "command:Domain Trust Check"
+    ]
+  },
+  "Windows Time Source": {
+    "family": "Windows time",
+    "code": "w32tm /query /source",
+    "related": [
+      "command:Windows Time Status",
+      "command:Show Last Boot And Uptime",
+      "command:Domain Trust Check"
+    ]
+  },
+  "WinHTTP Proxy": {
+    "family": "Network paths",
+    "code": "netsh winhttp show proxy",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Domain Trust Check": {
+    "family": "Domain and device identity",
+    "code": "Test-ComputerSecureChannel -Verbose",
+    "related": [
+      "command:Entra Join Status",
+      "command:Show Group Policy Result",
+      "command:Show Configured Dns Servers"
+    ]
+  },
+  "Printer Check": {
+    "family": "Printing",
+    "code": "Get-Printer | Select-Object Name,DriverName,PortName,PrinterStatus",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Print Jobs",
+      "command:Spooler Status"
+    ]
+  },
+  "Open Storage Settings": {
+    "family": "Storage",
+    "code": "start ms-settings:storagesense",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Clear Delivery Optimization Cache": {
+    "family": "Storage",
+    "code": "Delete-DeliveryOptimizationCache -Force",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ]
+  },
+  "Identity and Privileges": {
+    "family": "Local accounts",
+    "code": "whoami /all",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Local Account Details"
+    ]
+  },
+  "Entra Join Status": {
+    "family": "Domain and device identity",
+    "code": "dsregcmd /status",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Show Group Policy Result",
+      "command:Show Configured Dns Servers"
+    ]
+  },
+  "Mapped Drives": {
+    "family": "Windows sessions and shares",
+    "code": "net use",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ]
+  },
+  "Network Profile": {
+    "family": "Network paths",
+    "code": "Get-NetConnectionProfile",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ]
+  },
+  "Defender Status": {
+    "family": "Antivirus",
+    "code": "Get-MpComputerStatus | Select-Object AMServiceEnabled,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanEndTime,FullScanEndTime",
+    "related": [
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status",
+      "command:Show Problem Devices"
+    ]
+  },
+  "Print Jobs": {
+    "family": "Printing",
+    "code": "Get-Printer | ForEach-Object { Get-PrintJob -PrinterName $_.Name -ErrorAction SilentlyContinue }",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Printer Check",
+      "command:Spooler Status"
+    ]
+  },
+  "Spooler Status": {
+    "family": "Printing",
+    "code": "Get-Service Spooler",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Printer Check",
+      "command:Print Jobs"
+    ]
+  },
+  "Connect Microsoft Graph": {
+    "family": "Graph connection",
+    "code": "Connect-MgGraph -Scopes \"User.Read\" -ContextScope Process",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Graph Context"
+    ]
+  },
+  "Show Code-Signing Certificates": {
+    "family": "Signing and certificates",
+    "code": "Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert | Select-Object Subject,Thumbprint,NotAfter",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ]
+  }
+}

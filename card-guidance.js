@@ -219,7 +219,6 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "ir-risk-assessment.ps1": {
-    "reviewNote": "Known limitation: app display names may be unresolved. Review the app IDs and grants; an unresolved name does not clear a finding.",
     "checks": [
       "Account status, password change date, and admin roles",
       "Sign-in methods and enabled Conditional Access policies",
@@ -230,9 +229,9 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Read-only assessment; no tenant changes",
       "Shows checks that could not run; findings need review before deciding the account is compromised"
     ],
-    "sourceSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
     "objective": "Review one user's account and mailbox before choosing a response.",
-    "input": "One exact user sign-in name (UPN) and tenant domain. Later steps reuse the user and checked connection in the same PowerShell window.",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
     "notes": "Makes no tenant changes. Conditional Access is an enabled-policy inventory, not proof of user coverage. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. The policy list does not prove that Conditional Access protects this user.",
@@ -250,9 +249,9 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Does not force a sync; check that changes reach Entra ID",
       "Shows a temporary password only after reset; clears its variable after you confirm secure delivery"
     ],
-    "sourceSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
     "objective": "Contain and clean up one compromised account after approval.",
-    "input": "One exact user sign-in name (UPN) and tenant domain. Later steps reuse the user and checked connection in the same PowerShell window.",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
     "notes": "Revocation, sign-in block, password reset and selected persistence deletion require explicit approvals. Synced AD changes use a SID-matched account. MFA is operator-confirmed, not independently enforced by the script. A temporary password can appear in terminal capture/transcripts; no automatic export or clipboard copy. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. You confirm trusted MFA methods; the script does not enforce them. A temporary password can remain in terminal capture/transcripts even after its variable is cleared.",
@@ -270,9 +269,9 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "A pending sync is not reported as confirmed recovery",
       "No password reset or persistence removal in recovery"
     ],
-    "sourceSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
     "objective": "Check recovery readiness and restore approved account access.",
-    "input": "One exact user sign-in name (UPN) and tenant domain. Later steps reuse the user and checked connection in the same PowerShell window.",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. Recovery does not reset passwords or remove unwanted access. Verify user sign-in with MFA and complete the follow-up monitoring.",
@@ -1667,7 +1666,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-GROUPS.ps1"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Show Password Expiry": {
     "code": "Get-ADUser \"username\" -Properties msDS-UserPasswordExpiryTimeComputed |\n  Select-Object SamAccountName,@{N=\"PasswordExpires\";E={[datetime]::FromFileTime($_.\"msDS-UserPasswordExpiryTimeComputed\")}}",
@@ -1678,7 +1683,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Delete User": {
     "code": "Remove-ADUser -Identity \"username\" -Confirm:$true",
@@ -1691,7 +1702,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the target; PowerShell asks for confirmation before removal."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Disable User": {
     "code": "Disable-ADAccount -Identity \"username\"",
@@ -1704,7 +1721,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Enable User": {
     "code": "Enable-ADAccount -Identity \"username\"",
@@ -1717,7 +1740,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Force Password Change Next Logon": {
     "code": "Set-ADUser -Identity \"username\" -ChangePasswordAtLogon $true",
@@ -1730,7 +1759,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Reset Password": {
     "code": "$Password = Read-Host \"Temporary password\" -AsSecureString\nSet-ADAccountPassword -Identity \"username\" -Reset -NewPassword $Password",
@@ -1743,7 +1778,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Unlock User": {
     "code": "Unlock-ADAccount -Identity \"username\"",
@@ -1756,7 +1797,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Find User By Exact Display Name": {
     "code": "$Name = \"Jane Doe\"\nGet-MgUser -Filter \"displayName eq '$Name'\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled",
@@ -1767,7 +1814,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
-    "input": "Replace command examples with your exact display name. Review all target values before running."
+    "input": "Replace command examples with your exact display name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Get User By Upn": {
     "code": "Get-MgUser -UserId \"user@domain.com\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled",
@@ -1778,7 +1831,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Show Assigned Licenses": {
     "code": "Get-MgUserLicenseDetail -UserId \"user@domain.com\" |\n  Select-Object SkuPartNumber,SkuId",
@@ -1789,7 +1848,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Show Manager": {
     "code": "Invoke-MgGraphRequest -Method GET -Uri \"https://graph.microsoft.com/v1.0/users/user@domain.com/manager?`$select=displayName,userPrincipalName\" |\n  Select-Object displayName,userPrincipalName",
@@ -1800,7 +1865,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Show Password Last Changed And Age": {
     "code": "$u = Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,LastPasswordChangeDateTime\n[pscustomobject]@{\n  User = $u.UserPrincipalName\n  LastPasswordChange = $u.LastPasswordChangeDateTime\n  PasswordAgeDays = if($u.LastPasswordChangeDateTime){ [math]::Floor(((Get-Date) - $u.LastPasswordChangeDateTime).TotalDays) } else { $null }\n}",
@@ -1811,7 +1882,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Show Sync Source": {
     "code": "Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName |\n  Select-Object UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName",
@@ -1822,7 +1899,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Delete Cloud User": {
     "code": "Remove-MgUser -UserId \"user@domain.com\"",
@@ -1835,7 +1918,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Cloud account review"
   },
   "Disable Sign-In": {
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$false",
@@ -1848,7 +1937,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Enable Sign-In": {
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$true",
@@ -1861,7 +1956,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Revoke Active Sessions": {
     "code": "Revoke-MgUserSignInSession -UserId \"user@domain.com\"",
@@ -1874,7 +1975,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.RevokeSessions.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Cached Tickets": {
     "code": "klist",
@@ -1883,7 +1990,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Purge Cached Tickets": {
     "code": "klist purge",
@@ -1894,7 +2007,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Show Local Administrators": {
     "code": "Get-LocalGroupMember -Group \"Administrators\" |\n  Select-Object Name,ObjectClass,PrincipalSource",
@@ -1905,7 +2024,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "The example uses the English group name Administrators; localized Windows installations may use another name."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Local Users",
+      "command:Identity and Privileges",
+      "command:Local Account Details"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Show Local Users": {
     "code": "Get-LocalUser |\n  Select-Object Name,Enabled,LastLogon,PasswordExpires,UserMayChangePassword",
@@ -1914,7 +2039,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Local Administrators",
+      "command:Identity and Privileges",
+      "command:Local Account Details"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Add User To Administrators": {
     "code": "Add-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
@@ -1925,7 +2056,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Account to add or remove; replace DOMAIN\\User."
+    "input": "Account to add or remove; replace DOMAIN\\User.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Remove User From Administrators": {
     "code": "Remove-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
@@ -1936,7 +2073,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Account to add or remove; replace DOMAIN\\User."
+    "input": "Account to add or remove; replace DOMAIN\\User.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Show All Authentication Methods For One User": {
     "code": "Get-MgUserAuthenticationMethod -UserId \"user@domain.com\" |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}}",
@@ -1947,7 +2090,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show Registration Status For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Show Microsoft Authenticator Methods": {
     "code": "Get-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" |\n  Select-Object Id,DisplayName,DeviceTag,PhoneAppVersion",
@@ -1958,7 +2107,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Show Phone Methods": {
     "code": "Get-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" |\n  Select-Object Id,PhoneNumber,PhoneType,SmsSignInState",
@@ -1969,7 +2124,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Show Registration Status For One User": {
     "code": "Get-MgReportAuthenticationMethodUserRegistrationDetail -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,IsMfaRegistered,IsMfaCapable,DefaultMfaMethod,MethodsRegistered",
@@ -1980,7 +2141,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Remove Specific Authenticator Method": {
     "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" -MicrosoftAuthenticatorAuthenticationMethodId $MethodId",
@@ -1993,7 +2160,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type."
+    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Remove Specific Phone Method": {
     "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" -PhoneAuthenticationMethodId $MethodId",
@@ -2006,7 +2179,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: UserAuthenticationMethod.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type."
+    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type.",
+    "related": [
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "GET-MFA-SECURITY-AUDIT.ps1",
+      "command:Show All Authentication Methods For One User"
+    ],
+    "relationshipFamily": "MFA methods"
   },
   "Show Delegated Grants For One User": {
     "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Select-Object Id,ClientId,ConsentType,Scope",
@@ -2017,7 +2196,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, DelegatedPermissionGrant.Read.All, DelegatedPermissionGrant.ReadWrite.All, Application.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "App access"
   },
   "Show Potentially High-Impact Delegated Scopes": {
     "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Where-Object {\n    $_.Scope -match '(^| )(offline_access|User.ReadWrite|Mail\\.|MailboxSettings\\.|Files\\.|Sites\\.|Calendars\\.|Contacts\\.|Directory\\.)' -or\n    $_.Scope -match '\\.All($| )'\n  } |\n  Select-Object Id,ClientId,ConsentType,Scope",
@@ -2028,7 +2213,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, DelegatedPermissionGrant.Read.All, DelegatedPermissionGrant.ReadWrite.All, Application.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "App access"
   },
   "Remove Specific Delegated Grant": {
     "code": "$GrantId = \"OAUTH-GRANT-ID\"\nRemove-MgOauth2PermissionGrant -OAuth2PermissionGrantId $GrantId",
@@ -2041,7 +2232,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: DelegatedPermissionGrant.ReadWrite.All.",
-    "input": "Replace command examples with your record ID from a prior lookup. Review all target values before running. Grant ID from the app-permission lookup, not the app ID."
+    "input": "Replace command examples with your record ID from a prior lookup. Review all target values before running. Grant ID from the app-permission lookup, not the app ID.",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "App access"
   },
   "Show Distribution Group Members": {
     "code": "$Group = \"group@domain.com\"\nGet-DistributionGroupMember -Identity $Group -ResultSize Unlimited |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientType",
@@ -2052,7 +2249,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ],
+    "relationshipFamily": "Distribution groups"
   },
   "Show Distribution Group Owners": {
     "code": "$Group = \"group@domain.com\"\nGet-DistributionGroup -Identity $Group |\n  Select-Object -ExpandProperty ManagedBy",
@@ -2063,7 +2266,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "GET-GROUP-MEMBERS.ps1"
+    ],
+    "relationshipFamily": "Distribution groups"
   },
   "Add Distribution Group Member": {
     "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nAdd-DistributionGroupMember -Identity $Group -Member $Member",
@@ -2076,7 +2285,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ],
+    "relationshipFamily": "Distribution groups"
   },
   "Remove Distribution Group Member": {
     "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$false",
@@ -2089,7 +2304,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1",
+      "command:Show Distribution Group Owners"
+    ],
+    "relationshipFamily": "Distribution groups"
   },
   "Show AD Group Members": {
     "code": "$Group = \"Group Name\"\nGet-ADGroupMember -Identity $Group |\n  Select-Object Name,SamAccountName,ObjectClass",
@@ -2100,7 +2321,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD User Group Memberships"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Show AD User Group Memberships": {
     "code": "Get-ADPrincipalGroupMembership -Identity \"username\" |\n  Select-Object Name,GroupCategory,GroupScope",
@@ -2111,7 +2338,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Add User to AD Group": {
     "code": "$Group = \"Group Name\"\nAdd-ADGroupMember -Identity $Group -Members \"username\"",
@@ -2124,7 +2357,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name; group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your target account name; group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Remove User from AD Group": {
     "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$false",
@@ -2137,7 +2376,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
-    "input": "Replace command examples with your target account name; group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your target account name; group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Find Exact Group": {
     "code": "$GroupName = \"Group Name\"\nGet-MgGroup -Filter \"displayName eq '$GroupName'\" -Property Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled |\n  Select-Object Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled",
@@ -2148,7 +2393,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
-    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Show Entra Group Direct Members": {
     "code": "Get-MgGroupMember -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
@@ -2159,7 +2410,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
-    "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup."
+    "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Show Entra Group Owners": {
     "code": "Get-MgGroupOwner -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
@@ -2170,7 +2427,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
-    "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup."
+    "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Show Entra User Group Memberships": {
     "code": "Get-MgUserMemberOf -UserId \"user@domain.com\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}}",
@@ -2182,7 +2445,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Group.Read.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Add User to Entra Group": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nNew-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -OdataId \"https://graph.microsoft.com/v1.0/directoryObjects/$UserId\"",
@@ -2195,7 +2464,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, GroupMember.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup."
+    "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Remove User from Entra Group": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nRemove-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -DirectoryObjectId $UserId",
@@ -2208,7 +2483,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, GroupMember.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup."
+    "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup.",
+    "related": [
+      "GET-GROUP-MEMBERS.ps1",
+      "GET-USER-GROUPS.ps1",
+      "GET-TENANT-GROUP-OWNERS.ps1"
+    ],
+    "relationshipFamily": "Entra groups"
   },
   "Show Mailbox Protocol State": {
     "code": "Get-CASMailbox -Identity \"user@domain.com\" |\n  Select-Object PopEnabled,ImapEnabled,SmtpClientAuthenticationDisabled,MAPIEnabled,OWAEnabled,ActiveSyncEnabled",
@@ -2219,7 +2500,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ],
+    "relationshipFamily": "Mailbox protocols"
   },
   "Show Mailbox Summary": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientTypeDetails,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
@@ -2230,7 +2517,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Disable Mailbox SMTP AUTH": {
     "code": "Set-CASMailbox -Identity \"user@domain.com\" -SmtpClientAuthenticationDisabled $true",
@@ -2243,7 +2536,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Mailbox Protocol State",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary"
+    ],
+    "relationshipFamily": "Mailbox protocols"
   },
   "Disable Mailbox POP / IMAP": {
     "code": "Set-CASMailbox -Identity \"user@domain.com\" -PopEnabled $false -ImapEnabled $false",
@@ -2256,7 +2555,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Mailbox Protocol State",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "command:Show Mailbox Summary"
+    ],
+    "relationshipFamily": "Mailbox protocols"
   },
   "Show Mailbox Full Access Delegates": {
     "code": "Get-MailboxPermission -Identity \"user@domain.com\" |\n  Where-Object { -not $_.IsInherited -and $_.User -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object User,AccessRights,Deny",
@@ -2267,7 +2572,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Show Mailbox Forwarding": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object PrimarySmtpAddress,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
@@ -2278,7 +2589,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Show Mailbox Send As Delegates": {
     "code": "Get-RecipientPermission -Identity \"user@domain.com\" |\n  Where-Object { $_.Trustee -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object Trustee,AccessRights",
@@ -2289,7 +2606,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Show Mailbox Send on Behalf Delegates": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object -ExpandProperty GrantSendOnBehalfTo",
@@ -2300,7 +2623,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Full Access Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$false",
@@ -2313,7 +2642,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Forwarding": {
     "code": "Set-Mailbox -Identity \"user@domain.com\" -ForwardingAddress $null -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false",
@@ -2326,7 +2661,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Send As Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$false",
@@ -2339,7 +2680,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Send on Behalf Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nSet-Mailbox -Identity \"user@domain.com\" -GrantSendOnBehalfTo @{Remove=$Delegate}",
@@ -2352,7 +2699,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-MAILBOX-FORWARDING.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "Mailbox access and forwarding"
   },
   "Show Specific Transport Rule": {
     "code": "$Rule = \"Rule Name\"\nGet-TransportRule -Identity $Rule | Format-List *",
@@ -2363,7 +2716,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "GET-TRANSPORT-RULES-AUDIT.ps1",
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "relationshipFamily": "Mail transport"
   },
   "Show Transport Rules": {
     "code": "Get-TransportRule |\n  Select-Object Name,State,Mode,Priority",
@@ -2374,7 +2733,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter."
+    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter.",
+    "related": [
+      "GET-TRANSPORT-RULES-AUDIT.ps1",
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "relationshipFamily": "Mail transport"
   },
   "Show Inbox Rules - Including Hidden": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Select-Object Name,Enabled,Priority,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
@@ -2385,7 +2750,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "Show Suspicious Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Where-Object { $_.ForwardTo -or $_.RedirectTo -or $_.DeleteMessage -or $_.StopProcessingRules } |\n  Select-Object Name,Enabled,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
@@ -2396,7 +2767,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "Remove All Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Remove-InboxRule -Confirm:$false",
@@ -2410,7 +2787,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "Remove Specific Inbox Rule": {
     "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$false",
@@ -2424,7 +2807,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address; target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address; target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "Show BitLocker Recovery Protectors": {
     "code": "Get-BitLockerVolume -MountPoint \"C:\" |\n  Select-Object -ExpandProperty KeyProtector |\n  Select-Object KeyProtectorType,KeyProtectorId,RecoveryPassword",
@@ -2435,7 +2824,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Contains recovery secrets or a private key; keep the output private."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show Physical Disk Health",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Endpoint protection"
   },
   "Show BitLocker Status": {
     "code": "Get-BitLockerVolume |\n  Select-Object MountPoint,VolumeStatus,ProtectionStatus,EncryptionPercentage,EncryptionMethod",
@@ -2444,7 +2839,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Endpoint protection"
   },
   "Resume Protection": {
     "code": "Resume-BitLocker -MountPoint \"C:\"",
@@ -2455,7 +2856,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Endpoint protection"
   },
   "Suspend For One Reboot": {
     "code": "Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1",
@@ -2466,7 +2873,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "command:Show BitLocker Status",
+      "command:Show BitLocker Recovery Protectors",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Endpoint protection"
   },
   "Find By Thumbprint": {
     "code": "Get-ChildItem Cert:\\CurrentUser\\My,Cert:\\LocalMachine\\My |\n  Where-Object Thumbprint -eq \"THUMBPRINT\" |\n  Select-Object Subject,Thumbprint,NotBefore,NotAfter,HasPrivateKey",
@@ -2475,7 +2888,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your certificate thumbprint. Review all target values before running."
+    "input": "Replace command examples with your certificate thumbprint. Review all target values before running.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Show Expiring Certificates": {
     "code": "Get-ChildItem Cert:\\LocalMachine\\My |\n  Where-Object { $_.NotAfter -le (Get-Date).AddDays(30) } |\n  Select-Object Subject,Thumbprint,NotAfter",
@@ -2484,7 +2903,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Verify Script Signature": {
     "code": "$Path = \"C:\\Scripts\\script.ps1\"\nGet-AuthenticodeSignature -FilePath $Path |\n  Select-Object Status,StatusMessage,SignerCertificate",
@@ -2493,7 +2918,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Show Code-Signing Certificates"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Create Self-Signed App-Auth Certificate": {
     "code": "$Name = \"M365-AppAuth\"\nNew-SelfSignedCertificate `\n  -Subject \"CN=$Name\" `\n  -CertStoreLocation \"Cert:\\CurrentUser\\My\" `\n  -KeySpec KeyExchange `\n  -KeyExportPolicy Exportable `\n  -KeyLength 2048 `\n  -HashAlgorithm SHA256 `\n  -NotAfter (Get-Date).AddYears(2)",
@@ -2504,7 +2935,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your certificate subject name. Review all target values before running."
+    "input": "Replace command examples with your certificate subject name. Review all target values before running.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Export Pfx": {
     "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.pfx\"\n$Password = Read-Host \"PFX password\" -AsSecureString\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-PfxCertificate -Cert $Cert -FilePath $Path -Password $Password",
@@ -2516,7 +2953,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Contains recovery secrets or a private key; keep the output private."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Export Public Cer": {
     "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.cer\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-Certificate -Cert $Cert -FilePath $Path",
@@ -2527,7 +2970,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Sign Script": {
     "code": "$Path = \"C:\\Scripts\\script.ps1\"\n$Thumbprint = \"THUMBPRINT\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nSet-AuthenticodeSignature -FilePath $Path -Certificate $Cert -TimestampServer \"http://timestamp.digicert.com\"",
@@ -2538,7 +2987,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your certificate thumbprint; local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Find Exchange Service Principal By Appid": {
     "code": "$AppId = \"APP-ID\"\nGet-ServicePrincipal |\n  Where-Object AppId -eq $AppId |\n  Select-Object DisplayName,AppId,ObjectId",
@@ -2549,7 +3004,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your record ID from a prior lookup. Review all target values before running. Application (client) ID of the app to find."
+    "input": "Replace command examples with your record ID from a prior lookup. Review all target values before running. Application (client) ID of the app to find.",
+    "related": [
+      "GET-OAUTH-CONSENT-AUDIT.ps1",
+      "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "relationshipFamily": "App access"
   },
   "Calculate Sha256 Hash": {
     "code": "$Path = \"C:\\Temp\\file.exe\"\nGet-FileHash -Path $Path -Algorithm SHA256",
@@ -2558,7 +3019,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   },
   "Show Compliance Search Status": {
     "code": "$SearchName = \"SEARCH-NAME\"\nGet-ComplianceSearch -Identity $SearchName |\n  Select-Object Name,Status,Items,Size,SuccessResults",
@@ -2569,7 +3036,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and Purview roles for this search or purge action. Your tenant must support the command shown.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Search Jobs"
+    ],
+    "relationshipFamily": "Content search"
   },
   "Create Phishing Search By Subject": {
     "code": "$SearchName = \"IR_Clawback_$(Get-Date -Format 'yyyyMMdd_HHmmss')\"\n$Subject = \"phishing subject\"\nNew-ComplianceSearch `\n  -Name $SearchName `\n  -ExchangeLocation All `\n  -ContentMatchQuery \"subject:`\"$Subject`\"\"",
@@ -2582,7 +3055,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and Purview roles for this search or purge action. Your tenant must support the command shown.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "relationshipFamily": "Content search"
   },
   "Hard-Delete Search Results": {
     "code": "$SearchName = \"SEARCH-NAME\"\nNew-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete",
@@ -2596,7 +3075,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Permanent deletion request. Review the completed search and obtain approval before running."
     ],
     "requires": "ExchangeOnlineManagement module and Purview roles for this search or purge action. Your tenant must support the command shown.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "relationshipFamily": "Content search"
   },
   "Start Compliance Search": {
     "code": "$SearchName = \"SEARCH-NAME\"\nStart-ComplianceSearch -Identity $SearchName",
@@ -2609,7 +3094,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and Purview roles for this search or purge action. Your tenant must support the command shown.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Compliance Search Status",
+      "command:Show Exchange Connection",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "relationshipFamily": "Content search"
   },
   "Run Quick Scan": {
     "code": "Start-MpScan -ScanType QuickScan",
@@ -2620,7 +3111,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Defender Status",
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status"
+    ],
+    "relationshipFamily": "Antivirus"
   },
   "Update Signatures": {
     "code": "Update-MpSignature",
@@ -2631,7 +3128,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Defender Status",
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status"
+    ],
+    "relationshipFamily": "Antivirus"
   },
   "Audit Inbox Rule Changes": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations New-InboxRule,Set-InboxRule `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -2644,7 +3147,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Mail Delete And Move Audit": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -2657,7 +3166,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Mailitemsaccessed Audit": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -2670,7 +3185,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Parse Mail Audit Subject, Ip, And Destination Folder": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed,SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,Operation,\n    @{N=\"EmailSubject\";E={(ConvertFrom-Json $_.AuditData).Item.Subject}},\n    @{N=\"ClientIP\";E={(ConvertFrom-Json $_.AuditData).ClientIP}},\n    @{N=\"DestFolder\";E={(ConvertFrom-Json $_.AuditData).DestinationFolder.Name}}",
@@ -2683,7 +3204,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Search Query Audit": {
     "code": "Search-UnifiedAuditLog -Operations SearchQueryInitiated -UserIds \"user@domain.com\" |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -2696,7 +3223,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Unified Audit Log For One User": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -2709,7 +3242,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows available returned records only; this command does not collect every page or prove that no other activity exists."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "relationshipFamily": "Mail investigation"
   },
   "Show Risk Detections For One User": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nGet-MgRiskDetection -Filter \"userId eq '$UserId'\" -All |\n  Select-Object ActivityDateTime,RiskEventType,RiskLevel,RiskState,IPAddress,Location,Source",
@@ -2720,7 +3259,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Risky User State": {
     "code": "Get-MgRiskyUser -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,RiskLevel,RiskState,RiskDetail,RiskLastUpdatedDateTime",
@@ -2731,7 +3276,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Recipient": {
     "code": "Get-MessageTraceV2 `\n  -RecipientAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
@@ -2744,7 +3295,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows the returned search results only; result limits can leave a large search incomplete."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ],
+    "relationshipFamily": "Mail delivery"
   },
   "Sender": {
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
@@ -2757,7 +3314,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows the returned search results only; result limits can leave a large search incomplete."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ],
+    "relationshipFamily": "Mail delivery"
   },
   "Show Message Trace Events": {
     "code": "$TraceId = \"MESSAGE-TRACE-ID\"\nGet-MessageTraceDetailV2 -MessageTraceId $TraceId -RecipientAddress \"recipient@domain.com\" |\n  Select-Object Date,Event,Action,Detail,Data",
@@ -2768,7 +3331,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Message trace ID from a trace search and the exact recipient address."
+    "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Message trace ID from a trace search and the exact recipient address.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Search Jobs",
+      "command:Who Received Mail From Suspicious Sender"
+    ],
+    "relationshipFamily": "Mail delivery"
   },
   "Show Message Trace Search Jobs": {
     "code": "Get-HistoricalSearch |\n  Sort-Object SubmitDate -Descending |\n  Select-Object -First 5 ReportTitle,Status,Rows,FileUrl,SubmitDate",
@@ -2779,7 +3348,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter."
+    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Who Received Mail From Suspicious Sender"
+    ],
+    "relationshipFamily": "Mail delivery"
   },
   "Who Received Mail From Suspicious Sender": {
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"badguy@evil.com\" `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object -ExpandProperty RecipientAddress |\n  Sort-Object -Unique",
@@ -2792,7 +3367,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Shows the returned search results only; result limits can leave a large search incomplete."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your suspect sender address. Review all target values before running."
+    "input": "Replace command examples with your suspect sender address. Review all target values before running.",
+    "related": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "command:Show Message Trace Events",
+      "command:Show Message Trace Search Jobs"
+    ],
+    "relationshipFamily": "Mail delivery"
   },
   "Show Failed Sign-Ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -ne 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"ErrorCode\";E={$_.Status.ErrorCode}},\n    @{N=\"FailureReason\";E={$_.Status.FailureReason}}",
@@ -2803,7 +3384,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Last 10 Entra Sign-Ins": {
     "code": "Get-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com'\" -Top 10 -Sort \"createdDateTime desc\" |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}},\n    @{N=\"Location\";E={\"$($_.Location.City), $($_.Location.State), $($_.Location.CountryOrRegion)\"}}",
@@ -2814,7 +3401,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Entra Sign-ins - Last 48 Hours": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}}",
@@ -2825,7 +3418,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Legacy / Other-client Sign-ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddDays(-7).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.ClientAppUsed -eq \"Other clients\" } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
@@ -2836,7 +3435,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Show Successful Sign-Ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -eq 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus",
@@ -2847,7 +3452,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Recent Application Errors": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"Application\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
@@ -2858,7 +3469,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Recent System Errors",
+      "command:Show Last Boot And Uptime",
+      "command:Show Service Status"
+    ],
+    "relationshipFamily": "Windows event review"
   },
   "Recent System Errors": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
@@ -2869,7 +3486,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Recent Application Errors",
+      "command:Show Last Boot And Uptime",
+      "command:Show Service Status"
+    ],
+    "relationshipFamily": "Windows event review"
   },
   "Resolve Name": {
     "code": "$Name = \"example.com\"\nResolve-DnsName $Name",
@@ -2878,7 +3501,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ],
+    "relationshipFamily": "DNS"
   },
   "Show Configured Dns Servers": {
     "code": "Get-DnsClientServerAddress -AddressFamily IPv4 |\n  Select-Object InterfaceAlias,ServerAddresses",
@@ -2887,7 +3516,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:DNS Lookup",
+      "command:Show Ip Configuration",
+      "command:Resolve Name"
+    ],
+    "relationshipFamily": "DNS"
   },
   "Flush Resolver Cache": {
     "code": "Clear-DnsClientCache",
@@ -2898,7 +3533,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ],
+    "relationshipFamily": "DNS"
   },
   "Show Windows Firewall Profiles": {
     "code": "Get-NetFirewallProfile |\n  Select-Object Name,Enabled,DefaultInboundAction,DefaultOutboundAction",
@@ -2907,7 +3548,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Windows Firewall Rules by Name",
+      "command:Show Listening Tcp Ports",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Firewall and remote access"
   },
   "Show Windows Firewall Rules by Name": {
     "code": "$Name = \"*Remote Desktop*\"\nGet-NetFirewallRule -DisplayName $Name |\n  Select-Object DisplayName,Enabled,Direction,Action,Profile",
@@ -2916,7 +3563,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your firewall rule display-name filter. Review all target values before running."
+    "input": "Replace command examples with your firewall rule display-name filter. Review all target values before running.",
+    "related": [
+      "command:Show Windows Firewall Profiles",
+      "command:Show Listening Tcp Ports",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Firewall and remote access"
   },
   "Ping Host": {
     "code": "Test-Connection -ComputerName \"server01\" -Count 4",
@@ -2925,7 +3578,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Active Adapters": {
     "code": "Get-NetAdapter |\n  Where-Object Status -eq \"Up\" |\n  Select-Object Name,InterfaceDescription,MacAddress,LinkSpeed",
@@ -2934,7 +3593,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Network Profile"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Show Arp Neighbor Cache": {
     "code": "Get-NetNeighbor -AddressFamily IPv4 |\n  Select-Object IPAddress,LinkLayerAddress,State,InterfaceAlias",
@@ -2943,7 +3608,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Established Tcp Connections": {
     "code": "Get-NetTCPConnection -State Established |\n  Select-Object LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess",
@@ -2952,7 +3623,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Ip Configuration": {
     "code": "Get-NetIPConfiguration |\n  Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer",
@@ -2961,7 +3638,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Routing Table",
+      "command:Test Tcp Port",
+      "command:Ping Host"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Listening Tcp Ports": {
     "code": "Get-NetTCPConnection -State Listen |\n  Sort-Object LocalPort |\n  Select-Object LocalAddress,LocalPort,OwningProcess",
@@ -2970,7 +3653,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Routing Table": {
     "code": "Get-NetRoute -AddressFamily IPv4 |\n  Sort-Object RouteMetric |\n  Select-Object DestinationPrefix,NextHop,InterfaceAlias,RouteMetric",
@@ -2979,7 +3668,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Test Tcp Port",
+      "command:Ping Host"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Test Tcp Port": {
     "code": "Test-NetConnection -ComputerName \"server01\" -Port 443",
@@ -2988,7 +3683,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Ping Host"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Trace Route": {
     "code": "Test-NetConnection -ComputerName \"example.com\" -TraceRoute",
@@ -2997,7 +3698,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Release And Renew Dhcp": {
     "code": "ipconfig /release\nipconfig /renew",
@@ -3009,7 +3716,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Reset Tcp/Ip Stack": {
     "code": "netsh int ip reset",
@@ -3020,7 +3733,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Reset Winsock": {
     "code": "netsh winsock reset",
@@ -3031,7 +3750,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Restart Adapter": {
     "code": "Restart-NetAdapter -Name \"Ethernet\" -Confirm:$false",
@@ -3043,7 +3768,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your network adapter name. Review all target values before running."
+    "input": "Replace command examples with your network adapter name. Review all target values before running.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Show Configured Windows Vpn Connections": {
     "code": "Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue |\n  Select-Object Name,ServerAddress,TunnelType,AuthenticationMethod,ConnectionStatus",
@@ -3054,7 +3785,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Show Wi-Fi Connection": {
     "code": "netsh wlan show interfaces",
@@ -3063,7 +3800,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Wi-Fi Interface",
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
+    ],
+    "relationshipFamily": "Wi-Fi"
   },
   "Show Saved Wi-Fi Profiles": {
     "code": "netsh wlan show profiles",
@@ -3072,7 +3815,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Wi-Fi Interface",
+      "command:Network Profile"
+    ],
+    "relationshipFamily": "Wi-Fi"
   },
   "Show Problem Devices": {
     "code": "Get-PnpDevice -PresentOnly |\n  Where-Object Status -ne \"OK\" |\n  Select-Object Class,FriendlyName,InstanceId,Status",
@@ -3081,7 +3830,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime"
+    ],
+    "relationshipFamily": "Computer information"
   },
   "Show Free Space": {
     "code": "Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" |\n  Select-Object DeviceID,\n    @{N=\"SizeGB\";E={[math]::Round($_.Size/1GB,1)}},\n    @{N=\"FreeGB\";E={[math]::Round($_.FreeSpace/1GB,1)}},\n    @{N=\"FreePct\";E={[math]::Round(($_.FreeSpace/$_.Size)*100,1)}}",
@@ -3090,7 +3845,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Physical Disk Health",
+      "command:Open Storage Settings"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Show Physical Disk Health": {
     "code": "Get-PhysicalDisk |\n  Select-Object FriendlyName,MediaType,HealthStatus,OperationalStatus,Size",
@@ -3099,7 +3860,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Open Storage Settings"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Find Files Modified In Last 24 Hours": {
     "code": "$Path = \"C:\\Temp\"\nGet-ChildItem $Path -File -Recurse -ErrorAction SilentlyContinue |\n  Where-Object LastWriteTime -ge (Get-Date).AddHours(-24) |\n  Select-Object FullName,Length,LastWriteTime",
@@ -3110,7 +3877,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Replace command examples with your local file or folder path. Review all target values before running. Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Show Computer Model And Serial Number": {
     "code": "$System = Get-CimInstance Win32_ComputerSystem\n$Bios = Get-CimInstance Win32_BIOS\n[pscustomobject]@{\n  Manufacturer = $System.Manufacturer\n  Model = $System.Model\n  SerialNumber = $Bios.SerialNumber\n}",
@@ -3119,7 +3892,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime",
+      "command:Show Problem Devices"
+    ],
+    "relationshipFamily": "Computer information"
   },
   "Show Hostname And Current User": {
     "code": "[pscustomobject]@{\n  ComputerName = $env:COMPUTERNAME\n  User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name\n}",
@@ -3128,7 +3907,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Last Boot And Uptime"
+    ],
+    "relationshipFamily": "Computer information"
   },
   "Show Last Boot And Uptime": {
     "code": "$OS = Get-CimInstance Win32_OperatingSystem\n[pscustomobject]@{\n  LastBoot = $OS.LastBootUpTime\n  Uptime = (Get-Date) - $OS.LastBootUpTime\n}",
@@ -3137,7 +3922,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Os And Build",
+      "command:Show Problem Devices"
+    ],
+    "relationshipFamily": "Computer information"
   },
   "Show Os And Build": {
     "code": "Get-CimInstance Win32_OperatingSystem |\n  Select-Object Caption,Version,BuildNumber,OSArchitecture",
@@ -3146,7 +3937,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Computer Model And Serial Number",
+      "command:Show Last Boot And Uptime",
+      "command:Show Problem Devices"
+    ],
+    "relationshipFamily": "Computer information"
   },
   "Show Top Cpu Consumers": {
     "code": "Get-Process |\n  Sort-Object CPU -Descending |\n  Select-Object -First 15 Name,Id,CPU",
@@ -3155,7 +3952,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Top Memory Consumers",
+      "command:Show Service Status",
+      "command:Recent Application Errors"
+    ],
+    "relationshipFamily": "Performance"
   },
   "Show Top Memory Consumers": {
     "code": "Get-Process |\n  Sort-Object WorkingSet64 -Descending |\n  Select-Object -First 15 Name,Id,@{N=\"MemoryMB\";E={[math]::Round($_.WorkingSet64/1MB,1)}}",
@@ -3164,7 +3967,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Top Cpu Consumers",
+      "command:Show Service Status",
+      "command:Recent Application Errors"
+    ],
+    "relationshipFamily": "Performance"
   },
   "Stop Process By Name": {
     "code": "$Name = \"notepad\"\nStop-Process -Name $Name -Force",
@@ -3176,7 +3985,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can discard unsaved work in every matching process."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your process name. Review all target values before running."
+    "input": "Replace command examples with your process name. Review all target values before running.",
+    "related": [
+      "command:Show Top Cpu Consumers",
+      "command:Show Top Memory Consumers",
+      "command:Show Service Status"
+    ],
+    "relationshipFamily": "Performance"
   },
   "Show Whether Remote Desktop Is Enabled": {
     "code": "$Value = (Get-ItemProperty \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\" -Name fDenyTSConnections).fDenyTSConnections\n[pscustomobject]@{ RDPEnabled = ($Value -eq 0) }",
@@ -3187,7 +4002,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "This registry setting alone does not confirm firewall access or a working remote connection."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Windows Firewall Profiles",
+      "command:Show Windows Firewall Rules by Name",
+      "command:Show Listening Tcp Ports"
+    ],
+    "relationshipFamily": "Firewall and remote access"
   },
   "Chkdsk Online Scan": {
     "code": "chkdsk C: /scan",
@@ -3196,7 +4017,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Drive or file path shown in the command; change it if the target is not C:."
+    "input": "Drive or file path shown in the command; change it if the target is not C:.",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "Dism Component Store Scan": {
     "code": "DISM.exe /Online /Cleanup-Image /ScanHealth",
@@ -3205,7 +4032,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "Dism Restore Health": {
     "code": "DISM.exe /Online /Cleanup-Image /RestoreHealth",
@@ -3216,7 +4049,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "System File Checker": {
     "code": "sfc.exe /scannow",
@@ -3227,7 +4066,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "Reboot Computer": {
     "code": "Restart-Computer -Force",
@@ -3239,7 +4084,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Restarts immediately and can discard unsaved work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show Service Status": {
     "code": "Get-Service -Name \"Spooler\" |\n  Select-Object Name,DisplayName,Status,StartType",
@@ -3248,7 +4099,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your service name. Review all target values before running."
+    "input": "Replace command examples with your service name. Review all target values before running.",
+    "related": [
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Services and scheduled tasks"
   },
   "Restart Service": {
     "code": "Restart-Service -Name \"Spooler\" -Force",
@@ -3259,7 +4116,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your service name. Review all target values before running."
+    "input": "Replace command examples with your service name. Review all target values before running.",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result"
+    ],
+    "relationshipFamily": "Services and scheduled tasks"
   },
   "Set Startup Type": {
     "code": "Set-Service -Name \"Spooler\" -StartupType Automatic",
@@ -3270,7 +4133,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your service name. Review all target values before running."
+    "input": "Replace command examples with your service name. Review all target values before running.",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Show Scheduled Task Last Run Result"
+    ],
+    "relationshipFamily": "Services and scheduled tasks"
   },
   "Show Locally Logged-On Users": {
     "code": "quser",
@@ -3279,7 +4148,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Show SMB Sessions": {
     "code": "Get-SmbSession |\n  Select-Object ClientComputerName,ClientUserName,NumOpens,Dialect",
@@ -3288,7 +4163,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Shares",
+      "command:Mapped Drives"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Show SMB Shares": {
     "code": "Get-SmbShare |\n  Select-Object Name,Path,Description",
@@ -3297,7 +4178,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Mapped Drives"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Show Scheduled Task": {
     "code": "Get-ScheduledTask -TaskName \"Task Name\" |\n  Select-Object TaskName,TaskPath,State",
@@ -3306,7 +4193,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task Last Run Result",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Services and scheduled tasks"
   },
   "Show Scheduled Task Last Run Result": {
     "code": "Get-ScheduledTaskInfo -TaskName \"Task Name\" |\n  Select-Object LastRunTime,LastTaskResult,NextRunTime,NumberOfMissedRuns",
@@ -3315,7 +4208,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running."
+    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "related": [
+      "command:Show Service Status",
+      "command:Show Scheduled Task",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Services and scheduled tasks"
   },
   "Check Common Pending Reboot Flags": {
     "code": "$Pending = $false\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending\"){ $Pending = $true }\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired\"){ $Pending = $true }\n[pscustomobject]@{ PendingReboot = $Pending }",
@@ -3326,7 +4225,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Checks only the two registry locations shown; other reboot requirements may exist."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Show Installed Hotfixes"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show Installed Hotfixes": {
     "code": "Get-HotFix |\n  Sort-Object InstalledOn -Descending |\n  Select-Object HotFixID,Description,InstalledOn,InstalledBy",
@@ -3335,7 +4240,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show Recent Windows Update History": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";ProviderName=\"Microsoft-Windows-WindowsUpdateClient\";StartTime=(Get-Date).AddDays(-30)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,Id,LevelDisplayName,Message",
@@ -3346,7 +4257,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Check Common Pending Reboot Flags",
+      "command:Show Installed Hotfixes"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Add Calendar Permission": {
     "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -AccessRights $AccessRights",
@@ -3359,7 +4276,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ],
+    "relationshipFamily": "Calendar and contacts"
   },
   "Remove Calendar Permission": {
     "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$false",
@@ -3372,7 +4295,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ],
+    "relationshipFamily": "Calendar and contacts"
   },
   "Show Calendar Permissions": {
     "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Calendar\"",
@@ -3383,7 +4312,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-ROOM-RESOURCE-ACCESS.ps1"
+    ],
+    "relationshipFamily": "Calendar and contacts"
   },
   "Show Contacts Permissions": {
     "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Contacts\"",
@@ -3394,7 +4329,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Calendar Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1",
+      "GET-ROOM-RESOURCE-ACCESS.ps1"
+    ],
+    "relationshipFamily": "Calendar and contacts"
   },
   "Add Contacts Permission": {
     "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Contacts\" -User \"user@domain.com\" -AccessRights $AccessRights",
@@ -3407,7 +4348,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "command:Show Calendar Permissions",
+      "command:Show Contacts Permissions",
+      "GET-MAILBOX-PERMISSIONS.ps1"
+    ],
+    "relationshipFamily": "Calendar and contacts"
   },
   "Show Send-To Restrictions / authOrig": {
     "code": "Get-ADGroup 'GroupName' -Properties authOrig | Select-Object -ExpandProperty authOrig",
@@ -3418,7 +4365,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Show Account Enabled": {
     "code": "Get-ADUser \"username\" -Properties Enabled | Select-Object SamAccountName,Enabled",
@@ -3429,7 +4382,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Show User Principal Name": {
     "code": "Get-ADUser -Identity \"username\" -Properties UserPrincipalName | Select-Object UserPrincipalName",
@@ -3440,7 +4399,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Show Password Last Set": {
     "code": "Get-ADUser -Identity \"username\" -Properties PasswordLastSet | Select-Object Name,PasswordLastSet",
@@ -3451,7 +4416,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Show Distinguished Name": {
     "code": "Get-ADUser -Identity \"username\" | Select-Object DistinguishedName",
@@ -3462,7 +4433,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Show Default Domain Password Policy": {
     "code": "Get-ADDefaultDomainPasswordPolicy",
@@ -3473,7 +4450,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Uses the domain available to your Windows account; no user or group name to enter."
+    "input": "Uses the domain available to your Windows account; no user or group name to enter.",
+    "related": [
+      "GET-ACCOUNT-STATUS.ps1",
+      "GET-USER-PREDELETE-CHECK.ps1",
+      "command:Get User"
+    ],
+    "relationshipFamily": "AD account review"
   },
   "Force Group Policy Update": {
     "code": "gpupdate /force",
@@ -3484,7 +4467,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Group Policy Result"
+    ],
+    "relationshipFamily": "Domain and device identity"
   },
   "Show Group Policy Result": {
     "code": "gpresult /r",
@@ -3493,7 +4482,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Configured Dns Servers"
+    ],
+    "relationshipFamily": "Domain and device identity"
   },
   "Disable Hibernation": {
     "code": "powercfg.exe /hibernate off",
@@ -3504,7 +4499,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Show Domain Account Details": {
     "code": "net user username /domain",
@@ -3513,7 +4514,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Entra Join Status",
+      "command:Show Group Policy Result"
+    ],
+    "relationshipFamily": "Domain and device identity"
   },
   "Create Local User": {
     "code": "net user username /add",
@@ -3524,7 +4531,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Delete Local User": {
     "code": "net user username /delete",
@@ -3535,7 +4548,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Set Local User Password": {
     "code": "net user \"username\" \"temporary password\"",
@@ -3547,7 +4566,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "The password is typed in plain text and may remain in command history or recordings."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your target account name. Review all target values before running. New password; replace the example value before running."
+    "input": "Replace command examples with your target account name. Review all target values before running. New password; replace the example value before running.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Enable Local Account": {
     "code": "net user \"username\" /active:yes",
@@ -3558,7 +4583,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Open Local Users and Groups": {
     "code": "lusrmgr.msc",
@@ -3567,7 +4598,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Show Logged-On Users": {
     "code": "quser",
@@ -3576,7 +4613,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares",
+      "command:Mapped Drives"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Disable Network Adapter": {
     "code": "netsh interface set interface \"Wi-Fi\" admin=disabled",
@@ -3588,7 +4631,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your network adapter name. Review all target values before running."
+    "input": "Replace command examples with your network adapter name. Review all target values before running.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Restart Network Adapter": {
     "code": "Restart-NetAdapter -Name \"Wi-Fi\"",
@@ -3600,7 +4649,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your network adapter name. Review all target values before running."
+    "input": "Replace command examples with your network adapter name. Review all target values before running.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Isolate Device - Disable Enabled Adapters": {
     "code": "Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$false",
@@ -3612,7 +4667,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Active Adapters",
+      "command:Show Ip Configuration",
+      "command:Show Routing Table"
+    ],
+    "relationshipFamily": "Network changes"
   },
   "Resync Windows Time": {
     "code": "w32tm /resync /force",
@@ -3623,7 +4684,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Windows Time Status",
+      "command:Windows Time Source",
+      "command:Show Last Boot And Uptime"
+    ],
+    "relationshipFamily": "Windows time"
   },
   "Open Windows Update": {
     "code": "start ms-settings:windowsupdate-action",
@@ -3632,7 +4699,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show Wi-Fi Interface": {
     "code": "netsh wlan show interfaces",
@@ -3641,7 +4714,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
+    ],
+    "relationshipFamily": "Wi-Fi"
   },
   "Delete Wi-Fi Profile": {
     "code": "netsh wlan delete profile name=\"ProfileName\"",
@@ -3652,7 +4731,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Saved Wi-Fi profile name; replace ProfileName."
+    "input": "Saved Wi-Fi profile name; replace ProfileName.",
+    "related": [
+      "command:Show Wi-Fi Connection",
+      "command:Show Wi-Fi Interface",
+      "command:Show Saved Wi-Fi Profiles"
+    ],
+    "relationshipFamily": "Wi-Fi"
   },
   "DISM Analyze Component Store": {
     "code": "DISM /Online /Cleanup-Image /AnalyzeComponentStore",
@@ -3661,7 +4746,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:Recent System Errors",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "DISM Component Store Cleanup": {
     "code": "DISM /Online /Cleanup-Image /StartComponentCleanup",
@@ -3672,7 +4763,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Dism Component Store Scan",
+      "command:DISM Analyze Component Store",
+      "command:Recent System Errors"
+    ],
+    "relationshipFamily": "Windows repair"
   },
   "Launch Disk Cleanup": {
     "code": "cleanmgr.exe",
@@ -3683,7 +4780,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Defragment Volume": {
     "code": "Optimize-Volume -DriveLetter C -Defrag -Verbose",
@@ -3694,7 +4797,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Default target: C: drive. Change -DriveLetter before running if another volume is intended."
+    "input": "Default target: C: drive. Change -DriveLetter before running if another volume is intended.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Show Available WinGet Updates": {
     "code": "winget upgrade --accept-source-agreements",
@@ -3705,7 +4814,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Accepts source agreements even though it does not install updates."
     ],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
-    "input": "Uses the WinGet packages and sources configured on this Windows computer."
+    "input": "Uses the WinGet packages and sources configured on this Windows computer.",
+    "related": [
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags",
+      "command:Show Installed Hotfixes"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Update All Eligible WinGet Packages": {
     "code": "winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
@@ -3716,7 +4831,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
-    "input": "Uses the WinGet packages and sources configured on this Windows computer."
+    "input": "Uses the WinGet packages and sources configured on this Windows computer.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show WinGet Package Information": {
     "code": "$PackageId = \"Package.Id\"\nwinget show --id $PackageId --exact",
@@ -3725,7 +4846,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
-    "input": "Exact package ID from winget search. Replace \"Package.Id\" before running."
+    "input": "Exact package ID from winget search. Replace \"Package.Id\" before running.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Update Specific WinGet Package": {
     "code": "$PackageId = \"Package.Id\"\nwinget upgrade --id $PackageId --exact --accept-source-agreements --accept-package-agreements",
@@ -3736,7 +4863,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
-    "input": "Exact package ID from winget search. Replace \"Package.Id\" before running."
+    "input": "Exact package ID from winget search. Replace \"Package.Id\" before running.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Update WinGet Sources": {
     "code": "winget source update",
@@ -3747,7 +4880,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
-    "input": "Uses the WinGet packages and sources configured on this Windows computer."
+    "input": "Uses the WinGet packages and sources configured on this Windows computer.",
+    "related": [
+      "command:Show Available WinGet Updates",
+      "command:Show Recent Windows Update History",
+      "command:Check Common Pending Reboot Flags"
+    ],
+    "relationshipFamily": "Apps and updates"
   },
   "Show PowerShell Version": {
     "code": "$PSVersionTable.PSVersion",
@@ -3756,7 +4895,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Show Execution Policies": {
     "code": "Get-ExecutionPolicy -List",
@@ -3765,7 +4910,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show PowerShell Version"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Set Current User Execution Policy - RemoteSigned": {
     "code": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
@@ -3777,7 +4928,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Does not override an organization-managed execution policy."
     ],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Show Installed Microsoft Graph Module Version": {
     "code": "Get-Module Microsoft.Graph.Authentication -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
@@ -3786,7 +4943,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Show Installed ExchangeOnlineManagement Version": {
     "code": "Get-Module ExchangeOnlineManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
@@ -3795,7 +4958,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Show Graph Context": {
     "code": "Get-MgContext",
@@ -3804,7 +4973,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft.Graph.Authentication module; uses the current PowerShell session.",
-    "input": "Uses this PowerShell window’s Microsoft Graph connection; no user or group name to enter."
+    "input": "Uses this PowerShell window’s Microsoft Graph connection; no user or group name to enter.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Get User By Upn"
+    ],
+    "relationshipFamily": "Graph connection"
   },
   "Show Exchange Connection": {
     "code": "Get-ConnectionInformation",
@@ -3813,7 +4988,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter."
+    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Mailbox Summary"
+    ],
+    "relationshipFamily": "Exchange connection"
   },
   "Disconnect Microsoft Graph": {
     "code": "Disconnect-MgGraph",
@@ -3824,7 +5005,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Microsoft.Graph.Authentication module; uses the current PowerShell session.",
-    "input": "Uses this PowerShell window’s Microsoft Graph connection; no user or group name to enter."
+    "input": "Uses this PowerShell window’s Microsoft Graph connection; no user or group name to enter.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Graph Context"
+    ],
+    "relationshipFamily": "Graph connection"
   },
   "Disconnect Exchange Online": {
     "code": "Disconnect-ExchangeOnline -Confirm:$false",
@@ -3835,7 +5022,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter."
+    "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Exchange Connection"
+    ],
+    "relationshipFamily": "Exchange connection"
   },
   "Show Activity From One IP": {
     "code": "$Ip = \"1.2.3.4\"\nGet-MgAuditLogSignIn -Filter \"ipAddress eq '$Ip'\" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
@@ -3846,7 +5039,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "ir-risk-assessment.ps1",
+      "GET-USER-SECURITY-SNAPSHOT.ps1",
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "relationshipFamily": "Sign-in investigation"
   },
   "Look Up ISP And Location": {
     "code": "$Ip = \"8.8.8.8\"\nInvoke-RestMethod \"https://ipinfo.io/$Ip/json\" |\n  Select-Object ip,city,region,country,org",
@@ -3857,7 +5056,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Sends the IP to an external service. Reported location is approximate."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "AD Group Memberships": {
     "code": "Get-ADPrincipalGroupMembership -Identity \"username\" | Select-Object Name",
@@ -3868,7 +5073,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "AD Group Members": {
     "code": "Get-ADGroupMember -Identity \"GroupName\" | Select-Object Name,SamAccountName,ObjectClass",
@@ -3879,7 +5090,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to read the selected objects.",
-    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name."
+    "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name.",
+    "related": [
+      "GET-USER-GROUPS.ps1",
+      "GET-GROUP-MEMBERS.ps1",
+      "command:Show AD Group Members"
+    ],
+    "relationshipFamily": "AD groups"
   },
   "Connect Exchange Online": {
     "code": "Connect-ExchangeOnline",
@@ -3888,7 +5105,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "An authorized account for the intended tenant; select it during sign-in."
+    "input": "An authorized account for the intended tenant; select it during sign-in.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Exchange Connection"
+    ],
+    "relationshipFamily": "Exchange connection"
   },
   "Install Exchange Online Module": {
     "code": "Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force -AllowClobber",
@@ -3899,7 +5122,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell. Internet access to PowerShell Gallery and permission to install modules for your user.",
-    "input": "Installs ExchangeOnlineManagement from PowerShell Gallery for the current Windows user."
+    "input": "Installs ExchangeOnlineManagement from PowerShell Gallery for the current Windows user.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Install Microsoft Graph Module": {
     "code": "Install-Module -Name Microsoft.Graph -Scope CurrentUser -Force -AllowClobber",
@@ -3910,7 +5139,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell. Internet access to PowerShell Gallery and permission to install modules for your user.",
-    "input": "Installs Microsoft.Graph from PowerShell Gallery for the current Windows user."
+    "input": "Installs Microsoft.Graph from PowerShell Gallery for the current Windows user.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "command:Show Execution Policies"
+    ],
+    "relationshipFamily": "PowerShell setup"
   },
   "Show Hidden Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden",
@@ -3921,7 +5156,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "Delete All Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden | Remove-InboxRule -Confirm:$true",
@@ -3935,7 +5176,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running."
+    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "related": [
+      "GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "GET-MAILBOX-FORWARDING.ps1"
+    ],
+    "relationshipFamily": "Inbox rules"
   },
   "IP Configuration (ipconfig)": {
     "code": "ipconfig /all",
@@ -3944,7 +5191,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Flush DNS": {
     "code": "ipconfig /flushdns",
@@ -3955,7 +5208,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:DNS Lookup",
+      "command:Show Ip Configuration"
+    ],
+    "relationshipFamily": "DNS"
   },
   "DNS Lookup": {
     "code": "nslookup example.com",
@@ -3964,7 +5223,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Configured Dns Servers",
+      "command:Show Ip Configuration",
+      "command:Resolve Name"
+    ],
+    "relationshipFamily": "DNS"
   },
   "Continuous Ping": {
     "code": "ping -t example.com",
@@ -3973,7 +5238,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Traceroute": {
     "code": "tracert example.com",
@@ -3982,7 +5253,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Path Ping": {
     "code": "pathping example.com",
@@ -3991,7 +5268,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running."
+    "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Routing Table (route print)": {
     "code": "route print",
@@ -4000,7 +5283,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "ARP Cache": {
     "code": "arp -a",
@@ -4009,7 +5298,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "TCP Connections (netstat)": {
     "code": "netstat -ano",
@@ -4018,7 +5313,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Port 443 Connections": {
     "code": "netstat -ano | findstr :443",
@@ -4027,7 +5328,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Local Account Details": {
     "code": "net user username",
@@ -4036,7 +5343,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Replace command examples with your target account name. Review all target values before running."
+    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Identity and Privileges"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Windows Time Status": {
     "code": "w32tm /query /status",
@@ -4045,7 +5358,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Windows Time Source",
+      "command:Show Last Boot And Uptime",
+      "command:Domain Trust Check"
+    ],
+    "relationshipFamily": "Windows time"
   },
   "Windows Time Source": {
     "code": "w32tm /query /source",
@@ -4054,7 +5373,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Windows Time Status",
+      "command:Show Last Boot And Uptime",
+      "command:Domain Trust Check"
+    ],
+    "relationshipFamily": "Windows time"
   },
   "WinHTTP Proxy": {
     "code": "netsh winhttp show proxy",
@@ -4063,7 +5388,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Domain Trust Check": {
     "code": "Test-ComputerSecureChannel -Verbose",
@@ -4072,7 +5403,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Entra Join Status",
+      "command:Show Group Policy Result",
+      "command:Show Configured Dns Servers"
+    ],
+    "relationshipFamily": "Domain and device identity"
   },
   "Printer Check": {
     "code": "Get-Printer | Select-Object Name,DriverName,PortName,PrinterStatus",
@@ -4081,7 +5418,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Print Jobs",
+      "command:Spooler Status"
+    ],
+    "relationshipFamily": "Printing"
   },
   "Open Storage Settings": {
     "code": "start ms-settings:storagesense",
@@ -4090,7 +5433,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Clear Delivery Optimization Cache": {
     "code": "Delete-DeliveryOptimizationCache -Force",
@@ -4101,7 +5450,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Review the full command and target before pasting; it can make changes immediately."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "command:Show Free Space",
+      "command:Show Physical Disk Health"
+    ],
+    "relationshipFamily": "Storage"
   },
   "Identity and Privileges": {
     "code": "whoami /all",
@@ -4110,7 +5465,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Local Users",
+      "command:Show Local Administrators",
+      "command:Local Account Details"
+    ],
+    "relationshipFamily": "Local accounts"
   },
   "Entra Join Status": {
     "code": "dsregcmd /status",
@@ -4119,7 +5480,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Domain Trust Check",
+      "command:Show Group Policy Result",
+      "command:Show Configured Dns Servers"
+    ],
+    "relationshipFamily": "Domain and device identity"
   },
   "Mapped Drives": {
     "code": "net use",
@@ -4128,7 +5495,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Logged-On Users",
+      "command:Show SMB Sessions",
+      "command:Show SMB Shares"
+    ],
+    "relationshipFamily": "Windows sessions and shares"
   },
   "Network Profile": {
     "code": "Get-NetConnectionProfile",
@@ -4137,7 +5510,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Ip Configuration",
+      "command:Show Routing Table",
+      "command:Test Tcp Port"
+    ],
+    "relationshipFamily": "Network paths"
   },
   "Defender Status": {
     "code": "Get-MpComputerStatus | Select-Object AMServiceEnabled,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanEndTime,FullScanEndTime",
@@ -4146,7 +5525,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "command:Show Recent Windows Update History",
+      "command:Show Service Status",
+      "command:Show Problem Devices"
+    ],
+    "relationshipFamily": "Antivirus"
   },
   "Print Jobs": {
     "code": "Get-Printer | ForEach-Object { Get-PrintJob -PrinterName $_.Name -ErrorAction SilentlyContinue }",
@@ -4157,7 +5542,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Some read errors are suppressed. No output does not prove that nothing exists."
     ],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Printer Check",
+      "command:Spooler Status"
+    ],
+    "relationshipFamily": "Printing"
   },
   "Spooler Status": {
     "code": "Get-Service Spooler",
@@ -4166,7 +5557,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell on the computer being checked.",
-    "input": "Uses this Windows computer; no target values to enter."
+    "input": "Uses this Windows computer; no target values to enter.",
+    "related": [
+      "DEPLOY-TCPIP-PRINTER.ps1",
+      "command:Printer Check",
+      "command:Print Jobs"
+    ],
+    "relationshipFamily": "Printing"
   },
   "Connect Microsoft Graph": {
     "code": "Connect-MgGraph -Scopes \"User.Read\" -ContextScope Process",
@@ -4175,7 +5572,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Microsoft.Graph.Authentication module and consent to the permissions selected for your task.",
-    "input": "Delegated scopes required by your task. User.Read below is a basic signed-in-user example; use each task card's scopes for other operations."
+    "input": "Delegated scopes required by your task. User.Read below is a basic signed-in-user example; use each task card's scopes for other operations.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "RESET-M365-SESSION.ps1",
+      "command:Show Graph Context"
+    ],
+    "relationshipFamily": "Graph connection"
   },
   "Show Code-Signing Certificates": {
     "code": "Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert | Select-Object Subject,Thumbprint,NotAfter",
@@ -4184,7 +5587,13 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "checks": [],
     "guards": [],
     "requires": "Windows PowerShell. ",
-    "input": "Uses this Windows user and PowerShell session on the current computer."
+    "input": "Uses this Windows user and PowerShell session on the current computer.",
+    "related": [
+      "MANAGE-CERT-SIGNATURES.ps1",
+      "SIGN-FOLDER-SCRIPTS.ps1",
+      "command:Verify Script Signature"
+    ],
+    "relationshipFamily": "Signing and certificates"
   }
 });
 
@@ -4700,18 +6109,18 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
   "ir-risk-assessment.ps1": {
     "name": "BEC: Assess User Risk",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
-      "Use the approved jumpbox and keep the workflow in one PowerShell window.",
+      "Use the approved support computer and keep the workflow in one PowerShell window.",
       "Review findings and unavailable checks before deciding on containment."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-contain-eradicate.ps1",
@@ -4719,35 +6128,35 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
     "workflowReview": {
-      "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+      "kind": "uri-boundary-fix",
+      "version": "1.0.2",
+      "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
         "operatorTested": true,
         "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
       },
-      "nonPresentationSha256": "10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",
-      "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
+      "nonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
+      "evidence": "docs/qa/BEC-APP-LOOKUP-FIX.md"
     }
   },
   "ir-contain-eradicate.ps1": {
     "name": "BEC: Contain and Clean Up",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
       "Use the same PowerShell window as assessment.",
       "Maintain containment until cleanup and recovery are approved.",
       "Temporary passwords can remain in terminal capture/transcripts. The operator confirms trusted MFA methods."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Contain and clean up one compromised account after approval.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-risk-assessment.ps1",
@@ -4756,8 +6165,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     ],
     "workflowReview": {
       "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+      "version": "1.0.2",
+      "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
@@ -4861,7 +6270,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "input": "Evidence files",
     "details": [
       "Combines supplied evidence; it does not collect missing events.",
-      "When event time is unavailable, labels the file\u2019s modified time separately. Check time zones and gaps before drawing conclusions."
+      "When event time is unavailable, labels the file’s modified time separately. Check time zones and gaps before drawing conclusions."
     ],
     "family": "ir-investigate",
     "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
@@ -5647,18 +7056,18 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
   "ir-recover-validate.ps1": {
     "name": "BEC: Restore and Validate",
     "scope": "SINGLE-USER",
-    "input": "UPN and tenant",
+    "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "details": [
       "Use the same workflow window and approved recovery decision.",
       "Confirm sign-in and MFA before closing the incident."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
     "presentationRevision": true,
-    "releaseVersion": "1.0.1",
+    "releaseVersion": "1.0.2",
     "objective": "Check recovery readiness and restore approved account access.",
     "preparation": [
-      "Use the approved Windows jumpbox with Graph Authentication 2.x and Exchange Online 3.2+."
+      "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
       "ir-contain-eradicate.ps1",
@@ -5667,8 +7076,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     ],
     "workflowReview": {
       "kind": "presentation-only",
-      "version": "1.0.1",
-      "sourceSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+      "version": "1.0.2",
+      "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
@@ -5953,7 +7362,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Preview a blue PowerShell theme and output helpers.",
-    "notice": "Changes this session\u2019s appearance and sets Process execution policy to Bypass.",
+    "notice": "Changes this session’s appearance and sets Process execution policy to Bypass.",
     "preparation": [],
     "related": [
       "SET-THEME-BASIC.ps1",
@@ -5974,7 +7383,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "presentationRevision": true,
     "releaseVersion": "1.0.2",
     "objective": "Install a sea-green PowerShell theme in your startup profile.",
-    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session\u2019s execution setting.",
+    "notice": "Installs a startup theme, replaces recognized theme blocks, and changes this session’s execution setting.",
     "preparation": [],
     "related": [
       "SET-THEME-COBALT.ps1",

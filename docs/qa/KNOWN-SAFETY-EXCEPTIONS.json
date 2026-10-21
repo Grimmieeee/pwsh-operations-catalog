@@ -1,12 +1,1 @@
-[
-  {
-    "path": "published-source/incident-response/ir-risk-assessment.ps1",
-    "rule": "URI_VARIABLE_QUESTION",
-    "line": 557,
-    "sha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
-    "reason": "Direct service-principal lookup can lose the identifier and return a collection. Its fallback runs after a failed request, not a successful collection response.",
-    "disposition": "Existing app-name lookup limitation retained. Display-only revision compares operational tokens unchanged against the accepted baseline. A behavior fix and operator testing remain a separate revision.",
-    "baselineSha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
-    "reviewEvidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
-  }
-]
+[]

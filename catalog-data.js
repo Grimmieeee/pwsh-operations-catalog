@@ -3825,7 +3825,7 @@ window.CATALOG_DATA = [
     "keywords": "bec compromised account hacked phishing incident discovery triage mailbox compromise ioc hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP1-ir-discovery-summary.ps1 ir incident response IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",
     "url": "",
     "_order": 189,
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publishedPath": "published-source/incident-response/ir-risk-assessment.ps1",
     "objective": "Review one user's account and mailbox before choosing a response."
   },
@@ -3848,7 +3848,7 @@ window.CATALOG_DATA = [
     "keywords": "contain compromised account revoke reset eradicate recover incident response hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP2-ir-execution-v2.ps1 ir incident response IR-INVOKE-CONTAINMENT-ERADICATION.ps1",
     "url": "",
     "_order": 190,
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publishedPath": "published-source/incident-response/ir-contain-eradicate.ps1",
     "objective": "Contain and clean up one compromised account after approval."
   },
@@ -5620,7 +5620,7 @@ window.CATALOG_DATA = [
     "source": "FIELD // KIT interactive IR workflow 1.0.0",
     "input": "One exact user UPN and tenant domain; validated context reused between steps",
     "requires": "Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. First sign-in requests workflow read/change scopes. AD changes require local Windows AD rights.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publishedPath": "published-source/incident-response/ir-recover-validate.ps1",
     "output": "Verified enable state, ticket summary and assessment/monitoring follow-up"
   }

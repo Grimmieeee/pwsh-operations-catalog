@@ -1901,7 +1901,7 @@
   const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
 
   const IR_STEPS = [
-    {file:"ir-risk-assessment.ps1",operationalSha256:"10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",acceptedSha256:"07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",name:"BEC: Assess User Risk",n:"1"},
+    {file:"ir-risk-assessment.ps1",operationalSha256:"75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",acceptedSha256:"07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",name:"BEC: Assess User Risk",n:"1"},
     {file:"ir-contain-eradicate.ps1",operationalSha256:"a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",acceptedSha256:"e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",name:"BEC: Contain and Clean Up",n:"2"},
     {file:"ir-recover-validate.ps1",operationalSha256:"141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",acceptedSha256:"c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",name:"BEC: Restore and Validate",n:"3"}
   ];
@@ -1968,7 +1968,8 @@
     const cards=window.FIELD_KIT_OPERATOR_CARDS || {};
     const spec=cards[item.file];
     const candidates=ITEMS.filter(other=>other!==item && (!item.file || other.file!==item.file) && other.status!=="Source pending");
-    const reviewedLinks=item.status==="Source pending" ? PENDING_NEXT_STEPS[item.file] : spec?.related;
+    const commandReview=window.FIELD_KIT_COMMAND_GUIDANCE?.[item.name];
+    const reviewedLinks=item.type==='Quick Command' ? (commandReview?.code===item.code ? commandReview.related : []) : spec?.related;
     if(reviewedLinks)return reviewedLinks.map(key=>key.startsWith('command:')
       ? candidates.find(other=>other.type==='Quick Command' && other.name===key.slice(8))
       : candidates.find(other=>other.file===key)).filter(Boolean);
@@ -2079,7 +2080,8 @@
     if (!existing || scoreQuality(item) > scoreQuality(existing)) byKey.set(key,item);
   }
 
-  const ITEMS = [...byKey.values()];
+  const PLANNED_ITEMS = [...byKey.values()].filter(item=>item.status==="Source pending");
+  const ITEMS = [...byKey.values()].filter(item=>item.status!=="Source pending");
 
   const state = {
     area:"Full Library",
@@ -2215,22 +2217,7 @@
   }
 
   function searchConcepts(item){
-    const facts = factBlockFor(item)?.items || [];
-    const text = [
-      item.displayName,
-      item.name,
-      item.file,
-      item.group,
-      item.logicalArea,
-      item.keywords,
-      item.platform,
-      item.notes,
-      item.output,
-      item.subarea,
-      item.useFor,
-      item.code,
-      facts.join(" ")
-    ].join(" ");
+    const text = [item.displayName,item.operatorCard?.objective || item.objective,item.useFor].join(" ");
 
     const tags = [];
     const families = [
@@ -2306,7 +2293,6 @@
     const offboardingIntent = /^(?:offboarding|offboard(?: user| employee)?|employee left|(?:employee|user) (?:leaving|departed)|departing (?:employee|user)|leaver)$/.test(intent);
     if (offboardingIntent) {
       if (item.file === 'GET-USER-PREDELETE-CHECK.ps1') return 1000;
-      if (item.displayName === 'User Offboarding') return 900;
       if (item.file === 'INVOKE-REMOVE-LICENSES.ps1') return 800;
       return 0;
     }
@@ -2324,10 +2310,11 @@
       item.file,
       item.group,
       item.logicalArea,
-      item.keywords,
       searchConcepts(item)
     ].join(" "));
 
+    const task = words([item.displayName,item.operatorCard?.objective || item.objective,item.useFor,searchConcepts(item)].join(" "));
+    if(!q.every(token=>task.some(w=>w===token || w.startsWith(token))))return 0;
     const weak = words([
       item.platform,
       item.objective,
@@ -2669,12 +2656,12 @@
   }
 
   // Package review is separate from the exact-source operator-tested badge.
-  // Only the coupled BEC trio can carry this source-bound presentation review.
-  function isPresentationReviewedWorkflow(item){
+  // Only the coupled BEC trio can carry this source-bound package review.
+  function isReviewedWorkflowPackage(item){
     const spec=item.operatorCard, review=spec?.workflowReview, baseline=review?.baselineVerification;
     const accepted=IR_STEPS.find(step=>step.file===item.file);
     return !!(accepted && item.workflow &&
-      review?.kind==='presentation-only' && baseline?.operatorTested===true &&
+      (item.file==='ir-risk-assessment.ps1' ? review?.kind==='uri-boundary-fix' && review.evidence==='docs/qa/BEC-APP-LOOKUP-FIX.md' : review?.kind==='presentation-only') && baseline?.operatorTested===true &&
       baseline.version==='1.0.0' && baseline.evidence==='docs/qa/IR-1.0.0-VERIFICATION.md' && baseline.sha256===accepted.acceptedSha256 &&
       /^[0-9a-f]{64}$/.test(baseline.sha256 || '') && review.nonPresentationSha256===accepted.operationalSha256 &&
       review.version===item.version && review.sourceSha256===spec.sourceSha256 &&
@@ -2753,6 +2740,7 @@
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
           <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
 
+          <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
             <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
@@ -2865,7 +2853,7 @@
     const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
     if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Right-click the downloaded file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
     return `<section class="guided-start operator-steps"><div class="section-label">STEPS</div>
-      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on the jumpbox.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
+      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
       <p>${ir ? 'Keep the workflow in the same PowerShell window.' : item.startMode==='terminal-admin' ? 'Open PowerShell as administrator.' : 'Use the PowerShell window where this tool should run.'}</p>
       <div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
       <p>Copy the command into that window. Select <strong>Copy as path</strong> for the downloaded file and paste the path when asked.</p>
@@ -3400,7 +3388,7 @@
   async function buildIRBundle(){
     if(!window.FIELD_KIT_START)throw new Error('Workflow guidance could not load. Reload the site.');
     const items=IR_STEPS.map(step=>ITEMS.find(candidate=>candidate.file===step.file));
-    if(items.some(item=>!item || !(isVerifiedRelease(item) || isPresentationReviewedWorkflow(item))))throw new Error('The workflow needs release review. No package downloaded.');
+    if(items.some(item=>!item || !(isVerifiedRelease(item) || isReviewedWorkflowPackage(item))))throw new Error('The workflow needs release review. No package downloaded.');
     if(new Set(items.map(item=>item.version)).size!==1)throw new Error('Workflow versions do not match. No package downloaded.');
     const files = await Promise.all(items.map(async item=>{
       return {name:item.file,text:await resolveSource(item),hash:window.FIELD_KIT_SOURCE_INTEGRITY[item.publishedPath],version:item.version};

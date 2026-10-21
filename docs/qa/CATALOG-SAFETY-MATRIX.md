@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":338,"scripts":80,"commands":235,"references":12,"pending":11,"operatorVerified":0,"scopedReviews":80}
+{"entries":327,"scripts":80,"commands":235,"references":12,"pending":0,"operatorVerified":0,"scopedReviews":80}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|
@@ -25,7 +25,7 @@ Generated from current source hashes. Automated-test states describe the listed 
 | GET-MAILBOX-FORWARDING.ps1 | Read-only workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | INVOKE-LITIGATION-HOLD.ps1 | Change workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | IR-INVOKE-EMAIL-RECOVERY.ps1 | Change workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
-| ir-risk-assessment.ps1 | Read-only workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
+| ir-risk-assessment.ps1 | Read-only workflows | Scoped regression review — app lookup URI fix | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Bounded app lookup URI/response fix; all other operational tokens preserved; Exact app-ID URI, filtered fallback, unresolved failures and cached lookups; tests/bec-app-lookup.test.ps1 |
 | ir-contain-eradicate.ps1 | Change workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | IR-GET-DATA-EXFIL-ACTIVITY.ps1 | Read-only workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | IR-GET-IP-TRACE.ps1 | Read-only workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
