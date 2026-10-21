@@ -18,3 +18,5 @@ Validation: catalog/path/checksum/markup checks and 52 site behavior/theme tests
 Remaining follow-ups: the 11 planned tools still need source publication. Full first-run Windows and live Microsoft 365 acceptance remains separate from these site checks. CSV examples use reserved example.com addresses and must be replaced before running.
 
 Live verification: the first publication passed all 100 source/asset comparisons. A returning-browser check caught stale JavaScript because asset version tags were unchanged; the release tags were then advanced to novice-followups-1.
+
+Input clarification: all 15 CSV/TXT example disclosures now also show comma-separated multiple entries for direct typing. TXT remains one entry per line and CSV retains its supported column header. Script behavior is unchanged.
