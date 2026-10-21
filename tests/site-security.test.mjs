@@ -628,7 +628,10 @@ test('file input examples use supported columns and resource mailboxes do not ad
     const source=fs.readFileSync(path.join(root,item.publishedPath),'utf8');
     assert.ok(source.includes('Import-Csv'),item.file);
     assert.ok(source.includes("'"+sample.header+"'") || source.includes('"'+sample.header+'"'),item.file);
-    f.api.openItem(item);assert.ok(f.elements.get('drawerBody').innerHTML.includes('TXT: one entry per line.'));
+    f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
+    assert.ok(html.includes('TXT: one entry per line.'));
+    assert.ok(html.includes('Multiple entries: separate with commas when typing into the script.'));
+    assert.ok(html.includes(sample.values.join(',')));
   }
   const resource=f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1');
   assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
