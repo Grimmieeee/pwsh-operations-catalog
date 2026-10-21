@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Disconnect Microsoft 365 services in the current PowerShell window.
+
 #Requires -Version 5.1
 
 <#
@@ -55,6 +57,7 @@ function Start-FreshPowerShell {
 
 try {
     Write-Host 'Reset M365 Session'
+    Write-Host 'Disconnect Microsoft 365 services in the current PowerShell window.'
     Write-Host 'LOCAL SESSION CLEANUP. No tenant configuration is changed.'
 
     Show-Section 'PLAN'

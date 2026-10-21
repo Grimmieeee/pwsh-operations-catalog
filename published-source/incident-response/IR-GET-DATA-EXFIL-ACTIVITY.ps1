@@ -1,12 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - FILE ACTIVITY / EXFIL REVIEW
 
 OBJECTIVE
-Review SharePoint and OneDrive audit activity for a target user with emphasis on
-downloads, sharing, and suspicious source IPs.
+Review a user's file activity for possible data exposure.
 
 READ-ONLY
 No tenant changes.
@@ -377,7 +376,7 @@ function Get-RiskLabel {
 
 try {
     Write-Host 'IR: Review File Activity'
-    Write-Host 'Looks for unusual file activity that could indicate data was copied or taken.'
+    Write-Host 'Review a user''s file activity for possible data exposure.'
     Write-Host "READ-ONLY"
     Write-Host ""
 

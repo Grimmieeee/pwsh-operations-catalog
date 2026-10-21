@@ -1,3 +1,6 @@
+# .VERSION 1.0.0
+
+# OBJECTIVE: Review a GitHub security-log export for unfamiliar access and activity.
 #Requires -Version 5.1
 <#
 .SYNOPSIS

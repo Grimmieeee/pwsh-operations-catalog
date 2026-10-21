@@ -1,9 +1,9 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 <#
 GET USER MAILBOX SNAPSHOT
 
 OBJECTIVE
-Provide a fast, read-only mailbox posture snapshot for one Microsoft 365 user.
+Review one mailbox for unexpected access, forwarding, and suspicious rules.
 
 INPUT
 One UPN.
@@ -504,7 +504,7 @@ function Show-InboxRule {
 
 try {
     Write-FKReportLine 'Get Mailbox Security'
-    Write-FKReportLine 'Checks a mailbox for forwarding, rules, delegates, and other access that may matter during an investigation.'
+    Write-FKReportLine 'Review one mailbox for unexpected access, forwarding, and suspicious rules.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find mailbox inbox rules that need review across the tenant.
+
 <#
 GET-TENANT-INBOX-RULES-AUDIT.ps1
 
@@ -255,7 +257,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit Tenant Inbox Rules'
-    Write-Host 'Finds inbox rules across the tenant that forward, redirect, delete, hide, or move mail in suspicious ways.'
+    Write-Host 'Find mailbox inbox rules that need review across the tenant.'
     Write-Host "Read-only"
     Write-Host ""
 

@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: List tenant admin-role assignments for review.
+
 <#
 GET-ADMIN-ROLE-AUDIT.ps1
 
@@ -347,7 +349,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit Admin Roles'
-    Write-Host 'Shows who has active Entra admin roles and flags disabled or stale admin accounts.'
+    Write-Host 'List tenant admin-role assignments for review.'
     Write-Host "Read-only"
     Write-Host ""
 

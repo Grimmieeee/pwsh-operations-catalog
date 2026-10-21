@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review registered apps, ownership, and credential expiry dates.
+
 <#
 tenant-app-registrations-audit-clean.ps1
 
@@ -288,7 +290,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit App Registrations'
-    Write-Host 'Finds app registrations with risky permissions, expiring credentials, or missing owners.'
+    Write-Host 'Review registered apps, ownership, and credential expiry dates.'
     Write-Host "Read-only"
     Write-Host ""
 

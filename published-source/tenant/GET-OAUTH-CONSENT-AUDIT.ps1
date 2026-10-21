@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review app permissions granted in the tenant.
+
 <#
 GET-OAUTH-CONSENT-AUDIT.ps1
 
@@ -346,7 +348,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit App Consent'
-    Write-Host 'Review app permissions approved on behalf of users and flag permissions that may create risk.'
+    Write-Host 'Review app permissions granted in the tenant.'
     Write-Host "Read-only"
     Write-Host ""
 

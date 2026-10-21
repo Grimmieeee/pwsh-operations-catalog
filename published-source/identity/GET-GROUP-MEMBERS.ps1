@@ -1,11 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 GROUP MEMBERS LOOKUP
 
 OBJECTIVE
-Show direct members of one or more groups.
+List direct members of selected groups.
 
 LOOKUP ORDER
 1. Exchange Online distribution group
@@ -452,7 +452,7 @@ function Offer-VerifiedCsv {
 try {
     Write-Host ""
     Write-Host 'Get Group Members'
-    Write-Host 'Shows direct members of one or more groups after resolving the appropriate source.'
+    Write-Host 'List direct members of selected groups.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

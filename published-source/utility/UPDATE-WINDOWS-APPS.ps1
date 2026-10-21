@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review and update installed applications using WinGet.
+
 #Requires -Version 5.1
 
 <#
@@ -38,6 +40,7 @@ function Confirm-Type {
 
 try {
     Write-Host 'Update Windows Apps'
+    Write-Host 'Review and update installed applications using WinGet.'
     Write-Host 'Uses WinGet to review and update installed applications.'
 
     $wingetCommand = Get-Command winget -ErrorAction Stop

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 IR AUDIT - THREAT INTEL
 
 OBJECTIVE
-Look up suspect public IP addresses in VirusTotal and/or AbuseIPDB.
+Check a public IP address against external reputation services.
 
 READ-ONLY
 No tenant changes.
@@ -397,7 +397,7 @@ function Get-AbuseIPDBReport {
 
 try {
     Write-Host 'IR: Check IP Reputation'
-    Write-Host 'Check public IP addresses against VirusTotal or AbuseIPDB reputation reports.'
+    Write-Host 'Check a public IP address against external reputation services.'
     Write-Host "READ-ONLY / EXTERNAL REPUTATION LOOKUP"
     Write-Host ""
 

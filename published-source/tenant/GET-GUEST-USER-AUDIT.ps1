@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find guest accounts that need an ownership or activity review.
+
 <#
 GET-GUEST-USER-AUDIT.ps1
 
@@ -347,7 +349,7 @@ try {
 
     Clear-Host
     Write-Host 'Review Guest Users'
-    Write-Host 'Find guest accounts with old or missing sign-in records, disabled accounts, and unaccepted invitations.'
+    Write-Host 'Find guest accounts that need an ownership or activity review.'
     Write-Host "Read-only"
     Write-Host ""
 

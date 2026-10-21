@@ -1,3 +1,7 @@
+## Shared purpose sentence — October 21, 2026
+
+Every script card shows one brief purpose sentence directly below the title. Use the exact same sentence as the script objective. Describe the specific job plainly; keep scope, steps and limitations separate. The objective must not imply complete access coverage, a clean security verdict, successful changes, or unsupported bulk behavior. Reuse an existing suitable objective when that preserves an accepted specialized release. Card/source parity is a release check.
+
 # PowerShell Standards
 
 A practical baseline for interactive PowerShell tools in FIELD // KIT.

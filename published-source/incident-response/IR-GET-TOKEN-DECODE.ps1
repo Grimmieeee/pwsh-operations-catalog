@@ -1,11 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 IR AUDIT - TOKEN DECODE
 
 OBJECTIVE
-Decode the header and payload of a three-part JWT locally for IR review.
+Read a token's contents locally without sending it online.
 
 LOCAL ONLY
 No Graph.
@@ -215,7 +215,7 @@ function Show-Claim {
 
 try {
     Write-Host 'IR: Decode Token'
-    Write-Host 'Decodes a JWT locally so you can inspect its claims.'
+    Write-Host 'Read a token''s contents locally without sending it online.'
     Write-Host "LOCAL ONLY / NO NETWORK"
     Write-Host ""
 

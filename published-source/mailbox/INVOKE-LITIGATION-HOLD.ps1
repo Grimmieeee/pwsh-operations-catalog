@@ -1,12 +1,11 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 <#
 ENFORCE LITIGATION HOLD
 
 OBJECTIVE
-Review one or more Exchange Online mailboxes from direct input or TXT/CSV and enforce
-Litigation Hold with Unlimited duration.
+Enable an unlimited litigation hold on approved mailboxes.
 
 COMPLIANT STATE
 LitigationHoldEnabled  : True
@@ -467,7 +466,7 @@ function Offer-ExportCsv {
 
 try {
     Write-Host 'Set Litigation Hold'
-    Write-Host 'Enforces Unlimited Litigation Hold on one or more approved mailboxes and verifies the final state.'
+    Write-Host 'Enable an unlimited litigation hold on approved mailboxes.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host "Target state: Litigation Hold enabled with Unlimited duration."
     Write-Host ""

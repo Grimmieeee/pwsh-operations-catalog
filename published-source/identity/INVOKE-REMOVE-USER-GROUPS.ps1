@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Remove selected users from eligible AD and Entra groups.
+
 <#
 INVOKE-REMOVE-USER-GROUPS.ps1
 
@@ -838,6 +840,7 @@ function Get-FriendlyRemovalFailure {
 
 try {
     Write-Host 'Remove User Groups'
+    Write-Host 'Remove selected users from eligible AD and Entra groups.'
     Write-Host "Shows AD and Entra groups for one or more users and removes all removable memberships after review."
     Write-Host ""
 

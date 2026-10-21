@@ -1,9 +1,11 @@
 <#
 INVOKE-ASSIGN-LICENSES.ps1
-.VERSION 1.0.3
+.VERSION 1.0.4
 Assign one selected tenant license to approved exact UPNs.
 Requires expected tenant GUID; previews every user and any UsageLocation change.
 #>
+# OBJECTIVE: Assign a selected Microsoft 365 license to approved users.
+
 param(
     [Alias('UPN')][string[]]$InputObject,
     [string]$InputPath,
@@ -310,6 +312,7 @@ function Get-GraphUserByUPN {
 try {
     try { $host.UI.RawUI.WindowTitle='Assign User Licenses' } catch {}
     Write-Host 'Assign User Licenses'
+    Write-Host 'Assign a selected Microsoft 365 license to approved users.'
     Write-Host 'Assign one approved license to exact users after tenant and target review.'
     $upns=@(Get-InputUPNs -Values $InputObject -Path $InputPath)
     if (-not $upns.Count) { throw 'At least one exact UPN is required.' }

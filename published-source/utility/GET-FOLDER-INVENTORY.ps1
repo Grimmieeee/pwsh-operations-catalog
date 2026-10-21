@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Review a folder's files, script signatures, and Git status.
 #Requires -Version 5.1
 
 <#
@@ -153,7 +155,7 @@ function Get-GitSummary {
 
 try {
     Write-Host 'Get Folder Inventory'
-    Write-Host 'Review a folder''s contents, script signatures, and Git status.'
+    Write-Host 'Review a folder''s files, script signatures, and Git status.'
     Write-Host 'READ ONLY. No files are changed.'
 
     $root = Resolve-InventoryRoot -InputPath $Path

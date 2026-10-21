@@ -1,11 +1,11 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 #Requires -Version 5.1
 
 <#
 TENANT GROUP OWNERS REVIEW
 
 OBJECTIVE
-Read-only review of owners for all current Microsoft Teams and Entra ID groups.
+List group owners and identify groups without an assigned owner.
 
 SCOPE
 - Microsoft Teams

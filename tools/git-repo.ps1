@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Review, pull, or push changes in the selected Git repository.
+
 #Requires -Version 5.1
 <#
 Standalone versions of the FIELD KIT profile's Git check/send/grab commands.

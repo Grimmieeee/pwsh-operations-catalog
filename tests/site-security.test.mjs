@@ -245,9 +245,9 @@ test('VERIFIED is bound to operator evidence, exact version and source manifest 
   assert.equal(f.api.releaseTag(item),'');
   const ledger=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json'),'utf8'));
   for(const row of ledger.filter(x=>x.changed))assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file===row.file)),false,row.file);
-  assert(f.api.ITEMS.filter(item=>item.verification).length===14);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===3);
   const pilot=f.api.ITEMS.find(item=>item.file==='GET-USER-GROUPS.ps1');
-  assert.equal(pilot.version,'1.0.1');
+  assert.equal(pilot.version,'1.0.2');
   assert.equal(f.api.releaseTag(pilot),'');
 });
 function sourceFixture(bytes,fetchImpl){return loadCatalog(root,{integrity:{[fixturePath]:digest(bytes)},fetchImpl:fetchImpl??(async()=>new Response(bytes,{headers:{'content-type':'text/plain'}}))});}
@@ -516,4 +516,18 @@ test('batch two acceptance remains tied to original bytes and resource acceptanc
   assert.equal(record.readFailures,0);assert.equal(f.api.isVerifiedRelease(item),false,record.file);
  }
  assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1')),false);
+});
+
+
+test('all 80 purpose sentences match reviewed source objectives and stay visible before scope',()=>{
+ const f=loadCatalog(root),records=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/CARD-OBJECTIVES-REVIEW.json'),'utf8'));
+ assert.equal(records.length,80);
+ for(const r of records){const item=f.api.ITEMS.find(x=>x.file===r.file);f.api.openItem(item);
+  const html=f.elements.get('drawerBody').innerHTML,esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+  assert.equal(item.operatorCard.objective,r.objective,r.file);
+  assert.equal(item.objective,r.objective,r.file);
+  assert.ok(html.includes(`<p class="operator-purpose">${esc(r.objective)}</p>`),r.file);
+  assert.ok(html.indexOf('operator-purpose')<html.indexOf('operator-scope'),r.file);
+  assert.ok(html.indexOf('operator-purpose')<html.indexOf('guided-start'),r.file);
+ }
 });

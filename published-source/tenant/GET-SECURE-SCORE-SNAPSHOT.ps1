@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Show the tenant's latest Microsoft Secure Score.
+
 <#
 tenant-secure-score-snapshot-clean.ps1
 
@@ -308,7 +310,7 @@ function Is-RiskyScope {
 try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Secure Score Snapshot" } catch {}
 Write-Host 'Get Secure Score'
-Write-Host 'Shows the tenant''s current Microsoft Secure Score and the areas affecting it.'
+Write-Host 'Show the tenant''s latest Microsoft Secure Score.'
     Write-Host "Read-only"
     Write-Host ""
 

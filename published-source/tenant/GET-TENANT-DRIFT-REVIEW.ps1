@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Compare tenant settings with a saved baseline and review changes.
+
 <#
 GET-TENANT-DRIFT-REVIEW.ps1
 
@@ -621,6 +623,7 @@ function Write-ChangeSection {
 
 try {
     Write-Host 'Review Tenant Changes'
+    Write-Host 'Compare tenant settings with a saved baseline and review changes.'
     Write-Host "Shows high-value tenant changes since the last approved baseline."
     Write-Host ""
 

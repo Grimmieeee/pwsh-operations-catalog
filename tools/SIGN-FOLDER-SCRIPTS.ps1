@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Sign scripts in a selected folder with a code-signing certificate.
+
 <#
 sign-folder-scripts.ps1
 
@@ -174,7 +176,7 @@ try {
 
     Clear-Host
     Write-Host 'Sign Scripts'
-    Write-Host 'Sign reviewed PowerShell scripts with a certificate you choose.'
+    Write-Host 'Sign scripts in a selected folder with a code-signing certificate.'
     Write-Host ""
 
     if (-not $RootPath) {

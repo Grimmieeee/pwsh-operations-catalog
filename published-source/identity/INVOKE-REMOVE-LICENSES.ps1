@@ -1,6 +1,6 @@
 <#
 INVOKE-REMOVE-LICENSES.ps1
-.VERSION 1.0.3
+.VERSION 1.0.4
 
 User license removal for one or more users.
 
@@ -12,6 +12,8 @@ Purpose:
 
 Change-making.
 #>
+# OBJECTIVE: Remove selected Microsoft 365 licenses from approved users.
+
 
 param(
     [Alias('UPN')]
@@ -377,7 +379,7 @@ try {
 
     Clear-Host
     Write-Host 'Remove User Licenses'
-    Write-Host 'Removes one selected license or all licenses from one or more approved users and verifies the final state.'
+    Write-Host 'Remove selected Microsoft 365 licenses from approved users.'
     Write-Host "Change-making"
     Write-Host ""
 

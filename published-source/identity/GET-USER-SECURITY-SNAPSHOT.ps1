@@ -1,9 +1,9 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
 <#
 GET USER SECURITY SNAPSHOT
 
 OBJECTIVE
-Provide a fast, read-only security and identity snapshot for one Microsoft 365 user.
+Review one user's account, authentication, access, and recent sign-ins.
 
 INPUT
 One UPN.
@@ -495,7 +495,7 @@ function Get-SignInResult {
 
 try {
     Write-FKReportLine 'Get User Security'
-    Write-FKReportLine 'Shows the security state around one user before you decide what needs deeper review.'
+    Write-FKReportLine 'Review one user''s account, authentication, access, and recent sign-ins.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine ""
 

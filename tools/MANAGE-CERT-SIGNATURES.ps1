@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Create, review, export, import, or trust script-signing certificates.
+
 <#
 manage-code-signing-cert.ps1
 
@@ -480,7 +482,7 @@ try {
 
     Clear-Host
     Write-Host 'Manage Signing Certificates'
-    Write-Host 'Create and manage certificates used to sign PowerShell scripts.'
+    Write-Host 'Create, review, export, import, or trust script-signing certificates.'
     Write-Host ""
 
     do {

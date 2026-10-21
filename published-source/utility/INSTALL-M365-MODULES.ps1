@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Install or update the selected Microsoft 365 PowerShell modules.
+
 #Requires -Version 5.1
 
 <#
@@ -44,6 +46,7 @@ function Get-LatestModule {
 
 try {
     Write-Host 'Install M365 Modules'
+    Write-Host 'Install or update the selected Microsoft 365 PowerShell modules.'
     Write-Host 'Installs or updates PowerShell modules for the current user.'
     Write-Host 'No tenant connection is made.'
 

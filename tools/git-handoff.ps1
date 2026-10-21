@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Save a screened snapshot of the current Git project for handoff.
+
 #requires -Version 5.1
 <#
 Readable Git context snapshot with targeted metadata redaction. No network calls, staging, commits or pushes.

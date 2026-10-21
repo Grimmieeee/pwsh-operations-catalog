@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Show a plain PowerShell output style without color.
+
 #Requires -Version 5.1
 
 # theme-plain.ps1

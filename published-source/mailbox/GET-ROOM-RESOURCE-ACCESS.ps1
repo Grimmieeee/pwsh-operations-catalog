@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Review delegated access and booking permissions for resource mailboxes.
 <#
 GET-ROOM-RESOURCE-ACCESS.ps1
 
@@ -155,7 +157,7 @@ try {
 
     Clear-Host
     Write-Host 'Get Resource Mailbox Access'
-    Write-Host 'Shows who can access or book one or more room and equipment mailboxes.'
+    Write-Host 'Review delegated access and booking permissions for resource mailboxes.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 

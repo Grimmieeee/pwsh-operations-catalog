@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Preview a green PowerShell theme and output helpers.
+
 #Requires -Version 5.1
 # =============================================================================
 # MSSP FIELD KIT — SET-SILICONVALLEYTHEME

@@ -19,6 +19,7 @@ for(const item of effective){
  if(reviews[item.file])reviews[item.file].sourceSha256=sha;
  if(connections[item.publishedPath])connections[item.publishedPath].sha256=sha;
  if(row?.changed && item.verification && !row.priorVerification)row.priorVerification=item.verification;
+ if(specs[item.file] && reviews[item.file])reviews[item.file].objective=specs[item.file].objective;
  if(specs[item.file])Object.assign(specs[item.file],{sourceSha256:sha,presentationRevision:Boolean(row?.changed),releaseVersion:row?.version||item.version||''});
 }
 
@@ -28,6 +29,7 @@ for(const item of context.window.CATALOG_DATA){
  if(reviews[item.file])reviews[item.file].sourceSha256=sha;
  if(connections[item.publishedPath])connections[item.publishedPath].sha256=sha;
  const row=byFile.get(item.file);
+ if(specs[item.file])item.objective=specs[item.file].objective;
  if(row?.changed){
   if(item.verification){row.priorVerification=item.verification;delete item.verification;}
   item.version=row.version;changed.push(item.file);

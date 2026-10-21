@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review Microsoft 365 license capacity and user assignments.
+
 <#
 GET-TENANT-LICENSING-AUDIT.ps1
 
@@ -345,7 +347,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit Tenant Licenses'
-    Write-Host 'Review license use, including disabled users with licenses and enabled users without one.'
+    Write-Host 'Review Microsoft 365 license capacity and user assignments.'
     Write-Host "Read-only"
     Write-Host ""
 

@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Join the current computer to the selected AD domain.
+
 <#
 JOIN-COMPUTER-TO-DOMAIN.ps1
 
@@ -192,7 +194,7 @@ try {
 
     Clear-Host
     Write-Host 'Join Computer to Domain'
-    Write-Host 'Checks the workstation first, then joins it to an Active Directory domain only after typed confirmation.'
+    Write-Host 'Join the current computer to the selected AD domain.'
     Write-Host "Change-making"
     Write-Host ""
 

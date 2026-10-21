@@ -1,3 +1,9 @@
+# Latest update — matching card and script objectives
+
+October 21, 2026. All 80 script cards now show a short purpose sentence beneath the title. The sentence matches each script's objective exactly. 77 files receive documentation/display changes; all non-presentation tokens compare unchanged. Three existing IR metadata descriptions are reused without changing the coupled release bytes. See [the complete objective review](qa/CARD-OBJECTIVES-REVIEW.md).
+
+Earlier rollout checkpoints below retain their original counts and scope.
+
 # Current rollout — approved compact operator cards
 
 October 20, 2026. The owner authorized broad card/script alignment and publication. The approved card contract is at the top of DESIGN-LOCK.md. Main dashboard and navigation remain unchanged.

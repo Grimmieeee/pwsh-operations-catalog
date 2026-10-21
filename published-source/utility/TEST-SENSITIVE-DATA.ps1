@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Scan selected files for potentially sensitive information before sharing.
 #Requires -Version 5.1
 
 <#
@@ -65,6 +67,7 @@ function Add-Finding {
 
 try {
     Write-Host 'Check Sensitive Data'
+    Write-Host 'Scan selected files for potentially sensitive information before sharing.'
     Write-Host 'READ ONLY. Finds information you may not want to publish.'
 
     if (-not $Path) {

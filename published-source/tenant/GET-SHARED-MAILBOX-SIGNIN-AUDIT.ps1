@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Find sign-in activity associated with shared mailboxes.
+
 <#
 shared-mailbox-signin-audit-clean.ps1
 
@@ -321,7 +323,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit Shared Mailbox Sign-ins'
-    Write-Host 'Shows whether shared mailboxes are being signed into directly.'
+    Write-Host 'Find sign-in activity associated with shared mailboxes.'
     Write-Host "Read-only"
     Write-Host ""
 

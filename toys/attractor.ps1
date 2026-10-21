@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.0
+.VERSION 1.0.1
 #>
+# OBJECTIVE: Run a floating fractal animation with a clock.
+
 $script:DisplayText = '<YOUR TEXT HERE>' # Edit this label.
 # Standalone terminal fractal screensaver with floating/flickering custom text logo + clock. Ctrl+C exits.
 $ErrorActionPreference = 'Stop'

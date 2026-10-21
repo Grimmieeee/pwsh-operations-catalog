@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review mail flow rules for settings that need attention.
+
 <#
 GET-TRANSPORT-RULES-AUDIT.ps1
 
@@ -192,7 +194,7 @@ try {
     try { $host.UI.RawUI.WindowTitle = "Tenant Transport Rules Audit" } catch {}
 
     Write-Host 'Audit Mail Flow Rules'
-    Write-Host 'Reviews tenant-wide mail-flow rules and highlights actions that warrant operator review.'
+    Write-Host 'Review mail flow rules for settings that need attention.'
     Write-Host "Read-only"
     Write-Host ""
 

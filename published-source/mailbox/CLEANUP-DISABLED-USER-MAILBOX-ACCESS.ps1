@@ -1,12 +1,11 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 <#
 CLEANUP DISABLED USER MAILBOX ACCESS
 
 OBJECTIVE
-Find and optionally remove Full Access, Send As, and Send On Behalf permissions
-held by one disabled/departing user on other Exchange Online recipients.
+Remove approved mailbox access held by disabled users.
 
 INPUT
 One UPN.
@@ -807,7 +806,7 @@ function Get-SendAsPermission {
 
 try {
     Write-Host 'Remove Disabled User Mailbox Access'
-    Write-Host 'Remove a disabled user''s Full Access, Send As, and Send on Behalf permissions after reviewing the removal plan.'
+    Write-Host 'Remove approved mailbox access held by disabled users.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host ""
 

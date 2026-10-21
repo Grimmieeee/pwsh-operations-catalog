@@ -1,3 +1,5 @@
+Latest purpose-statement follow-up: [all 80 matching objectives](CARD-OBJECTIVES-REVIEW.md). The earlier rollout below remains historical.
+
 # Operator alignment — change log and follow-ups
 
 Owner approved October 20, 2026. Base public release: 70bf66c. The Group Memberships pilot from PR #75 is included; its behavior changes remain separately attributable.

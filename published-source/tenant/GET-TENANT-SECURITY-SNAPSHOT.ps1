@@ -1,4 +1,6 @@
-# .VERSION 1.0.1
+# .VERSION 1.0.2
+
+# OBJECTIVE: Get a broad overview of the tenant's security settings and review areas.
 <#
 GET-TENANT-SECURITY-SNAPSHOT.ps1
 
@@ -227,7 +229,7 @@ try {
 
     Clear-Host
     Write-FKReportLine 'Get Tenant Security'
-    Write-FKReportLine 'Gives a fast tenant security overview before you open the deeper focused audits.'
+    Write-FKReportLine 'Get a broad overview of the tenant''s security settings and review areas.'
     Write-FKReportLine "READ-ONLY. NO CHANGES MADE."
     Write-FKReportLine "Fast overview only. Use focused audits for deeper review."
     Write-FKReportLine ""

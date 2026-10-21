@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 GET-USER-GROUPS.ps1
 
 OBJECTIVE
-Find a user's direct group memberships in AD and Entra ID.
+List the selected users' direct groups in AD and Entra.
 
 INPUT
 - One UPN
@@ -591,7 +591,7 @@ function Offer-VerifiedCsv {
 
 try {
     Write-Host 'Get User Groups'
-    Write-Host "Find a user's direct group memberships in AD and Entra ID."
+    Write-Host 'List the selected users'' direct groups in AD and Entra.'
     Write-Host "Read only. Direct membership does not establish effective access."
     Write-Host ("Started: {0}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'))
     Write-Host ""

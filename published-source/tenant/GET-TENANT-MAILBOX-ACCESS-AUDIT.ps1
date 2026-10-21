@@ -1,6 +1,8 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
+# OBJECTIVE: Review mailbox forwarding and delegated access across the tenant.
+
 <#
 GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1
 
@@ -123,7 +125,7 @@ try {
 
     Clear-Host
     Write-Host 'Audit Tenant Mailbox Access'
-    Write-Host 'Finds mailbox forwarding and delegated access across the tenant without opening mailboxes one at a time.'
+    Write-Host 'Review mailbox forwarding and delegated access across the tenant.'
     Write-Host "READ-ONLY. NO CHANGES MADE."
     Write-Host ""
 
