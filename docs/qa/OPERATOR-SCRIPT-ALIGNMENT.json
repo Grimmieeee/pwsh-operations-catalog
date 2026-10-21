@@ -562,15 +562,20 @@
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "newSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
     "changed": true,
-    "nonPresentationSha256": "10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",
-    "version": "1.0.1",
+    "nonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
+    "version": "1.0.2",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
       "operatorTested": true,
       "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    },
+    "operationalChange": {
+      "kind": "uri-boundary-fix",
+      "priorNonPresentationSha256": "10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",
+      "evidence": "docs/qa/BEC-APP-LOOKUP-FIX.md"
     }
   },
   {
@@ -584,10 +589,10 @@
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "newSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
     "changed": true,
     "nonPresentationSha256": "a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
@@ -1819,10 +1824,10 @@
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "newSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
     "changed": true,
     "nonPresentationSha256": "141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",

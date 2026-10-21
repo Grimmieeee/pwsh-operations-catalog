@@ -1,11 +1,11 @@
 {
   "note": "Every catalog entry screened. Pattern signals require source review. Scoped review and automated tests do not confer operator verification.",
   "counts": {
-    "entries": 338,
+    "entries": 327,
     "scripts": 80,
     "commands": 235,
     "references": 12,
-    "pending": 11,
+    "pending": 0,
     "operatorVerified": 0,
     "scopedReviews": 80
   },
@@ -3040,78 +3040,6 @@
       ]
     },
     {
-      "name": "Disabled User Group Debt",
-      "file": "get-inactive-group-debt.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Disabled User Mailbox Access Review",
-      "file": "get-inactive-mailbox-debt.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "User Onboarding",
-      "file": "invoke-user-onboard.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Change",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "User Offboarding",
-      "file": "invoke-user-offboard.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Change",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
       "name": "Disable User Accounts",
       "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
       "path": "published-source/identity/INVOKE-DISABLE-ACCOUNTS.ps1",
@@ -3743,24 +3671,6 @@
         "Available",
         "QueryFailed"
       ]
-    },
-    {
-      "name": "Find Accounts by Name or Email",
-      "file": "find-accounts-by-name-clean.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
     },
     {
       "name": "Get Distribution Group Members",
@@ -4818,42 +4728,6 @@
       ]
     },
     {
-      "name": "Shared Mailbox Membership Review",
-      "file": "shared-mailbox-members.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Distribution Group Inventory",
-      "file": "distro-group-members.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
       "name": "Set Litigation Hold",
       "file": "INVOKE-LITIGATION-HOLD.ps1",
       "path": "published-source/mailbox/INVOKE-LITIGATION-HOLD.ps1",
@@ -5061,22 +4935,24 @@
       "path": "published-source/incident-response/ir-risk-assessment.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+      "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Scoped regression review — app lookup URI fix",
       "review": {
-        "sha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+        "state": "Scoped regression review — app lookup URI fix",
         "scope": [
           "Shared card/script objective",
           "Source-supported scope and preparation",
           "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Bounded app lookup URI/response fix; all other operational tokens preserved",
+          "Exact app-ID URI, filtered fallback, unresolved failures and cached lookups; tests/bec-app-lookup.test.ps1"
         ],
         "tests": [
           "tests/card-objectives.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/site-security.test.mjs",
+          "tests/bec-app-lookup.test.ps1"
         ],
         "remaining": [
           "No new live tenant or Windows-host runtime acceptance claimed."
@@ -5084,11 +4960,6 @@
         "previousReview": null
       },
       "signals": [
-        {
-          "id": "URI_VARIABLE_QUESTION",
-          "line": 557,
-          "note": "Check URI variable boundaries."
-        },
         {
           "id": "LOCAL_INSTALL",
           "line": 254,
@@ -5112,11 +4983,11 @@
       "path": "published-source/incident-response/ir-contain-eradicate.ps1",
       "kind": "PowerShell",
       "access": "Destructive",
-      "sha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+      "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
       "family": "Change workflows",
       "state": "Alignment reviewed — source and rendered card checked",
       "review": {
-        "sha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+        "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
         "state": "Alignment reviewed — source and rendered card checked",
         "scope": [
           "Shared card/script objective",
@@ -5174,24 +5045,6 @@
       "resultStates": [
         "Not required"
       ]
-    },
-    {
-      "name": "Graph Session and User Check",
-      "file": "get-graph-session-user-check.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Read-only",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
     },
     {
       "name": "Incident Response: Review File Activity",
@@ -5878,24 +5731,6 @@
       ],
       "authentication": {
         "graph": true,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Tenant Security Hardening",
-      "file": "tenant-security-hardening-guided.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Change",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
         "exchange": false,
         "ad": false
       },
@@ -8074,42 +7909,6 @@
       "resultStates": []
     },
     {
-      "name": "Combine CSV Reports",
-      "file": "csv-combine.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Change",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Send Bulk Graph Email",
-      "file": "csv-graph-send-bulk-emails.ps1",
-      "path": null,
-      "kind": "Source pending",
-      "access": "Change",
-      "sha256": null,
-      "family": "Source pending",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
       "name": "Update Windows Apps",
       "file": "UPDATE-WINDOWS-APPS.ps1",
       "path": "published-source/utility/UPDATE-WINDOWS-APPS.ps1",
@@ -9841,11 +9640,11 @@
       "path": "published-source/incident-response/ir-recover-validate.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+      "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
       "family": "Change workflows",
       "state": "Alignment reviewed — source and rendered card checked",
       "review": {
-        "sha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+        "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
         "state": "Alignment reviewed — source and rendered card checked",
         "scope": [
           "Shared card/script objective",

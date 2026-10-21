@@ -18,9 +18,10 @@
     }
   };
   const preparation = [
-    'Use the approved client Windows jumpbox and an authorized account. Synced-user changes also need local Active Directory permissions.',
-    'Have the exact user sign-in name (UPN) and tenant domain or ID ready. Required modules: Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.',
-    'Extract all three scripts into one folder. Open Windows PowerShell 5.1 or PowerShell 7 on the jumpbox and keep that window open for the workflow.',
+    'BEC means business email compromise: a suspected takeover of a work email account.',
+    'Use the approved Windows support computer and an account allowed to manage the customer’s Microsoft 365 environment. Accounts linked to local Active Directory also need permission there.',
+    'Have the user’s full sign-in address (UPN) and the customer’s Microsoft 365 domain or tenant ID ready. Install Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+ using Install M365 Modules.',
+    'Extract all three scripts into one folder. Open Windows PowerShell 5.1 or PowerShell 7 on that computer and keep that window open for the workflow.',
     'The first sign-in requests permissions for assessment, containment and recovery. The assessment itself makes no tenant changes; change actions still require approval.'
   ];
   function launch(file){

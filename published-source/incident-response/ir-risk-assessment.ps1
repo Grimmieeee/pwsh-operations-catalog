@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.1
+.VERSION 1.0.2
 .GUID 7cf20e90-263b-4c97-98ec-f7d7d105d9aa
 .AUTHOR FIELD // KIT
 .DESCRIPTION Review one user's account and mailbox before choosing a response.
@@ -23,7 +23,7 @@ Skip mailbox collection. The assessment remains incomplete and requires review.
 .PARAMETER NoPause
 Suppress end-of-step navigation. Does not bypass action confirmations.
 .NOTES
-Runtime baseline: 1.0.0. Display revision: 1.0.1. Derived from the v0.32 risk exposure snapshot.
+Runtime baseline: 1.0.0. App lookup boundary fix: 1.0.2. Derived from the v0.32 risk exposure snapshot.
 Preserves indicator rules and summary precedence; not a compromise verdict or incident closure.
 Graph sign-ins are a bounded latest-25 sample over 10 days, not a complete investigation.
 #>
@@ -554,13 +554,13 @@ function Get-ServicePrincipalInfo($ServicePrincipalId, $Headers, $Cache) {
 
     if ($Cache.ContainsKey($ServicePrincipalId)) { return $Cache[$ServicePrincipalId] }
 
-    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/$ServicePrincipalId?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
+    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/${ServicePrincipalId}?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
 
-    if (-not $Result.Ok) {
+    if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {
         $Filter = [System.Uri]::EscapeDataString("id eq '$ServicePrincipalId'")
         $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=$Filter&`$select=id,appId,displayName,publisherName,verifiedPublisher&`$top=1" $Headers
 
-        if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {
+        if (-not $Result.Ok -or @($Result.Data.value).Count -ne 1 -or @($Result.Data.value)[0].id -ne $ServicePrincipalId) {
             $Info = [pscustomobject]@{ Ok = $false; Name = "Unresolved app ($ServicePrincipalId)"; Microsoft = $false; Verified = $false }
             $Cache[$ServicePrincipalId] = $Info
             return $Info

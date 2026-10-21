@@ -6,7 +6,7 @@ $records=@(Get-Content (Join-Path $Root 'docs/qa/CARD-OBJECTIVES-REVIEW.json') -
 $alignment=@(Get-Content (Join-Path $Root 'docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.json') -Raw|ConvertFrom-Json)
 $t=$null;$e=$null
 $helpers=[System.Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot 'operator-alignment.test.ps1'),[ref]$t,[ref]$e)
-foreach($name in @('Pure-Print','NonPresentation-Tokens')){
+foreach($name in @('Pure-Print','NonPresentation-Tokens','Assert-ApprovedOperationalChange')){
  $fn=$helpers.Find({param($n)$n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$false)
  . ([scriptblock]::Create($fn.Extent.Text))
 }
@@ -23,6 +23,7 @@ foreach($r in $records){
  if(-not $r.changed -and $hash -ne $r.oldSha256){throw 'Preserved IR release drifted.'}
  $sha=[Security.Cryptography.SHA256]::Create()
  try{$fingerprint=([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes((NonPresentation-Tokens $text))))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+ Assert-ApprovedOperationalChange $r $text
  if($fingerprint -ne $r.nonPresentationSha256){throw "Non-presentation tokens changed: $($r.file)"}
  if($r.consoleObjective){
   $tokens=$null;$errors=$null;$a=[System.Management.Automation.Language.Parser]::ParseInput($text,[ref]$tokens,[ref]$errors)
@@ -39,4 +40,4 @@ foreach($r in $records){
  }
  Write-Output "PASS: card/script objective / $($r.file)"
 }
-Write-Output 'PASS: all 80 documented objectives match; console objectives match where present; non-presentation tokens unchanged.'
+Write-Output 'PASS: all 80 documented objectives match; console objectives match where present; non-presentation tokens unchanged except the bounded BEC app-lookup fix.'

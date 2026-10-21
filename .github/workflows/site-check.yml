@@ -41,7 +41,9 @@ jobs:
           ./tests/license-removal.test.ps1 -Mode Assign
       - name: Screen catalog sources and shared Graph URI helpers
         shell: pwsh
-        run: ./tests/catalog-safety.test.ps1
+        run: |
+          ./tests/catalog-safety.test.ps1
+          ./tests/bec-app-lookup.test.ps1
       - name: Test endpoint failure reporting offline
         shell: pwsh
         run: |

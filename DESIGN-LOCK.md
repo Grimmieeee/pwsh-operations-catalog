@@ -1,3 +1,7 @@
+## Remaining card issues — October 21, 2026
+
+Working-library search and counts include only available scripts, commands and references. Keep source-less concepts under About → Planned Tools. Every quick command requires three explicit related destinations bound to its reviewed command text; task-family guessing is not a release fallback. Search matches must describe the actual task rather than incidental code, setup notes or broad subareas. Define BEC and explain sign-in/customer terms plainly while retaining required module names and versions.
+
 ## Alignment and relationship review — October 21, 2026
 
 Use BEC: for the guided account-compromise sequence and Incident Response: for broader investigation tools. Keep filenames and callable interfaces stable. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.

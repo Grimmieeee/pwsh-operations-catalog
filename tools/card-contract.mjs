@@ -52,6 +52,8 @@ export function validateCardContract({api,window,document,hashes}){
       assert(meaningful(review.useFor),`Quick command needs a purpose: ${label}`);
       assert(concreteInput(review.input) && concreteInput(api.inputInfo(item)),`Quick command needs explicit inputs or default context: ${label}`);
       assert(meaningful(review.requires),`Quick command needs reviewed requirements: ${label}`);
+      assert.equal(api.relatedItems(item).length,3,`Three reviewed related items required for quick command: ${label}`);
+      assert(Array.isArray(review.related) && new Set(review.related).size===3,`Explicit quick-command relationships missing: ${label}`);
       assert(Array.isArray(review.connectFirst),`Quick command needs reviewed preparation, including an empty list for local commands: ${label}`);
     }else{
       counts.pending++;

@@ -22,6 +22,17 @@ function NonPresentation-Tokens($Text){
  };return $parts -join "`n"
 }
 
+function Assert-ApprovedOperationalChange($Row,$Text){
+ if(-not $Row.operationalChange){return}
+ if($Row.file -ne 'ir-risk-assessment.ps1' -or $Row.operationalChange.kind -ne 'uri-boundary-fix'){throw 'Unknown approved operational change.'}
+ $new='servicePrincipals/${ServicePrincipalId}?`$select';$old='servicePrincipals/$ServicePrincipalId?`$select'
+ if(($Text.Split(@($new),[StringSplitOptions]::None).Count-1) -ne 1){throw 'Expected one corrected app lookup boundary.'}
+ $baseline=$Text.Replace($new,$old).Replace('if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {','if (-not $Result.Ok) {').Replace('if (-not $Result.Ok -or @($Result.Data.value).Count -ne 1 -or @($Result.Data.value)[0].id -ne $ServicePrincipalId) {','if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {')
+ $sha=[Security.Cryptography.SHA256]::Create()
+ try{$fingerprint=([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes((NonPresentation-Tokens $baseline))))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+ if($fingerprint -ne $Row.operationalChange.priorNonPresentationSha256){throw 'App lookup fix includes unreviewed operational changes.'}
+}
+
 $rows=Get-Content (Join-Path $Root 'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json') -Raw|ConvertFrom-Json
 $changed=@($rows|Where-Object{$_.changed})
 if($rows.Count -ne 80 -or $changed.Count -ne 80){throw 'Unexpected alignment scope.'}
@@ -33,6 +44,7 @@ foreach($row in $rows){
  $text=[IO.File]::ReadAllText($path)
  $sha=[Security.Cryptography.SHA256]::Create()
  try{$actual=([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes((NonPresentation-Tokens $text))))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+ Assert-ApprovedOperationalChange $row $text
  if($actual -ne $row.nonPresentationSha256){throw "Non-presentation tokens changed: $($row.file)"}
  if($row.changes -contains 'Consistent Enter completion prompt' -and $text -notmatch 'Press Enter to close session\.'){throw 'Completion prompt missing.'}
  $t=$null;$e=$null;$a=[System.Management.Automation.Language.Parser]::ParseInput($text,[ref]$t,[ref]$e)
@@ -46,6 +58,6 @@ foreach($row in $rows){
    Pause-End
   }
  }
- Write-Output "PASS: presentation-only fingerprint / $($row.file)"
+ Write-Output "PASS: reviewed source fingerprint / $($row.file)"
 }
-Write-Output 'PASS: 80 presentation-only comparisons, including the coupled BEC display revisions; NoPause remains noninteractive where supported.'
+Write-Output 'PASS: 80 source comparisons; the isolated BEC URI/response fix is explicitly bounded; NoPause remains noninteractive where supported.'

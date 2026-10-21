@@ -125,7 +125,7 @@ foreach ($command in $commands) {
     $t=$null;$e=$null
     $risk=[System.Management.Automation.Language.Parser]::ParseFile((Join-Path $Root 'published-source/incident-response/ir-risk-assessment.ps1'),[ref]$t,[ref]$e)
     $fn=$risk.Find({param($n) $n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq 'Get-ServicePrincipalInfo'},$false)
-    $candidate=$fn.Extent.Text.Replace('/$ServicePrincipalId?','/${ServicePrincipalId}?').Replace('if (-not $Result.Ok) {','if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {')
+    $candidate=$fn.Extent.Text
     . ([scriptblock]::Create($candidate))
     function GraphGet {
         param($Uri,$Headers)
@@ -133,13 +133,13 @@ foreach ($command in $commands) {
         if ($script:appCase -eq 'unavailable') { return @{Ok=$false} }
         $data=@{id='fixture-id';displayName='Offline app';publisherName='Offline publisher';verifiedPublisher=@{displayName=''}}
         if ($Uri -match '/servicePrincipals\?') { return @{Ok=$true;Data=@{value=@($data)}} }
-        if ($Uri -notmatch '/servicePrincipals/fixture-id\?') { throw 'Candidate lost the service-principal identifier.' }
+        if ($Uri -notmatch '/servicePrincipals/fixture-id\?') { throw 'App lookup lost the service-principal identifier.' }
         return @{Ok=$true;Data=$data}
     }
     foreach ($case in @('direct','collection-first','unavailable')) {
         $script:appCase=$case;$info=Get-ServicePrincipalInfo 'fixture-id' @{} @{}
         if ($case -eq 'unavailable') { if ($info.Ok) { throw 'Unavailable app lookup was reported resolved.' } }
-        elseif (-not $info.Ok -or $info.Name -ne 'Offline app') { throw "Candidate app lookup failed: $case" }
+        elseif (-not $info.Ok -or $info.Name -ne 'Offline app') { throw "App lookup failed: $case" }
     }
 }
-Write-Output "PASS: $scriptCount script ASTs, $($commands.Count) command ASTs, $uriCount Graph URI strings, $helperCount resolver fixtures, $readCases collection/error cases, $authCases tenant-context cases, 6 sign-in context cases, 3 IR candidate fixtures. Known open findings: $($seen.Count)."
+Write-Output "PASS: $scriptCount script ASTs, $($commands.Count) command ASTs, $uriCount Graph URI strings, $helperCount resolver fixtures, $readCases collection/error cases, $authCases tenant-context cases, 6 sign-in context cases, 3 current-source IR fixtures. Known open findings: $($seen.Count)."
