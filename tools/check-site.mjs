@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { loadCatalog } from './site-test-harness.mjs';
 import { validateCardContract } from './card-contract.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const {api,window}=loadCatalog(root);
+const {api,window,document}=loadCatalog(root);
 const hashes={};
 for(const item of api.ITEMS){
   if(!item.publishedPath)continue;
@@ -95,5 +95,5 @@ for(const item of api.ITEMS){
   assert(item.checks?.length || item.facts?.items?.length,`Script needs source-reviewed card coverage: ${item.file}`);
   assert(!/^Read-only tenant permissions$/i.test(item.requires||''),`Document exact prerequisites: ${item.file}`);
 }
-validateCardContract({api,window,hashes});
+validateCardContract({api,window,document,hashes});
 console.log(`PASS: ${api.ITEMS.length} catalog items; ${Object.keys(sorted).length} downloadable sources; checksums, paths, policy and markup.`);

@@ -30,7 +30,7 @@
       '& $ScriptPath';
   }
   function guide(){
-    return '# FIELD // KIT — IR workflow\n\nPREPARE\n'+preparation.map((text,i)=>(i+1)+'. '+text).join('\n')+
+    return '# FIELD // KIT — BEC workflow\n\nPREPARE\n'+preparation.map((text,i)=>(i+1)+'. '+text).join('\n')+
       '\n\nSTART\nRight-click ir-risk-assessment.ps1 in File Explorer and choose Copy as path. In the existing PowerShell window, paste the following launch block, then paste the file path when asked.\n\n```powershell\n'+launch('ir-risk-assessment.ps1')+'\n```\n\n'+
       Object.entries(stages).map(([file,step])=>'## '+file.replace(/\.ps1$/,'')+'\n\nExpected result: '+step.result+'\n\nNext: '+step.next+'\n\nIf blocked or cancelled: '+step.blocked).join('\n\n')+
       '\n\nIf PowerShell blocks execution, stop and use the approved signing/execution-policy process. Do not bypass a managed policy.\n';

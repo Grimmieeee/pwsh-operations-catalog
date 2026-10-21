@@ -2,7 +2,7 @@
 param([string]$Root=(Split-Path $PSScriptRoot -Parent))
 $ErrorActionPreference='Stop'
 function Pure-Print($Node){
- if($Node -isnot [System.Management.Automation.Language.CommandAst] -or $Node.GetCommandName() -notin @('Write-Host','Write-FKReportLine')){return $false}
+ if($Node -isnot [System.Management.Automation.Language.CommandAst] -or $Node.GetCommandName() -notin @('Write-Host','Write-FKReportLine','Write-IRLine')){return $false}
  foreach($element in @($Node.CommandElements|Select-Object -Skip 1)){
   if($element -is [System.Management.Automation.Language.CommandParameterAst]){continue}
   if($element -isnot [System.Management.Automation.Language.StringConstantExpressionAst] -and $element -isnot [System.Management.Automation.Language.ConstantExpressionAst]){return $false}
@@ -12,7 +12,9 @@ function NonPresentation-Tokens($Text){
  $t=$null;$e=$null;$a=[System.Management.Automation.Language.Parser]::ParseInput($Text,[ref]$t,[ref]$e)
  if($e.Count){throw $e[0]}
  $ranges=@($a.FindAll({param($n) Pure-Print $n},$true)|ForEach-Object{,@($_.Extent.StartOffset,$_.Extent.EndOffset)})
- $prompts=@($a.FindAll({param($n)$n -is [System.Management.Automation.Language.CommandAst] -and $n.GetCommandName() -eq 'Read-Host'},$true)|ForEach-Object{$_.CommandElements}|Where-Object{$_ -is [System.Management.Automation.Language.StringConstantExpressionAst] -and $_.Value -match '^Press (?:Enter|ENTER) to (?:EXIT|exit session\.|close.*|return to PowerShell)$'}|ForEach-Object{,@($_.Extent.StartOffset,$_.Extent.EndOffset)})
+ # A literal console window title is presentation; keep its assignment and all dynamic values in the comparison.
+ $ranges+=@($a.FindAll({param($n)$n -is [System.Management.Automation.Language.AssignmentStatementAst] -and $n.Left.Extent.Text -ceq '$Host.UI.RawUI.WindowTitle' -and $n.Right.Extent.Text -match "^'[^']*'$"},$true)|ForEach-Object{,@($_.Right.Extent.StartOffset,$_.Right.Extent.EndOffset)})
+ $prompts=@($a.FindAll({param($n)$n -is [System.Management.Automation.Language.CommandAst] -and $n.GetCommandName() -eq 'Read-Host'},$true)|ForEach-Object{$_.CommandElements}|Where-Object{$_ -is [System.Management.Automation.Language.StringConstantExpressionAst] -and $_.Value -match '^\s*Press (?:Enter|ENTER) to (?:EXIT|exit session\.|close.*|return to PowerShell)$'}|ForEach-Object{,@($_.Extent.StartOffset,$_.Extent.EndOffset)})
  $parts=@();foreach($token in $t){
   if($token.Kind -in @('Comment','NewLine','EndOfInput')){continue}
   $skip=$false;foreach($range in @($ranges)+@($prompts)){if($token.Extent.StartOffset -ge $range[0] -and $token.Extent.EndOffset -le $range[1]){$skip=$true;break}}
@@ -22,7 +24,7 @@ function NonPresentation-Tokens($Text){
 
 $rows=Get-Content (Join-Path $Root 'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json') -Raw|ConvertFrom-Json
 $changed=@($rows|Where-Object{$_.changed})
-if($rows.Count -ne 80 -or $changed.Count -ne 77){throw 'Unexpected alignment scope.'}
+if($rows.Count -ne 80 -or $changed.Count -ne 80){throw 'Unexpected alignment scope.'}
 foreach($row in $rows){
  $path=Join-Path $Root $row.path
  $hash=(Get-FileHash $path -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -46,4 +48,4 @@ foreach($row in $rows){
  }
  Write-Output "PASS: presentation-only fingerprint / $($row.file)"
 }
-Write-Output 'PASS: 77 presentation-only comparisons, 3 preserved IR sources; NoPause remains noninteractive where supported.'
+Write-Output 'PASS: 80 presentation-only comparisons, including the coupled BEC display revisions; NoPause remains noninteractive where supported.'

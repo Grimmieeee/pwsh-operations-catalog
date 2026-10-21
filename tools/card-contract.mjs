@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 const meaningful=value=>typeof value==='string' && value.trim().length>0;
 const concreteInput=value=>meaningful(value)&&!/^(?:tenant|user|none|n\/a|no input|nothing)$/i.test(value.trim());
-export function validateCardContract({api,window,hashes}){
+export function validateCardContract({api,window,document,hashes}){
   const counts={sources:0,scripts:0,commands:0,pending:0};
   const sourceRecords=window.FIELD_KIT_CARD_GUIDANCE;
   const commandRecords=window.FIELD_KIT_COMMAND_GUIDANCE;
@@ -23,6 +23,18 @@ export function validateCardContract({api,window,hashes}){
       assert.equal(operator.sourceSha256,hashes[item.publishedPath],`Operator copy is stale: ${label}`);
       assert(Array.isArray(operator.details) && operator.details.length>0,`Operational details missing: ${label}`);
       assert.equal(api.relatedItems(item).length,3,`Three usable related items required: ${label}`);
+      assert(Array.isArray(operator.related) && new Set(operator.related).size===3 && !operator.related.includes(item.file),`Three distinct reviewed relationships required: ${label}`);
+      assert.deepEqual(Array.from(api.relatedItems(item),other=>other.type==='Quick Command'?'command:'+other.name:other.file),Array.from(operator.related),`Rendered relationships differ from review: ${label}`);
+      for(const other of api.relatedItems(item))assert((other.publishedPath || other.code) && other.status!=='Source pending',`Related source unavailable: ${label}`);
+      assert(Array.isArray(operator.preparation),`Reviewed operational preparation missing: ${label}`);
+      api.openItem(item);
+      const rendered=document.getElementById('drawerBody').innerHTML;
+      const escape=text=>text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+      for(const text of [operator.objective,operator.scope,operator.input,...operator.preparation,...operator.details])assert(rendered.includes(escape(text)),`Reviewed operator information not displayed: ${label}`);
+      if(operator.notice){
+        assert(rendered.includes(escape(operator.notice)),`Operational notice not displayed: ${label}`);
+        assert(rendered.indexOf('operator-notice')<rendered.indexOf('guided-start'),`Operational notice must precede launch: ${label}`);
+      }
       assert(meaningful(review.objective),`Card needs a purpose: ${label}`);
       assert(concreteInput(review.input) && concreteInput(api.inputInfo(item)),`Card needs explicit inputs or default context: ${label}`);
       assert(meaningful(review.requires),`Card needs reviewed requirements: ${label}`);

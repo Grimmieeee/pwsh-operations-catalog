@@ -1,11 +1,11 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 <#
 CLEANUP DISABLED USER MAILBOX ACCESS
 
 OBJECTIVE
-Remove approved mailbox access held by disabled users.
+Remove approved mailbox access held by one disabled user.
 
 INPUT
 One UPN.
@@ -806,7 +806,7 @@ function Get-SendAsPermission {
 
 try {
     Write-Host 'Remove Disabled User Mailbox Access'
-    Write-Host 'Remove approved mailbox access held by disabled users.'
+    Write-Host 'Remove approved mailbox access held by one disabled user.'
     Write-Host "CHANGES MAY BE MADE."
     Write-Host ""
 

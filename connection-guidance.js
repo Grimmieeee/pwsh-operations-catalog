@@ -100,7 +100,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1": {
-    "sha256": "742d126522230364471ab8bee9bc83132e8589a2ff144199d66cfda4f366107a",
+    "sha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -108,7 +108,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/GET-MAILBOX-PERMISSIONS.ps1": {
-    "sha256": "3faaae2c396c8615499bbd47570ee57d9d3a04e56f5e7c7a4a53b1f4d627257b",
+    "sha256": "76535edd6d3e922cc44decedba707203716788afa4bdabbf68579549a57752e6",
     "mode": "auto",
     "services": [
       "EXO"
@@ -136,14 +136,14 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1": {
-    "sha256": "375f096c481686d5933fee82ceac7e56e4b33482e9ffe13ea588325869861f5e",
+    "sha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/incident-response/ir-risk-assessment.ps1": {
-    "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+    "sha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -151,7 +151,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/ir-contain-eradicate.ps1": {
-    "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+    "sha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -160,43 +160,43 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
-    "sha256": "a5f17427b6cb03c31b790b922d8119c9107309b0bb8dabd773928d33a264a638",
+    "sha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/incident-response/IR-GET-IP-TRACE.ps1": {
-    "sha256": "acce3f018ebcd20c0e3b199bf5b7ffc7924b26c6d4c64d75a47faf8b89f031c1",
+    "sha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1": {
-    "sha256": "1851ee0ec2ebbc086aed89fed3bf2e4d839005497262fb6bb264a4b62a5622d8",
+    "sha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
   "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
-    "sha256": "dea6a298adb935521b5d3b06b73ff0e654612bc8a04881382ade57a7b483964f",
+    "sha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
     "mode": "local",
     "services": []
   },
   "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1": {
-    "sha256": "00892f3409549b4fe2bad0a0d234f54ec06d581e63487982f30dd050d2fa2d5e",
+    "sha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
     "mode": "local",
     "services": []
   },
   "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1": {
-    "sha256": "4b95de1355f8eb34b43a87e29e247e5da04541fb83b91ef0328f86918fa9f254",
+    "sha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
     "mode": "local",
     "services": []
   },
   "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1": {
-    "sha256": "a800a61cf9c7f9a2b34f02bb49c3764cbf8261d5cd0ad92a13f0cb544fd120c5",
+    "sha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -253,7 +253,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
-    "sha256": "1934bda28cce1b49450261c0bbf1333210ec8723842c81de9c0dc3d5796c6fa3",
+    "sha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -291,12 +291,12 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "published-source/utility/TEST-POWERSHELL-READINESS.ps1": {
-    "sha256": "59b6730559b3916819789d913503c610a06bbabe86f1fd8a9e70f820106cd784",
+    "sha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
     "mode": "local",
     "services": []
   },
   "published-source/utility/GET-FOLDER-INVENTORY.ps1": {
-    "sha256": "de076936d25c2b448ecc638f12f65fee672c9ada27aac56ef41c1c0ab76507f5",
+    "sha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
     "mode": "local",
     "services": []
   },
@@ -400,7 +400,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
-    "sha256": "4a9291b9f133ce2bd5ec2f563fb6101aaf5857f9c9d88536853788ce1d56e804",
+    "sha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -416,19 +416,19 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
-    "sha256": "6b3deeb1c1cefe468ec8c46443fe4b235ea151daf697e9b06f7e7dde73860ae0",
+    "sha256": "7af474157506fd00c85b064ec037e09286c7776e4b088b28e8af36d6f3cbc85d",
     "mode": "local",
     "services": []
   },
   "published-source/identity/INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
-    "sha256": "f3ada8c4e78014fbe24a23ea569863716db83e28ade000299fd1f41e415ad2d1",
+    "sha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
   "published-source/incident-response/ir-recover-validate.ps1": {
-    "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+    "sha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -437,22 +437,22 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "tools/git-handoff.ps1": {
-    "sha256": "396dc02a8e7a54fc8a80bfdd3257d789ba2b33b5ae16d47ae67032b41dd543c5",
+    "sha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
     "mode": "local",
     "services": []
   },
   "tools/git-repo.ps1": {
-    "sha256": "a7bf40b9e18e0d772a484e728fec4b7604e44480e0906d86458d4ee82c81c4f1",
+    "sha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
     "mode": "local",
     "services": []
   },
   "tools/git-security.ps1": {
-    "sha256": "e99843711cd1f33cbd7a2851e631c0593ffa2378c01e675ced78a91cfb764279",
+    "sha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
     "mode": "local",
     "services": []
   },
   "tools/set-execution.ps1": {
-    "sha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
+    "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
     "mode": "local",
     "services": []
   },
@@ -477,17 +477,17 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "tools/GET-TERMINAL-READINESS-CHECK.ps1": {
-    "sha256": "aff60902758c4085701a22dc0ab5eeb0bd0f4db075a68d4c20164294226c70fb",
+    "sha256": "0cdf541f4222218c359dddc9e441343d37ee7ad745cfe5588e06a9a45ad42316",
     "mode": "local",
     "services": []
   },
   "tools/INVOKE-FILE-INVENTORY.ps1": {
-    "sha256": "3fbe443e0b5033489d2f7be78897ee6c7992448a4a86383b331f58166cfb2202",
+    "sha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
     "mode": "local",
     "services": []
   },
   "tools/INVOKE-MAP-KIT.ps1": {
-    "sha256": "e0bd93584585d1f47d550da919ed3f18f7e99c338d07f04e85e660ad9310c92a",
+    "sha256": "ea3b5ee21dbd384d7107ec1458be968d7c7c5c00c9998a4dcc2f89856a8372a4",
     "mode": "local",
     "services": []
   },
@@ -497,22 +497,22 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": []
   },
   "toys/SET-THEME-BASIC.ps1": {
-    "sha256": "fff5bd842f9f9c0b3e0f4ab27c1ba8d8bc3bf74954b4c2aa4ada22c4fe513bc0",
+    "sha256": "9dc01f2210cf808379be2770450283f0d44be72c4d3cae3f9a0087c2f15e98f2",
     "mode": "local",
     "services": []
   },
   "toys/SET-THEME-COBALT.ps1": {
-    "sha256": "0747cc7f881a84169801f4318c35e6bec8335db224cb5014178c5bd767d28486",
+    "sha256": "602ddcb368e716ca73ced3b799d847262faca237ee43b63a7070596ce37d9d2b",
     "mode": "local",
     "services": []
   },
   "toys/SET-THEME-SEAGLASS.ps1": {
-    "sha256": "460efef8263380e50352a1f7acdc43284e9234cb6662bd40ed005f5578c1763f",
+    "sha256": "629b919cea8aabd890151a2402241e426a4c0c331a9a4d5861bd9aaa340e888e",
     "mode": "local",
     "services": []
   },
   "toys/SET-THEME-SILICON-VALLEY.ps1": {
-    "sha256": "161ca2b09e7798fa07b240896f1aa4b75bb0fba1073bc5e776ad0ba48bc3bd98",
+    "sha256": "aab04649707578c0c57a9602b80cdae04465bff529fae0373d46f1aa2bc43739",
     "mode": "local",
     "services": []
   },

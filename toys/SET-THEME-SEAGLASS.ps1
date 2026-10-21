@@ -1,7 +1,7 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
-# OBJECTIVE: Preview a sea-green PowerShell theme and output helpers.
+# OBJECTIVE: Install a sea-green PowerShell theme in your startup profile.
 
 #Requires -Version 5.1
 
@@ -11,6 +11,9 @@
 # Writes theme block to $PROFILE.CurrentUserAllHosts for persistence.
 # Removes any previously installed kit theme before writing.
 
+
+Write-Host 'Install Sea Glass Theme'
+Write-Host 'Install a sea-green PowerShell theme in your startup profile.'
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
 $Host.UI.RawUI.BackgroundColor = 'Black'
@@ -161,7 +164,7 @@ if (Test-Path $profilePath) {
         Write-Host "${cT3}  Loads on every new session.${cR}"
         Write-Host "${cT3}. . . . . . . . . . . . . . . . . . . . .${cR}"
         Write-Host ""
-        Read-Host "  Press Enter to exit"
+        Read-Host 'Press Enter to close session.'
         exit
     }
     foreach ($theme in @('SILICON VALLEY THEME', 'COBALT THEME', 'MINT CORAL THEME')) {
@@ -189,4 +192,4 @@ Write-Host "${cT3}  Restart your terminal to confirm persistence.${cR}"
 Write-Host "${cT3}  To revert: remove the SEA GLASS THEME block from your profile.${cR}"
 Write-Host "${cT3}. . . . . . . . . . . . . . . . . . . . .${cR}"
 Write-Host ""
-Read-Host "  Press Enter to exit"
+Read-Host 'Press Enter to close session.'

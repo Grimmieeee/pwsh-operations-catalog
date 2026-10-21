@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.1
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
-.DESCRIPTION Selective containment and eradication workflow for operator-approved response.
+.DESCRIPTION Contain and clean up one compromised account after approval.
 #>
 <#
 .SYNOPSIS
-IR: Contain and Eradicate
+BEC: Contain and Clean Up
 .DESCRIPTION
 Makes only selected and explicitly confirmed changes to one M365 identity/mailbox.
 Synced identity changes use the matching AD SID, never a name-only match or cloud fallback.
@@ -1155,10 +1155,10 @@ function Invoke-EradicationPlan {
 
 try {
     Enable-Tls12
-    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Contain and Eradicate' } catch {}
+    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='BEC: Contain and Clean Up' } catch {}
 
-    Write-IRLine 'IR: CONTAIN AND ERADICATE'
-    Write-IRLine 'Contain the account and remove approved persistence.'
+    Write-IRLine 'BEC: Contain and Clean Up'
+    Write-IRLine 'Contain and clean up one compromised account after approval.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine 'Review legacy app passwords separately in Entra if applicable; this script does not clear them.'
     Write-IRLine ''

@@ -218,9 +218,9 @@ switch($Focus){
    if($case -in @('already','managed')){Assert-FK ($script:FKWrites -eq 0) 'Managed/usable policy rewritten.'}
    else{Assert-FK ($script:FKWrites -eq 1) 'Expected scoped policy request.'}
    Assert-FK ($script:FKUnblocks -eq 1) 'Wrong unblock scope.'
-   if($case -in @('policy-unchanged','unblock-denied')){Assert-FK ($text -match 'SETUP INCOMPLETE' -and $text -notmatch 'MISSION COMPLETE') 'Setup failure hidden.'}
+   if($case -in @('policy-unchanged','unblock-denied')){Assert-FK ($text -match 'SETUP INCOMPLETE' -and $text -notmatch 'SETUP VERIFIED') 'Setup failure hidden.'}
    elseif($case -eq 'managed'){Assert-FK ($text -match 'FOLLOW UP') 'Managed policy warning missing.'}
-   else{Assert-FK ($text -match 'MISSION COMPLETE') "Expected setup success: $text"};Pass-FK $case
+   else{Assert-FK ($text -match 'SETUP VERIFIED') "Expected setup success: $text"};Pass-FK $case
   }
  } }
  'ThreatIntel' { & {

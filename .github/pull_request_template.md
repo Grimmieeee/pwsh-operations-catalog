@@ -19,3 +19,6 @@ Windows/tenant testing performed, or pending validation and operational limits:
 - [ ] Desktop and phone: search, View Code, Copy, and Download checked.
 
 Do not mark pending tests as passed. Use `docs/qa/SECURITY-RELEASE-CHECKLIST.md` for the security gate and protection drill.
+
+- [ ] Related Items reviewed for task relevance, destination accuracy, scope and unsupported handoffs.
+- [ ] Required operator information verified in rendered cards, not only metadata.

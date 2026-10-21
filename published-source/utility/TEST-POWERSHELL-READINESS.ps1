@@ -1,6 +1,6 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.3
 
-# OBJECTIVE: Check whether this computer has the PowerShell tools needed to proceed.
+# OBJECTIVE: Check this computer for Microsoft 365 PowerShell prerequisites.
 #Requires -Version 5.1
 
 <#
@@ -38,8 +38,8 @@ function Get-LatestModule {
 }
 
 try {
-    Write-Host 'Check PowerShell Readiness'
-    Write-Host 'Check whether this computer has the PowerShell tools needed to proceed.'
+    Write-Host 'Check M365 PowerShell Readiness'
+    Write-Host 'Check this computer for Microsoft 365 PowerShell prerequisites.'
     Write-Host 'READ ONLY. No settings or modules are changed.'
 
     Show-Section 'POWERSHELL'

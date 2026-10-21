@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.3
 #Requires -Version 5.1
 
 <#
@@ -29,6 +29,9 @@ Right-click > Run with PowerShell 7
 Compatible with Windows PowerShell 5.1 and PowerShell 7.
 #>
 
+
+Write-Host 'Get Group Owners'
+Write-Host 'List group owners and identify groups without an assigned owner.'
 $ErrorActionPreference = "Stop"
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {

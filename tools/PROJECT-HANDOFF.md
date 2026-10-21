@@ -1,3 +1,7 @@
+# Current alignment checkpoint — October 21, 2026
+
+Read [the current status](../docs/PROJECT-STATUS.md) and [alignment review](../docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md) first. All 80 cards and their 240 explicit script-card relationships are reviewed. Guided response uses BEC: and broader tools use Incident Response:. Current presentation revisions have source/DOM/offline evidence; original runtime acceptance is retained separately. The BEC package has a source-bound display review, not an inherited runtime badge. Earlier dated release descriptions below are historical.
+
 # Current checkpoint — native closeout accepted
 
 78/80 standalone scripts have owner-accepted, source-bound evidence. Seven visuals and both signing utilities passed native local review. The tested single-certificate array fixes are released; no other implementation change is bundled. See docs/qa/NATIVE-1.0.0-VERIFICATION.md.

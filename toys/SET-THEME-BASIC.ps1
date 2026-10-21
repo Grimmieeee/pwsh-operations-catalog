@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 # OBJECTIVE: Show a plain PowerShell output style without color.
 
@@ -16,6 +16,9 @@
 # WRITE HELPERS
 # ============================================================
 
+
+Write-Host 'Preview Plain Output'
+Write-Host 'Show a plain PowerShell output style without color.'
 function Write-Dots  { Write-Host "........................................" }
 function Write-Ok    { param($Msg) Write-Host "[OK]  $Msg" }
 function Write-Info  { param($Msg) Write-Host "[--]  $Msg" }
@@ -50,4 +53,4 @@ Write-Dots
 Write-Host ""
 Write-Host "MISSION ACCOMPLISHED. Goodbye."
 Write-Host ""
-Read-Host "Press Enter to exit"
+Read-Host 'Press Enter to close session.'

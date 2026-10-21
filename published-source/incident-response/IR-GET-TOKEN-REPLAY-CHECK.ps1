@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.3
 #Requires -Version 5.1
 
 <#
@@ -410,7 +410,7 @@ function Get-DeviceText {
 }
 
 try {
-    Write-FKReportLine 'IR: Review Token Replay'
+    Write-FKReportLine 'Incident Response: Review Token Replay'
     Write-FKReportLine 'Review sign-ins for indicators of token replay or session theft.'
     Write-FKReportLine "READ-ONLY INDICATOR REVIEW"
     Write-FKReportLine ""

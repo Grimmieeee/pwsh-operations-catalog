@@ -1,7 +1,7 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
-# OBJECTIVE: Preview a green PowerShell theme and output helpers.
+# OBJECTIVE: Install a green PowerShell theme in your startup profile.
 
 #Requires -Version 5.1
 # =============================================================================
@@ -16,6 +16,9 @@
 # PS 5.1: ConsoleColor fallback
 # =============================================================================
 
+
+Write-Host 'Install Silicon Valley Theme'
+Write-Host 'Install a green PowerShell theme in your startup profile.'
 $Host.UI.RawUI.BackgroundColor = 'Black'
 $Host.UI.RawUI.ForegroundColor = 'White'
 Clear-Host
@@ -198,4 +201,4 @@ Write-Host "  Suck it, Jin Yang. Loads on every new session." -ForegroundColor C
 Write-Host "  To revert: remove the SILICON VALLEY THEME block from $profilePath" -ForegroundColor DarkCyan
 Write-Host '. . . . . . . . . . . . . . . . . . . . .'  -ForegroundColor Cyan
 Write-Host ''
-Read-Host '  Press Enter to exit'
+Read-Host 'Press Enter to close session.'
