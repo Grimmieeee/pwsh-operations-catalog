@@ -1,9 +1,9 @@
-# Interactive incident-response workflow
+# BEC response workflow
 
-Published release: 1.0.0. The owner confirmed successful runs of these exact
-assessment, containment, cleanup, recovery and same-window handoff files on
-a Windows client jumpbox. This is not a
-claim of compatibility with every tenant, module version or hybrid deployment.
+Current display release: 1.0.1. Titles and objectives align with the BEC cards;
+response controls and operational tokens compare unchanged against the accepted
+1.0.0 runtime baseline. The owner’s 1.0.0 acceptance remains historical evidence,
+not a new runtime test of the display revision. See the [current review](qa/RELATIONSHIP-ALIGNMENT-REVIEW.md).
 
 Download all three scripts into one folder, retaining their filenames. Start
 `ir-risk-assessment` from an existing PowerShell window. Enter an
@@ -28,7 +28,7 @@ containment again. An existing PowerShell window remains open.
 The companion filenames are `ir-risk-assessment.ps1`,
 `ir-contain-eradicate.ps1`, and `ir-recover-validate.ps1`. Download and replace
 all three together; older uppercase filenames are retired. Output uses STATUS
-for results and NEXT STEP for guidance. Verification evidence and exact hashes
+for results and NEXT STEP for guidance. Accepted baseline runtime evidence and hashes
 are recorded in [IR-1.0.0-VERIFICATION.md](qa/IR-1.0.0-VERIFICATION.md).
 
 ## Limits and safety

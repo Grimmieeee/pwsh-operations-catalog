@@ -21,11 +21,12 @@ test('reviewed tenant audits disclose the required tenant ID before launch',()=>
  }
 });
 
-test('known IR lookup limitation is visible without changing exact-version release evidence',()=>{
+test('known BEC limitation stays visible with separately bound display evidence',()=>{
   const f=loadCatalog(root),risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');
   f.api.openItem(risk);
   assert.ok(f.elements.get('drawerBody').innerHTML.includes('Known limitation: app display names may be unresolved'));
-  assert.equal(digest(fs.readFileSync(path.join(root,risk.publishedPath))),risk.verification.sha256);
+  assert.equal(digest(fs.readFileSync(path.join(root,risk.publishedPath))),risk.operatorCard.workflowReview.sourceSha256);
+  assert.equal(f.api.isVerifiedRelease(risk),false);
 });
 
 test('offboarding language leads to read-only preparation without enabling missing sources',()=>{
@@ -68,9 +69,9 @@ test('IR cards retain the exact launch, preparation and incident handoff',()=>{
  const f=loadCatalog(root);
  for(const item of f.api.ITEMS.filter(x=>x.workflow)){
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-  for(const text of ['DOWNLOAD IR WORKFLOW','Workflow preparation','DETAILS','Paste the full path to '+item.file,'same PowerShell window'])assert.ok(html.includes(text),item.file+': '+text);
+  for(const text of ['DOWNLOAD BEC WORKFLOW','Workflow preparation','DETAILS','Paste the full path to '+item.file,'same PowerShell window'])assert.ok(html.includes(text),item.file+': '+text);
   const completion=f.api.completionInfo(item);for(const key of ['result','next','blocked'])assert.ok(html.includes(completion[key].replaceAll('&','&amp;')),item.file+': '+key);
-  assert.equal(f.api.isVerifiedRelease(item),true);
+  assert.equal(f.api.isVerifiedRelease(item),false);
  }
  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){f.api.openItem(item);assert.ok(!f.elements.get('drawerBody').innerHTML.includes('guided-start'));}
 });
@@ -80,7 +81,7 @@ test('IR package is a readable ZIP with exact reviewed script bytes and a guide'
   const archive=Buffer.from(await (await f.api.buildIRBundle()).arrayBuffer());
   const report=JSON.parse(execFileSync('python3',['-c','import io,sys,zipfile,hashlib,json; z=zipfile.ZipFile(io.BytesIO(sys.stdin.buffer.read())); assert z.testzip() is None; print(json.dumps({n:hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist()}))'],{input:archive,encoding:'utf8'}));
   assert.equal(Object.keys(report).length,5);
-  for(const item of f.api.ITEMS.filter(x=>x.workflow))assert.equal(report[item.file],item.verification.sha256);
+  for(const item of f.api.ITEMS.filter(x=>x.workflow))assert.equal(report[item.file],item.operatorCard.workflowReview.sourceSha256);
   assert.ok(report['IR-WORKFLOW-GUIDE.md']);assert.ok(report['SHA256SUMS.txt']);
   const guide=f.window.FIELD_KIT_START.guide();
   for(const text of ['ir-risk-assessment','ir-contain-eradicate','ir-recover-validate','48 hours','blocked or cancelled'])assert.ok(guide.includes(text));
@@ -89,7 +90,7 @@ test('IR package is a readable ZIP with exact reviewed script bytes and a guide'
 test('IR package fails closed if any source bytes or release evidence differ',async()=>{
   const f=loadCatalog(root,{fetchImpl:async()=>new Response('changed script',{headers:{'content-type':'text/plain'}})});
   await assert.rejects(()=>f.api.buildIRBundle(),/checksum mismatch/);
-  const risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');risk.verification.operatorTested=false;
+  const risk=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1');risk.operatorCard.workflowReview.baselineVerification.operatorTested=false;
   await assert.rejects(()=>f.api.buildIRBundle(),/release review/);
 });
 
@@ -212,7 +213,7 @@ test('all script cards lead with scope, then steps, actions, details and related
  assert.deepEqual([...f.api.relatedItems(groups)].map(x=>x.displayName),['Get Group Members','Remove User Groups','Get Group Owners']);
 });
 
-test('three tested IR workflow steps expose checksum-verified canonical source',async()=>{
+test('three BEC workflow display revisions expose checksum-verified canonical source',async()=>{
   const f=loadCatalog(root,{fetchImpl:async url=>{
     const relative=new URL(url,'https://catalog.invalid/').pathname.replace(/^\/pwsh-operations-catalog\//,'').replace(/^\//,'');
     return new Response(fs.readFileSync(path.join(root,relative)),{headers:{'content-type':'text/plain'}});
@@ -225,27 +226,30 @@ test('three tested IR workflow steps expose checksum-verified canonical source',
     assert.equal(item.publishedPath,'published-source/incident-response/'+file);
     const bytes=fs.readFileSync(path.join(root,item.publishedPath));
     assert.deepEqual(Buffer.from(await f.api.resolveSource(item),'utf8'),bytes);
-    assert.match(bytes.toString('utf8'),/\.VERSION 1\.0\.0/);
-    assert.equal(f.api.isVerifiedRelease(item),true);
+    assert.match(bytes.toString('utf8'),/\.VERSION 1\.0\.1/);
+    assert.equal(f.api.isVerifiedRelease(item),false);
     assert(item.workflow);
   }
 });
 test('VERIFIED is bound to operator evidence, exact version and source manifest hash',()=>{
   const f=loadCatalog(root);
   const item=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
+  assert.equal(f.api.releaseTag(item),'');
+  item.verification={version:item.version,sha256:digest(fs.readFileSync(path.join(root,item.publishedPath))),operatorTested:true};
   assert.match(f.api.releaseTag(item),/data-verification-about/);
   assert.ok(!f.api.releaseTag(item).includes('v1.0.0'));
   for(const altered of [
-    {...item,version:'1.0.1'},
+    {...item,version:'99.0.0'},
     {...item,verification:{...item.verification,sha256:'0'.repeat(64)}},
     {...item,verification:{...item.verification,operatorTested:false}},
     {...item,verification:null}
   ])assert.equal(f.api.releaseTag(altered),'');
   f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[item.publishedPath]:'1'.repeat(64)};
   assert.equal(f.api.releaseTag(item),'');
+  delete item.verification;
   const ledger=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json'),'utf8'));
   for(const row of ledger.filter(x=>x.changed))assert.equal(f.api.isVerifiedRelease(f.api.ITEMS.find(x=>x.file===row.file)),false,row.file);
-  assert(f.api.ITEMS.filter(item=>item.verification).length===3);
+  assert(f.api.ITEMS.filter(item=>item.verification).length===0);
   const pilot=f.api.ITEMS.find(item=>item.file==='GET-USER-GROUPS.ps1');
   assert.equal(pilot.version,'1.0.2');
   assert.equal(f.api.releaseTag(pilot),'');
@@ -398,7 +402,10 @@ test('global search includes every scope regardless of navigation selection',()=
 });
 
 test('verified rows end in a check after visible risk labels; footer retains its typography',()=>{
-  const f=loadCatalog(root);f.api.state.query='ir';f.api.renderResults();
+  const f=loadCatalog(root);
+  const sample=f.api.ITEMS.find(item=>item.file==='ir-risk-assessment.ps1');
+  sample.verification={version:sample.version,sha256:digest(fs.readFileSync(path.join(root,sample.publishedPath))),operatorTested:true};
+  f.api.state.query='ir';f.api.renderResults();
   const html=f.elements.get('results').innerHTML;
   assert.ok(html.includes('class="result-check verification-check" aria-hidden="true">✓</span>'));
   assert.ok(html.indexOf('class="result-risk-flags"')<html.indexOf('class="result-check verification-check"'));
@@ -529,5 +536,56 @@ test('all 80 purpose sentences match reviewed source objectives and stay visible
   assert.ok(html.includes(`<p class="operator-purpose">${esc(r.objective)}</p>`),r.file);
   assert.ok(html.indexOf('operator-purpose')<html.indexOf('operator-scope'),r.file);
   assert.ok(html.indexOf('operator-purpose')<html.indexOf('guided-start'),r.file);
+ }
+});
+
+test('all 80 scripts use reviewed relationships and every runnable relationship resolves',()=>{
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(x=>x.operatorCard || x.type==='Quick Command')){
+  const related=f.api.relatedItems(item);
+  assert.equal(related.length,3,item.file||item.name);
+  assert.equal(new Set(related).size,3,item.file||item.name);
+  assert.ok(related.every(other=>other!==item && other.status!=='Source pending' && (other.publishedPath || other.code)));
+  if(item.operatorCard)assert.deepEqual(Array.from(related,x=>x.type==='Quick Command'?'command:'+x.name:x.file),Array.from(item.operatorCard.related));
+ }
+ for(const item of f.api.ITEMS)assert.ok(!/^IR:/.test(item.displayName),item.displayName);
+ const byFile=file=>f.api.ITEMS.find(x=>x.file===file);
+ for(const file of ['IR-INVOKE-EMAIL-RECOVERY.ps1','IR-GET-TENANT-EMAIL-SEARCH.ps1']){
+  const other=file==='IR-INVOKE-EMAIL-RECOVERY.ps1'?'IR-GET-TENANT-EMAIL-SEARCH.ps1':'IR-INVOKE-EMAIL-RECOVERY.ps1';
+  assert.ok(!f.api.relatedItems(byFile(file)).some(x=>x.file===other),'Do not imply an unsupported trace-to-recovery handoff');
+ }
+ assert.ok(!f.api.relatedItems(byFile('INVOKE-RESET-CLOUD-USER-PASSWORD.ps1')).some(x=>x.file==='INVOKE-DELETE-ACCOUNTS.ps1'));
+ assert.ok(!f.api.relatedItems(byFile('GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1')).some(x=>x.file==='DEPLOY-TCPIP-PRINTER.ps1'));
+});
+
+test('rendered cards retain source-supported target scope and required preparation',()=>{
+ const f=loadCatalog(root),open=file=>{const item=f.api.ITEMS.find(x=>x.file===file);f.api.openItem(item);return f.elements.get('drawerBody').innerHTML;};
+ const cleanup=open('CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1');
+ assert.ok(cleanup.includes('SINGLE-USER') && cleanup.includes('Disabled user UPN'));
+ const cleanupSource=fs.readFileSync(path.join(root,'published-source/mailbox/CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1'),'utf8');
+ assert.match(cleanupSource,/param\(\[string\]\$UPN\)/);
+ const reputation=open('IR-GET-THREAT-INTEL-ACTIVITY.ps1');
+ assert.ok(reputation.includes('SINGLE or MULTI-IP') && reputation.includes('TXT') && reputation.includes('API key'));
+ assert.ok(open('IR-INVOKE-EMAIL-RECOVERY.ps1').includes('an admin role alone is not enough'));
+ assert.ok(open('IR-GET-TENANT-EMAIL-SEARCH.ps1').includes('not message bodies or attachments'));
+ assert.ok(open('GET-TENANT-INBOX-RULES-AUDIT.ps1').includes('-IncludeShared'));
+ assert.ok(open('GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1').includes('ten largest files'));
+ assert.ok(open('git-repo.ps1').includes('-Action (Read-Host'));
+ for(const file of ['SET-THEME-SEAGLASS.ps1','SET-THEME-SILICON-VALLEY.ps1','set-execution.ps1']){
+  const html=open(file);assert.ok(html.indexOf('operator-notice')<html.indexOf('guided-start'));
+ }
+ assert.ok(open('set-execution.ps1').includes('every .ps1 file beside this file'));
+});
+
+test('presentation package approval cannot become operator verification or accept unbound evidence',async()=>{
+ for(const mutation of ['hash','version','baseline','fingerprint']){
+  const f=loadCatalog(root,{fetchImpl:async()=>{throw Error('Unapproved package must not fetch source');}});
+  const item=f.api.ITEMS.find(x=>x.file==='ir-risk-assessment.ps1'),review=item.operatorCard.workflowReview;
+  assert.equal(f.api.isVerifiedRelease(item),false);
+  if(mutation==='hash')review.sourceSha256='0'.repeat(64);
+  if(mutation==='version')review.version='99.0.0';
+  if(mutation==='baseline')review.baselineVerification.sha256='0'.repeat(64);
+  if(mutation==='fingerprint')review.nonPresentationSha256='0'.repeat(64);
+  await assert.rejects(()=>f.api.buildIRBundle(),/release review/);
  }
 });

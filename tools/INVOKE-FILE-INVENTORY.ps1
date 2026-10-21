@@ -1,11 +1,11 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.3
 #Requires -Version 5.1
 
 <#
 JUMPBOX FILE INVENTORY
 
 OBJECTIVE
-Review files, script versions, and signatures in the selected folder.
+Compare script versions, signatures, and duplicate content in a folder.
 
 REVIEWS
 - Active / Testing / Archive PowerShell counts
@@ -108,8 +108,8 @@ function Get-Scope {
 }
 
 try {
-    Write-Host 'Get File Inventory'
-    Write-Host 'Review files, script versions, and signatures in the selected folder.'
+    Write-Host 'Compare Script Files'
+    Write-Host 'Compare script versions, signatures, and duplicate content in a folder.'
     Write-Host "READ-ONLY VERSION SANITY REVIEW"
     Write-Host ""
 

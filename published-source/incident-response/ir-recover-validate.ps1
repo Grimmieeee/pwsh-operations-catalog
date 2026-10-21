@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.1
 .GUID d77fb13d-5860-46ad-bc7e-2ef0df3a458d
 .AUTHOR FIELD // KIT
-.DESCRIPTION Verify response readiness and restore one approved identity.
+.DESCRIPTION Check recovery readiness and restore approved account access.
 #>
 <#
 .SYNOPSIS
-IR: Recovery and Validation
+BEC: Restore and Validate
 .DESCRIPTION
 Step 3 follows containment and persistence review. Uses the same PowerShell window,
 validated connections, and target details. Fresh checks run before any restore.
@@ -801,9 +801,9 @@ function Write-IRTicketSummary {
 
 try {
     Enable-Tls12
-    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Recovery and Validation' } catch {}
-    Write-IRLine 'IR: RECOVERY AND VALIDATION'
-    Write-IRLine 'Confirm recovery readiness and restore approved access.'
+    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='BEC: Restore and Validate' } catch {}
+    Write-IRLine 'BEC: Restore and Validate'
+    Write-IRLine 'Check recovery readiness and restore approved account access.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine '' 
     $inputs=Get-IRWorkflowInput $UPN $Tenant
@@ -861,7 +861,7 @@ try {
     Write-IRLine 'User sign-in with MFA still needs validation.'
     Write-IRLine 'Identity, remediation, and MFA readiness confirmed by the operator.'
     Write-IRTicketSummary
-    
+
     Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
     Section 'NEXT STEP'
     Write-IRLine 'Verify user sign-in with MFA.'

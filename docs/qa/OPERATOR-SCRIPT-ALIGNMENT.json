@@ -16,7 +16,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "b74e59eebe1fdaa9160e575a756f5eefdb6804e13ba934cff8e9447f40f259a4",
     "newSha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
     "priorVerification": {
       "version": "1.0.0",
@@ -26,7 +25,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "b74e59eebe1fdaa9160e575a756f5eefdb6804e13ba934cff8e9447f40f259a4"
   },
   {
     "file": "GET-STALE-SIGNIN-REVIEW.ps1",
@@ -45,7 +45,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "dbc6dbdbf2aef4b45a9003d3d7a7a585d9777ebd3c8adc55645a8e98845d8190",
     "newSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
     "priorVerification": {
       "version": "1.0.0",
@@ -56,7 +55,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "dbc6dbdbf2aef4b45a9003d3d7a7a585d9777ebd3c8adc55645a8e98845d8190"
   },
   {
     "file": "INVOKE-DISABLE-ACCOUNTS.ps1",
@@ -75,7 +75,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "6184600b7c4aa328c363bdf188926dc471d5f933583f41c5f56a63a0f3f68d50",
     "newSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
     "priorVerification": {
       "version": "1.0.0",
@@ -86,7 +85,8 @@
       "scope": "Simulated cloud disable workflow: preview, approval, mutation and readback; auth and AD are fixtures.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "6184600b7c4aa328c363bdf188926dc471d5f933583f41c5f56a63a0f3f68d50"
   },
   {
     "file": "INVOKE-DELETE-ACCOUNTS.ps1",
@@ -105,7 +105,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "9196484c5c0712f2e4ca2f51238a1a2fe80cc2bb72bd77964e675d0429c9f77c",
     "newSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
     "priorVerification": {
       "version": "1.0.0",
@@ -116,7 +115,8 @@
       "scope": "Exact Graph lookup and post-delete absence verification functions only; no account deletion.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "9196484c5c0712f2e4ca2f51238a1a2fe80cc2bb72bd77964e675d0429c9f77c"
   },
   {
     "file": "INVOKE-ASSIGN-LICENSES.ps1",
@@ -134,7 +134,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "791f3ecc1d2a052f0a302613931741107176d3c833da20aa94131694d5eb9038",
     "newSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
     "priorVerification": {
       "version": "1.0.2",
@@ -144,7 +143,8 @@
       "testMode": "Live assignment/removal; owner-accepted product-name display update",
       "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
     },
-    "version": "1.0.4"
+    "version": "1.0.4",
+    "nonPresentationSha256": "791f3ecc1d2a052f0a302613931741107176d3c833da20aa94131694d5eb9038"
   },
   {
     "file": "INVOKE-REMOVE-LICENSES.ps1",
@@ -163,7 +163,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "39f5d45d6171b1a82a612eb4f22571b9df7899b3381971599bb7affb4802b2e0",
     "newSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
     "priorVerification": {
       "version": "1.0.2",
@@ -173,7 +172,8 @@
       "testMode": "Live assignment/removal; owner-accepted product-name display update",
       "evidence": "docs/qa/LICENSE-1.0.2-VERIFICATION.md"
     },
-    "version": "1.0.4"
+    "version": "1.0.4",
+    "nonPresentationSha256": "39f5d45d6171b1a82a612eb4f22571b9df7899b3381971599bb7affb4802b2e0"
   },
   {
     "file": "RESOLVE-NAMES-TO-UPNS.ps1",
@@ -192,7 +192,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "b96f08c006f18f0daf9f573e8ab8634151e4c9e384f3357c4f9dc2c0dbf48ad9",
     "newSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
     "priorVerification": {
       "version": "1.0.0",
@@ -203,7 +202,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "b96f08c006f18f0daf9f573e8ab8634151e4c9e384f3357c4f9dc2c0dbf48ad9"
   },
   {
     "file": "GET-ACCOUNT-STATUS.ps1",
@@ -222,7 +222,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "0aed6273a02356cfc8b5ff012fef19dbdedaba655eca39aaeb0c85ce9082c7d6",
     "newSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
     "priorVerification": {
       "version": "1.0.0",
@@ -233,7 +232,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "0aed6273a02356cfc8b5ff012fef19dbdedaba655eca39aaeb0c85ce9082c7d6"
   },
   {
     "file": "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
@@ -252,7 +252,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "1b2a242a0099e920c5d9ff208e91a1831f18020a27a144c733f06c2519ba2f73",
     "newSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
     "priorVerification": {
       "version": "1.0.0",
@@ -262,7 +261,8 @@
       "testMode": "Sampled read-only batch",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "1b2a242a0099e920c5d9ff208e91a1831f18020a27a144c733f06c2519ba2f73"
   },
   {
     "file": "GET-GROUP-MEMBERS.ps1",
@@ -281,7 +281,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "adcb442f64feaca3619f1cc7681a6dc1a600c14a8d3a6bbd9d801b05f02852e9",
     "newSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
     "priorVerification": {
       "version": "1.0.0",
@@ -291,7 +290,8 @@
       "testMode": "Sampled read-only batch",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "adcb442f64feaca3619f1cc7681a6dc1a600c14a8d3a6bbd9d801b05f02852e9"
   },
   {
     "file": "GET-USER-GROUPS.ps1",
@@ -308,9 +308,9 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "4983a442b32b670d7cf8748795d824b448463cdf8c9adf5faa6022efe90b78b8",
     "newSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "4983a442b32b670d7cf8748795d824b448463cdf8c9adf5faa6022efe90b78b8"
   },
   {
     "file": "INVOKE-REMOVE-USER-GROUPS.ps1",
@@ -328,7 +328,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "b6260f8afc29c99af4937f81fb374eced045281803316936b222b8b7c2d68d0d",
     "newSha256": "8bc820639a1d6e1479e0b1c7a2a1f58953fb0eb5396f922628a73855b0e3fc54",
     "priorVerification": {
       "version": "1.0.0",
@@ -339,7 +338,8 @@
       "scope": "Membership DELETE route and eventual removal readback functions only; no actual group changes.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "b6260f8afc29c99af4937f81fb374eced045281803316936b222b8b7c2d68d0d"
   },
   {
     "file": "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
@@ -358,7 +358,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "241a5017e661dccdb2f4da2ec1d1a84621e9b32d37430ce3627efeb98759595b",
     "newSha256": "7ed4b8f50be401d4004b6ff4672d19bcad5ab6e7f47cf7bc3d0a3e144290f83d",
     "priorVerification": {
       "version": "1.0.1",
@@ -369,7 +368,8 @@
       "scope": "15 synthetic group-creation cases: preview/cancel, tenant/context/scope checks, request failure and readback. No real group creation or auth tested.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.3"
+    "version": "1.0.3",
+    "nonPresentationSha256": "241a5017e661dccdb2f4da2ec1d1a84621e9b32d37430ce3627efeb98759595b"
   },
   {
     "file": "GET-TENANT-GROUP-OWNERS.ps1",
@@ -380,7 +380,8 @@
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
       "Completion marker in actual final report path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Console title is not a simple top-level banner; preserve rather than guess.",
@@ -388,8 +389,7 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "1229b86fbdf245e8510c8ce5c4e2bdf57efb06137458dde48d96cd65a8f3eb67",
-    "newSha256": "742d126522230364471ab8bee9bc83132e8589a2ff144199d66cfda4f366107a",
+    "newSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "830e2ed189de399a7f3813a021446ae68cba5c9c4e810b69cf41e5698751d786",
@@ -398,7 +398,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "1229b86fbdf245e8510c8ce5c4e2bdf57efb06137458dde48d96cd65a8f3eb67",
+    "version": "1.0.3"
   },
   {
     "file": "GET-MAILBOX-PERMISSIONS.ps1",
@@ -410,15 +411,15 @@
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Mailbox target wording"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "0c71cccb02a4a3b0e7fb52157c03d056cf3f45a6cc32557c5e1c20acc0d924a4",
-    "newSha256": "3faaae2c396c8615499bbd47570ee57d9d3a04e56f5e7c7a4a53b1f4d627257b",
+    "newSha256": "76535edd6d3e922cc44decedba707203716788afa4bdabbf68579549a57752e6",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "793bdd06ff9adadcae9312e8614513d7c6440f507858593a35eb05469fe43620",
@@ -427,7 +428,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.3",
+    "nonPresentationSha256": "0c71cccb02a4a3b0e7fb52157c03d056cf3f45a6cc32557c5e1c20acc0d924a4"
   },
   {
     "file": "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
@@ -446,7 +448,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "c462555143ac0187d219fa2781bba1fbd614f3b9f1e953dfee89280e678f6a5d",
     "newSha256": "e9e75ef77efeb81017c8dcc6f3f05cd5deb4fb8eba90890560808406762f7fda",
     "priorVerification": {
       "version": "1.0.0",
@@ -456,7 +457,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "c462555143ac0187d219fa2781bba1fbd614f3b9f1e953dfee89280e678f6a5d"
   },
   {
     "file": "GET-MAILBOX-FORWARDING.ps1",
@@ -475,7 +477,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "9a08008552a5cb2d1f3bf0590ec6d2fb638760bc7438de4b6a6c2efff61a0d0e",
     "newSha256": "0e184a41bd351c391985118eb128eaefad0311ec691abe4933868e6af5a88d91",
     "priorVerification": {
       "version": "1.0.0",
@@ -486,7 +487,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "9a08008552a5cb2d1f3bf0590ec6d2fb638760bc7438de4b6a6c2efff61a0d0e"
   },
   {
     "file": "INVOKE-LITIGATION-HOLD.ps1",
@@ -505,7 +507,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "dde964d451d8ef7ec295ca33cb7c2e17727bb9bee432d493191d33a8dda73bc6",
     "newSha256": "1ea2ff740e1f5eb24ba4aafa92636fce025ed90ffbc4050e80ce5aedcb3568fe",
     "priorVerification": {
       "version": "1.0.0",
@@ -516,27 +517,28 @@
       "scope": "Simulated hold enforcement workflow: approval, mutation and readback; Exchange/auth are fixtures.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "dde964d451d8ef7ec295ca33cb7c2e17727bb9bee432d493191d33a8dda73bc6"
   },
   {
     "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
     "path": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
-    "name": "Restore Email",
+    "name": "Incident Response: Restore Email",
     "oldSha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "403d56d4b0a0c8653d1af6c4134aa1089660b9c796f15541beb46ae5129d8269",
-    "newSha256": "375f096c481686d5933fee82ceac7e56e4b33482e9ffe13ea588325869861f5e",
+    "newSha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "b75852825c289f1db32ffd2532f308546fe31f547be0298b56b2de78330b8894",
@@ -546,51 +548,72 @@
       "scope": "Encoded message-move request and root-folder creation functions only; no mailbox access or message changes.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "403d56d4b0a0c8653d1af6c4134aa1089660b9c796f15541beb46ae5129d8269",
+    "version": "1.0.3"
   },
   {
     "file": "ir-risk-assessment.ps1",
     "path": "published-source/incident-response/ir-risk-assessment.ps1",
-    "name": "IR: Assess User Risk",
+    "name": "BEC: Assess User Risk",
     "oldSha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
-    "changes": [],
+    "changes": [
+      "Relationship and operator wording review"
+    ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
-    "changed": false
+    "newSha256": "54b3747cb42f853cd8090c103c4d3068c50dacfb40e3b406616d0304871d16e7",
+    "changed": true,
+    "nonPresentationSha256": "10fbaed9635dcc5d50e89ebeb158f4bbe04ad7fa0821eb75b8288adecd71a84b",
+    "version": "1.0.1",
+    "priorVerification": {
+      "version": "1.0.0",
+      "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "file": "ir-contain-eradicate.ps1",
     "path": "published-source/incident-response/ir-contain-eradicate.ps1",
-    "name": "IR: Contain and Clean Up",
+    "name": "BEC: Contain and Clean Up",
     "oldSha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
-    "changes": [],
+    "changes": [
+      "Relationship and operator wording review"
+    ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
-    "changed": false
+    "newSha256": "fba3a8a36fe2b7750162614f51708b555f4636697279ee1b8486ce8e93fef9a3",
+    "changed": true,
+    "nonPresentationSha256": "a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",
+    "version": "1.0.1",
+    "priorVerification": {
+      "version": "1.0.0",
+      "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
     "path": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
-    "name": "IR: Review File Activity",
+    "name": "Incident Response: Review File Activity",
     "oldSha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "d88efcf8ff0c21083fac5822ff4024392f900f9c5fc5fc5abb123e10bb91e0d6",
-    "newSha256": "a5f17427b6cb03c31b790b922d8119c9107309b0bb8dabd773928d33a264a638",
+    "newSha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
@@ -599,27 +622,28 @@
       "testMode": "Sampled read-only batch",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "d88efcf8ff0c21083fac5822ff4024392f900f9c5fc5fc5abb123e10bb91e0d6",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-IP-TRACE.ps1",
     "path": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
-    "name": "IR: Trace IP Activity",
+    "name": "Incident Response: Trace IP Activity",
     "oldSha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "8b8bce67fe02a11c31c75e777259ef7c1b5dbcc85463ec8d826e3df5c4d1d2ab",
-    "newSha256": "acce3f018ebcd20c0e3b199bf5b7ffc7924b26c6d4c64d75a47faf8b89f031c1",
+    "newSha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
@@ -628,27 +652,28 @@
       "testMode": "Sampled read-only batch",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "8b8bce67fe02a11c31c75e777259ef7c1b5dbcc85463ec8d826e3df5c4d1d2ab",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
     "path": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
-    "name": "IR: Search Tenant Email",
+    "name": "Incident Response: Trace Email Delivery",
     "oldSha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "0e03dab7ba71408b51b7687a4cdc529c1fb41d686ed75b6ecce72324ed318685",
-    "newSha256": "1851ee0ec2ebbc086aed89fed3bf2e4d839005497262fb6bb264a4b62a5622d8",
+    "newSha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
@@ -657,27 +682,28 @@
       "testMode": "Sampled read-only batch",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "0e03dab7ba71408b51b7687a4cdc529c1fb41d686ed75b6ecce72324ed318685",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
     "path": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
-    "name": "IR: Check IP Reputation",
+    "name": "Incident Response: Check IP Reputation",
     "oldSha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "1a4e03414fc6b2bfaf729de85c360943ab9d6dbb923524d3dea03a37e9cf5bbd",
-    "newSha256": "dea6a298adb935521b5d3b06b73ff0e654612bc8a04881382ade57a7b483964f",
+    "newSha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "ea3d359ed80ce3b867b3ee1b84fba7234ccab29ba0e2c9d3cbd4e99001761f42",
@@ -687,27 +713,28 @@
       "scope": "IP input guards only; provider API calls, credentials and reputation findings are not tested.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "1a4e03414fc6b2bfaf729de85c360943ab9d6dbb923524d3dea03a37e9cf5bbd",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-TIMELINE-BUILDER.ps1",
     "path": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
-    "name": "IR: Build Incident Timeline",
+    "name": "Incident Response: Build Incident Timeline",
     "oldSha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "0e1ca524b82eb10a4f98d1c29d02789ffdcbb2a2a7dfa02f8621996072df6ec7",
-    "newSha256": "00892f3409549b4fe2bad0a0d234f54ec06d581e63487982f30dd050d2fa2d5e",
+    "newSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
@@ -716,27 +743,28 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "0e1ca524b82eb10a4f98d1c29d02789ffdcbb2a2a7dfa02f8621996072df6ec7",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-TOKEN-DECODE.ps1",
     "path": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
-    "name": "IR: Decode Token",
+    "name": "Incident Response: Decode Token",
     "oldSha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "4b2d7c64682e20bc2e8e5356b133feec68b5a4a883f9a185b9c60a6f82b85042",
-    "newSha256": "4b95de1355f8eb34b43a87e29e247e5da04541fb83b91ef0328f86918fa9f254",
+    "newSha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
@@ -745,27 +773,28 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "4b2d7c64682e20bc2e8e5356b133feec68b5a4a883f9a185b9c60a6f82b85042",
+    "version": "1.0.3"
   },
   {
     "file": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
     "path": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
-    "name": "IR: Review Token Replay",
+    "name": "Incident Response: Review Token Replay",
     "oldSha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "27f8c85439d6086be5ea6d75e611957965b1661dfd13b7512cb76b6fa7dae58c",
-    "newSha256": "a800a61cf9c7f9a2b34f02bb49c3764cbf8261d5cd0ad92a13f0cb544fd120c5",
+    "newSha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
@@ -774,7 +803,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "27f8c85439d6086be5ea6d75e611957965b1661dfd13b7512cb76b6fa7dae58c",
+    "version": "1.0.3"
   },
   {
     "file": "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
@@ -793,7 +823,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "49e342b4ff6297b8bc981f8c892cef6f07073cf6e22f669368745ec3c8126c76",
     "newSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
     "priorVerification": {
       "version": "1.0.0",
@@ -804,7 +833,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "49e342b4ff6297b8bc981f8c892cef6f07073cf6e22f669368745ec3c8126c76"
   },
   {
     "file": "GET-APP-REGISTRATION-AUDIT.ps1",
@@ -823,7 +853,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "4ba9fc8178a4cd2341355993a957238be28e849bbabc8af7fcfa065451d43d89",
     "newSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
     "priorVerification": {
       "version": "1.0.0",
@@ -834,7 +863,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "4ba9fc8178a4cd2341355993a957238be28e849bbabc8af7fcfa065451d43d89"
   },
   {
     "file": "GET-CONDITIONAL-ACCESS-GAPS.ps1",
@@ -853,7 +883,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "41a81f3ad719b87683911a1e53ce13a68dcf27911f1ed287200efe3dcb9d7252",
     "newSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
     "priorVerification": {
       "version": "1.0.0",
@@ -864,7 +893,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "41a81f3ad719b87683911a1e53ce13a68dcf27911f1ed287200efe3dcb9d7252"
   },
   {
     "file": "GET-DEVICE-CODE-EXPOSURE.ps1",
@@ -883,7 +913,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "4a95910abb898e405616a675569fcdc76514a4ed1658c85faad766b04a743bd9",
     "newSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
     "priorVerification": {
       "version": "1.0.0",
@@ -894,7 +923,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "4a95910abb898e405616a675569fcdc76514a4ed1658c85faad766b04a743bd9"
   },
   {
     "file": "GET-GUEST-APP-CONSENT-AUDIT.ps1",
@@ -913,7 +943,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "ba4ee68c4d0db448e8961bb85eb4afff9e0103a60b01cbb82993ec5ed659f42d",
     "newSha256": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
     "priorVerification": {
       "version": "1.0.0",
@@ -924,7 +953,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "ba4ee68c4d0db448e8961bb85eb4afff9e0103a60b01cbb82993ec5ed659f42d"
   },
   {
     "file": "GET-MFA-SECURITY-AUDIT.ps1",
@@ -943,7 +973,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06",
     "newSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
     "priorVerification": {
       "version": "1.0.0",
@@ -954,7 +983,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06"
   },
   {
     "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
@@ -973,7 +1003,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "128fa698d00c3b8b966f3d0c9784b043420a6877c17a3c27e514b6054e176629",
     "newSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
     "priorVerification": {
       "version": "1.0.0",
@@ -984,27 +1013,28 @@
       "scope": "Owner-reported acceptance of the supplied sampled report follow-up. Secure Score was included in that bundle; no separate returned execution manifest or HTML report is available. Not a full-tenant or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "128fa698d00c3b8b966f3d0c9784b043420a6877c17a3c27e514b6054e176629"
   },
   {
     "file": "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
     "path": "published-source/tenant/GET-SERVICE-PRINCIPAL-OWNERS.ps1",
-    "name": "Get App Owners",
+    "name": "Get Enterprise App Owners",
     "oldSha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "68980d55dac2c32a0285fc60d307db161b07a151bc90cdda0bc8a926b888fab9",
-    "newSha256": "1934bda28cce1b49450261c0bbf1333210ec8723842c81de9c0dc3d5796c6fa3",
+    "newSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "a562cf302de63e53dc755cc83b9df06a8edf62059e0c3893f8f790a7bd1a9558",
@@ -1014,7 +1044,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "68980d55dac2c32a0285fc60d307db161b07a151bc90cdda0bc8a926b888fab9",
+    "version": "1.0.3"
   },
   {
     "file": "GET-SIGNIN-ANOMALIES.ps1",
@@ -1033,7 +1064,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "042dac3de462f801d3b95256ab2106734d7daf41fa78aa2e0cfcfde2ebd51429",
     "newSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
     "priorVerification": {
       "version": "1.0.0",
@@ -1044,7 +1074,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "042dac3de462f801d3b95256ab2106734d7daf41fa78aa2e0cfcfde2ebd51429"
   },
   {
     "file": "GET-TRANSPORT-RULES-AUDIT.ps1",
@@ -1063,7 +1094,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "c77071b181154e9ec36f056718354046843585b5ec007576895436f4bd1dfa1b",
     "newSha256": "7c4ff63bee17b5669a05a76657f3cca0b5b3674b102ead014df742ae720c62ae",
     "priorVerification": {
       "version": "1.0.0",
@@ -1074,7 +1104,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "c77071b181154e9ec36f056718354046843585b5ec007576895436f4bd1dfa1b"
   },
   {
     "file": "JOIN-COMPUTER-TO-DOMAIN.ps1",
@@ -1093,7 +1124,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "3485e33b650b001a7643c1b15d1a77d260708a0e7d431b55cda5e198fdfd7565",
     "newSha256": "231cef1b8c4ca32837fa4ece5cc04162eb1de0371f3fd69a6fd7aa839bd6f147",
     "priorVerification": {
       "version": "1.0.0",
@@ -1104,7 +1134,8 @@
       "scope": "Simulated approved join workflow success/failure and reboot-pending messaging; no actual join or reboot.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "3485e33b650b001a7643c1b15d1a77d260708a0e7d431b55cda5e198fdfd7565"
   },
   {
     "file": "DEPLOY-TCPIP-PRINTER.ps1",
@@ -1123,7 +1154,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "1ce30ef340f75b724645e03a6c552de3cdb8f3d86121668a9f9e4067892e9adb",
     "newSha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",
     "priorVerification": {
       "version": "1.0.0",
@@ -1134,7 +1164,8 @@
       "scope": "5 synthetic default-printer method/result checks. No actual printer installation or device tested.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "1ce30ef340f75b724645e03a6c552de3cdb8f3d86121668a9f9e4067892e9adb"
   },
   {
     "file": "BACKUP-USER-PROFILE.ps1",
@@ -1153,7 +1184,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "cc4f1b5799473ac7940590fa684d0f9f4fa2147cfadf5c52d9e192f1ce6e6b8b",
     "newSha256": "dd1d1e62acc1343f0c5010dc93ebd5cf29671ff42d9876580c3f1ef7b285988d",
     "priorVerification": {
       "version": "1.0.0",
@@ -1164,26 +1194,27 @@
       "scope": "6 synthetic Robocopy outcome/coverage cases. No actual profile backup or restore tested.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "cc4f1b5799473ac7940590fa684d0f9f4fa2147cfadf5c52d9e192f1ce6e6b8b"
   },
   {
     "file": "TEST-POWERSHELL-READINESS.ps1",
     "path": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
-    "name": "Check PowerShell Readiness",
+    "name": "Check M365 PowerShell Readiness",
     "oldSha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
     "changes": [
       "Matching console title",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "c4b82a409647bdab1fba5f08584451b990e7a7404448c639bc5b513ae878081d",
-    "newSha256": "59b6730559b3916819789d913503c610a06bbabe86f1fd8a9e70f820106cd784",
+    "newSha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "a8a52521cfa5a63477558769b97805e64e24fb03452c349ece4c8b9facbf7449",
@@ -1192,27 +1223,28 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "c4b82a409647bdab1fba5f08584451b990e7a7404448c639bc5b513ae878081d",
+    "version": "1.0.3"
   },
   {
     "file": "GET-FOLDER-INVENTORY.ps1",
     "path": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
-    "name": "Get Folder Inventory",
+    "name": "Review Folder Contents",
     "oldSha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "e3b2db1b391d2549ca70a827e4758ce1178d339028a6a00653a03b110315a6f4",
-    "newSha256": "de076936d25c2b448ecc638f12f65fee672c9ada27aac56ef41c1c0ab76507f5",
+    "newSha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "fc544a0aeef46727b8ba3ede8640114ea94707dd84a410a3c50cc36e0d273387",
@@ -1221,7 +1253,8 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "e3b2db1b391d2549ca70a827e4758ce1178d339028a6a00653a03b110315a6f4",
+    "version": "1.0.3"
   },
   {
     "file": "INSTALL-M365-MODULES.ps1",
@@ -1239,7 +1272,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "859947fe3fca41395fef479104dd115933f6b4ff181c62c251fde89f85505248",
     "newSha256": "6c5fb208fea47d9588354590817362336e644bc4887127f317d4816161c0b4a2",
     "priorVerification": {
       "version": "1.0.0",
@@ -1250,7 +1282,8 @@
       "scope": "Simulated module installation workflow with cancellation, scope and failure checks; nothing is installed.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "859947fe3fca41395fef479104dd115933f6b4ff181c62c251fde89f85505248"
   },
   {
     "file": "TEST-SENSITIVE-DATA.ps1",
@@ -1268,7 +1301,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "44df9659d844957c746e932a8797dcdcc450ef972636192d066a9e1fef17ea27",
     "newSha256": "594d18150acb832080f13776581f6d8d8d21d3addc7e14aa8aea017b76e9b69e",
     "priorVerification": {
       "version": "1.0.0",
@@ -1278,7 +1310,8 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "44df9659d844957c746e932a8797dcdcc450ef972636192d066a9e1fef17ea27"
   },
   {
     "file": "RESET-M365-SESSION.ps1",
@@ -1296,7 +1329,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "8b7f14fe7b43a67d48c9bde265e1e20fc424d49c8b3689cbefe292046d921571",
     "newSha256": "a08270181dc4ac7ac0cb78fd8f651701a40ce25b668342a4e0a829fb09246809",
     "priorVerification": {
       "version": "1.0.0",
@@ -1307,7 +1339,8 @@
       "scope": "Simulated reset workflow; checks unrelated sessions are preserved; no real disconnections.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "8b7f14fe7b43a67d48c9bde265e1e20fc424d49c8b3689cbefe292046d921571"
   },
   {
     "file": "UPDATE-WINDOWS-APPS.ps1",
@@ -1325,7 +1358,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "5db8ed007228a2189a27ad3df53802ed74d248fd4e120be9d198459edbdb4554",
     "newSha256": "32fcfc1c298460301dc5fe7841bb5bddb768691e23f7c9f28270c5396349c3c3",
     "priorVerification": {
       "version": "1.0.0",
@@ -1336,7 +1368,8 @@
       "scope": "4 simulated WinGet completion/review/cancellation cases. No actual application updates tested.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "5db8ed007228a2189a27ad3df53802ed74d248fd4e120be9d198459edbdb4554"
   },
   {
     "file": "GET-USER-PREDELETE-CHECK.ps1",
@@ -1355,7 +1388,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "2458ac78d7060c3f359dffaa189551c7989d09a692572cc3e9c19e56399d4e48",
     "newSha256": "4ae5545f73829374e5b1500bd3ba8cc029e3f095e700e9ce76bf835d8a034107",
     "priorVerification": {
       "version": "1.0.0",
@@ -1365,7 +1397,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "2458ac78d7060c3f359dffaa189551c7989d09a692572cc3e9c19e56399d4e48"
   },
   {
     "file": "INVOKE-ENFORCE-PER-USER-MFA.ps1",
@@ -1383,7 +1416,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "42d6dd3838570b3784750d9644d2ef99f067eba5aaa6346b464a5489c7e4e17e",
     "newSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
     "priorVerification": {
       "version": "1.0.0",
@@ -1394,7 +1426,8 @@
       "scope": "Simulated per-user MFA workflow: approval, mutation and readback; auth is a fixture.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "42d6dd3838570b3784750d9644d2ef99f067eba5aaa6346b464a5489c7e4e17e"
   },
   {
     "file": "GET-ADMIN-ROLE-AUDIT.ps1",
@@ -1413,7 +1446,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "77db621843b80065819f567b2c1e5ba7c1d3f5e24108a2595e7bf71f1e98f91a",
     "newSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
     "priorVerification": {
       "version": "1.0.0",
@@ -1424,7 +1456,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "77db621843b80065819f567b2c1e5ba7c1d3f5e24108a2595e7bf71f1e98f91a"
   },
   {
     "file": "GET-OAUTH-CONSENT-AUDIT.ps1",
@@ -1443,7 +1476,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "2b1d6c8af7466c6323766007378754ba52437f827a9103ef44a423752f7579c7",
     "newSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
     "priorVerification": {
       "version": "1.0.0",
@@ -1454,7 +1486,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "2b1d6c8af7466c6323766007378754ba52437f827a9103ef44a423752f7579c7"
   },
   {
     "file": "GET-GUEST-USER-AUDIT.ps1",
@@ -1473,7 +1506,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "063ad1fad4e7410a79f0aab2db8b809f3dcde1877bc6cbe7aad9363466ae9ecb",
     "newSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
     "priorVerification": {
       "version": "1.0.0",
@@ -1484,7 +1516,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "063ad1fad4e7410a79f0aab2db8b809f3dcde1877bc6cbe7aad9363466ae9ecb"
   },
   {
     "file": "GET-TENANT-LICENSING-AUDIT.ps1",
@@ -1503,7 +1536,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "2c87241a72928436aa53075fe49a58f2402e140d2fca67b099befdcd32973660",
     "newSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
     "priorVerification": {
       "version": "1.0.0",
@@ -1514,7 +1546,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "2c87241a72928436aa53075fe49a58f2402e140d2fca67b099befdcd32973660"
   },
   {
     "file": "GET-TENANT-INBOX-RULES-AUDIT.ps1",
@@ -1533,7 +1566,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "ebe49e76a2bd510f699f2d11adced8da28f02e0840da3ae28756f22605d437f0",
     "newSha256": "c0a1a2459471df298746940de9a997ee60514cbec0bb11a821f4c7e2233c66f6",
     "priorVerification": {
       "version": "1.0.0",
@@ -1544,7 +1576,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "ebe49e76a2bd510f699f2d11adced8da28f02e0840da3ae28756f22605d437f0"
   },
   {
     "file": "GET-USER-SECURITY-SNAPSHOT.ps1",
@@ -1563,7 +1596,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "7f858fe6097c496f92fdcbddf84c7157ff35470b327bf973b8c1dda74bb3fd01",
     "newSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
     "priorVerification": {
       "version": "1.0.0",
@@ -1573,7 +1605,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "7f858fe6097c496f92fdcbddf84c7157ff35470b327bf973b8c1dda74bb3fd01"
   },
   {
     "file": "GET-TENANT-SECURITY-SNAPSHOT.ps1",
@@ -1592,7 +1625,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "ad4a38478417b7f26533622aab8f530424ee3e43713cdeba228ecb36dd5bd240",
     "newSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
     "priorVerification": {
       "version": "1.0.0",
@@ -1602,7 +1634,8 @@
       "testMode": "Sampled read-only batch and HTML export",
       "evidence": "docs/qa/READONLY-REPORTS-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "ad4a38478417b7f26533622aab8f530424ee3e43713cdeba228ecb36dd5bd240"
   },
   {
     "file": "GET-ROOM-RESOURCE-ACCESS.ps1",
@@ -1621,9 +1654,9 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "6a0b70abf2bc6b45d73faf7cbace38d915f901b44e92d8a0f60bf8070cf9df9a",
     "newSha256": "476e8e8458b73432ec3c1e5d90be596b6472cece0e43c79cddc4b1de1693e1ad",
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "6a0b70abf2bc6b45d73faf7cbace38d915f901b44e92d8a0f60bf8070cf9df9a"
   },
   {
     "file": "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
@@ -1642,7 +1675,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "667bcc1d84364ece0d86bd095122c585685cce984a621fbe49cdb770ad4d760b",
     "newSha256": "90eadb894e2aa8ac36f62047a4c4aadcac67aa468c8bbbf583ec0992e6fc6e9c",
     "priorVerification": {
       "version": "1.0.0",
@@ -1653,7 +1685,8 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "667bcc1d84364ece0d86bd095122c585685cce984a621fbe49cdb770ad4d760b"
   },
   {
     "file": "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
@@ -1665,15 +1698,15 @@
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "f059564f457a2a27cbcc5a7072b682096b3fdadf390ea937d5ecd0fabc58fe0f",
-    "newSha256": "4a9291b9f133ce2bd5ec2f563fb6101aaf5857f9c9d88536853788ce1d56e804",
+    "newSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "e9b65c7fc9da2a09b87f84618b0d2693681cc8f497eef0343de990dee202c7c1",
@@ -1683,7 +1716,8 @@
       "scope": "Principal matching and SendOnBehalf target isolation only; disabled-state/auth and removal are not exercised.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "f059564f457a2a27cbcc5a7072b682096b3fdadf390ea937d5ecd0fabc58fe0f",
+    "version": "1.0.3"
   },
   {
     "file": "GET-TENANT-DRIFT-REVIEW.ps1",
@@ -1701,7 +1735,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "b39ed4c05fde227c8bd7297a2503dfc58e3099cc009427b5af80594670d33839",
     "newSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
     "priorVerification": {
       "version": "1.0.0",
@@ -1712,7 +1745,8 @@
       "scope": "Synthetic added/removed/changed comparisons and real temporary JSON write/read; no tenant queries.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "b39ed4c05fde227c8bd7297a2503dfc58e3099cc009427b5af80594670d33839"
   },
   {
     "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
@@ -1723,15 +1757,15 @@
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "3efdb800d8df06a3101f69324cb33875382911dff9a2da2c4211cbee01890424",
-    "newSha256": "6b3deeb1c1cefe468ec8c46443fe4b235ea151daf697e9b06f7e7dde73860ae0",
+    "newSha256": "7af474157506fd00c85b064ec037e09286c7776e4b088b28e8af36d6f3cbc85d",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "cb834050cc7551dfa261f19ff53eb363e917de63d368884ef6f1964a20c84f47",
@@ -1741,7 +1775,8 @@
       "scope": "Storage collector with synthetic CIM/file records; top-file ranking and skip option; no real drive walk.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "3efdb800d8df06a3101f69324cb33875382911dff9a2da2c4211cbee01890424",
+    "version": "1.0.3"
   },
   {
     "file": "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
@@ -1752,15 +1787,15 @@
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "f95fcf43b389f242343e9ab55e380b352bd3efdf6127996f51277659f095879b",
-    "newSha256": "f3ada8c4e78014fbe24a23ea569863716db83e28ade000299fd1f41e415ad2d1",
+    "newSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "bcaf79f5c432558ed746efd6667aff21cc0b7dc61a0d4c62e5cd444eeb402507",
@@ -1770,19 +1805,30 @@
       "scope": "4 accepted-reset timestamp readback cases only: changed, unchanged, missing and denied. No actual reset, password generation or delivery tested.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "f95fcf43b389f242343e9ab55e380b352bd3efdf6127996f51277659f095879b",
+    "version": "1.0.3"
   },
   {
     "file": "ir-recover-validate.ps1",
     "path": "published-source/incident-response/ir-recover-validate.ps1",
-    "name": "IR: Restore and Validate",
+    "name": "BEC: Restore and Validate",
     "oldSha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
-    "changes": [],
+    "changes": [
+      "Relationship and operator wording review"
+    ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
-    "changed": false
+    "newSha256": "6a4999b2ead42802fe65d89bce9ba68969b14f7e1a27d00a8ace79c4a757c209",
+    "changed": true,
+    "nonPresentationSha256": "141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",
+    "version": "1.0.1",
+    "priorVerification": {
+      "version": "1.0.0",
+      "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+      "operatorTested": true,
+      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+    }
   },
   {
     "file": "git-handoff.ps1",
@@ -1790,12 +1836,13 @@
     "name": "Save Project Handoff",
     "oldSha256": "886a5782009fc8abf4825f997ccab38c0c1679a32b6653596089e038cf3ba22c",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "396dc02a8e7a54fc8a80bfdd3257d789ba2b33b5ae16d47ae67032b41dd543c5",
+    "newSha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -1806,9 +1853,9 @@
       "scope": "Metadata redaction and object-ID validation only; no repository reads or handoff writes.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "nonPresentationSha256": "ec9d49bdbc3ebe90857d1f5bc345c12979446419fd11415996c22f654211e5c5",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "ec9d49bdbc3ebe90857d1f5bc345c12979446419fd11415996c22f654211e5c5",
+    "version": "1.0.2"
   },
   {
     "file": "git-repo.ps1",
@@ -1816,12 +1863,13 @@
     "name": "Manage Git Repository",
     "oldSha256": "cd0c87313d27c17cd79a82f470991aad016583781066f856841cc251f245afdd",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "a7bf40b9e18e0d772a484e728fec4b7604e44480e0906d86458d4ee82c81c4f1",
+    "newSha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -1832,9 +1880,9 @@
       "scope": "Changed-filename risk screening with synthetic Git status; no real Git commands, commit, push or pull.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "nonPresentationSha256": "e6e94245281264e51173a63dec14094e1221cebcc053b9e676f4dc915d99ff47",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "e6e94245281264e51173a63dec14094e1221cebcc053b9e676f4dc915d99ff47",
+    "version": "1.0.2"
   },
   {
     "file": "git-security.ps1",
@@ -1842,16 +1890,17 @@
     "name": "Review GitHub Security",
     "oldSha256": "3cba00d77603ffe94401fbda18953579b90492012be0446b08c6de806d5fe1e8",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "e99843711cd1f33cbd7a2851e631c0593ffa2378c01e675ced78a91cfb764279",
+    "newSha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
     "changed": true,
-    "nonPresentationSha256": "4ecf0d4df41ef4db9b17f5184b272ce3619316ebf8293d888a247dfd947cc4cd",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.0"
+    "nonPresentationSha256": "4ecf0d4df41ef4db9b17f5184b272ce3619316ebf8293d888a247dfd947cc4cd",
+    "version": "1.0.1"
   },
   {
     "file": "set-execution.ps1",
@@ -1859,12 +1908,13 @@
     "name": "Set Up Script Execution",
     "oldSha256": "90464f2b844266bdf88c5956fc44dd34939cf7c8664ac19c90f4be4defec2bc4",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
+    "newSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -1875,9 +1925,9 @@
       "scope": "Simulated execution-policy/unblock workflow; managed policy preserved; no real policy/unblock changes.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "d7edabab3e29826b391fa521af5e3986154394aa4dea6af30deae5812ca40675",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "d7edabab3e29826b391fa521af5e3986154394aa4dea6af30deae5812ca40675",
+    "version": "1.0.2"
   },
   {
     "file": "attractor.ps1",
@@ -1901,9 +1951,9 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "bf668890623640e0f24dfe1bf578d94adf1bd96429c02bd30b44bc837ccc2188",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "version": "1.0.1",
+    "nonPresentationSha256": "bf668890623640e0f24dfe1bf578d94adf1bd96429c02bd30b44bc837ccc2188"
   },
   {
     "file": "rain.ps1",
@@ -1927,9 +1977,9 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "59a74456025850e3fc77709c88298c1ba9c71f9dd85e5d0f64903103b264cd66",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "version": "1.0.1",
+    "nonPresentationSha256": "59a74456025850e3fc77709c88298c1ba9c71f9dd85e5d0f64903103b264cd66"
   },
   {
     "file": "static.ps1",
@@ -1953,9 +2003,9 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "8e5cab56049d6a20122933ddd94c6ac4d4dea977263de86281b7e3cc1a25de7a",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "version": "1.0.1",
+    "nonPresentationSha256": "8e5cab56049d6a20122933ddd94c6ac4d4dea977263de86281b7e3cc1a25de7a"
   },
   {
     "file": "SIGN-FOLDER-SCRIPTS.ps1",
@@ -1974,7 +2024,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "ced9018624e392fe4a0f2da75ed8a46b9f654012128c1939cba53f8cc3c95b31",
     "newSha256": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
     "priorVerification": {
       "version": "1.0.0",
@@ -1985,27 +2034,28 @@
       "scope": "Operator-selected certificate/signing wizard steps; dummy signing folder; native approvals preserved.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "ced9018624e392fe4a0f2da75ed8a46b9f654012128c1939cba53f8cc3c95b31"
   },
   {
     "file": "GET-TERMINAL-READINESS-CHECK.ps1",
     "path": "tools/GET-TERMINAL-READINESS-CHECK.ps1",
-    "name": "Check Terminal Readiness",
+    "name": "Check Toolkit Setup",
     "oldSha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "30719c8ccb644e38b7352698c0f0f2231282c238ca77715ea5028036c022a1ca",
-    "newSha256": "aff60902758c4085701a22dc0ab5eeb0bd0f4db075a68d4c20164294226c70fb",
+    "newSha256": "0cdf541f4222218c359dddc9e441343d37ee7ad745cfe5588e06a9a45ad42316",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "fcb2a3383b43915e88dc3e819ba6f573dafb2dc256b008d1d896535bb7dae991",
@@ -2015,27 +2065,28 @@
       "scope": "Relative-path presentation only; no installed-module, signature or certificate readiness claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "30719c8ccb644e38b7352698c0f0f2231282c238ca77715ea5028036c022a1ca",
+    "version": "1.0.3"
   },
   {
     "file": "INVOKE-FILE-INVENTORY.ps1",
     "path": "tools/INVOKE-FILE-INVENTORY.ps1",
-    "name": "Get File Inventory",
+    "name": "Compare Script Files",
     "oldSha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
     "changes": [
       "Matching console title",
       "One objective statement",
       "Consistent Enter completion prompt",
       "Neutral completion marker in existing pause path",
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "8f26ad5675fda01c625d59e72f6034f2d08d794a6ea56c96df6f2de8a5e98ec6",
-    "newSha256": "3fbe443e0b5033489d2f7be78897ee6c7992448a4a86383b331f58166cfb2202",
+    "newSha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "acb04fd3968ef3a29356ef52583229a72926f7a6ed319b4b36bd01e56de28445",
@@ -2044,20 +2095,22 @@
       "testMode": "Synthetic local fixture / host read-only check",
       "evidence": "docs/qa/BATCH-2-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "nonPresentationSha256": "8f26ad5675fda01c625d59e72f6034f2d08d794a6ea56c96df6f2de8a5e98ec6",
+    "version": "1.0.3"
   },
   {
     "file": "INVOKE-MAP-KIT.ps1",
     "path": "tools/INVOKE-MAP-KIT.ps1",
-    "name": "Map Folders",
+    "name": "Map Folder Structure",
     "oldSha256": "330fb1fc8cc144b3f9cd23a0e3399a2f69d168b31b6a9fe27c255e0c77ffdf2b",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "e0bd93584585d1f47d550da919ed3f18f7e99c338d07f04e85e660ad9310c92a",
+    "newSha256": "ea3b5ee21dbd384d7107ec1458be968d7c7c5c00c9998a4dcc2f89856a8372a4",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -2068,9 +2121,9 @@
       "scope": "Actual map workflow against a tiny disposable folder, including missing path; signatures skipped.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "4832604a1e3b9a2592cf4008025f89aff378ec2348769548c456cb84ba05bcda",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "4832604a1e3b9a2592cf4008025f89aff378ec2348769548c456cb84ba05bcda",
+    "version": "1.0.2"
   },
   {
     "file": "INVOKE-SESSION-RESET.ps1",
@@ -2089,7 +2142,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "f70e9b776be8a184ffc2c1149f47b5e0d323a4148e03b782daff98c31f8bacac",
     "newSha256": "2fa5b247f31b2dfe29bbed17ec9ffe576e53dbe3ce3e7ffb03f8328c7843dc07",
     "priorVerification": {
       "version": "1.0.0",
@@ -2100,20 +2152,22 @@
       "scope": "Simulated jumpbox reset workflow; no password variable removal, disconnections or new windows.",
       "evidence": "docs/qa/BATCH-4-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "f70e9b776be8a184ffc2c1149f47b5e0d323a4148e03b782daff98c31f8bacac"
   },
   {
     "file": "SET-THEME-BASIC.ps1",
     "path": "toys/SET-THEME-BASIC.ps1",
-    "name": "Basic Theme",
+    "name": "Preview Plain Output",
     "oldSha256": "82ddf2ed63914b6a1eb40664f486783e59690799b8df19bf9f00fbd3dc142756",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "fff5bd842f9f9c0b3e0f4ab27c1ba8d8bc3bf74954b4c2aa4ada22c4fe513bc0",
+    "newSha256": "9dc01f2210cf808379be2770450283f0d44be72c4d3cae3f9a0087c2f15e98f2",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -2124,22 +2178,23 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "df7288ed2df1b0f81f5c83a52a5581938a0002fb789ccc67bcdf9337342a44e7",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "df7288ed2df1b0f81f5c83a52a5581938a0002fb789ccc67bcdf9337342a44e7",
+    "version": "1.0.2"
   },
   {
     "file": "SET-THEME-COBALT.ps1",
     "path": "toys/SET-THEME-COBALT.ps1",
-    "name": "Cobalt Theme",
+    "name": "Preview Cobalt Theme",
     "oldSha256": "3d0dbac577cce716e5427a9b2635ee6cefe29a45955bc632cb8b4f2dd48fe343",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "0747cc7f881a84169801f4318c35e6bec8335db224cb5014178c5bd767d28486",
+    "newSha256": "602ddcb368e716ca73ced3b799d847262faca237ee43b63a7070596ce37d9d2b",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -2150,22 +2205,23 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "77fef98ccec96950ec2f2404225bb18f062ab6b1a28e884415431c83e21a61de",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "3a480791860bf73073b265620c64af12e3d0d6b6dba5d1e82ad3bbbb2b0b34ca",
+    "version": "1.0.2"
   },
   {
     "file": "SET-THEME-SEAGLASS.ps1",
     "path": "toys/SET-THEME-SEAGLASS.ps1",
-    "name": "Sea Glass Theme",
+    "name": "Install Sea Glass Theme",
     "oldSha256": "16153f1c1989834f659ec7c08546c454dd95bdc51abebb2f7afb684b70964fdf",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "460efef8263380e50352a1f7acdc43284e9234cb6662bd40ed005f5578c1763f",
+    "newSha256": "629b919cea8aabd890151a2402241e426a4c0c331a9a4d5861bd9aaa340e888e",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -2176,22 +2232,23 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "ba652fdb6a07c328f4146a0ee8fa97021084d1ddd3242aae21bd93668fa50c1c",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "5b7e7a6d58e036929708007113af9990afb93a2b7f723ec0d89321ae4732ae3c",
+    "version": "1.0.2"
   },
   {
     "file": "SET-THEME-SILICON-VALLEY.ps1",
     "path": "toys/SET-THEME-SILICON-VALLEY.ps1",
-    "name": "Silicon Valley Theme",
+    "name": "Install Silicon Valley Theme",
     "oldSha256": "1c732aa6c82182265dc02019c9805a7ac9faec56e7b3312e8d7b00c7d66dd60d",
     "changes": [
-      "Shared card/script objective statement"
+      "Shared card/script objective statement",
+      "Relationship and operator wording review"
     ],
     "followUps": [
       "Preserved specialized workflow, terminal controls or reusable command behavior; card aligned."
     ],
-    "newSha256": "161ca2b09e7798fa07b240896f1aa4b75bb0fba1073bc5e776ad0ba48bc3bd98",
+    "newSha256": "aab04649707578c0c57a9602b80cdae04465bff529fae0373d46f1aa2bc43739",
     "changed": true,
     "priorVerification": {
       "version": "1.0.0",
@@ -2202,9 +2259,9 @@
       "scope": "Native separate-window preview; theme profile redirected; operator-reviewed appearance.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "nonPresentationSha256": "dc177f5acbafea5bae85c473a8144dbb32f8f75b3d72d23ef1d231eba38f30fe",
     "nonPresentationTokensUnchanged": true,
-    "version": "1.0.1"
+    "nonPresentationSha256": "b9b4d81c24e4e3f7f5cd4c00f77c323a3b4b116df250f1c1dd126c25155d970d",
+    "version": "1.0.2"
   },
   {
     "file": "MANAGE-CERT-SIGNATURES.ps1",
@@ -2223,7 +2280,6 @@
     ],
     "changed": true,
     "nonPresentationTokensUnchanged": true,
-    "nonPresentationSha256": "2aaea1e8d2e2074037254bf1a8126fe66dcf960de71d920c121da492379a97fc",
     "newSha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
     "priorVerification": {
       "version": "1.0.0",
@@ -2234,6 +2290,7 @@
       "scope": "Operator-selected certificate/signing wizard steps; dummy signing folder; native approvals preserved.",
       "evidence": "docs/qa/NATIVE-1.0.0-VERIFICATION.md"
     },
-    "version": "1.0.2"
+    "version": "1.0.2",
+    "nonPresentationSha256": "2aaea1e8d2e2074037254bf1a8126fe66dcf960de71d920c121da492379a97fc"
   }
 ]

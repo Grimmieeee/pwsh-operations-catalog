@@ -3629,7 +3629,7 @@ window.CATALOG_DATA = [
     "objective": "List group owners and identify groups without an assigned owner.",
     "publishedPath": "published-source/tenant/GET-TENANT-GROUP-OWNERS.ps1",
     "summary": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Mailbox Permissions Review",
@@ -3652,12 +3652,12 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 178,
     "summary": "NO",
-    "objective": "Review mailbox forwarding, delegated access, and inbox rules for selected users.",
+    "objective": "Review forwarding, delegated access, and inbox rules for selected mailboxes.",
     "scopes": [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Mailbox Security Snapshot",
@@ -3804,7 +3804,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
     "summary": "NO",
     "objective": "Restore previously moved email to the selected mailbox.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "IR: Risk Assessment",
@@ -3825,15 +3825,9 @@ window.CATALOG_DATA = [
     "keywords": "bec compromised account hacked phishing incident discovery triage mailbox compromise ioc hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP1-ir-discovery-summary.ps1 ir incident response IR-GET-IDENTITY-RISK-ASSESSMENT.ps1",
     "url": "",
     "_order": 189,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publishedPath": "published-source/incident-response/ir-risk-assessment.ps1",
-    "objective": "Read-only identity risk assessment for the operator-guided IR workflow.",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
-      "operatorTested": true,
-      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
-    }
+    "objective": "Review one user's account and mailbox before choosing a response."
   },
   {
     "name": "IR: Contain and Eradicate",
@@ -3854,15 +3848,9 @@ window.CATALOG_DATA = [
     "keywords": "contain compromised account revoke reset eradicate recover incident response hacked account breached bec phishing security incident suspicious hacked investigation account hacked user hacked mailbox hacked compromised email phishing _STEP2-ir-execution-v2.ps1 ir incident response IR-INVOKE-CONTAINMENT-ERADICATION.ps1",
     "url": "",
     "_order": 190,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publishedPath": "published-source/incident-response/ir-contain-eradicate.ps1",
-    "objective": "Selective containment and eradication workflow for operator-approved response.",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
-      "operatorTested": true,
-      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
-    }
+    "objective": "Contain and clean up one compromised account after approval."
   },
   {
     "name": "Graph Session and User Check",
@@ -3907,7 +3895,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Review a user's file activity for possible data exposure.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Suspicious IP Tenant Trace",
@@ -3932,7 +3920,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Find tenant audit activity associated with a selected IP address.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Tenant Email Search",
@@ -3955,9 +3943,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 194,
     "summary": "NO",
-    "objective": "Search tenant email using the selected criteria and time range.",
+    "objective": "Find email delivery records by sender, recipient, or IP address.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Threat Intel IP Check",
@@ -3980,9 +3968,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 195,
     "summary": "NO",
-    "objective": "Check a public IP address against external reputation services.",
+    "objective": "Check selected public IP addresses against external reputation services.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Incident Timeline Builder",
@@ -4006,7 +3994,7 @@ window.CATALOG_DATA = [
     "_order": 196,
     "summary": "NO",
     "objective": "Combine supplied incident evidence into a timeline.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "JWT Token Decode",
@@ -4030,7 +4018,7 @@ window.CATALOG_DATA = [
     "_order": 197,
     "summary": "NO",
     "objective": "Read a token's contents locally without sending it online.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Token Replay / AiTM Review",
@@ -4054,7 +4042,7 @@ window.CATALOG_DATA = [
     "_order": 198,
     "summary": "NO",
     "objective": "Review sign-ins for indicators of token replay or session theft.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Tenant Security Hardening",
@@ -4372,9 +4360,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 212,
     "summary": "NO",
-    "objective": "Identify enterprise apps without an assigned owner.",
+    "objective": "List enterprise app owners and identify apps without an owner.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Sign-in Anomalies Audit",
@@ -4517,8 +4505,8 @@ window.CATALOG_DATA = [
     "_order": 218,
     "publishedPath": "published-source/utility/TEST-POWERSHELL-READINESS.ps1",
     "summary": "NO",
-    "objective": "Check whether this computer has the PowerShell tools needed to proceed.",
-    "version": "1.0.2"
+    "objective": "Check this computer for Microsoft 365 PowerShell prerequisites.",
+    "version": "1.0.3"
   },
   {
     "name": "Folder Inventory",
@@ -4542,7 +4530,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/utility/GET-FOLDER-INVENTORY.ps1",
     "summary": "NO",
     "objective": "Review a folder's files, script signatures, and Git status.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "M365 Module Setup",
@@ -5543,9 +5531,9 @@ window.CATALOG_DATA = [
     "url": "",
     "_order": 273,
     "summary": "YES",
-    "objective": "Remove approved mailbox access held by disabled users.",
+    "objective": "Remove approved mailbox access held by one disabled user.",
     "csv": "NO",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Tenant Drift Review",
@@ -5588,7 +5576,7 @@ window.CATALOG_DATA = [
     "publishedPath": "published-source/endpoint/GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
     "notes": "Full-drive largest-file scan is read-only but can take several minutes. Largest files are review evidence, not automatic deletion candidates.",
     "keywords": "windows storage cleanup disk size largest files top 10 windows.old windows setup cache softwaredistribution delivery optimization temp endpoint capacity space",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "objective": "Find Windows storage that may be reclaimable without deleting files."
   },
   {
@@ -5612,7 +5600,7 @@ window.CATALOG_DATA = [
       "Single User",
       "Multi User"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "objective": "Reset passwords for selected cloud-only users after approval."
   },
   {
@@ -5624,7 +5612,7 @@ window.CATALOG_DATA = [
     "access": "Change",
     "status": "Ready",
     "platform": "Microsoft Graph + Exchange Online + Active Directory",
-    "objective": "Verify response readiness and restore one approved identity.",
+    "objective": "Check recovery readiness and restore approved account access.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "keywords": "ir incident response recovery recover restore validate account compromise bec IR-INVOKE-RECOVERY-VALIDATION.ps1",
     "code": "",
@@ -5632,14 +5620,8 @@ window.CATALOG_DATA = [
     "source": "FIELD // KIT interactive IR workflow 1.0.0",
     "input": "One exact user UPN and tenant domain; validated context reused between steps",
     "requires": "Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. First sign-in requests workflow read/change scopes. AD changes require local Windows AD rights.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publishedPath": "published-source/incident-response/ir-recover-validate.ps1",
-    "output": "Verified enable state, ticket summary and assessment/monitoring follow-up",
-    "verification": {
-      "version": "1.0.0",
-      "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
-      "operatorTested": true,
-      "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
-    }
+    "output": "Verified enable state, ticket summary and assessment/monitoring follow-up"
   }
 ];

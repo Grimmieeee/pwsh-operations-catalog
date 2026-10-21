@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 KIT PREFLIGHT
 
 OBJECTIVE
-Check this computer against the expected terminal and toolkit setup.
+Check a toolkit folder against the expected files and setup.
 
 REVIEWS
 - PowerShell version and execution policy
@@ -101,8 +101,8 @@ function Get-RelativePath {
 }
 
 try {
-    Write-Host 'Check Terminal Readiness'
-    Write-Host 'Check this computer against the expected terminal and toolkit setup.'
+    Write-Host 'Check Toolkit Setup'
+    Write-Host 'Check a toolkit folder against the expected files and setup.'
     Write-Host "READ-ONLY LOCAL READINESS CHECK"
     Write-Host ""
 

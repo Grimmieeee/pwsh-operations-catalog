@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 #Requires -Version 5.1
 
@@ -7,7 +7,7 @@
 IR AUDIT - THREAT INTEL
 
 OBJECTIVE
-Check a public IP address against external reputation services.
+Check selected public IP addresses against external reputation services.
 
 READ-ONLY
 No tenant changes.
@@ -396,8 +396,8 @@ function Get-AbuseIPDBReport {
 }
 
 try {
-    Write-Host 'IR: Check IP Reputation'
-    Write-Host 'Check a public IP address against external reputation services.'
+    Write-Host 'Incident Response: Check IP Reputation'
+    Write-Host 'Check selected public IP addresses against external reputation services.'
     Write-Host "READ-ONLY / EXTERNAL REPUTATION LOOKUP"
     Write-Host ""
 

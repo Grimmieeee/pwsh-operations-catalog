@@ -70,12 +70,14 @@ main
 
 ## Public Site
 
-The interactive three-step IR tools are available with an
-[execution and safety guide](docs/IR-WORKFLOW.md). The published baseline is
-1.0.0. Batches 1 and 2 are closed, with 78 VERIFIED tools total. Batch 2 accepted
-11 completed workflows; the resource-mailbox target mismatch remains a separate
-untested path. See the [project status](docs/PROJECT-STATUS.md) and
-[batch-2 evidence](docs/qa/BATCH-2-1.0.0-VERIFICATION.md).
+The guided three-step BEC workflow and broader Incident Response tools are available with an
+[execution and safety guide](docs/IR-WORKFLOW.md). The latest pass reviews all 80
+script cards and 240 script relationships. See the [alignment review](docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md)
+and [current status](docs/PROJECT-STATUS.md).
+
+BEC 1.0.1 changes display wording only. Original 1.0.0 runtime acceptance is
+retained separately; current presentation revisions do not inherit exact-byte
+VERIFIED badges. Package eligibility and runtime verification are distinct.
 
 ```text
 https://grimmieeee.github.io/pwsh-operations-catalog/
@@ -105,4 +107,4 @@ Tools includes Digital Signature, Terminal Readiness, File Inventory, Folder Map
 
 Toys includes Basic and Cobalt previews plus Sea Glass and Silicon Valley profile installers. Silicon Valley also retains a predictable daily password generator: do not use its output as a credential. The cards explain profile and process-policy changes. Public copies are unsigned; uploaded originals are unchanged.
 
-Download and copy are available before opening source. Setup comes first where relevant, then A–Z; incident-response steps keep their required order.
+Download is available directly; Copy is inside View Code after source verification. Setup comes first where relevant, then A–Z; incident-response steps keep their required order.

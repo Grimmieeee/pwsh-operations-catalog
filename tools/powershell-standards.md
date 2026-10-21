@@ -1,3 +1,7 @@
+## Display alignment — October 21, 2026
+
+Use the approved BEC: or Incident Response: label in interactive display titles; keep callable names stable. Match the card purpose exactly. Preserve specialized navigation and reusable terminal controls. Keep task-specific results clear; SESSION COMPLETE marks the end, never proof of success. Compare operational tokens before and after a display-only revision and retain original runtime evidence separately.
+
 ## Shared purpose sentence — October 21, 2026
 
 Every script card shows one brief purpose sentence directly below the title. Use the exact same sentence as the script objective. Describe the specific job plainly; keep scope, steps and limitations separate. The objective must not imply complete access coverage, a clean security verdict, successful changes, or unsupported bulk behavior. Reuse an existing suitable objective when that preserves an accepted specialized release. Card/source parity is a release check.

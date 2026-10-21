@@ -1,3 +1,12 @@
+## Card and relationship checks
+
+- [ ] Card and source objective match exactly; display title matches where appropriate.
+- [ ] Scope and input formats are traced to source behavior, including one versus many targets.
+- [ ] Required preparation, default scope and consequential local changes are visible in the rendered card.
+- [ ] Three related tools per script are unique, available and task-relevant; no unsupported handoff is implied.
+- [ ] Related navigation opens the intended source-bound card and retains its impact labels.
+- [ ] Presentation evidence, package eligibility and exact-source operator verification remain distinct.
+
 # Publishing Checklist
 
 Run this before making a script, document, or workflow publicly available.

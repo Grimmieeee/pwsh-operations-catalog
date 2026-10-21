@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.3
 
 # OBJECTIVE: Review a folder's files, script signatures, and Git status.
 #Requires -Version 5.1
@@ -154,7 +154,7 @@ function Get-GitSummary {
 }
 
 try {
-    Write-Host 'Get Folder Inventory'
+    Write-Host 'Review Folder Contents'
     Write-Host 'Review a folder''s files, script signatures, and Git status.'
     Write-Host 'READ ONLY. No files are changed.'
 

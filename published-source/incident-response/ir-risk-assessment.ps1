@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.1
 .GUID 7cf20e90-263b-4c97-98ec-f7d7d105d9aa
 .AUTHOR FIELD // KIT
-.DESCRIPTION Read-only identity risk assessment for the operator-guided IR workflow.
+.DESCRIPTION Review one user's account and mailbox before choosing a response.
 #>
 <#
 .SYNOPSIS
-IR: Identity Risk Assessment
+BEC: Assess User Risk
 .DESCRIPTION
 Reviews one M365 identity and mailbox before response decisions. Makes no tenant changes.
 Uses delegated Microsoft Graph and Exchange Online sign-in in the global Microsoft cloud.
@@ -23,7 +23,7 @@ Skip mailbox collection. The assessment remains incomplete and requires review.
 .PARAMETER NoPause
 Suppress end-of-step navigation. Does not bypass action confirmations.
 .NOTES
-Version 1.0.0. Derived from the v0.32 risk exposure snapshot.
+Runtime baseline: 1.0.0. Display revision: 1.0.1. Derived from the v0.32 risk exposure snapshot.
 Preserves indicator rules and summary precedence; not a compromise verdict or incident closure.
 Graph sign-ins are a bounded latest-25 sample over 10 days, not a complete investigation.
 #>
@@ -761,10 +761,10 @@ $HiddenRuleFindings = @()
 try {
     try {
         $OriginalTitle = $Host.UI.RawUI.WindowTitle
-        $Host.UI.RawUI.WindowTitle = 'IR: Identity Risk Assessment'
+        $Host.UI.RawUI.WindowTitle = 'BEC: Assess User Risk'
     } catch { }
-    Write-IRLine 'IR: RISK ASSESSMENT'
-    Write-IRLine 'Check the account and mailbox for signs of suspicious activity.'
+    Write-IRLine 'BEC: Assess User Risk'
+    Write-IRLine 'Review one user''s account and mailbox before choosing a response.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine ''
     $inputs = Get-IRWorkflowInput $UserPrincipalName $Tenant
@@ -1169,7 +1169,7 @@ try {
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden' -or $InboxRuleCoverage -eq 'Visible Only') {
         if ($VisibleInboxRules.Count -gt 0) {
-    
+
             for ($Index = 0; $Index -lt $VisibleInboxRules.Count; $Index++) {
                 if ($Index -gt 0) {
                     Write-IRLine ""
@@ -1192,7 +1192,7 @@ try {
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden') {
         if ($HiddenRuleFindings.Count -gt 0) {
-    
+
             $HiddenFindingNames = @(
                 $HiddenRuleFindings |
                     ForEach-Object {

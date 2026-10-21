@@ -1,3 +1,11 @@
+# Latest checkpoint — alignment and related items
+
+October 21, 2026. All 80 script cards and 240 script-card relationships are reviewed. 30 sources have presentation-only revisions; operational token comparisons are unchanged across all 80. Guided response uses BEC:, broader investigation uses Incident Response:. Corrected target scope, prerequisites, trace/recovery distinction, theme installation warnings, Git action selection and missing finish markers. See [the full review and follow-ups](qa/RELATIONSHIP-ALIGNMENT-REVIEW.md).
+
+All current scripts have presentation revisions relative to their originally accepted bytes. Exact-version VERIFIED marks therefore total zero; accepted historical runtime evidence remains retained. The BEC bundle uses a separate source-bound presentation review anchored to the three pinned accepted baseline hashes. It does not confer a runtime badge. Native/browser acceptance is not claimed by offline checks.
+
+Earlier checkpoints below are historical.
+
 # Latest update — matching card and script objectives
 
 October 21, 2026. All 80 script cards now show a short purpose sentence beneath the title. The sentence matches each script's objective exactly. 77 files receive documentation/display changes; all non-presentation tokens compare unchanged. Three existing IR metadata descriptions are reused without changing the coupled release bytes. See [the complete objective review](qa/CARD-OBJECTIVES-REVIEW.md).

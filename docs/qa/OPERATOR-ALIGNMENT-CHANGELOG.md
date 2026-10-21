@@ -1,3 +1,5 @@
+Latest: [alignment and relationship review](RELATIONSHIP-ALIGNMENT-REVIEW.md). Earlier rollout counts below are historical.
+
 Latest purpose-statement follow-up: [all 80 matching objectives](CARD-OBJECTIVES-REVIEW.md). The earlier rollout below remains historical.
 
 # Operator alignment — change log and follow-ups
