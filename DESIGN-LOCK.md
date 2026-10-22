@@ -4,7 +4,7 @@ Working-library search and counts include only available scripts, commands and r
 
 ## Alignment and relationship review — October 21, 2026
 
-Use BEC: for the guided account-compromise sequence and BEC: for broader investigation tools. Keep filenames and callable interfaces stable. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
+Use BEC: for the account-compromise sequence and related investigation tools. Canonical response filenames use BEC-. Preserve IR, incident response and previous filenames as search aliases; update all companion calls and source-bound records together. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
 
 A relationship review includes Related Items: three unique available tools per script, no self-links, no unsupported handoff, and a source-reviewed reason the next task is useful. Store explicit choices in operator-card-specs.json. Display only names and impact labels. Quick-command relationship curation remains separately attributable.
 

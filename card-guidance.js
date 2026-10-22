@@ -1283,7 +1283,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Read the project rules for building, reviewing, and releasing tools."
   },
   "field-kit-build-standard.md": {
-    "sourceSha256": "45cd723344b87995f56753251f8ebf8817442910f28de3466511e8b10fa551c7",
+    "sourceSha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
     "notes": "Locked baseline for FIELD // KIT visual design, navigation, sorting, card behavior, source publication, and release validation.",
     "objective": "Read the agreed site layout, card, and publishing standards."
   },
@@ -1339,7 +1339,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "eb5a97f276d9f3c041dd0125926e60f925d3a2afb2dbb523c8a3a0a3cb0c2d0a",
+    "sourceSha256": "1db78bc1dd4481c5e470e83e64bdf926130d2ff2e3882e3b204876f0c68b6d86",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },

@@ -1,3 +1,9 @@
+# Latest checkpoint — BEC naming
+
+October 22, 2026. The active catalog has 329 entries: 81 scripts, 235 commands and 13 references. All eleven response/investigation scripts use BEC-prefixed filenames and BEC display labels. IR, incident response and previous filenames remain search aliases. Companion calls, packages, relationships and source-bound reviews move together. See [the naming review](qa/BEC-NAMING-REVIEW.md).
+
+Superseded PRs #9, #10 and #19 are closed with branches retained. Their unresolved findings remain recorded; closing a draft does not certify a behavior fix. Earlier checkpoints below are historical.
+
 # Latest checkpoint — alignment and related items
 
 October 21, 2026. All 80 script cards and 240 script-card relationships are reviewed. 30 sources have presentation-only revisions; operational token comparisons are unchanged across all 80. Guided response uses BEC:, broader investigation uses Incident Response:. Corrected target scope, prerequisites, trace/recovery distinction, theme installation warnings, Git action selection and missing finish markers. See [the full review and follow-ups](qa/RELATIONSHIP-ALIGNMENT-REVIEW.md).
