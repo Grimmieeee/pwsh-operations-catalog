@@ -3108,7 +3108,7 @@
       "name": "Project Handoff",
       "type": "Documentation",
       "impact": "Read-only",
-      "sourceSha256": "1db78bc1dd4481c5e470e83e64bdf926130d2ff2e3882e3b204876f0c68b6d86",
+      "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b6fef636ee7c8baafc32c4f24c10c8da62eb34a2a42b11eef8779d1a6abf6ecf"

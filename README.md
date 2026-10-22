@@ -70,14 +70,17 @@ main
 
 ## Public Site
 
-The guided three-step BEC workflow and broader Incident Response tools are available with an
-[execution and safety guide](docs/IR-WORKFLOW.md). The latest pass reviews all 80
-script cards and 240 script relationships. See the [alignment review](docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md)
-and [current status](docs/PROJECT-STATUS.md).
+The guided BEC workflow and related investigation tools use BEC-prefixed downloads
+and BEC display labels. IR, incident response and previous filenames remain search
+aliases. Start with the [execution and safety guide](docs/IR-WORKFLOW.md) and
+[current status](docs/PROJECT-STATUS.md).
 
-BEC 1.0.1 changes display wording only. Original 1.0.0 runtime acceptance is
-retained separately; current presentation revisions do not inherit exact-byte
-VERIFIED badges. Package eligibility and runtime verification are distinct.
+The BEC workflow naming release is 1.0.3. Download all three renamed phase files
+together. The [naming review](docs/qa/BEC-NAMING-REVIEW.md) proves the bounded
+filename, title, version and companion-path changes. Original 1.0.0 runtime
+acceptance retains its original filenames and hashes; the renamed files do not
+inherit exact-byte VERIFIED badges. Package eligibility and runtime verification
+are distinct.
 
 ```text
 https://grimmieeee.github.io/pwsh-operations-catalog/

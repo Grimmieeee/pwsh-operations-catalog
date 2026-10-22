@@ -42,3 +42,13 @@ test('active companion paths resolve only to the renamed BEC trio',()=>{
   for(const match of text.matchAll(/['"](BEC-(?:RISK-ASSESSMENT|CONTAIN-ERADICATE|RECOVER-VALIDATE))['"]/g))assert.ok(fs.existsSync(path.join(root,'published-source/incident-response',match[1]+'.ps1')));
  }
 });
+
+test('current entry points describe BEC while historical acceptance retains original filenames',()=>{
+ const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+ const handoff=read('tools/PROJECT-HANDOFF.md').split('## IR 1.0.0, version-bound verification and catalog alignment')[1];
+ assert.ok(handoff);assert.match(handoff,/ir-risk-assessment\.ps1/);assert.match(handoff,/ir-contain-eradicate\.ps1/);assert.match(handoff,/ir-recover-validate\.ps1/);
+ assert.doesNotMatch(handoff,/BEC-(?:RISK-ASSESSMENT|CONTAIN-ERADICATE|RECOVER-VALIDATE)\.ps1/);
+ const current=read('docs/PROJECT-STATUS.md').split('## Historical release checkpoints')[0];
+ assert.match(current,/BEC-prefixed filenames/);assert.doesNotMatch(current,/broader investigation uses Incident Response:/);
+ assert.match(read('README.md'),/naming release is 1\.0\.3/);
+});

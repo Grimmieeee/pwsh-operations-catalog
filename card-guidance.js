@@ -1339,7 +1339,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "1db78bc1dd4481c5e470e83e64bdf926130d2ff2e3882e3b204876f0c68b6d86",
+    "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
