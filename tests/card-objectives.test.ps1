@@ -10,7 +10,7 @@ foreach($name in @('Pure-Print','NonPresentation-Tokens','Assert-ApprovedOperati
  $fn=$helpers.Find({param($n)$n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$false)
  . ([scriptblock]::Create($fn.Extent.Text))
 }
-if($records.Count -ne 80){throw 'All 80 objectives must be reviewed.'}
+if($records.Count -ne 81){throw 'All 81 objectives must be reviewed.'}
 foreach($r in $records){
  $objective=[string]$specs.($r.file).objective
  if($objective -cne $r.objective -or -not $objective.EndsWith('.') -or ($objective -split '\s+').Count -gt 17){throw "Objective copy mismatch: $($r.file)"}
@@ -40,4 +40,4 @@ foreach($r in $records){
  }
  Write-Output "PASS: card/script objective / $($r.file)"
 }
-Write-Output 'PASS: all 80 documented objectives match; console objectives match where present; non-presentation tokens unchanged except the bounded BEC app-lookup fix.'
+Write-Output 'PASS: all 81 documented objectives match; console objectives match where present; existing non-presentation tokens unchanged except the bounded BEC app-lookup fix.'

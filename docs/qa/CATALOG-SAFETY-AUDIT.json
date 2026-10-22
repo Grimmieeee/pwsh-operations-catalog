@@ -1,13 +1,13 @@
 {
   "note": "Every catalog entry screened. Pattern signals require source review. Scoped review and automated tests do not confer operator verification.",
   "counts": {
-    "entries": 327,
-    "scripts": 80,
+    "entries": 329,
+    "scripts": 81,
     "commands": 235,
-    "references": 12,
+    "references": 13,
     "pending": 0,
     "operatorVerified": 0,
-    "scopedReviews": 80
+    "scopedReviews": 81
   },
   "entries": [
     {
@@ -9692,6 +9692,86 @@
       "resultStates": [
         "Not required"
       ]
+    },
+    {
+      "name": "Prepare FIELD KIT",
+      "file": "PREPARE-FIELD-KIT.ps1",
+      "path": "published-source/utility/PREPARE-FIELD-KIT.ps1",
+      "kind": "PowerShell",
+      "access": "Change",
+      "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+      "family": "Local tools / toys",
+      "state": "New source reviewed — first-run preparation",
+      "review": {
+        "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+        "state": "New source reviewed — first-run preparation",
+        "scope": [
+          "Approved current-user module installation",
+          "Official repository verification",
+          "Compatible modules retained",
+          "Cancellation and unattended failure reporting",
+          "No customer tenant sign-in or execution-policy changes"
+        ],
+        "tests": [
+          "tests/first-run-setup.test.ps1",
+          "tests/site-security.test.mjs",
+          "tests/card-objectives.test.ps1"
+        ],
+        "remaining": [
+          "Native Windows and approved RMM installation acceptance."
+        ]
+      },
+      "signals": [
+        {
+          "id": "QUIET_ERROR",
+          "line": 84,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 98,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "QUIET_ERROR",
+          "line": 102,
+          "note": "Distinguish optional probes from hidden failures."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 97,
+          "note": "Distinguish printed directions from executable installs."
+        },
+        {
+          "id": "LOCAL_INSTALL",
+          "line": 111,
+          "note": "Distinguish printed directions from executable installs."
+        }
+      ],
+      "authentication": {
+        "graph": true,
+        "exchange": true,
+        "ad": true
+      },
+      "resultStates": []
+    },
+    {
+      "name": "Start Here Guide",
+      "file": "START-HERE.md",
+      "path": "published-source/utility/START-HERE.md",
+      "kind": "Reference",
+      "access": "Read-only",
+      "sha256": "0dd7f7793b99f618fffbd51bb857ce5abb429eed619f626550033e86e72211fb",
+      "family": "Reference",
+      "state": "Needs review",
+      "review": null,
+      "signals": [],
+      "authentication": {
+        "graph": false,
+        "exchange": false,
+        "ad": false
+      },
+      "resultStates": []
     },
     {
       "name": "Add Calendar Permission",

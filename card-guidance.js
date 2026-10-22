@@ -1467,6 +1467,30 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "next": "Check the intended store or output file. Keep PFX files and their passwords private; trust changes need separate review.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
     }
+  },
+  "PREPARE-FIELD-KIT.ps1": {
+    "sourceSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
+    "input": "Current Windows account; Graph, Exchange or both",
+    "requires": "Windows PowerShell 5.1 or PowerShell 7.4+; PowerShellGet for installation.",
+    "startMode": "right-click",
+    "completion": {
+      "result": "READY, NOT READY or CANCELLED for the selected local prerequisites.",
+      "next": "Close setup and start one selected tool in a fresh PowerShell window under the same Windows account and edition.",
+      "blocked": "Resolve missing or incompatible prerequisites before running dependent tools. Setup does not prove customer access."
+    },
+    "checks": [
+      "Checks selected module versions",
+      "Verifies module imports",
+      "Offers missing prerequisites only",
+      "No customer sign-in"
+    ]
+  },
+  "START-HERE.md": {
+    "sourceSha256": "0dd7f7793b99f618fffbd51bb857ce5abb429eed619f626550033e86e72211fb",
+    "objective": "Prepare the support computer and run one approved workflow at a time.",
+    "input": "Customer support computer and approved operator account",
+    "requires": "Approved RMM or remote session to the customer support computer."
   }
 });
 
@@ -7430,6 +7454,31 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "set-execution.ps1",
       "TEST-SENSITIVE-DATA.ps1"
+    ]
+  },
+  "PREPARE-FIELD-KIT.ps1": {
+    "name": "Prepare FIELD KIT",
+    "scope": "LOCAL",
+    "input": "Current Windows account; Graph, Exchange or both",
+    "details": [
+      "Installs missing selected modules for this Windows account and PowerShell edition after approval.",
+      "CheckOnly makes no installation or repository/provider changes.",
+      "AD checks report missing local tools or a domain connection; setup does not install RSAT.",
+      "READY verifies selected local prerequisites; each job still needs customer access."
+    ],
+    "family": "setup",
+    "sourceSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.0",
+    "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
+    "preparation": [
+      "Use the approved customer-side Windows support computer and the same account you will use for jobs."
+    ],
+    "notice": "After approval, installs missing local prerequisites. No customer tenant sign-in or permission grants.",
+    "related": [
+      "TEST-POWERSHELL-READINESS.ps1",
+      "INSTALL-M365-MODULES.ps1",
+      "START-HERE.md"
     ]
   }
 });

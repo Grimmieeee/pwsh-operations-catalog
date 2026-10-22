@@ -35,7 +35,7 @@ function Assert-ApprovedOperationalChange($Row,$Text){
 
 $rows=Get-Content (Join-Path $Root 'docs/qa/OPERATOR-SCRIPT-ALIGNMENT.json') -Raw|ConvertFrom-Json
 $changed=@($rows|Where-Object{$_.changed})
-if($rows.Count -ne 80 -or $changed.Count -ne 80){throw 'Unexpected alignment scope.'}
+if($rows.Count -ne 81 -or $changed.Count -ne 80){throw 'Unexpected alignment scope.'}
 foreach($row in $rows){
  $path=Join-Path $Root $row.path
  $hash=(Get-FileHash $path -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -60,4 +60,4 @@ foreach($row in $rows){
  }
  Write-Output "PASS: reviewed source fingerprint / $($row.file)"
 }
-Write-Output 'PASS: 80 source comparisons; the isolated BEC URI/response fix is explicitly bounded; NoPause remains noninteractive where supported.'
+Write-Output 'PASS: 80 existing-source comparisons plus the new setup baseline; the isolated BEC URI/response fix is explicitly bounded; NoPause remains noninteractive where supported.'

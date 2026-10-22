@@ -2297,5 +2297,25 @@
     },
     "version": "1.0.2",
     "nonPresentationSha256": "2aaea1e8d2e2074037254bf1a8126fe66dcf960de71d920c121da492379a97fc"
+  },
+  {
+    "file": "PREPARE-FIELD-KIT.ps1",
+    "path": "published-source/utility/PREPARE-FIELD-KIT.ps1",
+    "name": "Prepare FIELD KIT",
+    "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
+    "oldSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "newSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "nonPresentationSha256": "639ed5cc8f67285a68399c2658907d5ccd73e734ec5bf3056c51da86136f3e03",
+    "consoleObjective": true,
+    "metadataReuse": false,
+    "changed": false,
+    "newSource": true,
+    "version": "1.0.0",
+    "changes": [
+      "New first-run prerequisite preparation tool"
+    ],
+    "followUps": [
+      "Native Windows installation acceptance remains separate from isolated tests."
+    ]
   }
 ]

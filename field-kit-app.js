@@ -2122,7 +2122,7 @@
 
   function countArea(area){
     if (area === "Full Library") return ITEMS.length;
-    if (area === "About") return "";
+    if (area === "About" || area === "Start Here") return "";
     return ITEMS.filter(x => itemBuckets(x).includes(area)).length;
   }
 
@@ -2153,7 +2153,7 @@
     const parent = `
       <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
         <span class="area-label">${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
-        ${area === "Full Library" ? "" : `<span class="area-count">${countArea(area)}</span>`}
+        ${area === "Full Library" || area === "Start Here" ? "" : `<span class="area-count">${countArea(area)}</span>`}
       </button>
     `;
 
@@ -2207,7 +2207,7 @@
 
   function renderNav(){
     areaNav.innerHTML = [
-      '<div class="nav-primary">' + navButton("Full Library") + '</div>',
+      '<div class="nav-primary">' + navButton("Start Here") + navButton("Full Library") + '</div>',
       navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
       navSection("Operations", ["Incident Response","Utility","Standalone"]),
       navSection("Reference", ["Tools"]),
@@ -2707,10 +2707,60 @@
     `;
   }
 
+  function renderFirstRun(){
+    results.innerHTML = `<section class="about-block first-run-guide">
+      <div class="about-kicker">FIRST TIME USING FIELD // KIT?</div>
+      <h2 class="item-title">Start Here</h2>
+      <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
+      <section class="note-block"><h3>1. Confirm the customer and computer</h3>
+        <p>Use your approved RMM or remote session to the customer’s Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket or RMM activity open to record who ran the job and when.</p>
+      </section>
+      <section class="note-block"><h3>2. Prepare PowerShell</h3>
+        <p>Download the setup package, transfer it to that computer if needed, and extract it. Right-click <strong>PREPARE-FIELD-KIT.ps1</strong> and select <strong>Run with PowerShell</strong>.</p>
+        <p>Choose Microsoft Graph, Exchange Online, or both. Setup checks first, offers to install missing components, then rechecks them. Read the plan before typing INSTALL. Wait for <strong>RESULT: READY</strong>, then press Enter to close setup.</p>
+        <p>Run setup under the same Windows account and PowerShell edition you will use for jobs. Installing under RMM’s SYSTEM account does not prepare your interactive account.</p>
+        <div class="actions"><button id="downloadSetupPackage" class="action primary" type="button">Download Setup Package</button><button class="action" type="button" data-first-run-file="PREPARE-FIELD-KIT.ps1">View Setup Tool</button></div>
+        <p id="setupPackageStatus" class="source-note" role="status"></p>
+        <p>Setup changes local prerequisites after approval. It does not sign into a customer or grant access. Local AD jobs also need approved AD tools and a domain connection.</p>
+      </section>
+      <section class="note-block"><h3>3. Choose and run one job</h3>
+        <p>Read the card’s purpose, scope and impact. Download its current file and transfer it to the support computer. Right-click and select <strong>Run with PowerShell</strong>. Follow any card-specific launch instructions.</p>
+        <p>Confirm the account, customer environment and targets when the tool asks. Sign in with the approved customer account. Setup readiness does not prove you have permission to run a job.</p>
+        <p>The BEC package is one sequential workflow: keep its files together and use the same window through its handoffs.</p>
+        <div class="actions"><button id="browseAfterSetup" class="action" type="button">Choose a Tool</button></div>
+      </section>
+      <section class="note-block"><h3>4. Review, finish and close</h3>
+        <p>Review completed, failed, skipped and unresolved results. Record the outcome in the ticket or RMM activity. Press Enter to close the dedicated session when complete. Start the next unrelated job in a fresh window.</p>
+        <details class="operator-details"><summary>SESSION BOUNDARIES</summary><p>A separate window contains a job; it is not a security sandbox. Closing it ends that PowerShell process, but customer access, Windows rights and browser sign-in caches may remain. A fresh window does not guarantee another password or MFA prompt.</p><p>If reusing an existing window, run Reset M365 Session in that same window first. Running cleanup in a different window cannot clean up the original. Follow your approved sign-out process on the shared computer when finished.</p></details>
+      </section>
+      <div class="actions"><button class="action" type="button" data-first-run-file="START-HERE.md">Full Guide and RMM Options</button><button class="action" type="button" data-first-run-file="TEST-POWERSHELL-READINESS.ps1">Check Readiness Only</button></div>
+    </section>`;
+    results.querySelectorAll('[data-first-run-file]').forEach(button=>button.addEventListener('click',()=>{
+      const item=ITEMS.find(candidate=>candidate.file===button.dataset.firstRunFile);
+      if(item)openItem(item);
+    }));
+    document.getElementById('browseAfterSetup')?.addEventListener('click',()=>{
+      state.area='Full Library';state.query='';search.value='';renderNav();renderResults();
+    });
+    document.getElementById('downloadSetupPackage')?.addEventListener('click',async event=>{
+      const button=event.currentTarget,status=document.getElementById('setupPackageStatus');
+      button.disabled=true;status.textContent='Checking setup and guide before packaging…';
+      try { saveBlob(await buildSetupBundle(),'field-kit-first-run.zip');status.textContent='Setup script and guide verified. Package downloaded. Extract it on the approved support computer.'; }
+      catch(error){status.textContent=error.message || 'Setup package unavailable. No partial package downloaded.';}
+      finally {button.disabled=false;}
+    });
+  }
+
   function renderResults(){
     const queryActive = Boolean(state.query.trim());
-    searchWrap?.classList.toggle("hidden", state.area === "About");
+    searchWrap?.classList.toggle("hidden", state.area === "About" || state.area === "Start Here");
     verificationKey.classList.add("hidden");
+
+    if(state.area==='Start Here'){
+      crumb.textContent='START HERE';entryCount.textContent='';entryCount.classList.add('hidden');
+      clearSearch.classList.add('hidden');contextBar.classList.add('hidden');jumpBar.innerHTML='';jumpBar.classList.add('hidden');empty.classList.add('hidden');
+      renderFirstRun();return;
+    }
 
     if (state.area === "About"){
       crumb.textContent = "ABOUT";
@@ -2870,13 +2920,27 @@
   function operatorDetailsMarkup(item){
     const spec=item.operatorCard;
     if(!spec)return shortNote(item);
-    const notes=[...(spec.preparation || []),...spec.details];
+    const notes=[...connectionInfo(item),...(spec.preparation || []),...spec.details];
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
     const sample=spec.inputExample;
     const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
     return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}</details>`:'';
+  }
+
+  function connectionInfo(item){
+    const record=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
+    if(!record || record.sha256!==window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath])return [];
+    const services=record.services || [];
+    const labels={GRAPH:'Microsoft Graph',EXO:'Exchange Online',AD:'local Active Directory'};
+    if(services.length)return ['Connection: '+services.map(service=>labels[service] || service).join(' + ')+'.',services.includes('GRAPH') || services.includes('EXO') ? 'Sign-in: use the approved customer account when the workflow requests it.' : 'Sign-in: uses the Windows account running this job.'];
+    if(item.file==='IR-GET-THREAT-INTEL-ACTIVITY.ps1')return ['Connection: external IP reputation services.','Sign-in: provider API keys supplied for this run.'];
+    if(item.file==='git-repo.ps1')return ['Connection: the repository remote when pulling or pushing.','Sign-in: the Git credentials configured for that remote.'];
+    if(item.file==='UPDATE-WINDOWS-APPS.ps1')return ['Connection: configured WinGet package sources.','Sign-in: uses the Windows account; individual installers may request approval.'];
+    if(['RESET-M365-SESSION.ps1','INVOKE-SESSION-RESET.ps1'].includes(item.file))return ['Connection: existing sessions in this PowerShell window.','Sign-in: no new customer sign-in.'];
+    if(['PREPARE-FIELD-KIT.ps1','INSTALL-M365-MODULES.ps1'].includes(item.file))return ['Connection: official PowerShell Gallery for approved installations.','Sign-in: the current Windows account; no customer tenant sign-in.'];
+    return ['Connection: this computer or supplied files.','Sign-in: uses the approved Windows account; no new customer tenant sign-in.'];
   }
 
   function completionInfo(item){
@@ -3383,6 +3447,19 @@
   function safeFilename(value){
     const base = String(value).split(/[\\/]/).pop() || "script.ps1";
     return base.replace(/[^a-z0-9._-]/gi,"-");
+  }
+
+  async function buildSetupBundle(){
+    if(!window.FIELD_KIT_START)throw new Error('Package guidance could not load. Reload the site.');
+    const names=['PREPARE-FIELD-KIT.ps1','START-HERE.md'];
+    const files=await Promise.all(names.map(async name=>{
+      const item=ITEMS.find(candidate=>candidate.file===name);
+      const hash=item && window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath];
+      const review=window.FIELD_KIT_CARD_GUIDANCE?.[name];
+      if(!item || !hash || review?.sourceSha256!==hash)throw new Error('Setup package needs source review. No package downloaded.');
+      return {name,text:await resolveSource(item),hash};
+    }));
+    return window.FIELD_KIT_START.zip([...files,{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
   }
 
   async function buildIRBundle(){
