@@ -4,9 +4,9 @@ Prepare the client-side support computer, then run one tool for one goal.
 
 ## 1. Confirm where you are working
 
-Use the approved RMM session or remote connection to the customer's Windows support computer. Confirm the customer, computer and approved Windows account before continuing. Use the RMM activity record or ticket to identify the operator and job; a shared Windows account alone does not identify the technician.
+Connect to the customer's approved Windows support computer. Confirm the customer, computer and approved Windows account before continuing. Use the ticket to identify the operator and job; a shared Windows account alone does not identify the technician.
 
-Download the current setup package from FIELD // KIT. If downloaded elsewhere, transfer it to that support computer using your approved remote file transfer. Extract it into an approved toolkit folder. Setup installs modules for the Windows account and PowerShell edition running it, so run it in the same context you will use for later jobs. An RMM job running as SYSTEM prepares SYSTEM's module context, not an interactive technician's account.
+Download the current setup package from FIELD // KIT. If downloaded elsewhere, transfer it to that support computer using your approved remote file transfer. Extract it into an approved toolkit folder. Setup installs modules for the Windows account and PowerShell edition running it, so run it in the same context you will use for later jobs.
 
 If Windows blocks a downloaded script, use the approved signing and execution-policy process. Do not disable a managed policy or unblock an entire Downloads folder to get past it.
 
@@ -32,20 +32,6 @@ The BEC workflow is one sequential job: download its complete package, keep the 
 
 ## 4. Review, finish and close
 
-Read the completed, failed, skipped and unresolved results. Record the outcome under the ticket/RMM activity. Press Enter to close the dedicated session when complete. Start a separate window for the next unrelated job; do not turn a finished workflow into a general-purpose admin terminal.
+Read the completed, failed, skipped and unresolved results. Record the outcome in the ticket. Press Enter to close the dedicated session when complete. Start a separate window for the next unrelated job; do not turn a finished workflow into a general-purpose admin terminal.
 
 Closing a PowerShell process ends that process. It does not make the workflow a sandbox, revoke all tokens, remove the Windows account's rights, or guarantee another MFA prompt. Graph and Exchange connection/cache behavior differs between existing tools. If reusing an existing window, use **Reset M365 Session in that same window** before the next job. Opening the reset tool in a separate window cannot clean up the first window. Broker/browser sign-in may still persist; use your approved operator-session sign-out process when finished on the shared computer.
-
-## Approved RMM use
-
-The setup script supports noninteractive checks and explicit installations. These are examples for an approved RMM component; retain the RMM's operator, customer, computer, activity and time record.
-
-```powershell
-# Check only; missing prerequisites cause a failed job result.
-& '.\PREPARE-FIELD-KIT.ps1' -Profile Both -CheckOnly -NoPause
-
-# Explicit installation approval for missing selected prerequisites.
-& '.\PREPARE-FIELD-KIT.ps1' -Profile Both -InstallMissing -NoPause
-```
-
-Noninteractive setup prints its status and UTC start/finish times, returns a result object, and throws for NOT READY. No transcript or export is created automatically. RMM setup does not authenticate to a tenant or run a customer workflow.

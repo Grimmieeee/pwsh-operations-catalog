@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 # OBJECTIVE: Check this computer and install missing Microsoft 365 PowerShell modules.
 #Requires -Version 5.1
 <#
@@ -16,12 +16,12 @@ Also require local Active Directory tools and a domain-connected computer.
 .PARAMETER CheckOnly
 Report readiness without installation or repository/provider registration.
 .PARAMETER InstallMissing
-Explicit approval to install missing prerequisites; suitable for an approved RMM job.
+Explicit approval to install missing prerequisites.
 .PARAMETER NoPause
-Suppress prompts. A non-ready result throws after the summary for RMM failure reporting.
+Suppress prompts. A non-ready result throws after the summary.
 .NOTES
 Run under the Windows account and PowerShell edition used for subsequent jobs.
-RMM activity records identify the operator; a shared Windows account alone does not.
+Use the ticket to record the operator; a shared Windows account alone does not identify them.
 READY means local preparation passed; customer access is checked by each workflow.
 #>
 [CmdletBinding()]

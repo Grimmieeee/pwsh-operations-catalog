@@ -1843,9 +1843,9 @@
       "READY verifies selected local prerequisites; each job still needs customer access."
     ],
     "family": "setup",
-    "sourceSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
     "presentationRevision": false,
-    "releaseVersion": "1.0.0",
+    "releaseVersion": "1.0.1",
     "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
     "preparation": [
       "Use the approved customer-side Windows support computer and the same account you will use for jobs."

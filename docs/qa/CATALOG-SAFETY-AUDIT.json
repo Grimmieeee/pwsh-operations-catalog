@@ -9699,11 +9699,11 @@
       "path": "published-source/utility/PREPARE-FIELD-KIT.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+      "sha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
       "family": "Local tools / toys",
       "state": "New source reviewed — first-run preparation",
       "review": {
-        "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+        "sha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
         "state": "New source reviewed — first-run preparation",
         "scope": [
           "Approved current-user module installation",
@@ -9718,7 +9718,7 @@
           "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "Native Windows and approved RMM installation acceptance."
+          "Native Windows installation acceptance."
         ]
       },
       "signals": [
@@ -9761,7 +9761,7 @@
       "path": "published-source/utility/START-HERE.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "0dd7f7793b99f618fffbd51bb857ce5abb429eed619f626550033e86e72211fb",
+      "sha256": "ceaa8b9219d977a88e2f45f3af18c160671fb76812ba714a4dc437e51e9171f0",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
