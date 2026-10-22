@@ -1,7 +1,7 @@
 # Isolated function tests: no tenant connection or workflow main runs.
 param([string]$Root=(Split-Path $PSScriptRoot -Parent))
 $ErrorActionPreference='Stop'
-$file=Join-Path $Root 'published-source/incident-response/ir-risk-assessment.ps1'
+$file=Join-Path $Root 'published-source/incident-response/BEC-RISK-ASSESSMENT.ps1'
 $t=$null;$e=$null;$ast=[Management.Automation.Language.Parser]::ParseFile($file,[ref]$t,[ref]$e)
 $fn=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq 'Get-ServicePrincipalInfo'},$false)
 . ([scriptblock]::Create($fn.Extent.Text))

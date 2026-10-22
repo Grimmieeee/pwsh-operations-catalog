@@ -40,4 +40,4 @@ foreach($r in $records){
  }
  Write-Output "PASS: card/script objective / $($r.file)"
 }
-Write-Output 'PASS: all 81 documented objectives match; console objectives match where present; existing non-presentation tokens unchanged except the bounded BEC app-lookup fix.'
+Write-Output 'PASS: all 81 documented objectives match; console objectives match where present; operational changes are limited to the explicitly reviewed setup gate, BEC lookup fix and BEC naming migration.'

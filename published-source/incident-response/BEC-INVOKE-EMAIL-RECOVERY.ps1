@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.3
+.VERSION 1.0.4
 #>
 #Requires -Version 5.1
 
@@ -415,7 +415,7 @@ function Move-MailMessage {
 }
 
 try {
-    Write-Host 'Incident Response: Restore Email'
+    Write-Host 'BEC: Restore Email'
     Write-Host 'Restore previously moved email to the selected mailbox.'
     Write-Host "CHANGE-MAKING"
     Write-Host ""

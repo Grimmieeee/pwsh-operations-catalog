@@ -1,4 +1,4 @@
-# .VERSION 1.0.3
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -379,7 +379,7 @@ function Add-ManualEvents {
 }
 
 try {
-    Write-Host 'Incident Response: Build Incident Timeline'
+    Write-Host 'BEC: Build Incident Timeline'
     Write-Host 'Combine supplied incident evidence into a timeline.'
     Write-Host "LOCAL / READ-ONLY"
     Write-Host ""

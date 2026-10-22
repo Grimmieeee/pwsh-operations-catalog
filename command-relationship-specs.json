@@ -138,27 +138,27 @@
     "family": "Sign-in investigation",
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$false",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Enable Sign-In": {
     "family": "Sign-in investigation",
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$true",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Revoke Active Sessions": {
     "family": "Sign-in investigation",
     "code": "Revoke-MgUserSignInSession -UserId \"user@domain.com\"",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Cached Tickets": {
@@ -536,7 +536,7 @@
     "related": [
       "GET-TRANSPORT-RULES-AUDIT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ]
   },
   "Show Transport Rules": {
@@ -545,7 +545,7 @@
     "related": [
       "GET-TRANSPORT-RULES-AUDIT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ]
   },
   "Show Inbox Rules - Including Hidden": {
@@ -706,7 +706,7 @@
     "code": "$SearchName = \"SEARCH-NAME\"\nGet-ComplianceSearch -Identity $SearchName |\n  Select-Object Name,Status,Items,Size,SuccessResults",
     "related": [
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Search Jobs"
     ]
   },
@@ -716,7 +716,7 @@
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ]
   },
   "Hard-Delete Search Results": {
@@ -725,7 +725,7 @@
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ]
   },
   "Start Compliance Search": {
@@ -734,7 +734,7 @@
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ]
   },
   "Run Quick Scan": {
@@ -759,79 +759,79 @@
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations New-InboxRule,Set-InboxRule `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Mail Delete And Move Audit": {
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Mailitemsaccessed Audit": {
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Parse Mail Audit Subject, Ip, And Destination Folder": {
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed,SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,Operation,\n    @{N=\"EmailSubject\";E={(ConvertFrom-Json $_.AuditData).Item.Subject}},\n    @{N=\"ClientIP\";E={(ConvertFrom-Json $_.AuditData).ClientIP}},\n    @{N=\"DestFolder\";E={(ConvertFrom-Json $_.AuditData).DestinationFolder.Name}}",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Search Query Audit": {
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog -Operations SearchQueryInitiated -UserIds \"user@domain.com\" |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Unified Audit Log For One User": {
     "family": "Mail investigation",
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ]
   },
   "Show Risk Detections For One User": {
     "family": "Sign-in investigation",
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nGet-MgRiskDetection -Filter \"userId eq '$UserId'\" -All |\n  Select-Object ActivityDateTime,RiskEventType,RiskLevel,RiskState,IPAddress,Location,Source",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Risky User State": {
     "family": "Sign-in investigation",
     "code": "Get-MgRiskyUser -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,RiskLevel,RiskState,RiskDetail,RiskLastUpdatedDateTime",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Recipient": {
     "family": "Mail delivery",
     "code": "Get-MessageTraceV2 `\n  -RecipientAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ]
@@ -840,7 +840,7 @@
     "family": "Mail delivery",
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ]
@@ -849,7 +849,7 @@
     "family": "Mail delivery",
     "code": "$TraceId = \"MESSAGE-TRACE-ID\"\nGet-MessageTraceDetailV2 -MessageTraceId $TraceId -RecipientAddress \"recipient@domain.com\" |\n  Select-Object Date,Event,Action,Detail,Data",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Search Jobs",
       "command:Who Received Mail From Suspicious Sender"
     ]
@@ -858,7 +858,7 @@
     "family": "Mail delivery",
     "code": "Get-HistoricalSearch |\n  Sort-Object SubmitDate -Descending |\n  Select-Object -First 5 ReportTitle,Status,Rows,FileUrl,SubmitDate",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Who Received Mail From Suspicious Sender"
     ]
@@ -867,7 +867,7 @@
     "family": "Mail delivery",
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"badguy@evil.com\" `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object -ExpandProperty RecipientAddress |\n  Sort-Object -Unique",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ]
@@ -876,45 +876,45 @@
     "family": "Sign-in investigation",
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -ne 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"ErrorCode\";E={$_.Status.ErrorCode}},\n    @{N=\"FailureReason\";E={$_.Status.FailureReason}}",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Last 10 Entra Sign-Ins": {
     "family": "Sign-in investigation",
     "code": "Get-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com'\" -Top 10 -Sort \"createdDateTime desc\" |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}},\n    @{N=\"Location\";E={\"$($_.Location.City), $($_.Location.State), $($_.Location.CountryOrRegion)\"}}",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Entra Sign-ins - Last 48 Hours": {
     "family": "Sign-in investigation",
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}}",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Legacy / Other-client Sign-ins": {
     "family": "Sign-in investigation",
     "code": "$Since = (Get-Date).ToUniversalTime().AddDays(-7).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.ClientAppUsed -eq \"Other clients\" } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Show Successful Sign-Ins": {
     "family": "Sign-in investigation",
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -eq 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Recent Application Errors": {
@@ -1794,9 +1794,9 @@
     "family": "Sign-in investigation",
     "code": "$Ip = \"1.2.3.4\"\nGet-MgAuditLogSignIn -Filter \"ipAddress eq '$Ip'\" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ]
   },
   "Look Up ISP And Location": {

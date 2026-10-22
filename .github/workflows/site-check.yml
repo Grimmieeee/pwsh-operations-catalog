@@ -27,7 +27,7 @@ jobs:
           node --check tools/catalog-commands.mjs
           node --check tools/catalog-safety-audit.mjs
       - name: Check source-bound impact review and authorization regressions
-        run: node --test tests/impact-authorization.test.mjs
+        run: node --test tests/impact-authorization.test.mjs tests/bec-naming.test.mjs
       - name: Parse PowerShell sources and inline catalog commands without execution
         shell: pwsh
         run: ./tools/check-powershell.ps1
@@ -46,6 +46,7 @@ jobs:
         run: |
           ./tests/impact-authorization.test.ps1
           ./tests/catalog-safety.test.ps1
+          ./tests/bec-naming.test.ps1
           ./tests/bec-app-lookup.test.ps1
           ./tests/first-run-setup.test.ps1
       - name: Test endpoint failure reporting offline

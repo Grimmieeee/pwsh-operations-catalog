@@ -196,7 +196,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Desktop HTML report is optional; keep exported client information private"
     ]
   },
-  "IR-INVOKE-EMAIL-RECOVERY.ps1": {
+  "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "input": "Mailbox sign-in name (UPN). Defaults: move from RSS Subscriptions to Restored Messages, looking back 24 hours. Review or change the folders before approving moves.",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: delegated Mail.ReadWrite.Shared AND existing access to the target mailbox/folders. An admin role alone does not grant mailbox access.",
     "checks": [
@@ -208,7 +208,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Preview and typed MOVE confirmation",
       "Target folder creation requires approval"
     ],
-    "sourceSha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
+    "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
     "objective": "Restore previously moved email to the selected mailbox.",
     "notes": "Moves messages back from attacker-hidden or incorrect folders.",
     "startMode": "right-click",
@@ -218,7 +218,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
     }
   },
-  "ir-risk-assessment.ps1": {
+  "BEC-RISK-ASSESSMENT.ps1": {
     "checks": [
       "Account status, password change date, and admin roles",
       "Sign-in methods and enabled Conditional Access policies",
@@ -229,7 +229,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Read-only assessment; no tenant changes",
       "Shows checks that could not run; findings need review before deciding the account is compromised"
     ],
-    "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+    "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
@@ -237,7 +237,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. The policy list does not prove that Conditional Access protects this user.",
     "startMode": "workflow"
   },
-  "ir-contain-eradicate.ps1": {
+  "BEC-CONTAIN-ERADICATE.ps1": {
     "checks": [
       "Results of blocking sign-in, resetting the password, and revoking sessions",
       "Selected mailbox rules, forwarding, and shared access",
@@ -249,7 +249,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Does not force a sync; check that changes reach Entra ID",
       "Shows a temporary password only after reset; clears its variable after you confirm secure delivery"
     ],
-    "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+    "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
     "objective": "Contain and clean up one compromised account after approval.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
@@ -257,7 +257,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. You confirm trusted MFA methods; the script does not enforce them. A temporary password can remain in terminal capture/transcripts even after its variable is cleared.",
     "startMode": "workflow"
   },
-  "ir-recover-validate.ps1": {
+  "BEC-RECOVER-VALIDATE.ps1": {
     "checks": [
       "Rechecks the account, mailbox, and remaining unwanted access",
       "Checks that the account was enabled in the system that manages it",
@@ -269,7 +269,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "A pending sync is not reported as confirmed recovery",
       "No password reset or persistence removal in recovery"
     ],
-    "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+    "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
     "objective": "Check recovery readiness and restore approved account access.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
@@ -277,7 +277,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. Recovery does not reset passwords or remove unwanted access. Verify user sign-in with MFA and complete the follow-up monitoring.",
     "startMode": "workflow"
   },
-  "IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
+  "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
     "input": "Target UPN; lookback days (default 30, maximum 90); optional source IP.",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement; permission to run Search-UnifiedAuditLog.",
     "checks": [
@@ -288,7 +288,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Unusual activity needs review; it does not prove data was stolen"
     ],
-    "sourceSha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
+    "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
     "objective": "Review a user's file activity for possible data exposure.",
     "notes": "Reviews SharePoint/OneDrive activity for possible download, sharing, or exfiltration behavior.",
     "startMode": "right-click",
@@ -298,7 +298,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     }
   },
-  "IR-GET-IP-TRACE.ps1": {
+  "BEC-GET-IP-TRACE.ps1": {
     "input": "Suspect IP; lookback days (default 7, maximum 90).",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement; permission to run Search-UnifiedAuditLog.",
     "checks": [
@@ -308,7 +308,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Shows failed search periods and results cut short by limits"
     ],
-    "sourceSha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
+    "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
     "objective": "Find tenant audit activity associated with a selected IP address.",
     "notes": "Pivots on a source IP across tenant audit activity.",
     "startMode": "right-click",
@@ -318,7 +318,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     }
   },
-  "IR-GET-TENANT-EMAIL-SEARCH.ps1": {
+  "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "input": "Sender, recipient or source IP; lookback days (default 7, maximum 90).",
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement with Get-MessageTraceV2; message-trace read rights.",
     "checks": [
@@ -328,7 +328,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "guards": [
       "Searches in periods of up to 10 days; reports results cut short by limits"
     ],
-    "sourceSha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
+    "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
     "objective": "Find email delivery records by sender, recipient, or IP address.",
     "notes": "Searches tenant message trace by sender, recipient, source IP, or combination.",
     "startMode": "right-click",
@@ -338,7 +338,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     }
   },
-  "IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
+  "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "input": "Public IP addresses or TXT list; API key for each enabled provider.",
     "requires": "HTTPS access to the selected VirusTotal and/or AbuseIPDB API; provider API keys. No M365 connection.",
     "checks": [
@@ -349,7 +349,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Selected public IPs are sent to enabled providers",
       "API keys are not written to disk by this script"
     ],
-    "sourceSha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
+    "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
     "objective": "Check selected public IP addresses against external reputation services.",
     "notes": "Adds reputation context to suspicious IP addresses.",
     "startMode": "right-click",
@@ -359,7 +359,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     }
   },
-  "IR-GET-TIMELINE-BUILDER.ps1": {
+  "BEC-GET-TIMELINE-BUILDER.ps1": {
     "input": "Local case folder or manual event entries; optional search text.",
     "checks": [
       "Events sorted by time from JSON, text, log, and Markdown files",
@@ -369,7 +369,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Labels events that use a file modification time instead of an event time",
       "Source evidence is never modified"
     ],
-    "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
+    "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
     "objective": "Combine supplied incident evidence into a timeline.",
     "requires": "Local case outputs",
     "notes": "Builds a simple chronology from IR notes, logs, JSON, or manual entries.",
@@ -380,7 +380,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "If input cannot be read, check its path or format. Keep the original evidence unchanged."
     }
   },
-  "IR-GET-TOKEN-DECODE.ps1": {
+  "BEC-GET-TOKEN-DECODE.ps1": {
     "checks": [
       "Decodes the token header and contents on this computer"
     ],
@@ -388,7 +388,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "No network or export",
       "Does not check whether the token is signed, trusted, or usable"
     ],
-    "sourceSha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
+    "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
     "objective": "Read a token's contents locally without sending it online.",
     "input": "JWT token",
     "requires": "PowerShell on this computer.",
@@ -400,7 +400,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "blocked": "If input cannot be read, check its path or format. Keep the original evidence unchanged."
     }
   },
-  "IR-GET-TOKEN-REPLAY-CHECK.ps1": {
+  "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "input": "Target UPN; lookback hours (default 48); expected country/region (default US).",
     "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, AuditLog.Read.All, IdentityRiskEvent.Read.All; tenant licensing and role access for the requested logs.",
     "checks": [
@@ -412,7 +412,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "An unexpected location alone does not prove a stolen session",
       "Desktop HTML report is optional; keep exported client information private"
     ],
-    "sourceSha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
+    "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
     "objective": "Review sign-ins for indicators of token replay or session theft.",
     "notes": "Looks for suspicious sign-in patterns consistent with token replay/AiTM.",
     "startMode": "right-click",
@@ -1278,12 +1278,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Choose the right Graph, Exchange Online, or hybrid connection approach."
   },
   "OPERATING-STANDARDS.md": {
-    "sourceSha256": "c064810f1ac3134988901c0ddf184b6d11ac846a0dbba1ec3a0c69cb5b62e8c0",
+    "sourceSha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
     "notes": "Top-level project decision contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
     "objective": "Read the project rules for building, reviewing, and releasing tools."
   },
   "field-kit-build-standard.md": {
-    "sourceSha256": "f5951bb50bc42b6a042bc35ac04f453dcd8b6fec951f96b461096316c8fc1e3c",
+    "sourceSha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
     "notes": "Locked baseline for FIELD // KIT visual design, navigation, sorting, card behavior, source publication, and release validation.",
     "objective": "Read the agreed site layout, card, and publishing standards."
   },
@@ -1293,7 +1293,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "objective": "Check lessons from earlier scripting and publishing problems."
   },
   "powershell-standards.md": {
-    "sourceSha256": "3d8d55f6a9c5293c98225f18bc07cc133f6f0e50e7020544ec24f1e0ef8ff856",
+    "sourceSha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
     "notes": "Script implementation baseline for interactive FIELD // KIT PowerShell tools.",
     "objective": "Read the coding, safety, and output standards for these PowerShell tools."
   },
@@ -1339,7 +1339,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PROJECT-HANDOFF.md": {
-    "sourceSha256": "f96c9b55c7158f1910aaa7ab22b1e8d7bf06c3ecbf900f3932016f2ba5c9339f",
+    "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
     "objective": "Find the current project state, decisions, limits, and next steps."
   },
@@ -1964,9 +1964,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -1983,9 +1983,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -2002,9 +2002,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.RevokeSessions.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -2749,7 +2749,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "related": [
       "GET-TRANSPORT-RULES-AUDIT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
     "relationshipFamily": "Mail transport"
   },
@@ -2766,7 +2766,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "related": [
       "GET-TRANSPORT-RULES-AUDIT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
     "relationshipFamily": "Mail transport"
   },
@@ -3073,7 +3073,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
     "related": [
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Search Jobs"
     ],
     "relationshipFamily": "Content search"
@@ -3093,7 +3093,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
     "relationshipFamily": "Content search"
   },
@@ -3114,7 +3114,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
     "relationshipFamily": "Content search"
   },
@@ -3133,7 +3133,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
     "relationshipFamily": "Content search"
   },
@@ -3184,9 +3184,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3203,9 +3203,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3222,9 +3222,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3241,9 +3241,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3260,9 +3260,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3279,9 +3279,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
     "relationshipFamily": "Mail investigation"
   },
@@ -3296,9 +3296,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3313,9 +3313,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3332,7 +3332,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
@@ -3351,7 +3351,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
@@ -3368,7 +3368,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Message trace ID from a trace search and the exact recipient address.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Search Jobs",
       "command:Who Received Mail From Suspicious Sender"
     ],
@@ -3385,7 +3385,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Uses the tenant in this PowerShell window’s Exchange Online connection; no mailbox or rule name to enter.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Who Received Mail From Suspicious Sender"
     ],
@@ -3404,7 +3404,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to read the selected data.",
     "input": "Replace command examples with your suspect sender address. Review all target values before running.",
     "related": [
-      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
@@ -3421,9 +3421,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3438,9 +3438,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3455,9 +3455,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3472,9 +3472,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -3489,9 +3489,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -5100,9 +5100,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
     "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
     "related": [
-      "ir-risk-assessment.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-IP-TRACE.ps1"
+      "BEC-GET-IP-TRACE.ps1"
     ],
     "relationshipFamily": "Sign-in investigation"
   },
@@ -6145,8 +6145,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     }
   },
-  "IR-INVOKE-EMAIL-RECOVERY.ps1": {
-    "name": "Incident Response: Restore Email",
+  "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
+    "name": "BEC: Restore Email",
     "scope": "SINGLE-MAILBOX",
     "input": "Mailbox + source and destination folders",
     "details": [
@@ -6154,9 +6154,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Delivery-trace exports are not recovery sources. Review the source folder before confirming."
     ],
     "family": "ir-mail",
-    "sourceSha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Restore previously moved email to the selected mailbox.",
     "preparation": [
       "Requires Microsoft Graph PowerShell and authorized access to the target tenant.",
@@ -6165,10 +6165,20 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "related": [
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-INVOKE-EMAIL-RECOVERY.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "Incident Response: Restore Email"
     ]
   },
-  "ir-risk-assessment.ps1": {
+  "BEC-RISK-ASSESSMENT.ps1": {
     "name": "BEC: Assess User Risk",
     "scope": "SINGLE-USER",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
@@ -6177,33 +6187,57 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Review findings and unavailable checks before deciding on containment."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "preparation": [
       "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
-      "ir-contain-eradicate.ps1",
+      "BEC-CONTAIN-ERADICATE.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
     "workflowReview": {
-      "kind": "uri-boundary-fix",
-      "version": "1.0.2",
-      "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+      "kind": "bec-naming",
+      "version": "1.0.3",
+      "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
         "operatorTested": true,
         "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
       },
-      "nonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
-      "evidence": "docs/qa/BEC-APP-LOOKUP-FIX.md"
-    }
+      "nonPresentationSha256": "ff31eb0a23789f8c987a4518eed398728639f25d7201bcd4db925a2b80e4b227",
+      "evidence": "docs/qa/BEC-NAMING-REVIEW.json",
+      "priorReview": {
+        "kind": "uri-boundary-fix",
+        "version": "1.0.2",
+        "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+        "baselineVerification": {
+          "version": "1.0.0",
+          "sha256": "07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",
+          "operatorTested": true,
+          "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+        },
+        "nonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
+        "evidence": "docs/qa/BEC-APP-LOOKUP-FIX.md"
+      },
+      "priorSourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791"
+    },
+    "operationalRevision": true,
+    "legacyFiles": [
+      "ir-risk-assessment.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "ir-risk-assessment.ps1",
+      "BEC: Assess User Risk"
+    ]
   },
-  "ir-contain-eradicate.ps1": {
+  "BEC-CONTAIN-ERADICATE.ps1": {
     "name": "BEC: Contain and Clean Up",
     "scope": "SINGLE-USER",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
@@ -6213,34 +6247,58 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Temporary passwords can remain in terminal capture/transcripts. The operator confirms trusted MFA methods."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Contain and clean up one compromised account after approval.",
     "preparation": [
       "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
-      "ir-risk-assessment.ps1",
-      "ir-recover-validate.ps1",
+      "BEC-RISK-ASSESSMENT.ps1",
+      "BEC-RECOVER-VALIDATE.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1"
     ],
     "workflowReview": {
-      "kind": "presentation-only",
-      "version": "1.0.2",
-      "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+      "kind": "bec-naming",
+      "version": "1.0.3",
+      "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
         "operatorTested": true,
         "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
       },
-      "nonPresentationSha256": "a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",
-      "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
-    }
+      "nonPresentationSha256": "eb522ff1bde245fc1b18884bb21039f5e2267930d9e31d35c9f504590a94c64b",
+      "evidence": "docs/qa/BEC-NAMING-REVIEW.json",
+      "priorReview": {
+        "kind": "presentation-only",
+        "version": "1.0.2",
+        "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+        "baselineVerification": {
+          "version": "1.0.0",
+          "sha256": "e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",
+          "operatorTested": true,
+          "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+        },
+        "nonPresentationSha256": "a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",
+        "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
+      },
+      "priorSourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da"
+    },
+    "operationalRevision": true,
+    "legacyFiles": [
+      "ir-contain-eradicate.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "ir-contain-eradicate.ps1",
+      "BEC: Contain and Clean Up"
+    ]
   },
-  "IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
-    "name": "Incident Response: Review File Activity",
+  "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "name": "BEC: Review File Activity",
     "scope": "SINGLE-USER",
     "input": "UPN and time range",
     "details": [
@@ -6248,42 +6306,62 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Log availability limits the review."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Review a user's file activity for possible data exposure.",
     "preparation": [
       "Requires Exchange Online PowerShell and permission to read the requested records."
     ],
     "related": [
-      "IR-GET-TIMELINE-BUILDER.ps1",
-      "IR-GET-IP-TRACE.ps1",
+      "BEC-GET-TIMELINE-BUILDER.ps1",
+      "BEC-GET-IP-TRACE.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-DATA-EXFIL-ACTIVITY.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "Incident Response: Review File Activity"
     ]
   },
-  "IR-GET-IP-TRACE.ps1": {
-    "name": "Incident Response: Trace IP Activity",
+  "BEC-GET-IP-TRACE.ps1": {
+    "name": "BEC: Trace IP Activity",
     "scope": "TENANT",
     "input": "IP address and time range",
     "details": [
       "An IP match needs context before attributing activity to a person."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Find tenant audit activity associated with a selected IP address.",
     "preparation": [
       "Requires Exchange Online PowerShell and permission to read the requested records."
     ],
     "related": [
       "GET-SIGNIN-ANOMALIES.ps1",
-      "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "BEC-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-IP-TRACE.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-IP-TRACE.ps1",
+      "Incident Response: Trace IP Activity"
     ]
   },
-  "IR-GET-TENANT-EMAIL-SEARCH.ps1": {
-    "name": "Incident Response: Trace Email Delivery",
+  "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "name": "BEC: Trace Email Delivery",
     "scope": "TENANT",
     "input": "Sender / recipient / IP + time range",
     "details": [
@@ -6291,9 +6369,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Does not create a recovery folder or restore email."
     ],
     "family": "ir-mail",
-    "sourceSha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Find email delivery records by sender, recipient, or IP address.",
     "preparation": [
       "Requires Exchange Online PowerShell and permission to read the requested records."
@@ -6301,11 +6379,21 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "related": [
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "Incident Response: Trace Email Delivery"
     ]
   },
-  "IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
-    "name": "Incident Response: Check IP Reputation",
+  "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
+    "name": "BEC: Check IP Reputation",
     "scope": "SINGLE or MULTI-IP",
     "input": "Public IP / TXT + provider API keys",
     "details": [
@@ -6313,21 +6401,31 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Reputation is context, not a verdict on compromise."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Check selected public IP addresses against external reputation services.",
     "preparation": [
       "Have an API key for each provider you enable."
     ],
     "related": [
-      "IR-GET-IP-TRACE.ps1",
+      "BEC-GET-IP-TRACE.ps1",
       "GET-SIGNIN-ANOMALIES.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-THREAT-INTEL-ACTIVITY.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "Incident Response: Check IP Reputation"
     ]
   },
-  "IR-GET-TIMELINE-BUILDER.ps1": {
-    "name": "Incident Response: Build Incident Timeline",
+  "BEC-GET-TIMELINE-BUILDER.ps1": {
+    "name": "BEC: Build Incident Timeline",
     "scope": "LOCAL",
     "input": "Evidence files",
     "details": [
@@ -6335,19 +6433,29 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "When event time is unavailable, labels the file’s modified time separately. Check time zones and gaps before drawing conclusions."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Combine supplied incident evidence into a timeline.",
     "preparation": [],
     "related": [
-      "IR-GET-IP-TRACE.ps1",
-      "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
-      "IR-GET-TOKEN-REPLAY-CHECK.ps1"
+      "BEC-GET-IP-TRACE.ps1",
+      "BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "BEC-GET-TOKEN-REPLAY-CHECK.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-TIMELINE-BUILDER.ps1",
+      "Incident Response: Build Incident Timeline"
     ]
   },
-  "IR-GET-TOKEN-DECODE.ps1": {
-    "name": "Incident Response: Decode Token",
+  "BEC-GET-TOKEN-DECODE.ps1": {
+    "name": "BEC: Decode Token",
     "scope": "LOCAL",
     "input": "Token",
     "details": [
@@ -6355,19 +6463,29 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "A decoded token is not proof of authenticity or current access."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Read a token's contents locally without sending it online.",
     "preparation": [],
     "related": [
-      "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SIGNIN-ANOMALIES.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-TOKEN-DECODE.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-TOKEN-DECODE.ps1",
+      "Incident Response: Decode Token"
     ]
   },
-  "IR-GET-TOKEN-REPLAY-CHECK.ps1": {
-    "name": "Incident Response: Review Token Replay",
+  "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "name": "BEC: Review Token Replay",
     "scope": "SINGLE-USER",
     "input": "UPN and time range",
     "details": [
@@ -6375,17 +6493,27 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Missing logs limit the result."
     ],
     "family": "ir-investigate",
-    "sourceSha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.3",
+    "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.4",
     "objective": "Review sign-ins for indicators of token replay or session theft.",
     "preparation": [
       "Requires Microsoft Graph PowerShell and authorized access to the target tenant."
     ],
     "related": [
       "GET-SIGNIN-ANOMALIES.ps1",
-      "IR-GET-IP-TRACE.ps1",
-      "IR-GET-TIMELINE-BUILDER.ps1"
+      "BEC-GET-IP-TRACE.ps1",
+      "BEC-GET-TIMELINE-BUILDER.ps1"
+    ],
+    "operationalRevision": true,
+    "legacyFiles": [
+      "IR-GET-TOKEN-REPLAY-CHECK.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "Incident Response: Review Token Replay"
     ]
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
@@ -6574,8 +6702,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Requires Microsoft Graph PowerShell and authorized access to the target tenant."
     ],
     "related": [
-      "IR-GET-IP-TRACE.ps1",
-      "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "BEC-GET-IP-TRACE.ps1",
+      "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ]
   },
@@ -7115,7 +7243,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     }
   },
-  "ir-recover-validate.ps1": {
+  "BEC-RECOVER-VALIDATE.ps1": {
     "name": "BEC: Restore and Validate",
     "scope": "SINGLE-USER",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
@@ -7124,31 +7252,55 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Confirm sign-in and MFA before closing the incident."
     ],
     "family": "ir-workflow",
-    "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Check recovery readiness and restore approved account access.",
     "preparation": [
       "Use the approved Windows support computer with Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+."
     ],
     "related": [
-      "ir-contain-eradicate.ps1",
+      "BEC-CONTAIN-ERADICATE.ps1",
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
     "workflowReview": {
-      "kind": "presentation-only",
-      "version": "1.0.2",
-      "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+      "kind": "bec-naming",
+      "version": "1.0.3",
+      "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
       "baselineVerification": {
         "version": "1.0.0",
         "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
         "operatorTested": true,
         "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
       },
-      "nonPresentationSha256": "141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",
-      "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
-    }
+      "nonPresentationSha256": "c78fa6007c42f723a7a6be832dadb46253a4f693e4576d970725e66be9741995",
+      "evidence": "docs/qa/BEC-NAMING-REVIEW.json",
+      "priorReview": {
+        "kind": "presentation-only",
+        "version": "1.0.2",
+        "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+        "baselineVerification": {
+          "version": "1.0.0",
+          "sha256": "c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",
+          "operatorTested": true,
+          "evidence": "docs/qa/IR-1.0.0-VERIFICATION.md"
+        },
+        "nonPresentationSha256": "141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",
+        "evidence": "docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md"
+      },
+      "priorSourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5"
+    },
+    "operationalRevision": true,
+    "legacyFiles": [
+      "ir-recover-validate.ps1"
+    ],
+    "searchAliases": [
+      "IR",
+      "incident response",
+      "ir-recover-validate.ps1",
+      "BEC: Restore and Validate"
+    ]
   },
   "git-handoff.ps1": {
     "name": "Save Project Handoff",

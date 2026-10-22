@@ -123,7 +123,7 @@ foreach ($command in $commands) {
 }
 & {
     $t=$null;$e=$null
-    $risk=[System.Management.Automation.Language.Parser]::ParseFile((Join-Path $Root 'published-source/incident-response/ir-risk-assessment.ps1'),[ref]$t,[ref]$e)
+    $risk=[System.Management.Automation.Language.Parser]::ParseFile((Join-Path $Root 'published-source/incident-response/BEC-RISK-ASSESSMENT.ps1'),[ref]$t,[ref]$e)
     $fn=$risk.Find({param($n) $n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq 'Get-ServicePrincipalInfo'},$false)
     $candidate=$fn.Extent.Text
     . ([scriptblock]::Create($candidate))

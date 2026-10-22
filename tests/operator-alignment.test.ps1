@@ -44,6 +44,18 @@ function NonPresentation-Tokens($Text){
 
 function Assert-ApprovedOperationalChange($Row,$Text){
  if(-not $Row.operationalChange){return}
+ if($Row.operationalChange.kind -eq 'bec-naming'){
+  $record=@((Get-Content (Join-Path $Root 'docs/qa/BEC-NAMING-REVIEW.json') -Raw|ConvertFrom-Json).entries|Where-Object file -eq $Row.file)
+  if($record.Count -ne 1){throw 'Missing unique BEC naming source review.'}
+  $baseline=$Text
+  $pairs=@($record[0].replacements)
+  for($i=$pairs.Count-1;$i -ge 0;$i--){$baseline=$baseline.Replace([string]$pairs[$i].new,[string]$pairs[$i].old)}
+  $sha=[Security.Cryptography.SHA256]::Create()
+  try{$bytes=[Text.Encoding]::UTF8.GetBytes($baseline);if($record[0].utf8Bom){$bytes=[byte[]](@(239,187,191)+$bytes)};$hash=([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+  if($hash -ne $record[0].priorSourceSha256 -or $hash -ne $Row.operationalChange.priorSourceSha256){throw 'BEC rename includes unreviewed operational changes.'}
+  return
+ }
+
  if($Row.file -eq 'set-execution.ps1' -and $Row.operationalChange.kind -eq 'setup-approval-gate'){
   $baseline=Remove-SetupApprovalGate $Text
   $sha=[Security.Cryptography.SHA256]::Create()
@@ -51,7 +63,7 @@ function Assert-ApprovedOperationalChange($Row,$Text){
   if($hash -ne $Row.operationalChange.priorSourceSha256){throw 'Setup gate includes unreviewed operational changes.'}
   return
  }
- if($Row.file -ne 'ir-risk-assessment.ps1'  -or $Row.operationalChange.kind -ne 'uri-boundary-fix'){throw 'Unknown approved operational change.'}
+ if($Row.file -ne 'BEC-RISK-ASSESSMENT.ps1'  -or $Row.operationalChange.kind -ne 'uri-boundary-fix'){throw 'Unknown approved operational change.'}
  $new='servicePrincipals/${ServicePrincipalId}?`$select';$old='servicePrincipals/$ServicePrincipalId?`$select'
  if(($Text.Split(@($new),[StringSplitOptions]::None).Count-1) -ne 1){throw 'Expected one corrected app lookup boundary.'}
  $baseline=$Text.Replace($new,$old).Replace('if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {','if (-not $Result.Ok) {').Replace('if (-not $Result.Ok -or @($Result.Data.value).Count -ne 1 -or @($Result.Data.value)[0].id -ne $ServicePrincipalId) {','if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {')
@@ -87,4 +99,4 @@ foreach($row in $rows){
  }
  Write-Output "PASS: reviewed source fingerprint / $($row.file)"
 }
-Write-Output 'PASS: 81 reviewed source comparisons, including the setup documentation-only revision; the isolated BEC URI/response fix is explicitly bounded; NoPause remains noninteractive where supported.'
+Write-Output 'PASS: 81 reviewed source comparisons, including the setup documentation-only revision; the setup gate, BEC URI fix and BEC naming migration are explicitly bounded; NoPause remains noninteractive where supported.'

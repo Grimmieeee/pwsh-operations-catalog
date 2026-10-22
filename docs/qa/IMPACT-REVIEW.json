@@ -2374,6 +2374,116 @@
       "safetyMetadataSha256": "c0da05f6aaa911019b33aa36617773d2cbb15628b38c4b08a0e0fe817016796a"
     },
     {
+      "id": "file:BEC-CONTAIN-ERADICATE.ps1",
+      "name": "BEC: Contain and Clean Up",
+      "type": "Workflow",
+      "impact": "Destructive",
+      "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+      "disposition": "screened",
+      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
+      "safetyMetadataSha256": "841acff23def6673b153068afa2ca45c300377b8f6cd4b34f7b1aa81fa317d8e"
+    },
+    {
+      "id": "file:BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "name": "BEC: Review File Activity",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "b33ec51a150f48688d43609dd0f8d1b9406e3dfa46d303d1f4e37cca4d5a316d"
+    },
+    {
+      "id": "file:BEC-GET-IP-TRACE.ps1",
+      "name": "BEC: Trace IP Activity",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "83c967cd3cf09b7a250cef4d821be26505f6d68d9f08518cc3afbe82e2ba2e1b"
+    },
+    {
+      "id": "file:BEC-GET-TENANT-EMAIL-SEARCH.ps1",
+      "name": "BEC: Trace Email Delivery",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "0bf5bee4262753be9527c2249004dea990067980b458c6758a060663ea7d7595"
+    },
+    {
+      "id": "file:BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "name": "BEC: Check IP Reputation",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "78db7e1e207bc40752fd7421688db1f44fbf76180a39cc7c42ad5639e9a7bb58"
+    },
+    {
+      "id": "file:BEC-GET-TIMELINE-BUILDER.ps1",
+      "name": "BEC: Build Incident Timeline",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "54849a21c1524de51bae08bb0c13bcce5cfea32fd80a5aea97e9d2ba93a35e31"
+    },
+    {
+      "id": "file:BEC-GET-TOKEN-DECODE.ps1",
+      "name": "BEC: Decode Token",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "92ff3f367937eb7b99b619fb634683083c50e6d3b7d1037e11cc953a61b161e0"
+    },
+    {
+      "id": "file:BEC-GET-TOKEN-REPLAY-CHECK.ps1",
+      "name": "BEC: Review Token Replay",
+      "type": "Tool",
+      "impact": "Read-only",
+      "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "ae578b1cfeac928586ac27bcdf8b600ad4362b074e4f8b3b1d95a138f96f18eb"
+    },
+    {
+      "id": "file:BEC-INVOKE-EMAIL-RECOVERY.ps1",
+      "name": "BEC: Restore Email",
+      "type": "Workflow",
+      "impact": "Change",
+      "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+      "disposition": "screened",
+      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
+      "safetyMetadataSha256": "ed6de64118651012ea831fca194f8faec785fbe568f82553ffd952b9af45d411"
+    },
+    {
+      "id": "file:BEC-RECOVER-VALIDATE.ps1",
+      "name": "BEC: Restore and Validate",
+      "type": "Workflow",
+      "impact": "Change",
+      "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+      "disposition": "screened",
+      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
+      "safetyMetadataSha256": "d992e1e067025caee7701b4bbe8772c908c206b1d855de61f7b7ea962d3f683b"
+    },
+    {
+      "id": "file:BEC-RISK-ASSESSMENT.ps1",
+      "name": "BEC: Assess User Risk",
+      "type": "Workflow",
+      "impact": "Read-only",
+      "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+      "disposition": "screened",
+      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
+      "safetyMetadataSha256": "9383aa250726deebdf5d4dca0323e0a8a13f64126041c6ba5f6599a61054ecef"
+    },
+    {
       "id": "file:CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
       "name": "Disabled User Mailbox Access Cleanup",
       "type": "Workflow",
@@ -2408,7 +2518,7 @@
       "name": "FIELD // KIT Build Standard",
       "type": "Documentation",
       "impact": "Read-only",
-      "sourceSha256": "f5951bb50bc42b6a042bc35ac04f453dcd8b6fec951f96b461096316c8fc1e3c",
+      "sourceSha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b6fef636ee7c8baafc32c4f24c10c8da62eb34a2a42b11eef8779d1a6abf6ecf"
@@ -2924,116 +3034,6 @@
       "safetyMetadataSha256": "0cc447f29fb9fe8bade355dd5618eebda4d3255f04d194ec31c4454d4ba18b4c"
     },
     {
-      "id": "file:ir-contain-eradicate.ps1",
-      "name": "IR: Contain and Eradicate",
-      "type": "Workflow",
-      "impact": "Destructive",
-      "sourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
-      "disposition": "screened",
-      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
-      "safetyMetadataSha256": "841acff23def6673b153068afa2ca45c300377b8f6cd4b34f7b1aa81fa317d8e"
-    },
-    {
-      "id": "file:IR-GET-DATA-EXFIL-ACTIVITY.ps1",
-      "name": "File Activity / Exfiltration Review",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "b33ec51a150f48688d43609dd0f8d1b9406e3dfa46d303d1f4e37cca4d5a316d"
-    },
-    {
-      "id": "file:IR-GET-IP-TRACE.ps1",
-      "name": "Suspicious IP Tenant Trace",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "83c967cd3cf09b7a250cef4d821be26505f6d68d9f08518cc3afbe82e2ba2e1b"
-    },
-    {
-      "id": "file:IR-GET-TENANT-EMAIL-SEARCH.ps1",
-      "name": "Tenant Email Search",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "0bf5bee4262753be9527c2249004dea990067980b458c6758a060663ea7d7595"
-    },
-    {
-      "id": "file:IR-GET-THREAT-INTEL-ACTIVITY.ps1",
-      "name": "Threat Intel IP Check",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "78db7e1e207bc40752fd7421688db1f44fbf76180a39cc7c42ad5639e9a7bb58"
-    },
-    {
-      "id": "file:IR-GET-TIMELINE-BUILDER.ps1",
-      "name": "Incident Timeline Builder",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "54849a21c1524de51bae08bb0c13bcce5cfea32fd80a5aea97e9d2ba93a35e31"
-    },
-    {
-      "id": "file:IR-GET-TOKEN-DECODE.ps1",
-      "name": "JWT Token Decode",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "92ff3f367937eb7b99b619fb634683083c50e6d3b7d1037e11cc953a61b161e0"
-    },
-    {
-      "id": "file:IR-GET-TOKEN-REPLAY-CHECK.ps1",
-      "name": "Token Replay / AiTM Review",
-      "type": "Tool",
-      "impact": "Read-only",
-      "sourceSha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "ae578b1cfeac928586ac27bcdf8b600ad4362b074e4f8b3b1d95a138f96f18eb"
-    },
-    {
-      "id": "file:IR-INVOKE-EMAIL-RECOVERY.ps1",
-      "name": "Restore Moved Email",
-      "type": "Workflow",
-      "impact": "Change",
-      "sourceSha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
-      "disposition": "screened",
-      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
-      "safetyMetadataSha256": "ed6de64118651012ea831fca194f8faec785fbe568f82553ffd952b9af45d411"
-    },
-    {
-      "id": "file:ir-recover-validate.ps1",
-      "name": "IR: Recovery and Validation",
-      "type": "Workflow",
-      "impact": "Change",
-      "sourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
-      "disposition": "screened",
-      "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
-      "safetyMetadataSha256": "d992e1e067025caee7701b4bbe8772c908c206b1d855de61f7b7ea962d3f683b"
-    },
-    {
-      "id": "file:ir-risk-assessment.ps1",
-      "name": "IR: Risk Assessment",
-      "type": "Workflow",
-      "impact": "Read-only",
-      "sourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "9383aa250726deebdf5d4dca0323e0a8a13f64126041c6ba5f6599a61054ecef"
-    },
-    {
       "id": "file:JOIN-COMPUTER-TO-DOMAIN.ps1",
       "name": "Join Computer to Domain",
       "type": "Script",
@@ -3078,7 +3078,7 @@
       "name": "Operating Standards",
       "type": "Documentation",
       "impact": "Read-only",
-      "sourceSha256": "c064810f1ac3134988901c0ddf184b6d11ac846a0dbba1ec3a0c69cb5b62e8c0",
+      "sourceSha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b6fef636ee7c8baafc32c4f24c10c8da62eb34a2a42b11eef8779d1a6abf6ecf"
@@ -3088,7 +3088,7 @@
       "name": "PowerShell Standards",
       "type": "Documentation",
       "impact": "Read-only",
-      "sourceSha256": "3d8d55f6a9c5293c98225f18bc07cc133f6f0e50e7020544ec24f1e0ef8ff856",
+      "sourceSha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b6fef636ee7c8baafc32c4f24c10c8da62eb34a2a42b11eef8779d1a6abf6ecf"
@@ -3108,7 +3108,7 @@
       "name": "Project Handoff",
       "type": "Documentation",
       "impact": "Read-only",
-      "sourceSha256": "f96c9b55c7158f1910aaa7ab22b1e8d7bf06c3ecbf900f3932016f2ba5c9339f",
+      "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b6fef636ee7c8baafc32c4f24c10c8da62eb34a2a42b11eef8779d1a6abf6ecf"

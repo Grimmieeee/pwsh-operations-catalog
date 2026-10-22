@@ -317,7 +317,7 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Revoke Sessions",
+      "name": "BEC: Revoke Sessions",
       "file": "",
       "path": null,
       "kind": "Quick command",
@@ -4844,59 +4844,77 @@
       ]
     },
     {
-      "name": "Incident Response: Restore Email",
-      "file": "IR-INVOKE-EMAIL-RECOVERY.ps1",
-      "path": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "name": "BEC: Restore Email",
+      "file": "BEC-INVOKE-EMAIL-RECOVERY.ps1",
+      "path": "published-source/incident-response/BEC-INVOKE-EMAIL-RECOVERY.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
+      "sha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
       "family": "Change workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "375f096c481686d5933fee82ceac7e56e4b33482e9ffe13ea588325869861f5e",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "42d6400dc9381a7be3e14573bd5ca60199b099224853cf49e7bb410dc42fb829",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "375f096c481686d5933fee82ceac7e56e4b33482e9ffe13ea588325869861f5e",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
-            ]
+              "Exact revised-source runtime acceptance remains separately attributable."
+            ],
+            "previousReview": {
+              "sha256": "42d6400dc9381a7be3e14573bd5ca60199b099224853cf49e7bb410dc42fb829",
+              "state": "Presentation aligned — offline checked",
+              "scope": [
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
+              ],
+              "tests": [
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
+              ],
+              "remaining": [
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ]
+            }
           }
         }
       },
@@ -4931,33 +4949,51 @@
     },
     {
       "name": "BEC: Assess User Risk",
-      "file": "ir-risk-assessment.ps1",
-      "path": "published-source/incident-response/ir-risk-assessment.ps1",
+      "file": "BEC-RISK-ASSESSMENT.ps1",
+      "path": "published-source/incident-response/BEC-RISK-ASSESSMENT.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+      "sha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
       "family": "Read-only workflows",
-      "state": "Scoped regression review — app lookup URI fix",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
-        "state": "Scoped regression review — app lookup URI fix",
+        "sha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Bounded app lookup URI/response fix; all other operational tokens preserved",
-          "Exact app-ID URI, filtered fallback, unresolved failures and cached lookups; tests/bec-app-lookup.test.ps1"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs",
-          "tests/bec-app-lookup.test.ps1"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
-        "previousReview": null
+        "previousReview": {
+          "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+          "state": "Scoped regression review — app lookup URI fix",
+          "scope": [
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Bounded app lookup URI/response fix; all other operational tokens preserved",
+            "Exact app-ID URI, filtered fallback, unresolved failures and cached lookups; tests/bec-app-lookup.test.ps1"
+          ],
+          "tests": [
+            "tests/card-objectives.test.ps1",
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs",
+            "tests/bec-app-lookup.test.ps1"
+          ],
+          "remaining": [
+            "No new live tenant or Windows-host runtime acceptance claimed."
+          ],
+          "previousReview": null
+        }
       },
       "signals": [
         {
@@ -4979,31 +5015,49 @@
     },
     {
       "name": "BEC: Contain and Clean Up",
-      "file": "ir-contain-eradicate.ps1",
-      "path": "published-source/incident-response/ir-contain-eradicate.ps1",
+      "file": "BEC-CONTAIN-ERADICATE.ps1",
+      "path": "published-source/incident-response/BEC-CONTAIN-ERADICATE.ps1",
       "kind": "PowerShell",
       "access": "Destructive",
-      "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+      "sha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
       "family": "Change workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
-        "previousReview": null
+        "previousReview": {
+          "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+          "state": "Alignment reviewed — source and rendered card checked",
+          "scope": [
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
+          ],
+          "tests": [
+            "tests/card-objectives.test.ps1",
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
+          ],
+          "remaining": [
+            "No new live tenant or Windows-host runtime acceptance claimed."
+          ],
+          "previousReview": null
+        }
       },
       "signals": [
         {
@@ -5047,74 +5101,92 @@
       ]
     },
     {
-      "name": "Incident Response: Review File Activity",
-      "file": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
-      "path": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "name": "BEC: Review File Activity",
+      "file": "BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "path": "published-source/incident-response/BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
+      "sha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "a5f17427b6cb03c31b790b922d8119c9107309b0bb8dabd773928d33a264a638",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "ac7647ebb8f82cc31637c5a03c22847ce6082ec94a63df995f0e6243156f0e1a",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "a5f17427b6cb03c31b790b922d8119c9107309b0bb8dabd773928d33a264a638",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
-              "state": "Owner accepted operator test",
+              "sha256": "ac7647ebb8f82cc31637c5a03c22847ce6082ec94a63df995f0e6243156f0e1a",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Adapted sampled read-only workflow; ten records / forty reads",
-                "Test source matched returned runner manifest; release adds a version comment only"
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Owner batch-2 completion confirmed",
-                "397 runner regression checks and batch-2 mock/local tests"
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone sign-in and unexercised branches remain outside the sampled test.",
-                "Pagination and full-tenant coverage were not tested."
-              ]
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ],
+              "previousReview": {
+                "sha256": "73a83bd02db13481dbd1feb9d9088bfedf6a5f925c09fa71c241eaa83f9746a0",
+                "state": "Owner accepted operator test",
+                "scope": [
+                  "Adapted sampled read-only workflow; ten records / forty reads",
+                  "Test source matched returned runner manifest; release adds a version comment only"
+                ],
+                "tests": [
+                  "Owner batch-2 completion confirmed",
+                  "397 runner regression checks and batch-2 mock/local tests"
+                ],
+                "remaining": [
+                  "Standalone sign-in and unexercised branches remain outside the sampled test.",
+                  "Pagination and full-tenant coverage were not tested."
+                ]
+              }
             }
           }
         }
@@ -5159,74 +5231,92 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Trace IP Activity",
-      "file": "IR-GET-IP-TRACE.ps1",
-      "path": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
+      "name": "BEC: Trace IP Activity",
+      "file": "BEC-GET-IP-TRACE.ps1",
+      "path": "published-source/incident-response/BEC-GET-IP-TRACE.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
+      "sha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "acce3f018ebcd20c0e3b199bf5b7ffc7924b26c6d4c64d75a47faf8b89f031c1",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "bc20f462ee16d7df2fd70f7984c2503acfa823c2bb5a6d482305e00ef0f3eeaa",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "acce3f018ebcd20c0e3b199bf5b7ffc7924b26c6d4c64d75a47faf8b89f031c1",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
-              "state": "Owner accepted operator test",
+              "sha256": "bc20f462ee16d7df2fd70f7984c2503acfa823c2bb5a6d482305e00ef0f3eeaa",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Adapted sampled read-only workflow; ten records / forty reads",
-                "Test source matched returned runner manifest; release adds a version comment only"
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Owner batch-2 completion confirmed",
-                "397 runner regression checks and batch-2 mock/local tests"
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone sign-in and unexercised branches remain outside the sampled test.",
-                "Pagination and full-tenant coverage were not tested."
-              ]
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ],
+              "previousReview": {
+                "sha256": "6f1bacdb932aa3e2e5077b3c810a0cfb9969e4c24b07e285e1ecdf53d3fffd2d",
+                "state": "Owner accepted operator test",
+                "scope": [
+                  "Adapted sampled read-only workflow; ten records / forty reads",
+                  "Test source matched returned runner manifest; release adds a version comment only"
+                ],
+                "tests": [
+                  "Owner batch-2 completion confirmed",
+                  "397 runner regression checks and batch-2 mock/local tests"
+                ],
+                "remaining": [
+                  "Standalone sign-in and unexercised branches remain outside the sampled test.",
+                  "Pagination and full-tenant coverage were not tested."
+                ]
+              }
             }
           }
         }
@@ -5271,74 +5361,92 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Trace Email Delivery",
-      "file": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
-      "path": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "name": "BEC: Trace Email Delivery",
+      "file": "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
+      "path": "published-source/incident-response/BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
+      "sha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "1851ee0ec2ebbc086aed89fed3bf2e4d839005497262fb6bb264a4b62a5622d8",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "609adcefda10bc1f02fc040141a11cabc494dd8b78c795b36b1d050b939e5edd",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "1851ee0ec2ebbc086aed89fed3bf2e4d839005497262fb6bb264a4b62a5622d8",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
-              "state": "Owner accepted operator test",
+              "sha256": "609adcefda10bc1f02fc040141a11cabc494dd8b78c795b36b1d050b939e5edd",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Adapted sampled read-only workflow; ten records / forty reads",
-                "Test source matched returned runner manifest; release adds a version comment only"
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Owner batch-2 completion confirmed",
-                "397 runner regression checks and batch-2 mock/local tests"
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone sign-in and unexercised branches remain outside the sampled test.",
-                "Pagination and full-tenant coverage were not tested."
-              ]
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ],
+              "previousReview": {
+                "sha256": "e4b41e56c30b37ea2ec5de44d5e2851fd5fd1c656122d03d9b2a21b4c89de83c",
+                "state": "Owner accepted operator test",
+                "scope": [
+                  "Adapted sampled read-only workflow; ten records / forty reads",
+                  "Test source matched returned runner manifest; release adds a version comment only"
+                ],
+                "tests": [
+                  "Owner batch-2 completion confirmed",
+                  "397 runner regression checks and batch-2 mock/local tests"
+                ],
+                "remaining": [
+                  "Standalone sign-in and unexercised branches remain outside the sampled test.",
+                  "Pagination and full-tenant coverage were not tested."
+                ]
+              }
             }
           }
         }
@@ -5383,59 +5491,77 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Check IP Reputation",
-      "file": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
-      "path": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "name": "BEC: Check IP Reputation",
+      "file": "BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "path": "published-source/incident-response/BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
+      "sha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "dea6a298adb935521b5d3b06b73ff0e654612bc8a04881382ade57a7b483964f",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "c7cafb2a070acf00512356ec7adf9567ccb21523fd6f9bf6966e5f97fc7519fe",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "dea6a298adb935521b5d3b06b73ff0e654612bc8a04881382ade57a7b483964f",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
-            ]
+              "Exact revised-source runtime acceptance remains separately attributable."
+            ],
+            "previousReview": {
+              "sha256": "c7cafb2a070acf00512356ec7adf9567ccb21523fd6f9bf6966e5f97fc7519fe",
+              "state": "Presentation aligned — offline checked",
+              "scope": [
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
+              ],
+              "tests": [
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
+              ],
+              "remaining": [
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ]
+            }
           }
         }
       },
@@ -5451,74 +5577,92 @@
       ]
     },
     {
-      "name": "Incident Response: Build Incident Timeline",
-      "file": "IR-GET-TIMELINE-BUILDER.ps1",
-      "path": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
+      "name": "BEC: Build Incident Timeline",
+      "file": "BEC-GET-TIMELINE-BUILDER.ps1",
+      "path": "published-source/incident-response/BEC-GET-TIMELINE-BUILDER.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
+      "sha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "00892f3409549b4fe2bad0a0d234f54ec06d581e63487982f30dd050d2fa2d5e",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "9c0121dff77342f37c68d80f73304fe1c472c11f5251f8912d67519c1f892ec2",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "00892f3409549b4fe2bad0a0d234f54ec06d581e63487982f30dd050d2fa2d5e",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
-              "state": "Owner accepted operator test",
+              "sha256": "9c0121dff77342f37c68d80f73304fe1c472c11f5251f8912d67519c1f892ec2",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Synthetic local fixture or host prerequisite inspection",
-                "Test source matched returned runner manifest; release adds a version comment only"
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Owner batch-2 completion confirmed",
-                "397 runner regression checks and batch-2 mock/local tests"
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone sign-in and unexercised branches remain outside the sampled test.",
-                "Pagination and full-tenant coverage were not tested."
-              ]
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ],
+              "previousReview": {
+                "sha256": "483a49fbc5439e1f6282a5fefd44bc6b085376092a27659991f056385b9d4469",
+                "state": "Owner accepted operator test",
+                "scope": [
+                  "Synthetic local fixture or host prerequisite inspection",
+                  "Test source matched returned runner manifest; release adds a version comment only"
+                ],
+                "tests": [
+                  "Owner batch-2 completion confirmed",
+                  "397 runner regression checks and batch-2 mock/local tests"
+                ],
+                "remaining": [
+                  "Standalone sign-in and unexercised branches remain outside the sampled test.",
+                  "Pagination and full-tenant coverage were not tested."
+                ]
+              }
             }
           }
         }
@@ -5532,74 +5676,92 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Decode Token",
-      "file": "IR-GET-TOKEN-DECODE.ps1",
-      "path": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
+      "name": "BEC: Decode Token",
+      "file": "BEC-GET-TOKEN-DECODE.ps1",
+      "path": "published-source/incident-response/BEC-GET-TOKEN-DECODE.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
+      "sha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "4b95de1355f8eb34b43a87e29e247e5da04541fb83b91ef0328f86918fa9f254",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "f5272d98b5bc1532832215237c10822c22ca7e21833be0175623ce4e9a49de2c",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "4b95de1355f8eb34b43a87e29e247e5da04541fb83b91ef0328f86918fa9f254",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
-              "state": "Owner accepted operator test",
+              "sha256": "f5272d98b5bc1532832215237c10822c22ca7e21833be0175623ce4e9a49de2c",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Synthetic local fixture or host prerequisite inspection",
-                "Test source matched returned runner manifest; release adds a version comment only"
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Owner batch-2 completion confirmed",
-                "397 runner regression checks and batch-2 mock/local tests"
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone sign-in and unexercised branches remain outside the sampled test.",
-                "Pagination and full-tenant coverage were not tested."
-              ]
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              ],
+              "previousReview": {
+                "sha256": "89be0780dd4434bbd1dfebf54bfe06df1f0bb3db23f1df111b1a3143f57918bf",
+                "state": "Owner accepted operator test",
+                "scope": [
+                  "Synthetic local fixture or host prerequisite inspection",
+                  "Test source matched returned runner manifest; release adds a version comment only"
+                ],
+                "tests": [
+                  "Owner batch-2 completion confirmed",
+                  "397 runner regression checks and batch-2 mock/local tests"
+                ],
+                "remaining": [
+                  "Standalone sign-in and unexercised branches remain outside the sampled test.",
+                  "Pagination and full-tenant coverage were not tested."
+                ]
+              }
             }
           }
         }
@@ -5619,84 +5781,102 @@
       "resultStates": []
     },
     {
-      "name": "Incident Response: Review Token Replay",
-      "file": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
-      "path": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "name": "BEC: Review Token Replay",
+      "file": "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
+      "path": "published-source/incident-response/BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "kind": "PowerShell",
       "access": "Read-only",
-      "sha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
+      "sha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
       "family": "Read-only workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
         "previousReview": {
-          "sha256": "a800a61cf9c7f9a2b34f02bb49c3764cbf8261d5cd0ad92a13f0cb544fd120c5",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
+            "No new live tenant or Windows-host runtime acceptance claimed."
           ],
           "previousReview": {
-            "sha256": "d7f15be210646268958f8e0bd78c1c1a72c4bf92fe24883d10a9f27bc57a4646",
-            "state": "Presentation aligned — offline checked",
+            "sha256": "a800a61cf9c7f9a2b34f02bb49c3764cbf8261d5cd0ad92a13f0cb544fd120c5",
+            "state": "Objective aligned — source/DOM checked",
             "scope": [
-              "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-              "Prior runtime acceptance retained historically; no new live-service claim"
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
             ],
             "tests": [
-              "PowerShell parser and required offline suites",
-              "tests/operator-alignment.test.ps1"
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
             ],
             "remaining": [
-              "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+              "Exact revised-source runtime acceptance remains separately attributable."
             ],
             "previousReview": {
-              "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
-              "state": "Export update awaiting operator retest",
+              "sha256": "d7f15be210646268958f8e0bd78c1c1a72c4bf92fe24883d10a9f27bc57a4646",
+              "state": "Presentation aligned — offline checked",
               "scope": [
-                "Changed control path review",
-                "Graph URI variable boundary correction",
-                "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+                "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+                "Prior runtime acceptance retained historically; no new live-service claim"
               ],
               "tests": [
-                "Parser, source integrity and card/connection binding checks",
-                "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+                "PowerShell parser and required offline suites",
+                "tests/operator-alignment.test.ps1"
               ],
               "remaining": [
-                "Standalone launch and complete findings review.",
-                "Full pagination and environment-specific branches.",
-                "Operator test of the updated optional Desktop report."
+                "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
               ],
-              "sampledRuntime": {
-                "sha256": "9c5be4224fc76567431e348673104c869ac063020974a45b97450f6f5027804f",
-                "runnerVersion": "0.3.2",
-                "ownerConfirmed": true,
-                "recordLimit": 10,
-                "requestBudget": 40,
-                "readFailures": 0,
-                "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+              "previousReview": {
+                "sha256": "5b2d89608eb132a45412260ed831f4c17030ea00b073f80789b5b5dcd4cb3d52",
+                "state": "Export update awaiting operator retest",
+                "scope": [
+                  "Changed control path review",
+                  "Graph URI variable boundary correction",
+                  "Exact-hash bounded read-only service queries; export and standalone paths separately scoped."
+                ],
+                "tests": [
+                  "Parser, source integrity and card/connection binding checks",
+                  "Owner-confirmed v0.3.2 sampled run, up to ten records per collection."
+                ],
+                "remaining": [
+                  "Standalone launch and complete findings review.",
+                  "Full pagination and environment-specific branches.",
+                  "Operator test of the updated optional Desktop report."
+                ],
+                "sampledRuntime": {
+                  "sha256": "9c5be4224fc76567431e348673104c869ac063020974a45b97450f6f5027804f",
+                  "runnerVersion": "0.3.2",
+                  "ownerConfirmed": true,
+                  "recordLimit": 10,
+                  "requestBudget": 40,
+                  "readFailures": 0,
+                  "evidence": "docs/qa/READONLY-SAMPLE-VERIFICATION.json"
+                }
               }
             }
           }
@@ -9636,31 +9816,49 @@
     },
     {
       "name": "BEC: Restore and Validate",
-      "file": "ir-recover-validate.ps1",
-      "path": "published-source/incident-response/ir-recover-validate.ps1",
+      "file": "BEC-RECOVER-VALIDATE.ps1",
+      "path": "published-source/incident-response/BEC-RECOVER-VALIDATE.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+      "sha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
       "family": "Change workflows",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source naming migration reviewed — bounded filename/title/version changes",
       "review": {
-        "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+        "state": "Source naming migration reviewed — bounded filename/title/version changes",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Inverse replacements reconstruct the exact prior source bytes",
+          "Actual new operational-token fingerprint recorded",
+          "Existing authorization, queries and cleanup retained"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
+          "tests/bec-naming.test.mjs",
+          "tests/bec-naming.test.ps1",
           "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/card-objectives.test.ps1"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "No new Windows/tenant runtime verification claimed."
         ],
-        "previousReview": null
+        "previousReview": {
+          "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+          "state": "Alignment reviewed — source and rendered card checked",
+          "scope": [
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
+          ],
+          "tests": [
+            "tests/card-objectives.test.ps1",
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
+          ],
+          "remaining": [
+            "No new live tenant or Windows-host runtime acceptance claimed."
+          ],
+          "previousReview": null
+        }
       },
       "signals": [
         {
@@ -11297,7 +11495,7 @@
       "path": "OPERATING-STANDARDS.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "c064810f1ac3134988901c0ddf184b6d11ac846a0dbba1ec3a0c69cb5b62e8c0",
+      "sha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -11326,7 +11524,7 @@
       "path": "tools/field-kit-build-standard.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "f5951bb50bc42b6a042bc35ac04f453dcd8b6fec951f96b461096316c8fc1e3c",
+      "sha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -11362,7 +11560,7 @@
       "path": "tools/powershell-standards.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "3d8d55f6a9c5293c98225f18bc07cc133f6f0e50e7020544ec24f1e0ef8ff856",
+      "sha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
       "family": "Reference",
       "state": "Needs review",
       "review": null,
@@ -11537,7 +11735,7 @@
       "path": "tools/PROJECT-HANDOFF.md",
       "kind": "Reference",
       "access": "Read-only",
-      "sha256": "f96c9b55c7158f1910aaa7ab22b1e8d7bf06c3ecbf900f3932016f2ba5c9339f",
+      "sha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
       "family": "Reference",
       "state": "Needs review",
       "review": null,

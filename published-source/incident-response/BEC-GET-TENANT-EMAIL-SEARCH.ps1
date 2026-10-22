@@ -1,4 +1,4 @@
-# .VERSION 1.0.3
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -244,7 +244,7 @@ function Get-TraceChunk {
 }
 
 try {
-    Write-Host 'Incident Response: Trace Email Delivery'
+    Write-Host 'BEC: Trace Email Delivery'
     Write-Host 'Find email delivery records by sender, recipient, or IP address.'
     Write-Host "READ-ONLY"
     Write-Host ""

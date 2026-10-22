@@ -144,7 +144,7 @@ switch($Focus){
   Assert-FK (@(Get-SendOnBehalfMatch -Mailbox $mailbox -TargetSet $set).Count -eq 1) 'SendOnBehalf selected unrelated principal.';Pass-FK 'send-on-behalf-isolation'
  } }
  'Recovery' { & {
-  . Import-FKFunctions 'published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1'
+  . Import-FKFunctions 'published-source/incident-response/BEC-INVOKE-EMAIL-RECOVERY.ps1'
   function Invoke-GraphPost {param($Uri,$Body)$script:FKUri=$Uri;$script:FKBody=$Body;$script:FKWrites++;if($script:FKCase -eq 'denied'){throw 'Synthetic write denied'};@{id='new-message'}}
   foreach($case in @('success','denied')){
    $script:FKCase=$case;$script:FKWrites=0;$threw=$false
@@ -225,7 +225,7 @@ switch($Focus){
   }
  } }
  'ThreatIntel' { & {
-  . Import-FKFunctions 'published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1'
+  . Import-FKFunctions 'published-source/incident-response/BEC-GET-THREAT-INTEL-ACTIVITY.ps1'
   foreach($case in @(@('8.8.8.8',$true),@('1.1.1.1',$true),@('10.1.2.3',$false),@('127.0.0.1',$false),@('172.16.1.1',$false),@('192.168.1.1',$false),@('169.254.1.1',$false),@('100.64.0.1',$false),@('224.0.0.1',$false),@('::1',$false),@('fc00::1',$false),@('fe80::1',$false),@('2606:4700:4700::1111',$true),@('not-an-ip',$false))){$ip=Convert-ToIPAddress $case[0];Assert-FK ((Test-PublicIPAddress $ip) -eq $case[1]) ('IP input guard failed: '+$case[0]);Pass-FK $case[0]}
  } }
  'GitSecurity' { & {
