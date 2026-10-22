@@ -1557,12 +1557,13 @@
     "input": "Folder of reviewed .ps1 files",
     "details": [
       "Place it beside only the reviewed scripts you intend to unblock.",
-      "Managed policies still apply."
+      "Managed policies still apply.",
+      "Review the folder plan and type SETUP before policy or file changes; blank cancels."
     ],
     "family": "setup",
-    "sourceSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Set local execution policy and unblock scripts beside this file.",
     "notice": "May change your current-user execution policy. Unblocks every .ps1 file beside this file.",
     "preparation": [],
@@ -1570,7 +1571,8 @@
       "SIGN-FOLDER-SCRIPTS.ps1",
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
-    ]
+    ],
+    "operationalRevision": true
   },
   "attractor.ps1": {
     "name": "Attractor",

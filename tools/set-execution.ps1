@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 # OBJECTIVE: Set local execution policy and unblock scripts beside this file.
 
@@ -17,6 +17,15 @@ $oldProgressPreference = $ProgressPreference
 $ProgressPreference = 'SilentlyContinue'
 
 try {
+    # BEGIN IMPACT APPROVAL
+    Write-Host "PLAN // CurrentUser execution policy may change to RemoteSigned."
+    Write-Host "PLAN // Unblock every .ps1 file directly beside this script: $PSScriptRoot"
+    Write-Warning 'Only continue if every script in this folder has been reviewed.'
+    if ((Read-Host 'Type SETUP to approve; anything else cancels').Trim() -cne 'SETUP') {
+        Write-Host 'CANCELLED // No execution policy or file unblock changes requested.'
+        return
+    }
+    # END IMPACT APPROVAL
     # Do not rewrite policy when the effective setting already allows this workflow.
     # Never try to override an organizational policy with a process-level bypass.
     try {

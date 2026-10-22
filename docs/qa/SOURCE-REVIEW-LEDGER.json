@@ -3986,36 +3986,53 @@
     }
   },
   "set-execution.ps1": {
-    "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
-    "state": "Alignment reviewed \u2014 source and rendered card checked",
+    "sha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+    "state": "Source and offline behavior reviewed \u2014 setup approval gate",
     "scope": [
-      "Shared card/script objective",
-      "Source-supported scope and preparation",
-      "Three explicitly reviewed related tools",
-      "Presentation-only source comparison"
+      "Exact insertion before policy and file changes",
+      "Blank or mismatched approval returns through finally",
+      "Prior operational logic preserved"
     ],
     "tests": [
-      "tests/card-objectives.test.ps1",
-      "tests/operator-alignment.test.ps1",
-      "tests/site-security.test.mjs"
+      "tests/impact-authorization.test.mjs (static, passed)",
+      "tests/batch-four.test.ps1 -Focus Execution (six offline cases passed)",
+      "tests/operator-alignment.test.ps1 and tests/card-objectives.test.ps1 (passed)"
     ],
     "remaining": [
-      "No new live tenant or Windows-host runtime acceptance claimed."
+      "Native Windows acceptance remains separate; no new runtime badge claimed."
     ],
     "previousReview": {
-      "sha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
-      "state": "Objective aligned \u2014 source/DOM checked",
+      "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+      "state": "Alignment reviewed \u2014 source and rendered card checked",
       "scope": [
-        "Exact card/script purpose parity",
-        "Non-presentation token fingerprint unchanged"
+        "Shared card/script objective",
+        "Source-supported scope and preparation",
+        "Three explicitly reviewed related tools",
+        "Presentation-only source comparison"
       ],
       "tests": [
         "tests/card-objectives.test.ps1",
-        "45 site/theme tests including visible purpose check"
+        "tests/operator-alignment.test.ps1",
+        "tests/site-security.test.mjs"
       ],
       "remaining": [
-        "Exact revised-source runtime acceptance remains separately attributable."
-      ]
+        "No new live tenant or Windows-host runtime acceptance claimed."
+      ],
+      "previousReview": {
+        "sha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
+        "state": "Objective aligned \u2014 source/DOM checked",
+        "scope": [
+          "Exact card/script purpose parity",
+          "Non-presentation token fingerprint unchanged"
+        ],
+        "tests": [
+          "tests/card-objectives.test.ps1",
+          "45 site/theme tests including visible purpose check"
+        ],
+        "remaining": [
+          "Exact revised-source runtime acceptance remains separately attributable."
+        ]
+      }
     }
   },
   "attractor.ps1": {

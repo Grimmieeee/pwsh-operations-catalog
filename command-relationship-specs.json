@@ -127,7 +127,7 @@
   },
   "Delete Cloud User": {
     "family": "Cloud account review",
-    "code": "Remove-MgUser -UserId \"user@domain.com\"",
+    "code": "& {\n    $Target = (Read-Host 'Exact cloud user UPN; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-MgUser -UserId $Target -ErrorAction Stop\n    $User | Format-List Id,DisplayName,UserPrincipalName | Out-Host\n    if ((Read-Host \"Type DELETE $($User.UserPrincipalName) to approve\").Trim() -cne \"DELETE $($User.UserPrincipalName)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-MgUser -UserId $User.Id -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify absence and retention requirements.'\n}",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
@@ -325,7 +325,7 @@
   },
   "Remove Distribution Group Member": {
     "family": "Distribution groups",
-    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$false",
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$true",
     "related": [
       "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1",
@@ -361,7 +361,7 @@
   },
   "Remove User from AD Group": {
     "family": "AD groups",
-    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$false",
+    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$true",
     "related": [
       "GET-USER-GROUPS.ps1",
       "GET-GROUP-MEMBERS.ps1",
@@ -496,7 +496,7 @@
   },
   "Remove Mailbox Full Access Delegate": {
     "family": "Mailbox access and forwarding",
-    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$false",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$true",
     "related": [
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-MAILBOX-FORWARDING.ps1",
@@ -514,7 +514,7 @@
   },
   "Remove Mailbox Send As Delegate": {
     "family": "Mailbox access and forwarding",
-    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$false",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$true",
     "related": [
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-MAILBOX-FORWARDING.ps1",
@@ -568,7 +568,7 @@
   },
   "Remove All Inbox Rules": {
     "family": "Inbox rules",
-    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Remove-InboxRule -Confirm:$false",
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
     "related": [
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
@@ -577,7 +577,7 @@
   },
   "Remove Specific Inbox Rule": {
     "family": "Inbox rules",
-    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$false",
+    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$true",
     "related": [
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
@@ -613,7 +613,7 @@
   },
   "Suspend For One Reboot": {
     "family": "Endpoint protection",
-    "code": "Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Suspend For One Reboot\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1\n}",
     "related": [
       "command:Show BitLocker Status",
       "command:Show BitLocker Recovery Protectors",
@@ -721,7 +721,7 @@
   },
   "Hard-Delete Search Results": {
     "family": "Content search",
-    "code": "$SearchName = \"SEARCH-NAME\"\nNew-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete",
+    "code": "& {\n    $SearchName = (Read-Host 'Exact completed compliance search name; blank cancels').Trim()\n    if (-not $SearchName) { return }\n    $Search = Get-ComplianceSearch -Identity $SearchName -ErrorAction Stop\n    $Search | Format-List Name,Status,Items,Size,ExchangeLocation,ContentMatchQuery | Out-Host\n    if ($Search.Status -ne 'Completed') { throw 'Search must be completed before purge.' }\n    Write-Warning 'Hard-delete the matching search results. Confirm the query and mailbox scope above.'\n    if ((Read-Host \"Type PURGE $SearchName to approve\").Trim() -cne \"PURGE $SearchName\") { Write-Host 'Cancelled; no changes.'; return }\n    New-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete -ErrorAction Stop\n    Write-Host 'Purge submitted; check compliance action status and service purge limits before claiming completion.'\n}",
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
@@ -1063,7 +1063,7 @@
   },
   "Release And Renew Dhcp": {
     "family": "Network changes",
-    "code": "ipconfig /release\nipconfig /renew",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Release And Renew Dhcp\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    ipconfig /release\n    ipconfig /renew\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1072,7 +1072,7 @@
   },
   "Reset Tcp/Ip Stack": {
     "family": "Network changes",
-    "code": "netsh int ip reset",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Tcp/Ip Stack\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh int ip reset\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1081,7 +1081,7 @@
   },
   "Reset Winsock": {
     "family": "Network changes",
-    "code": "netsh winsock reset",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Winsock\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh winsock reset\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1090,7 +1090,7 @@
   },
   "Restart Adapter": {
     "family": "Network changes",
-    "code": "Restart-NetAdapter -Name \"Ethernet\" -Confirm:$false",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Ethernet\" -Confirm:$true\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1216,7 +1216,7 @@
   },
   "Stop Process By Name": {
     "family": "Performance",
-    "code": "$Name = \"notepad\"\nStop-Process -Name $Name -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Stop Process By Name\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    $Name = \"notepad\"\n    Stop-Process -Name $Name -Force\n}",
     "related": [
       "command:Show Top Cpu Consumers",
       "command:Show Top Memory Consumers",
@@ -1270,7 +1270,7 @@
   },
   "Reboot Computer": {
     "family": "Apps and updates",
-    "code": "Restart-Computer -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
     "related": [
       "command:Show Available WinGet Updates",
       "command:Show Recent Windows Update History",
@@ -1288,7 +1288,7 @@
   },
   "Restart Service": {
     "family": "Services and scheduled tasks",
-    "code": "Restart-Service -Name \"Spooler\" -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Service\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Service -Name \"Spooler\" -Force\n}",
     "related": [
       "command:Show Service Status",
       "command:Show Scheduled Task",
@@ -1387,7 +1387,7 @@
   },
   "Remove Calendar Permission": {
     "family": "Calendar and contacts",
-    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$false",
+    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$true",
     "related": [
       "command:Show Calendar Permissions",
       "command:Show Contacts Permissions",
@@ -1522,7 +1522,7 @@
   },
   "Delete Local User": {
     "family": "Local accounts",
-    "code": "net user username /delete",
+    "code": "& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
     "related": [
       "command:Show Local Users",
       "command:Show Local Administrators",
@@ -1567,7 +1567,7 @@
   },
   "Disable Network Adapter": {
     "family": "Network changes",
-    "code": "netsh interface set interface \"Wi-Fi\" admin=disabled",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1576,7 +1576,7 @@
   },
   "Restart Network Adapter": {
     "family": "Network changes",
-    "code": "Restart-NetAdapter -Name \"Wi-Fi\"",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1585,7 +1585,7 @@
   },
   "Isolate Device - Disable Enabled Adapters": {
     "family": "Network changes",
-    "code": "Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$false",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
     "related": [
       "command:Show Active Adapters",
       "command:Show Ip Configuration",
@@ -1675,7 +1675,7 @@
   },
   "Update All Eligible WinGet Packages": {
     "family": "Apps and updates",
-    "code": "winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
     "related": [
       "command:Show Available WinGet Updates",
       "command:Show Recent Windows Update History",
@@ -1864,7 +1864,7 @@
   },
   "Delete All Inbox Rules": {
     "family": "Inbox rules",
-    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden | Remove-InboxRule -Confirm:$true",
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
     "related": [
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",

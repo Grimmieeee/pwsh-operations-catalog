@@ -211,10 +211,11 @@ switch($Focus){
   function Set-ExecutionPolicy {[CmdletBinding()]param($ExecutionPolicy,$Scope,[switch]$Force)$script:FKWrites++;Assert-FK ($Scope -eq 'CurrentUser' -and $ExecutionPolicy -eq 'RemoteSigned') 'Policy scope drift.'}
   function Get-ChildItem {[CmdletBinding()]param($LiteralPath,$Filter,[switch]$File)@{Name='fixture.ps1';FullName='fixture.ps1'}}
   function Unblock-File {[CmdletBinding()]param($LiteralPath)$script:FKUnblocks++;if($script:FKCase -eq 'unblock-denied'){throw 'Synthetic access denied'}}
-  function Read-Host {return ''}
-  foreach($case in @('success','already','managed','policy-unchanged','unblock-denied')){
+  function Read-Host {param($Prompt)if($Prompt -like 'Type SETUP*' -and $script:FKCase -ne 'cancel'){return 'SETUP'};return ''}
+  foreach($case in @('cancel','success','already','managed','policy-unchanged','unblock-denied')){
    $script:FKCase=$case;$script:FKWrites=0;$script:FKUnblocks=0;$failures=New-Object 'Collections.Generic.List[string]';$notices=New-Object 'Collections.Generic.List[string]';$oldProgressPreference=$ProgressPreference
    $text=Capture-FK $main
+   if($case -eq 'cancel'){Assert-FK ($script:FKWrites -eq 0 -and $script:FKUnblocks -eq 0) 'Cancelled setup changed policy/files.';Assert-FK ($text -match 'CANCELLED' -and $text -notmatch 'SETUP VERIFIED') 'Cancellation reported as success.';Pass-FK $case;continue}
    if($case -in @('already','managed')){Assert-FK ($script:FKWrites -eq 0) 'Managed/usable policy rewritten.'}
    else{Assert-FK ($script:FKWrites -eq 1) 'Expected scoped policy request.'}
    Assert-FK ($script:FKUnblocks -eq 1) 'Wrong unblock scope.'

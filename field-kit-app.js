@@ -43,7 +43,7 @@
       platform:"Exchange Online",
       access:"Change",
       requires:"Connect: Connect-ExchangeOnline",
-      code:'Remove-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -Confirm:$false',
+      code:'Remove-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -Confirm:$true',
       keywords:"calendar permissions mailbox folder remove access"
     },
     {
@@ -158,7 +158,7 @@
       name:"Delete Local User",
       platform:"Local Windows",
       access:"Destructive",
-      code:"net user username /delete",
+      code:"& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
       keywords:"delete local user remove account"
     },
     {
@@ -193,28 +193,28 @@
       name:"Disable Network Adapter",
       platform:"Local Windows",
       access:"Change",
-      code:'netsh interface set interface "Wi-Fi" admin=disabled',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
       keywords:"network adapter disable wifi isolate"
     },
     {
       name:"Restart Network Adapter",
       platform:"Local Windows",
       access:"Change",
-      code:'Restart-NetAdapter -Name "Wi-Fi"',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
       keywords:"network adapter restart nic"
     },
     {
       name:"Isolate Device - Disable Enabled Adapters",
       platform:"Local Windows",
       access:"Change",
-      code:'Get-NetAdapter | Where-Object Status -eq "Up" | Disable-NetAdapter -Confirm:$false',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
       keywords:"isolate device network adapters disable incident response"
     },
     {
       name:"Reboot Computer",
       platform:"Local Windows",
       access:"Change",
-      code:"shutdown /r /t 0",
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
       keywords:"restart reboot computer workstation"
     },
     {
@@ -291,7 +291,7 @@
       name:"Update All Eligible WinGet Packages",
       platform:"WinGet",
       access:"Change",
-      code:"winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
       keywords:"winget update all packages software"
     },
     {
@@ -448,7 +448,7 @@
       name:"Delete All Inbox Rules",
       platform:"Exchange Online",
       access:"Destructive",
-      code:'Get-InboxRule -Mailbox "user@domain.com" -IncludeHidden | Remove-InboxRule -Confirm:$true',
+      code:"& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
       useFor:"Remove all visible and hidden inbox rules after reviewing the target mailbox.",
       keywords:"exchange inbox rules hidden delete remove cleanup mailbox"
     },
@@ -2047,7 +2047,7 @@
     if (operatorCard && operatorCard.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) {
       source.operatorCard=operatorCard;
       source.input=operatorCard.input;
-      if(operatorCard.presentationRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
+      if(operatorCard.presentationRevision || operatorCard.operationalRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
     }
     const area = logicalArea(source);
     return {

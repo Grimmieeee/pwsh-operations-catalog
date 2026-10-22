@@ -7,8 +7,10 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from './site-test-harness.mjs';
 import { validateCardContract } from './card-contract.mjs';
+import { checkImpactReview } from './impact-review.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const {api,window,document}=loadCatalog(root);
+checkImpactReview(root);
 const hashes={};
 for(const item of api.ITEMS){
   if(!item.publishedPath)continue;

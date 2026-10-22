@@ -1374,7 +1374,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "set-execution.ps1": {
-    "sourceSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+    "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
     "objective": "Set local execution policy and unblock scripts beside this file.",
     "notes": "Explicit local setup utility. Checks effective execution policy, sets CurrentUser RemoteSigned only when needed and not managed, and unblocks adjacent .ps1 files. Run only in a folder of scripts you have reviewed. Does not sign files or install modules. Colored result; Enter to exit.",
     "input": "Place this file beside only the reviewed .ps1 files you intend to unblock.",
@@ -1932,17 +1932,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Cloud account review"
   },
   "Delete Cloud User": {
-    "code": "Remove-MgUser -UserId \"user@domain.com\"",
+    "code": "& {\n    $Target = (Read-Host 'Exact cloud user UPN; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-MgUser -UserId $Target -ErrorAction Stop\n    $User | Format-List Id,DisplayName,UserPrincipalName | Out-Host\n    if ((Read-Host \"Type DELETE $($User.UserPrincipalName) to approve\").Trim() -cne \"DELETE $($User.UserPrincipalName)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-MgUser -UserId $User.Id -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify absence and retention requirements.'\n}",
     "useFor": "Delete the selected Entra user.",
     "connectFirst": [
       "Connect-MgGraph -Scopes \"User.ReadWrite.All\" -ContextScope Process"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification."
     ],
     "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.ReadWrite.All.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "input": "Exact cloud user UPN at the prompt; review the resolved user, then type DELETE followed by the displayed UPN.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
@@ -2318,14 +2319,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Distribution groups"
   },
   "Remove Distribution Group Member": {
-    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$false",
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$true",
     "useFor": "Remove one user from the selected distribution group.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
@@ -2390,14 +2392,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "AD groups"
   },
   "Remove User from AD Group": {
-    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$false",
+    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$true",
     "useFor": "Remove the user from the selected Active Directory group.",
     "connectFirst": [
       "Import-Module ActiveDirectory"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state."
     ],
     "requires": "ActiveDirectory PowerShell module and a connection to the domain. Your Windows account needs permission to change the selected objects.",
     "input": "Replace command examples with your target account name; group name or object ID. Review all target values before running. Exact target group name.",
@@ -2656,14 +2659,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Full Access Delegate": {
-    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$false",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$true",
     "useFor": "Remove the selected delegate’s Full Access permission.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
@@ -2694,14 +2698,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Mailbox access and forwarding"
   },
   "Remove Mailbox Send As Delegate": {
-    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$false",
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$true",
     "useFor": "Remove the selected delegate’s Send As permission.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
@@ -2800,18 +2805,20 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Inbox rules"
   },
   "Remove All Inbox Rules": {
-    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Remove-InboxRule -Confirm:$false",
-    "useFor": "Delete every inbox rule in the selected mailbox, including hidden rules.",
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
+    "useFor": "Delete all visible and hidden inbox rules from one explicitly approved mailbox.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Includes legitimate rules. Stops on errors and rechecks remaining rules; cancellation does not delete rules.",
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "input": "Exact mailbox UPN at the prompt, then DELETE followed by that UPN after reviewing every returned rule.",
     "related": [
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
@@ -2820,14 +2827,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Inbox rules"
   },
   "Remove Specific Inbox Rule": {
-    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$false",
+    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$true",
     "useFor": "Delete one selected inbox rule.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state.",
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
@@ -2889,12 +2897,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Endpoint protection"
   },
   "Suspend For One Reboot": {
-    "code": "Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Suspend For One Reboot\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1\n}",
     "useFor": "Suspend BitLocker protection on C: for one reboot.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Drive or file path shown in the command; change it if the target is not C:.",
@@ -3088,18 +3098,19 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Content search"
   },
   "Hard-Delete Search Results": {
-    "code": "$SearchName = \"SEARCH-NAME\"\nNew-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete",
+    "code": "& {\n    $SearchName = (Read-Host 'Exact completed compliance search name; blank cancels').Trim()\n    if (-not $SearchName) { return }\n    $Search = Get-ComplianceSearch -Identity $SearchName -ErrorAction Stop\n    $Search | Format-List Name,Status,Items,Size,ExchangeLocation,ContentMatchQuery | Out-Host\n    if ($Search.Status -ne 'Completed') { throw 'Search must be completed before purge.' }\n    Write-Warning 'Hard-delete the matching search results. Confirm the query and mailbox scope above.'\n    if ((Read-Host \"Type PURGE $SearchName to approve\").Trim() -cne \"PURGE $SearchName\") { Write-Host 'Cancelled; no changes.'; return }\n    New-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete -ErrorAction Stop\n    Write-Host 'Purge submitted; check compliance action status and service purge limits before claiming completion.'\n}",
     "useFor": "Request hard deletion of the selected completed search’s results.",
     "connectFirst": [
       "Connect-IPPSSession"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
       "Permanent deletion request. Review the completed search and obtain approval before running."
     ],
     "requires": "ExchangeOnlineManagement module and Purview roles for this search or purge action. Your tenant must support the command shown.",
-    "input": "Replace command examples with your target search, rule, task or subject. Review all target values before running.",
+    "input": "Exact completed compliance search name; review query and mailbox scope, then type PURGE followed by that search name.",
     "related": [
       "command:Show Compliance Search Status",
       "command:Show Exchange Connection",
@@ -3731,12 +3742,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network paths"
   },
   "Release And Renew Dhcp": {
-    "code": "ipconfig /release\nipconfig /renew",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Release And Renew Dhcp\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    ipconfig /release\n    ipconfig /renew\n}",
     "useFor": "Release and renew DHCP addresses on this computer.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -3749,12 +3762,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network changes"
   },
   "Reset Tcp/Ip Stack": {
-    "code": "netsh int ip reset",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Tcp/Ip Stack\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh int ip reset\n}",
     "useFor": "Reset the local TCP/IP configuration.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Uses this Windows computer; no target values to enter.",
@@ -3766,12 +3781,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network changes"
   },
   "Reset Winsock": {
-    "code": "netsh winsock reset",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Winsock\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh winsock reset\n}",
     "useFor": "Reset the local Winsock catalog.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Uses this Windows computer; no target values to enter.",
@@ -3783,12 +3800,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network changes"
   },
   "Restart Adapter": {
-    "code": "Restart-NetAdapter -Name \"Ethernet\" -Confirm:$false",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Ethernet\" -Confirm:$true\n}",
     "useFor": "Restart the selected network adapter.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4000,12 +4019,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Performance"
   },
   "Stop Process By Name": {
-    "code": "$Name = \"notepad\"\nStop-Process -Name $Name -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Stop Process By Name\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    $Name = \"notepad\"\n    Stop-Process -Name $Name -Force\n}",
     "useFor": "Force-stop all processes with the selected name.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can discard unsaved work in every matching process."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4099,12 +4120,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Windows repair"
   },
   "Reboot Computer": {
-    "code": "Restart-Computer -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
     "useFor": "Force an immediate restart of this computer.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Restarts immediately and can discard unsaved work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4132,12 +4155,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Services and scheduled tasks"
   },
   "Restart Service": {
-    "code": "Restart-Service -Name \"Spooler\" -Force",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Service\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Service -Name \"Spooler\" -Force\n}",
     "useFor": "Force-restart the selected Windows service.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Replace command examples with your service name. Review all target values before running.",
@@ -4309,14 +4334,15 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Calendar and contacts"
   },
   "Remove Calendar Permission": {
-    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$false",
+    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$true",
     "useFor": "Remove the selected user’s permission from a mailbox calendar.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requests native confirmation before the selected change. Review the actual target in the command and confirmation prompt.",
+      "Command completion alone does not verify the resulting state."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
@@ -4564,15 +4590,16 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Local accounts"
   },
   "Delete Local User": {
-    "code": "net user username /delete",
+    "code": "& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
     "useFor": "Delete the selected local Windows account.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
-    "input": "Replace command examples with your target account name. Review all target values before running.",
+    "input": "Exact local username at the prompt; review the resolved SID, then type DELETE followed by the displayed username.",
     "related": [
       "command:Show Local Users",
       "command:Show Local Administrators",
@@ -4646,12 +4673,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Windows sessions and shares"
   },
   "Disable Network Adapter": {
-    "code": "netsh interface set interface \"Wi-Fi\" admin=disabled",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
     "useFor": "Disable the selected network adapter.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4664,12 +4693,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network changes"
   },
   "Restart Network Adapter": {
-    "code": "Restart-NetAdapter -Name \"Wi-Fi\"",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
     "useFor": "Restart the selected network adapter.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4682,12 +4713,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Network changes"
   },
   "Isolate Device - Disable Enabled Adapters": {
-    "code": "Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$false",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
     "useFor": "Disable every network adapter whose status is Up.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately.",
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work.",
       "Can disconnect your remote session. Have another way to reach the device."
     ],
     "requires": "Windows PowerShell running as administrator on the target computer.",
@@ -4847,12 +4880,14 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Apps and updates"
   },
   "Update All Eligible WinGet Packages": {
-    "code": "winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
     "useFor": "Update all eligible WinGet packages silently and accept package/source agreements.",
     "connectFirst": [],
     "checks": [],
     "guards": [
-      "Review the full command and target before pasting; it can make changes immediately."
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Review the command target before pasting. Type APPLY only after arranging for any interrupted connectivity or work."
     ],
     "requires": "WinGet installed on the target Windows computer; access to its package sources. Some installers require administrator approval.",
     "input": "Uses the WinGet packages and sources configured on this Windows computer.",
@@ -5189,18 +5224,21 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "relationshipFamily": "Inbox rules"
   },
   "Delete All Inbox Rules": {
-    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden | Remove-InboxRule -Confirm:$true",
-    "useFor": "Delete every inbox rule, including hidden rules, with PowerShell confirmation.",
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
+    "useFor": "Delete all visible and hidden inbox rules from one explicitly approved mailbox.",
     "connectFirst": [
       "Connect-ExchangeOnline"
     ],
     "checks": [],
     "guards": [
+      "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
+      "A command error can leave partial work; do not assume rollback or successful verification.",
+      "Includes legitimate rules. Stops on errors and rechecks remaining rules; cancellation does not delete rules.",
       "Review the target; PowerShell asks for confirmation before removal.",
       "Deletes rules, not email. Export or record rules first if you may need to restore them."
     ],
     "requires": "ExchangeOnlineManagement module and an Exchange role allowed to change the selected settings.",
-    "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
+    "input": "Exact mailbox UPN at the prompt, then DELETE followed by that UPN after reviewing every returned rule.",
     "related": [
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
@@ -7181,12 +7219,13 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "input": "Folder of reviewed .ps1 files",
     "details": [
       "Place it beside only the reviewed scripts you intend to unblock.",
-      "Managed policies still apply."
+      "Managed policies still apply.",
+      "Review the folder plan and type SETUP before policy or file changes; blank cancels."
     ],
     "family": "setup",
-    "sourceSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Set local execution policy and unblock scripts beside this file.",
     "notice": "May change your current-user execution policy. Unblocks every .ps1 file beside this file.",
     "preparation": [],
@@ -7194,7 +7233,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
-    ]
+    ],
+    "operationalRevision": true
   },
   "attractor.ps1": {
     "name": "Attractor",
