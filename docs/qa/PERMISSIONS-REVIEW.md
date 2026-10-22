@@ -26,7 +26,8 @@ preparation now live in DETAILS. Task impact and input warnings remain visible.
 ## Deliberate boundaries
 
 The BEC trio still requests the common nine-scope response token at initial sign-in.
-Assessment and recovery are read-only operations but use a write-capable token.
+Assessment is read-only but uses a write-capable token; containment and recovery
+can make approved changes.
 Each DETAILS section explicitly discloses this exception. Existing sessions can
 also hold broader permissions than a newly selected read task requests.
 

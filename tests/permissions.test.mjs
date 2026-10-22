@@ -31,6 +31,8 @@ test('script scope declarations match DETAILS and BEC write-capable tokens are e
   if(item.access==='Read-only'&&scopes.some(x=>/Write|RevokeSessions|EnableDisable/.test(x)))assert(item.permissionNotes.some(x=>/Shared-session exception/.test(x)),item.file);
  }
  assert.equal(graph,38);
+ const recovery=api.ITEMS.find(x=>x.file==='BEC-RECOVER-VALIDATE.ps1');assert.equal(recovery.access,'Change');
+ assert(recovery.permissionNotes.some(x=>/recovery can make approved changes/.test(x)));
 });
 test('MFA permission patch inversely reconstructs exact prior bytes',()=>{
  const file='published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1';let current=fs.readFileSync(path.join(root,file),'utf8');

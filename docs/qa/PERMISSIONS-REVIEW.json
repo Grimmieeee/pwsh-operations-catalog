@@ -1738,7 +1738,7 @@
     {
       "id": "file:BEC-CONTAIN-ERADICATE.ps1",
       "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
-      "permissionMetadataSha256": "442bd6d4e1c232095f41ad3d24e0832fee83e2f0090a891063f60cd9fa7aeb85",
+      "permissionMetadataSha256": "03ae066b7ef28e379570ddae706201c1cfefb499beac126e1026d80051d34b3e",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1817,7 +1817,7 @@
     {
       "id": "file:BEC-RECOVER-VALIDATE.ps1",
       "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
-      "permissionMetadataSha256": "442bd6d4e1c232095f41ad3d24e0832fee83e2f0090a891063f60cd9fa7aeb85",
+      "permissionMetadataSha256": "03ae066b7ef28e379570ddae706201c1cfefb499beac126e1026d80051d34b3e",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1834,7 +1834,7 @@
     {
       "id": "file:BEC-RISK-ASSESSMENT.ps1",
       "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
-      "permissionMetadataSha256": "0c157ae45f7e4424ea82a476544ad555b508c5ccb4b7ccf6a020221a34e4a6c4",
+      "permissionMetadataSha256": "3dfb547652d03a86364ba6466d3d1e968a29c59543cc939d6b0ad547f459059b",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
