@@ -520,5 +520,10 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "sha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
     "mode": "local",
     "services": []
+  },
+  "published-source/utility/PREPARE-FIELD-KIT.ps1": {
+    "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "mode": "local",
+    "services": []
   }
 });

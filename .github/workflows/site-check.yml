@@ -44,6 +44,7 @@ jobs:
         run: |
           ./tests/catalog-safety.test.ps1
           ./tests/bec-app-lookup.test.ps1
+          ./tests/first-run-setup.test.ps1
       - name: Test endpoint failure reporting offline
         shell: pwsh
         run: |

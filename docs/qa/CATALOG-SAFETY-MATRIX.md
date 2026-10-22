@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":327,"scripts":80,"commands":235,"references":12,"pending":0,"operatorVerified":0,"scopedReviews":80}
+{"entries":329,"scripts":81,"commands":235,"references":13,"pending":0,"operatorVerified":0,"scopedReviews":81}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|
@@ -69,6 +69,7 @@ Generated from current source hashes. Automated-test states describe the listed 
 | GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1 | Read-only workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | INVOKE-RESET-CLOUD-USER-PASSWORD.ps1 | Change workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | ir-recover-validate.ps1 | Change workflows | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
+| PREPARE-FIELD-KIT.ps1 | Local tools / toys | New source reviewed — first-run preparation | Approved current-user module installation; Official repository verification; Compatible modules retained; Cancellation and unattended failure reporting; No customer tenant sign-in or execution-policy changes |
 | git-handoff.ps1 | Local tools / toys | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | git-repo.ps1 | Local tools / toys | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |
 | git-security.ps1 | Local tools / toys | Alignment reviewed — source and rendered card checked | Shared card/script objective; Source-supported scope and preparation; Three explicitly reviewed related tools; Presentation-only source comparison |

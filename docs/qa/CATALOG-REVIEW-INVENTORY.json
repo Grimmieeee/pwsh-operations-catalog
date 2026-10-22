@@ -1,15 +1,15 @@
 {
   "note": "Repository inventory only. Unbadged does not mean untested; reconcile owner evidence before scheduling. Batch 1 is closed; see docs/PROJECT-STATUS.md. Update after source/catalog changes.",
   "counts": {
-    "catalogEntries": 327,
-    "publishedSources": 92,
-    "publishedPowerShell": 80,
+    "catalogEntries": 329,
+    "publishedSources": 94,
+    "publishedPowerShell": 81,
     "verifiedReleases": 0,
     "batches": {
       "Change and destructive workflows": 18,
-      "Documentation / reference": 12,
+      "Documentation / reference": 13,
       "Identity, mailbox and IR read-only tools": 23,
-      "Local tools and toys": 21,
+      "Local tools and toys": 22,
       "Quick commands": 235,
       "Tenant-wide read-only audits": 18
     }
@@ -491,6 +491,22 @@
       "publishedPath": "tools/skills.md",
       "version": null,
       "sha256": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
+      "batch": "Documentation / reference",
+      "reviewState": "Review required",
+      "operatorTested": false
+    },
+    {
+      "file": "START-HERE.md",
+      "name": "Start Here Guide",
+      "type": "Documentation",
+      "sourceKind": "Published source",
+      "area": "Tools",
+      "group": "Reference",
+      "access": "Read-only",
+      "catalogStatus": "Ready",
+      "publishedPath": "published-source/utility/START-HERE.md",
+      "version": null,
+      "sha256": "0dd7f7793b99f618fffbd51bb857ce5abb429eed619f626550033e86e72211fb",
       "batch": "Documentation / reference",
       "reviewState": "Review required",
       "operatorTested": false
@@ -1035,6 +1051,22 @@
       "publishedPath": "tools/MANAGE-CERT-SIGNATURES.ps1",
       "version": "1.0.2",
       "sha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
+      "batch": "Local tools and toys",
+      "reviewState": "Review required",
+      "operatorTested": false
+    },
+    {
+      "file": "PREPARE-FIELD-KIT.ps1",
+      "name": "Prepare FIELD KIT",
+      "type": "Tool",
+      "sourceKind": "Published source",
+      "area": "Tools",
+      "group": "Setup",
+      "access": "Change",
+      "catalogStatus": "Ready",
+      "publishedPath": "published-source/utility/PREPARE-FIELD-KIT.ps1",
+      "version": "1.0.0",
+      "sha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
       "batch": "Local tools and toys",
       "reviewState": "Review required",
       "operatorTested": false

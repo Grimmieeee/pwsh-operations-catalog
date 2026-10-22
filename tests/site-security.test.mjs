@@ -11,6 +11,44 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('Start Here makes preparation, one-job scope and completion visible',()=>{
+ const f=loadCatalog(root);f.api.state.area='Start Here';f.api.renderResults();
+ const html=f.elements.get('results').innerHTML;
+ for(const text of ['1. Confirm the customer and computer','2. Prepare PowerShell','3. Choose and run one job','4. Review, finish and close','Download Setup Package','RESULT: READY','SYSTEM account','same window','does not guarantee another password or MFA prompt'])assert.ok(html.includes(text),text);
+ assert.equal(f.elements.get('.search-wrap').classList.contains('hidden'),true);
+ assert.equal(f.elements.get('empty').classList.contains('hidden'),true);
+});
+
+test('first-run ZIP contains the exact reviewed setup, guide and checksum list',async()=>{
+ const f=loadCatalog(root,{fetchImpl:async url=>new Response(fs.readFileSync(path.join(root,new URL(url).pathname.replace('/pwsh-operations-catalog/',''))),{headers:{'content-type':'text/plain'}})});
+ const archive=Buffer.from(await (await f.api.buildSetupBundle()).arrayBuffer());
+ const report=JSON.parse(execFileSync('python3',['-c','import io,sys,zipfile,hashlib,json; z=zipfile.ZipFile(io.BytesIO(sys.stdin.buffer.read())); assert z.testzip() is None; print(json.dumps({"hashes":{n:hashlib.sha256(z.read(n)).hexdigest() for n in z.namelist()},"checksums":z.read("SHA256SUMS.txt").decode()}))'],{input:archive,encoding:'utf8'}));
+ assert.equal(Object.keys(report.hashes).length,3);
+ for(const name of ['PREPARE-FIELD-KIT.ps1','START-HERE.md']){
+  const item=f.api.ITEMS.find(x=>x.file===name),hash=digest(fs.readFileSync(path.join(root,item.publishedPath)));
+  assert.equal(report.hashes[name],hash);assert.ok(report.checksums.includes(hash+'  '+name));
+ }
+});
+
+test('first-run packaging refuses changed bytes and a missing source review',async()=>{
+ const altered=loadCatalog(root,{fetchImpl:async()=>new Response('altered source',{headers:{'content-type':'text/plain'}})});
+ await assert.rejects(altered.api.buildSetupBundle(),/checksum|integrity|match/i);
+ const f=loadCatalog(root);f.window.FIELD_KIT_CARD_GUIDANCE={...f.window.FIELD_KIT_CARD_GUIDANCE,'PREPARE-FIELD-KIT.ps1':{sourceSha256:'stale'}};
+ await assert.rejects(f.api.buildSetupBundle(),/source review/);
+});
+
+test('connection details distinguish customer sign-in, local setup and same-window cleanup',()=>{
+ const f=loadCatalog(root);
+ const text=file=>Array.from(f.api.connectionInfo(f.api.ITEMS.find(x=>x.file===file))).join(' ');
+ assert.match(text('PREPARE-FIELD-KIT.ps1'),/official PowerShell Gallery.*no customer tenant sign-in/);
+ assert.match(text('RESET-M365-SESSION.ps1'),/existing sessions in this PowerShell window/);
+ const cloud=f.api.ITEMS.find(x=>f.window.FIELD_KIT_CONNECTION_GUIDANCE?.[x.publishedPath]?.services?.includes('GRAPH'));
+ assert.match(Array.from(f.api.connectionInfo(cloud)).join(' '),/Microsoft Graph.*approved customer account/);
+ const item=f.api.ITEMS.find(x=>x.file==='PREPARE-FIELD-KIT.ps1');
+ f.window.FIELD_KIT_CONNECTION_GUIDANCE={...f.window.FIELD_KIT_CONNECTION_GUIDANCE,[item.publishedPath]:{sha256:'stale',services:['GRAPH']}};
+ assert.equal(f.api.connectionInfo(item).length,0);
+});
+
 test('reviewed tenant audits disclose the required tenant ID before launch',()=>{
  const f=loadCatalog(root);
  const items=f.api.ITEMS.filter(x=>x.publishedPath?.startsWith('published-source/tenant/')&&fs.readFileSync(path.join(root,x.publishedPath),'utf8').includes('Graph read failed; review incomplete.'));
@@ -475,7 +513,7 @@ test('cards preserve investigative limits and do not promise unavailable searche
 test('release card contract covers every source, command, default and completion path',()=>{
   const f=loadCatalog(root);
   const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
-  assert.deepEqual(validateCardContract({...f,hashes}),{sources:92,scripts:80,commands:235,pending:0});
+  assert.deepEqual(validateCardContract({...f,hashes}),{sources:94,scripts:81,commands:235,pending:0});
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
@@ -528,9 +566,9 @@ test('batch two acceptance remains tied to original bytes and resource acceptanc
 });
 
 
-test('all 80 purpose sentences match reviewed source objectives and stay visible before scope',()=>{
+test('all 81 purpose sentences match reviewed source objectives and stay visible before scope',()=>{
  const f=loadCatalog(root),records=JSON.parse(fs.readFileSync(path.join(root,'docs/qa/CARD-OBJECTIVES-REVIEW.json'),'utf8'));
- assert.equal(records.length,80);
+ assert.equal(records.length,81);
  for(const r of records){const item=f.api.ITEMS.find(x=>x.file===r.file);f.api.openItem(item);
   const html=f.elements.get('drawerBody').innerHTML,esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
   assert.equal(item.operatorCard.objective,r.objective,r.file);
@@ -541,7 +579,7 @@ test('all 80 purpose sentences match reviewed source objectives and stay visible
  }
 });
 
-test('all 80 scripts use reviewed relationships and every runnable relationship resolves',()=>{
+test('all 81 scripts use reviewed relationships and every runnable relationship resolves',()=>{
  const f=loadCatalog(root);
  for(const item of f.api.ITEMS.filter(x=>x.operatorCard || x.type==='Quick Command')){
   const related=f.api.relatedItems(item);
@@ -614,7 +652,7 @@ test('search rows show purposes and the same entity scope as opened cards',()=>{
 test('unpublished plans stay out of working searches, counts and cards',()=>{
   const f=loadCatalog(root);
   assert.equal(f.api.PLANNED_ITEMS.length,11);
-  assert.equal(f.api.ITEMS.length,327);
+  assert.equal(f.api.ITEMS.length,329);
   assert.ok(f.api.ITEMS.every(x=>x.publishedPath || x.code));
   for(const item of f.api.PLANNED_ITEMS){
     f.api.state.query=item.displayName;

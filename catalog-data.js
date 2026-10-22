@@ -5623,5 +5623,59 @@ window.CATALOG_DATA = [
     "version": "1.0.2",
     "publishedPath": "published-source/incident-response/ir-recover-validate.ps1",
     "output": "Verified enable state, ticket summary and assessment/monitoring follow-up"
+  },
+  {
+    "name": "Prepare FIELD KIT",
+    "type": "Tool",
+    "area": "Tools",
+    "subarea": "Setup",
+    "platform": "PowerShell",
+    "access": "Change",
+    "status": "Ready",
+    "source": "FIELD // KIT first-run setup",
+    "requires": "Windows PowerShell 5.1 or PowerShell 7.4+; PowerShellGet for installation.",
+    "input": "Current Windows account; Graph, Exchange or both",
+    "output": "Local prerequisite readiness and optional approved installation",
+    "file": "PREPARE-FIELD-KIT.ps1",
+    "publishedPath": "published-source/utility/PREPARE-FIELD-KIT.ps1",
+    "code": "",
+    "related": [],
+    "notes": "Checks first and installs missing selected modules only after approval. No customer tenant sign-in.",
+    "keywords": "first time preflight prepare setup module prerequisites readiness",
+    "url": "",
+    "_order": 999,
+    "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
+    "version": "1.0.0",
+    "toolFacts": [
+      "Checks selected module versions",
+      "Verifies module imports",
+      "Offers missing prerequisites only",
+      "No customer sign-in"
+    ],
+    "completion": {
+      "result": "READY, NOT READY or CANCELLED for the selected local prerequisites.",
+      "next": "Close setup and start one selected tool in a fresh PowerShell window under the same Windows account and edition.",
+      "blocked": "Resolve missing or incompatible prerequisites before running dependent tools. Setup does not prove customer access."
+    }
+  },
+  {
+    "name": "Start Here Guide",
+    "type": "Documentation",
+    "area": "Tools",
+    "subarea": "Reference",
+    "platform": "Reference",
+    "access": "Read-only",
+    "status": "Ready",
+    "source": "FIELD // KIT first-run guide",
+    "requires": "Approved RMM or remote session to the customer support computer.",
+    "input": "Customer support computer and approved operator account",
+    "output": "First-run steps and RMM setup options",
+    "file": "START-HERE.md",
+    "publishedPath": "published-source/utility/START-HERE.md",
+    "code": "",
+    "notes": "Prepare the support computer and run one approved workflow at a time.",
+    "objective": "Prepare the support computer and run one approved workflow at a time.",
+    "url": "",
+    "_order": 1000
   }
 ];
