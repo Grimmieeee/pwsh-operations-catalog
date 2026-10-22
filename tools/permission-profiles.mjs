@@ -34,6 +34,10 @@ add(['Add User to Entra Group'],'User.ReadBasic.All,GroupMember.ReadWrite.All','
 add(['Remove User from Entra Group'],'User.ReadBasic.All,GroupMember.ReadWrite.All','Groups + Microsoft.Graph.Users','group-delete-members','Authorized group owner or Groups Administrator (or supported custom equivalent).','Role-assignable groups additionally require RoleManagement.ReadWrite.Directory and Privileged Role Administrator; not requested by default. Dynamic membership cannot be managed as direct membership.');
 export const graphConsent='Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.';
 
+export function declaredModules(text){
+ return [...new Set([...text.matchAll(/\b(Microsoft\.Graph(?:\.[A-Za-z]+)+|ExchangeOnlineManagement|ActiveDirectory)\b/g)].map(x=>x[1]))];
+}
+
 // Explicit requested-scope declarations only: detection strings such as Mail.ReadWrite
 // are findings, not requested permissions. Source hashes gate all other syntax changes.
 export function requestedScopes(text,file){

@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {fileURLToPath} from 'node:url';
-import {loadCatalog} from '../tools/site-test-harness.mjs';import {checkPermissionsReview} from '../tools/permissions-review.mjs';import {graphProfiles,requestedScopes} from '../tools/permission-profiles.mjs';
+import {loadCatalog} from '../tools/site-test-harness.mjs';import {checkPermissionsReview} from '../tools/permissions-review.mjs';import {graphProfiles,requestedScopes,declaredModules} from '../tools/permission-profiles.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 test('whole-catalog permission review covers source and effective preparation',()=>assert.deepEqual(checkPermissionsReview(root),{entries:329,graphCommands:33,exceptions:3}));
 test('all task Graph preparations match reviewed scopes and use no write access for reads',()=>{
@@ -25,7 +25,8 @@ test('requirements, consent, role notes and connection preparation are inside DE
 test('script scope declarations match DETAILS and BEC write-capable tokens are explicit',()=>{
  const {api}=loadCatalog(root);let graph=0;
  for(const item of api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
-  const scopes=requestedScopes(fs.readFileSync(path.join(root,item.publishedPath),'utf8'),item.file);if(!scopes.length)continue;graph++;
+  const source=fs.readFileSync(path.join(root,item.publishedPath),'utf8'),scopes=requestedScopes(source,item.file);if(!scopes.length)continue;graph++;
+  for(const module of declaredModules(source))assert(item.requires.includes(module),item.file+': '+module);
   for(const scope of scopes)assert(item.requires.includes(scope),item.file+': '+scope);
   if(item.access==='Read-only'&&scopes.some(x=>/Write|RevokeSessions|EnableDisable/.test(x)))assert(item.permissionNotes.some(x=>/Shared-session exception/.test(x)),item.file);
  }

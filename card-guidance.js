@@ -16,7 +16,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
     "objective": "Find Conditional Access settings and exclusions that need review.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, Directory.Read.All, User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, Directory.Read.All, User.Read.All.",
     "notes": "Read-only Conditional Access posture review that flags disabled/report-only policies, exclusions, device-code gaps, location conditions, and other weak-coverage indicators.",
     "startMode": "right-click",
     "completion": {
@@ -43,7 +43,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
     "objective": "Assign a selected Microsoft 365 license to approved users.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
     "startMode": "right-click",
     "completion": {
@@ -58,7 +58,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. Defaults offered: group name Dynamic-Group-AnyLicense and alias DG_AnyLicense; change them before approval if needed.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Group.ReadWrite.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Group.ReadWrite.All, Directory.Read.All.",
     "guards": [
       "Checks the tenant and signed-in account",
       "Stops creation if an existing-group lookup fails or has more than one match",
@@ -92,7 +92,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
     "objective": "Remove selected Microsoft 365 licenses from approved users.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
     "startMode": "right-click",
     "completion": {
@@ -107,7 +107,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
     "input": "Tenant domain (for example, contoso.com). Default inactivity threshold: 90 days.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, Group.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, Group.Read.All.",
     "checks": [
       "Enabled users with old or missing sign-in records",
       "Active admin roles and cloud groups with no owner",
@@ -159,7 +159,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
-    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All, GroupMember.ReadWrite.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Group.Read.All, GroupMember.ReadWrite.All.",
     "checks": [
       "Group memberships in Active Directory and Entra ID",
       "Removal results and remaining memberships",
@@ -200,7 +200,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
     "objective": "Require per-user MFA for selected accounts after approval.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.ReadWrite.AuthenticationMethod, UserAuthenticationMethod.Read.All, User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.ReadWrite.AuthenticationMethod, UserAuthenticationMethod.Read.All, User.Read.All.",
     "notes": "Uses the Microsoft Graph beta authentication requirements endpoint. Per-user MFA is separate from Conditional Access and Security Defaults. Shows all target states first, requires typed ENFORCE confirmation, and re-reads each user to verify the resulting MFA state.",
     "startMode": "right-click",
     "completion": {
@@ -235,7 +235,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "input": "Mailbox sign-in name (UPN). Defaults: move from RSS Subscriptions to Restored Messages, looking back 24 hours. Review or change the folders before approving moves.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Mail.ReadWrite.Shared.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Mail.ReadWrite.Shared.",
     "checks": [
       "Folders selected for the email move",
       "Message preview and selected move results",
@@ -273,7 +273,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "Makes no tenant changes. Conditional Access is an enabled-policy inventory, not proof of user coverage. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. The policy list does not prove that Conditional Access protects this user.",
     "startMode": "workflow",
@@ -300,7 +300,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
     "objective": "Contain and clean up one compromised account after approval.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "Revocation, sign-in block, password reset and selected persistence deletion require explicit approvals. Synced AD changes use a SID-matched account. MFA is operator-confirmed, not independently enforced by the script. A temporary password can appear in terminal capture/transcripts; no automatic export or clipboard copy. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. You confirm trusted MFA methods; the script does not enforce them. A temporary password can remain in terminal capture/transcripts even after its variable is cleared.",
     "startMode": "workflow",
@@ -328,7 +328,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
     "objective": "Check recovery readiness and restore approved account access.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. Recovery does not reset passwords or remove unwanted access. Verify user sign-in with MFA and complete the follow-up monitoring.",
     "startMode": "workflow",
@@ -478,7 +478,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "input": "Target UPN; lookback hours (default 48); expected country/region (default US).",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, AuditLog.Read.All, IdentityRiskEvent.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, AuditLog.Read.All, IdentityRiskEvent.Read.All.",
     "checks": [
       "Entra sign-ins and Identity Protection risk detections",
       "Risk signals related to stolen tokens, plus sign-in locations"
@@ -509,7 +509,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Application.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Application.Read.All.",
     "checks": [
       "App permissions approved by guest users",
       "App and service names when they can be found",
@@ -535,7 +535,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
     "sourceSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
     "objective": "Find sign-in activity associated with shared mailboxes.",
     "notes": "Finds shared mailboxes with direct sign-in exposure.",
@@ -557,7 +557,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
     "sourceSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
     "objective": "Review registered apps, ownership, and credential expiry dates.",
     "notes": "Reviews app registrations and related security posture.",
@@ -578,7 +578,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All.",
     "sourceSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
     "objective": "Review policies for gaps in device-code sign-in protection.",
     "notes": "Reviews device-code authentication exposure.",
@@ -599,7 +599,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, UserAuthenticationMethod.Read.All, Policy.Read.ConditionalAccess.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, UserAuthenticationMethod.Read.All, Policy.Read.ConditionalAccess.",
     "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
     "objective": "Review MFA registration and the policies intended to protect sign-ins.",
     "notes": "Reviews MFA coverage and security gaps.",
@@ -622,7 +622,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All.",
     "sourceSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
     "objective": "Show the tenant's latest Microsoft Secure Score.",
     "notes": "Captures Microsoft Secure Score posture.",
@@ -643,7 +643,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All, User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All, User.Read.All.",
     "sourceSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
     "objective": "List enterprise app owners and identify apps without an owner.",
     "notes": "Reviews enterprise/service principal ownership.",
@@ -665,7 +665,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Marks the review incomplete when the page limit is reached",
       "Stops if required data is missing or cannot be read"
     ],
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
     "sourceSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
     "objective": "Find unusual sign-in activity that needs investigation.",
     "notes": "Reviews suspicious or anomalous tenant sign-ins.",
@@ -750,7 +750,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "input": "One exact user sign-in name (UPN). Access to the user’s Active Directory domain is needed for local AD checks.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ActiveDirectory + ExchangeOnlineManagement. Requested delegated Graph scopes: User.Read.All, Group.Read.All, Directory.Read.All.",
     "checks": [
       "Active Directory account, groups, owned objects, and direct reports",
       "Mailbox forwarding, shared access, retention, and usage",
@@ -791,7 +791,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
     "objective": "List tenant admin-role assignments for review.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, RoleManagement.Read.Directory, User.Read.All, AuditLog.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, RoleManagement.Read.Directory, User.Read.All, AuditLog.Read.All.",
     "notes": "Reviews active Entra admin-role assignments with account state, hybrid status, and recent sign-in context.",
     "startMode": "right-click",
     "completion": {
@@ -817,7 +817,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
     "objective": "Review app permissions granted in the tenant.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
     "notes": "Reviews delegated OAuth grants, resolves application/resource names, and flags high-risk scopes.",
     "startMode": "right-click",
     "completion": {
@@ -843,7 +843,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
     "objective": "Find guest accounts that need an ownership or activity review.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Reviews guest accounts for disabled state, stale/no sign-in, and unaccepted invitations.",
     "startMode": "right-click",
     "completion": {
@@ -868,7 +868,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
     "objective": "Review Microsoft 365 license capacity and user assignments.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Organization.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Reviews subscribed SKUs and user license assignments, including disabled licensed users and enabled unlicensed users.",
     "startMode": "right-click",
     "completion": {
@@ -938,7 +938,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
     "input": "Cloud-only user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional tenant domain. Default generated password: 20 characters; the script asks whether to require a change at next sign-in (default Yes).",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, User-PasswordProfile.ReadWrite.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, User-PasswordProfile.ReadWrite.All.",
     "notes": "Refuses synced users so Active Directory remains authoritative. Generated passwords are never exported.",
     "objective": "Reset passwords for selected cloud-only users after approval.",
     "startMode": "right-click",
@@ -1104,7 +1104,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
     "objective": "Find enabled accounts with old or unavailable Entra sign-in activity.",
     "input": "No user list needed. Reviews enabled member accounts in the signed-in tenant; default inactivity threshold: 90 days. Use -Days in a terminal to change it.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Tenant-wide review of enabled Entra member accounts. Missing sign-in activity is reported separately and is never classified as inactivity.",
     "startMode": "right-click",
     "completion": {
@@ -1121,7 +1121,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
     "objective": "Disable selected user accounts in AD or Entra after approval.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ActiveDirectory. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All.",
     "notes": "Guarded account-disable workflow for one or many users. Uses Active Directory for synced users and Entra ID for cloud-only users, requires typed DISABLE confirmation, validates post-change state, and can optionally revoke sessions and request Entra Connect delta sync.",
     "startMode": "right-click",
     "completion": {
@@ -1139,7 +1139,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
     "objective": "Delete approved user accounts from their authoritative directory.",
     "input": "Exact user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.ReadWrite.All, Organization.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ActiveDirectory + Microsoft.Graph.Users + Microsoft.Graph.Identity.DirectoryManagement. Requested delegated Graph scopes: User.ReadWrite.All, Organization.Read.All.",
     "notes": "Destructive identity deletion workflow for one or many explicitly approved users. Resolves exact UPNs, uses Active Directory for synced users and Entra ID for cloud-only/guest identities, shows a full plan, requires typed DELETE confirmation, and validates absence at the same authoritative source.",
     "startMode": "right-click",
     "completion": {
@@ -1157,7 +1157,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
     "objective": "Find user sign-in names from names, email addresses, or a list.",
     "input": "Tenant domain, plus names, email addresses, or sign-in names (UPNs). Direct entries and TXT/CSV lists are supported.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All.",
     "notes": "Tenant-targeted identity resolver for direct values or TXT/CSV input with exact/likely/multiple/no-match decisions plus verified review CSV and exact-match UPN TXT exports.",
     "startMode": "right-click",
     "completion": {
@@ -1174,7 +1174,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
     "objective": "Show whether selected accounts are enabled and when they last signed in.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. The script uses their shared domain unless a tenant domain is supplied.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Checks exact UPN account state and recorded Entra sign-in activity. Missing sign-in data and query failures remain explicit and are never treated as inactivity.",
     "startMode": "right-click",
     "completion": {
@@ -1191,7 +1191,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
     "objective": "List direct members of selected groups.",
     "input": "Group names or email addresses, entered directly or in a TXT/CSV file.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + Microsoft.Graph.Groups + ExchangeOnlineManagement + ActiveDirectory. Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
     "notes": "General group-to-members review for one or many groups. Resolution order is Exchange distribution group, Entra ID group, then Active Directory group.",
     "startMode": "right-click",
     "completion": {
@@ -1210,7 +1210,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
     "objective": "List the selected users' direct groups in AD and Entra.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Group.Read.All.",
     "notes": "User-to-groups review that independently checks Active Directory and Entra ID. Synced groups remain visible in Entra as [Synced] even when the same group is also observed in AD.",
     "startMode": "right-click",
     "completion": {
@@ -1228,7 +1228,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
     "objective": "List group owners and identify groups without an assigned owner.",
     "input": "No group list needed. Reviews groups in the tenant you sign in to.",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + Microsoft.Graph.Groups + ExchangeOnlineManagement. Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
     "notes": "Tenant-wide owner review across Teams, Microsoft 365 groups, security groups, mail-enabled groups, and Exchange distribution groups. Lookup failures and ownerless groups remain visible.",
     "startMode": "right-click",
     "completion": {
@@ -1402,7 +1402,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
     "objective": "Review one user's account, authentication, access, and recent sign-ins.",
     "input": "One user sign-in name (UPN).",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All.",
     "notes": "Read-only one-user identity/security snapshot covering account state, authentication, privileged roles, direct groups, licensing, recent sign-ins, and explicit data gaps.",
     "startMode": "right-click",
     "completion": {
@@ -1423,7 +1423,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
     "objective": "Get a broad overview of the tenant's security settings and review areas.",
     "input": "Reviews the tenant you sign in to; no user list needed. Default old-sign-in threshold: 90 days.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Organization.Read.All, User.Read.All, AuditLog.Read.All, Directory.Read.All, RoleManagement.Read.Directory, Policy.Read.ConditionalAccess, DelegatedPermissionGrant.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Organization.Read.All, User.Read.All, AuditLog.Read.All, Directory.Read.All, RoleManagement.Read.Directory, Policy.Read.ConditionalAccess, DelegatedPermissionGrant.Read.All.",
     "notes": "Fast tenant overview of users, stale enabled accounts, Conditional Access policy state, active admin roles, and delegated OAuth grants.",
     "startMode": "right-click",
     "completion": {
@@ -1476,7 +1476,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
     "objective": "Remove approved mailbox access held by one disabled user.",
     "input": "The disabled user’s exact sign-in name (UPN).",
-    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory. Requested delegated Graph scopes: User.Read.All, Directory.Read.All.",
     "notes": "Post-offboarding cleanup that validates disabled state at the authoritative identity source, scans Exchange recipients for direct Full Access, Send As, and Send on Behalf rights, shows the exact removal plan, requires typed approval, and verifies each requested removal.",
     "startMode": "right-click",
     "completion": {
@@ -1495,7 +1495,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
     "objective": "Compare tenant settings with a saved baseline and review changes.",
     "input": "Optional local JSON comparison file (baseline). By default, uses a tenant-specific file in the script’s BASELINES folder; offers to create one when missing.",
-    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
+    "requires": "Modules used (depending on selected branch): Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
     "notes": "Tenant configuration drift detector. Tenant operations are read-only; the only state change is creating or replacing a local JSON baseline after explicit approval, with readback verification.",
     "startMode": "right-click",
     "completion": {

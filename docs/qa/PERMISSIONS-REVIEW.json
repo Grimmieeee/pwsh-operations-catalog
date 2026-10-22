@@ -1738,7 +1738,7 @@
     {
       "id": "file:BEC-CONTAIN-ERADICATE.ps1",
       "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
-      "permissionMetadataSha256": "def5e9705f9fc462d20f2686fba083373476ebbbae768ad0a6cce4e734cccca9",
+      "permissionMetadataSha256": "442bd6d4e1c232095f41ad3d24e0832fee83e2f0090a891063f60cd9fa7aeb85",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1797,7 +1797,7 @@
     {
       "id": "file:BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
-      "permissionMetadataSha256": "df36540d3d89bb166ca95c49c0cf0e5acbabb58c8a1529d12627b09a2fc077f6",
+      "permissionMetadataSha256": "941f0ea2839ddfa5d3fd4e870959bde0f685b53651bd3ec3ba00ecff172be4e2",
       "requestedScopes": [
         "User.Read.All",
         "AuditLog.Read.All",
@@ -1808,7 +1808,7 @@
     {
       "id": "file:BEC-INVOKE-EMAIL-RECOVERY.ps1",
       "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
-      "permissionMetadataSha256": "c5872b15d2ef08dbcc59c203febee9854c21a407891c3290740b489bb77e2c9a",
+      "permissionMetadataSha256": "23f28666b446c1ef03db23c4e3b7550679edba2eefcaad54eb0a23fbb1c7fe68",
       "requestedScopes": [
         "Mail.ReadWrite.Shared"
       ],
@@ -1817,7 +1817,7 @@
     {
       "id": "file:BEC-RECOVER-VALIDATE.ps1",
       "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
-      "permissionMetadataSha256": "def5e9705f9fc462d20f2686fba083373476ebbbae768ad0a6cce4e734cccca9",
+      "permissionMetadataSha256": "442bd6d4e1c232095f41ad3d24e0832fee83e2f0090a891063f60cd9fa7aeb85",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1834,7 +1834,7 @@
     {
       "id": "file:BEC-RISK-ASSESSMENT.ps1",
       "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
-      "permissionMetadataSha256": "fc45fa86ecb7a1d17e872947eb4e2cab3c334e1a35aa7d3140b13fd793ea4109",
+      "permissionMetadataSha256": "0c157ae45f7e4424ea82a476544ad555b508c5ccb4b7ccf6a020221a34e4a6c4",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1851,7 +1851,7 @@
     {
       "id": "file:CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
       "sourceSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
-      "permissionMetadataSha256": "4a76a868eb52895cb5c81f4dcba482a3815d20693d7ea734aa9438bf5f1f5b86",
+      "permissionMetadataSha256": "33c93086c7f5a5d9eef3efbb30b52946232904dd6449bb0fb75adaf7699fb825",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All"
@@ -1882,7 +1882,7 @@
     {
       "id": "file:GET-ACCOUNT-STATUS.ps1",
       "sourceSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
-      "permissionMetadataSha256": "cd91be9cd87b7b2d6fb8db237354cf67ca247a1e575c1f2bc75de99791206071",
+      "permissionMetadataSha256": "9d3807d746ee96a27320d14f8896c6a24e8def10bfac48867308fb9175c5081d",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1893,7 +1893,7 @@
     {
       "id": "file:GET-ADMIN-ROLE-AUDIT.ps1",
       "sourceSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
-      "permissionMetadataSha256": "47f6c53228bf04f9ab27eedea7ae23bae3c247e5577cd52d979c0c56d3b858d9",
+      "permissionMetadataSha256": "797b1ecfd022159dabbf494bbbb63e8dd3557f0d68389f13d0fbf38d424b438b",
       "requestedScopes": [
         "Directory.Read.All",
         "RoleManagement.Read.Directory",
@@ -1905,7 +1905,7 @@
     {
       "id": "file:GET-APP-REGISTRATION-AUDIT.ps1",
       "sourceSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
-      "permissionMetadataSha256": "ae6e61f0df6cb5a604e4d0046d99f654d8f4583b0698b1b8e7014ef7bea3dd4d",
+      "permissionMetadataSha256": "da7043ed0203537414c8649f26383314204952cbffd94741982f2f5f4732c9d8",
       "requestedScopes": [
         "Application.Read.All",
         "Directory.Read.All"
@@ -1915,7 +1915,7 @@
     {
       "id": "file:GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "sourceSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
-      "permissionMetadataSha256": "0eefdd3d2aae9817d459030ff6ff447bbf1a473fbe2e297375776b4c687cfbae",
+      "permissionMetadataSha256": "6fba5fd9cb4fc158d22152978172fdd8252af184ded7bab2b6418ea78a7b1453",
       "requestedScopes": [
         "Policy.Read.ConditionalAccess",
         "Directory.Read.All",
@@ -1926,7 +1926,7 @@
     {
       "id": "file:GET-DEVICE-CODE-EXPOSURE.ps1",
       "sourceSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
-      "permissionMetadataSha256": "1c9cdff0f274f685087538a59be409226e94eda33223472d18914f4aeefe0222",
+      "permissionMetadataSha256": "97ed53f6d08c1ffaa7b9b4789df60ec2eaa97c7de4b4c504af72a6704babd9bf",
       "requestedScopes": [
         "Policy.Read.ConditionalAccess",
         "AuditLog.Read.All",
@@ -1951,7 +1951,7 @@
     {
       "id": "file:GET-GROUP-MEMBERS.ps1",
       "sourceSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
-      "permissionMetadataSha256": "fdcdd73bea94cf97be7430c5800b50c620ec9f756b6efc5b34631a05fbb70878",
+      "permissionMetadataSha256": "f77ca890f2b588ac648a57bff180bef003611555761492c622fda41e67f987c0",
       "requestedScopes": [
         "Group.Read.All",
         "User.Read.All"
@@ -1961,7 +1961,7 @@
     {
       "id": "file:GET-GUEST-APP-CONSENT-AUDIT.ps1",
       "sourceSha256": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
-      "permissionMetadataSha256": "6a982727bf2b13ef3aebe7adf23504bc77f2fcfbc32271406be888381e11d5fe",
+      "permissionMetadataSha256": "028849a19aed685d19422e650af0f26a6ce923734e778c2eebb2d9bc12718736",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -1972,7 +1972,7 @@
     {
       "id": "file:GET-GUEST-USER-AUDIT.ps1",
       "sourceSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
-      "permissionMetadataSha256": "a51b7a659a0c49976fdde1727e8ef98d64be41ad936e1ec75176121c8f4c9e45",
+      "permissionMetadataSha256": "bf74a2bce7d1c4852a9a62097f6f1645cdf4d1c696de7ca407cd98c16d5ee406",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2004,7 +2004,7 @@
     {
       "id": "file:GET-MFA-SECURITY-AUDIT.ps1",
       "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
-      "permissionMetadataSha256": "94992655f6c034e736cac5c26adc6631da006e0cb62059dd1d767e348f00a3da",
+      "permissionMetadataSha256": "d5bfdb7570b6fea9171e80aa1d6585fc565256bb69c3199f128640cf04e08718",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2017,7 +2017,7 @@
     {
       "id": "file:GET-OAUTH-CONSENT-AUDIT.ps1",
       "sourceSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
-      "permissionMetadataSha256": "c2c11d866ab1d7cc15d6a00e0a83d82286cc0bb2747dbd8f24baf9f513ad6601",
+      "permissionMetadataSha256": "87d8aee8f5fbffd5f21203c3ad298df972db16b00520be4bdf4af3f1fa643e06",
       "requestedScopes": [
         "Application.Read.All",
         "Directory.Read.All"
@@ -2027,7 +2027,7 @@
     {
       "id": "file:GET-QUARTERLY-CLEANUP-REVIEW.ps1",
       "sourceSha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
-      "permissionMetadataSha256": "eee868e117e34587ba7813b6cad5cf230639a20e4d55ba102bfa557635032497",
+      "permissionMetadataSha256": "897d8e098efa92b80bb943a68bf8f92ccaa2d6e630b8f86a7f5c189bbd6c61ae",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2046,7 +2046,7 @@
     {
       "id": "file:GET-SECURE-SCORE-SNAPSHOT.ps1",
       "sourceSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
-      "permissionMetadataSha256": "53608e3e26b297b4886f4e928b2ad9e4d05d103ac3cb26b6a120c308f8df7dc1",
+      "permissionMetadataSha256": "fcb277436f5bfa6713a7212b9379e7a587cf394028abc564a4ba3d40a18138d9",
       "requestedScopes": [
         "SecurityEvents.Read.All",
         "SecurityActions.Read.All",
@@ -2057,7 +2057,7 @@
     {
       "id": "file:GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "sourceSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
-      "permissionMetadataSha256": "25b4636915ce0a396bb3bc911155c82ea0ebe4274d92ec0933c87706623e5996",
+      "permissionMetadataSha256": "914f88bbaf7ebb65904f75a784aa6a012912bae13e29b2c1bef600a509f8b774",
       "requestedScopes": [
         "Application.Read.All",
         "Directory.Read.All",
@@ -2068,7 +2068,7 @@
     {
       "id": "file:GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
       "sourceSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
-      "permissionMetadataSha256": "3eb22524e9b81cde08e9946c1f327e6d69c05b7ba6ca4aa891ddb7be0d8a7dee",
+      "permissionMetadataSha256": "9f1a02d34a9494a0425bd3cb05609962023220d525df0580c39c090c7bc96f8e",
       "requestedScopes": [
         "AuditLog.Read.All",
         "User.Read.All",
@@ -2079,7 +2079,7 @@
     {
       "id": "file:GET-SIGNIN-ANOMALIES.ps1",
       "sourceSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
-      "permissionMetadataSha256": "7eb8b4ebe75609b24507d1594366dbfd28e7a5245f89875e6038b9a59d6ce8c7",
+      "permissionMetadataSha256": "b7db216ffd901848a57697bf6ea0a2503f3f583079d87d19bda20af27d27a2e3",
       "requestedScopes": [
         "AuditLog.Read.All",
         "User.Read.All",
@@ -2090,7 +2090,7 @@
     {
       "id": "file:GET-STALE-SIGNIN-REVIEW.ps1",
       "sourceSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
-      "permissionMetadataSha256": "cd91be9cd87b7b2d6fb8db237354cf67ca247a1e575c1f2bc75de99791206071",
+      "permissionMetadataSha256": "9d3807d746ee96a27320d14f8896c6a24e8def10bfac48867308fb9175c5081d",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2101,7 +2101,7 @@
     {
       "id": "file:GET-TENANT-DRIFT-REVIEW.ps1",
       "sourceSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
-      "permissionMetadataSha256": "616312d4011678b6c332dec0f6b1ad09c052a1fbe903c41e8d04a745647092b6",
+      "permissionMetadataSha256": "8de0df7435adf8de670e686ae54daf12d16953828a89306804fc7c711b935b1f",
       "requestedScopes": [
         "Directory.Read.All",
         "Application.Read.All",
@@ -2114,7 +2114,7 @@
     {
       "id": "file:GET-TENANT-GROUP-OWNERS.ps1",
       "sourceSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
-      "permissionMetadataSha256": "229d33883bed31a1b4f6a451d0720bdc19a55939fe512e5f892787937f31d84f",
+      "permissionMetadataSha256": "0b1829ea1b85a4e545f85a6298292e175fe37f10eea738c49770fb369dde338a",
       "requestedScopes": [
         "Group.Read.All",
         "User.Read.All"
@@ -2131,7 +2131,7 @@
     {
       "id": "file:GET-TENANT-LICENSING-AUDIT.ps1",
       "sourceSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
-      "permissionMetadataSha256": "3f68e9b7ac27635c6c3a96e3c09546bba2c2b0b2cb2b072d95521bf6c0725467",
+      "permissionMetadataSha256": "f8619815b85a61ad5e821eb6f513f4d2341299df210f6f87d8dec55cd1ad81a2",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2149,7 +2149,7 @@
     {
       "id": "file:GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "sourceSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
-      "permissionMetadataSha256": "1ba690323abcf689bacef980e909506b904aeed899817761f02502f2724ef724",
+      "permissionMetadataSha256": "d18dd22a615e7f830a29ec89050dc988d0f7cd62593567d8db28b562f2f634b3",
       "requestedScopes": [
         "Organization.Read.All",
         "User.Read.All",
@@ -2178,7 +2178,7 @@
     {
       "id": "file:GET-USER-GROUPS.ps1",
       "sourceSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
-      "permissionMetadataSha256": "bd41de14fd445e49e75662e515ce03bfbf0bcd3f40989a8a75e139c6a385ab33",
+      "permissionMetadataSha256": "3dc464ae654e0337b8ae94001821ac870c4ac355ae02e3edc934757bb4f5618f",
       "requestedScopes": [
         "User.Read.All",
         "Group.Read.All"
@@ -2188,7 +2188,7 @@
     {
       "id": "file:GET-USER-PREDELETE-CHECK.ps1",
       "sourceSha256": "4ae5545f73829374e5b1500bd3ba8cc029e3f095e700e9ce76bf835d8a034107",
-      "permissionMetadataSha256": "b87a8df2c19c0046594cc2062899b88c7f8451e924de41abce0852d3fd92a545",
+      "permissionMetadataSha256": "7023f4daf631ac7ac8bfc7bfb07f070ec97cc72e01010367b9389d21de59ca10",
       "requestedScopes": [
         "User.Read.All",
         "Group.Read.All",
@@ -2199,7 +2199,7 @@
     {
       "id": "file:GET-USER-SECURITY-SNAPSHOT.ps1",
       "sourceSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
-      "permissionMetadataSha256": "8e9f74c67bea6da527baceef3fc97cd38dc7253f9229f3eac612cadb7a18b364",
+      "permissionMetadataSha256": "d50862c5c6483c40a1c1b5a50a31016fb4dc53c5e0513c7b9f5546aee7af2f0e",
       "requestedScopes": [
         "User.Read.All",
         "Directory.Read.All",
@@ -2253,7 +2253,7 @@
     {
       "id": "file:INVOKE-ASSIGN-LICENSES.ps1",
       "sourceSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
-      "permissionMetadataSha256": "e10d363112029f88030d02c91d46f5bde2bedae8b3bb1a476e4788e4600bca8f",
+      "permissionMetadataSha256": "9feeb1db4c39a4223388508b1eabdaad520cab757804ffb4f531d05cf3898356",
       "requestedScopes": [
         "User.ReadWrite.All",
         "Directory.Read.All",
@@ -2264,7 +2264,7 @@
     {
       "id": "file:INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
       "sourceSha256": "7ed4b8f50be401d4004b6ff4672d19bcad5ab6e7f47cf7bc3d0a3e144290f83d",
-      "permissionMetadataSha256": "c47c7d1c0bc2c3b96ac0f2ff0d771416a995c66326e4a704ea6346a44e595a49",
+      "permissionMetadataSha256": "4d9b2a3cc0a0fdce02cc3bc0db36b95f04fb12610fae5b06ed6b8c147365fef5",
       "requestedScopes": [
         "Group.ReadWrite.All",
         "Directory.Read.All"
@@ -2274,7 +2274,7 @@
     {
       "id": "file:INVOKE-DELETE-ACCOUNTS.ps1",
       "sourceSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
-      "permissionMetadataSha256": "b3c591e43518d3bc6d6c965b000a25249b9d10d1dbc31a539e695014209e5be2",
+      "permissionMetadataSha256": "699d7e53ad063ffb060b0ec37581ba03738355efa3042cce9470ee5aee98178b",
       "requestedScopes": [
         "User.ReadWrite.All",
         "Organization.Read.All"
@@ -2284,7 +2284,7 @@
     {
       "id": "file:INVOKE-DISABLE-ACCOUNTS.ps1",
       "sourceSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
-      "permissionMetadataSha256": "8fec35b0bfcb9ac9675b609c4a498a84d1ba77b1eb96578a1ea36e74cf8acf9d",
+      "permissionMetadataSha256": "e3ed54d16f3ede5f91c39ff7669e148c5305110c50c24bcb944be0b3f459f379",
       "requestedScopes": [
         "User.ReadWrite.All",
         "Directory.Read.All"
@@ -2294,7 +2294,7 @@
     {
       "id": "file:INVOKE-ENFORCE-PER-USER-MFA.ps1",
       "sourceSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
-      "permissionMetadataSha256": "36b936c03dbab9176226dd2f509e603786b45dacc2096073afcc874af9847689",
+      "permissionMetadataSha256": "c2c40fd6cf8111adc8a77d3c37cfff93ec3e916013b8608dd923f9d8b14524cb",
       "requestedScopes": [
         "Policy.ReadWrite.AuthenticationMethod",
         "UserAuthenticationMethod.Read.All",
@@ -2326,7 +2326,7 @@
     {
       "id": "file:INVOKE-REMOVE-LICENSES.ps1",
       "sourceSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
-      "permissionMetadataSha256": "e10d363112029f88030d02c91d46f5bde2bedae8b3bb1a476e4788e4600bca8f",
+      "permissionMetadataSha256": "9feeb1db4c39a4223388508b1eabdaad520cab757804ffb4f531d05cf3898356",
       "requestedScopes": [
         "User.ReadWrite.All",
         "Directory.Read.All",
@@ -2337,7 +2337,7 @@
     {
       "id": "file:INVOKE-REMOVE-USER-GROUPS.ps1",
       "sourceSha256": "8bc820639a1d6e1479e0b1c7a2a1f58953fb0eb5396f922628a73855b0e3fc54",
-      "permissionMetadataSha256": "8f2a31b1a240be19722b822219982a69101095fa270bb2e9b571f3b350b06666",
+      "permissionMetadataSha256": "bb8795b5401aa3f1d48c470e5851dd67976b916989af32d098455e07b6e83297",
       "requestedScopes": [
         "User.Read.All",
         "Group.Read.All",
@@ -2348,7 +2348,7 @@
     {
       "id": "file:INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
       "sourceSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
-      "permissionMetadataSha256": "eee81fabc906d9b981c7f0285a3ddc6214523979130012419cc1fb8a00540071",
+      "permissionMetadataSha256": "705b87d790ba8b3fba8598bf79bd9753b333845c70ceb6ca6c0faecd02b525dd",
       "requestedScopes": [
         "User.Read.All",
         "User-PasswordProfile.ReadWrite.All"
@@ -2442,7 +2442,7 @@
     {
       "id": "file:RESOLVE-NAMES-TO-UPNS.ps1",
       "sourceSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
-      "permissionMetadataSha256": "aa59a87d63079dd480f644c88fdd6bf662891f01fc095e3d8087f5640f4e1b77",
+      "permissionMetadataSha256": "88f4352bd0716fbe584c08503f33a3b4ad3cdf25f6f90f44a50a52581bd07118",
       "requestedScopes": [
         "User.Read.All"
       ],

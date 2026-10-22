@@ -1,7 +1,7 @@
 // Mechanical materialization of reviewed profiles. Does not refresh the approval register.
 import fs from 'node:fs';import vm from 'node:vm';
 import {loadCatalog} from './site-test-harness.mjs';
-import {graphProfiles,graphConsent,requestedScopes} from './permission-profiles.mjs';
+import {graphProfiles,graphConsent,requestedScopes,declaredModules} from './permission-profiles.mjs';
 const context={window:{}};let text=fs.readFileSync('card-guidance.js','utf8');vm.runInNewContext(text,context);
 const {api,window}=loadCatalog(process.cwd());
 const commands=context.window.FIELD_KIT_COMMAND_GUIDANCE,reviews=context.window.FIELD_KIT_CARD_GUIDANCE;
@@ -25,7 +25,8 @@ for(const item of api.ITEMS){
   if(scopes.length){
    // Preserve platform/module requirements, but replace stale permission prose with source truth.
    const services=window.FIELD_KIT_CONNECTION_GUIDANCE[item.publishedPath]?.services||[];
-   review.requires='Modules: Microsoft.Graph.Authentication'+(services.includes('EXO')?' + ExchangeOnlineManagement':'')+(services.includes('AD')?' + ActiveDirectory (Windows RSAT)':'')+'. Requested delegated Graph scopes: '+scopes.join(', ')+'.';
+   const modules=[...new Set(['Microsoft.Graph.Authentication',...declaredModules(source),...(services.includes('EXO')?['ExchangeOnlineManagement']:[]),...(services.includes('AD')?['ActiveDirectory']:[])])];
+   review.requires='Modules used (depending on selected branch): '+modules.join(' + ')+'. Requested delegated Graph scopes: '+scopes.join(', ')+'.';
    review.permissionNotes.push(graphConsent,'Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.');
    if(/^BEC-(RISK-ASSESSMENT|CONTAIN-ERADICATE|RECOVER-VALIDATE)\.ps1$/.test(item.file))review.permissionNotes.push('Shared-session exception: all three BEC phases request the same read AND response scopes at the first sign-in. Assessment and recovery do not themselves change tenant data, but their token is write-capable. Approve the whole response scope set before starting; authentication separation is deferred to the lifecycle wave.','BEC platform: approved Windows jumpbox, Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+; AD actions require delegated Windows AD rights.');
    if(item.file==='GET-MFA-SECURITY-AUDIT.ps1')review.permissionNotes.push('Policy.Read.ConditionalAccess is requested only when Conditional Access review is selected. Registration reporting requires a supported Reports Reader / Security Reader role (or equivalent); the beta report excludes disabled users and can change.');
