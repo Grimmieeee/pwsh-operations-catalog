@@ -8,7 +8,27 @@ function Pure-Print($Node){
   if($element -isnot [System.Management.Automation.Language.StringConstantExpressionAst] -and $element -isnot [System.Management.Automation.Language.ConstantExpressionAst]){return $false}
  };return $true
 }
+function Remove-SetupApprovalGate($Text){
+ $gate=@'
+    # BEGIN IMPACT APPROVAL
+    Write-Host "PLAN // CurrentUser execution policy may change to RemoteSigned."
+    Write-Host "PLAN // Unblock every .ps1 file directly beside this script: $PSScriptRoot"
+    Write-Warning 'Only continue if every script in this folder has been reviewed.'
+    if ((Read-Host 'Type SETUP to approve; anything else cancels').Trim() -cne 'SETUP') {
+        Write-Host 'CANCELLED // No execution policy or file unblock changes requested.'
+        return
+    }
+    # END IMPACT APPROVAL
+'@
+ $gate=$gate.Replace("`r`n","`n")+"`n"
+ $normalized=$Text.Replace("`r`n","`n")
+ if(($normalized.Split(@($gate),[StringSplitOptions]::None).Count-1) -ne 1){throw 'Expected exactly the approved setup gate.'}
+ return $normalized.Replace($gate,'').Replace('.VERSION 1.0.3','.VERSION 1.0.2')
+}
+
 function NonPresentation-Tokens($Text){
+ if($Text -match '# BEGIN IMPACT APPROVAL'){$Text=Remove-SetupApprovalGate $Text}
+
  $t=$null;$e=$null;$a=[System.Management.Automation.Language.Parser]::ParseInput($Text,[ref]$t,[ref]$e)
  if($e.Count){throw $e[0]}
  $ranges=@($a.FindAll({param($n) Pure-Print $n},$true)|ForEach-Object{,@($_.Extent.StartOffset,$_.Extent.EndOffset)})
@@ -24,7 +44,14 @@ function NonPresentation-Tokens($Text){
 
 function Assert-ApprovedOperationalChange($Row,$Text){
  if(-not $Row.operationalChange){return}
- if($Row.file -ne 'ir-risk-assessment.ps1' -or $Row.operationalChange.kind -ne 'uri-boundary-fix'){throw 'Unknown approved operational change.'}
+ if($Row.file -eq 'set-execution.ps1' -and $Row.operationalChange.kind -eq 'setup-approval-gate'){
+  $baseline=Remove-SetupApprovalGate $Text
+  $sha=[Security.Cryptography.SHA256]::Create()
+  try{$hash=([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($baseline)))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+  if($hash -ne $Row.operationalChange.priorSourceSha256){throw 'Setup gate includes unreviewed operational changes.'}
+  return
+ }
+ if($Row.file -ne 'ir-risk-assessment.ps1'  -or $Row.operationalChange.kind -ne 'uri-boundary-fix'){throw 'Unknown approved operational change.'}
  $new='servicePrincipals/${ServicePrincipalId}?`$select';$old='servicePrincipals/$ServicePrincipalId?`$select'
  if(($Text.Split(@($new),[StringSplitOptions]::None).Count-1) -ne 1){throw 'Expected one corrected app lookup boundary.'}
  $baseline=$Text.Replace($new,$old).Replace('if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {','if (-not $Result.Ok) {').Replace('if (-not $Result.Ok -or @($Result.Data.value).Count -ne 1 -or @($Result.Data.value)[0].id -ne $ServicePrincipalId) {','if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {')

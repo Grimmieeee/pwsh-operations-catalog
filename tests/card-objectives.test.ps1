@@ -6,7 +6,7 @@ $records=@(Get-Content (Join-Path $Root 'docs/qa/CARD-OBJECTIVES-REVIEW.json') -
 $alignment=@(Get-Content (Join-Path $Root 'docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.json') -Raw|ConvertFrom-Json)
 $t=$null;$e=$null
 $helpers=[System.Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot 'operator-alignment.test.ps1'),[ref]$t,[ref]$e)
-foreach($name in @('Pure-Print','NonPresentation-Tokens','Assert-ApprovedOperationalChange')){
+foreach($name in @('Pure-Print','Remove-SetupApprovalGate','NonPresentation-Tokens','Assert-ApprovedOperationalChange')){
  $fn=$helpers.Find({param($n)$n -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$false)
  . ([scriptblock]::Create($fn.Extent.Text))
 }

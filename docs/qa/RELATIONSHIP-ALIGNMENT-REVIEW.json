@@ -867,13 +867,18 @@
     "path": "tools/set-execution.ps1",
     "name": "Set Up Script Execution",
     "oldSha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
-    "newSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+    "newSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
     "changed": true,
-    "version": "1.0.2",
+    "version": "1.0.3",
     "nonPresentationSha256": "d7edabab3e29826b391fa521af5e3986154394aa4dea6af30deae5812ca40675",
     "operationalTokensUnchanged": true,
     "consoleTitle": true,
-    "consoleObjective": true
+    "consoleObjective": true,
+    "operationalChange": {
+      "kind": "setup-approval-gate",
+      "priorSourceSha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+      "scope": "Only inserts the exact approval block and bumps version 1.0.2 to 1.0.3; previous source bytes otherwise unchanged."
+    }
   },
   {
     "file": "attractor.ps1",

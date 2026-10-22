@@ -84,7 +84,7 @@ window.FIELD_KIT_SOURCE_INTEGRITY = Object.freeze({
   "tools/publishing-checklist.md": "7823173f60c3567e9dcb2da26a8a021f4c23b23d9279223a93910153e99c24bc",
   "tools/script-review-checklist.md": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
   "tools/script-template-guide.md": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",
-  "tools/set-execution.ps1": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+  "tools/set-execution.ps1": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
   "tools/SIGN-FOLDER-SCRIPTS.ps1": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
   "tools/skills.md": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
   "toys/attractor.ps1": "1268680342075976f80599213dd97d25abc2af741a07a7f5de2ceab2c2ba4cc6",

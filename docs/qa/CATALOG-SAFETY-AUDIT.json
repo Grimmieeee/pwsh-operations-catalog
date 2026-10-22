@@ -268,7 +268,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Destructive",
-      "sha256": "3330aec9a71d0216d5e01c3545f65849822d4127e514695321e8ef51f8a90edf",
+      "sha256": "dfc249f6ef81931ea9bd42c0adaf1a8768b3bd5dcbcc1305574e819483590816",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -664,7 +664,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "0c6d933393a528501271ae5e3c338bd9679ae41dab38de5a5c150f0281c44c29",
+      "sha256": "72c034784582754a94e3d31f17f507f97da5f54d086ee60edb58c106daeac2ca",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -736,7 +736,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "134c29b55a7d451efe3efaa66f687506d5c43a9efabf3b10d6a8fee56faf7b09",
+      "sha256": "a82e5d85a964d439d0909177e85c33eeeaf545625eac027f5279fde62c1bbce5",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1006,7 +1006,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "57fc537abb2c375a46b7e658fd0d1669e2966d82875d47f19494a11809af36c8",
+      "sha256": "4e10d176c2b92b9a1c0285956887fa0212516ca7114531a0f219c1adecc6b80f",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1042,7 +1042,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "5d2a9954c18594c1623556874124a7a8905ae5b5151956fdc4e4c9d878d4caac",
+      "sha256": "7bada8681b133f76334dbc7a1c146c29939f36b6d96c203036a490c6fa3a63ec",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1149,8 +1149,8 @@
       "file": "",
       "path": null,
       "kind": "Quick command",
-      "access": "Change",
-      "sha256": "7cdf94999b7915a409921097e9d3557b46784c6f9b6df2d7b630469ce84c0d78",
+      "access": "Destructive",
+      "sha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1168,7 +1168,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "819d24c9d986228ef5b625da923562c715bdef54568ae8e29294f043a51951ec",
+      "sha256": "06dc94a22ef0321761292bc718fffc646d939052ec9b993bcef1f78e423ad6a5",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1240,7 +1240,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "42cc24c8778b62466d6cc91c0f2a36af105a64e5f220e6df73b6f6a78080ce13",
+      "sha256": "de7c00c5acdba7a09c4ccb0873d980a33b3863d3b17198a37ad4d2b2a23a02fd",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -1456,7 +1456,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Destructive",
-      "sha256": "c08a36a2ef74eda4c07add2a7e220a8ff328a74641d2159971ed5c1e8bc8359f",
+      "sha256": "8c311c60a257dfb9bc8a55e449583384869bcedc1ba105a0e39260e7983c2ceb",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2152,7 +2152,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "7cfa3063168b71bbc2491876d023fffa158395d154d52e912301d9d225e917bf",
+      "sha256": "2a97606712d3ec1ee53d86aa40df5d6817f8c50e30122e2b72be8e437daa9bf3",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2170,7 +2170,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "20e93953b9878e435abbcd0c0e51c7f518dbd5ee95f4e57e76fe9fe292f0ed77",
+      "sha256": "020d638faae553d23a5a91a3b3e137707d4056d72f6fde10b30d7f8c071461e7",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2188,7 +2188,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "6fe4db2f92861379743ae5b2b133a0e78fe3aedc7ea179824dde9c59a0acfeb4",
+      "sha256": "2886077904f570096373650b68e2ddb4e4241b3846c99043adb40ba241719d3e",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2206,7 +2206,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "3564f4ad595e829437bdfa1a95ec286acec4f0a70c6eadfc0e1a7217fb85cd16",
+      "sha256": "2a8205d033243119a24a568cdbcef2743dca5834da584c5a72c2bd237ff6cc74",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2470,7 +2470,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "0fcb7b32122bbf2fdde6cc5335e7eb4f24d2c9cc8160a7cd66741a78ce3a8995",
+      "sha256": "a480940f1c210b8eeed22e4cb75cb7a5bd31e6bc6c182e414b3d6f49095e5ba7",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2578,7 +2578,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "7275a6dc7fd41985637bec01c3745ec674691da333420cc2087b68bcffc224b7",
+      "sha256": "d4e00b9e67508ac85d67bfaa7f3df951dd2e4081b652f24c061be1c101d52089",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -2614,7 +2614,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "349b20c8417f31fa23f272d9bd252e22f159a397b1788340a49105844291e90d",
+      "sha256": "e5e6290e8b3bbb943546e719e9389fbad1fc56fd74aae945718a1c0ff7354a91",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -9797,7 +9797,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "78c1c047ba772895b229718af3a973862ce3edc1cd429e3e4df48f0a68f4ab45",
+      "sha256": "117199aedfdf8f06670a3aa2bea683bd761fb7ca49e2d20b2a419b7052f46a53",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10067,7 +10067,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Destructive",
-      "sha256": "ae627979dc5e2b2f4d64f50f05ae382d38ffbf52f74b3378f6f7cf7ae6609c83",
+      "sha256": "4713a23c4451a32c112af74bb4330ec972f1288931f0c275ff34baf7325eb545",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10157,7 +10157,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "12ad05057273be4f93e896670e30f15a134b49147b14e6cd575b76289d101ee0",
+      "sha256": "dd6b962da241a461fabca47ad482c6fa7ae2121e48996b763e1e13e1af6cc9d4",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10175,7 +10175,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "16bb420233a80b2df8a1bdea0608de4727650ef7528fb2b014124df053ac9c10",
+      "sha256": "5a8faab96ad785027569c0226bb3ec6aa261ee4c8a6f44b1b020e37b587a4e8e",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10193,7 +10193,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "9000dc4d0fd4d445eaa8168b417002340b35bd584b5aca3ac8f9406bbc2059ff",
+      "sha256": "39241a4a47e0945f81ed3f309d65b9d92498192a1d442320e21ca8fba6f748f2",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10373,7 +10373,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Change",
-      "sha256": "a95ffba8e131a7639646d8c683af97f28da9404b11b288e5c586e48e26ab41ba",
+      "sha256": "f78be998aee8daac9792619cea18c0ec3c0519145a637a42101b8dd62cbac85e",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10769,7 +10769,7 @@
       "path": null,
       "kind": "Quick command",
       "access": "Destructive",
-      "sha256": "4cd98e4953f803e570dc003af414d480bd0af00b0c6c8c9580b3800d0874f718",
+      "sha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -11666,46 +11666,63 @@
       "path": "tools/set-execution.ps1",
       "kind": "PowerShell",
       "access": "Change",
-      "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+      "sha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
       "family": "Local tools / toys",
-      "state": "Alignment reviewed — source and rendered card checked",
+      "state": "Source and offline behavior reviewed — setup approval gate",
       "review": {
-        "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
-        "state": "Alignment reviewed — source and rendered card checked",
+        "sha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+        "state": "Source and offline behavior reviewed — setup approval gate",
         "scope": [
-          "Shared card/script objective",
-          "Source-supported scope and preparation",
-          "Three explicitly reviewed related tools",
-          "Presentation-only source comparison"
+          "Exact insertion before policy and file changes",
+          "Blank or mismatched approval returns through finally",
+          "Prior operational logic preserved"
         ],
         "tests": [
-          "tests/card-objectives.test.ps1",
-          "tests/operator-alignment.test.ps1",
-          "tests/site-security.test.mjs"
+          "tests/impact-authorization.test.mjs (static, passed)",
+          "tests/batch-four.test.ps1 -Focus Execution (six offline cases passed)",
+          "tests/operator-alignment.test.ps1 and tests/card-objectives.test.ps1 (passed)"
         ],
         "remaining": [
-          "No new live tenant or Windows-host runtime acceptance claimed."
+          "Native Windows acceptance remains separate; no new runtime badge claimed."
         ],
         "previousReview": {
-          "sha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
-          "state": "Objective aligned — source/DOM checked",
+          "sha256": "4234c9936cb435c64565ecd5a8884add0de36a4b9cf0648f2cad22098629506b",
+          "state": "Alignment reviewed — source and rendered card checked",
           "scope": [
-            "Exact card/script purpose parity",
-            "Non-presentation token fingerprint unchanged"
+            "Shared card/script objective",
+            "Source-supported scope and preparation",
+            "Three explicitly reviewed related tools",
+            "Presentation-only source comparison"
           ],
           "tests": [
             "tests/card-objectives.test.ps1",
-            "45 site/theme tests including visible purpose check"
+            "tests/operator-alignment.test.ps1",
+            "tests/site-security.test.mjs"
           ],
           "remaining": [
-            "Exact revised-source runtime acceptance remains separately attributable."
-          ]
+            "No new live tenant or Windows-host runtime acceptance claimed."
+          ],
+          "previousReview": {
+            "sha256": "c6c24e9e22bf78a342ab9bf01c0fbaf61051f1114f7f2b49157b082235a159a9",
+            "state": "Objective aligned — source/DOM checked",
+            "scope": [
+              "Exact card/script purpose parity",
+              "Non-presentation token fingerprint unchanged"
+            ],
+            "tests": [
+              "tests/card-objectives.test.ps1",
+              "45 site/theme tests including visible purpose check"
+            ],
+            "remaining": [
+              "Exact revised-source runtime acceptance remains separately attributable."
+            ]
+          }
         }
       },
       "signals": [
         {
           "id": "POLICY_CHANGE",
-          "line": 33,
+          "line": 42,
           "note": "Check explicit setup/theme purpose and disclosure."
         }
       ],
