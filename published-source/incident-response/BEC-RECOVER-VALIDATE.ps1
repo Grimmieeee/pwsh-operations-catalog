@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.2
+.VERSION 1.0.3
 .GUID d77fb13d-5860-46ad-bc7e-2ef0df3a458d
 .AUTHOR FIELD // KIT
 .DESCRIPTION Check recovery readiness and restore approved account access.
@@ -189,14 +189,14 @@ function Invoke-IRNextStep {
         return
     }
     $label=switch ($FileName) {
-        'ir-contain-eradicate' { 'ir-contain-eradicate' }
-        'ir-recover-validate' { 'ir-recover-validate' }
-        default { 'ir-risk-assessment (FINAL CHECK)' }
+        'BEC-CONTAIN-ERADICATE' { 'BEC-CONTAIN-ERADICATE' }
+        'BEC-RECOVER-VALIDATE' { 'BEC-RECOVER-VALIDATE' }
+        default { 'BEC-RISK-ASSESSMENT (FINAL CHECK)' }
     }
     if (-not (Read-IRNavigation $label)) {
         $message=switch ($FileName) {
-            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
-            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            'BEC-CONTAIN-ERADICATE' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'BEC-RECOVER-VALIDATE' { 'Response run finished. A contained account still requires approved recovery.' }
             default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
         }
         Close-IRWorkflow $message
@@ -217,7 +217,7 @@ function Invoke-IRNextStep {
             throw 'Next script is from a different release. Replace all three files together.'
         }
         $nextArgs.OutputDelayMs=$OutputDelayMs
-        if ($FileName -eq 'ir-risk-assessment') {
+        if ($FileName -eq 'BEC-RISK-ASSESSMENT') {
             $nextArgs.UserPrincipalName=[string]$saved.UPN
             $nextArgs.FinalReview=$true
         } else { $nextArgs.UPN=[string]$saved.UPN }
@@ -873,13 +873,13 @@ catch {
     foreach ($gap in $script:DataGaps) { Write-Warn $gap }
     if ($script:AdChanged) { Write-Warn 'AD may already be enabled. Verify AD and Entra state before retrying.' }
     Section 'NEXT STEP'
-    Write-IRLine 'ir-recover-validate'
+    Write-IRLine 'BEC-RECOVER-VALIDATE'
     Write-IRLine 'Resolve the reported items, then finish recovery. Do not assume access was fully restored.'
 }
 finally {
     if ($null -ne $script:OriginalTitle) { try { $Host.UI.RawUI.WindowTitle=$script:OriginalTitle } catch {} }
 }
 if ($script:RecoverySucceeded) {
-    Invoke-IRNextStep -FileName 'ir-risk-assessment' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
+    Invoke-IRNextStep -FileName 'BEC-RISK-ASSESSMENT' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
 }
 else { Invoke-IRNextStep -FileName '' -Objective '' }

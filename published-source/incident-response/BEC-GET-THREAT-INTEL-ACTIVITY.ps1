@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.3
+.VERSION 1.0.4
 #>
 #Requires -Version 5.1
 
@@ -396,7 +396,7 @@ function Get-AbuseIPDBReport {
 }
 
 try {
-    Write-Host 'Incident Response: Check IP Reputation'
+    Write-Host 'BEC: Check IP Reputation'
     Write-Host 'Check selected public IP addresses against external reputation services.'
     Write-Host "READ-ONLY / EXTERNAL REPUTATION LOOKUP"
     Write-Host ""

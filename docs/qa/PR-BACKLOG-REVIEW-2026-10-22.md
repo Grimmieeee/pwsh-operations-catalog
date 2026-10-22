@@ -13,3 +13,7 @@ Reviewed all five open PRs in creation order against the agreed standalone scope
 #87 merged as `43e8220609f8617abcbad82bbdcf50a2e59f1e37`; its Publish live site run `39787940661` completed successfully. The four held PRs remain open; no drafts were promoted and no branches were deleted.
 
 Next release wave: Stage 1 impact and authorization only. Retain goal-based workflow previews as unpublished discussion artifacts. Keep the permissions stage on hold until the Stage 1 release is reported back.
+
+## Subsequent approved cleanup
+
+PRs #9, #10 and #19 were closed as superseded on October 22; their branches remain available. The BEC naming wave carries their useful comparison history and unresolved findings forward in BEC-NAMING-REVIEW.md. #14 remains open.

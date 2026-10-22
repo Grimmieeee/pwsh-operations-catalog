@@ -1,4 +1,4 @@
-// Reviewed connection behavior; bound to exact downloadable source bytes.
+// Reviewed connection metadata bound to exact source bytes.
 window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
   "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
     "sha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
@@ -135,23 +135,23 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
       "EXO"
     ]
   },
-  "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1": {
-    "sha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
+  "published-source/incident-response/BEC-INVOKE-EMAIL-RECOVERY.ps1": {
+    "sha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
     "mode": "auto",
     "services": [
       "GRAPH"
     ]
   },
-  "published-source/incident-response/ir-risk-assessment.ps1": {
-    "sha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+  "published-source/incident-response/BEC-RISK-ASSESSMENT.ps1": {
+    "sha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
     "mode": "auto",
     "services": [
       "GRAPH",
       "EXO"
     ]
   },
-  "published-source/incident-response/ir-contain-eradicate.ps1": {
-    "sha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+  "published-source/incident-response/BEC-CONTAIN-ERADICATE.ps1": {
+    "sha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
     "mode": "auto",
     "services": [
       "GRAPH",
@@ -159,44 +159,44 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
       "AD"
     ]
   },
-  "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1": {
-    "sha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
+  "published-source/incident-response/BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "sha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
-  "published-source/incident-response/IR-GET-IP-TRACE.ps1": {
-    "sha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
+  "published-source/incident-response/BEC-GET-IP-TRACE.ps1": {
+    "sha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
-  "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1": {
-    "sha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
+  "published-source/incident-response/BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "sha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
     "mode": "auto",
     "services": [
       "EXO"
     ]
   },
-  "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1": {
-    "sha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
+  "published-source/incident-response/BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
+    "sha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
     "mode": "local",
     "services": []
   },
-  "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1": {
-    "sha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
+  "published-source/incident-response/BEC-GET-TIMELINE-BUILDER.ps1": {
+    "sha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
     "mode": "local",
     "services": []
   },
-  "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1": {
-    "sha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
+  "published-source/incident-response/BEC-GET-TOKEN-DECODE.ps1": {
+    "sha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
     "mode": "local",
     "services": []
   },
-  "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1": {
-    "sha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
+  "published-source/incident-response/BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "sha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
     "mode": "auto",
     "services": [
       "GRAPH"
@@ -427,8 +427,8 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
       "GRAPH"
     ]
   },
-  "published-source/incident-response/ir-recover-validate.ps1": {
-    "sha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+  "published-source/incident-response/BEC-RECOVER-VALIDATE.ps1": {
+    "sha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
     "mode": "auto",
     "services": [
       "GRAPH",

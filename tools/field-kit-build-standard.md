@@ -1,6 +1,6 @@
 ## Alignment and relationship review — October 21, 2026
 
-Use BEC: for the guided account-compromise sequence and Incident Response: for broader investigation tools. Keep filenames and callable interfaces stable. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
+Use BEC: for the guided account-compromise sequence and BEC: for broader investigation tools. Keep filenames and callable interfaces stable. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
 
 A relationship review includes Related Items: three unique available tools per script, no self-links, no unsupported handoff, and a source-reviewed reason the next task is useful. Store explicit choices in operator-card-specs.json. Display only names and impact labels. Quick-command relationship curation remains separately attributable.
 
@@ -137,7 +137,7 @@ Setup and terminal provisioning come first where relevant. Within each non-seque
 
 Exceptions:
 
-- Incident Response: execution sequence wins.
+- BEC: execution sequence wins.
 - Search results: relevance wins; A-Z breaks ties.
 
 Never alphabetize a sequence-dependent workflow.
@@ -198,7 +198,7 @@ Order:
 3. Important changes and required workflow order.
 4. INPUT, CHECKS and GUARDS, using matching headings and no overflow groups.
 5. Compact REQUIRES disclosure, then AUTO-CONNECT or CONNECT FIRST above small boxed service names and accurate start directions.
-6. Useful expandable Details; DOWNLOAD .PS1 / .MD and VIEW CODE actions.
+6. Useful expandable Details; DOWNLOAD .ps1 / .MD and VIEW CODE actions.
 7. COPY inside the exposed source box only.
 
 Use the compact Path Ping card as the default. Checkmarks describe distinct capabilities; do not repeat the title, purpose, or generic summary/CSV availability. Omit empty sections. Do not invent checks. Preserve important behavior and limitations in Details; show unusual side effects prominently.

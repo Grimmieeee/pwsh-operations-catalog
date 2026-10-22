@@ -1,6 +1,6 @@
 ## Display alignment — October 21, 2026
 
-Use the approved BEC: or Incident Response: label in interactive display titles; keep callable names stable. Match the card purpose exactly. Preserve specialized navigation and reusable terminal controls. Keep task-specific results clear; SESSION COMPLETE marks the end, never proof of success. Compare operational tokens before and after a display-only revision and retain original runtime evidence separately.
+Use the approved BEC: or BEC: label in interactive display titles; keep callable names stable. Match the card purpose exactly. Preserve specialized navigation and reusable terminal controls. Keep task-specific results clear; SESSION COMPLETE marks the end, never proof of success. Compare operational tokens before and after a display-only revision and retain original runtime evidence separately.
 
 ## Shared purpose sentence — October 21, 2026
 

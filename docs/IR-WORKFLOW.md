@@ -1,12 +1,13 @@
 # BEC response workflow
 
-Current display release: 1.0.1. Titles and objectives align with the BEC cards;
-response controls and operational tokens compare unchanged against the accepted
-1.0.0 runtime baseline. The owner’s 1.0.0 acceptance remains historical evidence,
-not a new runtime test of the display revision. See the [current review](qa/RELATIONSHIP-ALIGNMENT-REVIEW.md).
+Current BEC naming release: 1.0.3. Script filenames, console labels and companion
+paths use BEC consistently. Inverse source comparisons prove only the reviewed
+names and version changed. Historical runtime evidence retains its original
+filenames and hashes; it does not grant a new exact-source runtime badge.
+See [the naming review](qa/BEC-NAMING-REVIEW.json).
 
 Download all three scripts into one folder, retaining their filenames. Start
-`ir-risk-assessment` from an existing PowerShell window. Enter an
+`BEC-RISK-ASSESSMENT` from an existing PowerShell window. Enter an
 exact target UPN and tenant domain. The first sign-in requests the delegated
 read and change scopes for the workflow; assessment itself makes no tenant
 changes. Administrative roles and tenant consent are separate requirements.
@@ -25,9 +26,9 @@ Press ESC to end the workflow. In hosts without direct key support, type ESC
 and press ENTER as prompted. The final assessment completes without offering
 containment again. An existing PowerShell window remains open.
 
-The companion filenames are `ir-risk-assessment.ps1`,
-`ir-contain-eradicate.ps1`, and `ir-recover-validate.ps1`. Download and replace
-all three together; older uppercase filenames are retired. Output uses STATUS
+The companion filenames are `BEC-RISK-ASSESSMENT.ps1`,
+`BEC-CONTAIN-ERADICATE.ps1`, and `BEC-RECOVER-VALIDATE.ps1`. Download and replace
+all three together; previous IR-prefixed filenames are retired. Output uses STATUS
 for results and NEXT STEP for guidance. Accepted baseline runtime evidence and hashes
 are recorded in [IR-1.0.0-VERIFICATION.md](qa/IR-1.0.0-VERIFICATION.md).
 

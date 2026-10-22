@@ -1,6 +1,6 @@
 # Current alignment checkpoint — October 21, 2026
 
-Read [the current status](../docs/PROJECT-STATUS.md) and [alignment review](../docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md) first. All 80 cards and their 240 explicit script-card relationships are reviewed. Guided response uses BEC: and broader tools use Incident Response:. Current presentation revisions have source/DOM/offline evidence; original runtime acceptance is retained separately. The BEC package has a source-bound display review, not an inherited runtime badge. Earlier dated release descriptions below are historical.
+Read [the current status](../docs/PROJECT-STATUS.md) and [alignment review](../docs/qa/RELATIONSHIP-ALIGNMENT-REVIEW.md) first. All 80 cards and their 240 explicit script-card relationships are reviewed. Guided response uses BEC: and broader tools use BEC:. Current presentation revisions have source/DOM/offline evidence; original runtime acceptance is retained separately. The BEC package has a source-bound display review, not an inherited runtime badge. Earlier dated release descriptions below are historical.
 
 # Current checkpoint — native closeout accepted
 
@@ -112,8 +112,8 @@ The earlier dated sections below are historical context. They do not supersede t
 ## IR 1.0.0, version-bound verification and catalog alignment
 
 The owner confirmed all three exact files in FIELD-KIT-IR-1.0.0.zip passed on
-the client jumpbox. The canonical downloads now use ir-risk-assessment.ps1,
-ir-contain-eradicate.ps1 and ir-recover-validate.ps1 at version 1.0.0. Their
+the client jumpbox. The canonical downloads now use BEC-RISK-ASSESSMENT.ps1,
+BEC-CONTAIN-ERADICATE.ps1 and BEC-RECOVER-VALIDATE.ps1 at version 1.0.0. Their
 VERIFIED records bind version, SHA-256 and sanitized owner-test evidence in
 docs/qa/IR-1.0.0-VERIFICATION.md. Any source change invalidates the stamp until
 the replacement is tested. Do not stamp other tools based on static review.

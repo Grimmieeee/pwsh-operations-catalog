@@ -1452,6 +1452,7 @@
   function logicalArea(item){
     if (item.area === "Tools") return "Tools";
     if (item.area === "Toys") return "Toys";
+    if (/^BEC-/i.test(item.file || "")) return "Incident Response";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
     if (item.type === "Quick Command" && item.name !== "Revoke Active Sessions") return "Standalone";
     if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
@@ -1474,7 +1475,7 @@
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
     if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC: Assess User Risk";
     if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC: Contain and Clean Up";
-    if (/^Revoke Active Sessions$/i.test(name)) return "Incident Response: Revoke Sessions";
+    if (/^Revoke Active Sessions$/i.test(name)) return "BEC: Revoke Sessions";
     if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
     if (/^Map Service Desk Kit$/i.test(name)) return "Folder Inventory";
     if (/^Reset PowerShell Sessions$/i.test(name)) return "M365 Session Reset";
@@ -1482,7 +1483,7 @@
     if (/^Show Inbox Rules$/i.test(name) && /IncludeHidden/i.test(item.code || "")) return "Show Inbox Rules - Hidden";
     if (/Mailitemsaccessed/i.test(name)) return name.replace(/Mailitemsaccessed/ig,"Mail Items Accessed");
 
-    return name.replace(/^IR:\s*/i,"Incident Response: ");
+    return name.replace(/^IR:\s*/i,"BEC: ");
   }
 
   function groupFor(item, area){
@@ -1519,9 +1520,9 @@
     }
 
     if (area === "Incident Response"){
-      if (/^IR:|risk exposure|account compromise|bec|revoke active sessions/i.test(name)) return "Account Response";
+      if (IR_STEPS.some(step=>step.file===file) || /revoke(?: active)? sessions/i.test(name)) return "Account Response";
       if (/investigat|timeline|token|threat|trace|exfil|email search/i.test(combined)) return "Investigation";
-      if (/recover|response|eradicate/i.test(name)) return "Response";
+      if (/recover|response|eradicate/i.test(combined)) return "Response";
       return "General";
     }
 
@@ -1901,9 +1902,9 @@
   const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
 
   const IR_STEPS = [
-    {file:"ir-risk-assessment.ps1",operationalSha256:"75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",acceptedSha256:"07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",name:"BEC: Assess User Risk",n:"1"},
-    {file:"ir-contain-eradicate.ps1",operationalSha256:"a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",acceptedSha256:"e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",name:"BEC: Contain and Clean Up",n:"2"},
-    {file:"ir-recover-validate.ps1",operationalSha256:"141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",acceptedSha256:"c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",name:"BEC: Restore and Validate",n:"3"}
+    {file:"BEC-RISK-ASSESSMENT.ps1",operationalSha256:"ff31eb0a23789f8c987a4518eed398728639f25d7201bcd4db925a2b80e4b227",acceptedSha256:"07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",name:"BEC: Assess User Risk",n:"1"},
+    {file:"BEC-CONTAIN-ERADICATE.ps1",operationalSha256:"eb522ff1bde245fc1b18884bb21039f5e2267930d9e31d35c9f504590a94c64b",acceptedSha256:"e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",name:"BEC: Contain and Clean Up",n:"2"},
+    {file:"BEC-RECOVER-VALIDATE.ps1",operationalSha256:"c78fa6007c42f723a7a6be832dadb46253a4f693e4576d970725e66be9741995",acceptedSha256:"c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",name:"BEC: Restore and Validate",n:"3"}
   ];
   const IR_RENAMES = {
     "_STEP1-ir-discovery-summary.ps1": IR_STEPS[0],
@@ -1974,7 +1975,7 @@
       ? candidates.find(other=>other.type==='Quick Command' && other.name===key.slice(8))
       : candidates.find(other=>other.file===key)).filter(Boolean);
     let ranked=[];
-    if(item.name==='Revoke Active Sessions')return ['ir-risk-assessment.ps1','ir-contain-eradicate.ps1','ir-recover-validate.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
+    if(item.name==='Revoke Active Sessions')return ['BEC-RISK-ASSESSMENT.ps1','BEC-CONTAIN-ERADICATE.ps1','BEC-RECOVER-VALIDATE.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
     if(item.name==='Show Whether Remote Desktop Is Enabled')return ['Show Windows Firewall Profiles','Show Windows Firewall Rules by Name','Show Listening Tcp Ports'].map(name=>candidates.find(x=>x.name===name)).filter(Boolean);
     // Atomic commands relate within their actual platform and task group.
     ranked=candidates.filter(other=>other.type===item.type && other.platform===item.platform && other.group===item.group)
@@ -2015,6 +2016,7 @@
 
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
+    if (/^BEC-/i.test(source.file || "") && window.FIELD_KIT_OPERATOR_CARDS?.[source.file]) source.name=window.FIELD_KIT_OPERATOR_CARDS[source.file].name;
     const review = window.FIELD_KIT_CARD_GUIDANCE?.[source.file];
     if (review && review.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) source = {...source, ...review};
     if (source.name === "Revoke Active Sessions") source = {...source,area:"Security / IR",subarea:"Account Compromise"};
@@ -2115,6 +2117,7 @@
   const sourceCache = new Map();
 
   function areaLabel(area){
+    if (area === "Incident Response") return "BEC";
     if (area === "Standalone") return "Quick Commands";
     if (area === "Utility") return "Utilities";
     return area;
@@ -2167,7 +2170,7 @@
       const allActive = !state.incidentSource;
       const children = [
         `<button class="area-sub-button ${allActive ? "active" : ""}" data-incident-source="" type="button">
-            <span>All Incident Response</span><span class="area-count">${countArea("Incident Response")}</span>
+            <span>All BEC</span><span class="area-count">${countArea("Incident Response")}</span>
           </button>`,
         ...sources.map(({source,count}) => `
           <button class="area-sub-button ${state.incidentSource === source ? "active" : ""}" data-incident-source="${esc(source)}" type="button">
@@ -2220,6 +2223,7 @@
     const text = [item.displayName,item.operatorCard?.objective || item.objective,item.useFor].join(" ");
 
     const tags = [];
+    if (/^BEC-/i.test(item.file || "")) tags.push(item.file, ...(item.operatorCard?.searchAliases || []));
     const families = [
       [/computer|endpoint|workstation|device|hostname|bitlocker/i,"device computer endpoint workstation"],
       [/permission|delegat|full access|send as/i,"permission permissions access delegation"],
@@ -2297,7 +2301,8 @@
       return 0;
     }
     const assessmentIntent = /^(?:(?:suspicious|unfamiliar|unusual|unexpected) (?:login|logon|sign in|signin|mfa prompts?)|(?:hacked|compromised) (?:account|mailbox)|(?:account|mailbox) (?:hacked|compromised)|possible account compromise|bec|phishing)$/.test(intent);
-    if (assessmentIntent && item.file === 'ir-risk-assessment.ps1') return 1000;
+    if (assessmentIntent && item.file === 'BEC-RISK-ASSESSMENT.ps1') return 1000;
+    if ((item.operatorCard?.searchAliases || []).some(alias=>norm(alias)===intent)) return 1000;
     const q = words(query);
     if (!q.length) return 1;
 
@@ -2358,7 +2363,7 @@
     const text = [item.displayName,item.name,item.file,item.subarea].join(" ");
 
     if (/onboard|offboard|pre[- ]?delete|disable(?:\s+user)?\s+accounts|delete(?:\s+user)?\s+accounts/i.test(text)) return "On / Offboarding";
-    if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
+    if (/shared mailbox sign-in|\b(?:IR|BEC)[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
     if (/mailbox|room|equipment|resource access|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
     if (/license|licensing/i.test(text)) return "Licenses";
     if (/permission|role|access/i.test(text) && !/conditional access/i.test(text)) return "Permissions";
@@ -2661,7 +2666,7 @@
     const spec=item.operatorCard, review=spec?.workflowReview, baseline=review?.baselineVerification;
     const accepted=IR_STEPS.find(step=>step.file===item.file);
     return !!(accepted && item.workflow &&
-      (item.file==='ir-risk-assessment.ps1' ? review?.kind==='uri-boundary-fix' && review.evidence==='docs/qa/BEC-APP-LOOKUP-FIX.md' : review?.kind==='presentation-only') && baseline?.operatorTested===true &&
+      (review?.kind==='bec-naming' && review.evidence==='docs/qa/BEC-NAMING-REVIEW.json') && baseline?.operatorTested===true &&
       baseline.version==='1.0.0' && baseline.evidence==='docs/qa/IR-1.0.0-VERIFICATION.md' && baseline.sha256===accepted.acceptedSha256 &&
       /^[0-9a-f]{64}$/.test(baseline.sha256 || '') && review.nonPresentationSha256===accepted.operationalSha256 &&
       review.version===item.version && review.sourceSha256===spec.sourceSha256 &&
@@ -2935,7 +2940,7 @@
     const services=record.services || [];
     const labels={GRAPH:'Microsoft Graph',EXO:'Exchange Online',AD:'local Active Directory'};
     if(services.length)return ['Connection: '+services.map(service=>labels[service] || service).join(' + ')+'.',services.includes('GRAPH') || services.includes('EXO') ? 'Sign-in: use the approved customer account when the workflow requests it.' : 'Sign-in: uses the Windows account running this job.'];
-    if(item.file==='IR-GET-THREAT-INTEL-ACTIVITY.ps1')return ['Connection: external IP reputation services.','Sign-in: provider API keys supplied for this run.'];
+    if(item.file==='BEC-GET-THREAT-INTEL-ACTIVITY.ps1')return ['Connection: external IP reputation services.','Sign-in: provider API keys supplied for this run.'];
     if(item.file==='git-repo.ps1')return ['Connection: the repository remote when pulling or pushing.','Sign-in: the Git credentials configured for that remote.'];
     if(item.file==='UPDATE-WINDOWS-APPS.ps1')return ['Connection: configured WinGet package sources.','Sign-in: uses the Windows account; individual installers may request approval.'];
     if(['RESET-M365-SESSION.ps1','INVOKE-SESSION-RESET.ps1'].includes(item.file))return ['Connection: existing sessions in this PowerShell window.','Sign-in: no new customer sign-in.'];
@@ -3191,7 +3196,7 @@
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
     if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
-    const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
+    const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".ps1";
     const buttons = `<button id="downloadSource" class="action ${item.workflow ? '' : 'primary'}" type="button">Download</button><button id="showSource" class="action" type="button">View Code</button>`;
     return (item.workflow ? `<details class="individual-source"><summary>Individual script / source</summary><div class="actions">${buttons}</div></details>` : buttons)+'<span id="sourceStatus" role="status"></span>';
   }
@@ -3235,7 +3240,7 @@
 
     drawerBody.innerHTML = `
       <section class="item-head">
-        <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family==='ir-workflow' ? 'BEC' : item.operatorCard.family.startsWith('ir-') ? 'Incident Response' : item.operatorCard.family : primaryBucket(item))}</div>
+        <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family==='ir-workflow' ? 'BEC' : item.operatorCard.family.startsWith('ir-') ? 'BEC' : item.operatorCard.family : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
         <div class="operator-meta">${accessMarkup(item)}${item.operatorCard ? `<span class="operator-platform">${esc(moduleLabel(item).replace(/GRAPH/g,'Entra').replace(/EXO|EXCHANGE/g,'Exchange').replace(/ACTIVE DIRECTORY/g,'AD'))}</span>` : ''}</div>
@@ -3471,7 +3476,7 @@
       return {name:item.file,text:await resolveSource(item),hash:window.FIELD_KIT_SOURCE_INTEGRITY[item.publishedPath],version:item.version};
     }));
     if(new Set(files.map(file=>file.version)).size!==1)throw new Error('Workflow versions do not match. No package downloaded.');
-    return window.FIELD_KIT_START.zip([...files,{name:'IR-WORKFLOW-GUIDE.md',text:window.FIELD_KIT_START.guide()},{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
+    return window.FIELD_KIT_START.zip([...files,{name:'BEC-WORKFLOW-GUIDE.md',text:window.FIELD_KIT_START.guide()},{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
   }
 
   function saveText(source, filename){

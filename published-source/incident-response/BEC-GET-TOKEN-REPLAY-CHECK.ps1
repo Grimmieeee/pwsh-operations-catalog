@@ -1,4 +1,4 @@
-# .VERSION 1.0.3
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -410,7 +410,7 @@ function Get-DeviceText {
 }
 
 try {
-    Write-FKReportLine 'Incident Response: Review Token Replay'
+    Write-FKReportLine 'BEC: Review Token Replay'
     Write-FKReportLine 'Review sign-ins for indicators of token replay or session theft.'
     Write-FKReportLine "READ-ONLY INDICATOR REVIEW"
     Write-FKReportLine ""
@@ -727,7 +727,7 @@ catch {
     FAIL (Get-ShortError $_)
 }
 finally {
-    Offer-FKDesktopReport -Title 'IR-GET-TOKEN-REPLAY-CHECK'
+    Offer-FKDesktopReport -Title 'BEC-GET-TOKEN-REPLAY-CHECK'
 
     Pause-End
 }

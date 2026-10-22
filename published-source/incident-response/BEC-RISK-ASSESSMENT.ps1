@@ -1,5 +1,5 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.2
+.VERSION 1.0.3
 .GUID 7cf20e90-263b-4c97-98ec-f7d7d105d9aa
 .AUTHOR FIELD // KIT
 .DESCRIPTION Review one user's account and mailbox before choosing a response.
@@ -197,14 +197,14 @@ function Invoke-IRNextStep {
         return
     }
     $label=switch ($FileName) {
-        'ir-contain-eradicate' { 'ir-contain-eradicate' }
-        'ir-recover-validate' { 'ir-recover-validate' }
-        default { 'ir-risk-assessment (FINAL CHECK)' }
+        'BEC-CONTAIN-ERADICATE' { 'BEC-CONTAIN-ERADICATE' }
+        'BEC-RECOVER-VALIDATE' { 'BEC-RECOVER-VALIDATE' }
+        default { 'BEC-RISK-ASSESSMENT (FINAL CHECK)' }
     }
     if (-not (Read-IRNavigation $label)) {
         $message=switch ($FileName) {
-            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
-            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            'BEC-CONTAIN-ERADICATE' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'BEC-RECOVER-VALIDATE' { 'Response run finished. A contained account still requires approved recovery.' }
             default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
         }
         Close-IRWorkflow $message
@@ -225,7 +225,7 @@ function Invoke-IRNextStep {
             throw 'Next script is from a different release. Replace all three files together.'
         }
         $nextArgs.OutputDelayMs=$OutputDelayMs
-        if ($FileName -eq 'ir-risk-assessment') {
+        if ($FileName -eq 'BEC-RISK-ASSESSMENT') {
             $nextArgs.UserPrincipalName=[string]$saved.UPN
             $nextArgs.FinalReview=$true
         } else { $nextArgs.UPN=[string]$saved.UPN }
@@ -1390,14 +1390,14 @@ try {
         Write-IRLine 'Document evidence. Continue only if other incident evidence warrants response.'
     }
     Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
-    $script:NextIRFile='ir-contain-eradicate'
+    $script:NextIRFile='BEC-CONTAIN-ERADICATE'
     }
 
 }
 catch {
     Write-IRLine "[FAIL] Assessment incomplete: $($_.Exception.Message)" -ForegroundColor Red
     Section 'NEXT STEP'
-    Write-IRLine 'ir-risk-assessment'
+    Write-IRLine 'BEC-RISK-ASSESSMENT'
     Write-IRLine 'Resolve the reported checks and rerun. Confirmed compromise can still require approved containment.'
 }
 finally {
