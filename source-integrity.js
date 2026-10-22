@@ -43,7 +43,7 @@ window.FIELD_KIT_SOURCE_INTEGRITY = Object.freeze({
   "published-source/tenant/GET-DEVICE-CODE-EXPOSURE.ps1": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
   "published-source/tenant/GET-GUEST-APP-CONSENT-AUDIT.ps1": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
   "published-source/tenant/GET-GUEST-USER-AUDIT.ps1": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
-  "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+  "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
   "published-source/tenant/GET-OAUTH-CONSENT-AUDIT.ps1": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
   "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
   "published-source/tenant/GET-SECURE-SCORE-SNAPSHOT.ps1": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",

@@ -502,9 +502,15 @@
     "consoleObjective": true,
     "metadataReuse": false,
     "changed": true,
-    "newSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
-    "nonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06",
-    "version": "1.0.2"
+    "newSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
+    "nonPresentationSha256": "acd0f9509ab375960bec0a47b1a0ee519406c6a7502d2c0b068dd1d3057974de",
+    "version": "1.0.3",
+    "operationalChange": {
+      "kind": "registration-report-scope",
+      "priorSourceSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+      "priorNonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06"
+    },
+    "nonPresentationTokensUnchanged": false
   },
   {
     "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",

@@ -44,6 +44,16 @@ function NonPresentation-Tokens($Text){
 
 function Assert-ApprovedOperationalChange($Row,$Text){
  if(-not $Row.operationalChange){return}
+ if($Row.file -eq 'GET-MFA-SECURITY-AUDIT.ps1' -and $Row.operationalChange.kind -eq 'registration-report-scope'){
+  $new='$scopes = @("User.Read.All","Directory.Read.All","AuditLog.Read.All","UserAuthenticationMethod.Read.All")'
+  $old='$scopes = @("User.Read.All","Directory.Read.All","Reports.Read.All","UserAuthenticationMethod.Read.All")'
+  if(($Text.Split(@($new),[StringSplitOptions]::None).Count-1) -ne 1){throw 'Expected exactly one reviewed registration-scope correction.'}
+  $baseline=$Text.Replace($new,$old).Replace('.VERSION 1.0.3','.VERSION 1.0.2')
+  $sha=[Security.Cryptography.SHA256]::Create()
+  try{$hash=([BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($baseline)))).Replace('-','').ToLowerInvariant()}finally{$sha.Dispose()}
+  if($hash -ne $Row.operationalChange.priorSourceSha256){throw 'Registration scope fix includes unreviewed source changes.'}
+  return
+ }
  if($Row.operationalChange.kind -eq 'bec-naming'){
   $record=@((Get-Content (Join-Path $Root 'docs/qa/BEC-NAMING-REVIEW.json') -Raw|ConvertFrom-Json).entries|Where-Object file -eq $Row.file)
   if($record.Count -ne 1){throw 'Missing unique BEC naming source review.'}
@@ -99,4 +109,4 @@ foreach($row in $rows){
  }
  Write-Output "PASS: reviewed source fingerprint / $($row.file)"
 }
-Write-Output 'PASS: 81 reviewed source comparisons, including the setup documentation-only revision; the setup gate, BEC URI fix and BEC naming migration are explicitly bounded; NoPause remains noninteractive where supported.'
+Write-Output 'PASS: 81 reviewed source comparisons; the setup gate, BEC URI fix, BEC naming migration and registration-report scope correction are explicitly bounded; NoPause remains noninteractive where supported.'

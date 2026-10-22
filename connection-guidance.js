@@ -1,4 +1,4 @@
-// Reviewed connection metadata bound to exact source bytes.
+// Reviewed connection behavior; bound to exact downloadable source bytes.
 window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
   "published-source/tenant/GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
     "sha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
@@ -239,7 +239,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     ]
   },
   "published-source/tenant/GET-MFA-SECURITY-AUDIT.ps1": {
-    "sha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+    "sha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
     "mode": "auto",
     "services": [
       "GRAPH"

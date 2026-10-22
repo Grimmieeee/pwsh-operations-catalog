@@ -1029,8 +1029,8 @@
       "New presentation revision: original runtime acceptance retained historically; exact new revision is not runtime-tested here."
     ],
     "changed": true,
-    "nonPresentationTokensUnchanged": true,
-    "newSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+    "nonPresentationTokensUnchanged": false,
+    "newSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
     "priorVerification": {
       "version": "1.0.0",
       "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
@@ -1040,8 +1040,13 @@
       "scope": "Owner-accepted sampled read-only run: at most 10 records per collection, 40 reads per script/user. No full pagination, exhaustive tenant coverage or standalone-launch claim.",
       "evidence": "docs/qa/ACCEPTED-TEST-RECONCILIATION.md"
     },
-    "version": "1.0.2",
-    "nonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06"
+    "version": "1.0.3",
+    "nonPresentationSha256": "acd0f9509ab375960bec0a47b1a0ee519406c6a7502d2c0b068dd1d3057974de",
+    "operationalChange": {
+      "kind": "registration-report-scope",
+      "priorSourceSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+      "priorNonPresentationSha256": "5aeefdd3f16379f77d211d9941dbdf552ed03af33bef3896ef3f1f29fd600d06"
+    }
   },
   {
     "file": "GET-SECURE-SCORE-SNAPSHOT.ps1",
