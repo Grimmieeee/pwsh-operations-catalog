@@ -4312,7 +4312,7 @@ window.CATALOG_DATA = [
     "summary": "NO",
     "objective": "Review MFA registration and the policies intended to protect sign-ins.",
     "csv": "YES",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   {
     "name": "Secure Score Snapshot",

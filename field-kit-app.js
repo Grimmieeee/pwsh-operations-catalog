@@ -1813,10 +1813,6 @@
   function connectCommands(item){
     if (Array.isArray(item.connectFirst)) return [...item.connectFirst];
     if (/^Connect Microsoft Graph$/i.test(displayName(item))) return [];
-    if (item.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,item.name)){
-      const scopes = QUICK_GRAPH_SCOPES[item.name];
-      return scopes.length ? ['Connect-MgGraph -Scopes '+scopes.map(scope=>JSON.stringify(scope)).join(',')+' -ContextScope Process'] : [];
-    }
     if (/^Connect Exchange Online$/i.test(displayName(item))) return [];
 
     const curated = curatedMeta(item);
@@ -1993,27 +1989,6 @@
     return '<section class="related-block"><div class="section-label">RELATED ITEMS</div><div class="related-list">'+links.map(other=>`<button type="button" class="related-item" data-related-file="${esc(other.file)}" ${other.type==='Quick Command'?`data-related-name="${esc(other.name)}"`:''}><span>${esc(other.displayName)}</span>${accessMarkup(other).replaceAll('<div','<span').replaceAll('</div>','</span>')}</button>`).join('')+'</div></section>';
   }
 
-  // Delegated preparation for these atomic commands; roles and consent remain
-  // prerequisites. Diagnostic/disconnect commands deliberately need no sign-in.
-  const QUICK_GRAPH_SCOPES = {
-    "Show Password Last Changed And Age":["User.Read.All"],
-    "Show Sync Source":["User.Read.All"],
-    "Delete Cloud User":["User.ReadWrite.All"],
-    "Disable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
-    "Enable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
-    "Revoke Active Sessions":["User.RevokeSessions.All"],
-    "Remove Specific Authenticator Method":["UserAuthenticationMethod.ReadWrite.All"],
-    "Remove Specific Phone Method":["UserAuthenticationMethod.ReadWrite.All"],
-    "Remove Specific Delegated Grant":["DelegatedPermissionGrant.ReadWrite.All"],
-    "Add User to Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
-    "Remove User from Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
-    "Show Entra Sign-ins - Last 48 Hours":["AuditLog.Read.All"],
-    "Show Legacy / Other-client Sign-ins":["AuditLog.Read.All"],
-    "Show Successful Sign-Ins":["AuditLog.Read.All"],
-    "Show Graph Context":[],
-    "Disconnect Microsoft Graph":[]
-  };
-
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
     if (/^BEC-/i.test(source.file || "") && window.FIELD_KIT_OPERATOR_CARDS?.[source.file]) source.name=window.FIELD_KIT_OPERATOR_CARDS[source.file].name;
@@ -2027,12 +2002,6 @@
     if (/SET-THEME-(SEAGLASS|SILICON-VALLEY)/.test(source.file || "")) source.changeNote = source.notes;
     if (/SET-THEME-COBALT/.test(source.file || "")) source.changeNote = "Changes this terminal and sets Process execution policy to Bypass; no profile installation.";
     if (source.area === "Tools" && source.type === "Documentation") source.subarea = "Reference";
-    if (source.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,source.name)){
-      const scopes = QUICK_GRAPH_SCOPES[source.name];
-      source.requires = scopes.length
-        ? 'Microsoft.Graph modules for this command; delegated scopes: '+scopes.join(', ')+'. Consent and a supported Entra role for the target are required.'+(scopes.includes('AuditLog.Read.All') ? ' Sign-in logs also require tenant licensing and log-read access.' : '')
-        : 'Microsoft.Graph.Authentication; uses or inspects only the current session. No new sign-in required.';
-    }
     const commandReview = window.FIELD_KIT_COMMAND_GUIDANCE?.[source.name];
     if (source.type === "Quick Command" && commandReview?.code === source.code) {
       const {code: reviewedCode, ...copy} = commandReview;
@@ -2924,8 +2893,12 @@
   }
   function operatorDetailsMarkup(item){
     const spec=item.operatorCard;
-    if(!spec)return shortNote(item);
-    const notes=[...connectionInfo(item),...(spec.preparation || []),...spec.details];
+    if(!spec){
+      if(item.type!=='Quick Command')return shortNote(item);
+      const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
+      return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
+    }
+    const notes=[...connectionInfo(item),requirementInfo(item),...(item.permissionNotes || []),...(spec.preparation || []),...spec.details].filter(Boolean);
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
@@ -3025,12 +2998,10 @@
     const inputFacts = facts.filter(text => /^one .+ input$/i.test(text));
     const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
     const guards = item.guards || facts.filter(isGuard).filter(text => !inputFacts.includes(text));
-    const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(window.FIELD_KIT_PLAIN_PHRASES?.[text] || text)}</div>`).join("")}</div>`;
     const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
     const review = `${checks.length ? `<details class="card-disclosure"><summary>CHECKS</summary>${list(checks)}</details>` : ""}
-      ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}
-      ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES</summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}`;
+      ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}`;
     return input + review;
   }
 
@@ -3254,7 +3225,7 @@
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${item.operatorCard ? '' : factsMarkup(item)}
-      ${item.operatorCard ? '' : runInfoMarkup(item)}
+      ${item.operatorCard ? '' : item.type==='Quick Command' ? '<p class="connection-direction">START: open PowerShell on the target computer. Check DETAILS for requirements and connection setup before running.</p>' : runInfoMarkup(item)}
       ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
       <div class="actions operator-actions">${sourceButton(item)}${referenceButtons(item)}</div>

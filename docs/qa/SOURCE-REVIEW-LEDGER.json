@@ -587,67 +587,81 @@
     }
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
-    "sha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
-    "state": "Alignment reviewed \u2014 source and rendered card checked",
+    "sha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
+    "state": "Permission correction reviewed \u2014 exact inverse source check",
     "scope": [
-      "Shared card/script objective",
-      "Source-supported scope and preparation",
-      "Three explicitly reviewed related tools",
-      "Presentation-only source comparison"
+      "Registration-report AuditLog.Read.All scope correction and version bump only"
     ],
     "tests": [
-      "tests/card-objectives.test.ps1",
       "tests/operator-alignment.test.ps1",
-      "tests/site-security.test.mjs"
+      "tests/permissions.test.mjs"
     ],
     "remaining": [
-      "No new live tenant or Windows-host runtime acceptance claimed."
+      "No new live tenant acceptance claimed."
     ],
     "previousReview": {
       "sha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
-      "state": "Objective aligned \u2014 source/DOM checked",
+      "state": "Alignment reviewed \u2014 source and rendered card checked",
       "scope": [
-        "Exact card/script purpose parity",
-        "Non-presentation token fingerprint unchanged"
+        "Shared card/script objective",
+        "Source-supported scope and preparation",
+        "Three explicitly reviewed related tools",
+        "Presentation-only source comparison"
       ],
       "tests": [
         "tests/card-objectives.test.ps1",
-        "45 site/theme tests including visible purpose check"
+        "tests/operator-alignment.test.ps1",
+        "tests/site-security.test.mjs"
       ],
       "remaining": [
-        "Exact revised-source runtime acceptance remains separately attributable."
+        "No new live tenant or Windows-host runtime acceptance claimed."
       ],
       "previousReview": {
-        "sha256": "23d724f8a7af9c0effb335631381db8c5f6728939a047586b278168fe9bf2039",
-        "state": "Presentation aligned \u2014 offline checked",
+        "sha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+        "state": "Objective aligned \u2014 source/DOM checked",
         "scope": [
-          "Presentation-only source comparison; non-presentation token fingerprint unchanged",
-          "Prior runtime acceptance retained historically; no new live-service claim"
+          "Exact card/script purpose parity",
+          "Non-presentation token fingerprint unchanged"
         ],
         "tests": [
-          "PowerShell parser and required offline suites",
-          "tests/operator-alignment.test.ps1"
+          "tests/card-objectives.test.ps1",
+          "45 site/theme tests including visible purpose check"
         ],
         "remaining": [
-          "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+          "Exact revised-source runtime acceptance remains separately attributable."
         ],
         "previousReview": {
-          "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
-          "state": "Automated tests passed",
+          "sha256": "23d724f8a7af9c0effb335631381db8c5f6728939a047586b278168fe9bf2039",
+          "state": "Presentation aligned \u2014 offline checked",
           "scope": [
-            "Tenant/account binding and process-scoped delegated authentication",
-            "Successful empty, malformed, denied and interrupted collection reads",
-            "Graph URI interpolation and card input alignment"
+            "Presentation-only source comparison; non-presentation token fingerprint unchanged",
+            "Prior runtime acceptance retained historically; no new live-service claim"
           ],
           "tests": [
-            "7 offline tenant/account cases",
-            "4 offline collection cases",
-            "1 user resolver fixture"
+            "PowerShell parser and required offline suites",
+            "tests/operator-alignment.test.ps1"
           ],
           "remaining": [
-            "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
-            "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
-          ]
+            "Exact revised-source Windows acceptance; operational findings remain governed by prior evidence and known exceptions."
+          ],
+          "previousReview": {
+            "sha256": "73de4a26783e056f501d0e76c30882814c47dc9757898dbf64439087587862ed",
+            "state": "Automated tests passed",
+            "scope": [
+              "Tenant/account binding and process-scoped delegated authentication",
+              "Successful empty, malformed, denied and interrupted collection reads",
+              "Graph URI interpolation and card input alignment"
+            ],
+            "tests": [
+              "7 offline tenant/account cases",
+              "4 offline collection cases",
+              "1 user resolver fixture"
+            ],
+            "remaining": [
+              "Windows PowerShell 5.1 and PowerShell 7 operator testing on approved test objects.",
+              "Tenant API roles/licensing, per-tool heuristic findings and optional exports."
+            ]
+          }
         }
       }
     }

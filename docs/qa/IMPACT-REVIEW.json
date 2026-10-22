@@ -2658,7 +2658,7 @@
       "name": "MFA Security Audit",
       "type": "Tool",
       "impact": "Read-only",
-      "sourceSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+      "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
       "safetyMetadataSha256": "b9804204f2de342600ee4835865746246185f0c1c9b62d63505a1d29b3740f64"

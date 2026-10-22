@@ -16,14 +16,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
     "objective": "Find Conditional Access settings and exclusions that need review.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.Read.All + Directory.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, Directory.Read.All, User.Read.All.",
     "notes": "Read-only Conditional Access posture review that flags disabled/report-only policies, exclusions, device-code gaps, location conditions, and other weak-coverage indicators.",
     "startMode": "right-click",
     "completion": {
       "result": "Policy settings and possible protection gaps are listed.",
       "next": "Review how the policies apply to the affected users; configuration flags alone do not prove effective coverage.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview, plus exact user sign-in names (UPNs) or a TXT/CSV list. Choose a license from the numbered list. Enter a country/region code only for users missing UsageLocation.",
@@ -39,18 +43,22 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
     "objective": "Assign a selected Microsoft 365 license to approved users.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Shows available tenant SKUs, previews the selected license operation, optionally sets missing UsageLocation, requires typed ASSIGN confirmation, and re-reads each user to verify the selected SKU is present.",
     "startMode": "right-click",
     "completion": {
       "result": "Each user’s selected license and any approved country/region change are checked again.",
       "next": "Review failed or unconfirmed users; a successful license assignment does not prove every service is ready.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. Defaults offered: group name Dynamic-Group-AnyLicense and alias DG_AnyLicense; change them before approval if needed.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Group.ReadWrite.All and Directory.Read.All; tenant rights and licensing for dynamic groups.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Group.ReadWrite.All, Directory.Read.All.",
     "guards": [
       "Checks the tenant and signed-in account",
       "Stops creation if an existing-group lookup fails or has more than one match",
@@ -64,7 +72,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The new group’s dynamic membership settings are checked after creation.",
       "next": "Check membership processing in Entra ID. Creating this group does not assign a license to it.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview, plus exact user sign-in names (UPNs) or a TXT/CSV user list (UPN column recommended). Choose a license from the numbered list, or ALL.",
@@ -80,18 +92,22 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
     "objective": "Remove selected Microsoft 365 licenses from approved users.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.ReadWrite.All + Directory.Read.All + Organization.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Validates the expected tenant, previews each exact target UPN and planned license, requires one typed REMOVE approval, and re-reads each user. Failed or unverified results remain incomplete. License removal alone is not offboarding.",
     "startMode": "right-click",
     "completion": {
       "result": "Each user’s licenses are checked again after the approved removal.",
       "next": "Review failed or unconfirmed users. License removal alone does not complete offboarding.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
     "input": "Tenant domain (for example, contoso.com). Default inactivity threshold: 90 days.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, AuditLog.Read.All, Group.Read.All; ExchangeOnlineManagement with recipient-read access.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, Group.Read.All.",
     "checks": [
       "Enabled users with old or missing sign-in records",
       "Active admin roles and cloud groups with no owner",
@@ -110,7 +126,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "next": "Review each finding before planning cleanup. This tool makes no tenant changes. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     },
-    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "checks": [
@@ -131,10 +153,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Direct members of the requested distribution groups, with lookup problems shown.",
       "next": "Review unresolved group names; nested groups require their own membership review.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Group.Read.All, GroupMember.ReadWrite.All; ActiveDirectory module and AD change rights for synced memberships.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All, GroupMember.ReadWrite.All.",
     "checks": [
       "Group memberships in Active Directory and Entra ID",
       "Removal results and remaining memberships",
@@ -155,7 +180,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Removal results and remaining memberships for the approved users.",
       "next": "Review failed and skipped memberships. Check synchronized changes in Entra ID before closing the work.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "checks": [
@@ -170,14 +200,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
     "objective": "Require per-user MFA for selected accounts after approval.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Policy.ReadWrite.AuthenticationMethod + UserAuthenticationMethod.Read.All + User.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.ReadWrite.AuthenticationMethod, UserAuthenticationMethod.Read.All, User.Read.All.",
     "notes": "Uses the Microsoft Graph beta authentication requirements endpoint. Per-user MFA is separate from Conditional Access and Security Defaults. Shows all target states first, requires typed ENFORCE confirmation, and re-reads each user to verify the resulting MFA state.",
     "startMode": "right-click",
     "completion": {
       "result": "Each approved user’s per-user MFA setting is checked again.",
       "next": "Confirm the intended sign-in experience. This legacy setting does not replace Conditional Access or Security Defaults.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement; rights to read recipient, mailbox configuration, inbox rules and mailbox permissions. Microsoft Graph is not used.",
@@ -194,11 +228,14 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
     "guards": [
       "Desktop HTML report is optional; keep exported client information private"
+    ],
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
     ]
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "input": "Mailbox sign-in name (UPN). Defaults: move from RSS Subscriptions to Restored Messages, looking back 24 hours. Review or change the folders before approving moves.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: delegated Mail.ReadWrite.Shared AND existing access to the target mailbox/folders. An admin role alone does not grant mailbox access.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Mail.ReadWrite.Shared.",
     "checks": [
       "Folders selected for the email move",
       "Message preview and selected move results",
@@ -216,7 +253,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Selected email moves and checks of the source and recovery folders.",
       "next": "Have the user confirm the recovered messages are in the expected place. Review any failed moves before retrying.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "BEC-RISK-ASSESSMENT.ps1": {
     "checks": [
@@ -232,10 +273,17 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
     "objective": "Review one user's account and mailbox before choosing a response.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "Makes no tenant changes. Conditional Access is an enabled-policy inventory, not proof of user coverage. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. The policy list does not prove that Conditional Access protects this user.",
-    "startMode": "workflow"
+    "startMode": "workflow",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Shared-session exception: all three BEC phases request the same read AND response scopes at the first sign-in. Assessment and recovery do not themselves change tenant data, but their token is write-capable. Approve the whole response scope set before starting; authentication separation is deferred to the lifecycle wave.",
+      "BEC platform: approved Windows jumpbox, Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+; AD actions require delegated Windows AD rights.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "BEC-CONTAIN-ERADICATE.ps1": {
     "checks": [
@@ -252,10 +300,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
     "objective": "Contain and clean up one compromised account after approval.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "Revocation, sign-in block, password reset and selected persistence deletion require explicit approvals. Synced AD changes use a SID-matched account. MFA is operator-confirmed, not independently enforced by the script. A temporary password can appear in terminal capture/transcripts; no automatic export or clipboard copy. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. You confirm trusted MFA methods; the script does not enforce them. A temporary password can remain in terminal capture/transcripts even after its variable is cleared.",
-    "startMode": "workflow"
+    "startMode": "workflow",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Shared-session exception: all three BEC phases request the same read AND response scopes at the first sign-in. Assessment and recovery do not themselves change tenant data, but their token is write-capable. Approve the whole response scope set before starting; authentication separation is deferred to the lifecycle wave.",
+      "BEC platform: approved Windows jumpbox, Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+; AD actions require delegated Windows AD rights.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "BEC-RECOVER-VALIDATE.ps1": {
     "checks": [
@@ -272,10 +328,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
     "objective": "Check recovery readiness and restore approved account access.",
     "input": "User sign-in address and Microsoft 365 domain or tenant ID",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Windows jumpbox; Microsoft.Graph.Authentication 2.x; ExchangeOnlineManagement 3.2+; delegated tenant rights. AD changes require local Windows AD rights.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All, Policy.Read.All, User.RevokeSessions.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, DelegatedPermissionGrant.ReadWrite.All.",
     "notes": "RECOVER attests user identity, remediation, trusted MFA methods and owner approval. Rechecks available evidence; does not reset a password. User sign-in with MFA and monitoring remain required. User-tested on a client jumpbox; module versions, tenant policy and AD/cloud synchronization still need environment-specific validation. Keep all three files together and launch in one existing PowerShell window. No automatic delta sync, exports, module installs or execution-policy changes. Read the IR workflow guide before use.",
     "details": "Keep all three scripts in one folder and use the same PowerShell window. Sign-in requests permissions for all three steps; assessment makes no tenant changes. There is no automatic sync, export, module install, or execution-policy change. Module compatibility, local AD permissions, and synchronization must be checked for the client. Recovery does not reset passwords or remove unwanted access. Verify user sign-in with MFA and complete the follow-up monitoring.",
-    "startMode": "workflow"
+    "startMode": "workflow",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Shared-session exception: all three BEC phases request the same read AND response scopes at the first sign-in. Assessment and recovery do not themselves change tenant data, but their token is write-capable. Approve the whole response scope set before starting; authentication separation is deferred to the lifecycle wave.",
+      "BEC platform: approved Windows jumpbox, Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+; AD actions require delegated Windows AD rights.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
     "input": "Target UPN; lookback days (default 30, maximum 90); optional source IP.",
@@ -296,7 +360,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Available file-download and sharing events, plus download-burst indicators.",
       "next": "Investigate unusual events using the original records; the flags do not prove that data was stolen.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "BEC-GET-IP-TRACE.ps1": {
     "input": "Suspect IP; lookback days (default 7, maximum 90).",
@@ -316,7 +383,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Available audit events for the IP, with failed search periods and limits reported.",
       "next": "Review the events in context and resolve gaps before describing the search as complete.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "input": "Sender, recipient or source IP; lookback days (default 7, maximum 90).",
@@ -336,7 +406,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Matching email delivery records, with search periods and result limits shown.",
       "next": "Review recipients and delivery status; use a separate content-search tool when message content is needed.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "input": "Public IP addresses or TXT list; API key for each enabled provider.",
@@ -357,7 +430,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Reputation results from the enabled providers, or their lookup errors.",
       "next": "Compare reputation with client evidence. A clean reputation result does not prove an IP is safe.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "BEC-GET-TIMELINE-BUILDER.ps1": {
     "input": "Local case folder or manual event entries; optional search text.",
@@ -378,7 +452,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Events sorted by time and an optional saved timeline.",
       "next": "Check event time zones and entries based on file modification times before sharing the timeline.",
       "blocked": "If input cannot be read, check its path or format. Keep the original evidence unchanged."
-    }
+    },
+    "permissionNotes": []
   },
   "BEC-GET-TOKEN-DECODE.ps1": {
     "checks": [
@@ -398,11 +473,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The token’s decoded header and contents are shown locally.",
       "next": "Inspect the claims without treating decoding as proof of a valid or trusted token. Keep the token private.",
       "blocked": "If input cannot be read, check its path or format. Keep the original evidence unchanged."
-    }
+    },
+    "permissionNotes": []
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "input": "Target UPN; lookback hours (default 48); expected country/region (default US).",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, AuditLog.Read.All, IdentityRiskEvent.Read.All; tenant licensing and role access for the requested logs.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, AuditLog.Read.All, IdentityRiskEvent.Read.All.",
     "checks": [
       "Entra sign-ins and Identity Protection risk detections",
       "Risk signals related to stolen tokens, plus sign-in locations"
@@ -421,7 +497,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "next": "Review token-specific signals and missing data; an unexpected location alone does not prove a stolen session. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     },
-    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -429,7 +509,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Application.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Application.Read.All.",
     "checks": [
       "App permissions approved by guest users",
       "App and service names when they can be found",
@@ -443,7 +523,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Guest-approved app permissions and the permissions flagged for review.",
       "next": "Confirm the guest, app, and business need before revoking access.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default sign-in review period: 72 hours.",
@@ -451,7 +535,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: ExchangeOnlineManagement with recipient-read access; Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
     "sourceSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
     "objective": "Find sign-in activity associated with shared mailboxes.",
     "notes": "Finds shared mailboxes with direct sign-in exposure.",
@@ -460,7 +544,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Shared-mailbox sign-in records for the selected period.",
       "next": "Investigate unexpected direct sign-ins and confirm that log access covered the period needed.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default credential-expiry warning: within 30 days.",
@@ -468,7 +557,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
     "sourceSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
     "objective": "Review registered apps, ownership, and credential expiry dates.",
     "notes": "Reviews app registrations and related security posture.",
@@ -477,7 +566,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "App credentials, permission flags, and owner findings.",
       "next": "Confirm an app’s purpose and owner before changing permissions or rotating credentials.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default sign-in review period: 72 hours.",
@@ -485,7 +578,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All; policy/sign-in log role and licensing access.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Policy.Read.ConditionalAccess, AuditLog.Read.All, Directory.Read.All.",
     "sourceSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
     "objective": "Review policies for gaps in device-code sign-in protection.",
     "notes": "Reviews device-code authentication exposure.",
@@ -494,7 +587,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Device-code policy settings and recent device-code sign-ins.",
       "next": "Check whether each sign-in is expected before planning policy changes.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -502,8 +599,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: User.Read.All, Directory.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All; Policy.Read.ConditionalAccess when CA review is requested; appropriate report-read role.",
-    "sourceSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All, UserAuthenticationMethod.Read.All, Policy.Read.ConditionalAccess.",
+    "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
     "objective": "Review MFA registration and the policies intended to protect sign-ins.",
     "notes": "Reviews MFA coverage and security gaps.",
     "details": "Default review covers MFA registration and methods. To include Conditional Access policy review, launch in a terminal with -IncludeConditionalAccess. Policy settings alone do not prove protection for every user.",
@@ -512,7 +609,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "MFA registration and method findings; policy review is included only when requested.",
       "next": "Check users with missing or weaker methods. Registration does not prove MFA is enforced for every sign-in.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Policy.Read.ConditionalAccess is requested only when Conditional Access review is selected. Registration reporting requires a supported Reports Reader / Security Reader role (or equivalent); the beta report excludes disabled users and can change."
+    ]
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Optional previous JSON snapshot for comparison.",
@@ -520,7 +622,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All; Secure Score read access.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: SecurityEvents.Read.All, SecurityActions.Read.All, Directory.Read.All.",
     "sourceSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
     "objective": "Show the tenant's latest Microsoft Secure Score.",
     "notes": "Captures Microsoft Secure Score posture.",
@@ -529,7 +631,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Current Secure Score data and a comparison when a previous snapshot is supplied.",
       "next": "Prioritize controls that fit the client; the score is not proof that the tenant is secure.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -537,7 +643,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Checks the tenant and signed-in account before reading data",
       "Stops if required data cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: Application.Read.All, Directory.Read.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All, User.Read.All.",
     "sourceSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
     "objective": "List enterprise app owners and identify apps without an owner.",
     "notes": "Reviews enterprise/service principal ownership.",
@@ -546,7 +652,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Enterprise app owners and apps with no recorded owner.",
       "next": "Confirm who manages each app before assigning or removing owners.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. Defaults: last 24 hours, expected country US, up to five pages of results. Optional user sign-in name (UPN) filter.",
@@ -555,7 +665,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Marks the review incomplete when the page limit is reached",
       "Stops if required data is missing or cannot be read"
     ],
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication: AuditLog.Read.All, User.Read.All, Directory.Read.All; sign-in log role and licensing access.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: AuditLog.Read.All, User.Read.All, Directory.Read.All.",
     "sourceSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
     "objective": "Find unusual sign-in activity that needs investigation.",
     "notes": "Reviews suspicious or anomalous tenant sign-ins.",
@@ -564,7 +674,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Sign-ins flagged against the selected countries and time period, with page-limit gaps shown.",
       "next": "Review flagged events and any incomplete coverage before deciding the activity is expected or suspicious.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "checks": [
@@ -586,7 +700,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The approved domain join reports its result; a restart occurs only if approved.",
       "next": "Restart when required, then confirm domain membership and a permitted domain sign-in.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
     "checks": [
@@ -607,7 +724,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The printer and TCP/IP port are created or their existing state is reported.",
       "next": "Print a test page and confirm the intended default printer with the user.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "BACKUP-USER-PROFILE.ps1": {
     "checks": [
@@ -627,11 +745,12 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "A dated backup folder and a copy log for the selected profile folders.",
       "next": "Review copy errors and open representative backed-up files before removing the original data.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "input": "One exact user sign-in name (UPN). Access to the user’s Active Directory domain is needed for local AD checks.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: ActiveDirectory module/domain read access for AD coverage; Microsoft.Graph.Authentication: User.Read.All, Group.Read.All, Directory.Read.All; ExchangeOnlineManagement with mailbox, permission, transport-rule and retention read rights.",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All, Directory.Read.All.",
     "checks": [
       "Active Directory account, groups, owned objects, and direct reports",
       "Mailbox forwarding, shared access, retention, and usage",
@@ -651,7 +770,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "next": "Resolve dependencies and missing checks before deleting the account. Third-party and local-system dependencies still need separate review. Save the optional Desktop HTML report if you need a record.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
     },
-    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information."
+    "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default old-sign-in threshold: 30 days.",
@@ -666,14 +791,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
     "objective": "List tenant admin-role assignments for review.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Directory.Read.All + RoleManagement.Read.Directory + User.Read.All + AuditLog.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, RoleManagement.Read.Directory, User.Read.All, AuditLog.Read.All.",
     "notes": "Reviews active Entra admin-role assignments with account state, hybrid status, and recent sign-in context.",
     "startMode": "right-click",
     "completion": {
       "result": "Active admin-role assignments with account status and available sign-in context.",
       "next": "Confirm whether the roles are still needed; this is not a complete review of eligible roles available through PIM.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -688,14 +817,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
     "objective": "Review app permissions granted in the tenant.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Application.Read.All + Directory.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Application.Read.All, Directory.Read.All.",
     "notes": "Reviews delegated OAuth grants, resolves application/resource names, and flags high-risk scopes.",
     "startMode": "right-click",
     "completion": {
       "result": "App permissions approved on behalf of users, with higher-risk permissions flagged.",
       "next": "Confirm the app and business need before revoking grants; this does not cover every form of app access.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-GUEST-USER-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain. Default old-sign-in threshold: 90 days.",
@@ -710,14 +843,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
     "objective": "Find guest accounts that need an ownership or activity review.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + AuditLog.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Reviews guest accounts for disabled state, stale/no sign-in, and unaccepted invitations.",
     "startMode": "right-click",
     "completion": {
       "result": "Guest status, invitation state, and available sign-in history.",
       "next": "Confirm the sponsor and business need before removing guests. Missing history does not prove that a guest was never used.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
     "input": "Tenant ID (GUID) from Entra admin center > Overview. This script requires the ID, not just a domain.",
@@ -731,14 +868,18 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
     "objective": "Review Microsoft 365 license capacity and user assignments.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + Directory.Read.All + Organization.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, Organization.Read.All.",
     "notes": "Reviews subscribed SKUs and user license assignments, including disabled licensed users and enabled unlicensed users.",
     "startMode": "right-click",
     "completion": {
       "result": "License totals and user assignments, including disabled licensed and enabled unlicensed users.",
       "next": "Confirm business and retention needs before changing licenses.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "checks": [
@@ -756,7 +897,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Inbox rules for the chosen mailbox scope, or only flagged rules when requested.",
       "next": "Confirm whether flagged rules are approved and follow up on mailboxes that could not be read.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
     "checks": [
@@ -779,7 +923,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Drive usage, measured cleanup locations, and largest-file findings; scan failures remain visible.",
       "next": "Review candidate files before any separate cleanup. Large files are not automatically safe to delete.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
     "checks": [
@@ -793,7 +938,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ],
     "sourceSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
     "input": "Cloud-only user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional tenant domain. Default generated password: 20 characters; the script asks whether to require a change at next sign-in (default Yes).",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication | Delegated: User.Read.All + User-PasswordProfile.ReadWrite.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, User-PasswordProfile.ReadWrite.All.",
     "notes": "Refuses synced users so Active Directory remains authoritative. Generated passwords are never exported.",
     "objective": "Reset passwords for selected cloud-only users after approval.",
     "startMode": "right-click",
@@ -801,7 +946,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Each approved cloud-only user has a reset result; temporary passwords appear only after successful resets.",
       "next": "Deliver each password through the approved secure channel, confirm delivery at the pause, then verify the user’s next sign-in.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "input": "Local kit root (default C:\\Field-Kit); review expected layout for your installation.",
@@ -821,7 +970,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Findings compare the chosen folder with the script’s fixed expected kit layout.",
       "next": "Check whether reported missing files are actually required for your installation before changing the layout.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "INVOKE-MAP-KIT.ps1": {
     "input": "Confirm the detected root or select another folder. Default folder depth: 10; includes files and signature checks.",
@@ -841,7 +991,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "A folder map with counts, signature status, and available Git indicators.",
       "next": "Review naming and file warnings manually; this is not a complete secret scan.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "INVOKE-SESSION-RESET.ps1": {
     "checks": [
@@ -862,7 +1013,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Graph/Exchange cleanup results for this window; optional variable cleanup or a new window only when requested.",
       "next": "Reconnect to the intended tenant when ready. Review cleanup failures instead of assuming every connection closed.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "SET-THEME-BASIC.ps1": {
     "checks": [
@@ -881,7 +1033,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Example terminal messages are printed; no persistent theme is installed.",
       "next": "Use the examples as a reference; their output is demonstration data.",
       "blocked": "If the display fails, check PowerShell and terminal support before trying again."
-    }
+    },
+    "permissionNotes": []
   },
   "SET-THEME-COBALT.ps1": {
     "checks": [
@@ -901,7 +1054,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "This terminal displays the Cobalt palette; no startup theme is installed.",
       "next": "Close the terminal to end session-only changes. Review the reported Process execution-policy change.",
       "blocked": "If the display fails, check PowerShell and terminal support before trying again."
-    }
+    },
+    "permissionNotes": []
   },
   "SET-THEME-SEAGLASS.ps1": {
     "checks": [
@@ -922,7 +1076,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The theme is applied and its startup block is written to your PowerShell profile.",
       "next": "Open a new PowerShell window to confirm startup. Review the profile if other customizations changed.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "SET-THEME-SILICON-VALLEY.ps1": {
     "checks": [
@@ -942,104 +1097,138 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The profile theme and startup banner are installed.",
       "next": "Open a new PowerShell window to confirm startup. Never use the predictable date-based password output as a real password.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
     "sourceSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
     "objective": "Find enabled accounts with old or unavailable Entra sign-in activity.",
     "input": "No user list needed. Reviews enabled member accounts in the signed-in tenant; default inactivity threshold: 90 days. Use -Days in a terminal to change it.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Tenant-wide review of enabled Entra member accounts. Missing sign-in activity is reported separately and is never classified as inactivity.",
     "startMode": "right-click",
     "completion": {
       "result": "Enabled users with sign-in records older than the threshold, with missing records listed separately.",
       "next": "Confirm whether each account is still needed before proposing changes.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
     "sourceSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
     "objective": "Disable selected user accounts in AD or Entra after approval.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Graph account-change rights + Active Directory reachability for synced users",
+    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.ReadWrite.All, Directory.Read.All.",
     "notes": "Guarded account-disable workflow for one or many users. Uses Active Directory for synced users and Entra ID for cloud-only users, requires typed DISABLE confirmation, validates post-change state, and can optionally revoke sessions and request Entra Connect delta sync.",
     "startMode": "right-click",
     "completion": {
       "result": "A result for each approved account, including whether the disabled state was confirmed.",
       "next": "Check any failed account and confirm synced changes reach Entra ID. Session revocation is a separate optional action.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "sourceSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
     "objective": "Delete approved user accounts from their authoritative directory.",
     "input": "Exact user sign-in names (UPNs), entered directly or in a TXT/CSV file. Optional sync server if you request an immediate sync.",
-    "requires": "Microsoft Graph user-write rights + ActiveDirectory module / writable DC reachability for synced users",
+    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.ReadWrite.All, Organization.Read.All.",
     "notes": "Destructive identity deletion workflow for one or many explicitly approved users. Resolves exact UPNs, uses Active Directory for synced users and Entra ID for cloud-only/guest identities, shows a full plan, requires typed DELETE confirmation, and validates absence at the same authoritative source.",
     "startMode": "right-click",
     "completion": {
       "result": "A result for each approved deletion, checked in the system where the user was removed.",
       "next": "Keep failed deletions and pending synchronization open. Follow the separate mailbox and retention plan.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "sourceSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
     "objective": "Find user sign-in names from names, email addresses, or a list.",
     "input": "Tenant domain, plus names, email addresses, or sign-in names (UPNs). Direct entries and TXT/CSV lists are supported.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All.",
     "notes": "Tenant-targeted identity resolver for direct values or TXT/CSV input with exact/likely/multiple/no-match decisions plus verified review CSV and exact-match UPN TXT exports.",
     "startMode": "right-click",
     "completion": {
       "result": "Matches are separated into exact, likely, multiple, or no match.",
       "next": "Resolve uncertain matches before using the names in another tool. Export the exact-match list only when needed.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "sourceSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
     "objective": "Show whether selected accounts are enabled and when they last signed in.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file. The script uses their shared domain unless a tenant domain is supplied.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + AuditLog.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, AuditLog.Read.All.",
     "notes": "Checks exact UPN account state and recorded Entra sign-in activity. Missing sign-in data and query failures remain explicit and are never treated as inactivity.",
     "startMode": "right-click",
     "completion": {
       "result": "Account status and available sign-in records for the requested users.",
       "next": "Follow up on failed lookups or missing history before deciding an account is inactive.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "GET-GROUP-MEMBERS.ps1": {
     "sourceSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
     "objective": "List direct members of selected groups.",
     "input": "Group names or email addresses, entered directly or in a TXT/CSV file.",
-    "requires": "Exchange Online PowerShell and access to the mailbox or tenant settings being reviewed. Technical requirements: ExchangeOnlineManagement + Microsoft Graph group read access + Active Directory reachability when applicable",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
     "notes": "General group-to-members review for one or many groups. Resolution order is Exchange distribution group, Entra ID group, then Active Directory group.",
     "startMode": "right-click",
     "completion": {
       "result": "Direct members of each group found in Exchange, Entra ID, or Active Directory.",
       "next": "Confirm the resolved group and system. Nested memberships are not a complete access review.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "GET-USER-GROUPS.ps1": {
     "sourceSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
     "objective": "List the selected users' direct groups in AD and Entra.",
     "input": "User sign-in names (UPNs), entered directly or in a TXT/CSV file.",
-    "requires": "Access to read users and groups in the connected tenant. For AD results, run on a domain-connected computer with RSAT. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Group.Read.All + ActiveDirectory module / domain reachability for AD coverage",
+    "requires": "Modules: Microsoft.Graph.Authentication + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Group.Read.All.",
     "notes": "User-to-groups review that independently checks Active Directory and Entra ID. Synced groups remain visible in Entra as [Synced] even when the same group is also observed in AD.",
     "startMode": "right-click",
     "completion": {
       "result": "Direct memberships shown separately for AD and Entra, with missing users and unavailable or failed checks clearly identified.",
       "next": "Follow up on systems that could not be checked. A synced group appearing in both systems is expected.",
       "blocked": "Review any partial or unsuccessful outcome. A missing user is different from a user with no groups."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
     "sourceSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
     "objective": "List group owners and identify groups without an assigned owner.",
     "input": "No group list needed. Reviews groups in the tenant you sign in to.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + Microsoft.Graph.Groups + Group.Read.All + User.Read.All + ExchangeOnlineManagement",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement. Requested delegated Graph scopes: Group.Read.All, User.Read.All.",
     "notes": "Tenant-wide owner review across Teams, Microsoft 365 groups, security groups, mail-enabled groups, and Exchange distribution groups. Lookup failures and ownerless groups remain visible.",
     "startMode": "right-click",
     "completion": {
@@ -1050,6 +1239,11 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
     "guards": [
       "Desktop HTML report is optional; keep exported client information private"
+    ],
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
     ]
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
@@ -1067,6 +1261,9 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
     "guards": [
       "Desktop HTML report is optional; keep exported client information private"
+    ],
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
     ]
   },
   "GET-MAILBOX-FORWARDING.ps1": {
@@ -1080,7 +1277,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Mailbox-level and inbox-rule forwarding for the requested mailboxes.",
       "next": "Confirm whether destinations are approved. A failed rule or mailbox query leaves the review incomplete.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "sourceSha256": "1ea2ff740e1f5eb24ba4aafa92636fce025ed90ffbc4050e80ce5aedcb3568fe",
@@ -1093,7 +1293,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Hold settings are read again for mailboxes changed to the requested unlimited hold.",
       "next": "Review failed or unconfirmed mailboxes and record the approved retention decision.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
     "sourceSha256": "7c4ff63bee17b5669a05a76657f3cca0b5b3674b102ead014df742ae720c62ae",
@@ -1106,7 +1309,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Mail-flow rules with actions such as forwarding, redirection, deletion, or moderation.",
       "next": "Confirm the purpose of flagged rules before changing them; a flagged action can be legitimate.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "TEST-POWERSHELL-READINESS.ps1": {
     "sourceSha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
@@ -1119,7 +1325,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Readiness findings for this computer’s shell, modules, tools, and connections.",
       "next": "Fix the requirements needed by your selected script; a readiness pass does not verify that script’s runtime behavior.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "GET-FOLDER-INVENTORY.ps1": {
     "sourceSha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
@@ -1132,7 +1339,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "A folder map, file counts, signatures, and available Git status.",
       "next": "Review warnings before cleanup. This tool does not reorganize files or enforce a kit layout.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "INSTALL-M365-MODULES.ps1": {
     "sourceSha256": "6c5fb208fea47d9588354590817362336e644bc4887127f317d4816161c0b4a2",
@@ -1145,7 +1353,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Installation or update results for the selected PowerShell modules.",
       "next": "Resolve failed installs before running dependent tools. Tenant sign-in is still a separate step.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "TEST-SENSITIVE-DATA.ps1": {
     "sourceSha256": "594d18150acb832080f13776581f6d8d8d21d3addc7e14aa8aea017b76e9b69e",
@@ -1158,20 +1367,22 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Files and text matching the selected sensitive-data patterns.",
       "next": "Review each match and the files themselves before sharing; no matches does not guarantee that all sensitive data was found.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "RESET-M365-SESSION.ps1": {
     "sourceSha256": "a08270181dc4ac7ac0cb78fd8f651701a40ce25b668342a4e0a829fb09246809",
     "objective": "Disconnect Microsoft 365 services in the current PowerShell window.",
     "input": "No account list needed. Use the PowerShell window whose connections you want to close.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Optional Microsoft.Graph / ExchangeOnlineManagement",
+    "requires": "Optional Microsoft.Graph / ExchangeOnlineManagement",
     "notes": "Disconnects Graph and Exchange Online, removes legacy Exchange PSSessions, and clears the local PowerShell error buffer.",
     "startMode": "terminal",
     "completion": {
       "result": "Graph/Exchange connections and stored errors are cleared in this PowerShell session where possible.",
       "next": "Reconnect in the intended tenant when ready. A new window does not inherit authenticated sessions.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "UPDATE-WINDOWS-APPS.ps1": {
     "sourceSha256": "32fcfc1c298460301dc5fe7841bb5bddb768691e23f7c9f28270c5396349c3c3",
@@ -1184,13 +1395,14 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Available updates are listed; approved updates run and remaining upgrades are shown.",
       "next": "Review failed or remaining upgrades and check the affected applications with the user.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
     "sourceSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
     "objective": "Review one user's account, authentication, access, and recent sign-ins.",
     "input": "One user sign-in name (UPN).",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: User.Read.All + UserAuthenticationMethod.Read.All + Directory.Read.All + AuditLog.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: User.Read.All, Directory.Read.All, UserAuthenticationMethod.Read.All, AuditLog.Read.All.",
     "notes": "Read-only one-user identity/security snapshot covering account state, authentication, privileged roles, direct groups, licensing, recent sign-ins, and explicit data gaps.",
     "startMode": "right-click",
     "completion": {
@@ -1201,13 +1413,17 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
     "guards": [
       "Desktop HTML report is optional; keep exported client information private"
+    ],
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
     ]
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
     "sourceSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
     "objective": "Get a broad overview of the tenant's security settings and review areas.",
     "input": "Reviews the tenant you sign in to; no user list needed. Default old-sign-in threshold: 90 days.",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Organization.Read.All + User.Read.All + AuditLog.Read.All + Directory.Read.All + RoleManagement.Read.Directory + Policy.Read.ConditionalAccess + DelegatedPermissionGrant.Read.All",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Organization.Read.All, User.Read.All, AuditLog.Read.All, Directory.Read.All, RoleManagement.Read.Directory, Policy.Read.ConditionalAccess, DelegatedPermissionGrant.Read.All.",
     "notes": "Fast tenant overview of users, stale enabled accounts, Conditional Access policy state, active admin roles, and delegated OAuth grants.",
     "startMode": "right-click",
     "completion": {
@@ -1218,6 +1434,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     "details": " At the end, choose Y to save an HTML report to your Desktop; otherwise no HTML report is saved. Reports can contain client information.",
     "guards": [
       "Desktop HTML report is optional; keep exported client information private"
+    ],
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
     ]
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
@@ -1231,7 +1451,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Mailbox access, automatic booking permissions, and booking approvers are listed.",
       "next": "Confirm access and booking behavior with the resource owner before changing permissions.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
     "sourceSha256": "90eadb894e2aa8ac36f62047a4c4aadcac67aa468c8bbbf583ec0992e6fc6e9c",
@@ -1244,83 +1467,106 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Forwarding and supported mailbox-access permissions across user and shared mailboxes.",
       "next": "Review unexpected access and failed mailbox queries; findings alone do not authorize removal.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": [
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights."
+    ]
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
     "sourceSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
     "objective": "Remove approved mailbox access held by one disabled user.",
     "input": "The disabled user’s exact sign-in name (UPN).",
-    "requires": "Microsoft Graph PowerShell and an account allowed to read or change the listed data. Technical requirements: Microsoft.Graph.Authentication + User.Read.All + Directory.Read.All + Exchange Online permission-management rights + directory reachability for synced-user validation",
+    "requires": "Modules: Microsoft.Graph.Authentication + ExchangeOnlineManagement + ActiveDirectory (Windows RSAT). Requested delegated Graph scopes: User.Read.All, Directory.Read.All.",
     "notes": "Post-offboarding cleanup that validates disabled state at the authoritative identity source, scans Exchange recipients for direct Full Access, Send As, and Send on Behalf rights, shows the exact removal plan, requires typed approval, and verifies each requested removal.",
     "startMode": "right-click",
     "completion": {
       "result": "Selected Full Access, Send As, and Send on Behalf removals are checked after approval.",
       "next": "Review each failed removal and remaining access before closing offboarding.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result.",
+      "Exchange authority: ExchangeOnlineManagement and tenant RBAC access to the cmdlets, parameters and target mailboxes used by this task. Check assigned management roles; Graph consent does not grant Exchange rights.",
+      "AD authority: Windows ActiveDirectory module / RSAT and delegated rights to the target objects. Domain Administrator is not a default prerequisite; cloud consent does not grant AD rights."
+    ]
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
     "sourceSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
     "objective": "Compare tenant settings with a saved baseline and review changes.",
     "input": "Optional local JSON comparison file (baseline). By default, uses a tenant-specific file in the script’s BASELINES folder; offers to create one when missing.",
-    "requires": "Microsoft Graph PowerShell with tenant read access. Permissions: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Requested delegated Graph scopes: Directory.Read.All, Application.Read.All, Policy.Read.All, RoleAssignmentSchedule.Read.Directory, RoleEligibilitySchedule.Read.Directory.",
     "notes": "Tenant configuration drift detector. Tenant operations are read-only; the only state change is creating or replacing a local JSON baseline after explicit approval, with readback verification.",
     "startMode": "right-click",
     "completion": {
       "result": "Changes from the saved tenant baseline, or a newly approved local baseline, are reported.",
       "next": "Investigate differences before replacing the baseline; saving current settings does not make them approved.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: use supported Entra roles for the selected APIs and target accounts. Role restrictions, licensing and tenant policy can still deny access; an unavailable check is not a clean result."
+    ]
   },
   "connection-patterns.md": {
     "sourceSha256": "f186db47a6da071169e2ea0c1213a527f2f9eebbc78a4da2d1121db9fa387bc6",
     "notes": "Reusable Graph, Exchange Online, and hybrid connection guidance without environment-specific identifiers.",
-    "objective": "Choose the right Graph, Exchange Online, or hybrid connection approach."
+    "objective": "Choose the right Graph, Exchange Online, or hybrid connection approach.",
+    "permissionNotes": []
   },
   "OPERATING-STANDARDS.md": {
     "sourceSha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
     "notes": "Top-level project decision contract for canonical sources, 1-to-N input, safety, authentication, QA, release, and handoff/rebuild decisions.",
-    "objective": "Read the project rules for building, reviewing, and releasing tools."
+    "objective": "Read the project rules for building, reviewing, and releasing tools.",
+    "permissionNotes": []
   },
   "field-kit-build-standard.md": {
     "sourceSha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
     "notes": "Locked baseline for FIELD // KIT visual design, navigation, sorting, card behavior, source publication, and release validation.",
-    "objective": "Read the agreed site layout, card, and publishing standards."
+    "objective": "Read the agreed site layout, card, and publishing standards.",
+    "permissionNotes": []
   },
   "lessons-learned.md": {
     "sourceSha256": "f6bc6f62b00d32ef007589d931d6ee05e63944738a5df3d57a01344193c7e00f",
     "notes": "Small reusable rules captured from recurring PowerShell, authentication, hybrid, output, and publishing failures.",
-    "objective": "Check lessons from earlier scripting and publishing problems."
+    "objective": "Check lessons from earlier scripting and publishing problems.",
+    "permissionNotes": []
   },
   "powershell-standards.md": {
     "sourceSha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
     "notes": "Script implementation baseline for interactive FIELD // KIT PowerShell tools.",
-    "objective": "Read the coding, safety, and output standards for these PowerShell tools."
+    "objective": "Read the coding, safety, and output standards for these PowerShell tools.",
+    "permissionNotes": []
   },
   "publishing-checklist.md": {
     "sourceSha256": "7823173f60c3567e9dcb2da26a8a021f4c23b23d9279223a93910153e99c24bc",
     "notes": "Final public-release gate for source, secrets, proprietary context, operational behavior, and catalog metadata.",
-    "objective": "Check source, sensitive data, behavior, and card details before release."
+    "objective": "Check source, sensitive data, behavior, and card details before release.",
+    "permissionNotes": []
   },
   "script-review-checklist.md": {
     "sourceSha256": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
     "notes": "Reusable pre-approval review covering syntax, structure, authentication, data handling, safety, output, and publication.",
-    "objective": "Review a script’s syntax, access, safety, and output before approval."
+    "objective": "Review a script’s syntax, access, safety, and output before approval.",
+    "permissionNotes": []
   },
   "skills.md": {
     "sourceSha256": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
     "notes": "Repeatable workflows for building, reviewing, aligning, troubleshooting, publishing, and handing off FIELD // KIT work.",
-    "objective": "Find repeatable steps for building, reviewing, troubleshooting, and publishing tools."
+    "objective": "Find repeatable steps for building, reviewing, troubleshooting, and publishing tools.",
+    "permissionNotes": []
   },
   "script-template-guide.md": {
     "sourceSha256": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",
     "notes": "Structural guide for single-objective tools, multi-section reviews, and connected workflows.",
-    "objective": "Choose a script structure and follow the input and output patterns."
+    "objective": "Choose a script structure and follow the input and output patterns.",
+    "permissionNotes": []
   },
   "nato-phonetic-alphabet.md": {
     "sourceSha256": "c9dec1a66a3530972991663504e4c54e895e87093a43081404edfdf3da7288c7",
     "notes": "A-to-Z NATO spelling alphabet reference for clear verbal communication.",
-    "objective": "Use standard spelling words for clear verbal communication."
+    "objective": "Use standard spelling words for clear verbal communication.",
+    "permissionNotes": []
   },
   "git-handoff.ps1": {
     "sourceSha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
@@ -1336,12 +1582,14 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "A local .handoff/HANDOFF-SNAPSHOT.md file records the selected repository state.",
       "next": "Read the snapshot for sensitive details before sharing it. No commit or push is performed.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "PROJECT-HANDOFF.md": {
     "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
     "notes": "Canonical project handoff template for source of truth, local/remote state, locked decisions, validation status, limitations, and next-session startup.",
-    "objective": "Find the current project state, decisions, limits, and next steps."
+    "objective": "Find the current project state, decisions, limits, and next steps.",
+    "permissionNotes": []
   },
   "git-repo.ps1": {
     "sourceSha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
@@ -1356,7 +1604,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Check shows local and last-known remote state; Push or Pull reports its own result when explicitly requested.",
       "next": "Review errors and confirm the intended branch/remote. A Check result does not refresh remote state.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "git-security.ps1": {
     "sourceSha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
@@ -1371,7 +1620,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "New security-log events matching the review rules, or a report that no warning rules matched.",
       "next": "Confirm actors and changes in the original GitHub log. ALL CLEAR is not proof that the account is secure.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "set-execution.ps1": {
     "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
@@ -1384,11 +1634,13 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "A local setup result reports policy or unblock problems for adjacent scripts.",
       "next": "Resolve managed-policy blocks through the approved process; do not bypass them or unblock unreviewed files.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "git-tools.md": {
     "sourceSha256": "5aa1d822aa27dd41c43bab2554b87d925b1e1eb5fd41fc22f44c12d4cbfae21a",
-    "notes": "Commands and operating boundaries for the standalone repository, security, handoff and execution-setup helpers."
+    "notes": "Commands and operating boundaries for the standalone repository, security, handoff and execution-setup helpers.",
+    "permissionNotes": []
   },
   "attractor.ps1": {
     "sourceSha256": "1268680342075976f80599213dd97d25abc2af741a07a7f5de2ceab2c2ba4cc6",
@@ -1401,7 +1653,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The terminal animation runs until stopped.",
       "next": "Press Ctrl+C to stop. It is a display effect, not a screen lock.",
       "blocked": "If the display fails, check PowerShell and terminal support before trying again."
-    }
+    },
+    "permissionNotes": []
   },
   "rain.ps1": {
     "sourceSha256": "f793a1a68a8245527597522077f40dda3eeb209bf9c6ad1164f0dde5ef9daf96",
@@ -1414,7 +1667,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The terminal rain animation runs until stopped.",
       "next": "Press Ctrl+C to stop. It is a display effect, not a screen lock.",
       "blocked": "If the display fails, check PowerShell and terminal support before trying again."
-    }
+    },
+    "permissionNotes": []
   },
   "static.ps1": {
     "sourceSha256": "4aa3ae630d9631f11d110f78925c6e112508b3ccc7ba703f833537bb3c9394e0",
@@ -1427,7 +1681,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The terminal dots/static animation runs until stopped.",
       "next": "Press Ctrl+C to stop. It is a display effect, not a screen lock.",
       "blocked": "If the display fails, check PowerShell and terminal support before trying again."
-    }
+    },
+    "permissionNotes": []
   },
   "SIGN-FOLDER-SCRIPTS.ps1": {
     "sourceSha256": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
@@ -1440,7 +1695,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Signing results are reported for the selected scripts.",
       "next": "Review failed signatures and verify trust on the computer that will run the scripts; signing does not prove code is safe.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "INVOKE-FILE-INVENTORY.ps1": {
     "sourceSha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
@@ -1453,7 +1709,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "Duplicate-name, content-hash, signature, and working-copy findings; optional CSV files are saved when requested.",
       "next": "Review file differences before deleting duplicates; keep exported local paths and signer information private.",
       "blocked": "Resolve failed or unavailable checks before treating the review as complete."
-    }
+    },
+    "permissionNotes": []
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
     "sourceSha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
@@ -1466,7 +1723,8 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "result": "The selected certificate action reports its result and any output path.",
       "next": "Check the intended store or output file. Keep PFX files and their passwords private; trust changes need separate review.",
       "blocked": "A cancelled, failed, or unconfirmed action is not complete. Review the results before retrying."
-    }
+    },
+    "permissionNotes": []
   },
   "PREPARE-FIELD-KIT.ps1": {
     "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
@@ -1484,13 +1742,15 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
       "Verifies module imports",
       "Offers missing prerequisites only",
       "No customer sign-in"
-    ]
+    ],
+    "permissionNotes": []
   },
   "START-HERE.md": {
     "sourceSha256": "ceaa8b9219d977a88e2f45f3af18c160671fb76812ba714a4dc437e51e9171f0",
     "objective": "Prepare the support computer and run one approved workflow at a time.",
     "input": "Customer support computer and approved operator account",
-    "requires": "Access to the approved customer support computer."
+    "requires": "Access to the approved customer support computer.",
+    "permissionNotes": []
   }
 });
 
@@ -1696,7 +1956,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-GROUPS.ps1"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show Password Expiry": {
     "code": "Get-ADUser \"username\" -Properties msDS-UserPasswordExpiryTimeComputed |\n  Select-Object SamAccountName,@{N=\"PasswordExpires\";E={[datetime]::FromFileTime($_.\"msDS-UserPasswordExpiryTimeComputed\")}}",
@@ -1713,7 +1976,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Delete User": {
     "code": "Remove-ADUser -Identity \"username\" -Confirm:$true",
@@ -1732,7 +1998,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Disable User": {
     "code": "Disable-ADAccount -Identity \"username\"",
@@ -1751,7 +2020,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Enable User": {
     "code": "Enable-ADAccount -Identity \"username\"",
@@ -1770,7 +2042,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Force Password Change Next Logon": {
     "code": "Set-ADUser -Identity \"username\" -ChangePasswordAtLogon $true",
@@ -1789,7 +2064,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Reset Password": {
     "code": "$Password = Read-Host \"Temporary password\" -AsSecureString\nSet-ADAccountPassword -Identity \"username\" -Reset -NewPassword $Password",
@@ -1808,7 +2086,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Unlock User": {
     "code": "Unlock-ADAccount -Identity \"username\"",
@@ -1827,75 +2108,94 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Find User By Exact Display Name": {
     "code": "$Name = \"Jane Doe\"\nGet-MgUser -Filter \"displayName eq '$Name'\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled",
     "useFor": "Find Entra users with the exact display name you enter; more than one match is possible.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"User.ReadWrite.All\",\"User.EnableDisableAccount.All\",\"User-PasswordProfile.ReadWrite.All\",\"User.RevokeSessions.All\""
+      "Connect-MgGraph -Scopes \"User.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.Read.All.",
     "input": "Replace command examples with your exact display name. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Get User By Upn": {
     "code": "Get-MgUser -UserId \"user@domain.com\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled",
     "useFor": "Show the selected Entra user’s account status and sync setting.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"User.ReadWrite.All\",\"User.EnableDisableAccount.All\",\"User-PasswordProfile.ReadWrite.All\",\"User.RevokeSessions.All\""
+      "Connect-MgGraph -Scopes \"User.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Show Assigned Licenses": {
     "code": "Get-MgUserLicenseDetail -UserId \"user@domain.com\" |\n  Select-Object SkuPartNumber,SkuId",
     "useFor": "Show the user’s assigned license codes and IDs.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"User.ReadWrite.All\",\"User.EnableDisableAccount.All\",\"User-PasswordProfile.ReadWrite.All\",\"User.RevokeSessions.All\""
+      "Connect-MgGraph -Scopes \"LicenseAssignment.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: LicenseAssignment.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Directory Readers, License Administrator, or another supported role/custom equivalent."
+    ]
   },
   "Show Manager": {
     "code": "Invoke-MgGraphRequest -Method GET -Uri \"https://graph.microsoft.com/v1.0/users/user@domain.com/manager?`$select=displayName,userPrincipalName\" |\n  Select-Object displayName,userPrincipalName",
     "useFor": "Show the user’s recorded manager.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"User.ReadWrite.All\",\"User.EnableDisableAccount.All\",\"User-PasswordProfile.ReadWrite.All\",\"User.RevokeSessions.All\""
+      "Connect-MgGraph -Scopes \"User.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, User.ReadWrite.All, User.EnableDisableAccount.All, User-PasswordProfile.ReadWrite.All, User.RevokeSessions.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication. Delegated Graph scopes: User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Show Password Last Changed And Age": {
     "code": "$u = Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,LastPasswordChangeDateTime\n[pscustomobject]@{\n  User = $u.UserPrincipalName\n  LastPasswordChange = $u.LastPasswordChangeDateTime\n  PasswordAgeDays = if($u.LastPasswordChangeDateTime){ [math]::Floor(((Get-Date) - $u.LastPasswordChangeDateTime).TotalDays) } else { $null }\n}",
@@ -1905,14 +2205,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Show Sync Source": {
     "code": "Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName |\n  Select-Object UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName",
@@ -1922,14 +2226,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Delete Cloud User": {
     "code": "& {\n    $Target = (Read-Host 'Exact cloud user UPN; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-MgUser -UserId $Target -ErrorAction Stop\n    $User | Format-List Id,DisplayName,UserPrincipalName | Out-Host\n    if ((Read-Host \"Type DELETE $($User.UserPrincipalName) to approve\").Trim() -cne \"DELETE $($User.UserPrincipalName)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-MgUser -UserId $User.Id -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify absence and retention requirements.'\n}",
@@ -1942,14 +2250,19 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "Requires explicit typed approval; blank or unmatched confirmation cancels before changes.",
       "A command error can leave partial work; do not assume rollback or successful verification."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.ReadWrite.All.",
     "input": "Exact cloud user UPN at the prompt; review the resolved user, then type DELETE followed by the displayed UPN.",
     "related": [
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Cloud account review"
+    "relationshipFamily": "Cloud account review",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: User Administrator or another supported role/custom equivalent; privileged target restrictions apply.",
+      "This preparation does not authorize privileged administrator deletion. That scenario additionally requires Directory.AccessAsUser.All and a higher supported operator role; do not add those rights by default."
+    ]
   },
   "Disable Sign-In": {
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$false",
@@ -1961,14 +2274,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.EnableDisableAccount.All, User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: User Administrator for supported targets; privileged target accounts require a higher supported role. Do not assume consent alone authorizes the target."
+    ]
   },
   "Enable Sign-In": {
     "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$true",
@@ -1980,14 +2297,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.EnableDisableAccount.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.EnableDisableAccount.All, User.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: User Administrator for supported targets; privileged target accounts require a higher supported role. Do not assume consent alone authorizes the target."
+    ]
   },
   "Revoke Active Sessions": {
     "code": "Revoke-MgUserSignInSession -UserId \"user@domain.com\"",
@@ -1999,14 +2320,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.RevokeSessions.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users.Actions. Delegated Graph scopes: User.RevokeSessions.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use a role permitted to revoke sessions for the target; privileged targets have additional role restrictions."
+    ]
   },
   "Show Cached Tickets": {
     "code": "klist",
@@ -2021,7 +2346,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Purge Cached Tickets": {
     "code": "klist purge",
@@ -2038,7 +2364,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Show Local Administrators": {
     "code": "Get-LocalGroupMember -Group \"Administrators\" |\n  Select-Object Name,ObjectClass,PrincipalSource",
@@ -2055,7 +2382,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Identity and Privileges",
       "command:Local Account Details"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Show Local Users": {
     "code": "Get-LocalUser |\n  Select-Object Name,Enabled,LastLogon,PasswordExpires,UserMayChangePassword",
@@ -2070,7 +2398,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Identity and Privileges",
       "command:Local Account Details"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Add User To Administrators": {
     "code": "Add-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
@@ -2087,7 +2416,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Remove User From Administrators": {
     "code": "Remove-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
@@ -2104,75 +2434,93 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Show All Authentication Methods For One User": {
     "code": "Get-MgUserAuthenticationMethod -UserId \"user@domain.com\" |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}}",
     "useFor": "List the user’s registered authentication methods and IDs.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"Reports.Read.All\",\"UserAuthenticationMethod.Read.All\",\"UserAuthenticationMethod.ReadWrite.All\""
+      "Connect-MgGraph -Scopes \"UserAuthenticationMethod.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: UserAuthenticationMethod.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show Registration Status For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reading another user’s methods requires Global Reader, Authentication Administrator, or Privileged Authentication Administrator (or supported custom equivalent). Target-role restrictions apply; phone numbers may be masked."
+    ]
   },
   "Show Microsoft Authenticator Methods": {
     "code": "Get-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" |\n  Select-Object Id,DisplayName,DeviceTag,PhoneAppVersion",
     "useFor": "List the user’s registered Microsoft Authenticator methods.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"Reports.Read.All\",\"UserAuthenticationMethod.Read.All\",\"UserAuthenticationMethod.ReadWrite.All\""
+      "Connect-MgGraph -Scopes \"UserAuthMethod-MicrosoftAuthApp.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: UserAuthMethod-MicrosoftAuthApp.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show All Authentication Methods For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reading another user’s methods requires Global Reader, Authentication Administrator, or Privileged Authentication Administrator (or supported custom equivalent). Target-role restrictions apply; phone numbers may be masked."
+    ]
   },
   "Show Phone Methods": {
     "code": "Get-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" |\n  Select-Object Id,PhoneNumber,PhoneType,SmsSignInState",
     "useFor": "List the user’s registered phone authentication methods.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"Reports.Read.All\",\"UserAuthenticationMethod.Read.All\",\"UserAuthenticationMethod.ReadWrite.All\""
+      "Connect-MgGraph -Scopes \"UserAuthMethod-Phone.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: UserAuthMethod-Phone.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show All Authentication Methods For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reading another user’s methods requires Global Reader, Authentication Administrator, or Privileged Authentication Administrator (or supported custom equivalent). Target-role restrictions apply; phone numbers may be masked."
+    ]
   },
   "Show Registration Status For One User": {
     "code": "Get-MgReportAuthenticationMethodUserRegistrationDetail -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,IsMfaRegistered,IsMfaCapable,DefaultMfaMethod,MethodsRegistered",
     "useFor": "Show the user’s MFA registration report.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"Reports.Read.All\",\"UserAuthenticationMethod.Read.All\",\"UserAuthenticationMethod.ReadWrite.All\""
+      "Connect-MgGraph -Scopes \"AuditLog.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Reports.Read.All, UserAuthenticationMethod.Read.All, UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show All Authentication Methods For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result.",
+      "The registration report does not support disabled users."
+    ]
   },
   "Remove Specific Authenticator Method": {
     "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" -MicrosoftAuthenticatorAuthenticationMethodId $MethodId",
@@ -2184,14 +2532,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: UserAuthenticationMethod.ReadWrite.All.",
     "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show All Authentication Methods For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Authentication Administrator for supported nonprivileged targets; Privileged Authentication Administrator for privileged targets. Confirm the target-role restrictions before removal."
+    ]
   },
   "Remove Specific Phone Method": {
     "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" -PhoneAuthenticationMethodId $MethodId",
@@ -2203,48 +2555,62 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: UserAuthenticationMethod.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: UserAuthenticationMethod.ReadWrite.All.",
     "input": "Replace command examples with your target user, mailbox or group address; record ID from a prior lookup. Review all target values before running. Method ID from the user’s authentication-method lookup; choose the matching method type.",
     "related": [
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "command:Show All Authentication Methods For One User"
     ],
-    "relationshipFamily": "MFA methods"
+    "relationshipFamily": "MFA methods",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Authentication Administrator for supported nonprivileged targets; Privileged Authentication Administrator for privileged targets. Confirm the target-role restrictions before removal."
+    ]
   },
   "Show Delegated Grants For One User": {
     "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Select-Object Id,ClientId,ConsentType,Scope",
     "useFor": "List app permissions approved on behalf of this user.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"DelegatedPermissionGrant.Read.All\",\"DelegatedPermissionGrant.ReadWrite.All\",\"Application.Read.All\""
+      "Connect-MgGraph -Scopes \"Directory.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, DelegatedPermissionGrant.Read.All, DelegatedPermissionGrant.ReadWrite.All, Application.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: Directory.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "App access"
+    "relationshipFamily": "App access",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Directory Readers or another supported reader/custom role.",
+      "Lists this user’s grants, not tenant-wide consent grants."
+    ]
   },
   "Show Potentially High-Impact Delegated Scopes": {
     "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Where-Object {\n    $_.Scope -match '(^| )(offline_access|User.ReadWrite|Mail\\.|MailboxSettings\\.|Files\\.|Sites\\.|Calendars\\.|Contacts\\.|Directory\\.)' -or\n    $_.Scope -match '\\.All($| )'\n  } |\n  Select-Object Id,ClientId,ConsentType,Scope",
     "useFor": "Find this user’s approved app permissions that match the listed high-impact patterns.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"DelegatedPermissionGrant.Read.All\",\"DelegatedPermissionGrant.ReadWrite.All\",\"Application.Read.All\""
+      "Connect-MgGraph -Scopes \"Directory.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, DelegatedPermissionGrant.Read.All, DelegatedPermissionGrant.ReadWrite.All, Application.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: Directory.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "App access"
+    "relationshipFamily": "App access",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Directory Readers or another supported reader/custom role.",
+      "Lists this user’s grants, not tenant-wide consent grants."
+    ]
   },
   "Remove Specific Delegated Grant": {
     "code": "$GrantId = \"OAUTH-GRANT-ID\"\nRemove-MgOauth2PermissionGrant -OAuth2PermissionGrantId $GrantId",
@@ -2256,14 +2622,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: DelegatedPermissionGrant.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Applications. Delegated Graph scopes: DelegatedPermissionGrant.ReadWrite.All.",
     "input": "Replace command examples with your record ID from a prior lookup. Review all target values before running. Grant ID from the app-permission lookup, not the app ID.",
     "related": [
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "App access"
+    "relationshipFamily": "App access",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Cloud Application Administrator, Application Administrator, or another supported role/custom equivalent."
+    ]
   },
   "Show Distribution Group Members": {
     "code": "$Group = \"group@domain.com\"\nGet-DistributionGroupMember -Identity $Group -ResultSize Unlimited |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientType",
@@ -2280,7 +2650,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-GROUP-OWNERS.ps1",
       "command:Show Distribution Group Owners"
     ],
-    "relationshipFamily": "Distribution groups"
+    "relationshipFamily": "Distribution groups",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Distribution Group Owners": {
     "code": "$Group = \"group@domain.com\"\nGet-DistributionGroup -Identity $Group |\n  Select-Object -ExpandProperty ManagedBy",
@@ -2297,7 +2670,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-GROUP-OWNERS.ps1",
       "GET-GROUP-MEMBERS.ps1"
     ],
-    "relationshipFamily": "Distribution groups"
+    "relationshipFamily": "Distribution groups",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Add Distribution Group Member": {
     "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nAdd-DistributionGroupMember -Identity $Group -Member $Member",
@@ -2316,7 +2692,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-GROUP-OWNERS.ps1",
       "command:Show Distribution Group Owners"
     ],
-    "relationshipFamily": "Distribution groups"
+    "relationshipFamily": "Distribution groups",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Distribution Group Member": {
     "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$true",
@@ -2336,7 +2715,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-GROUP-OWNERS.ps1",
       "command:Show Distribution Group Owners"
     ],
-    "relationshipFamily": "Distribution groups"
+    "relationshipFamily": "Distribution groups",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show AD Group Members": {
     "code": "$Group = \"Group Name\"\nGet-ADGroupMember -Identity $Group |\n  Select-Object Name,SamAccountName,ObjectClass",
@@ -2353,7 +2735,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD User Group Memberships"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show AD User Group Memberships": {
     "code": "Get-ADPrincipalGroupMembership -Identity \"username\" |\n  Select-Object Name,GroupCategory,GroupScope",
@@ -2370,7 +2755,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Add User to AD Group": {
     "code": "$Group = \"Group Name\"\nAdd-ADGroupMember -Identity $Group -Members \"username\"",
@@ -2389,7 +2777,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Remove User from AD Group": {
     "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$true",
@@ -2409,114 +2800,144 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Find Exact Group": {
     "code": "$GroupName = \"Group Name\"\nGet-MgGroup -Filter \"displayName eq '$GroupName'\" -Property Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled |\n  Select-Object Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled",
     "useFor": "Find Entra groups with the exact display name; more than one match is possible.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"Group.Read.All\",\"GroupMember.Read.All\",\"GroupMember.ReadWrite.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"GroupMember.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Groups. Delegated Graph scopes: GroupMember.Read.All.",
     "input": "Replace command examples with your group name or object ID. Review all target values before running. Exact target group name.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an approved member account with directory-read access; tenant restrictions can require a supported reader/custom role."
+    ]
   },
   "Show Entra Group Direct Members": {
     "code": "Get-MgGroupMember -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
     "useFor": "List direct members of an Entra group by its object ID.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"Group.Read.All\",\"GroupMember.Read.All\",\"GroupMember.ReadWrite.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"GroupMember.Read.All\",\"User.ReadBasic.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Groups. Delegated Graph scopes: GroupMember.Read.All, User.ReadBasic.All.",
     "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an authorized group owner/member or a supported directory-reader/custom role. Hidden memberships require separately approved Member.Read.Hidden access; do not add it by default. Non-user objects can return limited properties.",
+      "GroupMember.Read.All is retained as a documented read-only permission; User.ReadBasic.All supplies user names and UPNs."
+    ]
   },
   "Show Entra Group Owners": {
     "code": "Get-MgGroupOwner -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
     "useFor": "List owners of an Entra group by its object ID.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"Group.Read.All\",\"GroupMember.Read.All\",\"GroupMember.ReadWrite.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"GroupMember.Read.All\",\"User.ReadBasic.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: Group.Read.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Groups. Delegated Graph scopes: GroupMember.Read.All, User.ReadBasic.All.",
     "input": "Replace command examples with your group name or object ID; target user UPN. Review all target values before running. Group object ID from the group lookup.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an authorized group owner/member or a supported directory-reader/custom role. Hidden memberships require separately approved Member.Read.Hidden access; do not add it by default. Non-user objects can return limited properties."
+    ]
   },
   "Show Entra User Group Memberships": {
     "code": "Get-MgUserMemberOf -UserId \"user@domain.com\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}}",
     "useFor": "List the Entra directory objects this user belongs to.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"Group.Read.All\"",
-      "Import-Module ActiveDirectory"
+      "Connect-MgGraph -Scopes \"User.Read.All\",\"GroupMember.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, Group.Read.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Users. Delegated Graph scopes: User.Read.All, GroupMember.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Use an authorized group owner/member or a supported directory-reader/custom role. Hidden memberships require separately approved Member.Read.Hidden access; do not add it by default. Non-user objects can return limited properties.",
+      "Cloud-only lookup: the ActiveDirectory module is not required."
+    ]
   },
   "Add User to Entra Group": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nNew-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -OdataId \"https://graph.microsoft.com/v1.0/directoryObjects/$UserId\"",
     "useFor": "Add the user to the selected Entra group.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"GroupMember.ReadWrite.All\" -ContextScope Process"
+      "Connect-MgGraph -Scopes \"User.ReadBasic.All\",\"GroupMember.ReadWrite.All\" -ContextScope Process"
     ],
     "checks": [],
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, GroupMember.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Groups + Microsoft.Graph.Users. Delegated Graph scopes: User.ReadBasic.All, GroupMember.ReadWrite.All.",
     "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Authorized group owner or Groups Administrator (or supported custom equivalent).",
+      "Role-assignable groups additionally require RoleManagement.ReadWrite.Directory and Privileged Role Administrator; not requested by default. Dynamic membership cannot be managed as direct membership."
+    ]
   },
   "Remove User from Entra Group": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nRemove-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -DirectoryObjectId $UserId",
     "useFor": "Remove the user’s direct membership from the selected Entra group.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"User.Read.All\",\"GroupMember.ReadWrite.All\" -ContextScope Process"
+      "Connect-MgGraph -Scopes \"User.ReadBasic.All\",\"GroupMember.ReadWrite.All\" -ContextScope Process"
     ],
     "checks": [],
     "guards": [
       "Review the full command and target before pasting; it can make changes immediately."
     ],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: User.Read.All, GroupMember.ReadWrite.All.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Groups + Microsoft.Graph.Users. Delegated Graph scopes: User.ReadBasic.All, GroupMember.ReadWrite.All.",
     "input": "Replace command examples with your target user, mailbox or group address; group name or object ID. Review all target values before running. Group object ID from the group lookup.",
     "related": [
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-TENANT-GROUP-OWNERS.ps1"
     ],
-    "relationshipFamily": "Entra groups"
+    "relationshipFamily": "Entra groups",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Authorized group owner or Groups Administrator (or supported custom equivalent).",
+      "Role-assignable groups additionally require RoleManagement.ReadWrite.Directory and Privileged Role Administrator; not requested by default. Dynamic membership cannot be managed as direct membership."
+    ]
   },
   "Show Mailbox Protocol State": {
     "code": "Get-CASMailbox -Identity \"user@domain.com\" |\n  Select-Object PopEnabled,ImapEnabled,SmtpClientAuthenticationDisabled,MAPIEnabled,OWAEnabled,ActiveSyncEnabled",
@@ -2533,7 +2954,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Mailbox Summary",
       "GET-MAILBOX-PERMISSIONS.ps1"
     ],
-    "relationshipFamily": "Mailbox protocols"
+    "relationshipFamily": "Mailbox protocols",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Mailbox Summary": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientTypeDetails,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
@@ -2550,7 +2974,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Disable Mailbox SMTP AUTH": {
     "code": "Set-CASMailbox -Identity \"user@domain.com\" -SmtpClientAuthenticationDisabled $true",
@@ -2569,7 +2996,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "command:Show Mailbox Summary"
     ],
-    "relationshipFamily": "Mailbox protocols"
+    "relationshipFamily": "Mailbox protocols",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Disable Mailbox POP / IMAP": {
     "code": "Set-CASMailbox -Identity \"user@domain.com\" -PopEnabled $false -ImapEnabled $false",
@@ -2588,7 +3018,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "command:Show Mailbox Summary"
     ],
-    "relationshipFamily": "Mailbox protocols"
+    "relationshipFamily": "Mailbox protocols",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Mailbox Full Access Delegates": {
     "code": "Get-MailboxPermission -Identity \"user@domain.com\" |\n  Where-Object { -not $_.IsInherited -and $_.User -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object User,AccessRights,Deny",
@@ -2605,7 +3038,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Mailbox Forwarding": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object PrimarySmtpAddress,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
@@ -2622,7 +3058,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Mailbox Send As Delegates": {
     "code": "Get-RecipientPermission -Identity \"user@domain.com\" |\n  Where-Object { $_.Trustee -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object Trustee,AccessRights",
@@ -2639,7 +3078,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Mailbox Send on Behalf Delegates": {
     "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object -ExpandProperty GrantSendOnBehalfTo",
@@ -2656,7 +3098,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Mailbox Full Access Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$true",
@@ -2676,7 +3121,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Mailbox Forwarding": {
     "code": "Set-Mailbox -Identity \"user@domain.com\" -ForwardingAddress $null -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false",
@@ -2695,7 +3143,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Mailbox Send As Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$true",
@@ -2715,7 +3166,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Mailbox Send on Behalf Delegate": {
     "code": "$Delegate = \"delegate@domain.com\"\nSet-Mailbox -Identity \"user@domain.com\" -GrantSendOnBehalfTo @{Remove=$Delegate}",
@@ -2734,7 +3188,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "Mailbox access and forwarding"
+    "relationshipFamily": "Mailbox access and forwarding",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Specific Transport Rule": {
     "code": "$Rule = \"Rule Name\"\nGet-TransportRule -Identity $Rule | Format-List *",
@@ -2751,7 +3208,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
-    "relationshipFamily": "Mail transport"
+    "relationshipFamily": "Mail transport",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Transport Rules": {
     "code": "Get-TransportRule |\n  Select-Object Name,State,Mode,Priority",
@@ -2768,7 +3228,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
-    "relationshipFamily": "Mail transport"
+    "relationshipFamily": "Mail transport",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Inbox Rules - Including Hidden": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Select-Object Name,Enabled,Priority,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
@@ -2785,7 +3248,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Suspicious Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Where-Object { $_.ForwardTo -or $_.RedirectTo -or $_.DeleteMessage -or $_.StopProcessingRules } |\n  Select-Object Name,Enabled,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
@@ -2802,7 +3268,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove All Inbox Rules": {
     "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
@@ -2824,7 +3293,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Specific Inbox Rule": {
     "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$true",
@@ -2845,7 +3317,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show BitLocker Recovery Protectors": {
     "code": "Get-BitLockerVolume -MountPoint \"C:\" |\n  Select-Object -ExpandProperty KeyProtector |\n  Select-Object KeyProtectorType,KeyProtectorId,RecoveryPassword",
@@ -2862,7 +3337,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Physical Disk Health",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Endpoint protection"
+    "relationshipFamily": "Endpoint protection",
+    "permissionNotes": []
   },
   "Show BitLocker Status": {
     "code": "Get-BitLockerVolume |\n  Select-Object MountPoint,VolumeStatus,ProtectionStatus,EncryptionPercentage,EncryptionMethod",
@@ -2877,7 +3353,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Physical Disk Health",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Endpoint protection"
+    "relationshipFamily": "Endpoint protection",
+    "permissionNotes": []
   },
   "Resume Protection": {
     "code": "Resume-BitLocker -MountPoint \"C:\"",
@@ -2894,7 +3371,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show BitLocker Recovery Protectors",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Endpoint protection"
+    "relationshipFamily": "Endpoint protection",
+    "permissionNotes": []
   },
   "Suspend For One Reboot": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Suspend For One Reboot\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1\n}",
@@ -2913,7 +3391,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show BitLocker Recovery Protectors",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Endpoint protection"
+    "relationshipFamily": "Endpoint protection",
+    "permissionNotes": []
   },
   "Find By Thumbprint": {
     "code": "Get-ChildItem Cert:\\CurrentUser\\My,Cert:\\LocalMachine\\My |\n  Where-Object Thumbprint -eq \"THUMBPRINT\" |\n  Select-Object Subject,Thumbprint,NotBefore,NotAfter,HasPrivateKey",
@@ -2928,7 +3407,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Show Expiring Certificates": {
     "code": "Get-ChildItem Cert:\\LocalMachine\\My |\n  Where-Object { $_.NotAfter -le (Get-Date).AddDays(30) } |\n  Select-Object Subject,Thumbprint,NotAfter",
@@ -2943,7 +3423,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Verify Script Signature": {
     "code": "$Path = \"C:\\Scripts\\script.ps1\"\nGet-AuthenticodeSignature -FilePath $Path |\n  Select-Object Status,StatusMessage,SignerCertificate",
@@ -2958,7 +3439,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Show Code-Signing Certificates"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Create Self-Signed App-Auth Certificate": {
     "code": "$Name = \"M365-AppAuth\"\nNew-SelfSignedCertificate `\n  -Subject \"CN=$Name\" `\n  -CertStoreLocation \"Cert:\\CurrentUser\\My\" `\n  -KeySpec KeyExchange `\n  -KeyExportPolicy Exportable `\n  -KeyLength 2048 `\n  -HashAlgorithm SHA256 `\n  -NotAfter (Get-Date).AddYears(2)",
@@ -2975,7 +3457,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Export Pfx": {
     "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.pfx\"\n$Password = Read-Host \"PFX password\" -AsSecureString\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-PfxCertificate -Cert $Cert -FilePath $Path -Password $Password",
@@ -2993,7 +3476,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Export Public Cer": {
     "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.cer\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-Certificate -Cert $Cert -FilePath $Path",
@@ -3010,7 +3494,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Sign Script": {
     "code": "$Path = \"C:\\Scripts\\script.ps1\"\n$Thumbprint = \"THUMBPRINT\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nSet-AuthenticodeSignature -FilePath $Path -Certificate $Cert -TimestampServer \"http://timestamp.digicert.com\"",
@@ -3027,7 +3512,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Find Exchange Service Principal By Appid": {
     "code": "$AppId = \"APP-ID\"\nGet-ServicePrincipal |\n  Where-Object AppId -eq $AppId |\n  Select-Object DisplayName,AppId,ObjectId",
@@ -3044,7 +3530,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "relationshipFamily": "App access"
+    "relationshipFamily": "App access",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Calculate Sha256 Hash": {
     "code": "$Path = \"C:\\Temp\\file.exe\"\nGet-FileHash -Path $Path -Algorithm SHA256",
@@ -3059,7 +3548,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   },
   "Show Compliance Search Status": {
     "code": "$SearchName = \"SEARCH-NAME\"\nGet-ComplianceSearch -Identity $SearchName |\n  Select-Object Name,Status,Items,Size,SuccessResults",
@@ -3076,7 +3566,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
       "command:Show Message Trace Search Jobs"
     ],
-    "relationshipFamily": "Content search"
+    "relationshipFamily": "Content search",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Create Phishing Search By Subject": {
     "code": "$SearchName = \"IR_Clawback_$(Get-Date -Format 'yyyyMMdd_HHmmss')\"\n$Subject = \"phishing subject\"\nNew-ComplianceSearch `\n  -Name $SearchName `\n  -ExchangeLocation All `\n  -ContentMatchQuery \"subject:`\"$Subject`\"\"",
@@ -3095,7 +3588,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Exchange Connection",
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
-    "relationshipFamily": "Content search"
+    "relationshipFamily": "Content search",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Hard-Delete Search Results": {
     "code": "& {\n    $SearchName = (Read-Host 'Exact completed compliance search name; blank cancels').Trim()\n    if (-not $SearchName) { return }\n    $Search = Get-ComplianceSearch -Identity $SearchName -ErrorAction Stop\n    $Search | Format-List Name,Status,Items,Size,ExchangeLocation,ContentMatchQuery | Out-Host\n    if ($Search.Status -ne 'Completed') { throw 'Search must be completed before purge.' }\n    Write-Warning 'Hard-delete the matching search results. Confirm the query and mailbox scope above.'\n    if ((Read-Host \"Type PURGE $SearchName to approve\").Trim() -cne \"PURGE $SearchName\") { Write-Host 'Cancelled; no changes.'; return }\n    New-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete -ErrorAction Stop\n    Write-Host 'Purge submitted; check compliance action status and service purge limits before claiming completion.'\n}",
@@ -3116,7 +3612,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Exchange Connection",
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
-    "relationshipFamily": "Content search"
+    "relationshipFamily": "Content search",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Start Compliance Search": {
     "code": "$SearchName = \"SEARCH-NAME\"\nStart-ComplianceSearch -Identity $SearchName",
@@ -3135,7 +3634,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Exchange Connection",
       "BEC-GET-TENANT-EMAIL-SEARCH.ps1"
     ],
-    "relationshipFamily": "Content search"
+    "relationshipFamily": "Content search",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Run Quick Scan": {
     "code": "Start-MpScan -ScanType QuickScan",
@@ -3152,7 +3654,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Show Service Status"
     ],
-    "relationshipFamily": "Antivirus"
+    "relationshipFamily": "Antivirus",
+    "permissionNotes": []
   },
   "Update Signatures": {
     "code": "Update-MpSignature",
@@ -3169,7 +3672,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Show Service Status"
     ],
-    "relationshipFamily": "Antivirus"
+    "relationshipFamily": "Antivirus",
+    "permissionNotes": []
   },
   "Audit Inbox Rule Changes": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations New-InboxRule,Set-InboxRule `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -3188,7 +3692,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Mail Delete And Move Audit": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -3207,7 +3714,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Mailitemsaccessed Audit": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -3226,7 +3736,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Parse Mail Audit Subject, Ip, And Destination Folder": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed,SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,Operation,\n    @{N=\"EmailSubject\";E={(ConvertFrom-Json $_.AuditData).Item.Subject}},\n    @{N=\"ClientIP\";E={(ConvertFrom-Json $_.AuditData).ClientIP}},\n    @{N=\"DestFolder\";E={(ConvertFrom-Json $_.AuditData).DestinationFolder.Name}}",
@@ -3245,7 +3758,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Search Query Audit": {
     "code": "Search-UnifiedAuditLog -Operations SearchQueryInitiated -UserIds \"user@domain.com\" |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -3264,7 +3780,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Unified Audit Log For One User": {
     "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
@@ -3283,41 +3802,52 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-TIMELINE-BUILDER.ps1"
     ],
-    "relationshipFamily": "Mail investigation"
+    "relationshipFamily": "Mail investigation",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Risk Detections For One User": {
     "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nGet-MgRiskDetection -Filter \"userId eq '$UserId'\" -All |\n  Select-Object ActivityDateTime,RiskEventType,RiskLevel,RiskState,IPAddress,Location,Source",
     "useFor": "Show Identity Protection risk detections for one user.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"IdentityRiskEvent.Read.All\",\"IdentityRiskyUser.Read.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"User.ReadBasic.All\",\"IdentityRiskEvent.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns + Microsoft.Graph.Users. Delegated Graph scopes: User.ReadBasic.All, IdentityRiskEvent.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Security Reader or another supported risk-reader/custom role. Identity Protection licensing and data availability apply."
+    ]
   },
   "Show Risky User State": {
     "code": "Get-MgRiskyUser -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,RiskLevel,RiskState,RiskDetail,RiskLastUpdatedDateTime",
     "useFor": "Show the user’s current Identity Protection risk status.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"IdentityRiskEvent.Read.All\",\"IdentityRiskyUser.Read.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"IdentityRiskyUser.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: IdentityRiskEvent.Read.All, IdentityRiskyUser.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Identity.SignIns. Delegated Graph scopes: IdentityRiskyUser.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Security Reader or another supported risk-reader/custom role. Identity Protection licensing and data availability apply."
+    ]
   },
   "Recipient": {
     "code": "Get-MessageTraceV2 `\n  -RecipientAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
@@ -3336,7 +3866,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
-    "relationshipFamily": "Mail delivery"
+    "relationshipFamily": "Mail delivery",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Sender": {
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
@@ -3355,7 +3888,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
-    "relationshipFamily": "Mail delivery"
+    "relationshipFamily": "Mail delivery",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Message Trace Events": {
     "code": "$TraceId = \"MESSAGE-TRACE-ID\"\nGet-MessageTraceDetailV2 -MessageTraceId $TraceId -RecipientAddress \"recipient@domain.com\" |\n  Select-Object Date,Event,Action,Detail,Data",
@@ -3372,7 +3908,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Message Trace Search Jobs",
       "command:Who Received Mail From Suspicious Sender"
     ],
-    "relationshipFamily": "Mail delivery"
+    "relationshipFamily": "Mail delivery",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Message Trace Search Jobs": {
     "code": "Get-HistoricalSearch |\n  Sort-Object SubmitDate -Descending |\n  Select-Object -First 5 ReportTitle,Status,Rows,FileUrl,SubmitDate",
@@ -3389,7 +3928,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Message Trace Events",
       "command:Who Received Mail From Suspicious Sender"
     ],
-    "relationshipFamily": "Mail delivery"
+    "relationshipFamily": "Mail delivery",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Who Received Mail From Suspicious Sender": {
     "code": "Get-MessageTraceV2 `\n  -SenderAddress \"badguy@evil.com\" `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object -ExpandProperty RecipientAddress |\n  Sort-Object -Unique",
@@ -3408,41 +3950,52 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Message Trace Events",
       "command:Show Message Trace Search Jobs"
     ],
-    "relationshipFamily": "Mail delivery"
+    "relationshipFamily": "Mail delivery",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Failed Sign-Ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -ne 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"ErrorCode\";E={$_.Status.ErrorCode}},\n    @{N=\"FailureReason\";E={$_.Status.FailureReason}}",
     "useFor": "Show failed sign-ins for one user over 48 hours.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"AuditLog.Read.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"AuditLog.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Show Last 10 Entra Sign-Ins": {
     "code": "Get-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com'\" -Top 10 -Sort \"createdDateTime desc\" |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}},\n    @{N=\"Location\";E={\"$($_.Location.City), $($_.Location.State), $($_.Location.CountryOrRegion)\"}}",
     "useFor": "Show the user’s 10 most recent Entra sign-ins.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"AuditLog.Read.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"AuditLog.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Show Entra Sign-ins - Last 48 Hours": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}}",
@@ -3452,14 +4005,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Show Legacy / Other-client Sign-ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddDays(-7).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.ClientAppUsed -eq \"Other clients\" } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
@@ -3469,14 +4026,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Show Successful Sign-Ins": {
     "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -eq 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus",
@@ -3486,14 +4047,18 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target user, mailbox or group address. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Recent Application Errors": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"Application\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
@@ -3510,7 +4075,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Show Service Status"
     ],
-    "relationshipFamily": "Windows event review"
+    "relationshipFamily": "Windows event review",
+    "permissionNotes": []
   },
   "Recent System Errors": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
@@ -3527,7 +4093,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Show Service Status"
     ],
-    "relationshipFamily": "Windows event review"
+    "relationshipFamily": "Windows event review",
+    "permissionNotes": []
   },
   "Resolve Name": {
     "code": "$Name = \"example.com\"\nResolve-DnsName $Name",
@@ -3542,7 +4109,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DNS Lookup",
       "command:Show Ip Configuration"
     ],
-    "relationshipFamily": "DNS"
+    "relationshipFamily": "DNS",
+    "permissionNotes": []
   },
   "Show Configured Dns Servers": {
     "code": "Get-DnsClientServerAddress -AddressFamily IPv4 |\n  Select-Object InterfaceAlias,ServerAddresses",
@@ -3557,7 +4125,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Resolve Name"
     ],
-    "relationshipFamily": "DNS"
+    "relationshipFamily": "DNS",
+    "permissionNotes": []
   },
   "Flush Resolver Cache": {
     "code": "Clear-DnsClientCache",
@@ -3574,7 +4143,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DNS Lookup",
       "command:Show Ip Configuration"
     ],
-    "relationshipFamily": "DNS"
+    "relationshipFamily": "DNS",
+    "permissionNotes": []
   },
   "Show Windows Firewall Profiles": {
     "code": "Get-NetFirewallProfile |\n  Select-Object Name,Enabled,DefaultInboundAction,DefaultOutboundAction",
@@ -3589,7 +4159,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Listening Tcp Ports",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Firewall and remote access"
+    "relationshipFamily": "Firewall and remote access",
+    "permissionNotes": []
   },
   "Show Windows Firewall Rules by Name": {
     "code": "$Name = \"*Remote Desktop*\"\nGet-NetFirewallRule -DisplayName $Name |\n  Select-Object DisplayName,Enabled,Direction,Action,Profile",
@@ -3604,7 +4175,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Listening Tcp Ports",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Firewall and remote access"
+    "relationshipFamily": "Firewall and remote access",
+    "permissionNotes": []
   },
   "Ping Host": {
     "code": "Test-Connection -ComputerName \"server01\" -Count 4",
@@ -3619,7 +4191,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Active Adapters": {
     "code": "Get-NetAdapter |\n  Where-Object Status -eq \"Up\" |\n  Select-Object Name,InterfaceDescription,MacAddress,LinkSpeed",
@@ -3634,7 +4207,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Network Profile"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Show Arp Neighbor Cache": {
     "code": "Get-NetNeighbor -AddressFamily IPv4 |\n  Select-Object IPAddress,LinkLayerAddress,State,InterfaceAlias",
@@ -3649,7 +4223,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Established Tcp Connections": {
     "code": "Get-NetTCPConnection -State Established |\n  Select-Object LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess",
@@ -3664,7 +4239,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Ip Configuration": {
     "code": "Get-NetIPConfiguration |\n  Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer",
@@ -3679,7 +4255,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Test Tcp Port",
       "command:Ping Host"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Listening Tcp Ports": {
     "code": "Get-NetTCPConnection -State Listen |\n  Sort-Object LocalPort |\n  Select-Object LocalAddress,LocalPort,OwningProcess",
@@ -3694,7 +4271,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Routing Table": {
     "code": "Get-NetRoute -AddressFamily IPv4 |\n  Sort-Object RouteMetric |\n  Select-Object DestinationPrefix,NextHop,InterfaceAlias,RouteMetric",
@@ -3709,7 +4287,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Test Tcp Port",
       "command:Ping Host"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Test Tcp Port": {
     "code": "Test-NetConnection -ComputerName \"server01\" -Port 443",
@@ -3724,7 +4303,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Ping Host"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Trace Route": {
     "code": "Test-NetConnection -ComputerName \"example.com\" -TraceRoute",
@@ -3739,7 +4319,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Release And Renew Dhcp": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Release And Renew Dhcp\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    ipconfig /release\n    ipconfig /renew\n}",
@@ -3759,7 +4340,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Reset Tcp/Ip Stack": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Tcp/Ip Stack\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh int ip reset\n}",
@@ -3778,7 +4360,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Reset Winsock": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Winsock\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh winsock reset\n}",
@@ -3797,7 +4380,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Restart Adapter": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Ethernet\" -Confirm:$true\n}",
@@ -3817,7 +4401,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Show Configured Windows Vpn Connections": {
     "code": "Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue |\n  Select-Object Name,ServerAddress,TunnelType,AuthenticationMethod,ConnectionStatus",
@@ -3834,7 +4419,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Show Wi-Fi Connection": {
     "code": "netsh wlan show interfaces",
@@ -3849,7 +4435,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Saved Wi-Fi Profiles",
       "command:Network Profile"
     ],
-    "relationshipFamily": "Wi-Fi"
+    "relationshipFamily": "Wi-Fi",
+    "permissionNotes": []
   },
   "Show Saved Wi-Fi Profiles": {
     "code": "netsh wlan show profiles",
@@ -3864,7 +4451,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Wi-Fi Interface",
       "command:Network Profile"
     ],
-    "relationshipFamily": "Wi-Fi"
+    "relationshipFamily": "Wi-Fi",
+    "permissionNotes": []
   },
   "Show Problem Devices": {
     "code": "Get-PnpDevice -PresentOnly |\n  Where-Object Status -ne \"OK\" |\n  Select-Object Class,FriendlyName,InstanceId,Status",
@@ -3879,7 +4467,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Os And Build",
       "command:Show Last Boot And Uptime"
     ],
-    "relationshipFamily": "Computer information"
+    "relationshipFamily": "Computer information",
+    "permissionNotes": []
   },
   "Show Free Space": {
     "code": "Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" |\n  Select-Object DeviceID,\n    @{N=\"SizeGB\";E={[math]::Round($_.Size/1GB,1)}},\n    @{N=\"FreeGB\";E={[math]::Round($_.FreeSpace/1GB,1)}},\n    @{N=\"FreePct\";E={[math]::Round(($_.FreeSpace/$_.Size)*100,1)}}",
@@ -3894,7 +4483,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Physical Disk Health",
       "command:Open Storage Settings"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Show Physical Disk Health": {
     "code": "Get-PhysicalDisk |\n  Select-Object FriendlyName,MediaType,HealthStatus,OperationalStatus,Size",
@@ -3909,7 +4499,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Open Storage Settings"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Find Files Modified In Last 24 Hours": {
     "code": "$Path = \"C:\\Temp\"\nGet-ChildItem $Path -File -Recurse -ErrorAction SilentlyContinue |\n  Where-Object LastWriteTime -ge (Get-Date).AddHours(-24) |\n  Select-Object FullName,Length,LastWriteTime",
@@ -3926,7 +4517,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Show Computer Model And Serial Number": {
     "code": "$System = Get-CimInstance Win32_ComputerSystem\n$Bios = Get-CimInstance Win32_BIOS\n[pscustomobject]@{\n  Manufacturer = $System.Manufacturer\n  Model = $System.Model\n  SerialNumber = $Bios.SerialNumber\n}",
@@ -3941,7 +4533,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Show Problem Devices"
     ],
-    "relationshipFamily": "Computer information"
+    "relationshipFamily": "Computer information",
+    "permissionNotes": []
   },
   "Show Hostname And Current User": {
     "code": "[pscustomobject]@{\n  ComputerName = $env:COMPUTERNAME\n  User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name\n}",
@@ -3956,7 +4549,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Os And Build",
       "command:Show Last Boot And Uptime"
     ],
-    "relationshipFamily": "Computer information"
+    "relationshipFamily": "Computer information",
+    "permissionNotes": []
   },
   "Show Last Boot And Uptime": {
     "code": "$OS = Get-CimInstance Win32_OperatingSystem\n[pscustomobject]@{\n  LastBoot = $OS.LastBootUpTime\n  Uptime = (Get-Date) - $OS.LastBootUpTime\n}",
@@ -3971,7 +4565,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Os And Build",
       "command:Show Problem Devices"
     ],
-    "relationshipFamily": "Computer information"
+    "relationshipFamily": "Computer information",
+    "permissionNotes": []
   },
   "Show Os And Build": {
     "code": "Get-CimInstance Win32_OperatingSystem |\n  Select-Object Caption,Version,BuildNumber,OSArchitecture",
@@ -3986,7 +4581,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Show Problem Devices"
     ],
-    "relationshipFamily": "Computer information"
+    "relationshipFamily": "Computer information",
+    "permissionNotes": []
   },
   "Show Top Cpu Consumers": {
     "code": "Get-Process |\n  Sort-Object CPU -Descending |\n  Select-Object -First 15 Name,Id,CPU",
@@ -4001,7 +4597,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Service Status",
       "command:Recent Application Errors"
     ],
-    "relationshipFamily": "Performance"
+    "relationshipFamily": "Performance",
+    "permissionNotes": []
   },
   "Show Top Memory Consumers": {
     "code": "Get-Process |\n  Sort-Object WorkingSet64 -Descending |\n  Select-Object -First 15 Name,Id,@{N=\"MemoryMB\";E={[math]::Round($_.WorkingSet64/1MB,1)}}",
@@ -4016,7 +4613,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Service Status",
       "command:Recent Application Errors"
     ],
-    "relationshipFamily": "Performance"
+    "relationshipFamily": "Performance",
+    "permissionNotes": []
   },
   "Stop Process By Name": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Stop Process By Name\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    $Name = \"notepad\"\n    Stop-Process -Name $Name -Force\n}",
@@ -4036,7 +4634,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Top Memory Consumers",
       "command:Show Service Status"
     ],
-    "relationshipFamily": "Performance"
+    "relationshipFamily": "Performance",
+    "permissionNotes": []
   },
   "Show Whether Remote Desktop Is Enabled": {
     "code": "$Value = (Get-ItemProperty \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\" -Name fDenyTSConnections).fDenyTSConnections\n[pscustomobject]@{ RDPEnabled = ($Value -eq 0) }",
@@ -4053,7 +4652,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Windows Firewall Rules by Name",
       "command:Show Listening Tcp Ports"
     ],
-    "relationshipFamily": "Firewall and remote access"
+    "relationshipFamily": "Firewall and remote access",
+    "permissionNotes": []
   },
   "Chkdsk Online Scan": {
     "code": "chkdsk C: /scan",
@@ -4068,7 +4668,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DISM Analyze Component Store",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "Dism Component Store Scan": {
     "code": "DISM.exe /Online /Cleanup-Image /ScanHealth",
@@ -4083,7 +4684,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Recent System Errors",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "Dism Restore Health": {
     "code": "DISM.exe /Online /Cleanup-Image /RestoreHealth",
@@ -4100,7 +4702,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DISM Analyze Component Store",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "System File Checker": {
     "code": "sfc.exe /scannow",
@@ -4117,7 +4720,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DISM Analyze Component Store",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "Reboot Computer": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
@@ -4137,7 +4741,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show Service Status": {
     "code": "Get-Service -Name \"Spooler\" |\n  Select-Object Name,DisplayName,Status,StartType",
@@ -4152,7 +4757,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Scheduled Task Last Run Result",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Services and scheduled tasks"
+    "relationshipFamily": "Services and scheduled tasks",
+    "permissionNotes": []
   },
   "Restart Service": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Service\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Service -Name \"Spooler\" -Force\n}",
@@ -4171,7 +4777,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Scheduled Task",
       "command:Show Scheduled Task Last Run Result"
     ],
-    "relationshipFamily": "Services and scheduled tasks"
+    "relationshipFamily": "Services and scheduled tasks",
+    "permissionNotes": []
   },
   "Set Startup Type": {
     "code": "Set-Service -Name \"Spooler\" -StartupType Automatic",
@@ -4188,7 +4795,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Scheduled Task",
       "command:Show Scheduled Task Last Run Result"
     ],
-    "relationshipFamily": "Services and scheduled tasks"
+    "relationshipFamily": "Services and scheduled tasks",
+    "permissionNotes": []
   },
   "Show Locally Logged-On Users": {
     "code": "quser",
@@ -4203,7 +4811,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Show SMB Sessions": {
     "code": "Get-SmbSession |\n  Select-Object ClientComputerName,ClientUserName,NumOpens,Dialect",
@@ -4218,7 +4827,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Shares",
       "command:Mapped Drives"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Show SMB Shares": {
     "code": "Get-SmbShare |\n  Select-Object Name,Path,Description",
@@ -4233,7 +4843,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Sessions",
       "command:Mapped Drives"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Show Scheduled Task": {
     "code": "Get-ScheduledTask -TaskName \"Task Name\" |\n  Select-Object TaskName,TaskPath,State",
@@ -4248,7 +4859,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Scheduled Task Last Run Result",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Services and scheduled tasks"
+    "relationshipFamily": "Services and scheduled tasks",
+    "permissionNotes": []
   },
   "Show Scheduled Task Last Run Result": {
     "code": "Get-ScheduledTaskInfo -TaskName \"Task Name\" |\n  Select-Object LastRunTime,LastTaskResult,NextRunTime,NumberOfMissedRuns",
@@ -4263,7 +4875,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Scheduled Task",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Services and scheduled tasks"
+    "relationshipFamily": "Services and scheduled tasks",
+    "permissionNotes": []
   },
   "Check Common Pending Reboot Flags": {
     "code": "$Pending = $false\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending\"){ $Pending = $true }\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired\"){ $Pending = $true }\n[pscustomobject]@{ PendingReboot = $Pending }",
@@ -4280,7 +4893,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Show Installed Hotfixes"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show Installed Hotfixes": {
     "code": "Get-HotFix |\n  Sort-Object InstalledOn -Descending |\n  Select-Object HotFixID,Description,InstalledOn,InstalledBy",
@@ -4295,7 +4909,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show Recent Windows Update History": {
     "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";ProviderName=\"Microsoft-Windows-WindowsUpdateClient\";StartTime=(Get-Date).AddDays(-30)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,Id,LevelDisplayName,Message",
@@ -4312,7 +4927,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Check Common Pending Reboot Flags",
       "command:Show Installed Hotfixes"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Add Calendar Permission": {
     "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -AccessRights $AccessRights",
@@ -4331,7 +4947,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Contacts Permissions",
       "GET-MAILBOX-PERMISSIONS.ps1"
     ],
-    "relationshipFamily": "Calendar and contacts"
+    "relationshipFamily": "Calendar and contacts",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Remove Calendar Permission": {
     "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$true",
@@ -4351,7 +4970,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Contacts Permissions",
       "GET-MAILBOX-PERMISSIONS.ps1"
     ],
-    "relationshipFamily": "Calendar and contacts"
+    "relationshipFamily": "Calendar and contacts",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Calendar Permissions": {
     "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Calendar\"",
@@ -4368,7 +4990,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-ROOM-RESOURCE-ACCESS.ps1"
     ],
-    "relationshipFamily": "Calendar and contacts"
+    "relationshipFamily": "Calendar and contacts",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Contacts Permissions": {
     "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Contacts\"",
@@ -4385,7 +5010,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-ROOM-RESOURCE-ACCESS.ps1"
     ],
-    "relationshipFamily": "Calendar and contacts"
+    "relationshipFamily": "Calendar and contacts",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Add Contacts Permission": {
     "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Contacts\" -User \"user@domain.com\" -AccessRights $AccessRights",
@@ -4404,7 +5032,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Contacts Permissions",
       "GET-MAILBOX-PERMISSIONS.ps1"
     ],
-    "relationshipFamily": "Calendar and contacts"
+    "relationshipFamily": "Calendar and contacts",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Send-To Restrictions / authOrig": {
     "code": "Get-ADGroup 'GroupName' -Properties authOrig | Select-Object -ExpandProperty authOrig",
@@ -4421,7 +5052,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show Account Enabled": {
     "code": "Get-ADUser \"username\" -Properties Enabled | Select-Object SamAccountName,Enabled",
@@ -4438,7 +5072,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show User Principal Name": {
     "code": "Get-ADUser -Identity \"username\" -Properties UserPrincipalName | Select-Object UserPrincipalName",
@@ -4455,7 +5092,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show Password Last Set": {
     "code": "Get-ADUser -Identity \"username\" -Properties PasswordLastSet | Select-Object Name,PasswordLastSet",
@@ -4472,7 +5112,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show Distinguished Name": {
     "code": "Get-ADUser -Identity \"username\" | Select-Object DistinguishedName",
@@ -4489,7 +5132,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Show Default Domain Password Policy": {
     "code": "Get-ADDefaultDomainPasswordPolicy",
@@ -4506,7 +5152,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1",
       "command:Get User"
     ],
-    "relationshipFamily": "AD account review"
+    "relationshipFamily": "AD account review",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Force Group Policy Update": {
     "code": "gpupdate /force",
@@ -4523,7 +5172,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Entra Join Status",
       "command:Show Group Policy Result"
     ],
-    "relationshipFamily": "Domain and device identity"
+    "relationshipFamily": "Domain and device identity",
+    "permissionNotes": []
   },
   "Show Group Policy Result": {
     "code": "gpresult /r",
@@ -4538,7 +5188,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Entra Join Status",
       "command:Show Configured Dns Servers"
     ],
-    "relationshipFamily": "Domain and device identity"
+    "relationshipFamily": "Domain and device identity",
+    "permissionNotes": []
   },
   "Disable Hibernation": {
     "code": "powercfg.exe /hibernate off",
@@ -4555,7 +5206,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Show Domain Account Details": {
     "code": "net user username /domain",
@@ -4570,7 +5222,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Entra Join Status",
       "command:Show Group Policy Result"
     ],
-    "relationshipFamily": "Domain and device identity"
+    "relationshipFamily": "Domain and device identity",
+    "permissionNotes": []
   },
   "Create Local User": {
     "code": "net user username /add",
@@ -4587,7 +5240,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Delete Local User": {
     "code": "& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
@@ -4605,7 +5259,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Set Local User Password": {
     "code": "net user \"username\" \"temporary password\"",
@@ -4623,7 +5278,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Enable Local Account": {
     "code": "net user \"username\" /active:yes",
@@ -4640,7 +5296,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Open Local Users and Groups": {
     "code": "lusrmgr.msc",
@@ -4655,7 +5312,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Show Logged-On Users": {
     "code": "quser",
@@ -4670,7 +5328,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Shares",
       "command:Mapped Drives"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Disable Network Adapter": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
@@ -4690,7 +5349,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Restart Network Adapter": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
@@ -4710,7 +5370,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Isolate Device - Disable Enabled Adapters": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
@@ -4730,7 +5391,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Show Routing Table"
     ],
-    "relationshipFamily": "Network changes"
+    "relationshipFamily": "Network changes",
+    "permissionNotes": []
   },
   "Resync Windows Time": {
     "code": "w32tm /resync /force",
@@ -4747,7 +5409,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Windows Time Source",
       "command:Show Last Boot And Uptime"
     ],
-    "relationshipFamily": "Windows time"
+    "relationshipFamily": "Windows time",
+    "permissionNotes": []
   },
   "Open Windows Update": {
     "code": "start ms-settings:windowsupdate-action",
@@ -4762,7 +5425,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show Wi-Fi Interface": {
     "code": "netsh wlan show interfaces",
@@ -4777,7 +5441,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Saved Wi-Fi Profiles",
       "command:Network Profile"
     ],
-    "relationshipFamily": "Wi-Fi"
+    "relationshipFamily": "Wi-Fi",
+    "permissionNotes": []
   },
   "Delete Wi-Fi Profile": {
     "code": "netsh wlan delete profile name=\"ProfileName\"",
@@ -4794,7 +5459,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Wi-Fi Interface",
       "command:Show Saved Wi-Fi Profiles"
     ],
-    "relationshipFamily": "Wi-Fi"
+    "relationshipFamily": "Wi-Fi",
+    "permissionNotes": []
   },
   "DISM Analyze Component Store": {
     "code": "DISM /Online /Cleanup-Image /AnalyzeComponentStore",
@@ -4809,7 +5475,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Recent System Errors",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "DISM Component Store Cleanup": {
     "code": "DISM /Online /Cleanup-Image /StartComponentCleanup",
@@ -4826,7 +5493,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DISM Analyze Component Store",
       "command:Recent System Errors"
     ],
-    "relationshipFamily": "Windows repair"
+    "relationshipFamily": "Windows repair",
+    "permissionNotes": []
   },
   "Launch Disk Cleanup": {
     "code": "cleanmgr.exe",
@@ -4843,7 +5511,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Defragment Volume": {
     "code": "Optimize-Volume -DriveLetter C -Defrag -Verbose",
@@ -4860,7 +5529,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Show Available WinGet Updates": {
     "code": "winget upgrade --accept-source-agreements",
@@ -4877,7 +5547,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Check Common Pending Reboot Flags",
       "command:Show Installed Hotfixes"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Update All Eligible WinGet Packages": {
     "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
@@ -4896,7 +5567,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show WinGet Package Information": {
     "code": "$PackageId = \"Package.Id\"\nwinget show --id $PackageId --exact",
@@ -4911,7 +5583,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Update Specific WinGet Package": {
     "code": "$PackageId = \"Package.Id\"\nwinget upgrade --id $PackageId --exact --accept-source-agreements --accept-package-agreements",
@@ -4928,7 +5601,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Update WinGet Sources": {
     "code": "winget source update",
@@ -4945,7 +5619,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Recent Windows Update History",
       "command:Check Common Pending Reboot Flags"
     ],
-    "relationshipFamily": "Apps and updates"
+    "relationshipFamily": "Apps and updates",
+    "permissionNotes": []
   },
   "Show PowerShell Version": {
     "code": "$PSVersionTable.PSVersion",
@@ -4960,7 +5635,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Show Execution Policies": {
     "code": "Get-ExecutionPolicy -List",
@@ -4975,7 +5651,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show PowerShell Version"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Set Current User Execution Policy - RemoteSigned": {
     "code": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
@@ -4993,7 +5670,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Show Installed Microsoft Graph Module Version": {
     "code": "Get-Module Microsoft.Graph.Authentication -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
@@ -5008,7 +5686,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Show Installed ExchangeOnlineManagement Version": {
     "code": "Get-Module ExchangeOnlineManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
@@ -5023,7 +5702,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Show Graph Context": {
     "code": "Get-MgContext",
@@ -5038,7 +5718,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Get User By Upn"
     ],
-    "relationshipFamily": "Graph connection"
+    "relationshipFamily": "Graph connection",
+    "permissionNotes": []
   },
   "Show Exchange Connection": {
     "code": "Get-ConnectionInformation",
@@ -5053,7 +5734,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Show Mailbox Summary"
     ],
-    "relationshipFamily": "Exchange connection"
+    "relationshipFamily": "Exchange connection",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Disconnect Microsoft Graph": {
     "code": "Disconnect-MgGraph",
@@ -5070,7 +5754,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Show Graph Context"
     ],
-    "relationshipFamily": "Graph connection"
+    "relationshipFamily": "Graph connection",
+    "permissionNotes": []
   },
   "Disconnect Exchange Online": {
     "code": "Disconnect-ExchangeOnline -Confirm:$false",
@@ -5087,24 +5772,31 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Show Exchange Connection"
     ],
-    "relationshipFamily": "Exchange connection"
+    "relationshipFamily": "Exchange connection",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Show Activity From One IP": {
     "code": "$Ip = \"1.2.3.4\"\nGet-MgAuditLogSignIn -Filter \"ipAddress eq '$Ip'\" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
     "useFor": "Show up to 100 sign-ins recorded from the selected IP address.",
     "connectFirst": [
-      "Connect-MgGraph -Scopes \"AuditLog.Read.All\",\"User.Read.All\""
+      "Connect-MgGraph -Scopes \"AuditLog.Read.All\""
     ],
     "checks": [],
     "guards": [],
-    "requires": "Microsoft Graph PowerShell modules for the command, consent to the listed permissions, and an account allowed to access the target. Graph permissions: AuditLog.Read.All, User.Read.All. Tenant licensing and a role that can read these logs are also required.",
+    "requires": "Modules: Microsoft.Graph.Authentication + Microsoft.Graph.Reports. Delegated Graph scopes: AuditLog.Read.All.",
     "input": "Replace command examples with your target IP address, domain or host. Review all target values before running.",
     "related": [
       "BEC-RISK-ASSESSMENT.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "BEC-GET-IP-TRACE.ps1"
     ],
-    "relationshipFamily": "Sign-in investigation"
+    "relationshipFamily": "Sign-in investigation",
+    "permissionNotes": [
+      "Delegated consent: these tenant-read/change scopes require administrator consent. Consent does not assign an Entra role or authorize a target. Use the approved tenant account; do not grant Global Administrator merely to run this task. Existing sessions may already hold broader permissions; this setup does not downgrade an existing token.",
+      "Role / target authority: Reports Reader or Security Reader (or another supported role). Tenant licensing, retention and log availability also apply; unavailable data is not a clean result."
+    ]
   },
   "Look Up ISP And Location": {
     "code": "$Ip = \"8.8.8.8\"\nInvoke-RestMethod \"https://ipinfo.io/$Ip/json\" |\n  Select-Object ip,city,region,country,org",
@@ -5121,7 +5813,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "AD Group Memberships": {
     "code": "Get-ADPrincipalGroupMembership -Identity \"username\" | Select-Object Name",
@@ -5138,7 +5831,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "AD Group Members": {
     "code": "Get-ADGroupMember -Identity \"GroupName\" | Select-Object Name,SamAccountName,ObjectClass",
@@ -5155,7 +5851,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "command:Show AD Group Members"
     ],
-    "relationshipFamily": "AD groups"
+    "relationshipFamily": "AD groups",
+    "permissionNotes": [
+      "AD authority: use Windows RSAT / ActiveDirectory and delegated rights to the selected objects. Domain Administrator is not a default requirement; Graph consent does not grant AD rights."
+    ]
   },
   "Connect Exchange Online": {
     "code": "Connect-ExchangeOnline",
@@ -5170,7 +5869,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Show Exchange Connection"
     ],
-    "relationshipFamily": "Exchange connection"
+    "relationshipFamily": "Exchange connection",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Install Exchange Online Module": {
     "code": "Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force -AllowClobber",
@@ -5187,7 +5889,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Install Microsoft Graph Module": {
     "code": "Install-Module -Name Microsoft.Graph -Scope CurrentUser -Force -AllowClobber",
@@ -5204,7 +5907,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "command:Show Execution Policies"
     ],
-    "relationshipFamily": "PowerShell setup"
+    "relationshipFamily": "PowerShell setup",
+    "permissionNotes": []
   },
   "Show Hidden Inbox Rules": {
     "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden",
@@ -5221,7 +5925,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "Delete All Inbox Rules": {
     "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
@@ -5244,7 +5951,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "relationshipFamily": "Inbox rules"
+    "relationshipFamily": "Inbox rules",
+    "permissionNotes": [
+      "Exchange / Purview authority: assigned RBAC roles must permit this exact cmdlet, its parameters and the target objects. Graph consent does not grant these rights; Global Administrator is not a default requirement."
+    ]
   },
   "IP Configuration (ipconfig)": {
     "code": "ipconfig /all",
@@ -5259,7 +5969,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Flush DNS": {
     "code": "ipconfig /flushdns",
@@ -5276,7 +5987,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:DNS Lookup",
       "command:Show Ip Configuration"
     ],
-    "relationshipFamily": "DNS"
+    "relationshipFamily": "DNS",
+    "permissionNotes": []
   },
   "DNS Lookup": {
     "code": "nslookup example.com",
@@ -5291,7 +6003,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Ip Configuration",
       "command:Resolve Name"
     ],
-    "relationshipFamily": "DNS"
+    "relationshipFamily": "DNS",
+    "permissionNotes": []
   },
   "Continuous Ping": {
     "code": "ping -t example.com",
@@ -5306,7 +6019,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Traceroute": {
     "code": "tracert example.com",
@@ -5321,7 +6035,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Path Ping": {
     "code": "pathping example.com",
@@ -5336,7 +6051,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Routing Table (route print)": {
     "code": "route print",
@@ -5351,7 +6067,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "ARP Cache": {
     "code": "arp -a",
@@ -5366,7 +6083,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "TCP Connections (netstat)": {
     "code": "netstat -ano",
@@ -5381,7 +6099,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Port 443 Connections": {
     "code": "netstat -ano | findstr :443",
@@ -5396,7 +6115,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Local Account Details": {
     "code": "net user username",
@@ -5411,7 +6131,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Identity and Privileges"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Windows Time Status": {
     "code": "w32tm /query /status",
@@ -5426,7 +6147,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Domain Trust Check"
     ],
-    "relationshipFamily": "Windows time"
+    "relationshipFamily": "Windows time",
+    "permissionNotes": []
   },
   "Windows Time Source": {
     "code": "w32tm /query /source",
@@ -5441,7 +6163,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Last Boot And Uptime",
       "command:Domain Trust Check"
     ],
-    "relationshipFamily": "Windows time"
+    "relationshipFamily": "Windows time",
+    "permissionNotes": []
   },
   "WinHTTP Proxy": {
     "code": "netsh winhttp show proxy",
@@ -5456,7 +6179,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Domain Trust Check": {
     "code": "Test-ComputerSecureChannel -Verbose",
@@ -5471,7 +6195,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Group Policy Result",
       "command:Show Configured Dns Servers"
     ],
-    "relationshipFamily": "Domain and device identity"
+    "relationshipFamily": "Domain and device identity",
+    "permissionNotes": []
   },
   "Printer Check": {
     "code": "Get-Printer | Select-Object Name,DriverName,PortName,PrinterStatus",
@@ -5486,7 +6211,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Print Jobs",
       "command:Spooler Status"
     ],
-    "relationshipFamily": "Printing"
+    "relationshipFamily": "Printing",
+    "permissionNotes": []
   },
   "Open Storage Settings": {
     "code": "start ms-settings:storagesense",
@@ -5501,7 +6227,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Clear Delivery Optimization Cache": {
     "code": "Delete-DeliveryOptimizationCache -Force",
@@ -5518,7 +6245,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Free Space",
       "command:Show Physical Disk Health"
     ],
-    "relationshipFamily": "Storage"
+    "relationshipFamily": "Storage",
+    "permissionNotes": []
   },
   "Identity and Privileges": {
     "code": "whoami /all",
@@ -5533,7 +6261,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Local Administrators",
       "command:Local Account Details"
     ],
-    "relationshipFamily": "Local accounts"
+    "relationshipFamily": "Local accounts",
+    "permissionNotes": []
   },
   "Entra Join Status": {
     "code": "dsregcmd /status",
@@ -5548,7 +6277,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Group Policy Result",
       "command:Show Configured Dns Servers"
     ],
-    "relationshipFamily": "Domain and device identity"
+    "relationshipFamily": "Domain and device identity",
+    "permissionNotes": []
   },
   "Mapped Drives": {
     "code": "net use",
@@ -5563,7 +6293,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
-    "relationshipFamily": "Windows sessions and shares"
+    "relationshipFamily": "Windows sessions and shares",
+    "permissionNotes": []
   },
   "Network Profile": {
     "code": "Get-NetConnectionProfile",
@@ -5578,7 +6309,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Routing Table",
       "command:Test Tcp Port"
     ],
-    "relationshipFamily": "Network paths"
+    "relationshipFamily": "Network paths",
+    "permissionNotes": []
   },
   "Defender Status": {
     "code": "Get-MpComputerStatus | Select-Object AMServiceEnabled,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanEndTime,FullScanEndTime",
@@ -5593,7 +6325,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Show Service Status",
       "command:Show Problem Devices"
     ],
-    "relationshipFamily": "Antivirus"
+    "relationshipFamily": "Antivirus",
+    "permissionNotes": []
   },
   "Print Jobs": {
     "code": "Get-Printer | ForEach-Object { Get-PrintJob -PrinterName $_.Name -ErrorAction SilentlyContinue }",
@@ -5610,7 +6343,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Printer Check",
       "command:Spooler Status"
     ],
-    "relationshipFamily": "Printing"
+    "relationshipFamily": "Printing",
+    "permissionNotes": []
   },
   "Spooler Status": {
     "code": "Get-Service Spooler",
@@ -5625,7 +6359,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "command:Printer Check",
       "command:Print Jobs"
     ],
-    "relationshipFamily": "Printing"
+    "relationshipFamily": "Printing",
+    "permissionNotes": []
   },
   "Connect Microsoft Graph": {
     "code": "Connect-MgGraph -Scopes \"User.Read\" -ContextScope Process",
@@ -5640,7 +6375,10 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "command:Show Graph Context"
     ],
-    "relationshipFamily": "Graph connection"
+    "relationshipFamily": "Graph connection",
+    "permissionNotes": [
+      "This generic connection requests only User.Read for your own profile. It does not prepare tenant-wide tasks; use the selected task’s DETAILS for its exact scopes, roles and consent."
+    ]
   },
   "Show Code-Signing Certificates": {
     "code": "Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert | Select-Object Subject,Thumbprint,NotAfter",
@@ -5655,7 +6393,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "command:Verify Script Signature"
     ],
-    "relationshipFamily": "Signing and certificates"
+    "relationshipFamily": "Signing and certificates",
+    "permissionNotes": []
   }
 });
 
@@ -6631,9 +7370,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Missing evidence is not a clean MFA result."
     ],
     "family": "security",
-    "sourceSha256": "f7a9db6339cac2c6725261c00908713e7fb4017f4441c66c6118bc0cc360a5eb",
-    "presentationRevision": true,
-    "releaseVersion": "1.0.2",
+    "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
+    "presentationRevision": false,
+    "releaseVersion": "1.0.3",
     "objective": "Review MFA registration and the policies intended to protect sign-ins.",
     "preparation": [
       "Requires Microsoft Graph PowerShell and authorized access to the target tenant."
@@ -6642,7 +7381,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-ADMIN-ROLE-AUDIT.ps1"
-    ]
+    ],
+    "operationalRevision": true
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "name": "Get Secure Score",

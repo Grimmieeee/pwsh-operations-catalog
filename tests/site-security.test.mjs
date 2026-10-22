@@ -57,7 +57,7 @@ test('reviewed tenant audits disclose the required tenant ID before launch',()=>
  assert.equal(items.length,13);
  for(const item of items){f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   assert.ok(html.includes('Tenant ID'),item.file);assert.ok(html.indexOf('Tenant ID')<html.indexOf('guided-start'),item.file);
-  assert.equal(item.operatorCard.presentationRevision,true);assert.equal(f.api.isVerifiedRelease(item),false);
+  assert.equal(Boolean(item.operatorCard.presentationRevision||item.operatorCard.operationalRevision),true);assert.equal(f.api.isVerifiedRelease(item),false);
  }
 });
 
@@ -188,7 +188,7 @@ test('every script has compact operational details and source-reviewed prerequis
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
   assert.ok(!html.includes('<summary>CHECKS</summary>'),item.file);
-  assert.ok(!html.includes('Technical requirements:'),item.file);
+  assert.ok(!html.split('<summary>DETAILS</summary>')[0].includes('Technical requirements:'),item.file);
   assert.ok(item.requires,item.file);
  }
  const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');f.api.openItem(removal);
@@ -235,7 +235,8 @@ test('compact cards retain change impact, operational warnings and exact source 
  for(const file of ['INVOKE-ASSIGN-LICENSES.ps1','INVOKE-REMOVE-LICENSES.ps1']){
   const item=f.api.ITEMS.find(x=>x.file===file);f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   for(const text of ['MAKES CHANGES','Run with PowerShell','id="downloadSource"','id="showSource"','DETAILS'])assert.ok(html.includes(text),file+': '+text);
-  assert.ok(!html.includes('AUTO-CONNECT'));assert.ok(!html.includes('data-copy="Connect-MgGraph'));assert.ok(!html.includes('User.ReadWrite.All'));
+  assert.ok(!html.includes('AUTO-CONNECT'));assert.ok(!html.includes('data-copy="Connect-MgGraph'));assert.ok(!html.split('<summary>DETAILS</summary>')[0].includes('User.ReadWrite.All'));
+  assert.ok(html.split('<summary>DETAILS</summary>')[1].includes('User.ReadWrite.All'));
  }
  const ir=f.api.ITEMS.find(x=>x.file==='BEC-CONTAIN-ERADICATE.ps1');f.api.openItem(ir);
  assert.ok(f.elements.get('drawerBody').innerHTML.includes('terminal capture/transcripts'));
@@ -342,13 +343,14 @@ test('script copy is exposed inside the verified source box and removed when cod
   assert.equal(mount.innerHTML,'');
 });
 
-test('quick command preparation precedes its own boxed command and copy control',()=>{
+test('quick command preparation is inside DETAILS with its own copy control',()=>{
   const f=loadCatalog(root);
   const item=f.api.ITEMS.find(item=>item.type==='Quick Command'&&item.connect.length&&!/^\s*(Connect-|Import-Module)/i.test(item.code));
   f.api.openItem(item);
   const html=f.elements.get('drawerBody').innerHTML;
   assert.ok(html.includes('CONNECT FIRST'));
-  assert.ok(html.indexOf('CONNECT FIRST')<html.indexOf('class="command-block"'));
+  assert.ok(html.indexOf('CONNECT FIRST')>html.indexOf('<summary>DETAILS</summary>'));
+  assert.ok(html.indexOf('<summary>DETAILS</summary>')>html.indexOf('class="command-block"'));
   assert.ok(html.includes('class="copy-mini" type="button" data-copy-source'));
 });
 
