@@ -1469,7 +1469,7 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     }
   },
   "PREPARE-FIELD-KIT.ps1": {
-    "sourceSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
     "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
     "input": "Current Windows account; Graph, Exchange or both",
     "requires": "Windows PowerShell 5.1 or PowerShell 7.4+; PowerShellGet for installation.",
@@ -1487,10 +1487,10 @@ window.FIELD_KIT_CARD_GUIDANCE = Object.freeze({
     ]
   },
   "START-HERE.md": {
-    "sourceSha256": "0dd7f7793b99f618fffbd51bb857ce5abb429eed619f626550033e86e72211fb",
+    "sourceSha256": "ceaa8b9219d977a88e2f45f3af18c160671fb76812ba714a4dc437e51e9171f0",
     "objective": "Prepare the support computer and run one approved workflow at a time.",
     "input": "Customer support computer and approved operator account",
-    "requires": "Approved RMM or remote session to the customer support computer."
+    "requires": "Access to the approved customer support computer."
   }
 });
 
@@ -7467,9 +7467,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "READY verifies selected local prerequisites; each job still needs customer access."
     ],
     "family": "setup",
-    "sourceSha256": "1440fe5fef49822310a3ce7f80949eb3f8506befdb3a7df2ffce66e8456d4ed4",
+    "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
     "presentationRevision": false,
-    "releaseVersion": "1.0.0",
+    "releaseVersion": "1.0.1",
     "objective": "Check this computer and install missing Microsoft 365 PowerShell modules.",
     "preparation": [
       "Use the approved customer-side Windows support computer and the same account you will use for jobs."

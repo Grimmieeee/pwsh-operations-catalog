@@ -14,7 +14,9 @@ const fixturePath='published-source/fixture.ps1';
 test('Start Here makes preparation, one-job scope and completion visible',()=>{
  const f=loadCatalog(root);f.api.state.area='Start Here';f.api.renderResults();
  const html=f.elements.get('results').innerHTML;
- for(const text of ['1. Confirm the customer and computer','2. Prepare PowerShell','3. Choose and run one job','4. Review, finish and close','Download Setup Package','RESULT: READY','SYSTEM account','same window','does not guarantee another password or MFA prompt'])assert.ok(html.includes(text),text);
+ for(const text of ['1. Confirm the customer and computer','2. Prepare PowerShell','3. Choose and run one job','4. Review, finish and close','Download Setup Package','RESULT: READY','same Windows account and PowerShell edition','same window','does not guarantee another password or MFA prompt'])assert.ok(html.includes(text),text);
+ assert.doesNotMatch(html,/RMM/i);
+ for(const file of ['published-source/utility/START-HERE.md','published-source/utility/PREPARE-FIELD-KIT.ps1'])assert.doesNotMatch(fs.readFileSync(path.join(root,file),'utf8'),/RMM/i);
  assert.equal(f.elements.get('.search-wrap').classList.contains('hidden'),true);
  assert.equal(f.elements.get('empty').classList.contains('hidden'),true);
 });

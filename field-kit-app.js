@@ -2713,12 +2713,12 @@
       <h2 class="item-title">Start Here</h2>
       <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
       <section class="note-block"><h3>1. Confirm the customer and computer</h3>
-        <p>Use your approved RMM or remote session to the customer’s Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket or RMM activity open to record who ran the job and when.</p>
+        <p>Connect to the customer’s approved Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket open to record who ran the job and when.</p>
       </section>
       <section class="note-block"><h3>2. Prepare PowerShell</h3>
         <p>Download the setup package, transfer it to that computer if needed, and extract it. Right-click <strong>PREPARE-FIELD-KIT.ps1</strong> and select <strong>Run with PowerShell</strong>.</p>
         <p>Choose Microsoft Graph, Exchange Online, or both. Setup checks first, offers to install missing components, then rechecks them. Read the plan before typing INSTALL. Wait for <strong>RESULT: READY</strong>, then press Enter to close setup.</p>
-        <p>Run setup under the same Windows account and PowerShell edition you will use for jobs. Installing under RMM’s SYSTEM account does not prepare your interactive account.</p>
+        <p>Run setup under the same Windows account and PowerShell edition you will use for jobs. Setup prepares that account and edition.</p>
         <div class="actions"><button id="downloadSetupPackage" class="action primary" type="button">Download Setup Package</button><button class="action" type="button" data-first-run-file="PREPARE-FIELD-KIT.ps1">View Setup Tool</button></div>
         <p id="setupPackageStatus" class="source-note" role="status"></p>
         <p>Setup changes local prerequisites after approval. It does not sign into a customer or grant access. Local AD jobs also need approved AD tools and a domain connection.</p>
@@ -2730,10 +2730,10 @@
         <div class="actions"><button id="browseAfterSetup" class="action" type="button">Choose a Tool</button></div>
       </section>
       <section class="note-block"><h3>4. Review, finish and close</h3>
-        <p>Review completed, failed, skipped and unresolved results. Record the outcome in the ticket or RMM activity. Press Enter to close the dedicated session when complete. Start the next unrelated job in a fresh window.</p>
+        <p>Review completed, failed, skipped and unresolved results. Record the outcome in the ticket. Press Enter to close the dedicated session when complete. Start the next unrelated job in a fresh window.</p>
         <details class="operator-details"><summary>SESSION BOUNDARIES</summary><p>A separate window contains a job; it is not a security sandbox. Closing it ends that PowerShell process, but customer access, Windows rights and browser sign-in caches may remain. A fresh window does not guarantee another password or MFA prompt.</p><p>If reusing an existing window, run Reset M365 Session in that same window first. Running cleanup in a different window cannot clean up the original. Follow your approved sign-out process on the shared computer when finished.</p></details>
       </section>
-      <div class="actions"><button class="action" type="button" data-first-run-file="START-HERE.md">Full Guide and RMM Options</button><button class="action" type="button" data-first-run-file="TEST-POWERSHELL-READINESS.ps1">Check Readiness Only</button></div>
+      <div class="actions"><button class="action" type="button" data-first-run-file="START-HERE.md">Full Setup Guide</button><button class="action" type="button" data-first-run-file="TEST-POWERSHELL-READINESS.ps1">Check Readiness Only</button></div>
     </section>`;
     results.querySelectorAll('[data-first-run-file]').forEach(button=>button.addEventListener('click',()=>{
       const item=ITEMS.find(candidate=>candidate.file===button.dataset.firstRunFile);
