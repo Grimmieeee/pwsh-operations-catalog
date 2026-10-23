@@ -10,11 +10,13 @@ import { validateCardContract } from './card-contract.mjs';
 import { checkImpactReview } from './impact-review.mjs';
 import { checkPermissionsReview } from './permissions-review.mjs';
 import { checkTaxonomyReview } from './taxonomy-review.mjs';
+import { checkWorkflowPreviews } from './build-workflow-previews.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const {api,window,document}=loadCatalog(root);
 checkImpactReview(root);
 checkPermissionsReview(root);
 checkTaxonomyReview(root);
+checkWorkflowPreviews(root);
 const hashes={};
 for(const item of api.ITEMS){
   if(!item.publishedPath)continue;
@@ -78,7 +80,7 @@ for(const name of ['index.html']){
   for(const [,src]of html.matchAll(/<script[^>]*src="([^"]+)"/g)){
     assert(!src.includes('..')&&!src.includes(':'),`${name}: unexpected script origin`);
     // Release assets accept a plain cache revision; check the actual local file.
-    const scriptPath=src.replace(/^((?:field-kit-app|catalog-data|source-integrity|connection-guidance|card-guidance|workflow-start|site-brand|site-theme|verification-history)\.js)\?v=[a-zA-Z0-9._-]+$/,'$1');
+    const scriptPath=src.replace(/^((?:field-kit-app|catalog-data|source-integrity|connection-guidance|card-guidance|workflow-start|workflow-previews|site-brand|site-theme|verification-history)\.js)\?v=[a-zA-Z0-9._-]+$/,'$1');
     assert(fs.existsSync(path.join(root,scriptPath)),`${name}: missing script ${src}`);
   }
   assert(html.includes('aria-label="Search all catalog sections"'),`${name}: search needs an accessible label`);

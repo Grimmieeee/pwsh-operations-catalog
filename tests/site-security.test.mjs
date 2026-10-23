@@ -909,3 +909,43 @@ test('duplicate names search canonical commands and command groups respect actua
  assert.equal(f.api.ITEMS.find(i=>i.name==='Look Up ISP And Location').group,'Network CLI');
  assert.equal(f.api.ITEMS.find(i=>i.name==='Show Whether Remote Desktop Is Enabled').group,'Windows CLI');
 });
+
+test('all 81 script workflows have source-bound illustrative scrollable previews',async()=>{
+ const {checkWorkflowPreviews}=await import('../tools/build-workflow-previews.mjs');
+ assert.deepEqual(checkWorkflowPreviews(root),{scripts:81,commands:0});
+ const f=loadCatalog(root);
+ for(const i of f.api.ITEMS.filter(i=>i.operatorCard)){
+  f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
+  assert.equal((html.match(/class="workflow-preview"/g)||[]).length,1,i.file);
+  assert.match(html,/Illustrative · sample data/);
+  assert.match(html,/class="preview-scroll" tabindex="0" role="region"/);
+  assert(html.indexOf('workflow-preview')<html.indexOf('guided-start'),i.file);
+  const details=html.slice(html.indexOf('<details class="operator-details">'));
+  assert(details.includes('class="related-block"'),i.file);
+  assert(!html.includes('<details class="operator-details" open'),i.file);
+  if(i.workflow)assert(details.includes('class="workflow-block"'),i.file);
+ }
+ const css=fs.readFileSync(path.join(root,'site-theme.css'),'utf8');
+ assert.match(css,/\.preview-scroll\{[^}]*max-height:290px;overflow:auto/);
+ assert.match(css,/\.preview-scroll:focus-visible/);
+});
+
+test('Quick Commands and reference cards never receive workflow previews',()=>{
+ const f=loadCatalog(root);
+ for(const i of f.api.ITEMS.filter(i=>!i.operatorCard)){
+  assert.equal(f.api.workflowPreview(i),null,i.name);
+  assert.equal(f.api.workflowPreviewMarkup(i),'',i.name);
+  f.api.openItem(i);assert(!f.elements.get('drawerBody').innerHTML.includes('class="workflow-preview"'),i.name);
+ }
+});
+
+test('preview text is escaped and stale examples cannot attach to changed source revisions',()=>{
+ const f=loadCatalog(root),i=f.api.ITEMS.find(i=>i.file==='GET-USER-GROUPS.ps1');
+ const record=f.window.FIELD_KIT_WORKFLOW_PREVIEWS[i.file];
+ record.text='<img src=x onerror=alert(1)>\n<script>alert(1)</script>';
+ const html=f.api.workflowPreviewMarkup(i);
+ assert(!html.includes('<img'));assert(!html.includes('<script>'));
+ assert(html.includes('&lt;img'));assert(html.includes('&lt;script&gt;'));
+ record.sourceSha256='0'.repeat(64);assert.equal(f.api.workflowPreview(i),null);
+ assert.match(f.api.workflowPreviewMarkup(i),/unavailable for this source revision/);
+});

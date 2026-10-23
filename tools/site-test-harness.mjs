@@ -54,10 +54,12 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   if(fs.existsSync(startPath))vm.runInContext(fs.readFileSync(startPath,'utf8'),context);
   const historyPath=path.join(root,'verification-history.js');
   if(fs.existsSync(historyPath))vm.runInContext(fs.readFileSync(historyPath,'utf8'),context);
+  const previewPath=path.join(root,'workflow-previews.js');
+  if(fs.existsSync(previewPath))vm.runInContext(fs.readFileSync(previewPath,'utf8'),context);
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');
-  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,PLANNED_ITEMS,TAXONOMY,COMMAND_ALIASES,taxonomyRecord,state,filteredItems,renderResults,DOMAIN_SECTIONS,catalogDomain,isReportView,matchesReportScope,matchesDomain,catalogIconType,catalogIconMarkup,catalogCompare,setCatalogSort,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,verificationHistory,verificationRank,releaseTag,rowTags,buildIRBundle,buildSetupBundle,connectionInfo,inputInfo,startMarkup,completionInfo,finishMarkup,relatedItems };\n${marker}`);
+  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,PLANNED_ITEMS,workflowPreview,workflowPreviewMarkup,TAXONOMY,COMMAND_ALIASES,taxonomyRecord,state,filteredItems,renderResults,DOMAIN_SECTIONS,catalogDomain,isReportView,matchesReportScope,matchesDomain,catalogIconType,catalogIconMarkup,catalogCompare,setCatalogSort,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,verificationHistory,verificationRank,releaseTag,rowTags,buildIRBundle,buildSetupBundle,connectionInfo,inputInfo,startMarkup,completionInfo,finishMarkup,relatedItems };\n${marker}`);
   vm.runInContext(instrumented,context);
   return {api:window.__TEST,window,document,elements,context,logs};
 }
