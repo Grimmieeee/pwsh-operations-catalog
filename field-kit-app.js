@@ -2211,8 +2211,10 @@
 
   function renderNav(){
     areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('Full Library') + '</div>' +
-      DOMAIN_SECTIONS.map(navButton).join('') +
-      '<div class="nav-bottom">' + navButton('About') + '<a class="area-button contribution-link" href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer" title="Request or submit a script on GitHub; sign-in required">Request / Submit<span aria-hidden="true">↗</span></a></div>';
+      navSection('Manage',['Identity','Mailbox','Licensing','Endpoint']) +
+      navSection('Protect & Respond',['Security','Incident Response']) +
+      navSection('Resources',['Reports','Quick Commands','Tools','Extras']) +
+      '<div class="nav-bottom">' + navButton('About') + '</div>';
   }
 
   function searchConcepts(item){
@@ -2878,7 +2880,7 @@
           <p>Each entry explains what you’ll need, what it does, who may be affected, and what a finished run should look like. Clear directions guide you through the work. If something gets in the way, you’ll know what happened and where to go next.</p>
           <p>Choose a section or search the whole catalog. Sections and scripts are A–Z by default. Follow the numbered order for incident-response steps.</p>
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
-          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reports is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Request or submit a script</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
+          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reports is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Submit a Request</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
 
           <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">

@@ -1,3 +1,7 @@
+## Intent groups and request placement — October 23, 2026
+
+Keep every domain visible, grouped as Manage, Protect & Respond, and Resources. Home/Full Library remain first; About stays below. Move Submit a Request to upper-right beside theme selection. Restore Icon Guide label and reduce space above it; cap section headings at 340px. Thin signature width 180px, aligned toward KIT edge, with a space between slashes.
+
 ## Workflow domain navigation — October 23, 2026
 
 Home and Full Library remain pinned; Endpoint, Extras, Identity, Incident Response, Licensing, Mailbox, Quick Commands, Reports, Security and Tools are alphabetical direct sections. Identity includes groups; Utilities merge into Tools; Toys become Extras. Reports is a cross-domain read-only script view. SCOPE icons derive from reviewed target scope, not report output type. Search remains global; selecting a domain clears search. Catalog impact labels use sentence case. Thin signature fits footer width with one literal space before //. GitHub request and contribution forms require review before catalog inclusion.
