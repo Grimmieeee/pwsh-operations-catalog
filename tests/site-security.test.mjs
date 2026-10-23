@@ -828,3 +828,18 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  assert.equal(f.api.state.query,'');assert.equal(f.api.state.area,'Identity');
  assert.ok(f.api.filteredItems().every(x=>f.api.catalogDomain(x)==='Identity'));
 });
+
+test('BEC and Security use distinct domain shields without changing scope sort',()=>{
+ const f=loadCatalog(root);
+ const bec=f.api.ITEMS.find(x=>x.file==='BEC-RISK-ASSESSMENT.ps1');
+ const security=f.api.ITEMS.find(x=>x.file==='GET-MFA-SECURITY-AUDIT.ps1');
+ assert.match(f.api.catalogIconMarkup(bec),/data-icon-design="bec"/);
+ assert.match(f.api.catalogIconMarkup(bec),/SINGLE-USER/);
+ assert.match(f.api.catalogIconMarkup(security),/data-icon-design="security"/);
+ assert.match(f.api.catalogIconMarkup(security),/TENANT/);
+ assert.equal(f.api.catalogIconType(bec),'single');assert.equal(f.api.catalogIconType(security),'organization');
+ const nav=f.elements.get('areaNav').innerHTML;
+ assert.match(nav,/<div class="nav-standalone">\s*<button[^>]*data-area="Reports"/);
+ assert.match(nav,/<div class="nav-standalone">\s*<button[^>]*data-area="Quick Commands"/);
+ f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/BEC incident response/);
+});

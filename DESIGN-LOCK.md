@@ -1,3 +1,7 @@
+## Impact alignment and workflow shields — October 23, 2026
+
+Reports and Quick Commands are standalone sidebar blocks; Resources retains Tools and Extras. Larger outlined Submit a Request button. Center IMPACT labels, stacking secondary destructive warnings. BEC warning shield and Security checked shield identify domains while tooltips and Scope sorting retain reviewed target scope. Explain this distinction in Icon Guide.
+
 ## Intent groups and request placement — October 23, 2026
 
 Keep every domain visible, grouped as Manage, Protect & Respond, and Resources. Home/Full Library remain first; About stays below. Move Submit a Request to upper-right beside theme selection. Restore Icon Guide label and reduce space above it; cap section headings at 340px. Thin signature width 180px, aligned toward KIT edge, with a space between slashes.

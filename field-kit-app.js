@@ -2213,7 +2213,9 @@
     areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('Full Library') + '</div>' +
       navSection('Manage',['Identity','Mailbox','Licensing','Endpoint']) +
       navSection('Protect & Respond',['Security','Incident Response']) +
-      navSection('Resources',['Reports','Quick Commands','Tools','Extras']) +
+      '<div class="nav-standalone">' + navButton('Reports') + '</div>' +
+      '<div class="nav-standalone">' + navButton('Quick Commands') + '</div>' +
+      navSection('Resources',['Tools','Extras']) +
       '<div class="nav-bottom">' + navButton('About') + '</div>';
   }
 
@@ -2736,10 +2738,18 @@
     reference:'<path d="M12 5v17M2 3c4-1 7 0 10 2 3-2 6-3 10-2v17c-4-1-7 0-10 2-3-2-6-3-10-2Z"/>'
   };
 
+  const DOMAIN_ICON_NAMES = {bec:'BEC incident response',security:'Security'};
+  const DOMAIN_ICON_PATHS = {
+    bec:'<path d="M12 2 3 6v6c0 5 5 8 9 10 4-2 9-5 9-10V6Z"/><path d="M12 6 6.5 16h11ZM12 10v2M12 14h.01"/>',
+    security:'<path d="M12 2 3 6v6c0 5 5 8 9 10 4-2 9-5 9-10V6Z"/><path d="m7 12 3.5 3.5L17 9"/>'
+  };
+
   function catalogIconMarkup(item){
     const kind = catalogIconType(item);
-    const label = CATALOG_ICON_NAMES[kind] + (item.operatorCard?.scope ? ' · ' + item.operatorCard.scope : '');
-    return `<span class="result-icon" data-icon-type="${kind}" title="${esc(label)}"><svg viewBox="0 0 24 24" role="img" aria-label="${esc(label)}">${CATALOG_ICON_PATHS[kind]}</svg></span>`;
+    const domain=catalogDomain(item);
+    const design=domain==='Incident Response'?'bec':domain==='Security'?'security':kind;
+    const label = (DOMAIN_ICON_NAMES[design] ? DOMAIN_ICON_NAMES[design]+' · ' : '') + CATALOG_ICON_NAMES[kind] + (item.operatorCard?.scope ? ' · ' + item.operatorCard.scope : '');
+    return `<span class="result-icon" data-icon-type="${kind}" data-icon-design="${design}" title="${esc(label)}"><svg viewBox="0 0 24 24" role="img" aria-label="${esc(label)}">${DOMAIN_ICON_PATHS[design] || CATALOG_ICON_PATHS[kind]}</svg></span>`;
   }
 
   function catalogCompare(a,b){
@@ -2835,7 +2845,7 @@
     const typeKey = document.getElementById('typeKey');
     typeKey?.classList.toggle('hidden', informational);
     const typeKeyItems = document.getElementById('typeKeyItems');
-    if (typeKeyItems) typeKeyItems.innerHTML = Object.entries(CATALOG_ICON_NAMES).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
+    if (typeKeyItems) typeKeyItems.innerHTML = Object.entries({...CATALOG_ICON_NAMES,...DOMAIN_ICON_NAMES}).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICON_PATHS[kind] || CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
     catalogHeading?.classList.toggle('hidden', informational);
     catalogHeading.textContent = queryActive ? 'Search results' : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
