@@ -2798,6 +2798,7 @@
     const queryActive = Boolean(state.query.trim());
     const informational = state.area === 'About' || state.area === 'Start Here';
     catalogHead?.classList.toggle('hidden', informational);
+    document.getElementById('verificationSortNote')?.classList.add('hidden');
     const typeKey = document.getElementById('typeKey');
     typeKey?.classList.toggle('hidden', informational);
     const typeKeyItems = document.getElementById('typeKeyItems');
@@ -2878,6 +2879,15 @@
     }
 
     const list = filteredItems();
+    const verificationSortNote = document.getElementById('verificationSortNote');
+    const verificationSortActive = state.sortKey === 'verified' && state.sortExplicit;
+    verificationSortNote?.classList.toggle('hidden', !verificationSortActive);
+    if (verificationSortNote && verificationSortActive){
+      const verifiedCount = list.filter(isVerifiedRelease).length;
+      verificationSortNote.textContent = verifiedCount
+        ? `${verifiedCount} of ${list.length} results verified for this release. ${state.sortDirection === 1 ? 'Verified first.' : 'Unverified first.'}`
+        : `0 of ${list.length} results have exact-release operator verification. All share the same status; script names break the tie.`;
+    }
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
     const showCount = queryActive || state.area !== "Full Library";
