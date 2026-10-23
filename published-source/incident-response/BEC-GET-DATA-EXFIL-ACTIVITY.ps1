@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -375,7 +375,7 @@ function Get-RiskLabel {
 }
 
 try {
-    Write-Host 'IR: Review File Activity'
+    Write-Host 'BEC: Review File Activity'
     Write-Host 'Review a user''s file activity for possible data exposure.'
     Write-Host "READ-ONLY"
     Write-Host ""

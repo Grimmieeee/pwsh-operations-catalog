@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 # OBJECTIVE: Review, pull, or push changes in the selected Git repository.
 
@@ -24,6 +24,9 @@ param(
     [switch]$Details,
     [string]$Message
 )
+Write-Host 'Manage Git Repository'
+Write-Host 'Review, pull, or push changes in the selected Git repository.'
+
 $ErrorActionPreference = 'Stop'
 function Get-FieldKitGitRepo {
     $repo = @(

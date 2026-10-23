@@ -1,0 +1,309 @@
+{
+  "date": "2026-10-22",
+  "scope": "Filename, display-name, version and companion-path migration only. Exact inverse replacements must reconstruct prior source bytes. Internal function/session names are retained. Historical runtime evidence stays attributed to its original source.",
+  "entries": [
+    {
+      "oldFile": "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "file": "BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "path": "published-source/incident-response/BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "oldName": "Incident Response: Review File Activity",
+      "name": "BEC: Review File Activity",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "20cb3f12c05665f31ca80189eb63a7a7ad837f1ae028132e66f15a2f403ed21c",
+      "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+      "replacements": [
+        {
+          "old": "Incident Response: Review File Activity",
+          "new": "BEC: Review File Activity"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "d88efcf8ff0c21083fac5822ff4024392f900f9c5fc5fc5abb123e10bb91e0d6",
+      "priorNonPresentationSha256": "d88efcf8ff0c21083fac5822ff4024392f900f9c5fc5fc5abb123e10bb91e0d6",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-IP-TRACE.ps1",
+      "file": "BEC-GET-IP-TRACE.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-IP-TRACE.ps1",
+      "path": "published-source/incident-response/BEC-GET-IP-TRACE.ps1",
+      "oldName": "Incident Response: Trace IP Activity",
+      "name": "BEC: Trace IP Activity",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "79ea0c87210e7f8b012e1d3ad3403014e4c72faf46287712574716a91dbf37e5",
+      "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+      "replacements": [
+        {
+          "old": "Incident Response: Trace IP Activity",
+          "new": "BEC: Trace IP Activity"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "8b8bce67fe02a11c31c75e777259ef7c1b5dbcc85463ec8d826e3df5c4d1d2ab",
+      "priorNonPresentationSha256": "8b8bce67fe02a11c31c75e777259ef7c1b5dbcc85463ec8d826e3df5c4d1d2ab",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "file": "BEC-GET-TENANT-EMAIL-SEARCH.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-TENANT-EMAIL-SEARCH.ps1",
+      "path": "published-source/incident-response/BEC-GET-TENANT-EMAIL-SEARCH.ps1",
+      "oldName": "Incident Response: Trace Email Delivery",
+      "name": "BEC: Trace Email Delivery",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "f678ca7c19548aed2cc35af1de374e130331ea4a1b1889971c0e2bc076713d0d",
+      "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+      "replacements": [
+        {
+          "old": "Incident Response: Trace Email Delivery",
+          "new": "BEC: Trace Email Delivery"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "0e03dab7ba71408b51b7687a4cdc529c1fb41d686ed75b6ecce72324ed318685",
+      "priorNonPresentationSha256": "0e03dab7ba71408b51b7687a4cdc529c1fb41d686ed75b6ecce72324ed318685",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "file": "BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "path": "published-source/incident-response/BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "oldName": "Incident Response: Check IP Reputation",
+      "name": "BEC: Check IP Reputation",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "1990af3b8e1a1170af56f1cef195e6d84f187de67f6619604a685bc79f740b5e",
+      "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+      "replacements": [
+        {
+          "old": "Incident Response: Check IP Reputation",
+          "new": "BEC: Check IP Reputation"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "1a4e03414fc6b2bfaf729de85c360943ab9d6dbb923524d3dea03a37e9cf5bbd",
+      "priorNonPresentationSha256": "1a4e03414fc6b2bfaf729de85c360943ab9d6dbb923524d3dea03a37e9cf5bbd",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-TIMELINE-BUILDER.ps1",
+      "file": "BEC-GET-TIMELINE-BUILDER.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-TIMELINE-BUILDER.ps1",
+      "path": "published-source/incident-response/BEC-GET-TIMELINE-BUILDER.ps1",
+      "oldName": "Incident Response: Build Incident Timeline",
+      "name": "BEC: Build Incident Timeline",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "c6d54b07c96317ec1ad7789a63edf5752a243a676867842e3f9bd2964d1a6bca",
+      "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+      "replacements": [
+        {
+          "old": "Incident Response: Build Incident Timeline",
+          "new": "BEC: Build Incident Timeline"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "0e1ca524b82eb10a4f98d1c29d02789ffdcbb2a2a7dfa02f8621996072df6ec7",
+      "priorNonPresentationSha256": "0e1ca524b82eb10a4f98d1c29d02789ffdcbb2a2a7dfa02f8621996072df6ec7",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-TOKEN-DECODE.ps1",
+      "file": "BEC-GET-TOKEN-DECODE.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-TOKEN-DECODE.ps1",
+      "path": "published-source/incident-response/BEC-GET-TOKEN-DECODE.ps1",
+      "oldName": "Incident Response: Decode Token",
+      "name": "BEC: Decode Token",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "98bdb58ed996d2acd2004ec7b86d690140bbc3fd3b673607633986a1a9a493e2",
+      "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+      "replacements": [
+        {
+          "old": "Incident Response: Decode Token",
+          "new": "BEC: Decode Token"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "4b2d7c64682e20bc2e8e5356b133feec68b5a4a883f9a185b9c60a6f82b85042",
+      "priorNonPresentationSha256": "4b2d7c64682e20bc2e8e5356b133feec68b5a4a883f9a185b9c60a6f82b85042",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "file": "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
+      "oldPath": "published-source/incident-response/IR-GET-TOKEN-REPLAY-CHECK.ps1",
+      "path": "published-source/incident-response/BEC-GET-TOKEN-REPLAY-CHECK.ps1",
+      "oldName": "Incident Response: Review Token Replay",
+      "name": "BEC: Review Token Replay",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "7e543f76d880e61dcf3db0521c293b810700afe4bb69eb4e48fa261f2026a416",
+      "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+      "replacements": [
+        {
+          "old": "IR-GET-TOKEN-REPLAY-CHECK",
+          "new": "BEC-GET-TOKEN-REPLAY-CHECK"
+        },
+        {
+          "old": "Incident Response: Review Token Replay",
+          "new": "BEC: Review Token Replay"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "4130bd18305d7201c275ca262d3eebf1e22f64b6c212787f467a132e42362604",
+      "priorNonPresentationSha256": "27f8c85439d6086be5ea6d75e611957965b1661dfd13b7512cb76b6fa7dae58c",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "file": "BEC-INVOKE-EMAIL-RECOVERY.ps1",
+      "oldPath": "published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1",
+      "path": "published-source/incident-response/BEC-INVOKE-EMAIL-RECOVERY.ps1",
+      "oldName": "Incident Response: Restore Email",
+      "name": "BEC: Restore Email",
+      "oldVersion": "1.0.3",
+      "version": "1.0.4",
+      "priorSourceSha256": "e2dee944e3be3a8f07ede7b6873ee898125853360f9c327da92f089e38a939c4",
+      "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+      "replacements": [
+        {
+          "old": "Incident Response: Restore Email",
+          "new": "BEC: Restore Email"
+        },
+        {
+          "old": ".VERSION 1.0.3",
+          "new": ".VERSION 1.0.4"
+        }
+      ],
+      "nonPresentationSha256": "403d56d4b0a0c8653d1af6c4134aa1089660b9c796f15541beb46ae5129d8269",
+      "priorNonPresentationSha256": "403d56d4b0a0c8653d1af6c4134aa1089660b9c796f15541beb46ae5129d8269",
+      "utf8Bom": false
+    },
+    {
+      "oldFile": "ir-contain-eradicate.ps1",
+      "file": "BEC-CONTAIN-ERADICATE.ps1",
+      "oldPath": "published-source/incident-response/ir-contain-eradicate.ps1",
+      "path": "published-source/incident-response/BEC-CONTAIN-ERADICATE.ps1",
+      "oldName": "BEC: Contain and Clean Up",
+      "name": "BEC: Contain and Clean Up",
+      "oldVersion": "1.0.2",
+      "version": "1.0.3",
+      "priorSourceSha256": "be8b1fd589c6225bd44ad6317e173c06a3d54ba2720223d397ea24d5bb4043da",
+      "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+      "replacements": [
+        {
+          "old": "ir-contain-eradicate",
+          "new": "BEC-CONTAIN-ERADICATE"
+        },
+        {
+          "old": "ir-recover-validate",
+          "new": "BEC-RECOVER-VALIDATE"
+        },
+        {
+          "old": "ir-risk-assessment",
+          "new": "BEC-RISK-ASSESSMENT"
+        },
+        {
+          "old": ".VERSION 1.0.2",
+          "new": ".VERSION 1.0.3"
+        }
+      ],
+      "nonPresentationSha256": "eb522ff1bde245fc1b18884bb21039f5e2267930d9e31d35c9f504590a94c64b",
+      "priorNonPresentationSha256": "a51b84573ab23050cf3e5352680c36b069ae0529eb75f81e215f914809823198",
+      "utf8Bom": true
+    },
+    {
+      "oldFile": "ir-recover-validate.ps1",
+      "file": "BEC-RECOVER-VALIDATE.ps1",
+      "oldPath": "published-source/incident-response/ir-recover-validate.ps1",
+      "path": "published-source/incident-response/BEC-RECOVER-VALIDATE.ps1",
+      "oldName": "BEC: Restore and Validate",
+      "name": "BEC: Restore and Validate",
+      "oldVersion": "1.0.2",
+      "version": "1.0.3",
+      "priorSourceSha256": "b803ac263f92bb2133711ca7a3b7237bb8ac187930365f71392624a8ab995de5",
+      "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+      "replacements": [
+        {
+          "old": "ir-contain-eradicate",
+          "new": "BEC-CONTAIN-ERADICATE"
+        },
+        {
+          "old": "ir-recover-validate",
+          "new": "BEC-RECOVER-VALIDATE"
+        },
+        {
+          "old": "ir-risk-assessment",
+          "new": "BEC-RISK-ASSESSMENT"
+        },
+        {
+          "old": ".VERSION 1.0.2",
+          "new": ".VERSION 1.0.3"
+        }
+      ],
+      "nonPresentationSha256": "c78fa6007c42f723a7a6be832dadb46253a4f693e4576d970725e66be9741995",
+      "priorNonPresentationSha256": "141be9986ae42e052f08c0768c107a6f6542c8085836cd01e530847dbe386a6f",
+      "utf8Bom": true
+    },
+    {
+      "oldFile": "ir-risk-assessment.ps1",
+      "file": "BEC-RISK-ASSESSMENT.ps1",
+      "oldPath": "published-source/incident-response/ir-risk-assessment.ps1",
+      "path": "published-source/incident-response/BEC-RISK-ASSESSMENT.ps1",
+      "oldName": "BEC: Assess User Risk",
+      "name": "BEC: Assess User Risk",
+      "oldVersion": "1.0.2",
+      "version": "1.0.3",
+      "priorSourceSha256": "8e89a03bcf61addd53da9b3e43b4517e89a609db434151832ac7625cb7c4c791",
+      "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+      "replacements": [
+        {
+          "old": "ir-contain-eradicate",
+          "new": "BEC-CONTAIN-ERADICATE"
+        },
+        {
+          "old": "ir-recover-validate",
+          "new": "BEC-RECOVER-VALIDATE"
+        },
+        {
+          "old": "ir-risk-assessment",
+          "new": "BEC-RISK-ASSESSMENT"
+        },
+        {
+          "old": ".VERSION 1.0.2",
+          "new": ".VERSION 1.0.3"
+        }
+      ],
+      "nonPresentationSha256": "ff31eb0a23789f8c987a4518eed398728639f25d7201bcd4db925a2b80e4b227",
+      "priorNonPresentationSha256": "75bf88444949d04fb4b4e8b32d661ea082e8eb084bc24fa8740249ea332c2a80",
+      "utf8Bom": true
+    }
+  ]
+}

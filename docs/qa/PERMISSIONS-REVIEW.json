@@ -1,0 +1,2550 @@
+{
+  "scope": "Whole-catalog permissions/preparation screen; no new live tenant acceptance. Three BEC shared-session exceptions retained explicitly.",
+  "reviewedOn": "2026-10-22",
+  "entries": [
+    {
+      "id": "command:AD Group Members",
+      "sourceSha256": "df834f9173b6d60c54d109c765e80007706f0b6a6d33ba72ae69a34541626b49",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:AD Group Memberships",
+      "sourceSha256": "f259211fd6c666b5a33a07f45a1b4fea51badb3686ae0e01ad76b8d5340da870",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add Calendar Permission",
+      "sourceSha256": "faf4c11a82aa87aeee141ab75ab2e7b8684562e9934c4be2937e71b99773a8f7",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add Contacts Permission",
+      "sourceSha256": "7fc3cb0d48e3e5678b9eac33f82776691c6fd3801b4be90414ab289858cea8b4",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add Distribution Group Member",
+      "sourceSha256": "032ef262c078ead7d8c2ef418f22523279fcb1916fbe53d0dd24668aa309faa3",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add User to AD Group",
+      "sourceSha256": "495ceaf610b1558c698ad966b03d92db624a90f5061214cb8d9ea2ff2525c109",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add User To Administrators",
+      "sourceSha256": "08373d2225b44365bd28805455a3028048ca5f0f2cc147a44069f6c37d75294e",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Add User to Entra Group",
+      "sourceSha256": "5858671ddc18ad56bd069021680dd6a580fd059bb9de8335ebebc8b1684f8d08",
+      "permissionMetadataSha256": "683eec41d78a66058d3915e6f843a8e7b295599586f60f6f74a436358d3db0e3",
+      "requestedScopes": [
+        "User.ReadBasic.All",
+        "GroupMember.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:ARP Cache",
+      "sourceSha256": "be7661c5c1522142e4425aaec0fced2d6832ec33edfa602b6022cdabb34ebb33",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Audit Inbox Rule Changes",
+      "sourceSha256": "52f50934bd09c7702f2af4c85b7f8c39d70e51cd9dd834525ea6fa0bc80c7e41",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Calculate Sha256 Hash",
+      "sourceSha256": "7804fd49a28e62cbbd01ff2eb2c56057d060c9e750e753bac8af2d6c783e20e5",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Check Common Pending Reboot Flags",
+      "sourceSha256": "5a7b3db2e2931a62089392e2be71348e93fad3eb7c392e9dc10c21637aba4eff",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Chkdsk Online Scan",
+      "sourceSha256": "f1c434a53a61416ddba25e912d3ee02224fc96e99c209d17cbb510ac84f8db5f",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Clear Delivery Optimization Cache",
+      "sourceSha256": "3b676f149232c918b1c76bf6b212ef1070ceb49fbb2a1911e5fd1b8425752e32",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Connect Exchange Online",
+      "sourceSha256": "67325c2ff7a6a2022eef69c3e0868668696c332fca4c58ead8c7d0a6e8c2165a",
+      "permissionMetadataSha256": "8d23099da9ab474a21488df5e0ce4be8c629b5b71b3af95138b34dc83ca24b8f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Connect Microsoft Graph",
+      "sourceSha256": "91829e8f6f910408ff89489d2e5c982a5092010492b72c7dbdd33cc6674baffc",
+      "permissionMetadataSha256": "59bee36d0cb67c7f1c186044439accfba569f38c3b27cc637df5186cb2f7d9d8",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Continuous Ping",
+      "sourceSha256": "67fbd345d5ac74252094c10caca547ef2a81f14e14ca1a7751c36238612d34bb",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Create Local User",
+      "sourceSha256": "1e4fdd6c33d79d60b50c148fcc6a6a81767617ef21414ab5c1c8f90dde24438a",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Create Phishing Search By Subject",
+      "sourceSha256": "e880682e9470878af1218b8d5b3d7d9e343f7e7821132ddf298f0e8bfd18bb02",
+      "permissionMetadataSha256": "72538df172b12f561cbf1e3f61ffdfda4b5214eb4088593d1b4d57a605022a29",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Create Self-Signed App-Auth Certificate",
+      "sourceSha256": "f4276d005ceca5779ae0b895b7253ef2b19228aaad4b9ca0b07c028129a52b7d",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Defender Status",
+      "sourceSha256": "7b26c5548c71a5652e1fb0958216c7c3f570bfdb15f5871e405a7f3a6140793a",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Defragment Volume",
+      "sourceSha256": "e81487a9e9bfeb1a72703f9fcd1af7ce6ce1ab844859b315020b25a503547ba7",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Delete All Inbox Rules",
+      "sourceSha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Delete Cloud User",
+      "sourceSha256": "dfc249f6ef81931ea9bd42c0adaf1a8768b3bd5dcbcc1305574e819483590816",
+      "permissionMetadataSha256": "6ae2876253589513c316b96bb923710d519d3d867e3657e85eaabae76fc9be7d",
+      "requestedScopes": [
+        "User.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Delete Local User",
+      "sourceSha256": "4713a23c4451a32c112af74bb4330ec972f1288931f0c275ff34baf7325eb545",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Delete User",
+      "sourceSha256": "cf4352aace25083d96c38c7ca62b4387126ccb5f1194416801e6ef1c54bc5781",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Delete Wi-Fi Profile",
+      "sourceSha256": "0bc8e0799812b596db01c594faecfc910ea6c58ad8f4be1fe9d861f85306bb44",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable Hibernation",
+      "sourceSha256": "8691d5e4b0e2075311d7c7903833c5c58b15cbbc817c9962df4be10b2c213cfd",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable Mailbox POP / IMAP",
+      "sourceSha256": "9946a362d8d8e95d880aa22e330db5418ccf6d03b7a637413f4f5038f4b76a58",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable Mailbox SMTP AUTH",
+      "sourceSha256": "63a7e8f2361e129620ad59ffd961bf99598970435dcb888a3eca9ee114ae1767",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable Network Adapter",
+      "sourceSha256": "dd6b962da241a461fabca47ad482c6fa7ae2121e48996b763e1e13e1af6cc9d4",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable Sign-In",
+      "sourceSha256": "5cd2484343b31e27c130923792b1e3399a0ffab2de4097d459bdf09f1ec66553",
+      "permissionMetadataSha256": "6a1254a676cd5372bccb9c52658b1227614ab871ac47ddd14ee33c267552d43d",
+      "requestedScopes": [
+        "User.EnableDisableAccount.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disable User",
+      "sourceSha256": "8bb90befd7aa77b4e0b94e1e5bf957781a6fc80d915a3e53876e7f01ab6be369",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disconnect Exchange Online",
+      "sourceSha256": "0398157b4ffb953c264bb3c3ea5f39a9f4db0a9ff446345f4dce0de00255c455",
+      "permissionMetadataSha256": "639ed5f54188dbdc1779430ff486837fc557366a4916ac03519cbe52c64e72c0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Disconnect Microsoft Graph",
+      "sourceSha256": "1e87232fbd57d0e1b99fe409ea23e8de6b4752d12f21632748a77995d0d725f0",
+      "permissionMetadataSha256": "5b2a51c02f6d71646230788c25eaec2bbdef46ce6d94be619ca65145d7cfa3e6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:DISM Analyze Component Store",
+      "sourceSha256": "a4e78d4685305209e85ac8a08f768d99a979a521354d33d9bd0591ea979e4332",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:DISM Component Store Cleanup",
+      "sourceSha256": "f2123c774a8981bbc13cdce188fa059873a8bda620f03defaa134685262f7961",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Dism Component Store Scan",
+      "sourceSha256": "9592d2d53d32de23e05098353649e78343270666592e1d4bb82d65124f7ee00d",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Dism Restore Health",
+      "sourceSha256": "6823edd3f231554ee5408ba942eadc4b2ced7696a18ef90ec4e8add73ac7766a",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:DNS Lookup",
+      "sourceSha256": "a8d4495fd893e57e4cdbfe9eefff97fb774c6018c90471697dbe419ff1821a5f",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Domain Trust Check",
+      "sourceSha256": "77256bac8500da38f53f8a54c4436426066dfe628ff8a6742c476bd36639b72b",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Enable Local Account",
+      "sourceSha256": "f1acb369cdbae8ee39b7383dc83bc1d8a8b6a271083574446d7f7e970692c3af",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Enable Sign-In",
+      "sourceSha256": "26a204f1f23829002dc58f5cbdfcd061a638ebd4d9dbb23537b6f3e11d28c0c5",
+      "permissionMetadataSha256": "6a1254a676cd5372bccb9c52658b1227614ab871ac47ddd14ee33c267552d43d",
+      "requestedScopes": [
+        "User.EnableDisableAccount.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Enable User",
+      "sourceSha256": "f9abca1d33e264e86c21dc80605556869370ecff7703e211bd33a6cebde56a37",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Entra Join Status",
+      "sourceSha256": "bf8c9cea699e55691e9cd95860f76c833eafc1ab8a7cb3001a3cc260e98d3c24",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Export Pfx",
+      "sourceSha256": "652e7264a9a749753581dd431ea31cd0957dff956d8977e3e20f3135f892c76c",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Export Public Cer",
+      "sourceSha256": "c3b0b58ac20e3b14ee896468c471f9e2f67c2fe2dd73232bba9edb8eb7b06c0d",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Find By Thumbprint",
+      "sourceSha256": "ef264560c7c3aace91e482676aa46bb9fd675b53bad510968422451bb005e085",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Find Exact Group",
+      "sourceSha256": "05d8a1a034b2f486fc66d54152cfa5778434a722d9566dcef1780f2895b80325",
+      "permissionMetadataSha256": "3f47a581e71adb4631dc6b94703381396bb7d20aac7b3e3008ff6b8202961dfb",
+      "requestedScopes": [
+        "GroupMember.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Find Exchange Service Principal By Appid",
+      "sourceSha256": "2eb5726f617436a67722d028cb9805b51c6dcf1e5e2cd3a20eceef6b80fcb702",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Find Files Modified In Last 24 Hours",
+      "sourceSha256": "24b314a500eebb3269a14c36d41a1e3afa7e3e208988a079b2e04ff243ff79d8",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Find User By Exact Display Name",
+      "sourceSha256": "d7eb915328f445b6b005f1ed3c9c46510bb29f87a7b43f99f0bcb6344572df33",
+      "permissionMetadataSha256": "26f4f406660705567425276f383ba89a99c5937521849c115269e3290bf829e9",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Flush DNS",
+      "sourceSha256": "998e9c67094be03bcf1b090bc5a57af2929d659f93037377ca4006e5713f1cb3",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Flush Resolver Cache",
+      "sourceSha256": "d7b5990535b4052b68712d82054895a4ec538bb5df9428637720c2141c38caeb",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Force Group Policy Update",
+      "sourceSha256": "c5f217c8c267b763d4ad24ac63d5b153ede0e4c4f20c2a59445f3f604aa0a7b9",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Force Password Change Next Logon",
+      "sourceSha256": "186b9ca17c1b95c7920f2c60e184b03e9bcbe7fc5bbb2253780e7e37ab343903",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Get User",
+      "sourceSha256": "d92e28c8ebb577a06730dfb82d6ec48e34cdd121331b3ae2344005648427493c",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Get User By Upn",
+      "sourceSha256": "ae7ba35863e4cc7b2187d5d1dbb895e1b2d96086c7d58e65ee58592f838b4671",
+      "permissionMetadataSha256": "26f4f406660705567425276f383ba89a99c5937521849c115269e3290bf829e9",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Hard-Delete Search Results",
+      "sourceSha256": "8c311c60a257dfb9bc8a55e449583384869bcedc1ba105a0e39260e7983c2ceb",
+      "permissionMetadataSha256": "72538df172b12f561cbf1e3f61ffdfda4b5214eb4088593d1b4d57a605022a29",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Identity and Privileges",
+      "sourceSha256": "e4f2104522f16071520d60701d463279b947b777bee9290c7c3e8bc89e7691b8",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Install Exchange Online Module",
+      "sourceSha256": "57a8b4d9ae4c6a729cba5bf6899a5e8835718c9f19ba7699cab66273178bc951",
+      "permissionMetadataSha256": "4ef7e311432743987e9050b9fc8616a72a1a7d6432b8fa66c0039038a25b88d5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Install Microsoft Graph Module",
+      "sourceSha256": "9b1c29918edc4e9dc7fe84a1943fc8709078d3cb77d919302eba19f1a59c50c0",
+      "permissionMetadataSha256": "4ef7e311432743987e9050b9fc8616a72a1a7d6432b8fa66c0039038a25b88d5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:IP Configuration (ipconfig)",
+      "sourceSha256": "59cb534e02a16fd3d21d1ba5d34ee15e665d7a955751171249563d1192aa33e4",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Isolate Device - Disable Enabled Adapters",
+      "sourceSha256": "39241a4a47e0945f81ed3f309d65b9d92498192a1d442320e21ca8fba6f748f2",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Launch Disk Cleanup",
+      "sourceSha256": "fa3e114bbccb26b5421c6b5033ebf4a315d674d956326787032fc382d6854749",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Local Account Details",
+      "sourceSha256": "7eec651d65d63711e9148c5101ca49610889478b2da06d5eff98e660e8067e43",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Look Up ISP And Location",
+      "sourceSha256": "444c712585c96a045d5d5a580e2679b71aed1de13188b2ea269229e8621a1ab1",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Mail Delete And Move Audit",
+      "sourceSha256": "d62214826ee8a88fbf12131a2bcf5ee7ce590c9268cbd17f0c627944d016122e",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Mailitemsaccessed Audit",
+      "sourceSha256": "1bd4a2c7df9666fc6de8231f7841177e930404a2c9c13905e981b8805e77910b",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Mapped Drives",
+      "sourceSha256": "c38ed655c219843015b8bcb703b31fcc9b985956784dc38dfe4690ae9cf2524d",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Network Profile",
+      "sourceSha256": "a88b1af102bff4a6fce0e67d3098cd54af02d463bcc8bce1cea3e060460c630d",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Open Local Users and Groups",
+      "sourceSha256": "4ef5ce7d15a701ee3b3c135e2230078ae2b2c86a4010727bd833c7130a50db10",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Open Storage Settings",
+      "sourceSha256": "e5c5800584bebeb49f2fe43c6682cb09a2425de26b4f7e3949e078ac16cf83e5",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Open Windows Update",
+      "sourceSha256": "3a96357adc48367447097115c25077b1841781c848d38238e68786fe89133765",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Parse Mail Audit Subject, Ip, And Destination Folder",
+      "sourceSha256": "32df33bc41526b0620c6fa69a023d82117593fb024d14b9d3a6e6294fcc78165",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Path Ping",
+      "sourceSha256": "741aedea63b4fdf9ac19698a66d2a068669fabafc463160b131e3df6b4fc22aa",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Ping Host",
+      "sourceSha256": "b93a505259715201d761d244f261ddfc7ab33b7d1d9e21183deeedcc471d77f9",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Port 443 Connections",
+      "sourceSha256": "9d76cc600c0d7679a8aa599cf2dc3402a4e99b75b3a5cf37d1b3fcf00f7e48c5",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Print Jobs",
+      "sourceSha256": "391d8b17bad0198f9df88ea41b8440d0b7a349c5a6f36354bc25a9c1a3941847",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Printer Check",
+      "sourceSha256": "e63546124965a25bd5cfe8d1c79b4659550d1887985eebfb7556fafe756324ab",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Purge Cached Tickets",
+      "sourceSha256": "16da8769fb8fd9e5f31d86769c0438e092142444f530777b73b2e859c6ffda5a",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Reboot Computer",
+      "sourceSha256": "d4e00b9e67508ac85d67bfaa7f3df951dd2e4081b652f24c061be1c101d52089",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Recent Application Errors",
+      "sourceSha256": "da95f892d0eeac82d907dfc45e6a98569d99fe906e3439a8ebf92f24c0da1902",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Recent System Errors",
+      "sourceSha256": "30bb429f605a18b4d3db238c0906b94d2e048843e899d23220f5b6ddcb6a6ed0",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Recipient",
+      "sourceSha256": "7596c68373956a269b4820f65dc345b0df8c65136aed62af217cbc0848aaa759",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Release And Renew Dhcp",
+      "sourceSha256": "2a97606712d3ec1ee53d86aa40df5d6817f8c50e30122e2b72be8e437daa9bf3",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove All Inbox Rules",
+      "sourceSha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Calendar Permission",
+      "sourceSha256": "117199aedfdf8f06670a3aa2bea683bd761fb7ca49e2d20b2a419b7052f46a53",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Distribution Group Member",
+      "sourceSha256": "72c034784582754a94e3d31f17f507f97da5f54d086ee60edb58c106daeac2ca",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Mailbox Forwarding",
+      "sourceSha256": "dff908c0b833a8b6b563c9d91a06566bb544a20f4701e26db3cebe37cae3994d",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Mailbox Full Access Delegate",
+      "sourceSha256": "4e10d176c2b92b9a1c0285956887fa0212516ca7114531a0f219c1adecc6b80f",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Mailbox Send As Delegate",
+      "sourceSha256": "7bada8681b133f76334dbc7a1c146c29939f36b6d96c203036a490c6fa3a63ec",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Mailbox Send on Behalf Delegate",
+      "sourceSha256": "e9224a4ed83e7b13378701fb5dfce0a2e30ca62528d76b0f192ce09ad6a73775",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Specific Authenticator Method",
+      "sourceSha256": "af395817183e8bf07d613ed9ea0ec7b0e2170f6bad4f437481b09825d0f6a510",
+      "permissionMetadataSha256": "fdf35920cd45b9de20f781e6bcacc2d04b8f2cb3bcd8cc0e1779959f1870774d",
+      "requestedScopes": [
+        "UserAuthenticationMethod.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Specific Delegated Grant",
+      "sourceSha256": "8707506fdf90e5793f42ec01d9bbcc5904fa2c2643148686990c36ab500c1882",
+      "permissionMetadataSha256": "47bebfab7a9cbe239d53e67c310ef3146b530a30e0cbccd32526c145985a5d5a",
+      "requestedScopes": [
+        "DelegatedPermissionGrant.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Specific Inbox Rule",
+      "sourceSha256": "06dc94a22ef0321761292bc718fffc646d939052ec9b993bcef1f78e423ad6a5",
+      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove Specific Phone Method",
+      "sourceSha256": "7f830e6ae058a00a36a3591e8b8ccfc489be6816a9eafe291f7ddafb7ee7f9ed",
+      "permissionMetadataSha256": "fdf35920cd45b9de20f781e6bcacc2d04b8f2cb3bcd8cc0e1779959f1870774d",
+      "requestedScopes": [
+        "UserAuthenticationMethod.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove User from AD Group",
+      "sourceSha256": "a82e5d85a964d439d0909177e85c33eeeaf545625eac027f5279fde62c1bbce5",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove User From Administrators",
+      "sourceSha256": "50fa5d1b00857ad3d0fffcef66c12088ca14bf89632b2b7e74bb5225a16247ed",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Remove User from Entra Group",
+      "sourceSha256": "1642999247ce9991796dcdcd06df60365525bd0878d29b52891872d6ec7e78b7",
+      "permissionMetadataSha256": "683eec41d78a66058d3915e6f843a8e7b295599586f60f6f74a436358d3db0e3",
+      "requestedScopes": [
+        "User.ReadBasic.All",
+        "GroupMember.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Reset Password",
+      "sourceSha256": "582fdcd3cb2033836abd7a6b10b7087e0afc7256a9d00e25b4c7ce22e1786dcd",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Reset Tcp/Ip Stack",
+      "sourceSha256": "020d638faae553d23a5a91a3b3e137707d4056d72f6fde10b30d7f8c071461e7",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Reset Winsock",
+      "sourceSha256": "2886077904f570096373650b68e2ddb4e4241b3846c99043adb40ba241719d3e",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Resolve Name",
+      "sourceSha256": "ced189a74d59074330b5690698b266d2b6ba732ca4c1854df0a0094dbb2d67de",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Restart Adapter",
+      "sourceSha256": "2a8205d033243119a24a568cdbcef2743dca5834da584c5a72c2bd237ff6cc74",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Restart Network Adapter",
+      "sourceSha256": "5a8faab96ad785027569c0226bb3ec6aa261ee4c8a6f44b1b020e37b587a4e8e",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Restart Service",
+      "sourceSha256": "e5e6290e8b3bbb943546e719e9389fbad1fc56fd74aae945718a1c0ff7354a91",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Resume Protection",
+      "sourceSha256": "f2bf571c266be54346ff73833fd6bbc9cfb9138d29948b676059f59b9de7bb7d",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Resync Windows Time",
+      "sourceSha256": "ee008245b50e459c01c3932c104b83cec769d7de87b49f299291049617a973b8",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Revoke Active Sessions",
+      "sourceSha256": "926811f46a02c18cc78da669828dde73982cd00e7edcb5b3be3cec2497cf2202",
+      "permissionMetadataSha256": "ed14c8516e71e823bf1c68dad266a0170070e8a60cff13b88a365fa272112f8a",
+      "requestedScopes": [
+        "User.RevokeSessions.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Routing Table (route print)",
+      "sourceSha256": "26c042be25515e3a897319631fe25f0644fca2d1f7bfa8d636b1408af71aab0a",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Run Quick Scan",
+      "sourceSha256": "4ae6896ddda736ff45898a23550a54e4eb7f4127ef68398fe7016ff8ccdc1ada",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Search Query Audit",
+      "sourceSha256": "0ca2d596a96c79f510766aa0715f770df0c027cdb15b18b0031053467ea3a86e",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Sender",
+      "sourceSha256": "4928657380c497a54a3d4790fc35d972a4d4c0b7e7e4f1d559262fa243614989",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Set Current User Execution Policy - RemoteSigned",
+      "sourceSha256": "d3791228baf56b3f90d5514d85f61c5899ef1c5c1f250d48a43338ee273d014b",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Set Local User Password",
+      "sourceSha256": "c36ca210bd1c2052a9c5aaffc4a4cd39d012c5bbbf886e1406fefddcaa5f2862",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Set Startup Type",
+      "sourceSha256": "9325287af960fc7e3100d90f3c2a1db0a01e357c1dd8ab1d5f11cd23e922516e",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Account Enabled",
+      "sourceSha256": "1f8fcb91d316a09e428fc08876187d1e852f688ca35fad76b5ad6b0c62051dc4",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Active Adapters",
+      "sourceSha256": "c877d0b1314ace82d18c642dc59cbacd22194bdc209040f2087eea4121eb82c5",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Activity From One IP",
+      "sourceSha256": "da8381a1b3ed3d07432edcc5fc5c2308af0e021e7f5f81f155c14e4c24013955",
+      "permissionMetadataSha256": "946454149a108f4c22fc76398587382c14658579341ca814a5221a2ed793864e",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show AD Group Members",
+      "sourceSha256": "35e05f236fd885d0fae5af7c9fe2b87345a553f40075067c969f9a3477a3346c",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show AD User Group Memberships",
+      "sourceSha256": "cc8c10139f884044a6ae24e21162a70342792bc5680c516cb5d41cbd7543869e",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show All Authentication Methods For One User",
+      "sourceSha256": "023679d35e684c6833a711cc28ca3c00acd6e2ac6db2ad6648dcac126233b2bc",
+      "permissionMetadataSha256": "ada8367e5fa03e5406f33a5735623105b9a19f5df00dad43b96dfdee92a629e6",
+      "requestedScopes": [
+        "UserAuthenticationMethod.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Arp Neighbor Cache",
+      "sourceSha256": "210ea342c67a2254dd49dc9a505b1ea8356aee73efa4bf3d881208b423495e6a",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Assigned Licenses",
+      "sourceSha256": "fca787b5d27dd580ff777ae78f01b89f2d7a6978bd9528ed0d69e62cb087994a",
+      "permissionMetadataSha256": "511923dff5d19de8a2d9157b0b52ed693ff4504542bbc2753e98a957247e2b95",
+      "requestedScopes": [
+        "LicenseAssignment.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Available WinGet Updates",
+      "sourceSha256": "f05314e778cf75960668942d8bfd85a223d0a70057151e99008a1513661b02d1",
+      "permissionMetadataSha256": "18a3026e229c9b84f16df0ddff75d52970754f871f4a8e6d637f947b503443c5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show BitLocker Recovery Protectors",
+      "sourceSha256": "76146e94947a13626b969afcb02eb570eedc3657ebb54bce8e2b0ab0e018b089",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show BitLocker Status",
+      "sourceSha256": "d8b503a9d3d2fc26bf24f367d3c35854d90e6ef06877439c8a698c121cfd20f1",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Cached Tickets",
+      "sourceSha256": "39ca55fa96b18633fa27a871ec7f90c5bcf152b10f2f99b5f4bae1b543b4beff",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Calendar Permissions",
+      "sourceSha256": "68958a0a5107bcab51070f9945a0ce8833d2567f5ccc3ff6102614399c64b27e",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Code-Signing Certificates",
+      "sourceSha256": "8c7b78e8d329e1c38267e1223057d402e64df1d9195f8bbc753a8a29a4c35332",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Compliance Search Status",
+      "sourceSha256": "dde836c6cd468b31aa4d8c3a010c601cd7b2fb28db1f8b15f812c76d8023aca1",
+      "permissionMetadataSha256": "72538df172b12f561cbf1e3f61ffdfda4b5214eb4088593d1b4d57a605022a29",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Computer Model And Serial Number",
+      "sourceSha256": "0c81556c95a9715eca2010040d478cbd3586327c8d7189b4bd1123523559b461",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Configured Dns Servers",
+      "sourceSha256": "ed4d50c47522a795b935432c889c08b7c95c8a1c1a582975aa835e7e59902a68",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Configured Windows Vpn Connections",
+      "sourceSha256": "4f4d56776cb7cd9ac352ca178a72824bf3d3b355e56d3bef19a80762b771c807",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Contacts Permissions",
+      "sourceSha256": "a26043e3122e43d0048e2f26eb50cdd4663b989a94625de6f07b4e1c4d1eb26d",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Default Domain Password Policy",
+      "sourceSha256": "b0945f677e1276e3dde8ba1976df75a6f989953329c2d005195a3cceaebfb364",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Delegated Grants For One User",
+      "sourceSha256": "446fb9bb2cb26d51109bd4f834baed9c4abf7e099e758ab3ecb04a9ca82a82b5",
+      "permissionMetadataSha256": "4bde07d9ab4ff5cb0908cee82693daee76ecbb5e20704edc836b70fdbc5cc0c0",
+      "requestedScopes": [
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Distinguished Name",
+      "sourceSha256": "a69faba2ea674dd795ea1409b7001ee3d72e852d839f98e898634586793f68f2",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Distribution Group Members",
+      "sourceSha256": "a1b45f4fc4bc2a9f5aa1bd3bc166afa1cfa4ca214abd204a1aa77e4700a9a9ad",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Distribution Group Owners",
+      "sourceSha256": "ff8b8c3d1fc3e340824f95186246e256fa22dff51518a9fe6a539045071252be",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Domain Account Details",
+      "sourceSha256": "888eca09ede07967a748f20c7e7d8f6f7c5faf876693a29d4892a73b4ef54a73",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Entra Group Direct Members",
+      "sourceSha256": "193671d24463c809d31071a747c035ce17ee197070df729a5cb442c4ef481370",
+      "permissionMetadataSha256": "4cc9cbb2d50981f868f688c484bc2c03df235bdc36ab058df0276e7f5fd44be2",
+      "requestedScopes": [
+        "GroupMember.Read.All",
+        "User.ReadBasic.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Entra Group Owners",
+      "sourceSha256": "0385e5b4d48ef708dddf42ad0d27008245d228b4fae9396bef029cbb4ed3d18c",
+      "permissionMetadataSha256": "7aef9a11e3df841b987fc5fe7d4866ef15c7c8a1ab75467b41b51801ee1ba512",
+      "requestedScopes": [
+        "GroupMember.Read.All",
+        "User.ReadBasic.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Entra Sign-ins - Last 48 Hours",
+      "sourceSha256": "453722184d7f6be24540e916507117404cd04d3d247c01196fcb02e82e0e417a",
+      "permissionMetadataSha256": "39b4cb9297137eb7e5fba02e1bf1e48b0b5b36c28a09b3c1a2417fadd5f0d366",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Entra User Group Memberships",
+      "sourceSha256": "c1cc2602f37ffecd3ac8ea4eff85397962c1efbfd66a86092c8b6e523b71b491",
+      "permissionMetadataSha256": "4c4d4772f9fe81ab9163b381699951326f3e430d56d75521cfd7c276c1c3d851",
+      "requestedScopes": [
+        "User.Read.All",
+        "GroupMember.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Established Tcp Connections",
+      "sourceSha256": "7bfa7f9ed7c252aae44d633a6149646be38127839aa0adb7c4e039f5c98a9b73",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Exchange Connection",
+      "sourceSha256": "5ca1904591160df64c92de558e9a4d63ffc564253d2630280497cf20604fca37",
+      "permissionMetadataSha256": "8d23099da9ab474a21488df5e0ce4be8c629b5b71b3af95138b34dc83ca24b8f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Execution Policies",
+      "sourceSha256": "02dce87650beca1327cdd0ee18ed7dcf694b83f2e1a9448bccfa9ba19b4cfe6d",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Expiring Certificates",
+      "sourceSha256": "9bdbd061bf5afa23f6f48854a5166c617c88bf749d99c35f286fc03adda6eb87",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Failed Sign-Ins",
+      "sourceSha256": "e548dc75c7107839a0ad86571c83f2673a6c27668d64da11fb0e58c170ab2fb3",
+      "permissionMetadataSha256": "946454149a108f4c22fc76398587382c14658579341ca814a5221a2ed793864e",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Free Space",
+      "sourceSha256": "543e86aecb5a9cab799f880f0b1fc3cabe0fbfabcd0536281c8478ff297ef692",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Graph Context",
+      "sourceSha256": "f40eb7388625aa98b48a77077b2e9b3ae856f02786e5b8ddec228a64de3e8d2d",
+      "permissionMetadataSha256": "5b2a51c02f6d71646230788c25eaec2bbdef46ce6d94be619ca65145d7cfa3e6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Group Policy Result",
+      "sourceSha256": "d7b92382af5b1819f0e711d053867bd700114b80e4d1a6f6690c33476cc348ed",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Hidden Inbox Rules",
+      "sourceSha256": "d3c0d6ab1b91610d73ff9a2784f6a4f40c087142a3a18452fef68bc71afdb6ff",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Hostname And Current User",
+      "sourceSha256": "0faffa63ac37de564e36fec57dc515fad7a8158584ab25ce39269b52d6623135",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Inbox Rules - Including Hidden",
+      "sourceSha256": "5c57a3ec84f346124d78839b4f4260e88a3c396422a038b7ef56f1147ddb792d",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Installed ExchangeOnlineManagement Version",
+      "sourceSha256": "086842a280494a3e905c2fdefe64b9ce9da5f1e90ae8334b928779c9e9f365e6",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Installed Hotfixes",
+      "sourceSha256": "65ce9b577010d15172adf58c8281a6af3cf79debfa0635460b18e8a5d0598eb7",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Installed Microsoft Graph Module Version",
+      "sourceSha256": "7884242b6d5a2140d7fd2747894627bfdfe8d57fe0ce4dec4b497b36dcebd5ea",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Ip Configuration",
+      "sourceSha256": "6c2a401ba42d3418705ea56546337ce893136babe6e96bf113f2e4b3dfcb1c68",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Last 10 Entra Sign-Ins",
+      "sourceSha256": "6832e5a77aa3409dcf71be70316eec7753c85dbc72ff796123fa33045bfd0dbb",
+      "permissionMetadataSha256": "946454149a108f4c22fc76398587382c14658579341ca814a5221a2ed793864e",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Last Boot And Uptime",
+      "sourceSha256": "60669c3cfdf25e27685d41c6583ad8a547dc3422f2f32534b5093317943de776",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Legacy / Other-client Sign-ins",
+      "sourceSha256": "8e4600e2644c10e9cdb4d4ef0b5de9afb45f0c800281372d5432b5cbebdac302",
+      "permissionMetadataSha256": "39b4cb9297137eb7e5fba02e1bf1e48b0b5b36c28a09b3c1a2417fadd5f0d366",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Listening Tcp Ports",
+      "sourceSha256": "02d89e5fbd851c222f2af68392200a6083bc00bc90f96206938c93472f3bf6e3",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Local Administrators",
+      "sourceSha256": "1deafddcb8d1e65d3067f6b08f1bad7afacae801293b4c4b0af16885d851a4d7",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Local Users",
+      "sourceSha256": "757900294611858240dc152a56981954bf720af2a64ee13a39adf1d7245df975",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Locally Logged-On Users",
+      "sourceSha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Logged-On Users",
+      "sourceSha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Forwarding",
+      "sourceSha256": "b6509ddf091b4a5d0a1fdbb769652ae6c2367c47dd160f2561951de530eab5fc",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Full Access Delegates",
+      "sourceSha256": "d2c0d7335a6a3ee689eea5cc0b4bb7331fa81834169979edcf43a5607527d62a",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Protocol State",
+      "sourceSha256": "781458eefd7111b1e15abd3a99e167aad8530788cbf224f65cad71b7bc30a402",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Send As Delegates",
+      "sourceSha256": "308f2e60836fd32da13ae400e0b1d0e1c672b280958e4835a50592b399980e2e",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Send on Behalf Delegates",
+      "sourceSha256": "a78f4516379efb1cd462d375e6e8b1f4ba1ff83ed580de59f2586fe59695203f",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Mailbox Summary",
+      "sourceSha256": "140cd192ffcdbdecbdadb67f86a6a5d2bb00d3963dbca5cf64f23140731d5d39",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Manager",
+      "sourceSha256": "b92ba994297560c10bfa8e944dd2d9af1582ca880871b2d4e4ccc6f385ec4f6f",
+      "permissionMetadataSha256": "747c65b6494aea44761d52b0acecf493d29079942d61635c30f9a9e13760fd6f",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Message Trace Events",
+      "sourceSha256": "8c97b679b647ebd8f4aab4eb2bbbf8ff091986f21518a374bdf4aab3d7e4b3d0",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Message Trace Search Jobs",
+      "sourceSha256": "e31ad630c331684633120f8ee064fe30ac35887d1ebdd236a58346585c1732fe",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Microsoft Authenticator Methods",
+      "sourceSha256": "fd04e9bca33a06b81eb86cb14db4182b4207cfafada920f0e7950d55605d5a7c",
+      "permissionMetadataSha256": "6cc74d4bde08ae6a8f4f4308c1e390218788aa39937f22c6c0a673a6ccb51091",
+      "requestedScopes": [
+        "UserAuthMethod-MicrosoftAuthApp.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Os And Build",
+      "sourceSha256": "d35222e1d8cab64b916689ab4ec10cd41f3752cb5f8809012a812d8e17386da4",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Password Expiry",
+      "sourceSha256": "a242493bd0ecd4b76d599ba96f7dc6f56e1a60b971601fcbe6b2e66d069d3c77",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Password Last Changed And Age",
+      "sourceSha256": "d72e06c164e845eab77a336d82fec883a242381e93901fb0d8bcf030eee3fc2f",
+      "permissionMetadataSha256": "220ba058acc02e866a477fa14a56e8eee4f099d292a9df9e88db0e0e1534d0b7",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Password Last Set",
+      "sourceSha256": "7a1da3e352222f9657dc31028a941dcf08dce04bfdf3f13d0f67ddba1da90cfd",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Phone Methods",
+      "sourceSha256": "4229ef5f0ed7c9f169f73b2985472493e8c81d497dfbfdacf49e04f7a5464f7f",
+      "permissionMetadataSha256": "d585157d63a50456e11940e8e68a1e0b8cc8241b545a2462ef585d9e95b3cb1e",
+      "requestedScopes": [
+        "UserAuthMethod-Phone.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Physical Disk Health",
+      "sourceSha256": "b2875ffc8fce7866adf4dfd3f2ea9a54cb8cb446324596684cd0dd45eac1c5eb",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Potentially High-Impact Delegated Scopes",
+      "sourceSha256": "7f317e0877e5f59ac27112215972abb6ae9734af4eb1bdaab3742c30a5105f31",
+      "permissionMetadataSha256": "4bde07d9ab4ff5cb0908cee82693daee76ecbb5e20704edc836b70fdbc5cc0c0",
+      "requestedScopes": [
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show PowerShell Version",
+      "sourceSha256": "08baf561a7cbdbe6647a651824c113900167870d74f4b9a45720ba67a861f257",
+      "permissionMetadataSha256": "f0b3c318473bb5cf507d2ee6744e6f80539e17d6ad241792d78b25b69cfa98d6",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Problem Devices",
+      "sourceSha256": "77de46298fbb32adb81f7738e7c316d1971d52681058fc64a4e0fb6e89506413",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Recent Windows Update History",
+      "sourceSha256": "02b1126bfc427bbb07accaa2903075261bda6b23d562fb93b4d5d7f05c4304b2",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Registration Status For One User",
+      "sourceSha256": "f8776ea69a613348362f13b876cbf2d9cfed488b80d48c886129e73d524eb330",
+      "permissionMetadataSha256": "80fd726da4e8ae1d712de59afbe16c352bf2a2bae5ce4e72e2f2dabf3b2e8b15",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Risk Detections For One User",
+      "sourceSha256": "f8ea1f1d762855951ff916b5817870a85169f796b3136a25ed3e03c0f504f0a9",
+      "permissionMetadataSha256": "faa6256252fae22412ebf7d0a99681e2d11817c27e7d25aa0450c66114ff4a4c",
+      "requestedScopes": [
+        "User.ReadBasic.All",
+        "IdentityRiskEvent.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Risky User State",
+      "sourceSha256": "11dfc8f08686295cb813c3b907b4f93f812c405546acfa75938fe99c825e5178",
+      "permissionMetadataSha256": "e19956d0ffe1c9a5958e82e756c296755ccff99196b02c0b90fd095457410e7a",
+      "requestedScopes": [
+        "IdentityRiskyUser.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Routing Table",
+      "sourceSha256": "cfdd30183ec340fefd5c49acc5ecfa0a9cec2fb6d58ceaf82ad3e2d7fabd1662",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Saved Wi-Fi Profiles",
+      "sourceSha256": "fceb64cc0bef7c987aecc68f6104ca5e30f8279f6c25aa86b86e2443c4548ade",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Scheduled Task",
+      "sourceSha256": "65aba81a88aa074913580c7523026032de741cf242e4fff53b8b0f5f1ceea43c",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Scheduled Task Last Run Result",
+      "sourceSha256": "a4358529f02574a98de34239a2678ef3cac64a82b722298125d7cccee0734a48",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Send-To Restrictions / authOrig",
+      "sourceSha256": "1f1d4091cf0431ab699851173bd144292616bd33122f93bca9a0436ba3475c6a",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Service Status",
+      "sourceSha256": "3e821924ed45a1bfddb430210a7c8adb689545b36ff16339f2322a282d4de0de",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show SMB Sessions",
+      "sourceSha256": "d4b9058840fdcf44600baf49e45944ea6e633cbd31ab68fa124102971c3b79d2",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show SMB Shares",
+      "sourceSha256": "931a487e2e6578b869c0d11dbd78fc10dc1d7846ac1fe23c5c9377be77acb996",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Specific Transport Rule",
+      "sourceSha256": "676c09821b592777a8dcaf317d58cf0a7972d440a6cd6a7e5f217ad8a03fea4e",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Successful Sign-Ins",
+      "sourceSha256": "eb5018f3abe5198c06ff7c94bcbb28a06230dde601b6f04b45e3a219b1343def",
+      "permissionMetadataSha256": "39b4cb9297137eb7e5fba02e1bf1e48b0b5b36c28a09b3c1a2417fadd5f0d366",
+      "requestedScopes": [
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Suspicious Inbox Rules",
+      "sourceSha256": "4740c57aa13fd0c8d946554d474b7c6c30d073f1a821127d737b788da5ce17b9",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Sync Source",
+      "sourceSha256": "23a02ef2b1fabb1de31b53e5143aac4eb0616a3dc00c6d7a52e7873bc65f9ff9",
+      "permissionMetadataSha256": "220ba058acc02e866a477fa14a56e8eee4f099d292a9df9e88db0e0e1534d0b7",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Top Cpu Consumers",
+      "sourceSha256": "070d3f1f50d08eb21aef6427ef8fe55154ef5610552deddbe84de3ca5766dbe6",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Top Memory Consumers",
+      "sourceSha256": "453bc12da7f30548663b55af0503fc58101bda0927ce84f648654699f6ac7cd0",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Transport Rules",
+      "sourceSha256": "99d1aef0cba4e8f31819d7abd3c6877ce724bdef5afa4c686ba2faa087b1de93",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show User Principal Name",
+      "sourceSha256": "68852da617f70b23af8dc57e8d736af4344da2813f2c30f8840f2d972ed38784",
+      "permissionMetadataSha256": "f721f29f51bbcad7a8ed3e052f7994ddf7890cbfbf0b823bce9ce7a8e6ac1340",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Whether Remote Desktop Is Enabled",
+      "sourceSha256": "9353fe1c7df3f2dd0d1478c170d9baedf2c3ccb80cc21fb70e6032039dc04208",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Wi-Fi Connection",
+      "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Wi-Fi Interface",
+      "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Windows Firewall Profiles",
+      "sourceSha256": "2623d2b2a4ce7edfc2220f368d958dfd2fe64a578d00882fbef7d010c73b6ac4",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show Windows Firewall Rules by Name",
+      "sourceSha256": "b6af3d57bba3c1e24dad7745ec1bf4fdf1da7fa2c868d5a3f5583afa39931c74",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Show WinGet Package Information",
+      "sourceSha256": "3b31b13d60506459330cdfc707f30294db35824dfa8fae545271c48b9bc8d0ab",
+      "permissionMetadataSha256": "18a3026e229c9b84f16df0ddff75d52970754f871f4a8e6d637f947b503443c5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Sign Script",
+      "sourceSha256": "e3d857742ab516d9a7ae0a6bf5935f503cd6bc4ec8f55362905180a009b2b9fe",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Spooler Status",
+      "sourceSha256": "a10f6676675754aef1c797440921e2a825a4633b5c666c5b1fbb0fb528855989",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Start Compliance Search",
+      "sourceSha256": "60f380faf59616a70e1c97f83464dd6768ed80f86b61b41cb93f8e1592929904",
+      "permissionMetadataSha256": "72538df172b12f561cbf1e3f61ffdfda4b5214eb4088593d1b4d57a605022a29",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Stop Process By Name",
+      "sourceSha256": "a480940f1c210b8eeed22e4cb75cb7a5bd31e6bc6c182e414b3d6f49095e5ba7",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Suspend For One Reboot",
+      "sourceSha256": "de7c00c5acdba7a09c4ccb0873d980a33b3863d3b17198a37ad4d2b2a23a02fd",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:System File Checker",
+      "sourceSha256": "6de4670620be3bb5599d162664d524757e3e6d69354ec8feff2e43481558f3ef",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:TCP Connections (netstat)",
+      "sourceSha256": "300915695831de23126d59367ca0a058efaa065a8b708845cd655eae5a8bf273",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Test Tcp Port",
+      "sourceSha256": "9523836c47665b1f4264f3c298fff8deb12684a6bd7b3ee2ba6628fe58fa031b",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Trace Route",
+      "sourceSha256": "fe4286654be0dc0debba59c29419ad94172a55416ea14a48d31389b3267b3bea",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Traceroute",
+      "sourceSha256": "c8556fa1297471f727579f37bc8e84585bdf12b80aa14f35965d01b58e1729e3",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Unified Audit Log For One User",
+      "sourceSha256": "3f39317a7a8d1ca564f90e44c699d1267b5aa64fd4b59c7f1202b2a5a51ace14",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Unlock User",
+      "sourceSha256": "9b7592655cf1021c9bd9e0fba065e8c400a3572ae701d7a6ea099707a35e42fb",
+      "permissionMetadataSha256": "79a7a6105d172261f223375339753996d29333dc616104a3ac1031614b7c0cc0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Update All Eligible WinGet Packages",
+      "sourceSha256": "f78be998aee8daac9792619cea18c0ec3c0519145a637a42101b8dd62cbac85e",
+      "permissionMetadataSha256": "18a3026e229c9b84f16df0ddff75d52970754f871f4a8e6d637f947b503443c5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Update Signatures",
+      "sourceSha256": "3ece2b34e2e4a97cfd6f08c1297ac518283975dda5abbb2d20eae0f776220a03",
+      "permissionMetadataSha256": "ad8d64268a3028e093e0e8b3734a574574969f85bbdee37e103bc3a3164b6063",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Update Specific WinGet Package",
+      "sourceSha256": "be5085dbf74e9533a4fed04c23fb1105461c40da4b77035a6f4b6db838e2dd65",
+      "permissionMetadataSha256": "18a3026e229c9b84f16df0ddff75d52970754f871f4a8e6d637f947b503443c5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Update WinGet Sources",
+      "sourceSha256": "63f98a90056a4c373bced766eb812d7932406ab0d564fb858b6b7fcde96f664f",
+      "permissionMetadataSha256": "18a3026e229c9b84f16df0ddff75d52970754f871f4a8e6d637f947b503443c5",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Verify Script Signature",
+      "sourceSha256": "45047f92891a37f5df94792db8171e4da719d5145cbbe14266f9fd0a56ae4232",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Who Received Mail From Suspicious Sender",
+      "sourceSha256": "51f44076834efbe160db46dd3a069998f30eca4a0593e38f2789bfec29c8cf5a",
+      "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Windows Time Source",
+      "sourceSha256": "75cb21a981f282469e4bfde15e1d83f2132c3eb9d4243de2fa387e500beb0e05",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:Windows Time Status",
+      "sourceSha256": "360c64cfce4f7b70cef8d56e4e5df69f451795f0af8b41a1438b39b720e7c2da",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "command:WinHTTP Proxy",
+      "sourceSha256": "07dff11d60284e43dbbcc89a6eaa40e7d50643159d39ee43a041e967cd08a3b4",
+      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:attractor.ps1",
+      "sourceSha256": "1268680342075976f80599213dd97d25abc2af741a07a7f5de2ceab2c2ba4cc6",
+      "permissionMetadataSha256": "4c047252c540c6685ce759f9415b0cf48965a65af9d7a3b0138f917b7a83dd8a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BACKUP-USER-PROFILE.ps1",
+      "sourceSha256": "dd1d1e62acc1343f0c5010dc93ebd5cf29671ff42d9876580c3f1ef7b285988d",
+      "permissionMetadataSha256": "6f7b8cefc91f9db8e62fe9e2b8382c16362f55d74af759dc8fdfc2e07dfddabf",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-CONTAIN-ERADICATE.ps1",
+      "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+      "permissionMetadataSha256": "03ae066b7ef28e379570ddae706201c1cfefb499beac126e1026d80051d34b3e",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "UserAuthenticationMethod.Read.All",
+        "AuditLog.Read.All",
+        "Policy.Read.All",
+        "User.RevokeSessions.All",
+        "User.EnableDisableAccount.All",
+        "User-PasswordProfile.ReadWrite.All",
+        "DelegatedPermissionGrant.ReadWrite.All"
+      ],
+      "disposition": "shared-session-exception"
+    },
+    {
+      "id": "file:BEC-GET-DATA-EXFIL-ACTIVITY.ps1",
+      "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+      "permissionMetadataSha256": "c061416004d004dbce8b373731ad02088ccb3a333f28106f1be03ea6ab456997",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-IP-TRACE.ps1",
+      "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+      "permissionMetadataSha256": "c061416004d004dbce8b373731ad02088ccb3a333f28106f1be03ea6ab456997",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-TENANT-EMAIL-SEARCH.ps1",
+      "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+      "permissionMetadataSha256": "791f9d39b36d42b1ffcc8666369a3f19e8992840a2e085b982a00e2871f69b3a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-THREAT-INTEL-ACTIVITY.ps1",
+      "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+      "permissionMetadataSha256": "b4488ce2037fd93bc78aacf3999d7679a0891e1b8ee1d2900ad8e8b1f26d8e75",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-TIMELINE-BUILDER.ps1",
+      "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+      "permissionMetadataSha256": "7b424e20e23a839873f6fe89112fb7fa09eca45130bc8748bdb8b9b9523414ed",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-TOKEN-DECODE.ps1",
+      "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+      "permissionMetadataSha256": "682ebc414c03a0d7b5d8658bef5e7930948e4b08d6c448524bb47ef4161a4863",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-GET-TOKEN-REPLAY-CHECK.ps1",
+      "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+      "permissionMetadataSha256": "941f0ea2839ddfa5d3fd4e870959bde0f685b53651bd3ec3ba00ecff172be4e2",
+      "requestedScopes": [
+        "User.Read.All",
+        "AuditLog.Read.All",
+        "IdentityRiskEvent.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-INVOKE-EMAIL-RECOVERY.ps1",
+      "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+      "permissionMetadataSha256": "23f28666b446c1ef03db23c4e3b7550679edba2eefcaad54eb0a23fbb1c7fe68",
+      "requestedScopes": [
+        "Mail.ReadWrite.Shared"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:BEC-RECOVER-VALIDATE.ps1",
+      "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+      "permissionMetadataSha256": "03ae066b7ef28e379570ddae706201c1cfefb499beac126e1026d80051d34b3e",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "UserAuthenticationMethod.Read.All",
+        "AuditLog.Read.All",
+        "Policy.Read.All",
+        "User.RevokeSessions.All",
+        "User.EnableDisableAccount.All",
+        "User-PasswordProfile.ReadWrite.All",
+        "DelegatedPermissionGrant.ReadWrite.All"
+      ],
+      "disposition": "shared-session-exception"
+    },
+    {
+      "id": "file:BEC-RISK-ASSESSMENT.ps1",
+      "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+      "permissionMetadataSha256": "3dfb547652d03a86364ba6466d3d1e968a29c59543cc939d6b0ad547f459059b",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "UserAuthenticationMethod.Read.All",
+        "AuditLog.Read.All",
+        "Policy.Read.All",
+        "User.RevokeSessions.All",
+        "User.EnableDisableAccount.All",
+        "User-PasswordProfile.ReadWrite.All",
+        "DelegatedPermissionGrant.ReadWrite.All"
+      ],
+      "disposition": "shared-session-exception"
+    },
+    {
+      "id": "file:CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1",
+      "sourceSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
+      "permissionMetadataSha256": "33c93086c7f5a5d9eef3efbb30b52946232904dd6449bb0fb75adaf7699fb825",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:connection-patterns.md",
+      "sourceSha256": "f186db47a6da071169e2ea0c1213a527f2f9eebbc78a4da2d1121db9fa387bc6",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:DEPLOY-TCPIP-PRINTER.ps1",
+      "sourceSha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",
+      "permissionMetadataSha256": "0978d99d2aec1719709f7407b5c8bfd52ea0d3b8841d84e234f9ee2bb08194ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:field-kit-build-standard.md",
+      "sourceSha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-ACCOUNT-STATUS.ps1",
+      "sourceSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
+      "permissionMetadataSha256": "9d3807d746ee96a27320d14f8896c6a24e8def10bfac48867308fb9175c5081d",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-ADMIN-ROLE-AUDIT.ps1",
+      "sourceSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
+      "permissionMetadataSha256": "797b1ecfd022159dabbf494bbbb63e8dd3557f0d68389f13d0fbf38d424b438b",
+      "requestedScopes": [
+        "Directory.Read.All",
+        "RoleManagement.Read.Directory",
+        "User.Read.All",
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-APP-REGISTRATION-AUDIT.ps1",
+      "sourceSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
+      "permissionMetadataSha256": "da7043ed0203537414c8649f26383314204952cbffd94741982f2f5f4732c9d8",
+      "requestedScopes": [
+        "Application.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-CONDITIONAL-ACCESS-GAPS.ps1",
+      "sourceSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
+      "permissionMetadataSha256": "6fba5fd9cb4fc158d22152978172fdd8252af184ded7bab2b6418ea78a7b1453",
+      "requestedScopes": [
+        "Policy.Read.ConditionalAccess",
+        "Directory.Read.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-DEVICE-CODE-EXPOSURE.ps1",
+      "sourceSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
+      "permissionMetadataSha256": "97ed53f6d08c1ffaa7b9b4789df60ec2eaa97c7de4b4c504af72a6704babd9bf",
+      "requestedScopes": [
+        "Policy.Read.ConditionalAccess",
+        "AuditLog.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+      "sourceSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
+      "permissionMetadataSha256": "63a31a64932d16d5e9dc05cfa6c7078600398461df6bbbc502c9cc88fcc8e73a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-FOLDER-INVENTORY.ps1",
+      "sourceSha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
+      "permissionMetadataSha256": "fd9b191055151cd4addb958907e94b891079b60c2667218a6487f3232905d441",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-GROUP-MEMBERS.ps1",
+      "sourceSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
+      "permissionMetadataSha256": "f77ca890f2b588ac648a57bff180bef003611555761492c622fda41e67f987c0",
+      "requestedScopes": [
+        "Group.Read.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-GUEST-APP-CONSENT-AUDIT.ps1",
+      "sourceSha256": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
+      "permissionMetadataSha256": "028849a19aed685d19422e650af0f26a6ce923734e778c2eebb2d9bc12718736",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "Application.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-GUEST-USER-AUDIT.ps1",
+      "sourceSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
+      "permissionMetadataSha256": "bf74a2bce7d1c4852a9a62097f6f1645cdf4d1c696de7ca407cd98c16d5ee406",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-MAILBOX-FORWARDING.ps1",
+      "sourceSha256": "0e184a41bd351c391985118eb128eaefad0311ec691abe4933868e6af5a88d91",
+      "permissionMetadataSha256": "9e0bb9def56722cb4dabd4ad24bc8bfaa5fcd761b7b1b97d85b18a30833a04ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-MAILBOX-PERMISSIONS.ps1",
+      "sourceSha256": "76535edd6d3e922cc44decedba707203716788afa4bdabbf68579549a57752e6",
+      "permissionMetadataSha256": "9e0bb9def56722cb4dabd4ad24bc8bfaa5fcd761b7b1b97d85b18a30833a04ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
+      "sourceSha256": "e9e75ef77efeb81017c8dcc6f3f05cd5deb4fb8eba90890560808406762f7fda",
+      "permissionMetadataSha256": "19ff8d770bff2bd037550bdfe21ca82b40900a2d9ba66eae99c48c2946b7a15d",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-MFA-SECURITY-AUDIT.ps1",
+      "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
+      "permissionMetadataSha256": "d5bfdb7570b6fea9171e80aa1d6585fc565256bb69c3199f128640cf04e08718",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "AuditLog.Read.All",
+        "UserAuthenticationMethod.Read.All",
+        "Policy.Read.ConditionalAccess"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-OAUTH-CONSENT-AUDIT.ps1",
+      "sourceSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
+      "permissionMetadataSha256": "87d8aee8f5fbffd5f21203c3ad298df972db16b00520be4bdf4af3f1fa643e06",
+      "requestedScopes": [
+        "Application.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+      "sourceSha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
+      "permissionMetadataSha256": "897d8e098efa92b80bb943a68bf8f92ccaa2d6e630b8f86a7f5c189bbd6c61ae",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "AuditLog.Read.All",
+        "Group.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-ROOM-RESOURCE-ACCESS.ps1",
+      "sourceSha256": "476e8e8458b73432ec3c1e5d90be596b6472cece0e43c79cddc4b1de1693e1ad",
+      "permissionMetadataSha256": "9e0bb9def56722cb4dabd4ad24bc8bfaa5fcd761b7b1b97d85b18a30833a04ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-SECURE-SCORE-SNAPSHOT.ps1",
+      "sourceSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
+      "permissionMetadataSha256": "fcb277436f5bfa6713a7212b9379e7a587cf394028abc564a4ba3d40a18138d9",
+      "requestedScopes": [
+        "SecurityEvents.Read.All",
+        "SecurityActions.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-SERVICE-PRINCIPAL-OWNERS.ps1",
+      "sourceSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
+      "permissionMetadataSha256": "914f88bbaf7ebb65904f75a784aa6a012912bae13e29b2c1bef600a509f8b774",
+      "requestedScopes": [
+        "Application.Read.All",
+        "Directory.Read.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1",
+      "sourceSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
+      "permissionMetadataSha256": "9f1a02d34a9494a0425bd3cb05609962023220d525df0580c39c090c7bc96f8e",
+      "requestedScopes": [
+        "AuditLog.Read.All",
+        "User.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-SIGNIN-ANOMALIES.ps1",
+      "sourceSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
+      "permissionMetadataSha256": "b7db216ffd901848a57697bf6ea0a2503f3f583079d87d19bda20af27d27a2e3",
+      "requestedScopes": [
+        "AuditLog.Read.All",
+        "User.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-STALE-SIGNIN-REVIEW.ps1",
+      "sourceSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
+      "permissionMetadataSha256": "9d3807d746ee96a27320d14f8896c6a24e8def10bfac48867308fb9175c5081d",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-DRIFT-REVIEW.ps1",
+      "sourceSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
+      "permissionMetadataSha256": "8de0df7435adf8de670e686ae54daf12d16953828a89306804fc7c711b935b1f",
+      "requestedScopes": [
+        "Directory.Read.All",
+        "Application.Read.All",
+        "Policy.Read.All",
+        "RoleAssignmentSchedule.Read.Directory",
+        "RoleEligibilitySchedule.Read.Directory"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-GROUP-OWNERS.ps1",
+      "sourceSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
+      "permissionMetadataSha256": "0b1829ea1b85a4e545f85a6298292e175fe37f10eea738c49770fb369dde338a",
+      "requestedScopes": [
+        "Group.Read.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-INBOX-RULES-AUDIT.ps1",
+      "sourceSha256": "c0a1a2459471df298746940de9a997ee60514cbec0bb11a821f4c7e2233c66f6",
+      "permissionMetadataSha256": "f471510baa898dd09a076b3f627dc936c8b19598192df0e7dc69648666cecda3",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-LICENSING-AUDIT.ps1",
+      "sourceSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
+      "permissionMetadataSha256": "f8619815b85a61ad5e821eb6f513f4d2341299df210f6f87d8dec55cd1ad81a2",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "Organization.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+      "sourceSha256": "90eadb894e2aa8ac36f62047a4c4aadcac67aa468c8bbbf583ec0992e6fc6e9c",
+      "permissionMetadataSha256": "9e0bb9def56722cb4dabd4ad24bc8bfaa5fcd761b7b1b97d85b18a30833a04ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TENANT-SECURITY-SNAPSHOT.ps1",
+      "sourceSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
+      "permissionMetadataSha256": "d18dd22a615e7f830a29ec89050dc988d0f7cd62593567d8db28b562f2f634b3",
+      "requestedScopes": [
+        "Organization.Read.All",
+        "User.Read.All",
+        "AuditLog.Read.All",
+        "Directory.Read.All",
+        "RoleManagement.Read.Directory",
+        "Policy.Read.ConditionalAccess",
+        "DelegatedPermissionGrant.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TERMINAL-READINESS-CHECK.ps1",
+      "sourceSha256": "0cdf541f4222218c359dddc9e441343d37ee7ad745cfe5588e06a9a45ad42316",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-TRANSPORT-RULES-AUDIT.ps1",
+      "sourceSha256": "7c4ff63bee17b5669a05a76657f3cca0b5b3674b102ead014df742ae720c62ae",
+      "permissionMetadataSha256": "9e0bb9def56722cb4dabd4ad24bc8bfaa5fcd761b7b1b97d85b18a30833a04ff",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-USER-GROUPS.ps1",
+      "sourceSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
+      "permissionMetadataSha256": "3dc464ae654e0337b8ae94001821ac870c4ac355ae02e3edc934757bb4f5618f",
+      "requestedScopes": [
+        "User.Read.All",
+        "Group.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-USER-PREDELETE-CHECK.ps1",
+      "sourceSha256": "4ae5545f73829374e5b1500bd3ba8cc029e3f095e700e9ce76bf835d8a034107",
+      "permissionMetadataSha256": "7023f4daf631ac7ac8bfc7bfb07f070ec97cc72e01010367b9389d21de59ca10",
+      "requestedScopes": [
+        "User.Read.All",
+        "Group.Read.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-USER-SECURITY-SNAPSHOT.ps1",
+      "sourceSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
+      "permissionMetadataSha256": "d50862c5c6483c40a1c1b5a50a31016fb4dc53c5e0513c7b9f5546aee7af2f0e",
+      "requestedScopes": [
+        "User.Read.All",
+        "Directory.Read.All",
+        "UserAuthenticationMethod.Read.All",
+        "AuditLog.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
+      "sourceSha256": "7af474157506fd00c85b064ec037e09286c7776e4b088b28e8af36d6f3cbc85d",
+      "permissionMetadataSha256": "e3510b6aa15d86bbf56a3d56cde927e306872548822c043c247f7dd616c6502d",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:git-handoff.ps1",
+      "sourceSha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
+      "permissionMetadataSha256": "61068d5fb178024328aac54d616862cd3cece4feb3208f17ef13bb10638c6f78",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:git-repo.ps1",
+      "sourceSha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
+      "permissionMetadataSha256": "5e75087f644f16e4220aaa863ad10043d29afb587effd7bccef333c76150f4e4",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:git-security.ps1",
+      "sourceSha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
+      "permissionMetadataSha256": "bf90a5085d7ce330f17ca5fc3998fc69deab2ecca7a289682d7e357f3f885ad7",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:git-tools.md",
+      "sourceSha256": "5aa1d822aa27dd41c43bab2554b87d925b1e1eb5fd41fc22f44c12d4cbfae21a",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INSTALL-M365-MODULES.ps1",
+      "sourceSha256": "6c5fb208fea47d9588354590817362336e644bc4887127f317d4816161c0b4a2",
+      "permissionMetadataSha256": "a5fbfc14f572cdb5a1b5e1a6efd48817b8287095e78889ed77a4362f22556e7c",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-ASSIGN-LICENSES.ps1",
+      "sourceSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
+      "permissionMetadataSha256": "9feeb1db4c39a4223388508b1eabdaad520cab757804ffb4f531d05cf3898356",
+      "requestedScopes": [
+        "User.ReadWrite.All",
+        "Directory.Read.All",
+        "Organization.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1",
+      "sourceSha256": "7ed4b8f50be401d4004b6ff4672d19bcad5ab6e7f47cf7bc3d0a3e144290f83d",
+      "permissionMetadataSha256": "4d9b2a3cc0a0fdce02cc3bc0db36b95f04fb12610fae5b06ed6b8c147365fef5",
+      "requestedScopes": [
+        "Group.ReadWrite.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-DELETE-ACCOUNTS.ps1",
+      "sourceSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
+      "permissionMetadataSha256": "699d7e53ad063ffb060b0ec37581ba03738355efa3042cce9470ee5aee98178b",
+      "requestedScopes": [
+        "User.ReadWrite.All",
+        "Organization.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-DISABLE-ACCOUNTS.ps1",
+      "sourceSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
+      "permissionMetadataSha256": "e3ed54d16f3ede5f91c39ff7669e148c5305110c50c24bcb944be0b3f459f379",
+      "requestedScopes": [
+        "User.ReadWrite.All",
+        "Directory.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-ENFORCE-PER-USER-MFA.ps1",
+      "sourceSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
+      "permissionMetadataSha256": "c2c40fd6cf8111adc8a77d3c37cfff93ec3e916013b8608dd923f9d8b14524cb",
+      "requestedScopes": [
+        "Policy.ReadWrite.AuthenticationMethod",
+        "UserAuthenticationMethod.Read.All",
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-FILE-INVENTORY.ps1",
+      "sourceSha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-LITIGATION-HOLD.ps1",
+      "sourceSha256": "1ea2ff740e1f5eb24ba4aafa92636fce025ed90ffbc4050e80ce5aedcb3568fe",
+      "permissionMetadataSha256": "7ed30858431fa8e1d9135d8b508f4918f7bc3daeba30ddfbd51e534c1d3536b1",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-MAP-KIT.ps1",
+      "sourceSha256": "ea3b5ee21dbd384d7107ec1458be968d7c7c5c00c9998a4dcc2f89856a8372a4",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-REMOVE-LICENSES.ps1",
+      "sourceSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
+      "permissionMetadataSha256": "9feeb1db4c39a4223388508b1eabdaad520cab757804ffb4f531d05cf3898356",
+      "requestedScopes": [
+        "User.ReadWrite.All",
+        "Directory.Read.All",
+        "Organization.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-REMOVE-USER-GROUPS.ps1",
+      "sourceSha256": "8bc820639a1d6e1479e0b1c7a2a1f58953fb0eb5396f922628a73855b0e3fc54",
+      "permissionMetadataSha256": "bb8795b5401aa3f1d48c470e5851dd67976b916989af32d098455e07b6e83297",
+      "requestedScopes": [
+        "User.Read.All",
+        "Group.Read.All",
+        "GroupMember.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-RESET-CLOUD-USER-PASSWORD.ps1",
+      "sourceSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
+      "permissionMetadataSha256": "705b87d790ba8b3fba8598bf79bd9753b333845c70ceb6ca6c0faecd02b525dd",
+      "requestedScopes": [
+        "User.Read.All",
+        "User-PasswordProfile.ReadWrite.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:INVOKE-SESSION-RESET.ps1",
+      "sourceSha256": "2fa5b247f31b2dfe29bbed17ec9ffe576e53dbe3ce3e7ffb03f8328c7843dc07",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:JOIN-COMPUTER-TO-DOMAIN.ps1",
+      "sourceSha256": "231cef1b8c4ca32837fa4ece5cc04162eb1de0371f3fd69a6fd7aa839bd6f147",
+      "permissionMetadataSha256": "d244dc1f0594331c507e53cbb55952e7ec3483fcbb1007c39e142756d1bf0adb",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:lessons-learned.md",
+      "sourceSha256": "f6bc6f62b00d32ef007589d931d6ee05e63944738a5df3d57a01344193c7e00f",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:MANAGE-CERT-SIGNATURES.ps1",
+      "sourceSha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
+      "permissionMetadataSha256": "524f276191e9278290b3a5991af57d7d5e4c562813816099b76540e67e7448ee",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:nato-phonetic-alphabet.md",
+      "sourceSha256": "c9dec1a66a3530972991663504e4c54e895e87093a43081404edfdf3da7288c7",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:OPERATING-STANDARDS.md",
+      "sourceSha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:powershell-standards.md",
+      "sourceSha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:PREPARE-FIELD-KIT.ps1",
+      "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
+      "permissionMetadataSha256": "ceeafb7764c158c6ac19cb33b0b079cd6119f7586d36bdff44028d3059de8066",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:PROJECT-HANDOFF.md",
+      "sourceSha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:publishing-checklist.md",
+      "sourceSha256": "7823173f60c3567e9dcb2da26a8a021f4c23b23d9279223a93910153e99c24bc",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:rain.ps1",
+      "sourceSha256": "f793a1a68a8245527597522077f40dda3eeb209bf9c6ad1164f0dde5ef9daf96",
+      "permissionMetadataSha256": "4c047252c540c6685ce759f9415b0cf48965a65af9d7a3b0138f917b7a83dd8a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:RESET-M365-SESSION.ps1",
+      "sourceSha256": "a08270181dc4ac7ac0cb78fd8f651701a40ce25b668342a4e0a829fb09246809",
+      "permissionMetadataSha256": "f618e48534c7b06d60ca233428c4f16ab33dbe5aa2d2cc0d66f3fad09420bbe0",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:RESOLVE-NAMES-TO-UPNS.ps1",
+      "sourceSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
+      "permissionMetadataSha256": "88f4352bd0716fbe584c08503f33a3b4ad3cdf25f6f90f44a50a52581bd07118",
+      "requestedScopes": [
+        "User.Read.All"
+      ],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:script-review-checklist.md",
+      "sourceSha256": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:script-template-guide.md",
+      "sourceSha256": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:set-execution.ps1",
+      "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+      "permissionMetadataSha256": "682ebc414c03a0d7b5d8658bef5e7930948e4b08d6c448524bb47ef4161a4863",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:SET-THEME-BASIC.ps1",
+      "sourceSha256": "9dc01f2210cf808379be2770450283f0d44be72c4d3cae3f9a0087c2f15e98f2",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:SET-THEME-COBALT.ps1",
+      "sourceSha256": "602ddcb368e716ca73ced3b799d847262faca237ee43b63a7070596ce37d9d2b",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:SET-THEME-SEAGLASS.ps1",
+      "sourceSha256": "629b919cea8aabd890151a2402241e426a4c0c331a9a4d5861bd9aaa340e888e",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:SET-THEME-SILICON-VALLEY.ps1",
+      "sourceSha256": "aab04649707578c0c57a9602b80cdae04465bff529fae0373d46f1aa2bc43739",
+      "permissionMetadataSha256": "498879638beae5e9a0ecf750c82ea845f4ed020e7d696c2995cba532e449a9a9",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:SIGN-FOLDER-SCRIPTS.ps1",
+      "sourceSha256": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
+      "permissionMetadataSha256": "687c92c01e167866d9ba51ef56838a4a9b16e792bf16f67879f8b56ded66af4a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:skills.md",
+      "sourceSha256": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
+      "permissionMetadataSha256": "a21686809201a90b488ffec40cf30ae5fb69d9377d08cb5139df039001811497",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:START-HERE.md",
+      "sourceSha256": "ceaa8b9219d977a88e2f45f3af18c160671fb76812ba714a4dc437e51e9171f0",
+      "permissionMetadataSha256": "048fa6145783f2e369e0cb88676c31a086010d4ec3adc3f31f98c78df3b98013",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:static.ps1",
+      "sourceSha256": "4aa3ae630d9631f11d110f78925c6e112508b3ccc7ba703f833537bb3c9394e0",
+      "permissionMetadataSha256": "4c047252c540c6685ce759f9415b0cf48965a65af9d7a3b0138f917b7a83dd8a",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:TEST-POWERSHELL-READINESS.ps1",
+      "sourceSha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
+      "permissionMetadataSha256": "fd9b191055151cd4addb958907e94b891079b60c2667218a6487f3232905d441",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:TEST-SENSITIVE-DATA.ps1",
+      "sourceSha256": "594d18150acb832080f13776581f6d8d8d21d3addc7e14aa8aea017b76e9b69e",
+      "permissionMetadataSha256": "fd9b191055151cd4addb958907e94b891079b60c2667218a6487f3232905d441",
+      "requestedScopes": [],
+      "disposition": "screened"
+    },
+    {
+      "id": "file:UPDATE-WINDOWS-APPS.ps1",
+      "sourceSha256": "32fcfc1c298460301dc5fe7841bb5bddb768691e23f7c9f28270c5396349c3c3",
+      "permissionMetadataSha256": "54f00c9e9632f5978670406cdd3e4a0c5aa27958ef8e4c21d0532463d7c23331",
+      "requestedScopes": [],
+      "disposition": "screened"
+    }
+  ]
+}

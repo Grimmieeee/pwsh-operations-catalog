@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.3
 .GUID 7cf20e90-263b-4c97-98ec-f7d7d105d9aa
 .AUTHOR FIELD // KIT
-.DESCRIPTION Read-only identity risk assessment for the operator-guided IR workflow.
+.DESCRIPTION Review one user's account and mailbox before choosing a response.
 #>
 <#
 .SYNOPSIS
-IR: Identity Risk Assessment
+BEC: Assess User Risk
 .DESCRIPTION
 Reviews one M365 identity and mailbox before response decisions. Makes no tenant changes.
 Uses delegated Microsoft Graph and Exchange Online sign-in in the global Microsoft cloud.
@@ -23,7 +23,7 @@ Skip mailbox collection. The assessment remains incomplete and requires review.
 .PARAMETER NoPause
 Suppress end-of-step navigation. Does not bypass action confirmations.
 .NOTES
-Version 1.0.0. Derived from the v0.32 risk exposure snapshot.
+Runtime baseline: 1.0.0. App lookup boundary fix: 1.0.2. Derived from the v0.32 risk exposure snapshot.
 Preserves indicator rules and summary precedence; not a compromise verdict or incident closure.
 Graph sign-ins are a bounded latest-25 sample over 10 days, not a complete investigation.
 #>
@@ -197,14 +197,14 @@ function Invoke-IRNextStep {
         return
     }
     $label=switch ($FileName) {
-        'ir-contain-eradicate' { 'ir-contain-eradicate' }
-        'ir-recover-validate' { 'ir-recover-validate' }
-        default { 'ir-risk-assessment (FINAL CHECK)' }
+        'BEC-CONTAIN-ERADICATE' { 'BEC-CONTAIN-ERADICATE' }
+        'BEC-RECOVER-VALIDATE' { 'BEC-RECOVER-VALIDATE' }
+        default { 'BEC-RISK-ASSESSMENT (FINAL CHECK)' }
     }
     if (-not (Read-IRNavigation $label)) {
         $message=switch ($FileName) {
-            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
-            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            'BEC-CONTAIN-ERADICATE' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'BEC-RECOVER-VALIDATE' { 'Response run finished. A contained account still requires approved recovery.' }
             default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
         }
         Close-IRWorkflow $message
@@ -225,7 +225,7 @@ function Invoke-IRNextStep {
             throw 'Next script is from a different release. Replace all three files together.'
         }
         $nextArgs.OutputDelayMs=$OutputDelayMs
-        if ($FileName -eq 'ir-risk-assessment') {
+        if ($FileName -eq 'BEC-RISK-ASSESSMENT') {
             $nextArgs.UserPrincipalName=[string]$saved.UPN
             $nextArgs.FinalReview=$true
         } else { $nextArgs.UPN=[string]$saved.UPN }
@@ -554,13 +554,13 @@ function Get-ServicePrincipalInfo($ServicePrincipalId, $Headers, $Cache) {
 
     if ($Cache.ContainsKey($ServicePrincipalId)) { return $Cache[$ServicePrincipalId] }
 
-    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/$ServicePrincipalId?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
+    $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals/${ServicePrincipalId}?`$select=id,appId,displayName,publisherName,verifiedPublisher" $Headers
 
-    if (-not $Result.Ok) {
+    if (-not $Result.Ok -or $Result.Data.id -ne $ServicePrincipalId) {
         $Filter = [System.Uri]::EscapeDataString("id eq '$ServicePrincipalId'")
         $Result = GraphGet "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=$Filter&`$select=id,appId,displayName,publisherName,verifiedPublisher&`$top=1" $Headers
 
-        if (-not $Result.Ok -or @($Result.Data.value).Count -lt 1) {
+        if (-not $Result.Ok -or @($Result.Data.value).Count -ne 1 -or @($Result.Data.value)[0].id -ne $ServicePrincipalId) {
             $Info = [pscustomobject]@{ Ok = $false; Name = "Unresolved app ($ServicePrincipalId)"; Microsoft = $false; Verified = $false }
             $Cache[$ServicePrincipalId] = $Info
             return $Info
@@ -761,10 +761,10 @@ $HiddenRuleFindings = @()
 try {
     try {
         $OriginalTitle = $Host.UI.RawUI.WindowTitle
-        $Host.UI.RawUI.WindowTitle = 'IR: Identity Risk Assessment'
+        $Host.UI.RawUI.WindowTitle = 'BEC: Assess User Risk'
     } catch { }
-    Write-IRLine 'IR: RISK ASSESSMENT'
-    Write-IRLine 'Check the account and mailbox for signs of suspicious activity.'
+    Write-IRLine 'BEC: Assess User Risk'
+    Write-IRLine 'Review one user''s account and mailbox before choosing a response.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine ''
     $inputs = Get-IRWorkflowInput $UserPrincipalName $Tenant
@@ -1169,7 +1169,7 @@ try {
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden' -or $InboxRuleCoverage -eq 'Visible Only') {
         if ($VisibleInboxRules.Count -gt 0) {
-    
+
             for ($Index = 0; $Index -lt $VisibleInboxRules.Count; $Index++) {
                 if ($Index -gt 0) {
                     Write-IRLine ""
@@ -1192,7 +1192,7 @@ try {
 
     if ($InboxRuleCoverage -eq 'Visible + Hidden') {
         if ($HiddenRuleFindings.Count -gt 0) {
-    
+
             $HiddenFindingNames = @(
                 $HiddenRuleFindings |
                     ForEach-Object {
@@ -1390,14 +1390,14 @@ try {
         Write-IRLine 'Document evidence. Continue only if other incident evidence warrants response.'
     }
     Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
-    $script:NextIRFile='ir-contain-eradicate'
+    $script:NextIRFile='BEC-CONTAIN-ERADICATE'
     }
 
 }
 catch {
     Write-IRLine "[FAIL] Assessment incomplete: $($_.Exception.Message)" -ForegroundColor Red
     Section 'NEXT STEP'
-    Write-IRLine 'ir-risk-assessment'
+    Write-IRLine 'BEC-RISK-ASSESSMENT'
     Write-IRLine 'Resolve the reported checks and rerun. Confirmed compromise can still require approved containment.'
 }
 finally {

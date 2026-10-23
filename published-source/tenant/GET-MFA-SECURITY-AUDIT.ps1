@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 # OBJECTIVE: Review MFA registration and the policies intended to protect sign-ins.
 
@@ -353,7 +353,7 @@ Write-Host 'Review MFA registration and the policies intended to protect sign-in
 
     Section "CONNECT"
 
-    $scopes = @("User.Read.All","Directory.Read.All","Reports.Read.All","UserAuthenticationMethod.Read.All")
+    $scopes = @("User.Read.All","Directory.Read.All","AuditLog.Read.All","UserAuthenticationMethod.Read.All")
     if ($IncludeConditionalAccess) { $scopes += "Policy.Read.ConditionalAccess" }
 
     if (-not (Ensure-Graph -Scopes $scopes -TenantId $ExpectedTenantId)) {

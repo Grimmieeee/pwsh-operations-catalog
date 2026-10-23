@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 # OBJECTIVE: Show the folder structure and files beneath a selected location.
 
@@ -28,6 +28,9 @@ param(
     [switch]$NoFileMap,
     [switch]$NoPause
 )
+Write-Host 'Map Folder Structure'
+Write-Host 'Show the folder structure and files beneath a selected location.'
+
 
 $ErrorActionPreference = "Stop"
 
@@ -38,8 +41,10 @@ function FAIL($m) { Write-Host "[FAIL] $m" -ForegroundColor Red }
 
 function Pause-End {
     if (-not $NoPause) {
-        Write-Host ""
-        Read-Host "Press Enter to EXIT" | Out-Null
+
+    Write-Host 'SESSION COMPLETE'
+    Write-Host ""
+        Read-Host 'Press Enter to close session.' | Out-Null
     }
 }
 

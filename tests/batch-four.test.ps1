@@ -144,7 +144,7 @@ switch($Focus){
   Assert-FK (@(Get-SendOnBehalfMatch -Mailbox $mailbox -TargetSet $set).Count -eq 1) 'SendOnBehalf selected unrelated principal.';Pass-FK 'send-on-behalf-isolation'
  } }
  'Recovery' { & {
-  . Import-FKFunctions 'published-source/incident-response/IR-INVOKE-EMAIL-RECOVERY.ps1'
+  . Import-FKFunctions 'published-source/incident-response/BEC-INVOKE-EMAIL-RECOVERY.ps1'
   function Invoke-GraphPost {param($Uri,$Body)$script:FKUri=$Uri;$script:FKBody=$Body;$script:FKWrites++;if($script:FKCase -eq 'denied'){throw 'Synthetic write denied'};@{id='new-message'}}
   foreach($case in @('success','denied')){
    $script:FKCase=$case;$script:FKWrites=0;$threw=$false
@@ -211,20 +211,21 @@ switch($Focus){
   function Set-ExecutionPolicy {[CmdletBinding()]param($ExecutionPolicy,$Scope,[switch]$Force)$script:FKWrites++;Assert-FK ($Scope -eq 'CurrentUser' -and $ExecutionPolicy -eq 'RemoteSigned') 'Policy scope drift.'}
   function Get-ChildItem {[CmdletBinding()]param($LiteralPath,$Filter,[switch]$File)@{Name='fixture.ps1';FullName='fixture.ps1'}}
   function Unblock-File {[CmdletBinding()]param($LiteralPath)$script:FKUnblocks++;if($script:FKCase -eq 'unblock-denied'){throw 'Synthetic access denied'}}
-  function Read-Host {return ''}
-  foreach($case in @('success','already','managed','policy-unchanged','unblock-denied')){
+  function Read-Host {param($Prompt)if($Prompt -like 'Type SETUP*' -and $script:FKCase -ne 'cancel'){return 'SETUP'};return ''}
+  foreach($case in @('cancel','success','already','managed','policy-unchanged','unblock-denied')){
    $script:FKCase=$case;$script:FKWrites=0;$script:FKUnblocks=0;$failures=New-Object 'Collections.Generic.List[string]';$notices=New-Object 'Collections.Generic.List[string]';$oldProgressPreference=$ProgressPreference
    $text=Capture-FK $main
+   if($case -eq 'cancel'){Assert-FK ($script:FKWrites -eq 0 -and $script:FKUnblocks -eq 0) 'Cancelled setup changed policy/files.';Assert-FK ($text -match 'CANCELLED' -and $text -notmatch 'SETUP VERIFIED') 'Cancellation reported as success.';Pass-FK $case;continue}
    if($case -in @('already','managed')){Assert-FK ($script:FKWrites -eq 0) 'Managed/usable policy rewritten.'}
    else{Assert-FK ($script:FKWrites -eq 1) 'Expected scoped policy request.'}
    Assert-FK ($script:FKUnblocks -eq 1) 'Wrong unblock scope.'
-   if($case -in @('policy-unchanged','unblock-denied')){Assert-FK ($text -match 'SETUP INCOMPLETE' -and $text -notmatch 'MISSION COMPLETE') 'Setup failure hidden.'}
+   if($case -in @('policy-unchanged','unblock-denied')){Assert-FK ($text -match 'SETUP INCOMPLETE' -and $text -notmatch 'SETUP VERIFIED') 'Setup failure hidden.'}
    elseif($case -eq 'managed'){Assert-FK ($text -match 'FOLLOW UP') 'Managed policy warning missing.'}
-   else{Assert-FK ($text -match 'MISSION COMPLETE') "Expected setup success: $text"};Pass-FK $case
+   else{Assert-FK ($text -match 'SETUP VERIFIED') "Expected setup success: $text"};Pass-FK $case
   }
  } }
  'ThreatIntel' { & {
-  . Import-FKFunctions 'published-source/incident-response/IR-GET-THREAT-INTEL-ACTIVITY.ps1'
+  . Import-FKFunctions 'published-source/incident-response/BEC-GET-THREAT-INTEL-ACTIVITY.ps1'
   foreach($case in @(@('8.8.8.8',$true),@('1.1.1.1',$true),@('10.1.2.3',$false),@('127.0.0.1',$false),@('172.16.1.1',$false),@('192.168.1.1',$false),@('169.254.1.1',$false),@('100.64.0.1',$false),@('224.0.0.1',$false),@('::1',$false),@('fc00::1',$false),@('fe80::1',$false),@('2606:4700:4700::1111',$true),@('not-an-ip',$false))){$ip=Convert-ToIPAddress $case[0];Assert-FK ((Test-PublicIPAddress $ip) -eq $case[1]) ('IP input guard failed: '+$case[0]);Pass-FK $case[0]}
  } }
  'GitSecurity' { & {

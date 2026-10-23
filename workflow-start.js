@@ -1,26 +1,27 @@
 // Operator directions and an in-browser ZIP writer. No tenant actions run here.
 (() => {
   const stages = {
-    'ir-risk-assessment.ps1': {
+    'BEC-RISK-ASSESSMENT.ps1': {
       result:'Findings and checks that could not run for the selected account. Review the evidence before deciding whether the incident is resolved.',
-      next:'If containment is needed and approved, continue with ir-contain-eradicate. Otherwise record the findings and follow your incident process.',
+      next:'If containment is needed and approved, continue with BEC-CONTAIN-ERADICATE. Otherwise record the findings and follow your incident process.',
       blocked:'If a required check cannot run, resolve the missing access or data before deciding the account is clear.'
     },
-    'ir-contain-eradicate.ps1': {
+    'BEC-CONTAIN-ERADICATE.ps1': {
       result:'Completed, failed, and skipped actions, plus any remaining investigation or unwanted access to remove.',
-      next:'Continue with ir-recover-validate before restoring access. Keep the account contained until cleanup is complete and recovery is approved.',
+      next:'Continue with BEC-RECOVER-VALIDATE before restoring access. Keep the account contained until cleanup is complete and recovery is approved.',
       blocked:'A failed or cancelled action is not completed. Review the action results and maintain containment until the incident owner approves the next step.'
     },
-    'ir-recover-validate.ps1': {
+    'BEC-RECOVER-VALIDATE.ps1': {
       result:'Recovery checks and whether the account was enabled. A pending sync is not confirmed recovery.',
       next:'Verify the user can sign in with MFA, record the result, and monitor for new suspicious activity for 48 hours. Unresolved issues remain open.',
       blocked:'If readiness or restored access cannot be verified, stop and return to the incident owner. Do not repeatedly enable the account to bypass a failed check.'
     }
   };
   const preparation = [
-    'Use the approved client Windows jumpbox and an authorized account. Synced-user changes also need local Active Directory permissions.',
-    'Have the exact user sign-in name (UPN) and tenant domain or ID ready. Required modules: Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+.',
-    'Extract all three scripts into one folder. Open Windows PowerShell 5.1 or PowerShell 7 on the jumpbox and keep that window open for the workflow.',
+    'BEC means business email compromise: a suspected takeover of a work email account.',
+    'Use the approved Windows support computer and an account allowed to manage the customer’s Microsoft 365 environment. Accounts linked to local Active Directory also need permission there.',
+    'Have the user’s full sign-in address (UPN) and the customer’s Microsoft 365 domain or tenant ID ready. Install Microsoft.Graph.Authentication 2.x and ExchangeOnlineManagement 3.2+ using Install M365 Modules.',
+    'Extract all three scripts into one folder. Open Windows PowerShell 5.1 or PowerShell 7 on that computer and keep that window open for the workflow.',
     'The first sign-in requests permissions for assessment, containment and recovery. The assessment itself makes no tenant changes; change actions still require approval.'
   ];
   function launch(file){
@@ -30,8 +31,8 @@
       '& $ScriptPath';
   }
   function guide(){
-    return '# FIELD // KIT — IR workflow\n\nPREPARE\n'+preparation.map((text,i)=>(i+1)+'. '+text).join('\n')+
-      '\n\nSTART\nRight-click ir-risk-assessment.ps1 in File Explorer and choose Copy as path. In the existing PowerShell window, paste the following launch block, then paste the file path when asked.\n\n```powershell\n'+launch('ir-risk-assessment.ps1')+'\n```\n\n'+
+    return '# FIELD // KIT — BEC workflow\n\nPREPARE\n'+preparation.map((text,i)=>(i+1)+'. '+text).join('\n')+
+      '\n\nSTART\nRight-click BEC-RISK-ASSESSMENT.ps1 in File Explorer and choose Copy as path. In the existing PowerShell window, paste the following launch block, then paste the file path when asked.\n\n```powershell\n'+launch('BEC-RISK-ASSESSMENT.ps1')+'\n```\n\n'+
       Object.entries(stages).map(([file,step])=>'## '+file.replace(/\.ps1$/,'')+'\n\nExpected result: '+step.result+'\n\nNext: '+step.next+'\n\nIf blocked or cancelled: '+step.blocked).join('\n\n')+
       '\n\nIf PowerShell blocks execution, stop and use the approved signing/execution-policy process. Do not bypass a managed policy.\n';
   }

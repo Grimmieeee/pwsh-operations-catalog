@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -214,7 +214,7 @@ function Show-Claim {
 }
 
 try {
-    Write-Host 'IR: Decode Token'
+    Write-Host 'BEC: Decode Token'
     Write-Host 'Read a token''s contents locally without sending it online.'
     Write-Host "LOCAL ONLY / NO NETWORK"
     Write-Host ""

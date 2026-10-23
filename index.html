@@ -393,7 +393,9 @@ body.open .drawer{transform:translateX(0)}
   background:transparent;color:inherit;text-align:left;
 }
 .result:hover{background:linear-gradient(90deg,rgba(0,240,181,.045),rgba(0,240,181,.012))}
-.result-identity{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
+.result-identity{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.input-example pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.5 var(--mono);padding:10px;background:var(--panel);border:1px solid var(--line-soft)}
+.result-description{font:400 13px/1.45 var(--ui);color:var(--fk-9cc0b6,#9cc0b6);overflow-wrap:anywhere}
 .result-name{font-family:var(--ui);font-size:16.5px;font-weight:600;color:var(--fk-e2f3ee,#e2f3ee)}
 .verification-seal{
   display:inline-flex;align-items:center;justify-content:center;flex:none;
@@ -1138,7 +1140,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .result-flags{justify-self:end;justify-content:flex-end;gap:24px;max-width:360px}
 .result-risk-flags{display:inline-flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=card-objectives-1">
+<link rel="stylesheet" href="site-theme.css?v=bec-naming-1">
 </head>
 <body>
 <noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
@@ -1211,12 +1213,12 @@ button,a,input{-webkit-tap-highlight-color:transparent}
   <div id="drawerBody" class="drawer-body"></div>
 </aside>
 
-<script src="catalog-data.js?v=card-objectives-1"></script>
-<script src="source-integrity.js?v=card-objectives-1"></script>
-<script src="connection-guidance.js?v=card-objectives-1"></script>
-<script src="card-guidance.js?v=card-objectives-1"></script>
-<script src="workflow-start.js?v=card-objectives-1"></script>
-<script src="field-kit-app.js?v=card-objectives-1"></script>
+<script src="catalog-data.js?v=permissions-1"></script>
+<script src="source-integrity.js?v=permissions-1"></script>
+<script src="connection-guidance.js?v=permissions-1"></script>
+<script src="card-guidance.js?v=permissions-1"></script>
+<script src="workflow-start.js?v=permissions-1"></script>
+<script src="field-kit-app.js?v=permissions-1"></script>
 <script src="site-brand.js?v=native-accepted-1"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 # OBJECTIVE: Save a screened snapshot of the current Git project for handoff.
 
@@ -15,6 +15,9 @@ param(
     [Parameter(Position=0)][string]$Path = (Get-Location).Path,
     [switch]$Open
 )
+Write-Host 'Save Project Handoff'
+Write-Host 'Save a screened snapshot of the current Git project for handoff.'
+
 $ErrorActionPreference = 'Stop'
 $script:HandoffStage = 'START'
 

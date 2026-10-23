@@ -1,4 +1,4 @@
-# .VERSION 1.0.0
+# .VERSION 1.0.1
 
 # OBJECTIVE: Review a GitHub security-log export for unfamiliar access and activity.
 #Requires -Version 5.1
@@ -39,6 +39,9 @@ param(
     [string] $BaselinePath,
     [string[]] $CommandArgs = @()
 )
+Write-Host 'Review GitHub Security'
+Write-Host 'Review a GitHub security-log export for unfamiliar access and activity.'
+
 
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'

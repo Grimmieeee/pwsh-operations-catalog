@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.3
 .GUID d77fb13d-5860-46ad-bc7e-2ef0df3a458d
 .AUTHOR FIELD // KIT
-.DESCRIPTION Verify response readiness and restore one approved identity.
+.DESCRIPTION Check recovery readiness and restore approved account access.
 #>
 <#
 .SYNOPSIS
-IR: Recovery and Validation
+BEC: Restore and Validate
 .DESCRIPTION
 Step 3 follows containment and persistence review. Uses the same PowerShell window,
 validated connections, and target details. Fresh checks run before any restore.
@@ -189,14 +189,14 @@ function Invoke-IRNextStep {
         return
     }
     $label=switch ($FileName) {
-        'ir-contain-eradicate' { 'ir-contain-eradicate' }
-        'ir-recover-validate' { 'ir-recover-validate' }
-        default { 'ir-risk-assessment (FINAL CHECK)' }
+        'BEC-CONTAIN-ERADICATE' { 'BEC-CONTAIN-ERADICATE' }
+        'BEC-RECOVER-VALIDATE' { 'BEC-RECOVER-VALIDATE' }
+        default { 'BEC-RISK-ASSESSMENT (FINAL CHECK)' }
     }
     if (-not (Read-IRNavigation $label)) {
         $message=switch ($FileName) {
-            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
-            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            'BEC-CONTAIN-ERADICATE' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'BEC-RECOVER-VALIDATE' { 'Response run finished. A contained account still requires approved recovery.' }
             default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
         }
         Close-IRWorkflow $message
@@ -217,7 +217,7 @@ function Invoke-IRNextStep {
             throw 'Next script is from a different release. Replace all three files together.'
         }
         $nextArgs.OutputDelayMs=$OutputDelayMs
-        if ($FileName -eq 'ir-risk-assessment') {
+        if ($FileName -eq 'BEC-RISK-ASSESSMENT') {
             $nextArgs.UserPrincipalName=[string]$saved.UPN
             $nextArgs.FinalReview=$true
         } else { $nextArgs.UPN=[string]$saved.UPN }
@@ -801,9 +801,9 @@ function Write-IRTicketSummary {
 
 try {
     Enable-Tls12
-    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Recovery and Validation' } catch {}
-    Write-IRLine 'IR: RECOVERY AND VALIDATION'
-    Write-IRLine 'Confirm recovery readiness and restore approved access.'
+    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='BEC: Restore and Validate' } catch {}
+    Write-IRLine 'BEC: Restore and Validate'
+    Write-IRLine 'Check recovery readiness and restore approved account access.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine '' 
     $inputs=Get-IRWorkflowInput $UPN $Tenant
@@ -861,7 +861,7 @@ try {
     Write-IRLine 'User sign-in with MFA still needs validation.'
     Write-IRLine 'Identity, remediation, and MFA readiness confirmed by the operator.'
     Write-IRTicketSummary
-    
+
     Write-IRLine "`nCOMPLETED: $((Get-Date).ToString('MM/dd/yyyy HH:mm'))"
     Section 'NEXT STEP'
     Write-IRLine 'Verify user sign-in with MFA.'
@@ -873,13 +873,13 @@ catch {
     foreach ($gap in $script:DataGaps) { Write-Warn $gap }
     if ($script:AdChanged) { Write-Warn 'AD may already be enabled. Verify AD and Entra state before retrying.' }
     Section 'NEXT STEP'
-    Write-IRLine 'ir-recover-validate'
+    Write-IRLine 'BEC-RECOVER-VALIDATE'
     Write-IRLine 'Resolve the reported items, then finish recovery. Do not assume access was fully restored.'
 }
 finally {
     if ($null -ne $script:OriginalTitle) { try { $Host.UI.RawUI.WindowTitle=$script:OriginalTitle } catch {} }
 }
 if ($script:RecoverySucceeded) {
-    Invoke-IRNextStep -FileName 'ir-risk-assessment' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
+    Invoke-IRNextStep -FileName 'BEC-RISK-ASSESSMENT' -Objective 'Next: rerun the read-only assessment for fresh account and mailbox checks.'
 }
 else { Invoke-IRNextStep -FileName '' -Objective '' }

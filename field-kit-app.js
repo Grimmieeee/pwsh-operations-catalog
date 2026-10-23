@@ -43,7 +43,7 @@
       platform:"Exchange Online",
       access:"Change",
       requires:"Connect: Connect-ExchangeOnline",
-      code:'Remove-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -Confirm:$false',
+      code:'Remove-MailboxFolderPermission -Identity "owner@domain.com:\\Calendar" -User "user@domain.com" -Confirm:$true',
       keywords:"calendar permissions mailbox folder remove access"
     },
     {
@@ -158,7 +158,7 @@
       name:"Delete Local User",
       platform:"Local Windows",
       access:"Destructive",
-      code:"net user username /delete",
+      code:"& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
       keywords:"delete local user remove account"
     },
     {
@@ -193,28 +193,28 @@
       name:"Disable Network Adapter",
       platform:"Local Windows",
       access:"Change",
-      code:'netsh interface set interface "Wi-Fi" admin=disabled',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
       keywords:"network adapter disable wifi isolate"
     },
     {
       name:"Restart Network Adapter",
       platform:"Local Windows",
       access:"Change",
-      code:'Restart-NetAdapter -Name "Wi-Fi"',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
       keywords:"network adapter restart nic"
     },
     {
       name:"Isolate Device - Disable Enabled Adapters",
       platform:"Local Windows",
       access:"Change",
-      code:'Get-NetAdapter | Where-Object Status -eq "Up" | Disable-NetAdapter -Confirm:$false',
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
       keywords:"isolate device network adapters disable incident response"
     },
     {
       name:"Reboot Computer",
       platform:"Local Windows",
       access:"Change",
-      code:"shutdown /r /t 0",
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
       keywords:"restart reboot computer workstation"
     },
     {
@@ -291,7 +291,7 @@
       name:"Update All Eligible WinGet Packages",
       platform:"WinGet",
       access:"Change",
-      code:"winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity",
+      code:"& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
       keywords:"winget update all packages software"
     },
     {
@@ -448,7 +448,7 @@
       name:"Delete All Inbox Rules",
       platform:"Exchange Online",
       access:"Destructive",
-      code:'Get-InboxRule -Mailbox "user@domain.com" -IncludeHidden | Remove-InboxRule -Confirm:$true',
+      code:"& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
       useFor:"Remove all visible and hidden inbox rules after reviewing the target mailbox.",
       keywords:"exchange inbox rules hidden delete remove cleanup mailbox"
     },
@@ -1452,6 +1452,7 @@
   function logicalArea(item){
     if (item.area === "Tools") return "Tools";
     if (item.area === "Toys") return "Toys";
+    if (/^BEC-/i.test(item.file || "")) return "Incident Response";
     if (/user profile backup/i.test(item.name || "")) return "Identity";
     if (item.type === "Quick Command" && item.name !== "Revoke Active Sessions") return "Standalone";
     if (/security\s*\/\s*ir|incident/i.test(item.area || "")) return "Incident Response";
@@ -1472,9 +1473,9 @@
 
     if (/^Show Password Last Changed And Age$/i.test(name)) return "Show Password Age";
     if (/^Show All Authentication Methods For One User$/i.test(name)) return "Show MFA Methods";
-    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "IR: Risk Assessment";
-    if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "IR: Contain and Eradicate";
-    if (/^Revoke Active Sessions$/i.test(name)) return "IR: Revoke Sessions";
+    if (/^BEC \/ Account Compromise Discovery$/i.test(name)) return "BEC: Assess User Risk";
+    if (/^BEC \/ Account Compromise Execution$/i.test(name)) return "BEC: Contain and Clean Up";
+    if (/^Revoke Active Sessions$/i.test(name)) return "BEC: Revoke Sessions";
     if (/^Kit Preflight$/i.test(name)) return "PowerShell Readiness Check";
     if (/^Map Service Desk Kit$/i.test(name)) return "Folder Inventory";
     if (/^Reset PowerShell Sessions$/i.test(name)) return "M365 Session Reset";
@@ -1482,7 +1483,7 @@
     if (/^Show Inbox Rules$/i.test(name) && /IncludeHidden/i.test(item.code || "")) return "Show Inbox Rules - Hidden";
     if (/Mailitemsaccessed/i.test(name)) return name.replace(/Mailitemsaccessed/ig,"Mail Items Accessed");
 
-    return name;
+    return name.replace(/^IR:\s*/i,"BEC: ");
   }
 
   function groupFor(item, area){
@@ -1519,9 +1520,9 @@
     }
 
     if (area === "Incident Response"){
-      if (/^IR:|risk exposure|account compromise|bec|revoke active sessions/i.test(name)) return "Account Response";
+      if (IR_STEPS.some(step=>step.file===file) || /revoke(?: active)? sessions/i.test(name)) return "Account Response";
       if (/investigat|timeline|token|threat|trace|exfil|email search/i.test(combined)) return "Investigation";
-      if (/recover|response|eradicate/i.test(name)) return "Response";
+      if (/recover|response|eradicate/i.test(combined)) return "Response";
       return "General";
     }
 
@@ -1812,10 +1813,6 @@
   function connectCommands(item){
     if (Array.isArray(item.connectFirst)) return [...item.connectFirst];
     if (/^Connect Microsoft Graph$/i.test(displayName(item))) return [];
-    if (item.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,item.name)){
-      const scopes = QUICK_GRAPH_SCOPES[item.name];
-      return scopes.length ? ['Connect-MgGraph -Scopes '+scopes.map(scope=>JSON.stringify(scope)).join(',')+' -ContextScope Process'] : [];
-    }
     if (/^Connect Exchange Online$/i.test(displayName(item))) return [];
 
     const curated = curatedMeta(item);
@@ -1901,9 +1898,9 @@
   const CARD_UPDATES = {"git-repo.ps1": {"objective": "Check repository changes, push reviewed work, or pull updates.", "requires": "Git for Windows; run from an existing terminal"}, "git-security.ps1": {"objective": "Review a GitHub security-log export for new access and security flags.", "requires": "Run with -Account your-github-handle"}, "set-execution.ps1": {"objective": "Prepare reviewed scripts to run under your current-user execution policy."}, "git-handoff.ps1": {"objective": "Save the current Git project state for your next session.", "changeNote": "Writes a local handoff file and Git exclusion; does not commit or push."}, "TEST-POWERSHELL-READINESS.ps1": {"area": "Tools", "subarea": "Setup", "name": "PowerShell Readiness"}, "GET-FOLDER-INVENTORY.ps1": {"area": "Tools", "subarea": "Repository", "name": "Repository Inventory", "objective": "Review a folder\u2019s contents, script signatures, and Git status."}, "RESET-M365-SESSION.ps1": {"area": "Tools", "subarea": "Setup"}, "INSTALL-M365-MODULES.ps1": {"area": "Tools", "subarea": "Setup"}, "attractor.ps1": {"objective": "Run a slowly evolving fractal animation with a floating label and clock."}, "rain.ps1": {"objective": "Run colorful terminal rain with a floating label and clock."}, "static.ps1": {"objective": "Run drifting dots and static with a floating label and clock."}};
 
   const IR_STEPS = [
-    {file:"ir-risk-assessment.ps1",name:"IR: Risk Assessment",n:"1"},
-    {file:"ir-contain-eradicate.ps1",name:"IR: Contain and Eradicate",n:"2"},
-    {file:"ir-recover-validate.ps1",name:"IR: Recovery and Validation",n:"3"}
+    {file:"BEC-RISK-ASSESSMENT.ps1",operationalSha256:"ff31eb0a23789f8c987a4518eed398728639f25d7201bcd4db925a2b80e4b227",acceptedSha256:"07f70bea99adcc4fcfc1115288ec4377f295f6b98ecfb6d16667da1d4f14383b",name:"BEC: Assess User Risk",n:"1"},
+    {file:"BEC-CONTAIN-ERADICATE.ps1",operationalSha256:"eb522ff1bde245fc1b18884bb21039f5e2267930d9e31d35c9f504590a94c64b",acceptedSha256:"e9c4eff8a9637416bb4b51f6de4f7f21838f01c0c80adcb9170ae98778b958fb",name:"BEC: Contain and Clean Up",n:"2"},
+    {file:"BEC-RECOVER-VALIDATE.ps1",operationalSha256:"c78fa6007c42f723a7a6be832dadb46253a4f693e4576d970725e66be9741995",acceptedSha256:"c8651f2ab0d3c0e3f50ee65bb80cda9e984bc6fe52ce268831b9a7cf501f9b04",name:"BEC: Restore and Validate",n:"3"}
   ];
   const IR_RENAMES = {
     "_STEP1-ir-discovery-summary.ps1": IR_STEPS[0],
@@ -1916,43 +1913,74 @@
   function documentLabel(item){
     return /guide|runbook|checklist|standard|handoff|how to/i.test([item.name,item.file].join(" ")) ? "GUIDE" : "REFERENCE";
   }
-  const RELATED_SETS = [
-    ["SIGN-FOLDER-SCRIPTS.ps1","MANAGE-CERT-SIGNATURES.ps1","set-execution.ps1"],
-    ["git-repo.ps1","git-security.ps1","git-handoff.ps1","git-tools.md"],
-    ["TEST-POWERSHELL-READINESS.ps1","INSTALL-M365-MODULES.ps1","RESET-M365-SESSION.ps1"],
-    ["GET-USER-GROUPS.ps1","GET-GROUP-MEMBERS.ps1","INVOKE-REMOVE-USER-GROUPS.ps1"],
-    ["GET-MAILBOX-FORWARDING.ps1","GET-MAILBOX-PERMISSIONS.ps1","GET-MAILBOX-SECURITY-SNAPSHOT.ps1"]
-  ];
+  const PENDING_NEXT_STEPS = {
+  "invoke-user-offboard.ps1": [
+    "GET-USER-PREDELETE-CHECK.ps1",
+    "INVOKE-DISABLE-ACCOUNTS.ps1",
+    "INVOKE-REMOVE-LICENSES.ps1"
+  ],
+  "invoke-user-onboard.ps1": [
+    "RESOLVE-NAMES-TO-UPNS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "INVOKE-ASSIGN-LICENSES.ps1"
+  ],
+  "get-inactive-group-debt.ps1": [
+    "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+    "GET-USER-GROUPS.ps1",
+    "GET-ACCOUNT-STATUS.ps1"
+  ],
+  "get-inactive-mailbox-debt.ps1": [
+    "GET-QUARTERLY-CLEANUP-REVIEW.ps1",
+    "GET-MAILBOX-PERMISSIONS.ps1",
+    "GET-ACCOUNT-STATUS.ps1"
+  ],
+  "find-accounts-by-name-clean.ps1": [
+    "RESOLVE-NAMES-TO-UPNS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "GET-USER-PREDELETE-CHECK.ps1"
+  ],
+  "shared-mailbox-members.ps1": [
+    "GET-MAILBOX-PERMISSIONS.ps1",
+    "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
+    "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
+  ],
+  "distro-group-members.ps1": [
+    "GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
+    "GET-GROUP-MEMBERS.ps1",
+    "GET-TENANT-GROUP-OWNERS.ps1"
+  ],
+  "get-graph-session-user-check.ps1": [
+    "TEST-POWERSHELL-READINESS.ps1",
+    "GET-ACCOUNT-STATUS.ps1",
+    "RESET-M365-SESSION.ps1"
+  ],
+  "tenant-security-hardening-guided.ps1": [
+    "GET-TENANT-SECURITY-SNAPSHOT.ps1",
+    "GET-CONDITIONAL-ACCESS-GAPS.ps1",
+    "GET-MFA-SECURITY-AUDIT.ps1"
+  ]
+};
+
   function relatedItems(item){
     const cards=window.FIELD_KIT_OPERATOR_CARDS || {};
     const spec=cards[item.file];
     const candidates=ITEMS.filter(other=>other!==item && (!item.file || other.file!==item.file) && other.status!=="Source pending");
+    const commandReview=window.FIELD_KIT_COMMAND_GUIDANCE?.[item.name];
+    const reviewedLinks=item.type==='Quick Command' ? (commandReview?.code===item.code ? commandReview.related : []) : spec?.related;
+    if(reviewedLinks)return reviewedLinks.map(key=>key.startsWith('command:')
+      ? candidates.find(other=>other.type==='Quick Command' && other.name===key.slice(8))
+      : candidates.find(other=>other.file===key)).filter(Boolean);
     let ranked=[];
-    if(item.name==='Revoke Active Sessions')return ['ir-risk-assessment.ps1','ir-contain-eradicate.ps1','ir-recover-validate.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
+    if(item.name==='Revoke Active Sessions')return ['BEC-RISK-ASSESSMENT.ps1','BEC-CONTAIN-ERADICATE.ps1','BEC-RECOVER-VALIDATE.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
     if(item.name==='Show Whether Remote Desktop Is Enabled')return ['Show Windows Firewall Profiles','Show Windows Firewall Rules by Name','Show Listening Tcp Ports'].map(name=>candidates.find(x=>x.name===name)).filter(Boolean);
-    if(spec){
-      const family=spec.family;
-      const adjoining={signing:['setup','files'],git:['files','signing'],licenses:['groups','accounts'],
-        'ir-mail':['ir-workflow','mail'],'ir-workflow':['ir-investigate','ir-mail'],
-        'ir-investigate':['ir-workflow','security'],groups:['licenses'],mail:['mail-audit'],
-        'mail-audit':['mail'],accounts:['licenses'],apps:['security'],security:['apps'],
-        endpoint:['files'],setup:['signing'],files:['git'],terminal:['setup']};
-      const explicit = family==='groups' ? ['GET-USER-GROUPS.ps1','GET-GROUP-MEMBERS.ps1','INVOKE-REMOVE-USER-GROUPS.ps1','GET-TENANT-GROUP-OWNERS.ps1','GET-DISTRIBUTION-GROUP-MEMBERS.ps1'] : [];
-      ranked=candidates.filter(other=>cards[other.file] && ((cards[other.file].family===family && family!=='ir-workflow') || adjoining[family]?.includes(cards[other.file].family)))
-        .sort((a,b)=>{
-          const rank=x=>explicit.includes(x.file)?explicit.indexOf(x.file):cards[x.file].family===family?10:20;
-          return rank(a)-rank(b)||a.displayName.localeCompare(b.displayName);
-        });
-    }else{
-      // Atomic commands relate within their actual platform and task group.
-      ranked=candidates.filter(other=>other.type===item.type && other.platform===item.platform && other.group===item.group)
-        .sort((a,b)=>{
-          const words=new Set(norm([item.displayName,item.subarea].join(' ')).split(' ').filter(x=>x.length>3));
-          const relevance=x=>norm([x.displayName,x.subarea].join(' ')).split(' ').filter(x=>words.has(x)).length;
-          return relevance(b)-relevance(a)||a.displayName.localeCompare(b.displayName);
-        });
-      if(isDocument(item))ranked=candidates.filter(isDocument).filter(other=>other.logicalArea===item.logicalArea);
-    }
+    // Atomic commands relate within their actual platform and task group.
+    ranked=candidates.filter(other=>other.type===item.type && other.platform===item.platform && other.group===item.group)
+      .sort((a,b)=>{
+        const words=new Set(norm([item.displayName,item.subarea].join(' ')).split(' ').filter(x=>x.length>3));
+        const relevance=x=>norm([x.displayName,x.subarea].join(' ')).split(' ').filter(x=>words.has(x)).length;
+        return relevance(b)-relevance(a)||a.displayName.localeCompare(b.displayName);
+      });
+    if(isDocument(item))ranked=candidates.filter(isDocument).filter(other=>other.logicalArea===item.logicalArea);
     return ranked.slice(0,3);
   }
   function relatedMarkup(item){
@@ -1961,29 +1989,9 @@
     return '<section class="related-block"><div class="section-label">RELATED ITEMS</div><div class="related-list">'+links.map(other=>`<button type="button" class="related-item" data-related-file="${esc(other.file)}" ${other.type==='Quick Command'?`data-related-name="${esc(other.name)}"`:''}><span>${esc(other.displayName)}</span>${accessMarkup(other).replaceAll('<div','<span').replaceAll('</div>','</span>')}</button>`).join('')+'</div></section>';
   }
 
-  // Delegated preparation for these atomic commands; roles and consent remain
-  // prerequisites. Diagnostic/disconnect commands deliberately need no sign-in.
-  const QUICK_GRAPH_SCOPES = {
-    "Show Password Last Changed And Age":["User.Read.All"],
-    "Show Sync Source":["User.Read.All"],
-    "Delete Cloud User":["User.ReadWrite.All"],
-    "Disable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
-    "Enable Sign-In":["User.EnableDisableAccount.All","User.Read.All"],
-    "Revoke Active Sessions":["User.RevokeSessions.All"],
-    "Remove Specific Authenticator Method":["UserAuthenticationMethod.ReadWrite.All"],
-    "Remove Specific Phone Method":["UserAuthenticationMethod.ReadWrite.All"],
-    "Remove Specific Delegated Grant":["DelegatedPermissionGrant.ReadWrite.All"],
-    "Add User to Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
-    "Remove User from Entra Group":["User.Read.All","GroupMember.ReadWrite.All"],
-    "Show Entra Sign-ins - Last 48 Hours":["AuditLog.Read.All"],
-    "Show Legacy / Other-client Sign-ins":["AuditLog.Read.All"],
-    "Show Successful Sign-Ins":["AuditLog.Read.All"],
-    "Show Graph Context":[],
-    "Disconnect Microsoft Graph":[]
-  };
-
   function buildItem(source){
     source = {...source, ...(CARD_UPDATES[source.file] || {})};
+    if (/^BEC-/i.test(source.file || "") && window.FIELD_KIT_OPERATOR_CARDS?.[source.file]) source.name=window.FIELD_KIT_OPERATOR_CARDS[source.file].name;
     const review = window.FIELD_KIT_CARD_GUIDANCE?.[source.file];
     if (review && review.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) source = {...source, ...review};
     if (source.name === "Revoke Active Sessions") source = {...source,area:"Security / IR",subarea:"Account Compromise"};
@@ -1994,12 +2002,6 @@
     if (/SET-THEME-(SEAGLASS|SILICON-VALLEY)/.test(source.file || "")) source.changeNote = source.notes;
     if (/SET-THEME-COBALT/.test(source.file || "")) source.changeNote = "Changes this terminal and sets Process execution policy to Bypass; no profile installation.";
     if (source.area === "Tools" && source.type === "Documentation") source.subarea = "Reference";
-    if (source.type === "Quick Command" && Object.hasOwn(QUICK_GRAPH_SCOPES,source.name)){
-      const scopes = QUICK_GRAPH_SCOPES[source.name];
-      source.requires = scopes.length
-        ? 'Microsoft.Graph modules for this command; delegated scopes: '+scopes.join(', ')+'. Consent and a supported Entra role for the target are required.'+(scopes.includes('AuditLog.Read.All') ? ' Sign-in logs also require tenant licensing and log-read access.' : '')
-        : 'Microsoft.Graph.Authentication; uses or inspects only the current session. No new sign-in required.';
-    }
     const commandReview = window.FIELD_KIT_COMMAND_GUIDANCE?.[source.name];
     if (source.type === "Quick Command" && commandReview?.code === source.code) {
       const {code: reviewedCode, ...copy} = commandReview;
@@ -2015,7 +2017,8 @@
     const operatorCard=window.FIELD_KIT_OPERATOR_CARDS?.[source.file];
     if (operatorCard && operatorCard.sourceSha256 === window.FIELD_KIT_SOURCE_INTEGRITY?.[source.publishedPath]) {
       source.operatorCard=operatorCard;
-      if(operatorCard.presentationRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
+      source.input=operatorCard.input;
+      if(operatorCard.presentationRevision || operatorCard.operationalRevision){source.version=operatorCard.releaseVersion;delete source.verification;}
     }
     const area = logicalArea(source);
     return {
@@ -2048,7 +2051,8 @@
     if (!existing || scoreQuality(item) > scoreQuality(existing)) byKey.set(key,item);
   }
 
-  const ITEMS = [...byKey.values()];
+  const PLANNED_ITEMS = [...byKey.values()].filter(item=>item.status==="Source pending");
+  const ITEMS = [...byKey.values()].filter(item=>item.status!=="Source pending");
 
   const state = {
     area:"Full Library",
@@ -2082,6 +2086,7 @@
   const sourceCache = new Map();
 
   function areaLabel(area){
+    if (area === "Incident Response") return "BEC";
     if (area === "Standalone") return "Quick Commands";
     if (area === "Utility") return "Utilities";
     return area;
@@ -2089,7 +2094,7 @@
 
   function countArea(area){
     if (area === "Full Library") return ITEMS.length;
-    if (area === "About") return "";
+    if (area === "About" || area === "Start Here") return "";
     return ITEMS.filter(x => itemBuckets(x).includes(area)).length;
   }
 
@@ -2120,7 +2125,7 @@
     const parent = `
       <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
         <span class="area-label">${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
-        ${area === "Full Library" ? "" : `<span class="area-count">${countArea(area)}</span>`}
+        ${area === "Full Library" || area === "Start Here" ? "" : `<span class="area-count">${countArea(area)}</span>`}
       </button>
     `;
 
@@ -2134,7 +2139,7 @@
       const allActive = !state.incidentSource;
       const children = [
         `<button class="area-sub-button ${allActive ? "active" : ""}" data-incident-source="" type="button">
-            <span>All Incident Response</span><span class="area-count">${countArea("Incident Response")}</span>
+            <span>All BEC</span><span class="area-count">${countArea("Incident Response")}</span>
           </button>`,
         ...sources.map(({source,count}) => `
           <button class="area-sub-button ${state.incidentSource === source ? "active" : ""}" data-incident-source="${esc(source)}" type="button">
@@ -2174,7 +2179,7 @@
 
   function renderNav(){
     areaNav.innerHTML = [
-      '<div class="nav-primary">' + navButton("Full Library") + '</div>',
+      '<div class="nav-primary">' + navButton("Start Here") + navButton("Full Library") + '</div>',
       navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
       navSection("Operations", ["Incident Response","Utility","Standalone"]),
       navSection("Reference", ["Tools"]),
@@ -2184,24 +2189,10 @@
   }
 
   function searchConcepts(item){
-    const facts = factBlockFor(item)?.items || [];
-    const text = [
-      item.displayName,
-      item.name,
-      item.file,
-      item.group,
-      item.logicalArea,
-      item.keywords,
-      item.platform,
-      item.notes,
-      item.output,
-      item.subarea,
-      item.useFor,
-      item.code,
-      facts.join(" ")
-    ].join(" ");
+    const text = [item.displayName,item.operatorCard?.objective || item.objective,item.useFor].join(" ");
 
     const tags = [];
+    if (/^BEC-/i.test(item.file || "")) tags.push(item.file, ...(item.operatorCard?.searchAliases || []));
     const families = [
       [/computer|endpoint|workstation|device|hostname|bitlocker/i,"device computer endpoint workstation"],
       [/permission|delegat|full access|send as/i,"permission permissions access delegation"],
@@ -2275,12 +2266,12 @@
     const offboardingIntent = /^(?:offboarding|offboard(?: user| employee)?|employee left|(?:employee|user) (?:leaving|departed)|departing (?:employee|user)|leaver)$/.test(intent);
     if (offboardingIntent) {
       if (item.file === 'GET-USER-PREDELETE-CHECK.ps1') return 1000;
-      if (item.displayName === 'User Offboarding') return 900;
       if (item.file === 'INVOKE-REMOVE-LICENSES.ps1') return 800;
       return 0;
     }
     const assessmentIntent = /^(?:(?:suspicious|unfamiliar|unusual|unexpected) (?:login|logon|sign in|signin|mfa prompts?)|(?:hacked|compromised) (?:account|mailbox)|(?:account|mailbox) (?:hacked|compromised)|possible account compromise|bec|phishing)$/.test(intent);
-    if (assessmentIntent && item.file === 'ir-risk-assessment.ps1') return 1000;
+    if (assessmentIntent && item.file === 'BEC-RISK-ASSESSMENT.ps1') return 1000;
+    if ((item.operatorCard?.searchAliases || []).some(alias=>norm(alias)===intent)) return 1000;
     const q = words(query);
     if (!q.length) return 1;
 
@@ -2293,10 +2284,11 @@
       item.file,
       item.group,
       item.logicalArea,
-      item.keywords,
       searchConcepts(item)
     ].join(" "));
 
+    const task = words([item.displayName,item.operatorCard?.objective || item.objective,item.useFor,searchConcepts(item)].join(" "));
+    if(!q.every(token=>task.some(w=>w===token || w.startsWith(token))))return 0;
     const weak = words([
       item.platform,
       item.objective,
@@ -2326,6 +2318,12 @@
       if (!matched) return 0;
     }
 
+    // Prefer a tool whose actual title matches the task over incidental mentions.
+    const titleWords=words(item.displayName);
+    if(q.every(token=>titleWords.some(w=>w===token || w.startsWith(token)))) score+=40;
+    if(norm(item.displayName)===intent) score+=100;
+    if(item.operatorCard) score+=12;
+    if(item.status==='Source pending') score-=2;
     return score;
   }
 
@@ -2334,7 +2332,7 @@
     const text = [item.displayName,item.name,item.file,item.subarea].join(" ");
 
     if (/onboard|offboard|pre[- ]?delete|disable(?:\s+user)?\s+accounts|delete(?:\s+user)?\s+accounts/i.test(text)) return "On / Offboarding";
-    if (/shared mailbox sign-in|\bIR[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
+    if (/shared mailbox sign-in|\b(?:IR|BEC)[-_ ]|incident response|mfa|conditional access|oauth|secure score|sign[- ]?in anomalies|device code|service principal|app registration|guest app consent|guest consent|security hardening|user security snapshot|tenant security snapshot/i.test(text)) return "Security";
     if (/mailbox|room|equipment|resource access|inbox|forward|transport rule|send as|full access|calendar|contacts|litigation hold/i.test(text)) return "Mailbox";
     if (/license|licensing/i.test(text)) return "Licenses";
     if (/permission|role|access/i.test(text) && !/conditional access/i.test(text)) return "Permissions";
@@ -2607,6 +2605,7 @@
     // Only show it when global search mixes scopes together.
     if (!state.query.trim()) return "";
 
+    if(item.operatorCard)return '<span class="result-tag result-scope">'+esc(item.operatorCard.scope)+'</span>';
     const labels = {
       "Single User":"SINGLE USER",
       "Multi User":"MULTI USER",
@@ -2628,6 +2627,19 @@
 
   function releaseTag(item){
     return isVerifiedRelease(item) ? '<button class="verification-check title-verification" type="button" data-verification-about aria-label="Operator verified; read About">✓</button>' : "";
+  }
+
+  // Package review is separate from the exact-source operator-tested badge.
+  // Only the coupled BEC trio can carry this source-bound package review.
+  function isReviewedWorkflowPackage(item){
+    const spec=item.operatorCard, review=spec?.workflowReview, baseline=review?.baselineVerification;
+    const accepted=IR_STEPS.find(step=>step.file===item.file);
+    return !!(accepted && item.workflow &&
+      (review?.kind==='bec-naming' && review.evidence==='docs/qa/BEC-NAMING-REVIEW.json') && baseline?.operatorTested===true &&
+      baseline.version==='1.0.0' && baseline.evidence==='docs/qa/IR-1.0.0-VERIFICATION.md' && baseline.sha256===accepted.acceptedSha256 &&
+      /^[0-9a-f]{64}$/.test(baseline.sha256 || '') && review.nonPresentationSha256===accepted.operationalSha256 &&
+      review.version===item.version && review.sourceSha256===spec.sourceSha256 &&
+      review.sourceSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath]);
   }
 
   function rowTags(item){
@@ -2661,6 +2673,7 @@
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
+          <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
         ${isVerifiedRelease(item) ? '<span class="result-check verification-check" aria-hidden="true">✓</span>' : '<span class="result-arrow" aria-hidden="true">›</span>'}
@@ -2668,10 +2681,60 @@
     `;
   }
 
+  function renderFirstRun(){
+    results.innerHTML = `<section class="about-block first-run-guide">
+      <div class="about-kicker">FIRST TIME USING FIELD // KIT?</div>
+      <h2 class="item-title">Start Here</h2>
+      <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
+      <section class="note-block"><h3>1. Confirm the customer and computer</h3>
+        <p>Connect to the customer’s approved Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket open to record who ran the job and when.</p>
+      </section>
+      <section class="note-block"><h3>2. Prepare PowerShell</h3>
+        <p>Download the setup package, transfer it to that computer if needed, and extract it. Right-click <strong>PREPARE-FIELD-KIT.ps1</strong> and select <strong>Run with PowerShell</strong>.</p>
+        <p>Choose Microsoft Graph, Exchange Online, or both. Setup checks first, offers to install missing components, then rechecks them. Read the plan before typing INSTALL. Wait for <strong>RESULT: READY</strong>, then press Enter to close setup.</p>
+        <p>Run setup under the same Windows account and PowerShell edition you will use for jobs. Setup prepares that account and edition.</p>
+        <div class="actions"><button id="downloadSetupPackage" class="action primary" type="button">Download Setup Package</button><button class="action" type="button" data-first-run-file="PREPARE-FIELD-KIT.ps1">View Setup Tool</button></div>
+        <p id="setupPackageStatus" class="source-note" role="status"></p>
+        <p>Setup changes local prerequisites after approval. It does not sign into a customer or grant access. Local AD jobs also need approved AD tools and a domain connection.</p>
+      </section>
+      <section class="note-block"><h3>3. Choose and run one job</h3>
+        <p>Read the card’s purpose, scope and impact. Download its current file and transfer it to the support computer. Right-click and select <strong>Run with PowerShell</strong>. Follow any card-specific launch instructions.</p>
+        <p>Confirm the account, customer environment and targets when the tool asks. Sign in with the approved customer account. Setup readiness does not prove you have permission to run a job.</p>
+        <p>The BEC package is one sequential workflow: keep its files together and use the same window through its handoffs.</p>
+        <div class="actions"><button id="browseAfterSetup" class="action" type="button">Choose a Tool</button></div>
+      </section>
+      <section class="note-block"><h3>4. Review, finish and close</h3>
+        <p>Review completed, failed, skipped and unresolved results. Record the outcome in the ticket. Press Enter to close the dedicated session when complete. Start the next unrelated job in a fresh window.</p>
+        <details class="operator-details"><summary>SESSION BOUNDARIES</summary><p>A separate window contains a job; it is not a security sandbox. Closing it ends that PowerShell process, but customer access, Windows rights and browser sign-in caches may remain. A fresh window does not guarantee another password or MFA prompt.</p><p>If reusing an existing window, run Reset M365 Session in that same window first. Running cleanup in a different window cannot clean up the original. Follow your approved sign-out process on the shared computer when finished.</p></details>
+      </section>
+      <div class="actions"><button class="action" type="button" data-first-run-file="START-HERE.md">Full Setup Guide</button><button class="action" type="button" data-first-run-file="TEST-POWERSHELL-READINESS.ps1">Check Readiness Only</button></div>
+    </section>`;
+    results.querySelectorAll('[data-first-run-file]').forEach(button=>button.addEventListener('click',()=>{
+      const item=ITEMS.find(candidate=>candidate.file===button.dataset.firstRunFile);
+      if(item)openItem(item);
+    }));
+    document.getElementById('browseAfterSetup')?.addEventListener('click',()=>{
+      state.area='Full Library';state.query='';search.value='';renderNav();renderResults();
+    });
+    document.getElementById('downloadSetupPackage')?.addEventListener('click',async event=>{
+      const button=event.currentTarget,status=document.getElementById('setupPackageStatus');
+      button.disabled=true;status.textContent='Checking setup and guide before packaging…';
+      try { saveBlob(await buildSetupBundle(),'field-kit-first-run.zip');status.textContent='Setup script and guide verified. Package downloaded. Extract it on the approved support computer.'; }
+      catch(error){status.textContent=error.message || 'Setup package unavailable. No partial package downloaded.';}
+      finally {button.disabled=false;}
+    });
+  }
+
   function renderResults(){
     const queryActive = Boolean(state.query.trim());
-    searchWrap?.classList.toggle("hidden", state.area === "About");
+    searchWrap?.classList.toggle("hidden", state.area === "About" || state.area === "Start Here");
     verificationKey.classList.add("hidden");
+
+    if(state.area==='Start Here'){
+      crumb.textContent='START HERE';entryCount.textContent='';entryCount.classList.add('hidden');
+      clearSearch.classList.add('hidden');contextBar.classList.add('hidden');jumpBar.innerHTML='';jumpBar.classList.add('hidden');empty.classList.add('hidden');
+      renderFirstRun();return;
+    }
 
     if (state.area === "About"){
       crumb.textContent = "ABOUT";
@@ -2701,6 +2764,7 @@
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
           <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
 
+          <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
             <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
@@ -2802,7 +2866,7 @@
   function workflowMarkup(workflow){
     if (!workflow) return "";
     const note = workflow.current === '1' ? 'Start here. Continue to containment only if needed and approved.' : workflow.current === '2' ? 'After containment, review recovery readiness before restoring access.' : 'Restore only approved access, then verify the user can sign in with MFA.';
-    return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^IR: /,""))}</span></button>`).join("")}</div></section>`;
+    return `<section class="workflow-block"><div class="section-label">STEP ${esc(workflow.current)} OF 3</div><div class="workflow-note">${esc(note)}</div><div class="sequence">${workflow.steps.map(step=>`<button type="button" class="sequence-row workflow-link ${step.n===workflow.current ? "sequence-current" : ""}" data-related-file="${esc(step.file)}" ${step.n===workflow.current ? 'aria-current="step"' : ''}><span class="sequence-number">${esc(step.n)}</span><span>${esc(step.name.replace(/^(?:BEC|Incident Response): /,""))}</span></button>`).join("")}</div></section>`;
   }
 
   function startMarkup(item){
@@ -2810,10 +2874,10 @@
     if (!window.FIELD_KIT_START) return '<section class="guided-start"><div class="section-label">STEPS</div><p>Start guidance could not load. Reload the site before proceeding. Individual source controls remain below.</p></section>';
     const ir=Boolean(window.FIELD_KIT_START.stages[item.file]);
     const terminal=/^terminal(?:-admin)?$/.test(item.startMode || '');
-    const code=window.FIELD_KIT_START.launch(item.file)+(item.launchArgs || '');
-    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
+    const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
+    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Right-click the downloaded file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
     return `<section class="guided-start operator-steps"><div class="section-label">STEPS</div>
-      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on the jumpbox.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD IR WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
+      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
       <p>${ir ? 'Keep the workflow in the same PowerShell window.' : item.startMode==='terminal-admin' ? 'Open PowerShell as administrator.' : 'Use the PowerShell window where this tool should run.'}</p>
       <div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
       <p>Copy the command into that window. Select <strong>Copy as path</strong> for the downloaded file and paste the path when asked.</p>
@@ -2829,12 +2893,32 @@
   }
   function operatorDetailsMarkup(item){
     const spec=item.operatorCard;
-    if(!spec)return shortNote(item);
-    const notes=[...spec.details];
+    if(!spec){
+      if(item.type!=='Quick Command')return shortNote(item);
+      const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
+      return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
+    }
+    const notes=[...connectionInfo(item),requirementInfo(item),...(item.permissionNotes || []),...(spec.preparation || []),...spec.details].filter(Boolean);
     if(item.reviewNote)notes.push(item.reviewNote);
-    if(item.changeNote && !notes.includes(item.changeNote))notes.push(item.changeNote);
+    if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
-    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></details>`:'';
+    const sample=spec.inputExample;
+    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
+    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}</details>`:'';
+  }
+
+  function connectionInfo(item){
+    const record=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
+    if(!record || record.sha256!==window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath])return [];
+    const services=record.services || [];
+    const labels={GRAPH:'Microsoft Graph',EXO:'Exchange Online',AD:'local Active Directory'};
+    if(services.length)return ['Connection: '+services.map(service=>labels[service] || service).join(' + ')+'.',services.includes('GRAPH') || services.includes('EXO') ? 'Sign-in: use the approved customer account when the workflow requests it.' : 'Sign-in: uses the Windows account running this job.'];
+    if(item.file==='BEC-GET-THREAT-INTEL-ACTIVITY.ps1')return ['Connection: external IP reputation services.','Sign-in: provider API keys supplied for this run.'];
+    if(item.file==='git-repo.ps1')return ['Connection: the repository remote when pulling or pushing.','Sign-in: the Git credentials configured for that remote.'];
+    if(item.file==='UPDATE-WINDOWS-APPS.ps1')return ['Connection: configured WinGet package sources.','Sign-in: uses the Windows account; individual installers may request approval.'];
+    if(['RESET-M365-SESSION.ps1','INVOKE-SESSION-RESET.ps1'].includes(item.file))return ['Connection: existing sessions in this PowerShell window.','Sign-in: no new customer sign-in.'];
+    if(['PREPARE-FIELD-KIT.ps1','INSTALL-M365-MODULES.ps1'].includes(item.file))return ['Connection: official PowerShell Gallery for approved installations.','Sign-in: the current Windows account; no customer tenant sign-in.'];
+    return ['Connection: this computer or supplied files.','Sign-in: uses the approved Windows account; no new customer tenant sign-in.'];
   }
 
   function completionInfo(item){
@@ -2914,12 +2998,10 @@
     const inputFacts = facts.filter(text => /^one .+ input$/i.test(text));
     const inputs = inputInfo(item) ? [inputInfo(item)] : inputFacts;
     const guards = item.guards || facts.filter(isGuard).filter(text => !inputFacts.includes(text));
-    const requires = requirementInfo(item);
     const list = values => `<div class="check-list">${values.map(text => `<div class="check-item">${esc(window.FIELD_KIT_PLAIN_PHRASES?.[text] || text)}</div>`).join("")}</div>`;
     const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
     const review = `${checks.length ? `<details class="card-disclosure"><summary>CHECKS</summary>${list(checks)}</details>` : ""}
-      ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}
-      ${requires ? `<details class="requirements"><summary title="${esc(requires)}">REQUIRES</summary><div class="requirements-copy">${esc(requires)}</div></details>` : ""}`;
+      ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}`;
     return input + review;
   }
 
@@ -3085,7 +3167,7 @@
   function sourceButton(item){
     if (item.type === "Quick Command") return "";
     if (!item.publishedPath && !item.code) return '<span class="source-note">Source pending. Download not available yet.</span>';
-    const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".PS1";
+    const ext = /\.md$/i.test(item.file || "") ? ".MD" : ".ps1";
     const buttons = `<button id="downloadSource" class="action ${item.workflow ? '' : 'primary'}" type="button">Download</button><button id="showSource" class="action" type="button">View Code</button>`;
     return (item.workflow ? `<details class="individual-source"><summary>Individual script / source</summary><div class="actions">${buttons}</div></details>` : buttons)+'<span id="sourceStatus" role="status"></span>';
   }
@@ -3129,26 +3211,28 @@
 
     drawerBody.innerHTML = `
       <section class="item-head">
-        <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family.replace(/^ir-/, 'IR / ') : primaryBucket(item))}</div>
+        <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family==='ir-workflow' ? 'BEC' : item.operatorCard.family.startsWith('ir-') ? 'BEC' : item.operatorCard.family : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
         <div class="operator-meta">${accessMarkup(item)}${item.operatorCard ? `<span class="operator-platform">${esc(moduleLabel(item).replace(/GRAPH/g,'Entra').replace(/EXO|EXCHANGE/g,'Exchange').replace(/ACTIVE DIRECTORY/g,'AD'))}</span>` : ''}</div>
         ${scopeMarkup(item)}
         ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}
       </section>
+      ${item.operatorCard?.notice ? `<p class="change-note operator-notice">${esc(item.operatorCard.notice)}</p>` : ''}
       ${item.operatorCard ? '' : objectiveMarkup(item)}
       ${item.operatorCard ? '' : useForMarkup(item)}
       ${item.changeNote && !item.operatorCard ? `<div class="change-note">${esc(item.changeNote)}</div>` : ''}
       ${optionMarkup(item)}
       ${workflowMarkup(item.workflow)}
       ${item.operatorCard ? '' : factsMarkup(item)}
-      ${item.operatorCard ? '' : runInfoMarkup(item)}
+      ${item.operatorCard ? '' : item.type==='Quick Command' ? '<p class="connection-direction">START: open PowerShell on the target computer. Check DETAILS for requirements and connection setup before running.</p>' : runInfoMarkup(item)}
       ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
       <div class="actions operator-actions">${sourceButton(item)}${referenceButtons(item)}</div>
       <div id="sourceMount"></div>
       <div id="copyStatus" role="status" aria-live="polite"></div>
       ${operatorDetailsMarkup(item)}
+      ${item.status==='Source pending' ? '<p class="source-note">'+(PENDING_NEXT_STEPS[item.file] ? 'The tools below cover individual tasks; they do not replace the complete planned workflow. Review each tool’s scope before continuing.' : 'No working replacement is published. Use your approved process for this task until this tool is available.')+'</p>' : ''}
       ${relatedMarkup(item)}
     `;
 
@@ -3165,9 +3249,9 @@
       const button=e.currentTarget,status=document.getElementById('workflowStatus');
       button.disabled=true;
       button.textContent='VERIFYING WORKFLOW';status.textContent='Checking all three scripts before building the package…';
-      try { const blob=await buildIRBundle();saveBlob(blob,'field-kit-ir.zip');status.textContent='All three scripts verified. Workflow package downloaded.'; }
+      try { const blob=await buildIRBundle();saveBlob(blob,'field-kit-bec.zip');status.textContent='All three source checksums match the reviewed release. Workflow package downloaded.'; }
       catch(error){status.textContent=error.message||'Workflow package could not be built. No partial package was downloaded.';}
-      finally{button.disabled=false;button.textContent='DOWNLOAD IR WORKFLOW';}
+      finally{button.disabled=false;button.textContent='DOWNLOAD BEC WORKFLOW';}
     });
     drawerBody.querySelector("[data-verification-about]")?.addEventListener("click",()=>{
       closeItem();state.area="About";state.query="";search.value="";renderNav();renderResults();
@@ -3341,15 +3425,29 @@
     return base.replace(/[^a-z0-9._-]/gi,"-");
   }
 
+  async function buildSetupBundle(){
+    if(!window.FIELD_KIT_START)throw new Error('Package guidance could not load. Reload the site.');
+    const names=['PREPARE-FIELD-KIT.ps1','START-HERE.md'];
+    const files=await Promise.all(names.map(async name=>{
+      const item=ITEMS.find(candidate=>candidate.file===name);
+      const hash=item && window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath];
+      const review=window.FIELD_KIT_CARD_GUIDANCE?.[name];
+      if(!item || !hash || review?.sourceSha256!==hash)throw new Error('Setup package needs source review. No package downloaded.');
+      return {name,text:await resolveSource(item),hash};
+    }));
+    return window.FIELD_KIT_START.zip([...files,{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
+  }
+
   async function buildIRBundle(){
     if(!window.FIELD_KIT_START)throw new Error('Workflow guidance could not load. Reload the site.');
-    const files = await Promise.all(IR_STEPS.map(async step=>{
-      const item=ITEMS.find(candidate=>candidate.file===step.file);
-      if(!item || !isVerifiedRelease(item))throw new Error('The workflow needs release review. No package downloaded.');
+    const items=IR_STEPS.map(step=>ITEMS.find(candidate=>candidate.file===step.file));
+    if(items.some(item=>!item || !(isVerifiedRelease(item) || isReviewedWorkflowPackage(item))))throw new Error('The workflow needs release review. No package downloaded.');
+    if(new Set(items.map(item=>item.version)).size!==1)throw new Error('Workflow versions do not match. No package downloaded.');
+    const files = await Promise.all(items.map(async item=>{
       return {name:item.file,text:await resolveSource(item),hash:window.FIELD_KIT_SOURCE_INTEGRITY[item.publishedPath],version:item.version};
     }));
     if(new Set(files.map(file=>file.version)).size!==1)throw new Error('Workflow versions do not match. No package downloaded.');
-    return window.FIELD_KIT_START.zip([...files,{name:'IR-WORKFLOW-GUIDE.md',text:window.FIELD_KIT_START.guide()},{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
+    return window.FIELD_KIT_START.zip([...files,{name:'BEC-WORKFLOW-GUIDE.md',text:window.FIELD_KIT_START.guide()},{name:'SHA256SUMS.txt',text:files.map(file=>file.hash+'  '+file.name).join('\n')+'\n'}]);
   }
 
   function saveText(source, filename){

@@ -1,12 +1,13 @@
-# Interactive incident-response workflow
+# BEC response workflow
 
-Published release: 1.0.0. The owner confirmed successful runs of these exact
-assessment, containment, cleanup, recovery and same-window handoff files on
-a Windows client jumpbox. This is not a
-claim of compatibility with every tenant, module version or hybrid deployment.
+Current BEC naming release: 1.0.3. Script filenames, console labels and companion
+paths use BEC consistently. Inverse source comparisons prove only the reviewed
+names and version changed. Historical runtime evidence retains its original
+filenames and hashes; it does not grant a new exact-source runtime badge.
+See [the naming review](qa/BEC-NAMING-REVIEW.json).
 
 Download all three scripts into one folder, retaining their filenames. Start
-`ir-risk-assessment` from an existing PowerShell window. Enter an
+`BEC-RISK-ASSESSMENT` from an existing PowerShell window. Enter an
 exact target UPN and tenant domain. The first sign-in requests the delegated
 read and change scopes for the workflow; assessment itself makes no tenant
 changes. Administrative roles and tenant consent are separate requirements.
@@ -25,10 +26,10 @@ Press ESC to end the workflow. In hosts without direct key support, type ESC
 and press ENTER as prompted. The final assessment completes without offering
 containment again. An existing PowerShell window remains open.
 
-The companion filenames are `ir-risk-assessment.ps1`,
-`ir-contain-eradicate.ps1`, and `ir-recover-validate.ps1`. Download and replace
-all three together; older uppercase filenames are retired. Output uses STATUS
-for results and NEXT STEP for guidance. Verification evidence and exact hashes
+The companion filenames are `BEC-RISK-ASSESSMENT.ps1`,
+`BEC-CONTAIN-ERADICATE.ps1`, and `BEC-RECOVER-VALIDATE.ps1`. Download and replace
+all three together; previous IR-prefixed filenames are retired. Output uses STATUS
+for results and NEXT STEP for guidance. Accepted baseline runtime evidence and hashes
 are recorded in [IR-1.0.0-VERIFICATION.md](qa/IR-1.0.0-VERIFICATION.md).
 
 ## Limits and safety

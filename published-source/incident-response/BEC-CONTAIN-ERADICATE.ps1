@@ -1,12 +1,12 @@
 ﻿<#PSScriptInfo
-.VERSION 1.0.0
+.VERSION 1.0.3
 .GUID d6441bc3-67ed-412b-bd3c-080a2ea6ef45
 .AUTHOR FIELD // KIT
-.DESCRIPTION Selective containment and eradication workflow for operator-approved response.
+.DESCRIPTION Contain and clean up one compromised account after approval.
 #>
 <#
 .SYNOPSIS
-IR: Contain and Eradicate
+BEC: Contain and Clean Up
 .DESCRIPTION
 Makes only selected and explicitly confirmed changes to one M365 identity/mailbox.
 Synced identity changes use the matching AD SID, never a name-only match or cloud fallback.
@@ -197,14 +197,14 @@ function Invoke-IRNextStep {
         return
     }
     $label=switch ($FileName) {
-        'ir-contain-eradicate' { 'ir-contain-eradicate' }
-        'ir-recover-validate' { 'ir-recover-validate' }
-        default { 'ir-risk-assessment (FINAL CHECK)' }
+        'BEC-CONTAIN-ERADICATE' { 'BEC-CONTAIN-ERADICATE' }
+        'BEC-RECOVER-VALIDATE' { 'BEC-RECOVER-VALIDATE' }
+        default { 'BEC-RISK-ASSESSMENT (FINAL CHECK)' }
     }
     if (-not (Read-IRNavigation $label)) {
         $message=switch ($FileName) {
-            'ir-contain-eradicate' { 'Assessment complete. Document the findings and follow the recommendation above.' }
-            'ir-recover-validate' { 'Response run finished. A contained account still requires approved recovery.' }
+            'BEC-CONTAIN-ERADICATE' { 'Assessment complete. Document the findings and follow the recommendation above.' }
+            'BEC-RECOVER-VALIDATE' { 'Response run finished. A contained account still requires approved recovery.' }
             default { 'Recovery run finished. Confirm user sign-in with MFA and complete assessment and monitoring.' }
         }
         Close-IRWorkflow $message
@@ -225,7 +225,7 @@ function Invoke-IRNextStep {
             throw 'Next script is from a different release. Replace all three files together.'
         }
         $nextArgs.OutputDelayMs=$OutputDelayMs
-        if ($FileName -eq 'ir-risk-assessment') {
+        if ($FileName -eq 'BEC-RISK-ASSESSMENT') {
             $nextArgs.UserPrincipalName=[string]$saved.UPN
             $nextArgs.FinalReview=$true
         } else { $nextArgs.UPN=[string]$saved.UPN }
@@ -1155,10 +1155,10 @@ function Invoke-EradicationPlan {
 
 try {
     Enable-Tls12
-    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='IR: Contain and Eradicate' } catch {}
+    try { $script:OriginalTitle=$Host.UI.RawUI.WindowTitle; $Host.UI.RawUI.WindowTitle='BEC: Contain and Clean Up' } catch {}
 
-    Write-IRLine 'IR: CONTAIN AND ERADICATE'
-    Write-IRLine 'Contain the account and remove approved persistence.'
+    Write-IRLine 'BEC: Contain and Clean Up'
+    Write-IRLine 'Contain and clean up one compromised account after approval.'
     Write-IRLine (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
     Write-IRLine 'Review legacy app passwords separately in Entra if applicable; this script does not clear them.'
     Write-IRLine ''
@@ -1401,17 +1401,17 @@ try {
         Write-IRLine 'STATUS: RECOVERY REQUIRED' -ForegroundColor Red
         Section 'NEXT STEP'
         Write-IRLine 'Confirm recovery readiness and restore approved access.'
-        $script:NextIRFile='ir-recover-validate'
+        $script:NextIRFile='BEC-RECOVER-VALIDATE'
     }
     elseif ($failedCount -gt 0 -or $script:DataGaps.Count -gt 0 -or $remainingHighRiskRules.Count -gt 0 -or $postMailboxState.Forwarding.Count -gt 0 -or $remainingSensitiveOAuth.Count -gt 0) {
         Section 'NEXT STEP'
-        Write-IRLine 'ir-contain-eradicate'
+        Write-IRLine 'BEC-CONTAIN-ERADICATE'
         Write-IRLine 'Resolve failed actions and review remaining findings before recovery.'
-        Write-IRLine 'Then run ir-recover-validate to complete the response.'
+        Write-IRLine 'Then run BEC-RECOVER-VALIDATE to complete the response.'
     }
     else {
         Section 'NEXT STEP'
-        Write-IRLine 'ir-recover-validate'
+        Write-IRLine 'BEC-RECOVER-VALIDATE'
         Write-IRLine 'Review skipped actions and current account state before recovery.'
     }
 
@@ -1419,7 +1419,7 @@ try {
 catch {
     Write-IRLine ''
     Write-Fail 'Response stopped'
-    Write-IRLine 'NEXT: ir-contain-eradicate'
+    Write-IRLine 'NEXT: BEC-CONTAIN-ERADICATE'
     Write-IRLine 'Resolve the reported items and finish response before restoring access.'
     Write-IRLine (Get-ShortError $_)
     if ($script:ActionLog.Count) {

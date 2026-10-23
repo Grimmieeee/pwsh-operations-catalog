@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.2
 #>
 # OBJECTIVE: Preview a blue PowerShell theme and output helpers.
 
@@ -10,6 +10,9 @@
 # Paste the palette block into any kit script.
 # Run this file to preview all colors and tags in terminal.
 
+
+Write-Host 'Preview Cobalt Theme'
+Write-Host 'Preview a blue PowerShell theme and output helpers.'
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
 $Host.UI.RawUI.BackgroundColor = 'Black'
@@ -103,4 +106,4 @@ Write-Host ""
 Write-Host "${cT3}. . . . . . . . . . . . . . . . . . . . .${cR}"
 Write-Host "${cT1}MISSION ACCOMPLISHED. Goodbye.${cR}"
 Write-Host ""
-Read-Host "Press Enter to exit"
+Read-Host 'Press Enter to close session.'

@@ -1,3 +1,11 @@
+## Alignment and relationship review — October 21, 2026
+
+Use BEC: for the guided account-compromise sequence and BEC: for broader investigation tools. Keep filenames and callable interfaces stable. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
+
+A relationship review includes Related Items: three unique available tools per script, no self-links, no unsupported handoff, and a source-reviewed reason the next task is useful. Store explicit choices in operator-card-specs.json. Display only names and impact labels. Quick-command relationship curation remains separately attributable.
+
+Keep essential preparation and actual default scope in operational DETAILS. Put consequential local side effects before launch. Rendered-card checks must confirm the reviewed copy is actually visible, not just present in metadata. A matching checksum proves source integrity, not runtime success. BEC display-only package review is source-bound to the pinned accepted baseline and checked operational fingerprints; it does not confer the exact-source runtime badge.
+
 ## Shared purpose sentence — October 21, 2026
 
 Every script card shows one brief purpose sentence directly below the title. Use the exact same sentence as the script objective. Describe the specific job plainly; keep scope, steps and limitations separate. The objective must not imply complete access coverage, a clean security verdict, successful changes, or unsupported bulk behavior. Reuse an existing suitable objective when that preserves an accepted specialized release. Card/source parity is a release check.

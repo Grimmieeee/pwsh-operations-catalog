@@ -1,3 +1,11 @@
+## Alignment and relationship review — October 21, 2026
+
+Use BEC: for the account-compromise sequence and related investigation tools. Canonical response filenames use BEC-. Preserve IR, incident response and previous filenames as search aliases; update all companion calls and source-bound records together. The card and displayed script title/objective must agree where a native interactive header is appropriate; animations may keep the objective in source notes.
+
+A relationship review includes Related Items: three unique available tools per script, no self-links, no unsupported handoff, and a source-reviewed reason the next task is useful. Store explicit choices in operator-card-specs.json. Display only names and impact labels. Quick-command relationship curation remains separately attributable.
+
+Keep essential preparation and actual default scope in operational DETAILS. Put consequential local side effects before launch. Rendered-card checks must confirm the reviewed copy is actually visible, not just present in metadata. A matching checksum proves source integrity, not runtime success. BEC display-only package review is source-bound to the pinned accepted baseline and checked operational fingerprints; it does not confer the exact-source runtime badge.
+
 ## Shared purpose sentence — October 21, 2026
 
 Every script card shows one brief purpose sentence directly below the title. Use the exact same sentence as the script objective. Describe the specific job plainly; keep scope, steps and limitations separate. The objective must not imply complete access coverage, a clean security verdict, successful changes, or unsupported bulk behavior. Reuse an existing suitable objective when that preserves an accepted specialized release. Card/source parity is a release check.
@@ -129,7 +137,7 @@ Setup and terminal provisioning come first where relevant. Within each non-seque
 
 Exceptions:
 
-- Incident Response: execution sequence wins.
+- BEC: execution sequence wins.
 - Search results: relevance wins; A-Z breaks ties.
 
 Never alphabetize a sequence-dependent workflow.
@@ -190,7 +198,7 @@ Order:
 3. Important changes and required workflow order.
 4. INPUT, CHECKS and GUARDS, using matching headings and no overflow groups.
 5. Compact REQUIRES disclosure, then AUTO-CONNECT or CONNECT FIRST above small boxed service names and accurate start directions.
-6. Useful expandable Details; DOWNLOAD .PS1 / .MD and VIEW CODE actions.
+6. Useful expandable Details; DOWNLOAD .ps1 / .MD and VIEW CODE actions.
 7. COPY inside the exposed source box only.
 
 Use the compact Path Ping card as the default. Checkmarks describe distinct capabilities; do not repeat the title, purpose, or generic summary/CSV availability. Omit empty sections. Do not invent checks. Preserve important behavior and limitations in Details; show unusual side effects prominently.

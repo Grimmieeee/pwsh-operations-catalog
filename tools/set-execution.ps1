@@ -1,19 +1,31 @@
 <#
-.VERSION 1.0.1
+.VERSION 1.0.3
 #>
-# OBJECTIVE: Prepare selected scripts to run under local execution settings.
+# OBJECTIVE: Set local execution policy and unblock scripts beside this file.
 
 #Requires -Version 5.1
 # FIELD KIT setup: current-user execution policy and local script unblock.
 # Re-sign this file after editing if your environment requires signed scripts.
 # Unblocks only .ps1 files beside this script, matching the original scope.
 
+
+Write-Host 'Set Up Script Execution'
+Write-Host 'Set local execution policy and unblock scripts beside this file.'
 $failures = New-Object 'System.Collections.Generic.List[string]'
 $notices = New-Object 'System.Collections.Generic.List[string]'
 $oldProgressPreference = $ProgressPreference
 $ProgressPreference = 'SilentlyContinue'
 
 try {
+    # BEGIN IMPACT APPROVAL
+    Write-Host "PLAN // CurrentUser execution policy may change to RemoteSigned."
+    Write-Host "PLAN // Unblock every .ps1 file directly beside this script: $PSScriptRoot"
+    Write-Warning 'Only continue if every script in this folder has been reviewed.'
+    if ((Read-Host 'Type SETUP to approve; anything else cancels').Trim() -cne 'SETUP') {
+        Write-Host 'CANCELLED // No execution policy or file unblock changes requested.'
+        return
+    }
+    # END IMPACT APPROVAL
     # Do not rewrite policy when the effective setting already allows this workflow.
     # Never try to override an organizational policy with a process-level bypass.
     try {
@@ -61,10 +73,11 @@ try {
     } elseif ($notices.Count -gt 0) {
         Write-Host ("[!!] FOLLOW UP // " + ($notices -join '; ')) -ForegroundColor Yellow
     } else {
-        Write-Host '[MISSION COMPLETE] // Send it.' -ForegroundColor Green
+        Write-Host 'SETUP VERIFIED // Local execution settings checked.' -ForegroundColor Green
 		Write-Host ""
     }
 } finally {
+    Write-Host 'SESSION COMPLETE'
     $ProgressPreference = $oldProgressPreference
-    [void](Read-Host 'Press Enter to exit')
+    [void](Read-Host 'Press Enter to close session.')
 }

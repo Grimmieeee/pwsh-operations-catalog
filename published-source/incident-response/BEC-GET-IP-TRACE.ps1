@@ -1,4 +1,4 @@
-# .VERSION 1.0.2
+# .VERSION 1.0.4
 #Requires -Version 5.1
 
 <#
@@ -357,7 +357,7 @@ function Test-IP {
 }
 
 try {
-    Write-Host 'IR: Trace IP Activity'
+    Write-Host 'BEC: Trace IP Activity'
     Write-Host 'Find tenant audit activity associated with a selected IP address.'
     Write-Host "READ-ONLY"
     Write-Host ""

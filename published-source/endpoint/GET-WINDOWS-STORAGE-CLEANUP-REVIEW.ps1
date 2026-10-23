@@ -1,5 +1,5 @@
 <#
-.VERSION 1.0.2
+.VERSION 1.0.3
 #>
 #Requires -Version 5.1
 
@@ -49,6 +49,8 @@ function Write-FieldKitFooter {
 }
 
 function Pause-End {
+    Write-Host 'SESSION COMPLETE'
+
     Write-FieldKitFooter
     Read-Host 'Press Enter to close session.' | Out-Null
 }
