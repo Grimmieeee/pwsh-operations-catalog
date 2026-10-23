@@ -509,3 +509,6 @@ html[data-theme="light"]{--flag-danger:#a92222}
 .sidebar-signature .signature-letters{display:flex;flex:1;justify-content:space-between;letter-spacing:0;margin:0}
 .sidebar-signature .signature-letter{font-weight:200;letter-spacing:0}
 .sidebar-signature .signature-slashes{font-weight:200;letter-spacing:0;white-space:pre}
+
+.home-start-here > h3{margin:24px 0 16px;font:600 22px/1.3 var(--ui);color:var(--text)}
+.home-start-here .note-block h4{margin:0 0 10px;font:600 17px/1.4 var(--ui);color:var(--text)}

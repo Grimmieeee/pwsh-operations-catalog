@@ -67,6 +67,7 @@ test('sorted row click opens the matching source and hides sort controls on guid
 test('Start Here makes preparation, one-job scope and completion visible',()=>{
  const f=loadCatalog(root);f.api.state.area='Start Here';f.api.renderResults();
  const html=f.elements.get('results').innerHTML;
+ assert.match(html,/id="startHereHeading">Start Here<\/h3>/);
  for(const text of ['1. Confirm the customer and computer','2. Prepare PowerShell','3. Choose and run one job','4. Review, finish and close','Download Setup Package','RESULT: READY','same Windows account and PowerShell edition','same window','does not guarantee another password or MFA prompt'])assert.ok(html.includes(text),text);
  assert.doesNotMatch(html,/RMM/i);
  for(const file of ['published-source/utility/START-HERE.md','published-source/utility/PREPARE-FIELD-KIT.ps1'])assert.doesNotMatch(fs.readFileSync(path.join(root,file),'utf8'),/RMM/i);

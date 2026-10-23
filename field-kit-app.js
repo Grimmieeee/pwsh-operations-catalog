@@ -2819,10 +2819,11 @@
       <h2 class="item-title">Home</h2>
       <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
       <p class="home-reference"><strong>A working reference.</strong> <span>Use responsibly.</span></p>
-      <section class="note-block"><h3>1. Confirm the customer and computer</h3>
+      <section class="home-start-here" aria-labelledby="startHereHeading"><h3 id="startHereHeading">Start Here</h3>
+      <section class="note-block"><h4>1. Confirm the customer and computer</h4>
         <p>Connect to the customer’s approved Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket open to record who ran the job and when.</p>
       </section>
-      <section class="note-block"><h3>2. Prepare PowerShell</h3>
+      <section class="note-block"><h4>2. Prepare PowerShell</h4>
         <p>Download the setup package, transfer it to that computer if needed, and extract it. Right-click <strong>PREPARE-FIELD-KIT.ps1</strong> and select <strong>Run with PowerShell</strong>.</p>
         <p>Choose Microsoft Graph, Exchange Online, or both. Setup checks first, offers to install missing components, then rechecks them. Read the plan before typing INSTALL. Wait for <strong>RESULT: READY</strong>, then press Enter to close setup.</p>
         <p>Run setup under the same Windows account and PowerShell edition you will use for jobs. Setup prepares that account and edition.</p>
@@ -2830,17 +2831,18 @@
         <p id="setupPackageStatus" class="source-note" role="status"></p>
         <p>Setup changes local prerequisites after approval. It does not sign into a customer or grant access. Local AD jobs also need approved AD tools and a domain connection.</p>
       </section>
-      <section class="note-block"><h3>3. Choose and run one job</h3>
+      <section class="note-block"><h4>3. Choose and run one job</h4>
         <p>Read the card’s purpose, scope and impact. Download its current file and transfer it to the support computer. Right-click and select <strong>Run with PowerShell</strong>. Follow any card-specific launch instructions.</p>
         <p>Confirm the account, customer environment and targets when the tool asks. Sign in with the approved customer account. Setup readiness does not prove you have permission to run a job.</p>
         <p>The BEC package is one sequential workflow: keep its files together and use the same window through its handoffs.</p>
         <div class="actions"><button id="browseAfterSetup" class="action" type="button">Choose a Tool</button></div>
       </section>
-      <section class="note-block"><h3>4. Review, finish and close</h3>
+      <section class="note-block"><h4>4. Review, finish and close</h4>
         <p>Review completed, failed, skipped and unresolved results. Record the outcome in the ticket. Press Enter to close the dedicated session when complete. Start the next unrelated job in a fresh window.</p>
         <details class="operator-details"><summary>SESSION BOUNDARIES</summary><p>A separate window contains a job; it is not a security sandbox. Closing it ends that PowerShell process, but customer access, Windows rights and browser sign-in caches may remain. A fresh window does not guarantee another password or MFA prompt.</p><p>If reusing an existing window, run Reset M365 Session in that same window first. Running cleanup in a different window cannot clean up the original. Follow your approved sign-out process on the shared computer when finished.</p></details>
       </section>
       <div class="actions"><button class="action" type="button" data-first-run-file="START-HERE.md">Full Setup Guide</button><button class="action" type="button" data-first-run-file="TEST-POWERSHELL-READINESS.ps1">Check Readiness Only</button></div>
+      </section>
     </section>`;
     results.querySelectorAll('[data-first-run-file]').forEach(button=>button.addEventListener('click',()=>{
       const item=ITEMS.find(candidate=>candidate.file===button.dataset.firstRunFile);
