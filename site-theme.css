@@ -406,3 +406,11 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
 .sidebar-signature span{margin-left:0}
 .verification-sort-note{margin:10px 12px;color:var(--body);font-size:13px;line-height:1.5}
 @media(max-width:1100px){.sidebar-signature{font-size:15px}}
+
+/* Wordmarks: optical spacing, softer signature, larger kit. */
+.kit-wordmark{font-size:30px;letter-spacing:.16em}
+.sidebar-signature{font-size:17px;letter-spacing:0;white-space:nowrap;color:var(--body);opacity:.76}
+.sidebar-signature .signature-letters{display:inline-block;letter-spacing:.9em;margin:0 -.9em 0 0;color:inherit}
+.sidebar-signature .signature-slashes{letter-spacing:0;margin:0}
+.verification-historical{font-size:14px;width:auto}
+@media(max-width:1100px){.kit-wordmark{font-size:28px}.sidebar-signature{font-size:15px}}
