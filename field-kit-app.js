@@ -2189,7 +2189,7 @@
       '<div class="nav-primary">' + navButton("Start Here") + navButton("Full Library") + '</div>',
       navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
       navSection("Operations", ["Incident Response","Utility","Standalone"]),
-      navSection("Reference", ["Tools"]),
+      navButton("Tools"),
       navSection("Extras", ["Toys"]),
       '<div class="nav-bottom">' + navButton("About") + '</div>'
     ].join("");
@@ -2712,6 +2712,7 @@
   function catalogCompare(a,b){
     let difference = 0;
     if (state.sortKey === 'name') difference = a.displayName.localeCompare(b.displayName);
+    if (state.sortKey === 'verified') difference = Number(isVerifiedRelease(b)) - Number(isVerifiedRelease(a));
     if (state.sortKey === 'flag') difference = actionRank(a) - actionRank(b);
     if (state.sortKey === 'icon') {
       const order = ['single','multi','report','organization','local','command','reference'];
@@ -2721,12 +2722,12 @@
   }
 
   function setCatalogSort(key){
-    if (!['icon','name','flag'].includes(key)) return;
+    if (!['icon','name','flag','verified'].includes(key)) return;
     state.sortDirection = state.sortKey === key && (!state.query.trim() || state.sortExplicit) ? -state.sortDirection : 1;
     state.sortKey = key;
     state.sortExplicit = true;
     renderResults();
-    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'type' : key === 'flag' ? 'impact' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
+    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'type' : key === 'flag' ? 'impact' : key === 'name' ? 'script name' : key === 'verified' ? 'verified status' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
   }
 
   catalogHead?.addEventListener('click', event => {
@@ -2743,7 +2744,8 @@
           <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
-        ${isVerifiedRelease(item) ? '<span class="result-check verification-check" aria-hidden="true">✓</span>' : '<span class="result-arrow" aria-hidden="true">›</span>'}
+        <span class="result-verification" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : 'No exact-release operator verification'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : '<span aria-hidden="true">—</span>'}</span>
+        <span class="result-arrow" aria-hidden="true">›</span>
       </button>
     `;
   }
@@ -2805,7 +2807,7 @@
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
-      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'type' : label === 'flag' ? 'impact' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
+      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'type' : label === 'flag' ? 'impact' : label === 'name' ? 'script name' : label === 'verified' ? 'verified status' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
       button.classList.toggle('sort-active', active);
       button.querySelector('span').textContent = active ? (state.sortDirection === 1 ? '↑' : '↓') : '↕';
     });

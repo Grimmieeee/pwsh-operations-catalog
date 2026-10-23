@@ -351,3 +351,41 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
 .type-key-item svg{width:22px;height:22px;fill:none;stroke:var(--brand-mint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .type-key p{margin:10px 0 0;max-width:70ch}
 @media(max-width:1100px){.kit-wordmark{font-size:21px}.result-risk-flags .result-tag{font-size:11px}}
+
+/* Shared tracks keep descriptions and impact labels aligned across rows. */
+.brand{padding:26px 21px 16px;min-height:112px}
+.kit-wordmark{font-size:27px;letter-spacing:.18em;font-weight:300}
+.kit-light{font-family:"Raleway",var(--ui);font-weight:200}
+.kit-the{font-size:12px;margin-bottom:7px}
+.terminal-mark{width:56px;height:44px}
+.sidebar-footer{gap:12px;padding-top:16px;padding-bottom:22px}
+.catalog{--catalog-columns:42px minmax(160px,.85fr) minmax(190px,1.4fr) 242px 90px 16px}
+.catalog-head button[data-sort="flag"]{grid-column:4;justify-self:end}
+.catalog-head button[data-sort="verified"]{grid-column:5;justify-self:center;font-size:10px;gap:5px}
+.result-flags{grid-column:4;max-width:none;justify-self:end}
+.result-risk-flags{flex-wrap:nowrap;white-space:nowrap;gap:10px;max-width:none}
+.result-risk-flags .result-tag{font-size:14px;white-space:nowrap;line-height:1.5;letter-spacing:0}
+.result-description{margin:0;text-align:left;justify-self:stretch}
+.result-verification{grid-column:5;grid-row:1;justify-self:center;color:var(--muted);font-size:14px}
+.result-arrow{grid-column:6;grid-row:1}
+@media(max-width:1350px){
+ .catalog{--catalog-columns:36px minmax(145px,.85fr) minmax(160px,1.25fr) 210px 82px 12px}
+ .result-risk-flags .result-tag,.result-description{font-size:13px}
+ .catalog-head{gap:10px}.result{column-gap:10px}
+}
+@media(max-width:1100px){
+ .catalog{--catalog-columns:34px minmax(140px,1fr) 210px 80px 12px}
+ .catalog-head button[data-sort="flag"]{grid-column:3}
+ .catalog-head button[data-sort="verified"]{grid-column:4}
+ .result-name{grid-column:2;grid-row:1}
+ .result-description{grid-column:2 / 5;grid-row:2;font-size:13px}
+ .result-flags{grid-column:3;grid-row:1}
+ .result-verification{grid-column:4;grid-row:1}
+ .result-arrow{grid-column:5;grid-row:1 / 3}
+ .kit-wordmark{font-size:25px}
+}
+@media(max-width:760px){
+ .catalog{overflow-x:auto}
+ .catalog-head,.results{min-width:620px}
+ .result-risk-flags .result-tag{font-size:13px}
+}
