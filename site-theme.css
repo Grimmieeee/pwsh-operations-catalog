@@ -243,3 +243,36 @@ html[data-theme="light"] .drawer-overlay{background:rgba(20,40,30,.28)}
 
 /* A shared, source-matched purpose sentence confirms the selected tool. */
 .operator-purpose{margin:13px 0 18px;max-width:45ch;color:var(--fk-ffffff,#ffffff);font-size:15px;font-weight:400;line-height:1.6}
+
+/* Approved Sexy PowerShell identity: shared muted ink and live, scalable type. */
+:root{--brand-mint:#78aa94;--brand-tracking:.22em}
+html[data-theme="light"]{--brand-mint:#3f7361}
+.kit-wordmark,.maker-signature,.terminal-mark{color:var(--brand-mint)}
+.brand{height:auto;min-height:135px;padding:34px 26px 28px}
+.kit-wordmark{font:600 21px/1.4 var(--mono);letter-spacing:var(--brand-tracking)}
+.kit-the,.kit-name{display:block;white-space:nowrap}
+.kit-slashes{letter-spacing:0}
+.sidebar-footer{display:flex;justify-content:center;padding:24px 24px 34px;border:0}
+.terminal-mark{display:block;width:112px;height:88px;flex:none}
+.about-nav{border-top:0}
+.site-masthead{max-width:1560px;margin-inline:auto;padding:34px 46px 38px}
+.site-heading{margin:0;min-width:0;font-family:"Archivo Black","Arial Black",Arial,sans-serif;font-size:var(--hero-size,clamp(28px,8vw,144px));font-weight:400;line-height:.94;letter-spacing:-.065em;color:var(--text)}
+.title-short,.title-long{display:block;width:max-content;white-space:nowrap}
+.title-cursor{color:var(--brand-mint);margin-left:.08em}
+.maker-signature{display:flex;align-items:baseline;gap:.85em;margin-top:20px;font:600 clamp(14px,1.8vw,27px)/1.4 var(--mono);letter-spacing:var(--brand-tracking)}
+.maker-name{white-space:nowrap}
+.maker-slashes{margin-left:calc(-1 * var(--brand-tracking));letter-spacing:0}
+.search-wrap{padding-top:12px;background:transparent;border-bottom:0}
+html[data-theme="dark"] .workspace{background:#0e1417}
+html[data-theme="dark"] .sidebar{background:#0b1114}
+html[data-theme="dark"] .topbar{background:transparent;border-bottom:0}
+html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
+@media(min-width:761px){.topbar{height:46px}.masthead-note{font-size:10px}}
+@media(min-width:761px) and (max-width:1100px){.site-masthead{padding-inline:36px}}
+@media(max-width:760px){
+  .site-masthead{padding:26px 18px 30px}
+  .maker-signature{font-size:15px;margin-top:16px}
+  .brand{min-height:124px;padding:28px 26px 24px}
+  .sidebar-footer{padding-bottom:26px}
+  .terminal-mark{width:96px;height:auto}
+}
