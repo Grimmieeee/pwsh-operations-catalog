@@ -4676,18 +4676,17 @@
     const ir=Boolean(window.FIELD_KIT_START.stages[item.file]);
     const terminal=/^terminal(?:-admin)?$/.test(item.startMode || '');
     const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
-    if(!ir && !terminal)return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><p>Download file.<br>Right-click the downloaded file.<br>Select <strong>Run with PowerShell.</strong><br>Press Enter to close session when complete.</p></section>';
-    return `<section class="guided-start operator-steps"><div class="section-label">STEPS</div>
-      ${ir ? '<p>Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.</p><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : '<p>Download file.</p>'}
-      <p>${ir ? 'Keep the workflow in the same PowerShell window.' : item.startMode==='terminal-admin' ? 'Open PowerShell as administrator.' : 'Use the PowerShell window where this tool should run.'}</p>
-      <div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>${esc(code)}</code></details><button class="copy-mini" type="button" data-copy="${esc(code)}">COPY</button></div>
-      <p>Copy the command into that window. Select <strong>Copy as path</strong> for the downloaded file and paste the path when asked.</p>
-      ${ir ? '<p>Use the script handoff to continue. Keep the workflow window open.</p>' : '<p>Use the tool’s own finish controls; the existing PowerShell window stays open.</p>'}
-      ${ir ? `<details class="workflow-guide"><summary>Workflow preparation</summary>${window.FIELD_KIT_START.preparation.map(text=>`<p>${esc(text)}</p>`).join('')}</details>` : ''}
-    </section>`;
+    const download=ir ? 'Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.<br><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : 'Download file to the target workstation or approved client jumpbox.';
+    const launch=ir||terminal ? (ir?'Keep the workflow in the same PowerShell window.':item.startMode==='terminal-admin'?'Open PowerShell as administrator.':'Use the PowerShell window where this tool should run.')+
+      '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click the downloaded file. Select <strong>Run with PowerShell.</strong>';
+    const services=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath]?.services || [];
+    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an account authorized for this customer when prompted. Review any requested consent before accepting.' : 'Enter the requested targets and follow the script prompts.';
+    const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? 'When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
+    return '<section class="guided-start operator-steps"><div class="section-label">HOW TO RUN</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+(actionRank(item)>1?' Review the plan before approving any changes.':'')+'</li><li>'+close+'</li></ol>'+
+      (ir?'<details class="workflow-guide"><summary>Workflow preparation</summary>'+window.FIELD_KIT_START.preparation.map(text=>'<p>'+esc(text)+'</p>').join('')+'</details>':'')+'</section>';
   }
   function scopeMarkup(item){
-    if(item.operatorCard)return `<div class="operator-scope">${esc(item.operatorCard.scope)}<span>${esc(item.operatorCard.input)}</span></div>`;
+    if(item.operatorCard)return `<div class="operator-scope">${esc(item.operatorCard.scope)}${/GROUP$/.test(item.operatorCard.scope)?actionRank(item)===1?' CHECK':' ACTION':''}<span>${esc(item.operatorCard.input)}</span></div>`;
     if(item.type==='Quick Command')return '<div class="operator-scope">QUICK COMMAND</div>';
     if(isDocument(item))return '';
     return `<div class="operator-scope">${esc(primaryBucket(item).toUpperCase())}</div>`;
@@ -4699,15 +4698,22 @@
       const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
       return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
     }
-    const notes=[...connectionInfo(item),requirementInfo(item),...(item.permissionNotes || []),...(spec.preparation || []),...spec.details].filter(Boolean);
+    const requirements=[...connectionInfo(item),requirementInfo(item),...(spec.preparation || [])].filter(Boolean);
+    const profile=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
+    const modules={GRAPH:'Microsoft.Graph.Authentication',EXO:'ExchangeOnlineManagement',AD:'ActiveDirectory / RSAT'};
+    const summary=[spec.runtimeRequirement,...connectionInfo(item),profile?.services?.length?'Modules used: '+profile.services.map(x=>modules[x] || x).join(' + '):''].filter(Boolean);
+    const permissions=item.permissionNotes || [];
+    const notes=[...spec.details];
+    const evidence=[];
     const historical=verificationHistory(item);
-    if(historical)notes.push(`✓ Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
+    if(historical)evidence.push(`✓ Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
     const sample=spec.inputExample;
     const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
-    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}${item.workflow ? workflowMarkup(item.workflow) : ''}${relatedMarkup(item)}</details>`:'';
+    const list=(title,values)=>values.length?`<section class="detail-group"><h3>${title}</h3><ul>${[...new Set(values)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></section>`:'';
+    return `<details class="operator-details"><summary>DETAILS</summary>${list('Requires',summary)}<details class="technical-details"><summary>Module &amp; permission details</summary>${list('Requirements',requirements)}${list('Permissions',permissions)}</details>${list('Scope &amp; limits',notes)}${example?`<details class="technical-details"><summary>Input examples</summary>${example}</details>`:''}${evidence.length?`<details class="acceptance-details"><summary>Verification record</summary>${list('Recorded acceptance',evidence)}</details>`:''}${item.workflow ? workflowMarkup(item.workflow) : ''}${relatedMarkup(item)}</details>`;
   }
 
   function connectionInfo(item){
@@ -5036,7 +5042,7 @@
         <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family==='ir-workflow' ? 'BEC' : item.operatorCard.family.startsWith('ir-') ? 'BEC' : item.operatorCard.family : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
-        <div class="operator-meta">${accessMarkup(item)}${item.operatorCard ? `<span class="operator-platform">${esc(moduleLabel(item).replace(/GRAPH/g,'Entra').replace(/EXO|EXCHANGE/g,'Exchange').replace(/ACTIVE DIRECTORY/g,'AD'))}</span>` : ''}</div>
+        <div class="operator-meta">${accessMarkup(item)}</div>
         ${scopeMarkup(item)}
         ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}
       </section>

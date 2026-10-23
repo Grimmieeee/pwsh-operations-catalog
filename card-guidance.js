@@ -6420,7 +6420,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-STALE-SIGNIN-REVIEW.ps1",
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
     "name": "Review Stale Sign-ins",
@@ -6442,7 +6444,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-GUEST-USER-AUDIT.ps1",
       "INVOKE-DISABLE-ACCOUNTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
     "name": "Disable User Accounts",
@@ -6471,7 +6475,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "name": "Delete User Accounts",
@@ -6500,7 +6505,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "name": "Assign User Licenses",
@@ -6529,7 +6536,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "name": "Remove User Licenses",
@@ -6558,7 +6566,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "name": "Find User UPNs",
@@ -6586,7 +6595,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "name": "Get User Account Status",
@@ -6614,12 +6624,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "name": "Get Distribution Group Members",
     "scope": "SINGLE or MULTI-GROUP",
-    "input": "Group / CSV / TXT",
+    "input": "Group name / email / CSV / TXT",
     "details": [
       "For distribution groups in Exchange Online.",
       "Nested groups are not a complete access review."
@@ -6630,7 +6642,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "releaseVersion": "1.0.2",
     "objective": "List direct members of selected Exchange distribution groups.",
     "preparation": [
-      "Requires Microsoft Graph PowerShell and authorized access to the target tenant."
+      "Requires ExchangeOnlineManagement and an account authorized to read the selected distribution groups."
     ],
     "related": [
       "GET-GROUP-MEMBERS.ps1",
@@ -6643,7 +6655,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "Finance",
         "Support"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GROUP-MEMBERS.ps1": {
     "name": "Get Group Members",
@@ -6672,7 +6685,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "Finance",
         "Support"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-USER-GROUPS.ps1": {
     "name": "Get User Groups",
@@ -6702,7 +6717,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
     "name": "Remove User Groups",
@@ -6731,7 +6748,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "name": "Create Dynamic License Group",
@@ -6753,7 +6771,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "GET-GROUP-MEMBERS.ps1",
       "INVOKE-ASSIGN-LICENSES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
     "name": "Get Group Owners",
@@ -6774,7 +6793,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-DISTRIBUTION-GROUP-MEMBERS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
     "name": "Get Mailbox Permissions",
@@ -6803,7 +6824,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Mailbox Security",
@@ -6825,7 +6847,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MAILBOX-FORWARDING.ps1": {
     "name": "Get Mailbox Forwarding",
@@ -6853,7 +6876,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "name": "Set Litigation Hold",
@@ -6882,7 +6907,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "name": "BEC: Restore Email",
@@ -6915,7 +6941,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-INVOKE-EMAIL-RECOVERY.ps1",
       "Incident Response: Restore Email"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-RISK-ASSESSMENT.ps1": {
     "name": "BEC: Assess User Risk",
@@ -7066,7 +7094,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
       "Incident Response: Review File Activity"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-IP-TRACE.ps1": {
     "name": "BEC: Trace IP Activity",
@@ -7097,7 +7127,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-IP-TRACE.ps1",
       "Incident Response: Trace IP Activity"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "name": "BEC: Trace Email Delivery",
@@ -7129,7 +7161,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-TENANT-EMAIL-SEARCH.ps1",
       "Incident Response: Trace Email Delivery"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "name": "BEC: Check IP Reputation",
@@ -7161,7 +7195,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
       "Incident Response: Check IP Reputation"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TIMELINE-BUILDER.ps1": {
     "name": "BEC: Build Incident Timeline",
@@ -7191,7 +7227,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-TIMELINE-BUILDER.ps1",
       "Incident Response: Build Incident Timeline"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TOKEN-DECODE.ps1": {
     "name": "BEC: Decode Token",
@@ -7221,7 +7259,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-TOKEN-DECODE.ps1",
       "Incident Response: Decode Token"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "name": "BEC: Review Token Replay",
@@ -7253,7 +7293,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "IR-GET-TOKEN-REPLAY-CHECK.ps1",
       "Incident Response: Review Token Replay"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
     "name": "Audit Shared Mailbox Sign-ins",
@@ -7274,7 +7316,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
     "name": "Audit App Registrations",
@@ -7295,7 +7338,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
     "name": "Review Conditional Access",
@@ -7317,7 +7361,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-DEVICE-CODE-EXPOSURE.ps1",
       "GET-SIGNIN-ANOMALIES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
     "name": "Review Device Code Exposure",
@@ -7338,7 +7383,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "name": "Audit Guest App Consent",
@@ -7359,7 +7405,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GUEST-USER-AUDIT.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
     "name": "Audit MFA Security",
@@ -7382,7 +7429,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-ADMIN-ROLE-AUDIT.ps1"
     ],
-    "operationalRevision": true
+    "operationalRevision": true,
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "name": "Get Secure Score",
@@ -7403,7 +7451,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
     "name": "Get Enterprise App Owners",
@@ -7424,7 +7473,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-APP-REGISTRATION-AUDIT.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
     "name": "Review Sign-in Anomalies",
@@ -7445,7 +7495,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "BEC-GET-IP-TRACE.ps1",
       "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
     "name": "Audit Mail Flow Rules",
@@ -7466,7 +7517,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "name": "Join Computer to Domain",
@@ -7486,7 +7538,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:Domain Trust Check",
       "command:DNS Lookup",
       "BACKUP-USER-PROFILE.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
     "name": "Install Network Printer",
@@ -7507,7 +7560,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:Printer Check",
       "command:Print Jobs",
       "command:Spooler Status"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "BACKUP-USER-PROFILE.ps1": {
     "name": "Back Up User Profile",
@@ -7527,7 +7581,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
       "GET-FOLDER-INVENTORY.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "TEST-POWERSHELL-READINESS.ps1": {
     "name": "Check M365 PowerShell Readiness",
@@ -7546,7 +7601,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "RESET-M365-SESSION.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-FOLDER-INVENTORY.ps1": {
     "name": "Review Folder Contents",
@@ -7566,7 +7623,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-FILE-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INSTALL-M365-MODULES.ps1": {
     "name": "Install M365 Modules",
@@ -7586,7 +7645,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-POWERSHELL-READINESS.ps1",
       "RESET-M365-SESSION.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "TEST-SENSITIVE-DATA.ps1": {
     "name": "Check Sensitive Data",
@@ -7605,7 +7666,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "git-handoff.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "SIGN-FOLDER-SCRIPTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "RESET-M365-SESSION.ps1": {
     "name": "Reset M365 Session",
@@ -7625,7 +7688,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-POWERSHELL-READINESS.ps1",
       "INVOKE-SESSION-RESET.ps1",
       "INSTALL-M365-MODULES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "UPDATE-WINDOWS-APPS.ps1": {
     "name": "Update Windows Apps",
@@ -7644,7 +7709,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:Show Available WinGet Updates",
       "command:Show WinGet Package Information",
       "command:Update Specific WinGet Package"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "name": "Check User Before Deletion",
@@ -7666,7 +7733,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "INVOKE-LITIGATION-HOLD.ps1",
       "INVOKE-DELETE-ACCOUNTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "name": "Set Per-user MFA",
@@ -7695,7 +7764,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "name": "Audit Admin Roles",
@@ -7716,7 +7787,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
     "name": "Audit App Consent",
@@ -7737,7 +7809,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-APP-REGISTRATION-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GUEST-USER-AUDIT.ps1": {
     "name": "Review Guest Users",
@@ -7759,7 +7832,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GUEST-APP-CONSENT-AUDIT.ps1",
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-GROUPS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
     "name": "Audit Tenant Licenses",
@@ -7780,7 +7854,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-ASSIGN-LICENSES.ps1",
       "INVOKE-REMOVE-LICENSES.ps1",
       "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "name": "Audit Tenant Inbox Rules",
@@ -7803,7 +7878,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
     "name": "Get User Security",
@@ -7824,7 +7900,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-ACCOUNT-STATUS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Tenant Security",
@@ -7845,7 +7922,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "name": "Get Resource Mailbox Access",
@@ -7867,7 +7945,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-GROUP-MEMBERS.ps1",
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
     "name": "Audit Tenant Mailbox Access",
@@ -7888,7 +7967,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
     "name": "Remove Disabled User Mailbox Access",
@@ -7910,7 +7990,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
     "name": "Review Tenant Changes",
@@ -7932,7 +8013,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
     "name": "Review Windows Storage",
@@ -7952,7 +8034,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "BACKUP-USER-PROFILE.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
     "name": "Reset Cloud User Password",
@@ -7981,7 +8065,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-RECOVER-VALIDATE.ps1": {
     "name": "BEC: Restore and Validate",
@@ -8061,7 +8147,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-SENSITIVE-DATA.ps1",
       "git-repo.ps1",
       "git-security.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "git-repo.ps1": {
     "name": "Manage Git Repository",
@@ -8083,7 +8170,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-SENSITIVE-DATA.ps1",
       "git-handoff.ps1",
       "git-security.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "git-security.ps1": {
     "name": "Review GitHub Security",
@@ -8103,7 +8191,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "git-repo.ps1",
       "git-handoff.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "set-execution.ps1": {
     "name": "Set Up Script Execution",
@@ -8126,7 +8215,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
     ],
-    "operationalRevision": true
+    "operationalRevision": true,
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "attractor.ps1": {
     "name": "Attractor",
@@ -8205,7 +8296,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-SENSITIVE-DATA.ps1",
       "set-execution.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "name": "Check Toolkit Setup",
@@ -8225,7 +8317,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-MAP-KIT.ps1",
       "GET-FOLDER-INVENTORY.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-FILE-INVENTORY.ps1": {
     "name": "Compare Script Files",
@@ -8245,7 +8339,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-FOLDER-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-MAP-KIT.ps1": {
     "name": "Map Folder Structure",
@@ -8265,7 +8361,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-FOLDER-INVENTORY.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-SESSION-RESET.ps1": {
     "name": "Reset Terminal Session",
@@ -8284,7 +8381,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "RESET-M365-SESSION.ps1",
       "TEST-POWERSHELL-READINESS.ps1",
       "INSTALL-M365-MODULES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-BASIC.ps1": {
     "name": "Preview Plain Output",
@@ -8304,7 +8403,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-COBALT.ps1",
       "SET-THEME-SEAGLASS.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-COBALT.ps1": {
     "name": "Preview Cobalt Theme",
@@ -8324,7 +8425,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SEAGLASS.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-SEAGLASS.ps1": {
     "name": "Install Sea Glass Theme",
@@ -8345,7 +8448,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-COBALT.ps1",
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-SILICON-VALLEY.ps1": {
     "name": "Install Silicon Valley Theme",
@@ -8366,7 +8471,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-COBALT.ps1",
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SEAGLASS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
     "name": "Manage Signing Certificates",
@@ -8386,7 +8493,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1",
       "set-execution.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "PREPARE-FIELD-KIT.ps1": {
     "name": "Prepare FIELD KIT",
@@ -8411,6 +8519,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-POWERSHELL-READINESS.ps1",
       "INSTALL-M365-MODULES.ps1",
       "START-HERE.md"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   }
 });

@@ -1916,7 +1916,7 @@
     {
       "id": "file:GET-DISTRIBUTION-GROUP-MEMBERS.ps1",
       "sourceSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
-      "permissionMetadataSha256": "63a31a64932d16d5e9dc05cfa6c7078600398461df6bbbc502c9cc88fcc8e73a",
+      "permissionMetadataSha256": "4e8be18934df48457e5f96393f1e84b6e67a43de59e1870a27ae0a48866f25c6",
       "requestedScopes": [],
       "disposition": "screened"
     },
@@ -2526,5 +2526,6 @@
       "disposition": "screened"
     }
   ],
-  "taxonomyNote": "2026-10-23: removed three exact duplicate commands; canonical command bodies, impact, safeguards and permissions unchanged. Alternate names retained as search aliases."
+  "taxonomyNote": "2026-10-23: removed three exact duplicate commands; canonical command bodies, impact, safeguards and permissions unchanged. Alternate names retained as search aliases.",
+  "cardCopyReview": "2026-10-23: distribution-group input clarified and incorrect Graph preparation replaced with source-supported Exchange-only preparation; no executable permission or source changes."
 }

@@ -2551,7 +2551,8 @@
       "sourceSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
       "disposition": "screened",
       "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "bcbd8ad2c507221a19e59a38a36bdead41547d1b038a2f13c7403e70a3cdfc1d"
+      "safetyMetadataSha256": "b4cae084d60ac86e43029fe7fd200f41f32072f9e85ed33c1df4f19e8c78261c",
+      "taxonomyCopyReview": "2026-10-23: input labels clarified; Exchange-only preparation replaces incorrect Graph prerequisite. Source behavior, impact and permissions unchanged."
     },
     {
       "id": "file:GET-FOLDER-INVENTORY.ps1",

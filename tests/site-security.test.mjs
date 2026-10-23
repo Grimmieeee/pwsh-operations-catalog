@@ -496,7 +496,7 @@ test('global search includes every scope regardless of navigation selection',()=
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
   else if(/^terminal/.test(item.startMode||'')){assert.ok(html.includes('PowerShell window')||html.includes('PowerShell as administrator'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
-  else{assert.ok(html.includes('Select <strong>Run with PowerShell.</strong>'),item.file);assert.ok(html.includes('Press Enter to close session when complete.'),item.file);}
+  else{assert.ok(html.includes('Select <strong>Run with PowerShell.</strong>'),item.file);assert.ok(html.includes(item.operatorCard.finishPrompt || 'Finish using the script’s own close controls.'),item.file);}
  }
 });
 
@@ -948,4 +948,27 @@ test('preview text is escaped and stale examples cannot attach to changed source
  assert(html.includes('&lt;img'));assert(html.includes('&lt;script&gt;'));
  record.sourceSha256='0'.repeat(64);assert.equal(f.api.workflowPreview(i),null);
  assert.match(f.api.workflowPreviewMarkup(i),/unavailable for this source revision/);
+});
+
+test('script card summary stays concise and run steps preserve source-specific launch modes',()=>{
+ const f=loadCatalog(root);
+ for(const i of f.api.ITEMS.filter(i=>i.operatorCard)){
+  f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
+  assert(!html.includes('class="operator-platform"'),i.file);
+  assert(html.includes('HOW TO RUN')&&html.includes('<ol class="run-steps">'),i.file);
+  const src=fs.readFileSync(path.join(root,i.publishedPath),'utf8');
+  if(i.operatorCard.finishPrompt)assert(src.includes(i.operatorCard.finishPrompt),i.file);
+  if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
+  assert(html.includes('Module &amp; permission details'),i.file);
+  assert(!html.includes('<details class="technical-details" open'),i.file);
+  if(f.api.verificationHistory(i))assert(html.includes('<details class="acceptance-details"><summary>Verification record</summary>'),i.file);
+ }
+ const i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
+ assert.equal(i.operatorCard.input,'Group name / email / CSV / TXT');
+ assert(!i.operatorCard.preparation.some(x=>/Graph/.test(x)));
+ f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
+ assert(html.includes('SINGLE or MULTI-GROUP CHECK'));
+ assert(html.includes('Press Enter to close session.'));
+ assert(!html.includes('Authenticate with Admin credentials'));
+ assert(!html.includes('detect and install necessary'));
 });
