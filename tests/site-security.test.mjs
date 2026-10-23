@@ -820,7 +820,9 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  assert.ok(!reports.some(x=>x.operatorCard.family==='terminal'));
  for(const item of f.api.ITEMS.filter(x=>x.operatorCard && /read.only/i.test(x.access) && x.operatorCard.family!=='terminal'))assert.ok(reports.includes(item),item.file);
  assert.ok(new Set(reports.map(x=>f.api.catalogDomain(x))).size>3);
- const nav=f.elements.get('areaNav').innerHTML;assert.match(nav,/Request \/ Submit/);assert.doesNotMatch(nav,/nav-section-label/);
+ const nav=f.elements.get('areaNav').innerHTML;assert.doesNotMatch(nav,/Request \/ Submit/);
+ for(const label of ['Manage','Protect &amp; Respond','Resources'])assert.ok(nav.includes(label));
+ const page=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(page,/class="request-link"/);assert.match(page,/>Submit a Request /);assert.match(page,/>Icon Guide</);
  f.api.state.query='mailbox';const button={getAttribute:()=> 'Identity'};
  f.elements.get('areaNav').listeners.click({target:{closest:selector=>selector==='[data-area]'?button:null}});
  assert.equal(f.api.state.query,'');assert.equal(f.api.state.area,'Identity');
