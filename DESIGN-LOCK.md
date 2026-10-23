@@ -1,3 +1,7 @@
+## Checkmark and theme polish — October 23, 2026
+
+Use a plain ✓ for recorded acceptance; preserve current versus historical rank, tooltip, counts and Details qualification. BURNSID tracking 1.2pt, with KIT text color. Borderless theme selector aligned to row chevrons.
+
 ## Acceptance history and wordmarks — October 23, 2026
 
 VERIFIED distinguishes current-release acceptance (✓), source-bound earlier-version acceptance (✓*), and no recorded acceptance (—). History comes from OPERATOR-SCRIPT-ALIGNMENT priorVerification, never upgraded to current testing. Sort all three states, show counts, preserve original version/hash/scope in Details. Bigger FIELD // KIT; softer BURNSID with optical spacing equivalent to 1.5 monospace spaces between letters and one space before //.

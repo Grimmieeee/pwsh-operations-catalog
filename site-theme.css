@@ -414,3 +414,11 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
 .sidebar-signature .signature-slashes{letter-spacing:0;margin:0}
 .verification-historical{font-size:14px;width:auto}
 @media(max-width:1100px){.kit-wordmark{font-size:28px}.sidebar-signature{font-size:15px}}
+
+/* Quiet signature and borderless theme selector aligned with row chevrons. */
+.sidebar-signature{color:var(--text);opacity:1}
+.sidebar-signature .signature-letters{letter-spacing:1.2pt;margin-right:-1.2pt}
+.sidebar-signature .signature-slashes{color:inherit}
+.theme-select{border:0;border-radius:0;box-shadow:none;background-color:transparent;padding:5px 0;max-width:84px}
+@media(min-width:1101px){.topbar{width:100%;max-width:1560px;margin-inline:auto;padding-right:44px}}
+@media(min-width:761px) and (max-width:1100px){.topbar{padding-right:34px}}

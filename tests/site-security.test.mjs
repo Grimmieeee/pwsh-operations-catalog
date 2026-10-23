@@ -799,6 +799,8 @@ test('historical checkmarks remain distinct from exact-release verification and 
  f.api.setCatalogSort('verified');assert.equal(f.api.verificationRank(f.api.filteredItems()[0]),1);
  assert.equal(f.api.verificationRank(f.api.filteredItems().at(-1)),0);
  assert.match(f.elements.get('results').innerHTML,/verification-historical/);
+ assert.doesNotMatch(f.elements.get('results').innerHTML,/✓\*/);
+ assert.match(f.elements.get('results').innerHTML,/Earlier version accepted; current revision not retested/);
  const item=items[0];f.api.openItem(item);assert.match(f.elements.get('drawerBody').innerHTML,/Current revision not retested/);
  item.version='changed';assert.equal(f.api.verificationHistory(item),null);
  const next=items[1];f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[next.publishedPath]:'0'.repeat(64)};
