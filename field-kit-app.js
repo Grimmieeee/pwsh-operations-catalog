@@ -4707,7 +4707,7 @@
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
     const sample=spec.inputExample;
     const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
-    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}</details>`:'';
+    return notes.length?`<details class="operator-details"><summary>DETAILS</summary><ul>${[...new Set(notes)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${example}${item.workflow ? workflowMarkup(item.workflow) : ''}${relatedMarkup(item)}</details>`:'';
   }
 
   function connectionInfo(item){
@@ -5005,6 +5005,23 @@
     `;
   }
 
+  function workflowPreview(item){
+    if(!item.operatorCard)return null;
+    const record=window.FIELD_KIT_WORKFLOW_PREVIEWS?.[item.file];
+    return record?.sourceSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? record : null;
+  }
+
+  function workflowPreviewMarkup(item){
+    if(!item.operatorCard)return '';
+    const record=workflowPreview(item);
+    if(!record)return '<p class="source-note">Example preview unavailable for this source revision.</p>';
+    const lines=record.text.split('\n').map(line=>{
+      const tone=/NOT PERFORMED|HIGH RISK|HIGH-RISK|\[XX\]/.test(line)?'danger':/pending|unavailable|not available|incomplete|failed|failure|review required|\[!!\]/i.test(line)?'warning':/^[A-Z][A-Z0-9 &/():+_.-]+$/.test(line.trim())?'heading':'';
+      return '<span class="preview-line'+(tone?' preview-'+tone:'')+'">'+esc(line)+'</span>';
+    }).join('\n');
+    return `<section class="workflow-preview" aria-labelledby="workflowPreviewHeading"><div class="preview-toolbar"><h3 id="workflowPreviewHeading">${record.kind==='static-illustration'?'Terminal preview':'Example output'}</h3><span>Illustrative · sample data</span></div><div class="preview-scroll" tabindex="0" role="region" aria-label="Scrollable example output for ${esc(item.displayName)}"><pre>${lines}</pre></div></section>`;
+  }
+
   function openItem(item){
     closeNav();
     if (!document.body.classList.contains("drawer-open")){
@@ -5028,7 +5045,7 @@
       ${item.operatorCard ? '' : useForMarkup(item)}
       ${item.changeNote && !item.operatorCard ? `<div class="change-note">${esc(item.changeNote)}</div>` : ''}
       ${optionMarkup(item)}
-      ${workflowMarkup(item.workflow)}
+      ${item.operatorCard ? workflowPreviewMarkup(item) : workflowMarkup(item.workflow)}
       ${item.operatorCard ? '' : factsMarkup(item)}
       ${item.operatorCard ? '' : item.type==='Quick Command' ? '<p class="connection-direction">START: open PowerShell on the target computer. Check DETAILS for requirements and connection setup before running.</p>' : runInfoMarkup(item)}
       ${startMarkup(item)}
@@ -5038,7 +5055,7 @@
       <div id="copyStatus" role="status" aria-live="polite"></div>
       ${operatorDetailsMarkup(item)}
       ${item.status==='Source pending' ? '<p class="source-note">'+(PENDING_NEXT_STEPS[item.file] ? 'The tools below cover individual tasks; they do not replace the complete planned workflow. Review each tool’s scope before continuing.' : 'No working replacement is published. Use your approved process for this task until this tool is available.')+'</p>' : ''}
-      ${relatedMarkup(item)}
+      ${item.operatorCard ? '' : relatedMarkup(item)}
     `;
 
     bindDrawerActions(item);
