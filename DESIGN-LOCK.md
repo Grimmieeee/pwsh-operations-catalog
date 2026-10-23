@@ -1,3 +1,7 @@
+## Sidebar balance — October 23, 2026
+
+Tighten Toys/About spacing. Align the Home icon to the right-hand count edge. Halve the bottom PowerShell prompt mark to 28 × 22 px; preserve footer placement and signature.
+
 ## Sidebar and catalog columns — October 23, 2026
 
 Larger FIELD // KIT with thin KIT; compact brand spacing above Home; smaller bottom prompt mark. SCRIPT NAME and sortable VERIFIED heading. Shared fixed impact and verification tracks prevent description drift; impact labels use description size and stay on one line. Compact screens allow horizontal catalog scrolling to retain readable labels. Remove search verification key and sidebar REFERENCE descriptor. Verification cells remain exact-source operator evidence bound.
