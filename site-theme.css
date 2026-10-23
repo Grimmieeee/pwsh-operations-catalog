@@ -333,3 +333,21 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
   .result-tag{font-size:9px}
   .result-flags{max-width:115px}
 }
+
+/* Catalog refinements: quieter wordmarks, clearer controls, compact type key. */
+.masthead-note{padding-left:1em}
+.kit-wordmark{font-weight:300;font-size:23px;letter-spacing:.24em}
+.kit-the{font-size:.58em}
+.kit-slashes{margin-left:-.18em}
+.sidebar-signature{font-family:"Archivo",var(--mono);font-weight:300;font-size:16px;letter-spacing:.3em}
+.result-risk-flags .result-tag{font-size:13px}
+.search-wrap .verification-key{max-width:none;margin-left:0;margin-right:0}
+.search-wrap .verification-key button{font-size:13px;color:var(--body)}
+.search-wrap .verification-key .verification-check{font-size:17px}
+.type-key{margin:0 12px 12px;color:var(--body);font:400 14px/1.5 var(--ui)}
+.type-key summary{cursor:pointer;width:fit-content;color:var(--brand-mint)}
+.type-key-items{display:flex;flex-wrap:wrap;gap:12px 22px;padding-top:12px}
+.type-key-item{display:inline-flex;align-items:center;gap:8px}
+.type-key-item svg{width:22px;height:22px;fill:none;stroke:var(--brand-mint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.type-key p{margin:10px 0 0;max-width:70ch}
+@media(max-width:1100px){.kit-wordmark{font-size:21px}.result-risk-flags .result-tag{font-size:11px}}

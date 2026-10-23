@@ -1,3 +1,7 @@
+## Catalog refinements — October 23, 2026
+
+Home replaces Start Here in navigation. Browse alphabetically by default, preserving search relevance until an explicit sort. TYPE and IMPACT headers, compact expandable icon key, larger impact labels, Dark/Light/Auto choices with Dark as the first-visit default. Wordmarks are larger, lighter and more spaced. Verification remains exact-release evidence bound; the visible check key explains its scope.
+
 ## Approved catalog markers and alignment — October 23, 2026
 
 Keep the live stacked wordmark with thinner block lettering. Align the working-reference line with the main title. Brighten THE FIELD // KIT and Start Here; add a modest home outline to Start Here. Bring the slashes one space closer to FIELD. Reduce the boxed PowerShell mark by a third, align it with the sidebar section labels, and place BURNSID// immediately beneath it without By.

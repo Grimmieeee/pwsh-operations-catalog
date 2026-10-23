@@ -2,7 +2,7 @@
 (() => {
   const key = 'field-kit-appearance';
   const valid = value => ['system','light','dark'].includes(value);
-  let choice = 'system';
+  let choice = 'dark';
   try { const saved = window.localStorage.getItem(key); if (valid(saved)) choice = saved; } catch {}
   let media;
   try { media = window.matchMedia('(prefers-color-scheme: light)'); } catch {}
@@ -21,13 +21,13 @@
     if (!control) return;
     control.value = choice;
     control.addEventListener('change', () => {
-      choice = valid(control.value) ? control.value : 'system';
+      choice = valid(control.value) ? control.value : 'dark';
       try { window.localStorage.setItem(key, choice); } catch {}
       apply();
     });
     window.addEventListener('storage', event => {
       if (event.key !== key) return;
-      choice = valid(event.newValue) ? event.newValue : 'system';
+      choice = valid(event.newValue) ? event.newValue : 'dark';
       control.value = choice;
       apply();
     });

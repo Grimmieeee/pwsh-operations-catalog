@@ -10,13 +10,13 @@
 <meta name="description" content="THE FIELD KIT by BURNSID// — a working catalog of PowerShell scripts, commands and workflows. Find the right tool and understand its impact before you begin.">
 <meta name="apple-mobile-web-app-title" content="THE FIELD KIT">
 <meta name="application-name" content="THE FIELD KIT">
-<script src="site-theme.js?v=appearance-1"></script>
+<script src="site-theme.js?v=appearance-2"></script>
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="assets/field-kit-icon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:var(--fk-0d1215,#0d1215);
@@ -1141,7 +1141,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .result-flags{justify-self:end;justify-content:flex-end;gap:24px;max-width:360px}
 .result-risk-flags{display:inline-flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=catalog-markers-1">
+<link rel="stylesheet" href="site-theme.css?v=catalog-refinements-2">
 </head>
 <body>
 <noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
@@ -1177,8 +1177,8 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       </div>
       <div id="crumb" class="crumb"></div>
       <div id="verificationKey" class="hidden"></div>
-      <select id="themeSelect" class="theme-select" aria-label="Color theme" title="Color theme: follow your system, or choose Light or Dark">
-        <option value="system">Auto</option><option value="light">Light</option><option value="dark">Dark</option>
+      <select id="themeSelect" class="theme-select" aria-label="Color theme" title="Color theme: Dark, Light, or follow your system">
+        <option value="dark">Dark</option><option value="light">Light</option><option value="system">Auto</option>
       </select>
     </header>
 
@@ -1201,11 +1201,12 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 
     <section class="catalog">
       <div id="catalogHeading" class="catalog-heading">Full Library</div>
+      <details id="typeKey" class="type-key"><summary>Type key</summary><div id="typeKeyItems" class="type-key-items"></div><p>Head icons show account actions. Reports can cover one or many accounts. ✓ Verified marks an operator-tested release; see About for scope.</p></details>
       <div id="catalogHead" class="catalog-head" role="group" aria-label="Sort catalog">
-        <button type="button" data-sort="icon" aria-label="Sort by icon type">Icon <span aria-hidden="true">↕</span></button>
+        <button type="button" data-sort="icon" aria-label="Sort by type">Type <span aria-hidden="true">↕</span></button>
         <button type="button" data-sort="name" aria-label="Sort by name">Name <span aria-hidden="true">↕</span></button>
         <span class="description-heading">Description</span>
-        <button type="button" data-sort="flag" aria-label="Sort by flag">Flag <span aria-hidden="true">↕</span></button>
+        <button type="button" data-sort="flag" aria-label="Sort by impact">Impact <span aria-hidden="true">↕</span></button>
       </div>
       <div id="catalogSortStatus" class="sr-only" role="status" aria-live="polite"></div>
       <div id="contextBar" class="context-bar hidden"></div>
@@ -1229,7 +1230,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 <script src="connection-guidance.js?v=permissions-1"></script>
 <script src="card-guidance.js?v=permissions-1"></script>
 <script src="workflow-start.js?v=permissions-1"></script>
-<script src="field-kit-app.js?v=catalog-markers-1"></script>
+<script src="field-kit-app.js?v=catalog-refinements-2"></script>
 <script src="site-brand.js?v=sexy-brand-1"></script>
 </body>
 </html>

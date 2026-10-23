@@ -27,7 +27,6 @@ test('catalog markers distinguish reports, account actions and non-account tools
 
 test('name and icon header sorting toggles direction across all visible results',()=>{
  const f=loadCatalog(root);
- f.api.setCatalogSort('name');
  let items=Array.from(f.api.filteredItems());
  assert.equal(items.length,329);
  assert.deepEqual(items.map(x=>x.displayName),items.map(x=>x.displayName).sort((a,b)=>a.localeCompare(b)));
@@ -51,7 +50,7 @@ test('flag sorting preserves destructive warnings and search membership',()=>{
  const list=Array.from(f.api.filteredItems());
  assert.ok(/destructive/i.test(list[0].access));
  assert.match(f.elements.get('results').innerHTML,/result-danger/);
- assert.match(f.elements.get('catalogSortStatus').textContent,/flag, descending/);
+ assert.match(f.elements.get('catalogSortStatus').textContent,/impact, descending/);
 });
 
 test('sorted row click opens the matching source and hides sort controls on guides',()=>{
@@ -763,3 +762,5 @@ test('file input examples use supported columns and resource mailboxes do not ad
   assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
   f.api.openItem(resource);assert.ok(f.elements.get('drawerBody').innerHTML.includes('File input is not supported.'));
 });
+
+test('browsing defaults to alphabetical with an expandable type key',()=>{const f=loadCatalog(root);const names=Array.from(f.api.filteredItems(),x=>x.displayName);assert.deepEqual(names,[...names].sort((a,b)=>a.localeCompare(b)));f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/Single-account action/);assert.match(f.elements.get('typeKeyItems').innerHTML,/Organization-wide tool/);});
