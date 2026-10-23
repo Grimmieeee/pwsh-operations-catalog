@@ -276,3 +276,60 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
   .sidebar-footer{padding-bottom:26px}
   .terminal-mark{width:96px;height:auto}
 }
+
+/* Owner-approved catalog markers and sidebar alignment. */
+.site-heading{font-family:"Archivo","Arial Black",Arial,sans-serif;font-weight:700;letter-spacing:-.055em}
+.site-masthead{padding-bottom:24px}
+.topbar{padding-left:46px;padding-right:32px}
+.kit-wordmark{color:var(--text);font-family:"Archivo",var(--mono);font-weight:600;letter-spacing:.16em}
+.kit-the{font-size:.72em;letter-spacing:.22em;margin-bottom:4px}
+.kit-slashes{color:var(--brand-mint);margin-left:-.16em}
+.sidebar-footer{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:20px 21px 28px;gap:14px}
+.terminal-mark{width:75px;height:59px;color:var(--brand-mint)}
+.sidebar-signature{color:var(--text);font:600 13px/1.4 var(--mono);letter-spacing:.2em;white-space:nowrap}
+.sidebar-signature span{color:var(--brand-mint);letter-spacing:0;margin-left:.1em}
+.area-button[data-area="Start Here"]{color:var(--text);font-weight:600}
+.area-button[data-area="Start Here"] .area-label{display:flex;align-items:center;gap:10px}
+.start-mark{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.catalog{--catalog-columns:42px minmax(170px,.85fr) minmax(210px,1.4fr) minmax(100px,auto) 16px}
+.catalog-heading{font-size:15px;font-weight:600;padding:0 12px 12px}
+.catalog-head{display:grid;grid-template-columns:var(--catalog-columns);gap:14px;align-items:center;border-block:1px solid var(--line);padding:12px;font:400 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--body)}
+.catalog-head button{display:flex;align-items:center;gap:10px;min-height:32px;padding:0;border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;text-align:left;cursor:pointer}
+.catalog-head button:last-child{grid-column:4;justify-self:end}
+.catalog-head button span{font-size:16px;color:var(--brand-mint)}
+.catalog-head button:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.catalog-head button.sort-active{color:var(--text)}
+.result{display:grid;grid-template-columns:var(--catalog-columns);gap:14px;align-items:center;min-height:74px;padding:12px}
+.result-identity{display:contents}
+.result-icon{grid-column:1;grid-row:1;display:flex;align-items:center;justify-content:center;width:42px;height:44px;border:1px solid var(--line);border-radius:3px;color:var(--brand-mint);background:var(--panel)}
+.result-icon svg{display:block;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.result-name{grid-column:2;grid-row:1;font-size:18px;font-weight:600;line-height:1.3}
+.result-description{grid-column:3;grid-row:1;font:400 14px/1.5 var(--ui);color:var(--body);max-width:none}
+.result-flags{grid-column:4;grid-row:1;max-width:180px}
+.result-check,.result-arrow{grid-column:5;grid-row:1}
+.result-risk-flags{gap:8px}
+.result-scope{display:none}
+.search-wrap .verification-key{margin-top:8px}
+@media(min-width:761px) and (max-width:1100px){.topbar{padding-left:36px}}
+@media(max-width:1100px){
+  .catalog{--catalog-columns:36px minmax(0,1fr) minmax(84px,auto) 12px}
+  .catalog-head .description-heading{display:none}
+  .catalog-head button:last-child{grid-column:3}
+  .result{grid-template-areas:none;row-gap:4px;min-height:78px}
+  .result-icon{grid-column:1;grid-row:1 / 3;width:34px;height:38px}
+  .result-name{grid-column:2;grid-row:1;font-size:17px}
+  .result-description{grid-column:2 / 4;grid-row:2;font-size:13px}
+  .result-flags{grid-column:3;grid-row:1}
+  .result-check,.result-arrow{grid-column:4;grid-row:1 / 3}
+}
+@media(max-width:760px){
+  .topbar{padding-left:calc(12px + env(safe-area-inset-left));padding-right:calc(12px + env(safe-area-inset-right))}
+  .sidebar-footer{padding-left:21px}
+  .terminal-mark{width:75px;height:59px}
+  .catalog-head{gap:8px;padding-inline:5px;font-size:10px;letter-spacing:.04em}
+  .result{padding:12px 5px;column-gap:8px}
+  .result-name{font-size:16px}
+  .result-tag{font-size:9px}
+  .result-flags{max-width:115px}
+}

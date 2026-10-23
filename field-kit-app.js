@@ -2061,6 +2061,8 @@
     standaloneGroup:"",
     standaloneOpen:false,
     query:"",
+    sortKey:"",
+    sortDirection:1,
     selected:null
   };
 
@@ -2074,6 +2076,9 @@
   const contextBar = document.getElementById("contextBar");
   const jumpBar = document.getElementById("jumpBar");
   const results = document.getElementById("results");
+  const catalogHead = document.getElementById("catalogHead");
+  const catalogHeading = document.getElementById("catalogHeading");
+  const catalogSortStatus = document.getElementById("catalogSortStatus");
   const empty = document.getElementById("empty");
   const drawer = document.getElementById("drawer");
   const drawerBody = document.getElementById("drawerBody");
@@ -2124,7 +2129,7 @@
 
     const parent = `
       <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
-        <span class="area-label">${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
+        <span class="area-label">${area === 'Start Here' ? '<svg class="start-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3 21 11M5 9v12h5v-7h4v7h5V9"/></svg>' : ''}${esc(label)}${expandable ? '<span class="nav-caret">▾</span>' : ""}</span>
         ${area === "Full Library" || area === "Start Here" ? "" : `<span class="area-count">${countArea(area)}</span>`}
       </button>
     `;
@@ -2527,6 +2532,7 @@
       );
     }
 
+    if (state.sortKey) list.sort(catalogCompare);
     return list;
   }
 
@@ -2668,9 +2674,67 @@
       '<strong class="item-title-accent">' + esc(accent) + '</strong>';
   }
 
+  // Type markers describe the reviewed source, not the selected navigation area.
+  // A report is an output family; head markers describe account actions.
+  function catalogIconType(item){
+    if (isDocument(item)) return 'reference';
+    if (item.type === 'Quick Command') return 'command';
+    const scope = item.operatorCard?.scope || '';
+    if (/^GET-/i.test(item.file || '') && actionRank(item) === 1) return 'report';
+    if (/MULTI-(?:USER|MAILBOX|GROUP)/i.test(scope)) return 'multi';
+    if (/^SINGLE-(?:USER|MAILBOX|GROUP)$/i.test(scope)) return 'single';
+    if (/^TENANT$/i.test(scope)) return 'organization';
+    return 'local';
+  }
+
+  const CATALOG_ICON_NAMES = {
+    single:'Single-account action', multi:'Multiple-account action', report:'Report',
+    organization:'Organization-wide tool', local:'Local tool', command:'Quick command', reference:'Reference'
+  };
+  const CATALOG_ICON_PATHS = {
+    single:'<circle cx="12" cy="7" r="4"/><path d="M4 22v-3c0-5 16-5 16 0v3Z"/>',
+    multi:'<circle cx="12" cy="6" r="3"/><circle cx="4" cy="9" r="2.5"/><circle cx="20" cy="9" r="2.5"/><path d="M6 22v-4c0-5 12-5 12 0v4ZM1 20v-3c0-3 3-4 5-3M23 20v-3c0-3-3-4-5-3"/>',
+    report:'<path d="M5 2h10l5 5v15H5ZM15 2v6h5M9 18v-4M12 18v-7M16 18V9"/>',
+    organization:'<path d="M5 22V2h14v20M2 22h20M9 6h1M14 6h1M9 10h1M14 10h1M9 14h1M14 14h1M10 22v-4h4v4"/>',
+    local:'<rect x="2" y="3" width="20" height="14" rx="1"/><path d="M8 22h8M12 17v5M6 7l3 3-3 3M12 13h5"/>',
+    command:'<path d="m4 5 7 7-7 7M13 19h8"/>',
+    reference:'<path d="M12 5v17M2 3c4-1 7 0 10 2 3-2 6-3 10-2v17c-4-1-7 0-10 2-3-2-6-3-10-2Z"/>'
+  };
+
+  function catalogIconMarkup(item){
+    const kind = catalogIconType(item);
+    const label = CATALOG_ICON_NAMES[kind] + (item.operatorCard?.scope ? ' · ' + item.operatorCard.scope : '');
+    return `<span class="result-icon" data-icon-type="${kind}" title="${esc(label)}"><svg viewBox="0 0 24 24" role="img" aria-label="${esc(label)}">${CATALOG_ICON_PATHS[kind]}</svg></span>`;
+  }
+
+  function catalogCompare(a,b){
+    let difference = 0;
+    if (state.sortKey === 'name') difference = a.displayName.localeCompare(b.displayName);
+    if (state.sortKey === 'flag') difference = actionRank(a) - actionRank(b);
+    if (state.sortKey === 'icon') {
+      const order = ['single','multi','report','organization','local','command','reference'];
+      difference = order.indexOf(catalogIconType(a)) - order.indexOf(catalogIconType(b));
+    }
+    return difference * state.sortDirection || a.displayName.localeCompare(b.displayName) || a._order - b._order;
+  }
+
+  function setCatalogSort(key){
+    if (!['icon','name','flag'].includes(key)) return;
+    state.sortDirection = state.sortKey === key ? -state.sortDirection : 1;
+    state.sortKey = key;
+    renderResults();
+    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'icon type' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
+  }
+
+  catalogHead?.addEventListener('click', event => {
+    const button = event.target.closest('[data-sort]');
+    if (button) setCatalogSort(button.getAttribute('data-sort'));
+  });
+
   function resultMarkup(item, index){
     return `
       <button class="result${isVerifiedRelease(item) ? ' result-operator-verified' : ''}" type="button" data-open-index="${index}"${isVerifiedRelease(item) ? ' aria-description="Operator verified. Download integrity checked. Applies to this release only." title="Operator verified. Download integrity checked. Applies to this release only."' : ''}>
+        ${catalogIconMarkup(item)}
         <span class="result-identity">
           <span class="result-name">${esc(item.displayName)}</span>
           <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
@@ -2727,6 +2791,17 @@
 
   function renderResults(){
     const queryActive = Boolean(state.query.trim());
+    const informational = state.area === 'About' || state.area === 'Start Here';
+    catalogHead?.classList.toggle('hidden', informational);
+    catalogHeading?.classList.toggle('hidden', informational);
+    catalogHeading.textContent = queryActive ? 'Search results' : areaLabel(state.area);
+    catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
+      const active = button.getAttribute('data-sort') === state.sortKey;
+      const label = button.getAttribute('data-sort');
+      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'icon type' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
+      button.classList.toggle('sort-active', active);
+      button.querySelector('span').textContent = active ? (state.sortDirection === 1 ? '↑' : '↓') : '↕';
+    });
     searchWrap?.classList.toggle("hidden", state.area === "About" || state.area === "Start Here");
     verificationKey.classList.add("hidden");
 
@@ -2814,7 +2889,7 @@
 
     empty.classList.add("hidden");
 
-    if (queryActive){
+    if (queryActive || state.sortKey || state.area === 'Full Library'){
       results.innerHTML = '<div class="group">' + list.map((item,i) => resultMarkup(item,i)).join("") + "</div>";
     } else {
       const grouped = new Map();
@@ -2837,8 +2912,8 @@
     }
 
     const visible = list;
-    results.querySelectorAll("[data-open-index]").forEach((btn, idx) => {
-      btn.addEventListener("click", () => openItem(visible[idx]));
+    results.querySelectorAll("[data-open-index]").forEach(btn => {
+      btn.addEventListener("click", () => openItem(visible[Number(btn.getAttribute('data-open-index'))]));
     });
 
     jumpBar.querySelectorAll("[data-jump]").forEach(btn => {
