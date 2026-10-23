@@ -1,3 +1,7 @@
+## Acceptance history and wordmarks — October 23, 2026
+
+VERIFIED distinguishes current-release acceptance (✓), source-bound earlier-version acceptance (✓*), and no recorded acceptance (—). History comes from OPERATOR-SCRIPT-ALIGNMENT priorVerification, never upgraded to current testing. Sort all three states, show counts, preserve original version/hash/scope in Details. Bigger FIELD // KIT; softer BURNSID with optical spacing equivalent to 1.5 monospace spaces between letters and one space before //.
+
 ## Sidebar flow and verification feedback — October 23, 2026
 
 Footer follows menu with a bounded gap, rather than anchoring to viewport bottom. Prompt 44 × 35 px. Signature uses two literal spaces between letters and one before //, with preformatted whitespace. VERIFIED sort displays result counts and explains ties when none qualifies; no acceptance is invented.

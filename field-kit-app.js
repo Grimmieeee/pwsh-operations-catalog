@@ -2633,6 +2633,18 @@
       window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] === record.sha256);
   }
 
+  function verificationHistory(item){
+    const record=window.FIELD_KIT_VERIFICATION_HISTORY?.[item.file];
+    return record && record.path===item.publishedPath && record.currentVersion===item.version &&
+      record.currentSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] &&
+      /^[a-f0-9]{64}$/.test(record.accepted?.sha256 || '') && record.accepted.operatorTested===true
+      ? record.accepted : null;
+  }
+
+  function verificationRank(item){
+    return isVerifiedRelease(item) ? 2 : verificationHistory(item) ? 1 : 0;
+  }
+
   function releaseTag(item){
     return isVerifiedRelease(item) ? '<button class="verification-check title-verification" type="button" data-verification-about aria-label="Operator verified; read About">✓</button>' : "";
   }
@@ -2712,7 +2724,7 @@
   function catalogCompare(a,b){
     let difference = 0;
     if (state.sortKey === 'name') difference = a.displayName.localeCompare(b.displayName);
-    if (state.sortKey === 'verified') difference = Number(isVerifiedRelease(b)) - Number(isVerifiedRelease(a));
+    if (state.sortKey === 'verified') difference = verificationRank(b) - verificationRank(a);
     if (state.sortKey === 'flag') difference = actionRank(a) - actionRank(b);
     if (state.sortKey === 'icon') {
       const order = ['single','multi','report','organization','local','command','reference'];
@@ -2744,7 +2756,7 @@
           <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
-        <span class="result-verification" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : 'No exact-release operator verification'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : '<span aria-hidden="true">—</span>'}</span>
+        <span class="result-verification" title="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested. Open Details for tested scope.' : 'No recorded operator acceptance'}" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested' : 'No recorded operator acceptance'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : verificationHistory(item) ? '<span class="verification-check verification-historical" aria-hidden="true">✓*</span>' : '<span aria-hidden="true">—</span>'}</span>
         <span class="result-arrow" aria-hidden="true">›</span>
       </button>
     `;
@@ -2853,6 +2865,7 @@
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
             <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
+            <p>✓* Earlier version accepted by the owner. The current script has changed and has not been retested. The original evidence and tested scope remain available in script Details. This is acceptance history, not verification of the current release.</p>
           </section>
 
           <section class="about-library">
@@ -2883,10 +2896,9 @@
     const verificationSortActive = state.sortKey === 'verified' && state.sortExplicit;
     verificationSortNote?.classList.toggle('hidden', !verificationSortActive);
     if (verificationSortNote && verificationSortActive){
-      const verifiedCount = list.filter(isVerifiedRelease).length;
-      verificationSortNote.textContent = verifiedCount
-        ? `${verifiedCount} of ${list.length} results verified for this release. ${state.sortDirection === 1 ? 'Verified first.' : 'Unverified first.'}`
-        : `0 of ${list.length} results have exact-release operator verification. All share the same status; script names break the tie.`;
+      const current = list.filter(isVerifiedRelease).length;
+      const historical = list.filter(item=>!isVerifiedRelease(item) && verificationHistory(item)).length;
+      verificationSortNote.textContent = `${current} current-release accepted · ${historical} earlier-version accepted · ${list.length-current-historical} without recorded acceptance. ✓* means current revision not retested. ${state.sortDirection === 1 ? 'Accepted first.' : 'Without acceptance first.'}`;
     }
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
@@ -2993,6 +3005,8 @@
       return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
     }
     const notes=[...connectionInfo(item),requirementInfo(item),...(item.permissionNotes || []),...(spec.preparation || []),...spec.details].filter(Boolean);
+    const historical=verificationHistory(item);
+    if(historical)notes.push(`✓* Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
@@ -3177,10 +3191,12 @@
       "INSTALL-M365-MODULES.ps1":"", "GET-FOLDER-INVENTORY.ps1":"Does not enforce a fixed folder structure."
     };
     const note = String(item.details ?? (Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || ""))).trim();
+    const historical = verificationHistory(item);
+    const historyScope = historical ? `<p><strong>✓* Earlier-version acceptance:</strong> Version ${esc(historical.version)}. Current revision not retested.</p><p><strong>Recorded scope:</strong> ${esc(historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.')}</p><p><strong>Evidence:</strong> ${esc(historical.evidence)}<br><strong>Accepted SHA-256:</strong> ${esc(historical.sha256)}</p>` : '';
     const verificationScope = isVerifiedRelease(item) && item.verification.scope ? `<p><strong>Tested scope:</strong> ${esc(item.verification.scope)}</p>` : "";
     const noteText = note && note !== item.objective && note !== item.changeNote && item.type !== "Quick Command" ? `<p>${esc(note)}</p>` : "";
-    if (!noteText && !verificationScope) return reviewNote;
-    return reviewNote + `<details class="more-details"><summary>Details</summary>${noteText}${verificationScope}</details>`;
+    if (!noteText && !verificationScope && !historyScope) return reviewNote;
+    return reviewNote + `<details class="more-details"><summary>Details</summary>${noteText}${verificationScope}${historyScope}</details>`;
   }
 
   function csvCapability(item){

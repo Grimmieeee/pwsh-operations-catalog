@@ -770,7 +770,7 @@ test('verified sorting remains evidence-bound and row columns are explicit',()=>
  const names=Array.from(f.api.filteredItems(),x=>x.displayName);
  assert.equal(names.length,329);
  assert.match(f.elements.get('results').innerHTML,/result-verification/);
- assert.match(f.elements.get('results').innerHTML,/No exact-release operator verification/);
+ assert.match(f.elements.get('results').innerHTML,/No recorded operator acceptance/);
  assert.doesNotMatch(f.elements.get('results').innerHTML,/result-check verification-check/);
  f.api.setCatalogSort('verified');assert.equal(f.api.state.sortDirection,-1);
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -782,12 +782,26 @@ test('VERIFIED header click sorts evidence matches both ways and explains empty 
  const f=loadCatalog(root);const header=f.elements.get('catalogHead');
  const click=()=>header.listeners.click({target:{closest:()=>({getAttribute:()=> 'verified'})}});
  click();assert.equal(f.api.state.sortKey,'verified');
- assert.match(f.elements.get('verificationSortNote').textContent,/0 of 329/);
+ assert.match(f.elements.get('verificationSortNote').textContent,/77 earlier-version accepted/);
  assert.equal(f.elements.get('verificationSortNote').classList.contains('hidden'),false);
  const item=f.api.ITEMS.find(x=>x.file==='BEC-RISK-ASSESSMENT.ps1');
  item.verification={version:item.version,sha256:digest(fs.readFileSync(path.join(root,item.publishedPath))),operatorTested:true};
  click();assert.equal(f.api.filteredItems().at(-1),item);
  click();assert.equal(f.api.filteredItems()[0],item);
- assert.match(f.elements.get('verificationSortNote').textContent,/1 of 329/);
+ assert.match(f.elements.get('verificationSortNote').textContent,/1 current-release accepted/);
  f.api.state.area='About';f.api.renderResults();assert.equal(f.elements.get('verificationSortNote').classList.contains('hidden'),true);
+});
+
+test('historical checkmarks remain distinct from exact-release verification and expire on changes',()=>{
+ const f=loadCatalog(root),items=f.api.ITEMS.filter(x=>f.api.verificationHistory(x));
+ assert.equal(items.length,77);
+ for(const item of items)assert.equal(f.api.isVerifiedRelease(item),false,item.file);
+ f.api.setCatalogSort('verified');assert.equal(f.api.verificationRank(f.api.filteredItems()[0]),1);
+ assert.equal(f.api.verificationRank(f.api.filteredItems().at(-1)),0);
+ assert.match(f.elements.get('results').innerHTML,/verification-historical/);
+ const item=items[0];f.api.openItem(item);assert.match(f.elements.get('drawerBody').innerHTML,/Current revision not retested/);
+ item.version='changed';assert.equal(f.api.verificationHistory(item),null);
+ const next=items[1];f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[next.publishedPath]:'0'.repeat(64)};
+ assert.equal(f.api.verificationHistory(next),null);
+ execFileSync(process.execPath,['tools/build-verification-history.mjs','--check'],{cwd:root});
 });
