@@ -2722,7 +2722,7 @@
 
   function setCatalogSort(key){
     if (!['icon','name','flag'].includes(key)) return;
-    state.sortDirection = state.sortExplicit && state.sortKey === key ? -state.sortDirection : 1;
+    state.sortDirection = state.sortKey === key && (!state.query.trim() || state.sortExplicit) ? -state.sortDirection : 1;
     state.sortKey = key;
     state.sortExplicit = true;
     renderResults();
@@ -2803,7 +2803,7 @@
     catalogHeading?.classList.toggle('hidden', informational);
     catalogHeading.textContent = queryActive ? 'Search results' : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
-      const active = button.getAttribute('data-sort') === state.sortKey;
+      const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
       button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'type' : label === 'flag' ? 'impact' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
       button.classList.toggle('sort-active', active);

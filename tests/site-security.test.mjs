@@ -27,7 +27,6 @@ test('catalog markers distinguish reports, account actions and non-account tools
 
 test('name and icon header sorting toggles direction across all visible results',()=>{
  const f=loadCatalog(root);
- f.api.setCatalogSort('name');
  let items=Array.from(f.api.filteredItems());
  assert.equal(items.length,329);
  assert.deepEqual(items.map(x=>x.displayName),items.map(x=>x.displayName).sort((a,b)=>a.localeCompare(b)));
