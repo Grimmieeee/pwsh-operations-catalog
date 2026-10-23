@@ -473,3 +473,17 @@ html[data-theme="light"]{--flag-danger:#a92222}
 .sidebar-signature{font-size:16px}
 @media(max-width:1100px){.sidebar-signature{font-size:14px}}
 .nav-standalone .nav-section-label{margin-top:0}
+
+/* Compact primary links, scoped reporting views and a wider request button. */
+.nav-primary .about-nav{margin-top:0;padding-top:11px;border-top:0}
+.report-scope-nav{margin:2px 0 4px 10px}
+.report-scope-nav .area-sub-button{width:100%;display:flex;justify-content:space-between;align-items:center}
+.request-link{display:flex;align-items:center;justify-content:space-between;width:clamp(200px,24vw,340px);text-align:left}
+@media(max-width:760px){
+ .request-link{width:calc(100% - 56px);max-width:none;order:3}
+ .request-link + .theme-select{order:2;margin-left:auto}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .topbar{height:auto;min-height:46px;flex-wrap:wrap;row-gap:8px;padding-block:8px}
+ .masthead-note{flex-basis:100%}
+}
