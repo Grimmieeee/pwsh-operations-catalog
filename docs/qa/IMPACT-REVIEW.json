@@ -224,16 +224,6 @@
       "safetyMetadataSha256": "000515b15fe125f0cf9b703484a0ac75bfb3de5c70b048ca8bd65c638bf17c86"
     },
     {
-      "id": "command:Delete All Inbox Rules",
-      "name": "Delete All Inbox Rules",
-      "type": "Quick Command",
-      "impact": "Destructive",
-      "sourceSha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
-      "disposition": "screened",
-      "rationale": "Reviewed executable example and impact. Typed approval for destructive/broad disruptive work; native approval for selected removals. Other bounded examples require deliberate target replacement and invocation; not a guided workflow.",
-      "safetyMetadataSha256": "45d94d093eb51ca0a245459267c50012ec2a9aefe9ae9dfbc803822d924cb121"
-    },
-    {
       "id": "command:Delete Cloud User",
       "name": "Delete Cloud User",
       "type": "Quick Command",
@@ -1684,16 +1674,6 @@
       "safetyMetadataSha256": "85ca785addb52e1aac77c2ec8c50e02755f7b71b1c28b64accca48b794a23bd2"
     },
     {
-      "id": "command:Show Logged-On Users",
-      "name": "Show Logged-On Users",
-      "type": "Quick Command",
-      "impact": "Read-only",
-      "sourceSha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "85ca785addb52e1aac77c2ec8c50e02755f7b71b1c28b64accca48b794a23bd2"
-    },
-    {
       "id": "command:Show Mailbox Forwarding",
       "name": "Show Mailbox Forwarding",
       "type": "Quick Command",
@@ -2096,16 +2076,6 @@
     {
       "id": "command:Show Wi-Fi Connection",
       "name": "Show Wi-Fi Connection",
-      "type": "Quick Command",
-      "impact": "Read-only",
-      "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
-      "disposition": "screened",
-      "rationale": "No intended operational target mutation; report output, in-memory state and explicitly documented local preparation are separate side effects. Static screening is not runtime certification.",
-      "safetyMetadataSha256": "85ca785addb52e1aac77c2ec8c50e02755f7b71b1c28b64accca48b794a23bd2"
-    },
-    {
-      "id": "command:Show Wi-Fi Interface",
-      "name": "Show Wi-Fi Interface",
       "type": "Quick Command",
       "impact": "Read-only",
       "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
@@ -3293,5 +3263,6 @@
       "rationale": "Reviewed impact and approval/control-path signals. Existing domain approval retained; local output/theme operations remain explicitly invoked utilities. No new runtime certification.",
       "safetyMetadataSha256": "ce4c356c0ef3976dc49529eb1c77bf7f8367dacb843bba6c66dfe52a087fd011"
     }
-  ]
+  ],
+  "taxonomyNote": "2026-10-23: removed three exact duplicate commands; canonical command bodies, impact, safeguards and permissions unchanged. Alternate names retained as search aliases."
 }

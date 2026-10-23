@@ -9,10 +9,12 @@ import { loadCatalog } from './site-test-harness.mjs';
 import { validateCardContract } from './card-contract.mjs';
 import { checkImpactReview } from './impact-review.mjs';
 import { checkPermissionsReview } from './permissions-review.mjs';
+import { checkTaxonomyReview } from './taxonomy-review.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const {api,window,document}=loadCatalog(root);
 checkImpactReview(root);
 checkPermissionsReview(root);
+checkTaxonomyReview(root);
 const hashes={};
 for(const item of api.ITEMS){
   if(!item.publishedPath)continue;

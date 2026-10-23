@@ -33,14 +33,14 @@ function Invoke-ImpactFixture {
  }
  Write-Output "PASS: impact authorization / $Name / $Mode"
 }
-foreach($name in @('Remove All Inbox Rules','Delete All Inbox Rules','Delete Cloud User','Delete Local User','Hard-Delete Search Results')){
+foreach($name in @('Remove All Inbox Rules','Delete Cloud User','Delete Local User','Hard-Delete Search Results')){
  Invoke-ImpactFixture $name @('')
  Invoke-ImpactFixture $name @('fixture@example.invalid','WRONG')
 }
 foreach($name in @('Reboot Computer','Stop Process By Name','Release And Renew Dhcp','Reset Tcp/Ip Stack','Reset Winsock','Restart Adapter','Restart Service','Suspend For One Reboot','Update All Eligible WinGet Packages','Disable Network Adapter','Restart Network Adapter','Isolate Device - Disable Enabled Adapters')){
  Invoke-ImpactFixture $name @('NO')
 }
-foreach($name in @('Remove All Inbox Rules','Delete All Inbox Rules')){
+foreach($name in @('Remove All Inbox Rules')){
  Invoke-ImpactFixture $name @('fixture@example.invalid','DELETE fixture@example.invalid') 'success'
  Invoke-ImpactFixture $name @('fixture@example.invalid','DELETE fixture@example.invalid') 'partial'
 }

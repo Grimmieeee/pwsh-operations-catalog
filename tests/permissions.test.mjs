@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {fileURLToPath} from 'node:url';
 import {loadCatalog} from '../tools/site-test-harness.mjs';import {checkPermissionsReview} from '../tools/permissions-review.mjs';import {graphProfiles,requestedScopes,declaredModules} from '../tools/permission-profiles.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-test('whole-catalog permission review covers source and effective preparation',()=>assert.deepEqual(checkPermissionsReview(root),{entries:329,graphCommands:33,exceptions:3}));
+test('whole-catalog permission review covers source and effective preparation',()=>assert.deepEqual(checkPermissionsReview(root),{entries:326,graphCommands:33,exceptions:3}));
 test('all task Graph preparations match reviewed scopes and use no write access for reads',()=>{
  const {api}=loadCatalog(root);
  for(const [name,p] of Object.entries(graphProfiles)){

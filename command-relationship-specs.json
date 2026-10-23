@@ -165,7 +165,7 @@
     "family": "Windows sessions and shares",
     "code": "klist",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ]
@@ -174,7 +174,7 @@
     "family": "Windows sessions and shares",
     "code": "klist purge",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ]
@@ -1110,9 +1110,9 @@
     "family": "Wi-Fi",
     "code": "netsh wlan show interfaces",
     "related": [
-      "command:Show Wi-Fi Interface",
       "command:Show Saved Wi-Fi Profiles",
-      "command:Network Profile"
+      "command:Network Profile",
+      "command:Show Active Adapters"
     ]
   },
   "Show Saved Wi-Fi Profiles": {
@@ -1120,8 +1120,8 @@
     "code": "netsh wlan show profiles",
     "related": [
       "command:Show Wi-Fi Connection",
-      "command:Show Wi-Fi Interface",
-      "command:Network Profile"
+      "command:Network Profile",
+      "command:Show Active Adapters"
     ]
   },
   "Show Problem Devices": {
@@ -1308,16 +1308,16 @@
     "family": "Windows sessions and shares",
     "code": "quser",
     "related": [
-      "command:Show Logged-On Users",
       "command:Show SMB Sessions",
-      "command:Show SMB Shares"
+      "command:Show SMB Shares",
+      "command:Show Hostname And Current User"
     ]
   },
   "Show SMB Sessions": {
     "family": "Windows sessions and shares",
     "code": "Get-SmbSession |\n  Select-Object ClientComputerName,ClientUserName,NumOpens,Dialect",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Shares",
       "command:Mapped Drives"
     ]
@@ -1326,7 +1326,7 @@
     "family": "Windows sessions and shares",
     "code": "Get-SmbShare |\n  Select-Object Name,Path,Description",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Mapped Drives"
     ]
@@ -1624,8 +1624,8 @@
     "code": "netsh wlan delete profile name=\"ProfileName\"",
     "related": [
       "command:Show Wi-Fi Connection",
-      "command:Show Wi-Fi Interface",
-      "command:Show Saved Wi-Fi Profiles"
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
     ]
   },
   "DISM Analyze Component Store": {
@@ -2055,7 +2055,7 @@
     "family": "Windows sessions and shares",
     "code": "net use",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ]
