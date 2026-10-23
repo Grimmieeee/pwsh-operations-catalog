@@ -2756,7 +2756,7 @@
           <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
-        <span class="result-verification" title="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested. Open Details for tested scope.' : 'No recorded operator acceptance'}" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested' : 'No recorded operator acceptance'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : verificationHistory(item) ? '<span class="verification-check verification-historical" aria-hidden="true">✓*</span>' : '<span aria-hidden="true">—</span>'}</span>
+        <span class="result-verification" title="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested. Open Details for tested scope.' : 'No recorded operator acceptance'}" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested' : 'No recorded operator acceptance'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : verificationHistory(item) ? '<span class="verification-check verification-historical" aria-hidden="true">✓</span>' : '<span aria-hidden="true">—</span>'}</span>
         <span class="result-arrow" aria-hidden="true">›</span>
       </button>
     `;
@@ -2865,7 +2865,7 @@
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
             <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
-            <p>✓* Earlier version accepted by the owner. The current script has changed and has not been retested. The original evidence and tested scope remain available in script Details. This is acceptance history, not verification of the current release.</p>
+            <p>✓ Earlier version accepted by the owner. The current script has changed and has not been retested. The original evidence and tested scope remain available in script Details. This is acceptance history, not verification of the current release.</p>
           </section>
 
           <section class="about-library">
@@ -2898,7 +2898,7 @@
     if (verificationSortNote && verificationSortActive){
       const current = list.filter(isVerifiedRelease).length;
       const historical = list.filter(item=>!isVerifiedRelease(item) && verificationHistory(item)).length;
-      verificationSortNote.textContent = `${current} current-release accepted · ${historical} earlier-version accepted · ${list.length-current-historical} without recorded acceptance. ✓* means current revision not retested. ${state.sortDirection === 1 ? 'Accepted first.' : 'Without acceptance first.'}`;
+      verificationSortNote.textContent = `${current} current-release accepted · ${historical} earlier-version accepted · ${list.length-current-historical} without recorded acceptance. Checkmarks include earlier-version acceptance; open Details for scope. ${state.sortDirection === 1 ? 'Accepted first.' : 'Without acceptance first.'}`;
     }
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
@@ -3006,7 +3006,7 @@
     }
     const notes=[...connectionInfo(item),requirementInfo(item),...(item.permissionNotes || []),...(spec.preparation || []),...spec.details].filter(Boolean);
     const historical=verificationHistory(item);
-    if(historical)notes.push(`✓* Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
+    if(historical)notes.push(`✓ Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
@@ -3192,7 +3192,7 @@
     };
     const note = String(item.details ?? (Object.hasOwn(concise,item.file) ? concise[item.file] : (item.notes || ""))).trim();
     const historical = verificationHistory(item);
-    const historyScope = historical ? `<p><strong>✓* Earlier-version acceptance:</strong> Version ${esc(historical.version)}. Current revision not retested.</p><p><strong>Recorded scope:</strong> ${esc(historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.')}</p><p><strong>Evidence:</strong> ${esc(historical.evidence)}<br><strong>Accepted SHA-256:</strong> ${esc(historical.sha256)}</p>` : '';
+    const historyScope = historical ? `<p><strong>✓ Earlier-version acceptance:</strong> Version ${esc(historical.version)}. Current revision not retested.</p><p><strong>Recorded scope:</strong> ${esc(historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.')}</p><p><strong>Evidence:</strong> ${esc(historical.evidence)}<br><strong>Accepted SHA-256:</strong> ${esc(historical.sha256)}</p>` : '';
     const verificationScope = isVerifiedRelease(item) && item.verification.scope ? `<p><strong>Tested scope:</strong> ${esc(item.verification.scope)}</p>` : "";
     const noteText = note && note !== item.objective && note !== item.changeNote && item.type !== "Quick Command" ? `<p>${esc(note)}</p>` : "";
     if (!noteText && !verificationScope && !historyScope) return reviewNote;
