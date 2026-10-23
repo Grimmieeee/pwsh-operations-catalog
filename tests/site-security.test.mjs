@@ -499,14 +499,14 @@ test('global search includes every scope regardless of navigation selection',()=
  }
 });
 
-test('verified rows end in a check after visible risk labels; footer retains its typography',()=>{
+test('verified rows place evidence checks in the verification column; footer retains its typography',()=>{
   const f=loadCatalog(root);
   const sample=f.api.ITEMS.find(item=>item.file==='BEC-RISK-ASSESSMENT.ps1');
   sample.verification={version:sample.version,sha256:digest(fs.readFileSync(path.join(root,sample.publishedPath))),operatorTested:true};
   f.api.state.query='ir';f.api.renderResults();
   const html=f.elements.get('results').innerHTML;
-  assert.ok(html.includes('class="result-check verification-check" aria-hidden="true">✓</span>'));
-  assert.ok(html.indexOf('class="result-risk-flags"')<html.indexOf('class="result-check verification-check"'));
+  assert.ok(html.includes('class="verification-check" aria-hidden="true">✓</span>'));
+  assert.ok(html.indexOf('class="result-risk-flags"')<html.indexOf('class="result-verification"'));
   assert.ok(!html.includes('> VERIFIED</span>'));
   const css=fs.readFileSync(path.join(root,'index.html'),'utf8');
   assert.ok(css.includes('.signature-mark{font-weight:600}'));
@@ -764,3 +764,16 @@ test('file input examples use supported columns and resource mailboxes do not ad
 });
 
 test('browsing defaults to alphabetical with an expandable type key',()=>{const f=loadCatalog(root);const names=Array.from(f.api.filteredItems(),x=>x.displayName);assert.deepEqual(names,[...names].sort((a,b)=>a.localeCompare(b)));f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/Single-account action/);assert.match(f.elements.get('typeKeyItems').innerHTML,/Organization-wide tool/);});
+
+test('verified sorting remains evidence-bound and row columns are explicit',()=>{
+ const f=loadCatalog(root);f.api.setCatalogSort('verified');
+ const names=Array.from(f.api.filteredItems(),x=>x.displayName);
+ assert.equal(names.length,329);
+ assert.match(f.elements.get('results').innerHTML,/result-verification/);
+ assert.match(f.elements.get('results').innerHTML,/No exact-release operator verification/);
+ assert.doesNotMatch(f.elements.get('results').innerHTML,/result-check verification-check/);
+ f.api.setCatalogSort('verified');assert.equal(f.api.state.sortDirection,-1);
+ const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.match(html,/data-sort="verified"/);assert.match(html,/>Script name /);
+ assert.doesNotMatch(html,/id="showVerificationAbout"/);
+});

@@ -1141,7 +1141,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .result-flags{justify-self:end;justify-content:flex-end;gap:24px;max-width:360px}
 .result-risk-flags{display:inline-flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=catalog-refinements-2">
+<link rel="stylesheet" href="site-theme.css?v=catalog-columns-3">
 </head>
 <body>
 <noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
@@ -1154,7 +1154,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       <div class="brand">
         <div class="kit-wordmark" aria-label="THE FIELD KIT">
           <span class="kit-the">THE</span>
-          <span class="kit-name">FIELD<span class="kit-slashes"> //</span> KIT</span>
+          <span class="kit-name">FIELD<span class="kit-slashes"> //</span> <span class="kit-light">KIT</span></span>
         </div>
       </div>
       <nav id="areaNav" class="nav area-nav"></nav>
@@ -1196,7 +1196,6 @@ button,a,input{-webkit-tap-highlight-color:transparent}
         <span id="entryCount" class="entry-count" role="status" aria-live="polite" aria-atomic="true">(0)</span>
         <button id="clearSearch" class="clear-button hidden" type="button" aria-label="Clear search">×</button>
       </label>
-      <div class="verification-key"><button id="showVerificationAbout" type="button" title="Operator-tested release; read verification scope in About"><span class="verification-check" aria-hidden="true">✓</span> Verified</button></div>
     </section>
 
     <section class="catalog">
@@ -1204,9 +1203,10 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       <details id="typeKey" class="type-key"><summary>Type key</summary><div id="typeKeyItems" class="type-key-items"></div><p>Head icons show account actions. Reports can cover one or many accounts. ✓ Verified marks an operator-tested release; see About for scope.</p></details>
       <div id="catalogHead" class="catalog-head" role="group" aria-label="Sort catalog">
         <button type="button" data-sort="icon" aria-label="Sort by type">Type <span aria-hidden="true">↕</span></button>
-        <button type="button" data-sort="name" aria-label="Sort by name">Name <span aria-hidden="true">↕</span></button>
+        <button type="button" data-sort="name" aria-label="Sort by script name">Script name <span aria-hidden="true">↕</span></button>
         <span class="description-heading">Description</span>
         <button type="button" data-sort="flag" aria-label="Sort by impact">Impact <span aria-hidden="true">↕</span></button>
+        <button type="button" data-sort="verified" aria-label="Sort by verified status">Verified <span aria-hidden="true">↕</span></button>
       </div>
       <div id="catalogSortStatus" class="sr-only" role="status" aria-live="polite"></div>
       <div id="contextBar" class="context-bar hidden"></div>
@@ -1230,7 +1230,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 <script src="connection-guidance.js?v=permissions-1"></script>
 <script src="card-guidance.js?v=permissions-1"></script>
 <script src="workflow-start.js?v=permissions-1"></script>
-<script src="field-kit-app.js?v=catalog-refinements-2"></script>
+<script src="field-kit-app.js?v=catalog-columns-3"></script>
 <script src="site-brand.js?v=sexy-brand-1"></script>
 </body>
 </html>
