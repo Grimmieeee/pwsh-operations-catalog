@@ -1,0 +1,56 @@
+name: Request a script
+description: Describe a job FIELD KIT should help complete.
+title: '[Request] '
+body:
+- type: markdown
+  attributes:
+    value: 'Submissions are public. Use sanitized examples only: no customer data, credentials, tokens
+      or private logs. Requests and contributed code are reviewed before inclusion.'
+- type: textarea
+  id: objective
+  attributes:
+    label: What job needs doing?
+    description: Describe the problem, target and desired result.
+  validations:
+    required: true
+- type: dropdown
+  id: domain
+  attributes:
+    label: Domain
+    description: Choose the closest workflow.
+    options:
+    - Endpoint
+    - Extras
+    - Identity
+    - Incident Response
+    - Licensing
+    - Mailbox
+    - Reports
+    - Security
+    - Tools
+    - Quick Commands
+    - Not sure
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: Environment and scope
+    description: Platform, one or many targets, available tools and constraints. No tenant names
+      or personal data.
+  validations:
+    required: true
+- type: textarea
+  id: expected-output
+  attributes:
+    label: Expected result
+    description: What should the script show or change, and how would you confirm success?
+  validations:
+    required: true
+- type: textarea
+  id: references
+  attributes:
+    label: Related tools or examples
+    description: Links to public docs or sanitized examples.
+  validations:
+    required: false

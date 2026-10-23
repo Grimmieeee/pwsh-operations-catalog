@@ -1,3 +1,7 @@
+## Workflow domain navigation — October 23, 2026
+
+Home and Full Library remain pinned; Endpoint, Extras, Identity, Incident Response, Licensing, Mailbox, Quick Commands, Reports, Security and Tools are alphabetical direct sections. Identity includes groups; Utilities merge into Tools; Toys become Extras. Reports is a cross-domain read-only script view. SCOPE icons derive from reviewed target scope, not report output type. Search remains global; selecting a domain clears search. Catalog impact labels use sentence case. Thin signature fits footer width with one literal space before //. GitHub request and contribution forms require review before catalog inclusion.
+
 ## Catalog section hierarchy — October 23, 2026
 
 Icon guide replaces Type key and sits above the larger semantic section heading. Descriptions and impact flags share 15px body type; flags use medium weight to reduce visual dominance without losing status color.
