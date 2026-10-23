@@ -27,9 +27,9 @@ test('IR, incident response, BEC and every legacy filename find the renamed tool
  }
  for(const r of review.entries){api.state.query=r.oldFile;assert.equal(api.filteredItems()[0]?.file,r.file,r.oldFile);}
 });
-test('response navigation and command labels use BEC',()=>{
+test('Incident Response section retains BEC script and command labels',()=>{
  const {api,document}=loadCatalog(root);api.state.area='Incident Response';api.renderResults();
- assert.equal(document.getElementById('crumb').textContent,'BEC');
+ assert.equal(document.getElementById('crumb').textContent,'INCIDENT RESPONSE');
  for(const r of review.entries)assert.ok(api.filteredItems().some(x=>x.file===r.file),'BEC navigation: '+r.file);
  assert.equal(api.ITEMS.find(x=>x.file==='BEC-GET-IP-TRACE.ps1').group,'Investigation');
  assert.equal(api.ITEMS.find(x=>x.file==='BEC-INVOKE-EMAIL-RECOVERY.ps1').group,'Response');

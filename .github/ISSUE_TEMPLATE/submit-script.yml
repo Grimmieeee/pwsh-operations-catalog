@@ -1,0 +1,51 @@
+name: Submit a script
+description: Offer a script or improvement for review.
+title: '[Submission] '
+body:
+- type: markdown
+  attributes:
+    value: 'Submissions are public. Use sanitized examples only: no customer data, credentials, tokens
+      or private logs. Requests and contributed code are reviewed before inclusion.'
+- type: textarea
+  id: objective
+  attributes:
+    label: Purpose and workflow
+    description: What job does it do, for which targets, and when should it be used?
+  validations:
+    required: true
+- type: input
+  id: source
+  attributes:
+    label: Source or pull request URL
+    description: Link to a public repository, gist or pull request. Do not paste credentials.
+  validations:
+    required: true
+- type: textarea
+  id: requirements
+  attributes:
+    label: Requirements and impact
+    description: PowerShell version, modules, permissions, target scope, and changes made.
+  validations:
+    required: true
+- type: textarea
+  id: testing
+  attributes:
+    label: Testing and known limits
+    description: Exact tested version or commit, environment, test cases, results and any untested
+      paths. Untested work is welcome if labeled honestly.
+  validations:
+    required: true
+- type: textarea
+  id: license
+  attributes:
+    label: License and attribution
+    description: State the license and any third-party code or attribution requirements.
+  validations:
+    required: true
+- type: checkboxes
+  id: rights
+  attributes:
+    label: Submission rights
+    options:
+    - label: I have permission to share this code, and have removed secrets and customer data.
+      required: true

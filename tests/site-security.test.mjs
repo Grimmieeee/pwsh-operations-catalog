@@ -14,13 +14,13 @@ const fixturePath='published-source/fixture.ps1';
 test('catalog markers distinguish reports, account actions and non-account tools',()=>{
  const f=loadCatalog(root),find=file=>f.api.ITEMS.find(x=>x.file===file);
  for(const [file,type] of [
-  ['GET-USER-GROUPS.ps1','report'],['INVOKE-ASSIGN-LICENSES.ps1','multi'],
+  ['GET-USER-GROUPS.ps1','multi'],['INVOKE-ASSIGN-LICENSES.ps1','multi'],
   ['BEC-CONTAIN-ERADICATE.ps1','single'],['BEC-RISK-ASSESSMENT.ps1','single'],
   ['GET-TENANT-DRIFT-REVIEW.ps1','organization'],['PREPARE-FIELD-KIT.ps1','local']
  ])assert.equal(f.api.catalogIconType(find(file)),type,file);
  assert.equal(f.api.catalogIconType(f.api.ITEMS.find(x=>x.type==='Quick Command')),'command');
  const mailbox=find('GET-MAILBOX-FORWARDING.ps1');
- assert.match(f.api.catalogIconMarkup(mailbox),/Report · SINGLE or MULTI-MAILBOX/);
+ assert.match(f.api.catalogIconMarkup(mailbox),/One or multiple targets · SINGLE or MULTI-MAILBOX/);
  const kinds=new Set(['single','multi','report','organization','local','command','reference']);
  for(const item of f.api.ITEMS)assert.ok(kinds.has(f.api.catalogIconType(item)),item.displayName);
 });
@@ -220,7 +220,7 @@ test('quick command risk, scoped preparation and missing-source readiness stay a
   for(const name of ['Delete User','Delete Cloud User','Hard-Delete Search Results']){
     const item=f.api.ITEMS.find(x=>x.name===name);
     assert.equal(item.access,'Destructive');
-    assert.ok(f.api.rowTags(item).includes('DESTRUCTIVE'));
+    assert.ok(f.api.rowTags(item).includes('Destructive'));
   }
   for(const name of ['Show Graph Context','Disconnect Microsoft Graph']){
     const item=f.api.ITEMS.find(x=>x.name===name);
@@ -763,7 +763,7 @@ test('file input examples use supported columns and resource mailboxes do not ad
   f.api.openItem(resource);assert.ok(f.elements.get('drawerBody').innerHTML.includes('File input is not supported.'));
 });
 
-test('browsing defaults to alphabetical with an expandable type key',()=>{const f=loadCatalog(root);const names=Array.from(f.api.filteredItems(),x=>x.displayName);assert.deepEqual(names,[...names].sort((a,b)=>a.localeCompare(b)));f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/Single-account action/);assert.match(f.elements.get('typeKeyItems').innerHTML,/Organization-wide tool/);});
+test('browsing defaults to alphabetical with an expandable type key',()=>{const f=loadCatalog(root);const names=Array.from(f.api.filteredItems(),x=>x.displayName);assert.deepEqual(names,[...names].sort((a,b)=>a.localeCompare(b)));f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/One target/);assert.match(f.elements.get('typeKeyItems').innerHTML,/Organization-wide/);});
 
 test('verified sorting remains evidence-bound and row columns are explicit',()=>{
  const f=loadCatalog(root);f.api.setCatalogSort('verified');
@@ -806,4 +806,20 @@ test('historical checkmarks remain distinct from exact-release verification and 
  const next=items[1];f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[next.publishedPath]:'0'.repeat(64)};
  assert.equal(f.api.verificationHistory(next),null);
  execFileSync(process.execPath,['tools/build-verification-history.mjs','--check'],{cwd:root});
+});
+
+test('workflow domains cover every entry while Reports is a cross-domain view',()=>{
+ const f=loadCatalog(root),domains=Array.from(f.api.DOMAIN_SECTIONS);
+ assert.deepEqual(domains,[...domains].sort((a,b)=>a.localeCompare(b)));
+ for(const item of f.api.ITEMS)assert.ok(domains.includes(f.api.catalogDomain(item)),item.file);
+ const cases={'GET-USER-GROUPS.ps1':'Identity','INVOKE-ASSIGN-LICENSES.ps1':'Licensing','GET-MAILBOX-FORWARDING.ps1':'Mailbox','BEC-RISK-ASSESSMENT.ps1':'Incident Response','GET-MFA-SECURITY-AUDIT.ps1':'Security','BACKUP-USER-PROFILE.ps1':'Endpoint','INSTALL-M365-MODULES.ps1':'Tools','attractor.ps1':'Extras'};
+ for(const [file,domain] of Object.entries(cases))assert.equal(f.api.catalogDomain(f.api.ITEMS.find(x=>x.file===file)),domain);
+ f.api.state.area='Reports';const reports=f.api.filteredItems();assert.ok(reports.length>10);
+ assert.ok(reports.every(x=>f.api.isReportView(x)));
+ assert.ok(new Set(reports.map(x=>f.api.catalogDomain(x))).size>3);
+ const nav=f.elements.get('areaNav').innerHTML;assert.match(nav,/Request \/ Submit/);assert.doesNotMatch(nav,/nav-section-label/);
+ f.api.state.query='mailbox';const button={getAttribute:()=> 'Identity'};
+ f.elements.get('areaNav').listeners.click({target:{closest:selector=>selector==='[data-area]'?button:null}});
+ assert.equal(f.api.state.query,'');assert.equal(f.api.state.area,'Identity');
+ assert.ok(f.api.filteredItems().every(x=>f.api.catalogDomain(x)==='Identity'));
 });

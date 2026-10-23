@@ -2093,15 +2093,40 @@
 
   function areaLabel(area){
     if (area === "Start Here") return "Home";
-    if (area === "Incident Response") return "BEC";
+    if (area === "Incident Response") return "Incident Response";
     if (area === "Standalone") return "Quick Commands";
     if (area === "Utility") return "Utilities";
     return area;
   }
 
+  const DOMAIN_SECTIONS = ['Endpoint','Extras','Identity','Incident Response','Licensing','Mailbox','Quick Commands','Reports','Security','Tools'];
+
+  function catalogDomain(item){
+    if(item.type==='Quick Command')return 'Quick Commands';
+    if(isDocument(item))return 'Tools';
+    const family=item.operatorCard?.family || '';
+    if(/^ir-/.test(family) || /^BEC-/.test(item.file || ''))return 'Incident Response';
+    if(family==='terminal')return 'Extras';
+    if(['accounts','groups'].includes(family))return 'Identity';
+    if(family==='licenses')return 'Licensing';
+    if(/^mail/.test(family))return 'Mailbox';
+    if(['security','apps'].includes(family))return 'Security';
+    if(family==='endpoint' || ['GET-FOLDER-INVENTORY.ps1','TEST-SENSITIVE-DATA.ps1'].includes(item.file))return 'Endpoint';
+    return 'Tools';
+  }
+
+  function isReportView(item){
+    return Boolean(item.operatorCard && actionRank(item)===1 && /^(GET-|TEST-|RESOLVE-|BEC-(GET-|RISK-))/.test(item.file || ''));
+  }
+
+  function matchesDomain(item,area){
+    return area==='Reports' ? isReportView(item) : catalogDomain(item)===area;
+  }
+
   function countArea(area){
     if (area === "Full Library") return ITEMS.length;
     if (area === "About" || area === "Start Here") return "";
+    if(DOMAIN_SECTIONS.includes(area))return ITEMS.filter(item=>matchesDomain(item,area)).length;
     return ITEMS.filter(x => itemBuckets(x).includes(area)).length;
   }
 
@@ -2121,7 +2146,7 @@
     const active = state.area === area;
     const isStandalone = area === "Standalone";
     const isIncident = area === "Incident Response";
-    const expandable = isStandalone;
+    const expandable = isStandalone && !DOMAIN_SECTIONS.includes(area);
     const expanded = isStandalone
       ? (active && state.standaloneOpen)
       : isIncident
@@ -2185,14 +2210,9 @@
   }
 
   function renderNav(){
-    areaNav.innerHTML = [
-      '<div class="nav-primary">' + navButton("Start Here") + navButton("Full Library") + '</div>',
-      navSection("Scope", ["Single User","Multi User","Tenant Wide"]),
-      navSection("Operations", ["Incident Response","Utility","Standalone"]),
-      navButton("Tools"),
-      navSection("Extras", ["Toys"]),
-      '<div class="nav-bottom">' + navButton("About") + '</div>'
-    ].join("");
+    areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('Full Library') + '</div>' +
+      DOMAIN_SECTIONS.map(navButton).join('') +
+      '<div class="nav-bottom">' + navButton('About') + '<a class="area-button contribution-link" href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer" title="Request or submit a script on GitHub; sign-in required">Request / Submit<span aria-hidden="true">↗</span></a></div>';
   }
 
   function searchConcepts(item){
@@ -2483,7 +2503,7 @@
     if (q){
       list = ITEMS.slice();
     } else {
-      list = ITEMS.filter(item => state.area === "Full Library" || itemBuckets(item).includes(state.area));
+      list = ITEMS.filter(item => state.area === "Full Library" || (DOMAIN_SECTIONS.includes(state.area) ? matchesDomain(item,state.area) : itemBuckets(item).includes(state.area)));
 
       if (state.area === "Incident Response" && state.incidentSource){
         list = list.filter(item => incidentSource(item) === state.incidentSource);
@@ -2560,23 +2580,23 @@
   }
 
   function accessTag(item){
-    if (isDocument(item)) return `<span class="result-tag result-document">${documentLabel(item)}</span>`;
+    if (isDocument(item)) return `<span class="result-tag result-document">${documentLabel(item)==='GUIDE'?'Guide':'Reference'}</span>`;
     const access = String(item.access || "").toLowerCase();
 
     if (access.includes("destructive")){
-      return '<span class="result-tag result-change">MAKES CHANGES</span>' +
-        '<span class="result-tag result-danger">DESTRUCTIVE</span>';
+      return '<span class="result-tag result-change">Makes changes</span>' +
+        '<span class="result-tag result-danger">Destructive</span>';
     }
 
     if (access.includes("change") || access.includes("mixed")){
-      return '<span class="result-tag result-change">MAKES CHANGES</span>';
+      return '<span class="result-tag result-change">Makes changes</span>';
     }
 
     if (access.includes("read-only") || access.includes("read only") || access.includes("readonly")){
-      return '<span class="result-tag result-read">READ ONLY</span>';
+      return '<span class="result-tag result-read">Read only</span>';
     }
 
-    return '<span class="result-tag result-change">REVIEW ACCESS</span>';
+    return '<span class="result-tag result-change">Review access</span>';
   }
 
   function moduleLabel(item){
@@ -2694,16 +2714,15 @@
     if (isDocument(item)) return 'reference';
     if (item.type === 'Quick Command') return 'command';
     const scope = item.operatorCard?.scope || '';
-    if (/^GET-/i.test(item.file || '') && actionRank(item) === 1) return 'report';
-    if (/MULTI-(?:USER|MAILBOX|GROUP)/i.test(scope)) return 'multi';
-    if (/^SINGLE-(?:USER|MAILBOX|GROUP)$/i.test(scope)) return 'single';
+    if (/MULTI-/i.test(scope)) return 'multi';
+    if (/^SINGLE-/i.test(scope)) return 'single';
     if (/^TENANT$/i.test(scope)) return 'organization';
     return 'local';
   }
 
   const CATALOG_ICON_NAMES = {
-    single:'Single-account action', multi:'Multiple-account action', report:'Report',
-    organization:'Organization-wide tool', local:'Local tool', command:'Quick command', reference:'Reference'
+    single:'One target', multi:'One or multiple targets',
+    organization:'Organization-wide', local:'Local computer or files', command:'Command-specific scope; review targets', reference:'Reference; no execution scope'
   };
   const CATALOG_ICON_PATHS = {
     single:'<circle cx="12" cy="7" r="4"/><path d="M4 22v-3c0-5 16-5 16 0v3Z"/>',
@@ -2739,7 +2758,7 @@
     state.sortKey = key;
     state.sortExplicit = true;
     renderResults();
-    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'type' : key === 'flag' ? 'impact' : key === 'name' ? 'script name' : key === 'verified' ? 'verified status' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
+    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'scope' : key === 'flag' ? 'impact' : key === 'name' ? 'script name' : key === 'verified' ? 'verified status' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
   }
 
   catalogHead?.addEventListener('click', event => {
@@ -2820,7 +2839,7 @@
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
-      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'type' : label === 'flag' ? 'impact' : label === 'name' ? 'script name' : label === 'verified' ? 'verified status' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
+      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'scope' : label === 'flag' ? 'impact' : label === 'name' ? 'script name' : label === 'verified' ? 'verified status' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
       button.classList.toggle('sort-active', active);
       button.querySelector('span').textContent = active ? (state.sortDirection === 1 ? '↑' : '↓') : '↕';
     });
@@ -2857,9 +2876,9 @@
 
           <p class="about-lede">FIELD // KIT helps you choose the right tool and understand its impact before you begin.</p>
           <p>Each entry explains what you’ll need, what it does, who may be affected, and what a finished run should look like. Clear directions guide you through the work. If something gets in the way, you’ll know what happened and where to go next.</p>
-          <p>Choose a section or search the whole catalog. Setup tools come first where useful; other items are A–Z. Follow the numbered order for incident-response steps.</p>
+          <p>Choose a section or search the whole catalog. Sections and scripts are A–Z by default. Follow the numbered order for incident-response steps.</p>
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
-          <p><strong>Tools</strong> contains setup, Git helpers, and references. <strong>Toys</strong> contains terminal animations and themes.</p>
+          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reports is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Request or submit a script</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
 
           <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">
@@ -3742,6 +3761,12 @@
     if (!btn) return;
 
     const nextArea = btn.getAttribute("data-area") || "Full Library";
+
+    if(DOMAIN_SECTIONS.includes(nextArea)){
+      state.area=nextArea;state.query='';search.value='';
+      state.incidentSource='';state.incidentOpen=false;state.standaloneGroup='';state.standaloneOpen=false;
+      renderNav();renderResults();closeNav();return;
+    }
 
     if (nextArea === "Incident Response"){
       if (state.area === "Incident Response"){
