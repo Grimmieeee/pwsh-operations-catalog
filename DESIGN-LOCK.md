@@ -1,3 +1,7 @@
+## Catalog section hierarchy — October 23, 2026
+
+Icon guide replaces Type key and sits above the larger semantic section heading. Descriptions and impact flags share 15px body type; flags use medium weight to reduce visual dominance without losing status color.
+
 ## Checkmark and theme polish — October 23, 2026
 
 Use a plain ✓ for recorded acceptance; preserve current versus historical rank, tooltip, counts and Details qualification. BURNSID tracking 1.2pt, with KIT text color. Borderless theme selector aligned to row chevrons.
