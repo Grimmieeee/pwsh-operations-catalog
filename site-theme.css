@@ -487,3 +487,13 @@ html[data-theme="light"]{--flag-danger:#a92222}
  .topbar{height:auto;min-height:46px;flex-wrap:wrap;row-gap:8px;padding-block:8px}
  .masthead-note{flex-basis:100%}
 }
+
+/* Align impact text and match the quiet THE typography in the signature. */
+.catalog-head button[data-sort="flag"]{justify-self:start}
+.result-flags{justify-content:flex-start;text-align:left}
+.result-risk-flags{align-items:flex-start;text-align:left}
+.result-name,.result-description,.result:hover .result-name,.result:hover .result-description{color:var(--text)}
+.sidebar-signature{display:inline-flex;width:auto;font:300 12px/1.4 "Archivo",var(--mono);color:var(--text);opacity:1}
+.sidebar-signature .signature-letters{display:inline;flex:initial;letter-spacing:.22em;margin-right:-.22em}
+.sidebar-signature .signature-letter{font-weight:inherit;letter-spacing:inherit}
+.sidebar-signature .signature-slashes{font-weight:inherit;letter-spacing:0}

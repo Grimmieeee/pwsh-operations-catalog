@@ -1,3 +1,7 @@
+## Left-aligned impact and quiet signature — October 23, 2026
+
+Left-align the IMPACT heading and stacked labels with the column start. Script names and descriptions share the primary text color, including hover. BURNSID matches THE at Archivo 300 / 12px with matching primary color and compact tracking. Icon Guide becomes Icons.
+
 ## Reporting scope views and request sizing — October 23, 2026
 
 Add Single User, Multi User and Org subviews under Reporting using reviewed target scope. Mixed user/mailbox tools appear in both relevant views; group/IP/local reports remain in All reports. All commands becomes All. Remove the leading space after D in the signature, retaining / / separator. Tighten Home/About gap. Request button widens to 340px maximum with left-aligned text. Search result count is screen-reader-only.
