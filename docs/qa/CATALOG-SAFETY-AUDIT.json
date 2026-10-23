@@ -1,9 +1,9 @@
 {
   "note": "Every catalog entry screened. Pattern signals require source review. Scoped review and automated tests do not confer operator verification.",
   "counts": {
-    "entries": 329,
+    "entries": 326,
     "scripts": 81,
-    "commands": 235,
+    "commands": 232,
     "references": 13,
     "pending": 0,
     "operatorVerified": 0,
@@ -10346,24 +10346,6 @@
       "resultStates": []
     },
     {
-      "name": "Show Logged-On Users",
-      "file": "",
-      "path": null,
-      "kind": "Quick command",
-      "access": "Read-only",
-      "sha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
-      "family": "Quick command",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
       "name": "Disable Network Adapter",
       "file": "",
       "path": null,
@@ -10442,24 +10424,6 @@
       "kind": "Quick command",
       "access": "Read-only",
       "sha256": "3a96357adc48367447097115c25077b1841781c848d38238e68786fe89133765",
-      "family": "Quick command",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Show Wi-Fi Interface",
-      "file": "",
-      "path": null,
-      "kind": "Quick command",
-      "access": "Read-only",
-      "sha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,
@@ -10964,24 +10928,6 @@
       "kind": "Quick command",
       "access": "Read-only",
       "sha256": "d3c0d6ab1b91610d73ff9a2784f6a4f40c087142a3a18452fef68bc71afdb6ff",
-      "family": "Quick command",
-      "state": "Needs review",
-      "review": null,
-      "signals": [],
-      "authentication": {
-        "graph": false,
-        "exchange": false,
-        "ad": false
-      },
-      "resultStates": []
-    },
-    {
-      "name": "Delete All Inbox Rules",
-      "file": "",
-      "path": null,
-      "kind": "Quick command",
-      "access": "Destructive",
-      "sha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
       "family": "Quick command",
       "state": "Needs review",
       "review": null,

@@ -1,6 +1,6 @@
 # Whole-catalog taxonomy double-check
 
-Review basis: main ee16829288e4d6e9c06c6eabe569e005c5ad3cf4. Review only; proposed taxonomy changes below are not implemented.
+Review basis: main ee16829288e4d6e9c06c6eabe569e005c5ad3cf4. Corrections implemented in PR #110 after owner approval.
 
 Coverage: all 329 catalog entries (81 scripts, 235 Quick Commands, 13 references). Compared current routing, source objectives and declared target scopes for scripts, command bodies/platforms for Quick Commands, and the earlier Tools/Endpoint review. This is taxonomy review, not full execution or renewed runtime acceptance.
 
@@ -21,7 +21,7 @@ Duplicate pairs: Remove All Inbox Rules / Delete All Inbox Rules; Show Wi-Fi Con
 
 Resolve Names to UPNs produces a human-review mapping CSV and clean target TXT. Retain its Reporting membership as a mapping/inventory workflow; output purpose is substantive, not merely completion status. Pre-delete User Check likewise produces dependency findings and stays in Reporting. Change workflows do not become Reporting simply because they print an action summary or export execution evidence.
 
-## Existing first-pass corrections still pending
+## First-pass corrections included
 
 Repository Inventory to Tools; Sensitive Data Check to Security with Tools secondary; PowerShell Readiness and Terminal Readiness out of Reporting; GitHub Security Check into Reporting with Security secondary. See SECTION-MEMBERSHIP-TOOLS-ENDPOINT.md for source-bound decisions.
 
@@ -41,3 +41,7 @@ No additional top-level section is required. Remaining Identity, Licensing, Mail
 - Network CLI: 37
 - Terminal: 9
 - WinGet: 5
+
+## Release validation
+
+326 canonical entries after consolidating three exact duplicate command pairs: 81 scripts, 232 Quick Commands and 13 references. All alternate names remain searchable. Reporting has 45 workflows with user, organization, group, IP and local/file target views. Every source and command has explicit reviewed taxonomy; the release gate checks coverage, source checksums, target scopes, aliases and agreement with the shipped mapping. Permissions and impact registers remove only the three duplicate IDs, preserving all retained review records. No executable script or command body was changed.

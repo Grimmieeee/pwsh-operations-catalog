@@ -1,6 +1,1630 @@
 (() => {
   "use strict";
 
+  // Explicit reviewed taxonomy. Source/command changes require membership review.
+  const TAXONOMY = {
+  "command:Get User": {
+    "code": "Get-ADUser \"username\" -Properties Enabled,UserPrincipalName,DisplayName,LockedOut,PasswordLastSet,PasswordNeverExpires |\n  Select-Object DisplayName,SamAccountName,UserPrincipalName,Enabled,LockedOut,PasswordLastSet,PasswordNeverExpires",
+    "group": "Active Directory"
+  },
+  "command:Show Password Expiry": {
+    "code": "Get-ADUser \"username\" -Properties msDS-UserPasswordExpiryTimeComputed |\n  Select-Object SamAccountName,@{N=\"PasswordExpires\";E={[datetime]::FromFileTime($_.\"msDS-UserPasswordExpiryTimeComputed\")}}",
+    "group": "Active Directory"
+  },
+  "command:Delete User": {
+    "code": "Remove-ADUser -Identity \"username\" -Confirm:$true",
+    "group": "Active Directory"
+  },
+  "command:Disable User": {
+    "code": "Disable-ADAccount -Identity \"username\"",
+    "group": "Active Directory"
+  },
+  "command:Enable User": {
+    "code": "Enable-ADAccount -Identity \"username\"",
+    "group": "Active Directory"
+  },
+  "command:Force Password Change Next Logon": {
+    "code": "Set-ADUser -Identity \"username\" -ChangePasswordAtLogon $true",
+    "group": "Active Directory"
+  },
+  "command:Reset Password": {
+    "code": "$Password = Read-Host \"Temporary password\" -AsSecureString\nSet-ADAccountPassword -Identity \"username\" -Reset -NewPassword $Password",
+    "group": "Active Directory"
+  },
+  "command:Unlock User": {
+    "code": "Unlock-ADAccount -Identity \"username\"",
+    "group": "Active Directory"
+  },
+  "command:Find User By Exact Display Name": {
+    "code": "$Name = \"Jane Doe\"\nGet-MgUser -Filter \"displayName eq '$Name'\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled",
+    "group": "Graph"
+  },
+  "command:Get User By Upn": {
+    "code": "Get-MgUser -UserId \"user@domain.com\" -Property Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled |\n  Select-Object Id,DisplayName,UserPrincipalName,AccountEnabled,OnPremisesSyncEnabled",
+    "group": "Graph"
+  },
+  "command:Show Assigned Licenses": {
+    "code": "Get-MgUserLicenseDetail -UserId \"user@domain.com\" |\n  Select-Object SkuPartNumber,SkuId",
+    "group": "Graph"
+  },
+  "command:Show Manager": {
+    "code": "Invoke-MgGraphRequest -Method GET -Uri \"https://graph.microsoft.com/v1.0/users/user@domain.com/manager?`$select=displayName,userPrincipalName\" |\n  Select-Object displayName,userPrincipalName",
+    "group": "Graph"
+  },
+  "command:Show Password Last Changed And Age": {
+    "code": "$u = Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,LastPasswordChangeDateTime\n[pscustomobject]@{\n  User = $u.UserPrincipalName\n  LastPasswordChange = $u.LastPasswordChangeDateTime\n  PasswordAgeDays = if($u.LastPasswordChangeDateTime){ [math]::Floor(((Get-Date) - $u.LastPasswordChangeDateTime).TotalDays) } else { $null }\n}",
+    "group": "Graph"
+  },
+  "command:Show Sync Source": {
+    "code": "Get-MgUser -UserId \"user@domain.com\" -Property UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName |\n  Select-Object UserPrincipalName,OnPremisesSyncEnabled,OnPremisesLastSyncDateTime,OnPremisesDomainName,OnPremisesSamAccountName",
+    "group": "Graph"
+  },
+  "command:Delete Cloud User": {
+    "code": "& {\n    $Target = (Read-Host 'Exact cloud user UPN; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-MgUser -UserId $Target -ErrorAction Stop\n    $User | Format-List Id,DisplayName,UserPrincipalName | Out-Host\n    if ((Read-Host \"Type DELETE $($User.UserPrincipalName) to approve\").Trim() -cne \"DELETE $($User.UserPrincipalName)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-MgUser -UserId $User.Id -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify absence and retention requirements.'\n}",
+    "group": "Graph"
+  },
+  "command:Disable Sign-In": {
+    "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$false",
+    "group": "Graph"
+  },
+  "command:Enable Sign-In": {
+    "code": "Update-MgUser -UserId \"user@domain.com\" -AccountEnabled:$true",
+    "group": "Graph"
+  },
+  "command:Revoke Active Sessions": {
+    "code": "Revoke-MgUserSignInSession -UserId \"user@domain.com\"",
+    "group": "Account Response"
+  },
+  "command:Show Cached Tickets": {
+    "code": "klist",
+    "group": "Windows CLI"
+  },
+  "command:Purge Cached Tickets": {
+    "code": "klist purge",
+    "group": "Windows CLI"
+  },
+  "command:Show Local Administrators": {
+    "code": "Get-LocalGroupMember -Group \"Administrators\" |\n  Select-Object Name,ObjectClass,PrincipalSource",
+    "group": "Windows CLI"
+  },
+  "command:Show Local Users": {
+    "code": "Get-LocalUser |\n  Select-Object Name,Enabled,LastLogon,PasswordExpires,UserMayChangePassword",
+    "group": "Windows CLI"
+  },
+  "command:Add User To Administrators": {
+    "code": "Add-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
+    "group": "Windows CLI"
+  },
+  "command:Remove User From Administrators": {
+    "code": "Remove-LocalGroupMember -Group \"Administrators\" -Member \"DOMAIN\\User\"",
+    "group": "Windows CLI"
+  },
+  "command:Show All Authentication Methods For One User": {
+    "code": "Get-MgUserAuthenticationMethod -UserId \"user@domain.com\" |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}}",
+    "group": "Graph"
+  },
+  "command:Show Microsoft Authenticator Methods": {
+    "code": "Get-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" |\n  Select-Object Id,DisplayName,DeviceTag,PhoneAppVersion",
+    "group": "Graph"
+  },
+  "command:Show Phone Methods": {
+    "code": "Get-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" |\n  Select-Object Id,PhoneNumber,PhoneType,SmsSignInState",
+    "group": "Graph"
+  },
+  "command:Show Registration Status For One User": {
+    "code": "Get-MgReportAuthenticationMethodUserRegistrationDetail -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,IsMfaRegistered,IsMfaCapable,DefaultMfaMethod,MethodsRegistered",
+    "group": "Graph"
+  },
+  "command:Remove Specific Authenticator Method": {
+    "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationMicrosoftAuthenticatorMethod -UserId \"user@domain.com\" -MicrosoftAuthenticatorAuthenticationMethodId $MethodId",
+    "group": "Graph"
+  },
+  "command:Remove Specific Phone Method": {
+    "code": "$MethodId = \"AUTH-METHOD-ID\"\nRemove-MgUserAuthenticationPhoneMethod -UserId \"user@domain.com\" -PhoneAuthenticationMethodId $MethodId",
+    "group": "Graph"
+  },
+  "command:Show Delegated Grants For One User": {
+    "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Select-Object Id,ClientId,ConsentType,Scope",
+    "group": "Graph"
+  },
+  "command:Show Potentially High-Impact Delegated Scopes": {
+    "code": "Get-MgUserOauth2PermissionGrant -UserId \"user@domain.com\" -All |\n  Where-Object {\n    $_.Scope -match '(^| )(offline_access|User.ReadWrite|Mail\\.|MailboxSettings\\.|Files\\.|Sites\\.|Calendars\\.|Contacts\\.|Directory\\.)' -or\n    $_.Scope -match '\\.All($| )'\n  } |\n  Select-Object Id,ClientId,ConsentType,Scope",
+    "group": "Graph"
+  },
+  "command:Remove Specific Delegated Grant": {
+    "code": "$GrantId = \"OAUTH-GRANT-ID\"\nRemove-MgOauth2PermissionGrant -OAuth2PermissionGrantId $GrantId",
+    "group": "Graph"
+  },
+  "command:Show Distribution Group Members": {
+    "code": "$Group = \"group@domain.com\"\nGet-DistributionGroupMember -Identity $Group -ResultSize Unlimited |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientType",
+    "group": "Exchange"
+  },
+  "command:Show Distribution Group Owners": {
+    "code": "$Group = \"group@domain.com\"\nGet-DistributionGroup -Identity $Group |\n  Select-Object -ExpandProperty ManagedBy",
+    "group": "Exchange"
+  },
+  "command:Add Distribution Group Member": {
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nAdd-DistributionGroupMember -Identity $Group -Member $Member",
+    "group": "Exchange"
+  },
+  "command:Remove Distribution Group Member": {
+    "code": "$Group = \"group@domain.com\"\n$Member = \"user@domain.com\"\nRemove-DistributionGroupMember -Identity $Group -Member $Member -Confirm:$true",
+    "group": "Exchange"
+  },
+  "command:Show AD Group Members": {
+    "code": "$Group = \"Group Name\"\nGet-ADGroupMember -Identity $Group |\n  Select-Object Name,SamAccountName,ObjectClass",
+    "group": "Active Directory"
+  },
+  "command:Show AD User Group Memberships": {
+    "code": "Get-ADPrincipalGroupMembership -Identity \"username\" |\n  Select-Object Name,GroupCategory,GroupScope",
+    "group": "Active Directory"
+  },
+  "command:Add User to AD Group": {
+    "code": "$Group = \"Group Name\"\nAdd-ADGroupMember -Identity $Group -Members \"username\"",
+    "group": "Active Directory"
+  },
+  "command:Remove User from AD Group": {
+    "code": "$Group = \"Group Name\"\nRemove-ADGroupMember -Identity $Group -Members \"username\" -Confirm:$true",
+    "group": "Active Directory"
+  },
+  "command:Find Exact Group": {
+    "code": "$GroupName = \"Group Name\"\nGet-MgGroup -Filter \"displayName eq '$GroupName'\" -Property Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled |\n  Select-Object Id,DisplayName,Mail,GroupTypes,SecurityEnabled,MailEnabled",
+    "group": "Graph"
+  },
+  "command:Show Entra Group Direct Members": {
+    "code": "Get-MgGroupMember -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
+    "group": "Graph"
+  },
+  "command:Show Entra Group Owners": {
+    "code": "Get-MgGroupOwner -GroupId \"GROUP-OBJECT-ID\" -All |\n  Select-Object Id,@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}},@{N=\"UPN\";E={$_.AdditionalProperties.userPrincipalName}}",
+    "group": "Graph"
+  },
+  "command:Show Entra User Group Memberships": {
+    "code": "Get-MgUserMemberOf -UserId \"user@domain.com\" -All |\n  Select-Object Id,@{N=\"Type\";E={$_.AdditionalProperties.'@odata.type'}},@{N=\"DisplayName\";E={$_.AdditionalProperties.displayName}}",
+    "group": "Graph"
+  },
+  "command:Add User to Entra Group": {
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nNew-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -OdataId \"https://graph.microsoft.com/v1.0/directoryObjects/$UserId\"",
+    "group": "Graph"
+  },
+  "command:Remove User from Entra Group": {
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nRemove-MgGroupMemberByRef -GroupId \"GROUP-OBJECT-ID\" -DirectoryObjectId $UserId",
+    "group": "Graph"
+  },
+  "command:Show Mailbox Protocol State": {
+    "code": "Get-CASMailbox -Identity \"user@domain.com\" |\n  Select-Object PopEnabled,ImapEnabled,SmtpClientAuthenticationDisabled,MAPIEnabled,OWAEnabled,ActiveSyncEnabled",
+    "group": "Exchange"
+  },
+  "command:Show Mailbox Summary": {
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object DisplayName,PrimarySmtpAddress,RecipientTypeDetails,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
+    "group": "Exchange"
+  },
+  "command:Disable Mailbox SMTP AUTH": {
+    "code": "Set-CASMailbox -Identity \"user@domain.com\" -SmtpClientAuthenticationDisabled $true",
+    "group": "Exchange"
+  },
+  "command:Disable Mailbox POP / IMAP": {
+    "code": "Set-CASMailbox -Identity \"user@domain.com\" -PopEnabled $false -ImapEnabled $false",
+    "group": "Exchange"
+  },
+  "command:Show Mailbox Full Access Delegates": {
+    "code": "Get-MailboxPermission -Identity \"user@domain.com\" |\n  Where-Object { -not $_.IsInherited -and $_.User -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object User,AccessRights,Deny",
+    "group": "Exchange"
+  },
+  "command:Show Mailbox Forwarding": {
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object PrimarySmtpAddress,ForwardingAddress,ForwardingSmtpAddress,DeliverToMailboxAndForward",
+    "group": "Exchange"
+  },
+  "command:Show Mailbox Send As Delegates": {
+    "code": "Get-RecipientPermission -Identity \"user@domain.com\" |\n  Where-Object { $_.Trustee -ne \"NT AUTHORITY\\SELF\" } |\n  Select-Object Trustee,AccessRights",
+    "group": "Exchange"
+  },
+  "command:Show Mailbox Send on Behalf Delegates": {
+    "code": "Get-Mailbox -Identity \"user@domain.com\" |\n  Select-Object -ExpandProperty GrantSendOnBehalfTo",
+    "group": "Exchange"
+  },
+  "command:Remove Mailbox Full Access Delegate": {
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-MailboxPermission -Identity \"user@domain.com\" -User $Delegate -AccessRights FullAccess -Confirm:$true",
+    "group": "Exchange"
+  },
+  "command:Remove Mailbox Forwarding": {
+    "code": "Set-Mailbox -Identity \"user@domain.com\" -ForwardingAddress $null -ForwardingSmtpAddress $null -DeliverToMailboxAndForward $false",
+    "group": "Exchange"
+  },
+  "command:Remove Mailbox Send As Delegate": {
+    "code": "$Delegate = \"delegate@domain.com\"\nRemove-RecipientPermission -Identity \"user@domain.com\" -Trustee $Delegate -AccessRights SendAs -Confirm:$true",
+    "group": "Exchange"
+  },
+  "command:Remove Mailbox Send on Behalf Delegate": {
+    "code": "$Delegate = \"delegate@domain.com\"\nSet-Mailbox -Identity \"user@domain.com\" -GrantSendOnBehalfTo @{Remove=$Delegate}",
+    "group": "Exchange"
+  },
+  "command:Show Specific Transport Rule": {
+    "code": "$Rule = \"Rule Name\"\nGet-TransportRule -Identity $Rule | Format-List *",
+    "group": "Exchange"
+  },
+  "command:Show Transport Rules": {
+    "code": "Get-TransportRule |\n  Select-Object Name,State,Mode,Priority",
+    "group": "Exchange"
+  },
+  "command:Show Inbox Rules - Including Hidden": {
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Select-Object Name,Enabled,Priority,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
+    "group": "Exchange"
+  },
+  "command:Show Suspicious Inbox Rules": {
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden |\n  Where-Object { $_.ForwardTo -or $_.RedirectTo -or $_.DeleteMessage -or $_.StopProcessingRules } |\n  Select-Object Name,Enabled,ForwardTo,RedirectTo,DeleteMessage,MoveToFolder,StopProcessingRules",
+    "group": "Exchange"
+  },
+  "command:Remove All Inbox Rules": {
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
+    "group": "Exchange"
+  },
+  "command:Remove Specific Inbox Rule": {
+    "code": "$Rule = \"Rule Name\"\nRemove-InboxRule -Mailbox \"user@domain.com\" -Identity $Rule -Confirm:$true",
+    "group": "Exchange"
+  },
+  "command:Show BitLocker Recovery Protectors": {
+    "code": "Get-BitLockerVolume -MountPoint \"C:\" |\n  Select-Object -ExpandProperty KeyProtector |\n  Select-Object KeyProtectorType,KeyProtectorId,RecoveryPassword",
+    "group": "Windows CLI"
+  },
+  "command:Show BitLocker Status": {
+    "code": "Get-BitLockerVolume |\n  Select-Object MountPoint,VolumeStatus,ProtectionStatus,EncryptionPercentage,EncryptionMethod",
+    "group": "Windows CLI"
+  },
+  "command:Resume Protection": {
+    "code": "Resume-BitLocker -MountPoint \"C:\"",
+    "group": "Windows CLI"
+  },
+  "command:Suspend For One Reboot": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Suspend For One Reboot\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Suspend-BitLocker -MountPoint \"C:\" -RebootCount 1\n}",
+    "group": "Windows CLI"
+  },
+  "command:Find By Thumbprint": {
+    "code": "Get-ChildItem Cert:\\CurrentUser\\My,Cert:\\LocalMachine\\My |\n  Where-Object Thumbprint -eq \"THUMBPRINT\" |\n  Select-Object Subject,Thumbprint,NotBefore,NotAfter,HasPrivateKey",
+    "group": "Windows CLI"
+  },
+  "command:Show Expiring Certificates": {
+    "code": "Get-ChildItem Cert:\\LocalMachine\\My |\n  Where-Object { $_.NotAfter -le (Get-Date).AddDays(30) } |\n  Select-Object Subject,Thumbprint,NotAfter",
+    "group": "Windows CLI"
+  },
+  "command:Verify Script Signature": {
+    "code": "$Path = \"C:\\Scripts\\script.ps1\"\nGet-AuthenticodeSignature -FilePath $Path |\n  Select-Object Status,StatusMessage,SignerCertificate",
+    "group": "Windows CLI"
+  },
+  "command:Create Self-Signed App-Auth Certificate": {
+    "code": "$Name = \"M365-AppAuth\"\nNew-SelfSignedCertificate `\n  -Subject \"CN=$Name\" `\n  -CertStoreLocation \"Cert:\\CurrentUser\\My\" `\n  -KeySpec KeyExchange `\n  -KeyExportPolicy Exportable `\n  -KeyLength 2048 `\n  -HashAlgorithm SHA256 `\n  -NotAfter (Get-Date).AddYears(2)",
+    "group": "Windows CLI"
+  },
+  "command:Export Pfx": {
+    "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.pfx\"\n$Password = Read-Host \"PFX password\" -AsSecureString\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-PfxCertificate -Cert $Cert -FilePath $Path -Password $Password",
+    "group": "Windows CLI"
+  },
+  "command:Export Public Cer": {
+    "code": "$Thumbprint = \"THUMBPRINT\"\n$Path = \"C:\\Temp\\AppAuth.cer\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nExport-Certificate -Cert $Cert -FilePath $Path",
+    "group": "Windows CLI"
+  },
+  "command:Sign Script": {
+    "code": "$Path = \"C:\\Scripts\\script.ps1\"\n$Thumbprint = \"THUMBPRINT\"\n$Cert = Get-Item \"Cert:\\CurrentUser\\My\\$Thumbprint\"\nSet-AuthenticodeSignature -FilePath $Path -Certificate $Cert -TimestampServer \"http://timestamp.digicert.com\"",
+    "group": "Windows CLI"
+  },
+  "command:Find Exchange Service Principal By Appid": {
+    "code": "$AppId = \"APP-ID\"\nGet-ServicePrincipal |\n  Where-Object AppId -eq $AppId |\n  Select-Object DisplayName,AppId,ObjectId",
+    "group": "Exchange"
+  },
+  "command:Calculate Sha256 Hash": {
+    "code": "$Path = \"C:\\Temp\\file.exe\"\nGet-FileHash -Path $Path -Algorithm SHA256",
+    "group": "Windows CLI"
+  },
+  "command:Show Compliance Search Status": {
+    "code": "$SearchName = \"SEARCH-NAME\"\nGet-ComplianceSearch -Identity $SearchName |\n  Select-Object Name,Status,Items,Size,SuccessResults",
+    "group": "Purview"
+  },
+  "command:Create Phishing Search By Subject": {
+    "code": "$SearchName = \"IR_Clawback_$(Get-Date -Format 'yyyyMMdd_HHmmss')\"\n$Subject = \"phishing subject\"\nNew-ComplianceSearch `\n  -Name $SearchName `\n  -ExchangeLocation All `\n  -ContentMatchQuery \"subject:`\"$Subject`\"\"",
+    "group": "Purview"
+  },
+  "command:Hard-Delete Search Results": {
+    "code": "& {\n    $SearchName = (Read-Host 'Exact completed compliance search name; blank cancels').Trim()\n    if (-not $SearchName) { return }\n    $Search = Get-ComplianceSearch -Identity $SearchName -ErrorAction Stop\n    $Search | Format-List Name,Status,Items,Size,ExchangeLocation,ContentMatchQuery | Out-Host\n    if ($Search.Status -ne 'Completed') { throw 'Search must be completed before purge.' }\n    Write-Warning 'Hard-delete the matching search results. Confirm the query and mailbox scope above.'\n    if ((Read-Host \"Type PURGE $SearchName to approve\").Trim() -cne \"PURGE $SearchName\") { Write-Host 'Cancelled; no changes.'; return }\n    New-ComplianceSearchAction -SearchName $SearchName -Purge -PurgeType HardDelete -ErrorAction Stop\n    Write-Host 'Purge submitted; check compliance action status and service purge limits before claiming completion.'\n}",
+    "group": "Purview"
+  },
+  "command:Start Compliance Search": {
+    "code": "$SearchName = \"SEARCH-NAME\"\nStart-ComplianceSearch -Identity $SearchName",
+    "group": "Purview"
+  },
+  "command:Run Quick Scan": {
+    "code": "Start-MpScan -ScanType QuickScan",
+    "group": "Windows CLI"
+  },
+  "command:Update Signatures": {
+    "code": "Update-MpSignature",
+    "group": "Windows CLI"
+  },
+  "command:Audit Inbox Rule Changes": {
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations New-InboxRule,Set-InboxRule `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "group": "Exchange"
+  },
+  "command:Mail Delete And Move Audit": {
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "group": "Exchange"
+  },
+  "command:Mailitemsaccessed Audit": {
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "group": "Exchange"
+  },
+  "command:Parse Mail Audit Subject, Ip, And Destination Folder": {
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-14) `\n  -EndDate (Get-Date) `\n  -Operations MailItemsAccessed,SoftDelete,HardDelete,MoveToDeletedItems,Update `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,Operation,\n    @{N=\"EmailSubject\";E={(ConvertFrom-Json $_.AuditData).Item.Subject}},\n    @{N=\"ClientIP\";E={(ConvertFrom-Json $_.AuditData).ClientIP}},\n    @{N=\"DestFolder\";E={(ConvertFrom-Json $_.AuditData).DestinationFolder.Name}}",
+    "group": "Exchange"
+  },
+  "command:Search Query Audit": {
+    "code": "Search-UnifiedAuditLog -Operations SearchQueryInitiated -UserIds \"user@domain.com\" |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "group": "Exchange"
+  },
+  "command:Unified Audit Log For One User": {
+    "code": "Search-UnifiedAuditLog `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -UserIds \"user@domain.com\" `\n  -ResultSize 5000 |\n  Select-Object CreationDate,UserIds,Operation,AuditData",
+    "group": "Exchange"
+  },
+  "command:Show Risk Detections For One User": {
+    "code": "$UserId = (Get-MgUser -UserId \"user@domain.com\").Id\nGet-MgRiskDetection -Filter \"userId eq '$UserId'\" -All |\n  Select-Object ActivityDateTime,RiskEventType,RiskLevel,RiskState,IPAddress,Location,Source",
+    "group": "Graph"
+  },
+  "command:Show Risky User State": {
+    "code": "Get-MgRiskyUser -Filter \"userPrincipalName eq 'user@domain.com'\" |\n  Select-Object UserPrincipalName,RiskLevel,RiskState,RiskDetail,RiskLastUpdatedDateTime",
+    "group": "Graph"
+  },
+  "command:Recipient": {
+    "code": "Get-MessageTraceV2 `\n  -RecipientAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
+    "group": "Exchange"
+  },
+  "command:Sender": {
+    "code": "Get-MessageTraceV2 `\n  -SenderAddress \"user@domain.com\" `\n  -StartDate (Get-Date).AddDays(-7) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object Received,SenderAddress,RecipientAddress,Subject,Status,MessageTraceId",
+    "group": "Exchange"
+  },
+  "command:Show Message Trace Events": {
+    "code": "$TraceId = \"MESSAGE-TRACE-ID\"\nGet-MessageTraceDetailV2 -MessageTraceId $TraceId -RecipientAddress \"recipient@domain.com\" |\n  Select-Object Date,Event,Action,Detail,Data",
+    "group": "Exchange"
+  },
+  "command:Show Message Trace Search Jobs": {
+    "code": "Get-HistoricalSearch |\n  Sort-Object SubmitDate -Descending |\n  Select-Object -First 5 ReportTitle,Status,Rows,FileUrl,SubmitDate",
+    "group": "Exchange"
+  },
+  "command:Who Received Mail From Suspicious Sender": {
+    "code": "Get-MessageTraceV2 `\n  -SenderAddress \"badguy@evil.com\" `\n  -StartDate (Get-Date).AddDays(-10) `\n  -EndDate (Get-Date) `\n  -ResultSize 5000 |\n  Select-Object -ExpandProperty RecipientAddress |\n  Sort-Object -Unique",
+    "group": "Exchange"
+  },
+  "command:Show Failed Sign-Ins": {
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -ne 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"ErrorCode\";E={$_.Status.ErrorCode}},\n    @{N=\"FailureReason\";E={$_.Status.FailureReason}}",
+    "group": "Graph"
+  },
+  "command:Show Last 10 Entra Sign-Ins": {
+    "code": "Get-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com'\" -Top 10 -Sort \"createdDateTime desc\" |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}},\n    @{N=\"Location\";E={\"$($_.Location.City), $($_.Location.State), $($_.Location.CountryOrRegion)\"}}",
+    "group": "Graph"
+  },
+  "command:Show Entra Sign-ins - Last 48 Hours": {
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed: $($_.Status.ErrorCode)\"}}}",
+    "group": "Graph"
+  },
+  "command:Show Legacy / Other-client Sign-ins": {
+    "code": "$Since = (Get-Date).ToUniversalTime().AddDays(-7).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.ClientAppUsed -eq \"Other clients\" } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
+    "group": "Graph"
+  },
+  "command:Show Successful Sign-Ins": {
+    "code": "$Since = (Get-Date).ToUniversalTime().AddHours(-48).ToString(\"yyyy-MM-ddTHH:mm:ssZ\")\nGet-MgAuditLogSignIn -Filter \"userPrincipalName eq 'user@domain.com' and createdDateTime ge $Since\" -All |\n  Where-Object { $_.Status.ErrorCode -eq 0 } |\n  Select-Object CreatedDateTime,AppDisplayName,IPAddress,ClientAppUsed,ConditionalAccessStatus",
+    "group": "Graph"
+  },
+  "command:Recent Application Errors": {
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"Application\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
+    "group": "Windows CLI"
+  },
+  "command:Recent System Errors": {
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";Level=2;StartTime=(Get-Date).AddHours(-24)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,ProviderName,Id,Message",
+    "group": "Windows CLI"
+  },
+  "command:Resolve Name": {
+    "code": "$Name = \"example.com\"\nResolve-DnsName $Name",
+    "group": "Network CLI"
+  },
+  "command:Show Configured Dns Servers": {
+    "code": "Get-DnsClientServerAddress -AddressFamily IPv4 |\n  Select-Object InterfaceAlias,ServerAddresses",
+    "group": "Network CLI"
+  },
+  "command:Flush Resolver Cache": {
+    "code": "Clear-DnsClientCache",
+    "group": "Network CLI"
+  },
+  "command:Show Windows Firewall Profiles": {
+    "code": "Get-NetFirewallProfile |\n  Select-Object Name,Enabled,DefaultInboundAction,DefaultOutboundAction",
+    "group": "Network CLI"
+  },
+  "command:Show Windows Firewall Rules by Name": {
+    "code": "$Name = \"*Remote Desktop*\"\nGet-NetFirewallRule -DisplayName $Name |\n  Select-Object DisplayName,Enabled,Direction,Action,Profile",
+    "group": "Network CLI"
+  },
+  "command:Ping Host": {
+    "code": "Test-Connection -ComputerName \"server01\" -Count 4",
+    "group": "Network CLI"
+  },
+  "command:Show Active Adapters": {
+    "code": "Get-NetAdapter |\n  Where-Object Status -eq \"Up\" |\n  Select-Object Name,InterfaceDescription,MacAddress,LinkSpeed",
+    "group": "Network CLI"
+  },
+  "command:Show Arp Neighbor Cache": {
+    "code": "Get-NetNeighbor -AddressFamily IPv4 |\n  Select-Object IPAddress,LinkLayerAddress,State,InterfaceAlias",
+    "group": "Network CLI"
+  },
+  "command:Show Established Tcp Connections": {
+    "code": "Get-NetTCPConnection -State Established |\n  Select-Object LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess",
+    "group": "Network CLI"
+  },
+  "command:Show Ip Configuration": {
+    "code": "Get-NetIPConfiguration |\n  Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer",
+    "group": "Network CLI"
+  },
+  "command:Show Listening Tcp Ports": {
+    "code": "Get-NetTCPConnection -State Listen |\n  Sort-Object LocalPort |\n  Select-Object LocalAddress,LocalPort,OwningProcess",
+    "group": "Network CLI"
+  },
+  "command:Show Routing Table": {
+    "code": "Get-NetRoute -AddressFamily IPv4 |\n  Sort-Object RouteMetric |\n  Select-Object DestinationPrefix,NextHop,InterfaceAlias,RouteMetric",
+    "group": "Network CLI"
+  },
+  "command:Test Tcp Port": {
+    "code": "Test-NetConnection -ComputerName \"server01\" -Port 443",
+    "group": "Network CLI"
+  },
+  "command:Trace Route": {
+    "code": "Test-NetConnection -ComputerName \"example.com\" -TraceRoute",
+    "group": "Network CLI"
+  },
+  "command:Release And Renew Dhcp": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Release And Renew Dhcp\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    ipconfig /release\n    ipconfig /renew\n}",
+    "group": "Network CLI"
+  },
+  "command:Reset Tcp/Ip Stack": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Tcp/Ip Stack\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh int ip reset\n}",
+    "group": "Network CLI"
+  },
+  "command:Reset Winsock": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reset Winsock\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh winsock reset\n}",
+    "group": "Network CLI"
+  },
+  "command:Restart Adapter": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Ethernet\" -Confirm:$true\n}",
+    "group": "Network CLI"
+  },
+  "command:Show Configured Windows Vpn Connections": {
+    "code": "Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue |\n  Select-Object Name,ServerAddress,TunnelType,AuthenticationMethod,ConnectionStatus",
+    "group": "Windows CLI"
+  },
+  "command:Show Wi-Fi Connection": {
+    "code": "netsh wlan show interfaces",
+    "group": "Network CLI"
+  },
+  "command:Show Saved Wi-Fi Profiles": {
+    "code": "netsh wlan show profiles",
+    "group": "Network CLI"
+  },
+  "command:Show Problem Devices": {
+    "code": "Get-PnpDevice -PresentOnly |\n  Where-Object Status -ne \"OK\" |\n  Select-Object Class,FriendlyName,InstanceId,Status",
+    "group": "Windows CLI"
+  },
+  "command:Show Free Space": {
+    "code": "Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" |\n  Select-Object DeviceID,\n    @{N=\"SizeGB\";E={[math]::Round($_.Size/1GB,1)}},\n    @{N=\"FreeGB\";E={[math]::Round($_.FreeSpace/1GB,1)}},\n    @{N=\"FreePct\";E={[math]::Round(($_.FreeSpace/$_.Size)*100,1)}}",
+    "group": "Windows CLI"
+  },
+  "command:Show Physical Disk Health": {
+    "code": "Get-PhysicalDisk |\n  Select-Object FriendlyName,MediaType,HealthStatus,OperationalStatus,Size",
+    "group": "Windows CLI"
+  },
+  "command:Find Files Modified In Last 24 Hours": {
+    "code": "$Path = \"C:\\Temp\"\nGet-ChildItem $Path -File -Recurse -ErrorAction SilentlyContinue |\n  Where-Object LastWriteTime -ge (Get-Date).AddHours(-24) |\n  Select-Object FullName,Length,LastWriteTime",
+    "group": "Windows CLI"
+  },
+  "command:Show Computer Model And Serial Number": {
+    "code": "$System = Get-CimInstance Win32_ComputerSystem\n$Bios = Get-CimInstance Win32_BIOS\n[pscustomobject]@{\n  Manufacturer = $System.Manufacturer\n  Model = $System.Model\n  SerialNumber = $Bios.SerialNumber\n}",
+    "group": "Windows CLI"
+  },
+  "command:Show Hostname And Current User": {
+    "code": "[pscustomobject]@{\n  ComputerName = $env:COMPUTERNAME\n  User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name\n}",
+    "group": "Windows CLI"
+  },
+  "command:Show Last Boot And Uptime": {
+    "code": "$OS = Get-CimInstance Win32_OperatingSystem\n[pscustomobject]@{\n  LastBoot = $OS.LastBootUpTime\n  Uptime = (Get-Date) - $OS.LastBootUpTime\n}",
+    "group": "Windows CLI"
+  },
+  "command:Show Os And Build": {
+    "code": "Get-CimInstance Win32_OperatingSystem |\n  Select-Object Caption,Version,BuildNumber,OSArchitecture",
+    "group": "Windows CLI"
+  },
+  "command:Show Top Cpu Consumers": {
+    "code": "Get-Process |\n  Sort-Object CPU -Descending |\n  Select-Object -First 15 Name,Id,CPU",
+    "group": "Windows CLI"
+  },
+  "command:Show Top Memory Consumers": {
+    "code": "Get-Process |\n  Sort-Object WorkingSet64 -Descending |\n  Select-Object -First 15 Name,Id,@{N=\"MemoryMB\";E={[math]::Round($_.WorkingSet64/1MB,1)}}",
+    "group": "Windows CLI"
+  },
+  "command:Stop Process By Name": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Stop Process By Name\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    $Name = \"notepad\"\n    Stop-Process -Name $Name -Force\n}",
+    "group": "Windows CLI"
+  },
+  "command:Show Whether Remote Desktop Is Enabled": {
+    "code": "$Value = (Get-ItemProperty \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\" -Name fDenyTSConnections).fDenyTSConnections\n[pscustomobject]@{ RDPEnabled = ($Value -eq 0) }",
+    "group": "Windows CLI"
+  },
+  "command:Chkdsk Online Scan": {
+    "code": "chkdsk C: /scan",
+    "group": "Windows CLI"
+  },
+  "command:Dism Component Store Scan": {
+    "code": "DISM.exe /Online /Cleanup-Image /ScanHealth",
+    "group": "Windows CLI"
+  },
+  "command:Dism Restore Health": {
+    "code": "DISM.exe /Online /Cleanup-Image /RestoreHealth",
+    "group": "Windows CLI"
+  },
+  "command:System File Checker": {
+    "code": "sfc.exe /scannow",
+    "group": "Windows CLI"
+  },
+  "command:Reboot Computer": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Reboot Computer\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Computer -Force\n}",
+    "group": "Windows CLI"
+  },
+  "command:Show Service Status": {
+    "code": "Get-Service -Name \"Spooler\" |\n  Select-Object Name,DisplayName,Status,StartType",
+    "group": "Windows CLI"
+  },
+  "command:Restart Service": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Service\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-Service -Name \"Spooler\" -Force\n}",
+    "group": "Windows CLI"
+  },
+  "command:Set Startup Type": {
+    "code": "Set-Service -Name \"Spooler\" -StartupType Automatic",
+    "group": "Windows CLI"
+  },
+  "command:Show Locally Logged-On Users": {
+    "code": "quser",
+    "group": "Windows CLI"
+  },
+  "command:Show SMB Sessions": {
+    "code": "Get-SmbSession |\n  Select-Object ClientComputerName,ClientUserName,NumOpens,Dialect",
+    "group": "Windows CLI"
+  },
+  "command:Show SMB Shares": {
+    "code": "Get-SmbShare |\n  Select-Object Name,Path,Description",
+    "group": "Windows CLI"
+  },
+  "command:Show Scheduled Task": {
+    "code": "Get-ScheduledTask -TaskName \"Task Name\" |\n  Select-Object TaskName,TaskPath,State",
+    "group": "Windows CLI"
+  },
+  "command:Show Scheduled Task Last Run Result": {
+    "code": "Get-ScheduledTaskInfo -TaskName \"Task Name\" |\n  Select-Object LastRunTime,LastTaskResult,NextRunTime,NumberOfMissedRuns",
+    "group": "Windows CLI"
+  },
+  "command:Check Common Pending Reboot Flags": {
+    "code": "$Pending = $false\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Component Based Servicing\\RebootPending\"){ $Pending = $true }\nif(Test-Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\RebootRequired\"){ $Pending = $true }\n[pscustomobject]@{ PendingReboot = $Pending }",
+    "group": "Windows CLI"
+  },
+  "command:Show Installed Hotfixes": {
+    "code": "Get-HotFix |\n  Sort-Object InstalledOn -Descending |\n  Select-Object HotFixID,Description,InstalledOn,InstalledBy",
+    "group": "Windows CLI"
+  },
+  "command:Show Recent Windows Update History": {
+    "code": "Get-WinEvent -FilterHashtable @{LogName=\"System\";ProviderName=\"Microsoft-Windows-WindowsUpdateClient\";StartTime=(Get-Date).AddDays(-30)} -ErrorAction SilentlyContinue |\n  Select-Object TimeCreated,Id,LevelDisplayName,Message",
+    "group": "Windows CLI"
+  },
+  "GET-QUARTERLY-CLEANUP-REVIEW.ps1": {
+    "sha256": "df729d70508b81bf0328f0313d0de406e56f4204c3dc8460ef0ea8bb4eb91606",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-STALE-SIGNIN-REVIEW.ps1": {
+    "sha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "INVOKE-DISABLE-ACCOUNTS.ps1": {
+    "sha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
+    "primary": "Identity",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "INVOKE-DELETE-ACCOUNTS.ps1": {
+    "sha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
+    "primary": "Identity",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "INVOKE-ASSIGN-LICENSES.ps1": {
+    "sha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
+    "primary": "Licensing",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "INVOKE-REMOVE-LICENSES.ps1": {
+    "sha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
+    "primary": "Licensing",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "RESOLVE-NAMES-TO-UPNS.ps1": {
+    "sha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "GET-ACCOUNT-STATUS.ps1": {
+    "sha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
+    "sha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
+    "primary": "Identity",
+    "secondary": [
+      "Mailbox"
+    ],
+    "report": true,
+    "scope": "SINGLE or MULTI-GROUP"
+  },
+  "GET-GROUP-MEMBERS.ps1": {
+    "sha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-GROUP"
+  },
+  "GET-USER-GROUPS.ps1": {
+    "sha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "INVOKE-REMOVE-USER-GROUPS.ps1": {
+    "sha256": "8bc820639a1d6e1479e0b1c7a2a1f58953fb0eb5396f922628a73855b0e3fc54",
+    "primary": "Identity",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
+    "sha256": "7ed4b8f50be401d4004b6ff4672d19bcad5ab6e7f47cf7bc3d0a3e144290f83d",
+    "primary": "Identity",
+    "secondary": [
+      "Licensing"
+    ],
+    "report": false,
+    "scope": "SINGLE-GROUP"
+  },
+  "GET-TENANT-GROUP-OWNERS.ps1": {
+    "sha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-MAILBOX-PERMISSIONS.ps1": {
+    "sha256": "76535edd6d3e922cc44decedba707203716788afa4bdabbf68579549a57752e6",
+    "primary": "Mailbox",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-MAILBOX"
+  },
+  "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
+    "sha256": "e9e75ef77efeb81017c8dcc6f3f05cd5deb4fb8eba90890560808406762f7fda",
+    "primary": "Mailbox",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "SINGLE-MAILBOX"
+  },
+  "GET-MAILBOX-FORWARDING.ps1": {
+    "sha256": "0e184a41bd351c391985118eb128eaefad0311ec691abe4933868e6af5a88d91",
+    "primary": "Mailbox",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-MAILBOX"
+  },
+  "INVOKE-LITIGATION-HOLD.ps1": {
+    "sha256": "1ea2ff740e1f5eb24ba4aafa92636fce025ed90ffbc4050e80ce5aedcb3568fe",
+    "primary": "Mailbox",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-MAILBOX"
+  },
+  "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
+    "sha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE-MAILBOX"
+  },
+  "BEC-RISK-ASSESSMENT.ps1": {
+    "sha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE-USER"
+  },
+  "BEC-CONTAIN-ERADICATE.ps1": {
+    "sha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE-USER"
+  },
+  "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
+    "sha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE-USER"
+  },
+  "BEC-GET-IP-TRACE.ps1": {
+    "sha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
+    "sha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
+    "sha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-IP"
+  },
+  "BEC-GET-TIMELINE-BUILDER.ps1": {
+    "sha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "BEC-GET-TOKEN-DECODE.ps1": {
+    "sha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
+    "primary": "Incident Response",
+    "secondary": [
+      "Security",
+      "Tools"
+    ],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
+    "sha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE-USER"
+  },
+  "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
+    "sha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
+    "primary": "Mailbox",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-APP-REGISTRATION-AUDIT.ps1": {
+    "sha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
+    "sha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-DEVICE-CODE-EXPOSURE.ps1": {
+    "sha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
+    "sha256": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-MFA-SECURITY-AUDIT.ps1": {
+    "sha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-SECURE-SCORE-SNAPSHOT.ps1": {
+    "sha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
+    "sha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-SIGNIN-ANOMALIES.ps1": {
+    "sha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-TRANSPORT-RULES-AUDIT.ps1": {
+    "sha256": "7c4ff63bee17b5669a05a76657f3cca0b5b3674b102ead014df742ae720c62ae",
+    "primary": "Mailbox",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "JOIN-COMPUTER-TO-DOMAIN.ps1": {
+    "sha256": "231cef1b8c4ca32837fa4ece5cc04162eb1de0371f3fd69a6fd7aa839bd6f147",
+    "primary": "Endpoint",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "DEPLOY-TCPIP-PRINTER.ps1": {
+    "sha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",
+    "primary": "Endpoint",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "BACKUP-USER-PROFILE.ps1": {
+    "sha256": "dd1d1e62acc1343f0c5010dc93ebd5cf29671ff42d9876580c3f1ef7b285988d",
+    "primary": "Endpoint",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "TEST-POWERSHELL-READINESS.ps1": {
+    "sha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "GET-FOLDER-INVENTORY.ps1": {
+    "sha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
+    "primary": "Tools",
+    "secondary": [],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "INSTALL-M365-MODULES.ps1": {
+    "sha256": "6c5fb208fea47d9588354590817362336e644bc4887127f317d4816161c0b4a2",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "TEST-SENSITIVE-DATA.ps1": {
+    "sha256": "594d18150acb832080f13776581f6d8d8d21d3addc7e14aa8aea017b76e9b69e",
+    "primary": "Security",
+    "secondary": [
+      "Tools"
+    ],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "RESET-M365-SESSION.ps1": {
+    "sha256": "a08270181dc4ac7ac0cb78fd8f651701a40ce25b668342a4e0a829fb09246809",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "UPDATE-WINDOWS-APPS.ps1": {
+    "sha256": "32fcfc1c298460301dc5fe7841bb5bddb768691e23f7c9f28270c5396349c3c3",
+    "primary": "Endpoint",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "GET-USER-PREDELETE-CHECK.ps1": {
+    "sha256": "4ae5545f73829374e5b1500bd3ba8cc029e3f095e700e9ce76bf835d8a034107",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE-USER"
+  },
+  "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
+    "sha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
+    "primary": "Security",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "GET-ADMIN-ROLE-AUDIT.ps1": {
+    "sha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-OAUTH-CONSENT-AUDIT.ps1": {
+    "sha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-GUEST-USER-AUDIT.ps1": {
+    "sha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
+    "primary": "Identity",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-TENANT-LICENSING-AUDIT.ps1": {
+    "sha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
+    "primary": "Licensing",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
+    "sha256": "c0a1a2459471df298746940de9a997ee60514cbec0bb11a821f4c7e2233c66f6",
+    "primary": "Mailbox",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-USER-SECURITY-SNAPSHOT.ps1": {
+    "sha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE-USER"
+  },
+  "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
+    "sha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-ROOM-RESOURCE-ACCESS.ps1": {
+    "sha256": "476e8e8458b73432ec3c1e5d90be596b6472cece0e43c79cddc4b1de1693e1ad",
+    "primary": "Mailbox",
+    "secondary": [],
+    "report": true,
+    "scope": "SINGLE or MULTI-MAILBOX"
+  },
+  "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
+    "sha256": "90eadb894e2aa8ac36f62047a4c4aadcac67aa468c8bbbf583ec0992e6fc6e9c",
+    "primary": "Mailbox",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
+    "sha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
+    "primary": "Mailbox",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE-USER"
+  },
+  "GET-TENANT-DRIFT-REVIEW.ps1": {
+    "sha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
+    "primary": "Security",
+    "secondary": [],
+    "report": true,
+    "scope": "TENANT"
+  },
+  "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
+    "sha256": "7af474157506fd00c85b064ec037e09286c7776e4b088b28e8af36d6f3cbc85d",
+    "primary": "Endpoint",
+    "secondary": [],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
+    "sha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
+    "primary": "Identity",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE or MULTI-USER"
+  },
+  "BEC-RECOVER-VALIDATE.ps1": {
+    "sha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
+    "primary": "Incident Response",
+    "secondary": [],
+    "report": false,
+    "scope": "SINGLE-USER"
+  },
+  "PREPARE-FIELD-KIT.ps1": {
+    "sha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "START-HERE.md": {
+    "sha256": "ceaa8b9219d977a88e2f45f3af18c160671fb76812ba714a4dc437e51e9171f0",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "command:Add Calendar Permission": {
+    "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -AccessRights $AccessRights",
+    "group": "Exchange"
+  },
+  "command:Remove Calendar Permission": {
+    "code": "Remove-MailboxFolderPermission -Identity \"owner@domain.com:\\Calendar\" -User \"user@domain.com\" -Confirm:$true",
+    "group": "Exchange"
+  },
+  "command:Show Calendar Permissions": {
+    "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Calendar\"",
+    "group": "Exchange"
+  },
+  "command:Show Contacts Permissions": {
+    "code": "Get-MailboxFolderPermission -Identity \"user@domain.com:\\Contacts\"",
+    "group": "Exchange"
+  },
+  "command:Add Contacts Permission": {
+    "code": "$AccessRights = \"Reviewer\" # Reviewer or Editor\nAdd-MailboxFolderPermission -Identity \"owner@domain.com:\\Contacts\" -User \"user@domain.com\" -AccessRights $AccessRights",
+    "group": "Exchange"
+  },
+  "command:Show Send-To Restrictions / authOrig": {
+    "code": "Get-ADGroup 'GroupName' -Properties authOrig | Select-Object -ExpandProperty authOrig",
+    "group": "Active Directory"
+  },
+  "command:Show Account Enabled": {
+    "code": "Get-ADUser \"username\" -Properties Enabled | Select-Object SamAccountName,Enabled",
+    "group": "Active Directory"
+  },
+  "command:Show User Principal Name": {
+    "code": "Get-ADUser -Identity \"username\" -Properties UserPrincipalName | Select-Object UserPrincipalName",
+    "group": "Active Directory"
+  },
+  "command:Show Password Last Set": {
+    "code": "Get-ADUser -Identity \"username\" -Properties PasswordLastSet | Select-Object Name,PasswordLastSet",
+    "group": "Active Directory"
+  },
+  "command:Show Distinguished Name": {
+    "code": "Get-ADUser -Identity \"username\" | Select-Object DistinguishedName",
+    "group": "Active Directory"
+  },
+  "command:Show Default Domain Password Policy": {
+    "code": "Get-ADDefaultDomainPasswordPolicy",
+    "group": "Active Directory"
+  },
+  "command:Force Group Policy Update": {
+    "code": "gpupdate /force",
+    "group": "Windows CLI"
+  },
+  "command:Show Group Policy Result": {
+    "code": "gpresult /r",
+    "group": "Windows CLI"
+  },
+  "command:Disable Hibernation": {
+    "code": "powercfg.exe /hibernate off",
+    "group": "Windows CLI"
+  },
+  "command:Show Domain Account Details": {
+    "code": "net user username /domain",
+    "group": "Windows CLI"
+  },
+  "command:Create Local User": {
+    "code": "net user username /add",
+    "group": "Windows CLI"
+  },
+  "command:Delete Local User": {
+    "code": "& {\n    $Target = (Read-Host 'Exact local account name; blank cancels').Trim()\n    if (-not $Target) { return }\n    $User = Get-LocalUser -Name $Target -ErrorAction Stop\n    $User | Format-List Name,SID,Enabled | Out-Host\n    if ((Read-Host \"Type DELETE $($User.Name) to approve\").Trim() -cne \"DELETE $($User.Name)\") { Write-Host 'Cancelled; no changes.'; return }\n    Remove-LocalUser -SID $User.SID -ErrorAction Stop\n    Write-Host 'Deletion request completed; independently verify the local account is absent.'\n}",
+    "group": "Windows CLI"
+  },
+  "command:Set Local User Password": {
+    "code": "net user \"username\" \"temporary password\"",
+    "group": "Windows CLI"
+  },
+  "command:Enable Local Account": {
+    "code": "net user \"username\" /active:yes",
+    "group": "Windows CLI"
+  },
+  "command:Open Local Users and Groups": {
+    "code": "lusrmgr.msc",
+    "group": "Windows CLI"
+  },
+  "command:Show Logged-On Users": {
+    "code": "quser",
+    "group": "Windows CLI"
+  },
+  "command:Disable Network Adapter": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Disable Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    netsh interface set interface \"Wi-Fi\" admin=disabled\n}",
+    "group": "Network CLI"
+  },
+  "command:Restart Network Adapter": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Restart Network Adapter\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Restart-NetAdapter -Name \"Wi-Fi\"\n}",
+    "group": "Network CLI"
+  },
+  "command:Isolate Device - Disable Enabled Adapters": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Isolate Device - Disable Enabled Adapters\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    Get-NetAdapter | Where-Object Status -eq \"Up\" | Disable-NetAdapter -Confirm:$true\n}",
+    "group": "Network CLI"
+  },
+  "command:Resync Windows Time": {
+    "code": "w32tm /resync /force",
+    "group": "Windows CLI"
+  },
+  "command:Open Windows Update": {
+    "code": "start ms-settings:windowsupdate-action",
+    "group": "Windows CLI"
+  },
+  "command:Show Wi-Fi Interface": {
+    "code": "netsh wlan show interfaces",
+    "group": "Network CLI"
+  },
+  "command:Delete Wi-Fi Profile": {
+    "code": "netsh wlan delete profile name=\"ProfileName\"",
+    "group": "Network CLI"
+  },
+  "command:DISM Analyze Component Store": {
+    "code": "DISM /Online /Cleanup-Image /AnalyzeComponentStore",
+    "group": "Windows CLI"
+  },
+  "command:DISM Component Store Cleanup": {
+    "code": "DISM /Online /Cleanup-Image /StartComponentCleanup",
+    "group": "Windows CLI"
+  },
+  "command:Launch Disk Cleanup": {
+    "code": "cleanmgr.exe",
+    "group": "Windows CLI"
+  },
+  "command:Defragment Volume": {
+    "code": "Optimize-Volume -DriveLetter C -Defrag -Verbose",
+    "group": "Windows CLI"
+  },
+  "command:Show Available WinGet Updates": {
+    "code": "winget upgrade --accept-source-agreements",
+    "group": "WinGet"
+  },
+  "command:Update All Eligible WinGet Packages": {
+    "code": "& {\n    Write-Warning \"May interrupt connectivity, active work, protection or installed applications. Review the command and arrange recovery before approving.\"\n    if ((Read-Host \"Type APPLY to approve: Update All Eligible WinGet Packages\").Trim() -cne 'APPLY') { Write-Host 'Cancelled; no changes.'; return }\n    winget upgrade --all --silent --accept-source-agreements --accept-package-agreements --disable-interactivity\n}",
+    "group": "WinGet"
+  },
+  "command:Show WinGet Package Information": {
+    "code": "$PackageId = \"Package.Id\"\nwinget show --id $PackageId --exact",
+    "group": "WinGet"
+  },
+  "command:Update Specific WinGet Package": {
+    "code": "$PackageId = \"Package.Id\"\nwinget upgrade --id $PackageId --exact --accept-source-agreements --accept-package-agreements",
+    "group": "WinGet"
+  },
+  "command:Update WinGet Sources": {
+    "code": "winget source update",
+    "group": "WinGet"
+  },
+  "command:Show PowerShell Version": {
+    "code": "$PSVersionTable.PSVersion",
+    "group": "Terminal"
+  },
+  "command:Show Execution Policies": {
+    "code": "Get-ExecutionPolicy -List",
+    "group": "Terminal"
+  },
+  "command:Set Current User Execution Policy - RemoteSigned": {
+    "code": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
+    "group": "Terminal"
+  },
+  "command:Show Installed Microsoft Graph Module Version": {
+    "code": "Get-Module Microsoft.Graph.Authentication -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
+    "group": "Terminal"
+  },
+  "command:Show Installed ExchangeOnlineManagement Version": {
+    "code": "Get-Module ExchangeOnlineManagement -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1 Name,Version,Path",
+    "group": "Terminal"
+  },
+  "command:Show Graph Context": {
+    "code": "Get-MgContext",
+    "group": "Graph"
+  },
+  "command:Show Exchange Connection": {
+    "code": "Get-ConnectionInformation",
+    "group": "Exchange"
+  },
+  "command:Disconnect Microsoft Graph": {
+    "code": "Disconnect-MgGraph",
+    "group": "Graph"
+  },
+  "command:Disconnect Exchange Online": {
+    "code": "Disconnect-ExchangeOnline -Confirm:$false",
+    "group": "Exchange"
+  },
+  "command:Show Activity From One IP": {
+    "code": "$Ip = \"1.2.3.4\"\nGet-MgAuditLogSignIn -Filter \"ipAddress eq '$Ip'\" -Top 100 |\n  Select-Object CreatedDateTime,UserPrincipalName,AppDisplayName,IPAddress,ClientAppUsed,\n    @{N=\"Status\";E={if($_.Status.ErrorCode -eq 0){\"Success\"}else{\"Failed\"}}}",
+    "group": "Graph"
+  },
+  "command:Look Up ISP And Location": {
+    "code": "$Ip = \"8.8.8.8\"\nInvoke-RestMethod \"https://ipinfo.io/$Ip/json\" |\n  Select-Object ip,city,region,country,org",
+    "group": "Network CLI"
+  },
+  "command:AD Group Memberships": {
+    "code": "Get-ADPrincipalGroupMembership -Identity \"username\" | Select-Object Name",
+    "group": "Active Directory"
+  },
+  "command:AD Group Members": {
+    "code": "Get-ADGroupMember -Identity \"GroupName\" | Select-Object Name,SamAccountName,ObjectClass",
+    "group": "Active Directory"
+  },
+  "command:Connect Exchange Online": {
+    "code": "Connect-ExchangeOnline",
+    "group": "Exchange"
+  },
+  "command:Install Exchange Online Module": {
+    "code": "Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser -Force -AllowClobber",
+    "group": "Terminal"
+  },
+  "command:Install Microsoft Graph Module": {
+    "code": "Install-Module -Name Microsoft.Graph -Scope CurrentUser -Force -AllowClobber",
+    "group": "Terminal"
+  },
+  "command:Show Hidden Inbox Rules": {
+    "code": "Get-InboxRule -Mailbox \"user@domain.com\" -IncludeHidden",
+    "group": "Exchange"
+  },
+  "command:Delete All Inbox Rules": {
+    "code": "& {\n    $Mailbox = (Read-Host 'Exact mailbox UPN; blank cancels').Trim()\n    if (-not $Mailbox) { return }\n    $Rules = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    $Rules | Format-Table Name,Identity,Enabled -AutoSize | Out-Host\n    if (-not $Rules.Count) { Write-Host 'No rules found; no changes.'; return }\n    Write-Warning \"Deletes ALL $($Rules.Count) visible and hidden rules from $Mailbox. Legitimate rules are included.\"\n    if ((Read-Host \"Type DELETE $Mailbox to approve\").Trim() -cne \"DELETE $Mailbox\") { Write-Host 'Cancelled; no changes.'; return }\n    foreach ($Rule in $Rules) {\n        Remove-InboxRule -Mailbox $Mailbox -Identity $Rule.Identity -Confirm:$false -ErrorAction Stop\n    }\n    $Remaining = @(Get-InboxRule -Mailbox $Mailbox -IncludeHidden -ErrorAction Stop)\n    if ($Remaining.Count) { throw \"$($Remaining.Count) rules remain; review partial results.\" }\n    Write-Host \"Verified: no inbox rules remain in $Mailbox.\"\n}",
+    "group": "Exchange"
+  },
+  "command:IP Configuration (ipconfig)": {
+    "code": "ipconfig /all",
+    "group": "Network CLI"
+  },
+  "command:Flush DNS": {
+    "code": "ipconfig /flushdns",
+    "group": "Network CLI"
+  },
+  "command:DNS Lookup": {
+    "code": "nslookup example.com",
+    "group": "Network CLI"
+  },
+  "command:Continuous Ping": {
+    "code": "ping -t example.com",
+    "group": "Network CLI"
+  },
+  "command:Traceroute": {
+    "code": "tracert example.com",
+    "group": "Network CLI"
+  },
+  "command:Path Ping": {
+    "code": "pathping example.com",
+    "group": "Network CLI"
+  },
+  "command:Routing Table (route print)": {
+    "code": "route print",
+    "group": "Network CLI"
+  },
+  "command:ARP Cache": {
+    "code": "arp -a",
+    "group": "Network CLI"
+  },
+  "command:TCP Connections (netstat)": {
+    "code": "netstat -ano",
+    "group": "Network CLI"
+  },
+  "command:Port 443 Connections": {
+    "code": "netstat -ano | findstr :443",
+    "group": "Network CLI"
+  },
+  "command:Local Account Details": {
+    "code": "net user username",
+    "group": "Windows CLI"
+  },
+  "command:Windows Time Status": {
+    "code": "w32tm /query /status",
+    "group": "Windows CLI"
+  },
+  "command:Windows Time Source": {
+    "code": "w32tm /query /source",
+    "group": "Windows CLI"
+  },
+  "command:WinHTTP Proxy": {
+    "code": "netsh winhttp show proxy",
+    "group": "Network CLI"
+  },
+  "command:Domain Trust Check": {
+    "code": "Test-ComputerSecureChannel -Verbose",
+    "group": "Windows CLI"
+  },
+  "command:Printer Check": {
+    "code": "Get-Printer | Select-Object Name,DriverName,PortName,PrinterStatus",
+    "group": "Windows CLI"
+  },
+  "command:Open Storage Settings": {
+    "code": "start ms-settings:storagesense",
+    "group": "Windows CLI"
+  },
+  "command:Clear Delivery Optimization Cache": {
+    "code": "Delete-DeliveryOptimizationCache -Force",
+    "group": "Windows CLI"
+  },
+  "command:Identity and Privileges": {
+    "code": "whoami /all",
+    "group": "Windows CLI"
+  },
+  "command:Entra Join Status": {
+    "code": "dsregcmd /status",
+    "group": "Windows CLI"
+  },
+  "command:Mapped Drives": {
+    "code": "net use",
+    "group": "Windows CLI"
+  },
+  "command:Network Profile": {
+    "code": "Get-NetConnectionProfile",
+    "group": "Network CLI"
+  },
+  "command:Defender Status": {
+    "code": "Get-MpComputerStatus | Select-Object AMServiceEnabled,AntivirusEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanEndTime,FullScanEndTime",
+    "group": "Windows CLI"
+  },
+  "command:Print Jobs": {
+    "code": "Get-Printer | ForEach-Object { Get-PrintJob -PrinterName $_.Name -ErrorAction SilentlyContinue }",
+    "group": "Windows CLI"
+  },
+  "command:Spooler Status": {
+    "code": "Get-Service Spooler",
+    "group": "Windows CLI"
+  },
+  "command:Connect Microsoft Graph": {
+    "code": "Connect-MgGraph -Scopes \"User.Read\" -ContextScope Process",
+    "group": "Graph"
+  },
+  "command:Show Code-Signing Certificates": {
+    "code": "Get-ChildItem Cert:\\CurrentUser\\My -CodeSigningCert | Select-Object Subject,Thumbprint,NotAfter",
+    "group": "Terminal"
+  },
+  "connection-patterns.md": {
+    "sha256": "f186db47a6da071169e2ea0c1213a527f2f9eebbc78a4da2d1121db9fa387bc6",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "OPERATING-STANDARDS.md": {
+    "sha256": "d8da345212ab7c9b4801b9e5255930b34651d33bc41dab6f6d37881baf617815",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "field-kit-build-standard.md": {
+    "sha256": "b6efdedf97856b7c96c51e73ccd5ee29ffecd6ea68c4b15895b70bb07eb244fa",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "lessons-learned.md": {
+    "sha256": "f6bc6f62b00d32ef007589d931d6ee05e63944738a5df3d57a01344193c7e00f",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "powershell-standards.md": {
+    "sha256": "1b431435c30764ca2ff5e0bdbf81deed62d0fcd0bbd5cd6b5ba3a51b8e514fd0",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "publishing-checklist.md": {
+    "sha256": "7823173f60c3567e9dcb2da26a8a021f4c23b23d9279223a93910153e99c24bc",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "script-review-checklist.md": {
+    "sha256": "8ad6e773bf7edd85abc81a3f24ecd674c7a0ffc8d72e2638b3aafe6a9a98155e",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "skills.md": {
+    "sha256": "69280cbd4203c3d96717d7f0f2343ed0566eb8ea2d5c9e2222eb6b7441217f92",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "script-template-guide.md": {
+    "sha256": "49204f5c543f7a3a7a3ac0372d6d8e9111666b2d20824b68ff544c030f70ab30",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "nato-phonetic-alphabet.md": {
+    "sha256": "c9dec1a66a3530972991663504e4c54e895e87093a43081404edfdf3da7288c7",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "git-handoff.ps1": {
+    "sha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "PROJECT-HANDOFF.md": {
+    "sha256": "b750357e69da53ab3c14380334b2ec38670b3ea04d20144681dfd8a0fe24708c",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "git-repo.ps1": {
+    "sha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "git-security.ps1": {
+    "sha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
+    "primary": "Tools",
+    "secondary": [
+      "Security"
+    ],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "set-execution.ps1": {
+    "sha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "git-tools.md": {
+    "sha256": "5aa1d822aa27dd41c43bab2554b87d925b1e1eb5fd41fc22f44c12d4cbfae21a",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "REFERENCE"
+  },
+  "attractor.ps1": {
+    "sha256": "1268680342075976f80599213dd97d25abc2af741a07a7f5de2ceab2c2ba4cc6",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "rain.ps1": {
+    "sha256": "f793a1a68a8245527597522077f40dda3eeb209bf9c6ad1164f0dde5ef9daf96",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "static.ps1": {
+    "sha256": "4aa3ae630d9631f11d110f78925c6e112508b3ccc7ba703f833537bb3c9394e0",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "SIGN-FOLDER-SCRIPTS.ps1": {
+    "sha256": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "GET-TERMINAL-READINESS-CHECK.ps1": {
+    "sha256": "0cdf541f4222218c359dddc9e441343d37ee7ad745cfe5588e06a9a45ad42316",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "INVOKE-FILE-INVENTORY.ps1": {
+    "sha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
+    "primary": "Tools",
+    "secondary": [],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "INVOKE-MAP-KIT.ps1": {
+    "sha256": "ea3b5ee21dbd384d7107ec1458be968d7c7c5c00c9998a4dcc2f89856a8372a4",
+    "primary": "Tools",
+    "secondary": [],
+    "report": true,
+    "scope": "LOCAL"
+  },
+  "INVOKE-SESSION-RESET.ps1": {
+    "sha256": "2fa5b247f31b2dfe29bbed17ec9ffe576e53dbe3ce3e7ffb03f8328c7843dc07",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "SET-THEME-BASIC.ps1": {
+    "sha256": "9dc01f2210cf808379be2770450283f0d44be72c4d3cae3f9a0087c2f15e98f2",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "SET-THEME-COBALT.ps1": {
+    "sha256": "602ddcb368e716ca73ced3b799d847262faca237ee43b63a7070596ce37d9d2b",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "SET-THEME-SEAGLASS.ps1": {
+    "sha256": "629b919cea8aabd890151a2402241e426a4c0c331a9a4d5861bd9aaa340e888e",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "SET-THEME-SILICON-VALLEY.ps1": {
+    "sha256": "aab04649707578c0c57a9602b80cdae04465bff529fae0373d46f1aa2bc43739",
+    "primary": "Extras",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  },
+  "MANAGE-CERT-SIGNATURES.ps1": {
+    "sha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
+    "primary": "Tools",
+    "secondary": [],
+    "report": false,
+    "scope": "LOCAL"
+  }
+};
+  const COMMAND_ALIASES = {"Delete All Inbox Rules":"Remove All Inbox Rules","Show Wi-Fi Interface":"Show Wi-Fi Connection","Show Logged-On Users":"Show Locally Logged-On Users"};
+
   const RAW = Array.isArray(window.CATALOG_DATA) ? window.CATALOG_DATA : [];
 
   const AREAS = [
@@ -25,7 +1649,8 @@
     "Windows CLI",
     "Network CLI",
     "WinGet",
-    "Terminal"
+    "Terminal",
+    "Purview"
   ];
 
   const EXTRA_STANDALONE = [
@@ -1489,6 +3114,10 @@
   function groupFor(item, area){
     const name = displayName(item);
     const file = item.file || "";
+    if(item.type==='Quick Command'){
+      const record=TAXONOMY['command:'+item.name];
+      if(record && record.code===item.code)return record.group;
+    }
     const combined = [name,file,item.subarea,item.platform,item.code].join(" ");
 
     if (area === "Tools" || area === "Toys"){
@@ -1968,7 +3597,7 @@
     const commandReview=window.FIELD_KIT_COMMAND_GUIDANCE?.[item.name];
     const reviewedLinks=item.type==='Quick Command' ? (commandReview?.code===item.code ? commandReview.related : []) : spec?.related;
     if(reviewedLinks)return reviewedLinks.map(key=>key.startsWith('command:')
-      ? candidates.find(other=>other.type==='Quick Command' && other.name===key.slice(8))
+      ? candidates.find(other=>other.type==='Quick Command' && other.name===(COMMAND_ALIASES[key.slice(8)] || key.slice(8)))
       : candidates.find(other=>other.file===key)).filter(Boolean);
     let ranked=[];
     if(item.name==='Revoke Active Sessions')return ['BEC-RISK-ASSESSMENT.ps1','BEC-CONTAIN-ERADICATE.ps1','BEC-RECOVER-VALIDATE.ps1'].map(file=>candidates.find(x=>x.file===file)).filter(Boolean);
@@ -2051,8 +3680,21 @@
     if (!existing || scoreQuality(item) > scoreQuality(existing)) byKey.set(key,item);
   }
 
+  // Collapse only reviewed exact duplicates; preserve alternate names for search.
+  for(const [alias,canonical] of Object.entries(COMMAND_ALIASES)){
+    const duplicate=[...byKey.entries()].find(([,i])=>i.type==='Quick Command' && i.name===alias);
+    const keeper=[...byKey.values()].find(i=>i.type==='Quick Command' && i.name===canonical);
+    if(!duplicate || !keeper || duplicate[1].code.trim().replace(/\s+/g,' ')!==keeper.code.trim().replace(/\s+/g,' '))throw new Error('Command alias review required: '+alias);
+    keeper.aliases=[...(keeper.aliases||[]),alias];
+    keeper.keywords=[keeper.keywords,alias].join(' ');
+    byKey.delete(duplicate[0]);
+  }
+
   const PLANNED_ITEMS = [...byKey.values()].filter(item=>item.status==="Source pending");
   const ITEMS = [...byKey.values()].filter(item=>item.status!=="Source pending");
+  for(const item of ITEMS.filter(i=>i.type==='Quick Command')){
+    if(TAXONOMY['command:'+item.name]?.code!==item.code)throw new Error('Command taxonomy review required: '+item.name);
+  }
 
   const state = {
     area:"Full Library",
@@ -2103,35 +3745,34 @@
 
   const DOMAIN_SECTIONS = ['Endpoint','Extras','Identity','Incident Response','Licensing','Mailbox','Quick Commands','Reports','Security','Tools'];
 
+  function taxonomyRecord(item){
+    const record=TAXONOMY[item.file];
+    if(!record)throw new Error('Source taxonomy review required: '+item.file);
+    return record;
+  }
+
   function catalogDomain(item){
-    if(item.type==='Quick Command')return 'Quick Commands';
-    if(isDocument(item))return 'Tools';
-    const family=item.operatorCard?.family || '';
-    if(/^ir-/.test(family) || /^BEC-/.test(item.file || ''))return 'Incident Response';
-    if(family==='terminal')return 'Extras';
-    if(['accounts','groups'].includes(family))return 'Identity';
-    if(family==='licenses')return 'Licensing';
-    if(/^mail/.test(family))return 'Mailbox';
-    if(['security','apps'].includes(family))return 'Security';
-    if(family==='endpoint' || ['GET-FOLDER-INVENTORY.ps1','TEST-SENSITIVE-DATA.ps1'].includes(item.file))return 'Endpoint';
-    return 'Tools';
+    return item.type==='Quick Command'?'Quick Commands':taxonomyRecord(item).primary;
   }
 
   function isReportView(item){
-    return Boolean(item.operatorCard && actionRank(item)===1 && item.operatorCard.family!=='terminal');
+    return item.type!=='Quick Command' && taxonomyRecord(item).report;
   }
 
   function matchesReportScope(item,scope){
     if(!isReportView(item))return false;
-    const target=item.operatorCard?.scope || '';
+    const target=taxonomyRecord(item).scope;
     if(scope==='single')return /SINGLE(?: or MULTI)?-(?:USER|MAILBOX)/i.test(target);
     if(scope==='multi')return /MULTI-(?:USER|MAILBOX)/i.test(target);
     if(scope==='org')return /^TENANT$/i.test(target);
-    return true;
+    if(scope==='group')return /-GROUP$/i.test(target);
+    if(scope==='ip')return /-IP$/i.test(target);
+    if(scope==='local')return target==='LOCAL';
+    return !scope;
   }
 
   function reportScopeNav(){
-    return '<div class="report-scope-nav">'+[['single','Single User'],['multi','Multi User'],['org','Organization']].map(([scope,label])=>{
+    return '<div class="report-scope-nav">'+[['single','Single User'],['multi','Multi User'],['org','Organization'],['group','Groups'],['ip','IP addresses'],['local','Local / Files']].map(([scope,label])=>{
       const active=state.area==='Reports' && state.reportScope===scope;
       const count=ITEMS.filter(item=>matchesReportScope(item,scope)).length;
       return `<button type="button" class="area-sub-button ${active?'active':''}" data-report-scope="${scope}" aria-pressed="${active}"><span>${label}</span><span class="area-count">${count}</span></button>`;
@@ -2139,7 +3780,7 @@
   }
 
   function matchesDomain(item,area){
-    return area==='Reports' ? isReportView(item) : catalogDomain(item)===area;
+    return area==='Reports' ? isReportView(item) : catalogDomain(item)===area || (item.type!=='Quick Command' && taxonomyRecord(item).secondary.includes(area));
   }
 
   function countArea(area){
@@ -2320,7 +3961,7 @@
     }
     const assessmentIntent = /^(?:(?:suspicious|unfamiliar|unusual|unexpected) (?:login|logon|sign in|signin|mfa prompts?)|(?:hacked|compromised) (?:account|mailbox)|(?:account|mailbox) (?:hacked|compromised)|possible account compromise|bec|phishing)$/.test(intent);
     if (assessmentIntent && item.file === 'BEC-RISK-ASSESSMENT.ps1') return 1000;
-    if ((item.operatorCard?.searchAliases || []).some(alias=>norm(alias)===intent)) return 1000;
+    if ([...(item.operatorCard?.searchAliases || []),...(item.aliases || [])].some(alias=>norm(alias)===intent)) return 1000;
     const q = words(query);
     if (!q.length) return 1;
 
@@ -2336,7 +3977,7 @@
       searchConcepts(item)
     ].join(" "));
 
-    const task = words([item.displayName,item.operatorCard?.objective || item.objective,item.useFor,searchConcepts(item)].join(" "));
+    const task = words([item.displayName,...(item.aliases||[]),item.operatorCard?.objective || item.objective,item.useFor,searchConcepts(item)].join(" "));
     if(!q.every(token=>task.some(w=>w===token || w.startsWith(token))))return 0;
     const weak = words([
       item.platform,
@@ -2870,7 +4511,7 @@
     const typeKeyItems = document.getElementById('typeKeyItems');
     if (typeKeyItems) typeKeyItems.innerHTML = Object.entries({...CATALOG_ICON_NAMES,...DOMAIN_ICON_NAMES}).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICON_PATHS[kind] || CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
     catalogHeading?.classList.toggle('hidden', informational);
-    catalogHeading.textContent = queryActive ? 'Search results' : state.area==='Reports' && state.reportScope ? 'Reporting · '+({single:'Single User',multi:'Multi User',org:'Organization'}[state.reportScope]) : areaLabel(state.area);
+    catalogHeading.textContent = queryActive ? 'Search results' : state.area==='Reports' && state.reportScope ? 'Reporting · '+({single:'Single User',multi:'Multi User',org:'Organization',group:'Groups',ip:'IP addresses',local:'Local / Files'}[state.reportScope]) : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
@@ -3769,7 +5410,7 @@
     const reportButton=event.target.closest('[data-report-scope]');
     if(reportButton){
       const scope=reportButton.getAttribute('data-report-scope');
-      if(!['single','multi','org'].includes(scope))return;
+      if(!['single','multi','org','group','ip','local'].includes(scope))return;
       state.area='Reports';state.reportScope=scope;state.query='';search.value='';
       renderNav();renderResults();closeNav();return;
     }

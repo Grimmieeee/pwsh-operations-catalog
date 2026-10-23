@@ -1,6 +1,6 @@
 # Tools and Endpoint membership review
 
-Status: review draft; proposed placements are not applied to the live catalog.
+Status: approved placements implemented in PR #110; runtime acceptance remains separate.
 
 Reviewed 34 entries: 21 scripts and 13 references. Runtime acceptance remains separate. The adjacent JSON binds each decision to the current source checksum.
 

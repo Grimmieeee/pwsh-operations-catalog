@@ -28,7 +28,7 @@ test('catalog markers distinguish reports, account actions and non-account tools
 test('name and icon header sorting toggles direction across all visible results',()=>{
  const f=loadCatalog(root);
  let items=Array.from(f.api.filteredItems());
- assert.equal(items.length,329);
+ assert.equal(items.length,326);
  assert.deepEqual(items.map(x=>x.displayName),items.map(x=>x.displayName).sort((a,b)=>a.localeCompare(b)));
  f.api.setCatalogSort('name');
  items=Array.from(f.api.filteredItems());
@@ -519,7 +519,7 @@ test('verified rows place evidence checks in the verification column; footer ret
 test('quick-command copy matches its exact example and local commands have no cloud preparation',()=>{
   const f=loadCatalog(root);
   const commands=f.api.ITEMS.filter(x=>x.type==='Quick Command');
-  assert.equal(commands.length,235);
+  assert.equal(commands.length,232);
   for(const item of commands){
     const review=f.window.FIELD_KIT_COMMAND_GUIDANCE[item.name];
     assert.ok(review,item.name);assert.equal(review.code,item.code,item.name);
@@ -572,7 +572,7 @@ test('cards preserve investigative limits and do not promise unavailable searche
 test('release card contract covers every source, command, default and completion path',()=>{
   const f=loadCatalog(root);
   const hashes=Object.fromEntries(f.api.ITEMS.filter(x=>x.publishedPath).map(x=>[x.publishedPath,digest(fs.readFileSync(path.join(root,x.publishedPath)))]));
-  assert.deepEqual(validateCardContract({...f,hashes}),{sources:94,scripts:81,commands:235,pending:0});
+  assert.deepEqual(validateCardContract({...f,hashes}),{sources:94,scripts:81,commands:232,pending:0});
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
@@ -711,7 +711,7 @@ test('search rows show purposes and the same entity scope as opened cards',()=>{
 test('unpublished plans stay out of working searches, counts and cards',()=>{
   const f=loadCatalog(root);
   assert.equal(f.api.PLANNED_ITEMS.length,11);
-  assert.equal(f.api.ITEMS.length,329);
+  assert.equal(f.api.ITEMS.length,326);
   assert.ok(f.api.ITEMS.every(x=>x.publishedPath || x.code));
   for(const item of f.api.PLANNED_ITEMS){
     f.api.state.query=item.displayName;
@@ -726,7 +726,7 @@ test('unpublished plans stay out of working searches, counts and cards',()=>{
 test('every quick command has three source-bound reviewed relationships',()=>{
   const f=loadCatalog(root);
   const records=JSON.parse(fs.readFileSync(path.join(root,'command-relationship-specs.json'),'utf8'));
-  const commands=f.api.ITEMS.filter(x=>x.type==='Quick Command');assert.equal(commands.length,235);
+  const commands=f.api.ITEMS.filter(x=>x.type==='Quick Command');assert.equal(commands.length,232);
   for(const item of commands){
     const record=records[item.name];assert.equal(record.code,item.code,item.name);
     const links=Array.from(f.api.relatedItems(item));
@@ -769,7 +769,7 @@ test('browsing defaults to alphabetical with an expandable type key',()=>{const 
 test('verified sorting remains evidence-bound and row columns are explicit',()=>{
  const f=loadCatalog(root);f.api.setCatalogSort('verified');
  const names=Array.from(f.api.filteredItems(),x=>x.displayName);
- assert.equal(names.length,329);
+ assert.equal(names.length,326);
  assert.match(f.elements.get('results').innerHTML,/result-verification/);
  assert.match(f.elements.get('results').innerHTML,/No recorded operator acceptance/);
  assert.doesNotMatch(f.elements.get('results').innerHTML,/result-check verification-check/);
@@ -819,7 +819,8 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  assert.ok(reports.every(x=>f.api.isReportView(x)));
  for(const file of ['INVOKE-FILE-INVENTORY.ps1','INVOKE-MAP-KIT.ps1'])assert.ok(reports.some(x=>x.file===file),file);
  assert.ok(!reports.some(x=>x.operatorCard.family==='terminal'));
- for(const item of f.api.ITEMS.filter(x=>x.operatorCard && /read.only/i.test(x.access) && x.operatorCard.family!=='terminal'))assert.ok(reports.includes(item),item.file);
+ for(const file of ['BEC-GET-TOKEN-DECODE.ps1','TEST-POWERSHELL-READINESS.ps1','GET-TERMINAL-READINESS-CHECK.ps1'])assert.ok(!reports.some(x=>x.file===file),file);
+ for(const file of ['GET-TENANT-DRIFT-REVIEW.ps1','git-security.ps1'])assert.ok(reports.some(x=>x.file===file),file);
  assert.ok(new Set(reports.map(x=>f.api.catalogDomain(x))).size>3);
  const nav=f.elements.get('areaNav').innerHTML;assert.doesNotMatch(nav,/Request \/ Submit/);
  for(const label of ['Manage','Protect &amp; Respond','Resources'])assert.ok(nav.includes(label));
@@ -827,7 +828,7 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  f.api.state.query='mailbox';const button={getAttribute:()=> 'Identity'};
  f.elements.get('areaNav').listeners.click({target:{closest:selector=>selector==='[data-area]'?button:null}});
  assert.equal(f.api.state.query,'');assert.equal(f.api.state.area,'Identity');
- assert.ok(f.api.filteredItems().every(x=>f.api.catalogDomain(x)==='Identity'));
+ assert.ok(f.api.filteredItems().every(x=>f.api.matchesDomain(x,'Identity')));
 });
 
 test('BEC and Security use distinct domain shields without changing scope sort',()=>{
@@ -856,14 +857,14 @@ test('About follows Home and reporting/command headings have direct view links',
 
 test('Reporting target views use reviewed scopes and All resets the filter',()=>{
  const f=loadCatalog(root),nav=f.elements.get('areaNav');
- for(const [scope,title] of [['single','Single User'],['multi','Multi User'],['org','Organization']]){
+ for(const [scope,title] of [['single','Single User'],['multi','Multi User'],['org','Organization'],['group','Groups'],['ip','IP addresses'],['local','Local / Files']]){
   nav.listeners.click({target:{closest:selector=>selector==='[data-report-scope]'?{getAttribute:()=>scope}:null}});
   assert.equal(f.api.state.reportScope,scope);
   const items=f.api.filteredItems();assert.ok(items.length>0);assert.ok(items.every(x=>f.api.matchesReportScope(x,scope)));
   assert.equal(f.elements.get('catalogHeading').textContent,'Reporting · '+title);
  }
  nav.listeners.click({target:{closest:selector=>selector==='[data-area]'?{getAttribute:()=> 'Reports'}:null}});
- assert.equal(f.api.state.reportScope,'');assert.equal(f.api.filteredItems().length,46);
+ assert.equal(f.api.state.reportScope,'');assert.equal(f.api.filteredItems().length,45);
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(html,/id="entryCount" class="entry-count sr-only"/);
 });
 
@@ -874,4 +875,37 @@ test('idea button has a terminal mark and reference note lives on Home',()=>{
  f.api.state.area='Start Here';f.api.renderResults();
  assert.match(f.elements.get('results').innerHTML,/A working reference/);assert.match(f.elements.get('results').innerHTML,/Use responsibly/);
  const nav=f.elements.get('areaNav').innerHTML;assert.match(nav,/>Organization</);assert.match(nav,/>Single Use</);
+});
+
+test('explicit taxonomy covers every source and source revision; no silent fallback',async()=>{
+ const {checkTaxonomyReview}=await import('../tools/taxonomy-review.mjs');
+ assert.deepEqual(checkTaxonomyReview(root),{entries:326,aliases:3});
+ const f=loadCatalog(root);f.api.TAXONOMY['GET-USER-GROUPS.ps1'].sha256='0'.repeat(64);
+ assert.throws(()=>checkTaxonomyReview(root,f),/differs|stale/);
+ assert.throws(()=>f.api.catalogDomain({file:'unknown.ps1'}),/review required/);
+});
+
+test('approved cross-listings are canonical and Reporting follows output purpose',()=>{
+ const f=loadCatalog(root),find=file=>f.api.ITEMS.find(i=>i.file===file);
+ for(const [file,primary,secondary] of [
+ ['GET-FOLDER-INVENTORY.ps1','Tools',null],['TEST-SENSITIVE-DATA.ps1','Security','Tools'],
+ ['INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1','Identity','Licensing'],
+ ['GET-DISTRIBUTION-GROUP-MEMBERS.ps1','Identity','Mailbox'],
+ ['GET-MAILBOX-SECURITY-SNAPSHOT.ps1','Mailbox','Security'],['git-security.ps1','Tools','Security']]){
+  const i=find(file);assert.equal(f.api.catalogDomain(i),primary,file);
+  if(secondary){f.api.state.area=secondary;assert(f.api.filteredItems().includes(i),file);assert.equal(f.api.ITEMS.filter(x=>x.file===file).length,1);}
+ }
+ for(const file of ['GET-TENANT-DRIFT-REVIEW.ps1','git-security.ps1'])assert(f.api.isReportView(find(file)),file);
+ for(const file of ['TEST-POWERSHELL-READINESS.ps1','GET-TERMINAL-READINESS-CHECK.ps1','BEC-GET-TOKEN-DECODE.ps1','INVOKE-DELETE-ACCOUNTS.ps1'])assert(!f.api.isReportView(find(file)),file);
+ for(const i of f.api.ITEMS.filter(f.api.isReportView))assert(['single','multi','org','group','ip','local'].some(s=>f.api.matchesReportScope(i,s)),i.file);
+});
+
+test('duplicate names search canonical commands and command groups respect actual platforms',()=>{
+ const f=loadCatalog(root);
+ for(const [alias,canonical]of Object.entries(f.api.COMMAND_ALIASES)){
+  f.api.state.query=alias;const found=f.api.filteredItems();assert(found.some(i=>i.name===canonical),alias);assert(!found.some(i=>i.name===alias));
+ }
+ for(const i of f.api.ITEMS.filter(i=>i.type==='Quick Command'&&i.platform==='Purview'))assert.equal(i.group,'Purview',i.name);
+ assert.equal(f.api.ITEMS.find(i=>i.name==='Look Up ISP And Location').group,'Network CLI');
+ assert.equal(f.api.ITEMS.find(i=>i.name==='Show Whether Remote Desktop Is Enabled').group,'Windows CLI');
 });

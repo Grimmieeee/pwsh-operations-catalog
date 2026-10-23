@@ -160,13 +160,6 @@
       "disposition": "screened"
     },
     {
-      "id": "command:Delete All Inbox Rules",
-      "sourceSha256": "e6cb3c7497828183e779a9c80051c1c7fc63dc2a3eecb91f2b8ba9d4fe4f9238",
-      "permissionMetadataSha256": "ffdbaf4a994a854db3668381d07ebdd07071376773e4abf978fb5bfd89796d6b",
-      "requestedScopes": [],
-      "disposition": "screened"
-    },
-    {
       "id": "command:Delete Cloud User",
       "sourceSha256": "dfc249f6ef81931ea9bd42c0adaf1a8768b3bd5dcbcc1305574e819483590816",
       "permissionMetadataSha256": "6ae2876253589513c316b96bb923710d519d3d867e3657e85eaabae76fc9be7d",
@@ -1232,13 +1225,6 @@
       "disposition": "screened"
     },
     {
-      "id": "command:Show Logged-On Users",
-      "sourceSha256": "ba62df33ed29fd38dad318681b96df010a6a25104ca475b3ee14ba401fa4510f",
-      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
-      "requestedScopes": [],
-      "disposition": "screened"
-    },
-    {
       "id": "command:Show Mailbox Forwarding",
       "sourceSha256": "b6509ddf091b4a5d0a1fdbb769652ae6c2367c47dd160f2561951de530eab5fc",
       "permissionMetadataSha256": "ac91e9426e87702d9b62cbbe083bcdd772dc2cb5ca45b85784a93d6f6a30d10c",
@@ -1541,13 +1527,6 @@
     },
     {
       "id": "command:Show Wi-Fi Connection",
-      "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
-      "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
-      "requestedScopes": [],
-      "disposition": "screened"
-    },
-    {
-      "id": "command:Show Wi-Fi Interface",
       "sourceSha256": "902a88a47257f2be665bfbbcc7632e9fa3d0feb4045a0c9d1498eb0396b84615",
       "permissionMetadataSha256": "81a8ad12c7515bd4cbef33bcbf594bdac28b634f296e3216a13ac975027e156f",
       "requestedScopes": [],
@@ -2546,5 +2525,6 @@
       "requestedScopes": [],
       "disposition": "screened"
     }
-  ]
+  ],
+  "taxonomyNote": "2026-10-23: removed three exact duplicate commands; canonical command bodies, impact, safeguards and permissions unchanged. Alternate names retained as search aliases."
 }

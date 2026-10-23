@@ -4,7 +4,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),revie
 const hash=value=>crypto.createHash('sha256').update(value).digest('hex');
 test('all eleven response scripts use BEC filenames, labels and source-bound reviews',()=>{
  const {api}=loadCatalog(root);assert.equal(review.entries.length,11);
- assert.equal(api.ITEMS.length,329);assert.equal(api.ITEMS.filter(x=>x.publishedPath).length,94);
+ assert.equal(api.ITEMS.length,326);assert.equal(api.ITEMS.filter(x=>x.publishedPath).length,94);
  assert.ok(api.ITEMS.every(x=>!/^IR-/i.test(x.file)));
  for(const r of review.entries){
   const item=api.ITEMS.find(x=>x.file===r.file);assert.ok(item,r.file);assert.match(item.displayName,/^BEC: /);

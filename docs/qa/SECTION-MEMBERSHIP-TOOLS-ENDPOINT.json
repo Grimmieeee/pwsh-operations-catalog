@@ -1,5 +1,5 @@
 {
-  "status": "review-draft-not-applied",
+  "status": "approved-and-implemented",
   "scope": "Tools and Endpoint only",
   "basis": "Current reviewed objectives, scope/impact records, source purpose and output paths. Static classification review; no new runtime acceptance.",
   "policy": {
@@ -20,7 +20,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Changes the current computer domain membership; endpoint provisioning.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "DEPLOY-TCPIP-PRINTER.ps1",
@@ -34,7 +34,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Installs a printer and driver on the target computer.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "BACKUP-USER-PROFILE.ps1",
@@ -48,7 +48,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Copies user-profile folders; backup operation rather than a reporting workflow.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "TEST-POWERSHELL-READINESS.ps1",
@@ -62,7 +62,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Prerequisite readiness diagnostic; successful checks are not a reporting workflow.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "GET-FOLDER-INVENTORY.ps1",
@@ -76,7 +76,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Inventories folders, scripts, signatures and Git status; toolkit/repository review rather than endpoint maintenance.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "INSTALL-M365-MODULES.ps1",
@@ -90,7 +90,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Installs or updates local dependencies.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "TEST-SENSITIVE-DATA.ps1",
@@ -106,7 +106,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Reports potential disclosure findings before sharing files; security review with a publishing-tool entry point.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "RESET-M365-SESSION.ps1",
@@ -120,7 +120,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Disconnects supported services in the current session.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "UPDATE-WINDOWS-APPS.ps1",
@@ -134,7 +134,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reviews and applies application updates; operational maintenance.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
@@ -148,7 +148,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Produces a reclaimable-storage review without deleting files.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "PREPARE-FIELD-KIT.ps1",
@@ -162,7 +162,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Prepares local prerequisites after approval.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "START-HERE.md",
@@ -176,7 +176,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "connection-patterns.md",
@@ -190,7 +190,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "OPERATING-STANDARDS.md",
@@ -204,7 +204,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "field-kit-build-standard.md",
@@ -218,7 +218,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "lessons-learned.md",
@@ -232,7 +232,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "powershell-standards.md",
@@ -246,7 +246,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "publishing-checklist.md",
@@ -260,7 +260,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "script-review-checklist.md",
@@ -274,7 +274,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "skills.md",
@@ -288,7 +288,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "script-template-guide.md",
@@ -302,7 +302,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "nato-phonetic-alphabet.md",
@@ -316,7 +316,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "git-handoff.ps1",
@@ -330,7 +330,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Creates a screened project handoff snapshot; handoff is the job, not analytical reporting.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "PROJECT-HANDOFF.md",
@@ -344,7 +344,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "git-repo.ps1",
@@ -358,7 +358,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Interactive Git review/pull/push workflow, not a dedicated report.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "git-security.ps1",
@@ -374,7 +374,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Reviews a supplied GitHub security export and reports actionable findings; may save local review checkpoints. Local writes do not remove reporting purpose.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "set-execution.ps1",
@@ -388,7 +388,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Changes execution policy/unblocks scripts; setup utility.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "git-tools.md",
@@ -402,7 +402,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Reference material supporting toolkit use, development or publishing; not a runnable script.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "SIGN-FOLDER-SCRIPTS.ps1",
@@ -416,7 +416,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Signs scripts; publishing operation.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "GET-TERMINAL-READINESS-CHECK.ps1",
@@ -430,7 +430,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Validates expected toolkit files and prerequisites; readiness diagnostic.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "INVOKE-FILE-INVENTORY.ps1",
@@ -444,7 +444,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Reports file/version/signature/duplicate-content findings; optional CSV export.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "INVOKE-MAP-KIT.ps1",
@@ -458,7 +458,7 @@
       "proposedReporting": true,
       "homeStartHereCandidate": false,
       "rationale": "Purpose-built folder map reporter, not a setup validator.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "INVOKE-SESSION-RESET.ps1",
@@ -472,7 +472,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": true,
       "rationale": "Clears supported service connections in the current session.",
-      "status": "proposed"
+      "status": "implemented"
     },
     {
       "file": "MANAGE-CERT-SIGNATURES.ps1",
@@ -486,7 +486,7 @@
       "proposedReporting": false,
       "homeStartHereCandidate": false,
       "rationale": "Interactive signing-certificate management; review mode alone does not make the whole workflow a report.",
-      "status": "proposed"
+      "status": "implemented"
     }
   ]
 }

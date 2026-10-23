@@ -2,7 +2,7 @@
 
 Generated from current source hashes. Automated-test states describe the listed scope only; native operator verification is a separate gate. Pattern matches in the JSON are review leads.
 
-{"entries":329,"scripts":81,"commands":235,"references":13,"pending":0,"operatorVerified":0,"scopedReviews":81}
+{"entries":326,"scripts":81,"commands":232,"references":13,"pending":0,"operatorVerified":0,"scopedReviews":81}
 
 | Script | Family | Review state | Scope / remaining review |
 |---|---|---|---|

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {loadCatalog} from '../tools/site-test-harness.mjs';
 import {checkImpactReview,root} from '../tools/impact-review.mjs';
 const {api}=loadCatalog(root);
-const named=name=>{const i=api.ITEMS.find(x=>x.name===name);assert.ok(i,name);return i;};
+const named=name=>{const i=api.ITEMS.find(x=>x.name===name || x.aliases?.includes(name));assert.ok(i,name);return i;};
 test('all active catalog entries have a current source-bound impact review',()=>assert.equal(checkImpactReview().entries,api.ITEMS.length));
 test('equivalent all-inbox-rule deletions have identical impact and executable safeguards',()=>{
  const a=named('Remove All Inbox Rules'),b=named('Delete All Inbox Rules');

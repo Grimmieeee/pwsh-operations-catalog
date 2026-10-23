@@ -2342,7 +2342,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell on the computer being checked.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
@@ -2360,7 +2360,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
@@ -4431,9 +4431,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell on the computer being checked.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Wi-Fi Interface",
       "command:Show Saved Wi-Fi Profiles",
-      "command:Network Profile"
+      "command:Network Profile",
+      "command:Show Active Adapters"
     ],
     "relationshipFamily": "Wi-Fi",
     "permissionNotes": []
@@ -4448,8 +4448,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
       "command:Show Wi-Fi Connection",
-      "command:Show Wi-Fi Interface",
-      "command:Network Profile"
+      "command:Network Profile",
+      "command:Show Active Adapters"
     ],
     "relationshipFamily": "Wi-Fi",
     "permissionNotes": []
@@ -4807,9 +4807,9 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell on the computer being checked.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
       "command:Show SMB Sessions",
-      "command:Show SMB Shares"
+      "command:Show SMB Shares",
+      "command:Show Hostname And Current User"
     ],
     "relationshipFamily": "Windows sessions and shares",
     "permissionNotes": []
@@ -4823,7 +4823,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell running as administrator on the target computer.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Shares",
       "command:Mapped Drives"
     ],
@@ -4839,7 +4839,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell on the computer being checked.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Mapped Drives"
     ],
@@ -5456,8 +5456,8 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "input": "Saved Wi-Fi profile name; replace ProfileName.",
     "related": [
       "command:Show Wi-Fi Connection",
-      "command:Show Wi-Fi Interface",
-      "command:Show Saved Wi-Fi Profiles"
+      "command:Show Saved Wi-Fi Profiles",
+      "command:Network Profile"
     ],
     "relationshipFamily": "Wi-Fi",
     "permissionNotes": []
@@ -6289,7 +6289,7 @@ window.FIELD_KIT_COMMAND_GUIDANCE = Object.freeze({
     "requires": "Windows PowerShell on the computer being checked.",
     "input": "Uses this Windows computer; no target values to enter.",
     "related": [
-      "command:Show Logged-On Users",
+      "command:Show Locally Logged-On Users",
       "command:Show SMB Sessions",
       "command:Show SMB Shares"
     ],
