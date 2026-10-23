@@ -822,7 +822,7 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  assert.ok(new Set(reports.map(x=>f.api.catalogDomain(x))).size>3);
  const nav=f.elements.get('areaNav').innerHTML;assert.doesNotMatch(nav,/Request \/ Submit/);
  for(const label of ['Manage','Protect &amp; Respond','Resources'])assert.ok(nav.includes(label));
- const page=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(page,/class="request-link"/);assert.match(page,/>Submit a Request /);assert.match(page,/>Icons</);
+ const page=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(page,/class="request-link"/);assert.match(page,/>Submit an idea!</);assert.match(page,/>Icons</);
  f.api.state.query='mailbox';const button={getAttribute:()=> 'Identity'};
  f.elements.get('areaNav').listeners.click({target:{closest:selector=>selector==='[data-area]'?button:null}});
  assert.equal(f.api.state.query,'');assert.equal(f.api.state.area,'Identity');
@@ -848,14 +848,14 @@ test('About follows Home and reporting/command headings have direct view links',
  const f=loadCatalog(root),nav=f.elements.get('areaNav').innerHTML;
  assert.ok(nav.indexOf('data-area="Start Here"')<nav.indexOf('data-area="About"'));
  assert.ok(nav.indexOf('data-area="About"')<nav.indexOf('data-area="Full Library"'));
- assert.match(nav,/>All reports</);assert.match(nav,/>All</);
+ assert.match(nav,/>All reports</);assert.match(nav,/>Single Use</);
  f.api.state.area='Reports';f.api.renderResults();assert.equal(f.elements.get('catalogHeading').textContent,'Reporting');
  f.api.state.area='Full Library';f.api.renderResults();assert.match(f.elements.get('results').innerHTML,/>Modifies</);assert.doesNotMatch(f.elements.get('results').innerHTML,/>Makes changes</);
 });
 
 test('Reporting target views use reviewed scopes and All resets the filter',()=>{
  const f=loadCatalog(root),nav=f.elements.get('areaNav');
- for(const [scope,title] of [['single','Single User'],['multi','Multi User'],['org','Org']]){
+ for(const [scope,title] of [['single','Single User'],['multi','Multi User'],['org','Organization']]){
   nav.listeners.click({target:{closest:selector=>selector==='[data-report-scope]'?{getAttribute:()=>scope}:null}});
   assert.equal(f.api.state.reportScope,scope);
   const items=f.api.filteredItems();assert.ok(items.length>0);assert.ok(items.every(x=>f.api.matchesReportScope(x,scope)));
@@ -864,4 +864,13 @@ test('Reporting target views use reviewed scopes and All resets the filter',()=>
  nav.listeners.click({target:{closest:selector=>selector==='[data-area]'?{getAttribute:()=> 'Reports'}:null}});
  assert.equal(f.api.state.reportScope,'');assert.equal(f.api.filteredItems().length,46);
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(html,/id="entryCount" class="entry-count sr-only"/);
+});
+
+test('idea button has a terminal mark and reference note lives on Home',()=>{
+ const f=loadCatalog(root),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+ assert.match(html,/class="request-mark"/);assert.match(html,/>Submit an idea!</);
+ assert.doesNotMatch(html,/<div class="masthead-note">/);
+ f.api.state.area='Start Here';f.api.renderResults();
+ assert.match(f.elements.get('results').innerHTML,/A working reference/);assert.match(f.elements.get('results').innerHTML,/Use responsibly/);
+ const nav=f.elements.get('areaNav').innerHTML;assert.match(nav,/>Organization</);assert.match(nav,/>Single Use</);
 });

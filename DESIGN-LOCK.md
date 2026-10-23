@@ -1,3 +1,7 @@
+## Idea action and Home reference — October 23, 2026
+
+Organization replaces Org in Reporting. Quick Commands view is Single Use. Submit an idea! button includes a small terminal mark at left. Move the reference/responsibility note from global header to Home. Signature uses thin Raleway 200 at 18px within 150px width, with one space before //. Graphics remain a proposal: faint Home prompt watermark or contour lines; real output previews for cards.
+
 ## Left-aligned impact and quiet signature — October 23, 2026
 
 Left-align the IMPACT heading and stacked labels with the column start. Script names and descriptions share the primary text color, including hover. BURNSID matches THE at Archivo 300 / 12px with matching primary color and compact tracking. Icon Guide becomes Icons.

@@ -2131,7 +2131,7 @@
   }
 
   function reportScopeNav(){
-    return '<div class="report-scope-nav">'+[['single','Single User'],['multi','Multi User'],['org','Org']].map(([scope,label])=>{
+    return '<div class="report-scope-nav">'+[['single','Single User'],['multi','Multi User'],['org','Organization']].map(([scope,label])=>{
       const active=state.area==='Reports' && state.reportScope===scope;
       const count=ITEMS.filter(item=>matchesReportScope(item,scope)).length;
       return `<button type="button" class="area-sub-button ${active?'active':''}" data-report-scope="${scope}" aria-pressed="${active}"><span>${label}</span><span class="area-count">${count}</span></button>`;
@@ -2233,7 +2233,7 @@
       navSection('Manage',['Identity','Mailbox','Licensing','Endpoint']) +
       navSection('Protect & Respond',['Security','Incident Response']) +
       '<div class="nav-standalone"><div class="nav-section-label">Reporting</div>' + navButton('Reports','All reports') + reportScopeNav() + '</div>' +
-      '<div class="nav-standalone"><div class="nav-section-label">Quick Commands</div>' + navButton('Quick Commands','All') + '</div>' +
+      '<div class="nav-standalone"><div class="nav-section-label">Quick Commands</div>' + navButton('Quick Commands','Single Use') + '</div>' +
       navSection('Resources',['Tools','Extras']);
   }
 
@@ -2818,6 +2818,7 @@
       <div class="about-kicker">FIRST TIME USING FIELD // KIT?</div>
       <h2 class="item-title">Home</h2>
       <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
+      <p class="home-reference"><strong>A working reference.</strong> <span>Use responsibly.</span></p>
       <section class="note-block"><h3>1. Confirm the customer and computer</h3>
         <p>Connect to the customer’s approved Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket open to record who ran the job and when.</p>
       </section>
@@ -2867,7 +2868,7 @@
     const typeKeyItems = document.getElementById('typeKeyItems');
     if (typeKeyItems) typeKeyItems.innerHTML = Object.entries({...CATALOG_ICON_NAMES,...DOMAIN_ICON_NAMES}).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICON_PATHS[kind] || CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
     catalogHeading?.classList.toggle('hidden', informational);
-    catalogHeading.textContent = queryActive ? 'Search results' : state.area==='Reports' && state.reportScope ? 'Reporting · '+({single:'Single User',multi:'Multi User',org:'Org'}[state.reportScope]) : areaLabel(state.area);
+    catalogHeading.textContent = queryActive ? 'Search results' : state.area==='Reports' && state.reportScope ? 'Reporting · '+({single:'Single User',multi:'Multi User',org:'Organization'}[state.reportScope]) : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
@@ -2910,7 +2911,7 @@
           <p>Each entry explains what you’ll need, what it does, who may be affected, and what a finished run should look like. Clear directions guide you through the work. If something gets in the way, you’ll know what happened and where to go next.</p>
           <p>Choose a section or search the whole catalog. Sections and scripts are A–Z by default. Follow the numbered order for incident-response steps.</p>
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
-          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reporting is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Submit a Request</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
+          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reporting is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Submit an idea!</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
 
           <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">
