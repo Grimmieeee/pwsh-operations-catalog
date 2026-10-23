@@ -268,7 +268,7 @@ html[data-theme="dark"] .sidebar{background:#0b1114}
 html[data-theme="dark"] .topbar{background:transparent;border-bottom:0}
 html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
 @media(min-width:761px){.topbar{height:46px}.masthead-note{font-size:10px}}
-@media(min-width:761px) and (max-width:1100px){.site-masthead{padding-inline:36px}}
+@media(min-width:761px) and (max-width:1100px){.site-masthead{padding-inline:36px}.kit-wordmark{font-size:19px}}
 @media(max-width:760px){
   .site-masthead{padding:26px 18px 30px}
   .maker-signature{font-size:15px;margin-top:16px}
