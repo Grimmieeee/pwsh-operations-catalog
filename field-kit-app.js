@@ -2061,7 +2061,8 @@
     standaloneGroup:"",
     standaloneOpen:false,
     query:"",
-    sortKey:"",
+    sortKey:"name",
+    sortExplicit:false,
     sortDirection:1,
     selected:null
   };
@@ -2091,6 +2092,7 @@
   const sourceCache = new Map();
 
   function areaLabel(area){
+    if (area === "Start Here") return "Home";
     if (area === "Incident Response") return "BEC";
     if (area === "Standalone") return "Quick Commands";
     if (area === "Utility") return "Utilities";
@@ -2532,7 +2534,7 @@
       );
     }
 
-    if (state.sortKey) list.sort(catalogCompare);
+    if (state.sortKey && (!q || state.sortExplicit)) list.sort(catalogCompare);
     return list;
   }
 
@@ -2720,10 +2722,11 @@
 
   function setCatalogSort(key){
     if (!['icon','name','flag'].includes(key)) return;
-    state.sortDirection = state.sortKey === key ? -state.sortDirection : 1;
+    state.sortDirection = state.sortExplicit && state.sortKey === key ? -state.sortDirection : 1;
     state.sortKey = key;
+    state.sortExplicit = true;
     renderResults();
-    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'icon type' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
+    catalogSortStatus.textContent = `Sorted by ${key === 'icon' ? 'type' : key === 'flag' ? 'impact' : key}, ${state.sortDirection === 1 ? 'ascending' : 'descending'}.`;
   }
 
   catalogHead?.addEventListener('click', event => {
@@ -2748,7 +2751,7 @@
   function renderFirstRun(){
     results.innerHTML = `<section class="about-block first-run-guide">
       <div class="about-kicker">FIRST TIME USING FIELD // KIT?</div>
-      <h2 class="item-title">Start Here</h2>
+      <h2 class="item-title">Home</h2>
       <p class="about-lede">Prepare the support computer. Choose one tool. Run one job.</p>
       <section class="note-block"><h3>1. Confirm the customer and computer</h3>
         <p>Connect to the customer’s approved Windows support computer. Confirm the customer, computer and approved Windows account. Keep the ticket open to record who ran the job and when.</p>
@@ -2793,12 +2796,16 @@
     const queryActive = Boolean(state.query.trim());
     const informational = state.area === 'About' || state.area === 'Start Here';
     catalogHead?.classList.toggle('hidden', informational);
+    const typeKey = document.getElementById('typeKey');
+    typeKey?.classList.toggle('hidden', informational);
+    const typeKeyItems = document.getElementById('typeKeyItems');
+    if (typeKeyItems) typeKeyItems.innerHTML = Object.entries(CATALOG_ICON_NAMES).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
     catalogHeading?.classList.toggle('hidden', informational);
     catalogHeading.textContent = queryActive ? 'Search results' : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey;
       const label = button.getAttribute('data-sort');
-      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'icon type' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
+      button.setAttribute('aria-label', `Sort by ${label === 'icon' ? 'type' : label === 'flag' ? 'impact' : label}${active ? '; currently ' + (state.sortDirection === 1 ? 'ascending' : 'descending') : ''}`);
       button.classList.toggle('sort-active', active);
       button.querySelector('span').textContent = active ? (state.sortDirection === 1 ? '↑' : '↓') : '↕';
     });

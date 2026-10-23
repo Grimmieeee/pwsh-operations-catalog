@@ -16,7 +16,7 @@ function fixture({saved=null,light=false,blocked=false,mediaUnavailable=false}={
  return {attributes,control,meta,storage,media,systemEvents,events};
 }
 test('system preference is applied immediately and follows later changes',()=>{
- const f=fixture({light:true});assert.equal(f.attributes['data-theme'],'light');assert.equal(f.control.value,'system');
+ const f=fixture({saved:'system',light:true});assert.equal(f.attributes['data-theme'],'light');assert.equal(f.control.value,'system');
  f.media.matches=false;f.systemEvents.change();assert.equal(f.attributes['data-theme'],'dark');
 });
 test('explicit choice survives system changes and is persisted',()=>{
@@ -30,9 +30,9 @@ test('blocked storage and missing media APIs leave the control functional',()=>{
  f.control.value='light';f.control.listeners.change();assert.equal(f.attributes['data-theme'],'light');assert.equal(f.meta.content,'#f4f7f3');
 });
 test('invalid saved values are rejected and other tabs synchronize valid choices',()=>{
- const f=fixture({saved:'untrusted-value'});assert.equal(f.control.value,'system');
+ const f=fixture({saved:'untrusted-value'});assert.equal(f.control.value,'dark');
  f.events.storage({key:'field-kit-appearance',newValue:'light'});assert.equal(f.attributes['data-theme'],'light');
- f.events.storage({key:'field-kit-appearance',newValue:null});assert.equal(f.control.value,'system');
+ f.events.storage({key:'field-kit-appearance',newValue:null});assert.equal(f.control.value,'dark');
 });
 test('appearance control remains labeled and bootstrap stays within self-only script policy',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -47,3 +47,5 @@ test('brighter status colors remain readable with existing typography',()=>{
  assert.ok(!css.includes('font:400 13px/1.5 var(--ui)'));
  assert.ok(!css.includes('border-width:1px'));
 });
+
+test('first visit defaults to Dark even on a light system',()=>{const f=fixture({light:true});assert.equal(f.control.value,'dark');assert.equal(f.attributes['data-theme'],'dark');});
