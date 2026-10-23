@@ -2116,7 +2116,7 @@
   }
 
   function isReportView(item){
-    return Boolean(item.operatorCard && actionRank(item)===1 && /^(GET-|TEST-|RESOLVE-|BEC-(GET-|RISK-))/.test(item.file || ''));
+    return Boolean(item.operatorCard && actionRank(item)===1 && item.operatorCard.family!=='terminal');
   }
 
   function matchesDomain(item,area){

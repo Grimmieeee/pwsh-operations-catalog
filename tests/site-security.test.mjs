@@ -816,6 +816,9 @@ test('workflow domains cover every entry while Reports is a cross-domain view',(
  for(const [file,domain] of Object.entries(cases))assert.equal(f.api.catalogDomain(f.api.ITEMS.find(x=>x.file===file)),domain);
  f.api.state.area='Reports';const reports=f.api.filteredItems();assert.ok(reports.length>10);
  assert.ok(reports.every(x=>f.api.isReportView(x)));
+ for(const file of ['INVOKE-FILE-INVENTORY.ps1','INVOKE-MAP-KIT.ps1'])assert.ok(reports.some(x=>x.file===file),file);
+ assert.ok(!reports.some(x=>x.operatorCard.family==='terminal'));
+ for(const item of f.api.ITEMS.filter(x=>x.operatorCard && /read.only/i.test(x.access) && x.operatorCard.family!=='terminal'))assert.ok(reports.includes(item),item.file);
  assert.ok(new Set(reports.map(x=>f.api.catalogDomain(x))).size>3);
  const nav=f.elements.get('areaNav').innerHTML;assert.match(nav,/Request \/ Submit/);assert.doesNotMatch(nav,/nav-section-label/);
  f.api.state.query='mailbox';const button={getAttribute:()=> 'Identity'};
