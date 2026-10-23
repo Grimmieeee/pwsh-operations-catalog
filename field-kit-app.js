@@ -2093,6 +2093,7 @@
 
   function areaLabel(area){
     if (area === "Start Here") return "Home";
+    if (area === "Reports") return "Reporting";
     if (area === "Incident Response") return "Incident Response";
     if (area === "Standalone") return "Quick Commands";
     if (area === "Utility") return "Utilities";
@@ -2142,7 +2143,7 @@
     return ITEMS.filter(item => primaryBucket(item) === "Incident Response" && incidentSource(item) === source).length;
   }
 
-  function navButton(area){
+  function navButton(area, navigationLabel){
     const active = state.area === area;
     const isStandalone = area === "Standalone";
     const isIncident = area === "Incident Response";
@@ -2152,7 +2153,7 @@
       : isIncident
         ? (active && state.incidentOpen)
         : false;
-    const label = areaLabel(area);
+    const label = typeof navigationLabel==='string' ? navigationLabel : areaLabel(area);
 
     const parent = `
       <button class="area-button ${area === "About" ? "about-nav" : ""} ${active ? "active" : ""} ${expandable ? "area-parent" : ""}" data-area="${esc(area)}" type="button" aria-expanded="${expandable ? String(expanded) : "false"}">
@@ -2210,13 +2211,12 @@
   }
 
   function renderNav(){
-    areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('Full Library') + '</div>' +
+    areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('About') + navButton('Full Library') + '</div>' +
       navSection('Manage',['Identity','Mailbox','Licensing','Endpoint']) +
       navSection('Protect & Respond',['Security','Incident Response']) +
-      '<div class="nav-standalone">' + navButton('Reports') + '</div>' +
-      '<div class="nav-standalone">' + navButton('Quick Commands') + '</div>' +
-      navSection('Resources',['Tools','Extras']) +
-      '<div class="nav-bottom">' + navButton('About') + '</div>';
+      '<div class="nav-standalone"><div class="nav-section-label">Reporting</div>' + navButton('Reports','All reports') + '</div>' +
+      '<div class="nav-standalone"><div class="nav-section-label">Quick Commands</div>' + navButton('Quick Commands','All commands') + '</div>' +
+      navSection('Resources',['Tools','Extras']);
   }
 
   function searchConcepts(item){
@@ -2588,12 +2588,12 @@
     const access = String(item.access || "").toLowerCase();
 
     if (access.includes("destructive")){
-      return '<span class="result-tag result-change">Makes changes</span>' +
+      return '<span class="result-tag result-change">Modifies</span>' +
         '<span class="result-tag result-danger">Destructive</span>';
     }
 
     if (access.includes("change") || access.includes("mixed")){
-      return '<span class="result-tag result-change">Makes changes</span>';
+      return '<span class="result-tag result-change">Modifies</span>';
     }
 
     if (access.includes("read-only") || access.includes("read only") || access.includes("readonly")){
@@ -2890,7 +2890,7 @@
           <p>Each entry explains what you’ll need, what it does, who may be affected, and what a finished run should look like. Clear directions guide you through the work. If something gets in the way, you’ll know what happened and where to go next.</p>
           <p>Choose a section or search the whole catalog. Sections and scripts are A–Z by default. Follow the numbered order for incident-response steps.</p>
           <p>Open an item to see what it does and what it changes. Download the script, view its code, or copy it. Read it before running it.</p>
-          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reports is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Submit a Request</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
+          <p>Browse workflows by domain: Identity includes accounts and groups; Security covers preventive controls; Incident Response covers BEC investigation and recovery. Reporting is a read-only view across domains. Tools includes setup, utilities and references. Extras contains terminal animations and themes.</p><p><a href="https://github.com/Grimmieeee/pwsh-operations-catalog/issues/new/choose" target="_blank" rel="noopener noreferrer">Submit a Request</a> through GitHub. Sign-in required; submissions are public and reviewed before inclusion.</p>
 
           <details class="operator-details"><summary>PLANNED TOOLS (${PLANNED_ITEMS.length})</summary><p>These tools are planned and have no published script. They are excluded from library search and tool counts.</p><ul>${PLANNED_ITEMS.map(item=>`<li><strong>${esc(item.displayName)}</strong> — ${esc(item.objective.replace(/^Planned tool: /,''))}</li>`).join('')}</ul></details>
           <section class="about-library">
