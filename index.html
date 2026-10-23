@@ -16,7 +16,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Raleway:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:var(--fk-0d1215,#0d1215);
@@ -1141,7 +1141,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 .result-flags{justify-self:end;justify-content:flex-end;gap:24px;max-width:360px}
 .result-risk-flags{display:inline-flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px}
 </style>
-<link rel="stylesheet" href="site-theme.css?v=sexy-brand-2">
+<link rel="stylesheet" href="site-theme.css?v=catalog-markers-1">
 </head>
 <body>
 <noscript><p>This catalog needs JavaScript for search and downloads. Browse the <a href="https://github.com/Grimmieeee/pwsh-operations-catalog/tree/main/published-source">published source files</a> in the repository.</p></noscript>
@@ -1154,7 +1154,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       <div class="brand">
         <div class="kit-wordmark" aria-label="THE FIELD KIT">
           <span class="kit-the">THE</span>
-          <span class="kit-name">FIELD <span class="kit-slashes">//</span> KIT</span>
+          <span class="kit-name">FIELD<span class="kit-slashes"> //</span> KIT</span>
         </div>
       </div>
       <nav id="areaNav" class="nav area-nav"></nav>
@@ -1164,6 +1164,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
         <rect x="1" y="1" width="110" height="86" fill="none" stroke="currentColor" stroke-width="1.5"/>
         <path d="M25 25 L46 43 L25 61 M55 62 H87" fill="none" stroke="currentColor" stroke-width="7"/>
       </svg>
+      <div class="sidebar-signature" aria-label="BURNSID">BURNSID<span>//</span></div>
     </div>
   </aside>
 
@@ -1181,14 +1182,11 @@ button,a,input{-webkit-tap-highlight-color:transparent}
       </select>
     </header>
 
-    <section class="site-masthead" aria-label="Sexy PowerShell by BURNSID">
+    <section class="site-masthead" aria-label="Sexy PowerShell">
       <h1 class="site-heading" aria-label="Sexy PowerShell">
         <span class="title-short" aria-hidden="true">SEXY</span>
         <span class="title-long" aria-hidden="true">POWERSHELL<span class="title-cursor">_</span></span>
       </h1>
-      <div class="maker-signature" aria-label="By BURNSID">
-        <span class="maker-by">By</span><span class="maker-name">BURNSID<span class="maker-slashes">//</span></span>
-      </div>
     </section>
 
     <section class="search-wrap">
@@ -1202,6 +1200,14 @@ button,a,input{-webkit-tap-highlight-color:transparent}
     </section>
 
     <section class="catalog">
+      <div id="catalogHeading" class="catalog-heading">Full Library</div>
+      <div id="catalogHead" class="catalog-head" role="group" aria-label="Sort catalog">
+        <button type="button" data-sort="icon" aria-label="Sort by icon type">Icon <span aria-hidden="true">↕</span></button>
+        <button type="button" data-sort="name" aria-label="Sort by name">Name <span aria-hidden="true">↕</span></button>
+        <span class="description-heading">Description</span>
+        <button type="button" data-sort="flag" aria-label="Sort by flag">Flag <span aria-hidden="true">↕</span></button>
+      </div>
+      <div id="catalogSortStatus" class="sr-only" role="status" aria-live="polite"></div>
       <div id="contextBar" class="context-bar hidden"></div>
       <div id="jumpBar" class="jump jump-bar hidden" aria-label="Jump to section"></div>
       <div id="results" class="results"></div>
@@ -1223,7 +1229,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 <script src="connection-guidance.js?v=permissions-1"></script>
 <script src="card-guidance.js?v=permissions-1"></script>
 <script src="workflow-start.js?v=permissions-1"></script>
-<script src="field-kit-app.js?v=permissions-1"></script>
+<script src="field-kit-app.js?v=catalog-markers-1"></script>
 <script src="site-brand.js?v=sexy-brand-1"></script>
 </body>
 </html>

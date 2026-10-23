@@ -1,3 +1,9 @@
+## Approved catalog markers and alignment — October 23, 2026
+
+Keep the live stacked wordmark with thinner block lettering. Align the working-reference line with the main title. Brighten THE FIELD // KIT and Start Here; add a modest home outline to Start Here. Bring the slashes one space closer to FIELD. Reduce the boxed PowerShell mark by a third, align it with the sidebar section labels, and place BURNSID// immediately beneath it without By.
+
+Rows use one source-supported primary type marker, a name, a middle description and impact flags. Reports use the report glyph; account actions use one or three heads from reviewed target scope. Organization tools, local tools, commands and references retain distinct truthful fallback markers. Accessible labels/tooltips preserve the exact reviewed entity scope without repeated visible scope tags. Icon, name and flag headers toggle ascending/descending sorting across visible results; default search still ranks by relevance. Mobile rows stack descriptions below names. This stage does not redesign opened cards or change source bytes.
+
 ## Approved Sexy PowerShell branding — October 23, 2026
 
 Use a large stacked SEXY / POWERSHELL title and a smaller By BURNSID// signature aligned beneath it. THE FIELD // KIT heads the sidebar; the centered PowerShell prompt sits in a thin rectangular box at its foot. The sidebar wordmark, signature and prompt share muted sage ink and matching monospaced tracking. Keep the author slashes tight, omit the URL beneath the title, and omit the lower sidebar divider. Fit the live title to the available width; retain readable light and dark themes, mobile navigation, and the original search prompt. This approval supersedes earlier wordmark, footer and browser-title treatments. Catalog behavior and operational labels retain their existing rules.

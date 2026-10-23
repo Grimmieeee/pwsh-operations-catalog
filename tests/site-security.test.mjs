@@ -11,6 +11,60 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const digest=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fixturePath='published-source/fixture.ps1';
 
+test('catalog markers distinguish reports, account actions and non-account tools',()=>{
+ const f=loadCatalog(root),find=file=>f.api.ITEMS.find(x=>x.file===file);
+ for(const [file,type] of [
+  ['GET-USER-GROUPS.ps1','report'],['INVOKE-ASSIGN-LICENSES.ps1','multi'],
+  ['BEC-CONTAIN-ERADICATE.ps1','single'],['BEC-RISK-ASSESSMENT.ps1','single'],
+  ['GET-TENANT-DRIFT-REVIEW.ps1','organization'],['PREPARE-FIELD-KIT.ps1','local']
+ ])assert.equal(f.api.catalogIconType(find(file)),type,file);
+ assert.equal(f.api.catalogIconType(f.api.ITEMS.find(x=>x.type==='Quick Command')),'command');
+ const mailbox=find('GET-MAILBOX-FORWARDING.ps1');
+ assert.match(f.api.catalogIconMarkup(mailbox),/Report · SINGLE or MULTI-MAILBOX/);
+ const kinds=new Set(['single','multi','report','organization','local','command','reference']);
+ for(const item of f.api.ITEMS)assert.ok(kinds.has(f.api.catalogIconType(item)),item.displayName);
+});
+
+test('name and icon header sorting toggles direction across all visible results',()=>{
+ const f=loadCatalog(root);
+ f.api.setCatalogSort('name');
+ let items=Array.from(f.api.filteredItems());
+ assert.equal(items.length,329);
+ assert.deepEqual(items.map(x=>x.displayName),items.map(x=>x.displayName).sort((a,b)=>a.localeCompare(b)));
+ f.api.setCatalogSort('name');
+ items=Array.from(f.api.filteredItems());
+ assert.deepEqual(items.map(x=>x.displayName),items.map(x=>x.displayName).sort((a,b)=>b.localeCompare(a)));
+ f.api.setCatalogSort('icon');
+ const order=['single','multi','report','organization','local','command','reference'];
+ const rank=()=>Array.from(f.api.filteredItems(),x=>order.indexOf(f.api.catalogIconType(x)));
+ assert.deepEqual(rank(),rank().sort((a,b)=>a-b));
+ f.api.setCatalogSort('icon');assert.deepEqual(rank(),rank().sort((a,b)=>b-a));
+ const before=f.api.state.sortKey;f.api.setCatalogSort('unknown');assert.equal(f.api.state.sortKey,before);
+});
+
+test('flag sorting preserves destructive warnings and search membership',()=>{
+ const f=loadCatalog(root);f.api.state.query='mailbox';
+ const before=Array.from(f.api.filteredItems(),x=>x.displayName).sort();
+ f.api.setCatalogSort('flag');
+ assert.deepEqual(Array.from(f.api.filteredItems(),x=>x.displayName).sort(),before);
+ f.api.state.query='';f.api.setCatalogSort('flag');
+ const list=Array.from(f.api.filteredItems());
+ assert.ok(/destructive/i.test(list[0].access));
+ assert.match(f.elements.get('results').innerHTML,/result-danger/);
+ assert.match(f.elements.get('catalogSortStatus').textContent,/flag, descending/);
+});
+
+test('sorted row click opens the matching source and hides sort controls on guides',()=>{
+ const f=loadCatalog(root);
+ const buttons=[];const rows=f.elements.get('results');
+ rows.querySelectorAll=selector=>selector==='[data-open-index]'?buttons:[];
+ const row=new FixtureElement(f.document);row.setAttribute('data-open-index','3');buttons.push(row);
+ f.api.setCatalogSort('name');
+ const selected=f.api.filteredItems()[3];row.listeners.click();
+ assert.equal(f.api.state.selected,selected);
+ for(const area of ['Start Here','About']){f.api.state.area=area;f.api.renderResults();assert.equal(f.elements.get('catalogHead').classList.contains('hidden'),true);}
+});
+
 test('Start Here makes preparation, one-job scope and completion visible',()=>{
  const f=loadCatalog(root);f.api.state.area='Start Here';f.api.renderResults();
  const html=f.elements.get('results').innerHTML;

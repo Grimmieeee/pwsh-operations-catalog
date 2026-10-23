@@ -55,7 +55,7 @@ export function loadCatalog(root,{integrity,fetchImpl}={}){
   const source=fs.readFileSync(path.join(root,'field-kit-app.js'),'utf8');
   const marker='  runFrameworkAudit();';
   if(!source.includes(marker))throw new Error('Catalog startup changed; update the checker');
-  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,PLANNED_ITEMS,state,filteredItems,renderResults,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,releaseTag,rowTags,buildIRBundle,buildSetupBundle,connectionInfo,inputInfo,startMarkup,completionInfo,finishMarkup,relatedItems };\n${marker}`);
+  const instrumented=source.replace(marker,`  window.__TEST = { ITEMS,PLANNED_ITEMS,state,filteredItems,renderResults,catalogIconType,catalogIconMarkup,catalogCompare,setCatalogSort,openItem,closeItem,approvedSourceUrl,resolveSource,safeReferenceUrl,copyText,copyWithFeedback,toggleSource,sourceCache,runFrameworkAudit,isVerifiedRelease,releaseTag,rowTags,buildIRBundle,buildSetupBundle,connectionInfo,inputInfo,startMarkup,completionInfo,finishMarkup,relatedItems };\n${marker}`);
   vm.runInContext(instrumented,context);
   return {api:window.__TEST,window,document,elements,context,logs};
 }
