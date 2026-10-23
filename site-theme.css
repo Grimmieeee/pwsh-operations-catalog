@@ -465,3 +465,11 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
 .catalog-head button[data-sort="flag"]{justify-self:center}
 .result-flags{justify-self:stretch;justify-content:center}
 .result-risk-flags{flex-direction:column;align-items:center;justify-content:center;gap:2px;white-space:nowrap}
+
+/* Stronger destructive red and explicit reporting/command section headings. */
+:root{--flag-danger:#ff665e}
+html[data-theme="light"]{--flag-danger:#a92222}
+.result-danger{font-weight:600}
+.sidebar-signature{font-size:16px}
+@media(max-width:1100px){.sidebar-signature{font-size:14px}}
+.nav-standalone .nav-section-label{margin-top:0}

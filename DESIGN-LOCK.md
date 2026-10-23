@@ -1,3 +1,7 @@
+## Reporting labels and impact wording — October 23, 2026
+
+Reporting and Quick Commands have explicit section headings with All reports / All commands links. Main reports heading is Reporting. About follows Home. Use Modifies for catalog change flags and stronger destructive red with a separate light-mode value. Reduce signature type one pixel.
+
 ## Impact alignment and workflow shields — October 23, 2026
 
 Reports and Quick Commands are standalone sidebar blocks; Resources retains Tools and Extras. Larger outlined Submit a Request button. Center IMPACT labels, stacking secondary destructive warnings. BEC warning shield and Security checked shield identify domains while tooltips and Scope sorting retain reviewed target scope. Explain this distinction in Icon Guide.

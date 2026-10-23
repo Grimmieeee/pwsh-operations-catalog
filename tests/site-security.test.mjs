@@ -839,7 +839,16 @@ test('BEC and Security use distinct domain shields without changing scope sort',
  assert.match(f.api.catalogIconMarkup(security),/TENANT/);
  assert.equal(f.api.catalogIconType(bec),'single');assert.equal(f.api.catalogIconType(security),'organization');
  const nav=f.elements.get('areaNav').innerHTML;
- assert.match(nav,/<div class="nav-standalone">\s*<button[^>]*data-area="Reports"/);
- assert.match(nav,/<div class="nav-standalone">\s*<button[^>]*data-area="Quick Commands"/);
+ assert.match(nav,/<div class="nav-standalone"><div class="nav-section-label">Reporting<\/div>\s*<button[^>]*data-area="Reports"/);
+ assert.match(nav,/<div class="nav-standalone"><div class="nav-section-label">Quick Commands<\/div>\s*<button[^>]*data-area="Quick Commands"/);
  f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/BEC incident response/);
+});
+
+test('About follows Home and reporting/command headings have direct view links',()=>{
+ const f=loadCatalog(root),nav=f.elements.get('areaNav').innerHTML;
+ assert.ok(nav.indexOf('data-area="Start Here"')<nav.indexOf('data-area="About"'));
+ assert.ok(nav.indexOf('data-area="About"')<nav.indexOf('data-area="Full Library"'));
+ assert.match(nav,/>All reports</);assert.match(nav,/>All commands</);
+ f.api.state.area='Reports';f.api.renderResults();assert.equal(f.elements.get('catalogHeading').textContent,'Reporting');
+ f.api.state.area='Full Library';f.api.renderResults();assert.match(f.elements.get('results').innerHTML,/>Modifies</);assert.doesNotMatch(f.elements.get('results').innerHTML,/>Makes changes</);
 });
