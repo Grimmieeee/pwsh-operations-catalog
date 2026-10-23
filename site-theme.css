@@ -497,3 +497,15 @@ html[data-theme="light"]{--flag-danger:#a92222}
 .sidebar-signature .signature-letters{display:inline;flex:initial;letter-spacing:.22em;margin-right:-.22em}
 .sidebar-signature .signature-letter{font-weight:inherit;letter-spacing:inherit}
 .sidebar-signature .signature-slashes{font-weight:inherit;letter-spacing:0}
+
+/* Home owns the reference note; the idea action carries a small terminal mark. */
+.request-link{justify-content:flex-start;gap:10px}
+.request-mark{width:20px;height:17px;flex:none;fill:none;stroke:var(--brand-mint);stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
+.request-arrow{margin-left:auto}
+.home-reference{margin:12px 0 22px;font:300 12px/1.5 "Archivo",var(--ui);letter-spacing:.08em;color:var(--text)}
+.home-reference strong{font-weight:400}
+.home-reference span{color:var(--brand-mint)}
+.sidebar-signature{width:150px;display:flex;font:200 18px/1.4 "Raleway",var(--ui)}
+.sidebar-signature .signature-letters{display:flex;flex:1;justify-content:space-between;letter-spacing:0;margin:0}
+.sidebar-signature .signature-letter{font-weight:200;letter-spacing:0}
+.sidebar-signature .signature-slashes{font-weight:200;letter-spacing:0;white-space:pre}
