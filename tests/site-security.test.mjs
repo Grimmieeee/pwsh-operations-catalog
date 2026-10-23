@@ -777,3 +777,17 @@ test('verified sorting remains evidence-bound and row columns are explicit',()=>
  assert.match(html,/data-sort="verified"/);assert.match(html,/>Script name /);
  assert.doesNotMatch(html,/id="showVerificationAbout"/);
 });
+
+test('VERIFIED header click sorts evidence matches both ways and explains empty status',()=>{
+ const f=loadCatalog(root);const header=f.elements.get('catalogHead');
+ const click=()=>header.listeners.click({target:{closest:()=>({getAttribute:()=> 'verified'})}});
+ click();assert.equal(f.api.state.sortKey,'verified');
+ assert.match(f.elements.get('verificationSortNote').textContent,/0 of 329/);
+ assert.equal(f.elements.get('verificationSortNote').classList.contains('hidden'),false);
+ const item=f.api.ITEMS.find(x=>x.file==='BEC-RISK-ASSESSMENT.ps1');
+ item.verification={version:item.version,sha256:digest(fs.readFileSync(path.join(root,item.publishedPath))),operatorTested:true};
+ click();assert.equal(f.api.filteredItems().at(-1),item);
+ click();assert.equal(f.api.filteredItems()[0],item);
+ assert.match(f.elements.get('verificationSortNote').textContent,/1 of 329/);
+ f.api.state.area='About';f.api.renderResults();assert.equal(f.elements.get('verificationSortNote').classList.contains('hidden'),true);
+});

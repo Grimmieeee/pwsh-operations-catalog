@@ -1,3 +1,7 @@
+## Sidebar flow and verification feedback — October 23, 2026
+
+Footer follows menu with a bounded gap, rather than anchoring to viewport bottom. Prompt 44 × 35 px. Signature uses two literal spaces between letters and one before //, with preformatted whitespace. VERIFIED sort displays result counts and explains ties when none qualifies; no acceptance is invented.
+
 ## Sidebar balance — October 23, 2026
 
 Tighten Toys/About spacing. Align the Home icon to the right-hand count edge. Halve the bottom PowerShell prompt mark to 28 × 22 px; preserve footer placement and signature.
