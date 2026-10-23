@@ -389,3 +389,9 @@ html[data-theme="dark"] .search-box{background:#131b1f;border-color:#3d4b4f}
  .catalog-head,.results{min-width:620px}
  .result-risk-flags .result-tag{font-size:13px}
 }
+
+/* Sidebar balance: Home uses the count edge; About follows Toys directly. */
+.nav-bottom{margin-top:2px;padding-top:0}
+.area-button[data-area="Start Here"] .area-label{flex:1}
+.area-button[data-area="Start Here"] .start-mark{order:1;margin-left:auto}
+.terminal-mark{width:28px;height:22px}
