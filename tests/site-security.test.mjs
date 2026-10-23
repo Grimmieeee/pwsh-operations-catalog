@@ -271,11 +271,11 @@ test('library total lives in About while result counts appear only for search or
   assert.ok(counter.classList.contains('hidden'));
   f.api.state.area='Incident Response';
   search.value='';search.listeners.input();
-  assert.equal(counter.textContent,`(${f.api.filteredItems().length})`);
+  assert.equal(counter.textContent,`${f.api.filteredItems().length} matching results`);
   assert.ok(!counter.classList.contains('hidden'));
   f.api.state.area='Full Library';
   search.value='mailbox';search.listeners.input();
-  assert.equal(counter.textContent,`(${f.api.filteredItems().length})`);
+  assert.equal(counter.textContent,`${f.api.filteredItems().length} matching results`);
   search.value='';search.listeners.input();
   assert.ok(counter.classList.contains('hidden'));
   f.api.state.area='About';search.listeners.input();
@@ -848,7 +848,20 @@ test('About follows Home and reporting/command headings have direct view links',
  const f=loadCatalog(root),nav=f.elements.get('areaNav').innerHTML;
  assert.ok(nav.indexOf('data-area="Start Here"')<nav.indexOf('data-area="About"'));
  assert.ok(nav.indexOf('data-area="About"')<nav.indexOf('data-area="Full Library"'));
- assert.match(nav,/>All reports</);assert.match(nav,/>All commands</);
+ assert.match(nav,/>All reports</);assert.match(nav,/>All</);
  f.api.state.area='Reports';f.api.renderResults();assert.equal(f.elements.get('catalogHeading').textContent,'Reporting');
  f.api.state.area='Full Library';f.api.renderResults();assert.match(f.elements.get('results').innerHTML,/>Modifies</);assert.doesNotMatch(f.elements.get('results').innerHTML,/>Makes changes</);
+});
+
+test('Reporting target views use reviewed scopes and All resets the filter',()=>{
+ const f=loadCatalog(root),nav=f.elements.get('areaNav');
+ for(const [scope,title] of [['single','Single User'],['multi','Multi User'],['org','Org']]){
+  nav.listeners.click({target:{closest:selector=>selector==='[data-report-scope]'?{getAttribute:()=>scope}:null}});
+  assert.equal(f.api.state.reportScope,scope);
+  const items=f.api.filteredItems();assert.ok(items.length>0);assert.ok(items.every(x=>f.api.matchesReportScope(x,scope)));
+  assert.equal(f.elements.get('catalogHeading').textContent,'Reporting · '+title);
+ }
+ nav.listeners.click({target:{closest:selector=>selector==='[data-area]'?{getAttribute:()=> 'Reports'}:null}});
+ assert.equal(f.api.state.reportScope,'');assert.equal(f.api.filteredItems().length,46);
+ const html=fs.readFileSync(path.join(root,'index.html'),'utf8');assert.match(html,/id="entryCount" class="entry-count sr-only"/);
 });

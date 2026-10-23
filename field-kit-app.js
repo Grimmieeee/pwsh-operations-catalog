@@ -2061,6 +2061,7 @@
     standaloneGroup:"",
     standaloneOpen:false,
     query:"",
+    reportScope:"",
     sortKey:"name",
     sortExplicit:false,
     sortDirection:1,
@@ -2120,6 +2121,23 @@
     return Boolean(item.operatorCard && actionRank(item)===1 && item.operatorCard.family!=='terminal');
   }
 
+  function matchesReportScope(item,scope){
+    if(!isReportView(item))return false;
+    const target=item.operatorCard?.scope || '';
+    if(scope==='single')return /SINGLE(?: or MULTI)?-(?:USER|MAILBOX)/i.test(target);
+    if(scope==='multi')return /MULTI-(?:USER|MAILBOX)/i.test(target);
+    if(scope==='org')return /^TENANT$/i.test(target);
+    return true;
+  }
+
+  function reportScopeNav(){
+    return '<div class="report-scope-nav">'+[['single','Single User'],['multi','Multi User'],['org','Org']].map(([scope,label])=>{
+      const active=state.area==='Reports' && state.reportScope===scope;
+      const count=ITEMS.filter(item=>matchesReportScope(item,scope)).length;
+      return `<button type="button" class="area-sub-button ${active?'active':''}" data-report-scope="${scope}" aria-pressed="${active}"><span>${label}</span><span class="area-count">${count}</span></button>`;
+    }).join('')+'</div>';
+  }
+
   function matchesDomain(item,area){
     return area==='Reports' ? isReportView(item) : catalogDomain(item)===area;
   }
@@ -2144,7 +2162,7 @@
   }
 
   function navButton(area, navigationLabel){
-    const active = state.area === area;
+    const active = state.area === area && !(area==='Reports' && state.reportScope);
     const isStandalone = area === "Standalone";
     const isIncident = area === "Incident Response";
     const expandable = isStandalone && !DOMAIN_SECTIONS.includes(area);
@@ -2214,8 +2232,8 @@
     areaNav.innerHTML = '<div class="nav-primary">' + navButton('Start Here') + navButton('About') + navButton('Full Library') + '</div>' +
       navSection('Manage',['Identity','Mailbox','Licensing','Endpoint']) +
       navSection('Protect & Respond',['Security','Incident Response']) +
-      '<div class="nav-standalone"><div class="nav-section-label">Reporting</div>' + navButton('Reports','All reports') + '</div>' +
-      '<div class="nav-standalone"><div class="nav-section-label">Quick Commands</div>' + navButton('Quick Commands','All commands') + '</div>' +
+      '<div class="nav-standalone"><div class="nav-section-label">Reporting</div>' + navButton('Reports','All reports') + reportScopeNav() + '</div>' +
+      '<div class="nav-standalone"><div class="nav-section-label">Quick Commands</div>' + navButton('Quick Commands','All') + '</div>' +
       navSection('Resources',['Tools','Extras']);
   }
 
@@ -2508,6 +2526,8 @@
       list = ITEMS.slice();
     } else {
       list = ITEMS.filter(item => state.area === "Full Library" || (DOMAIN_SECTIONS.includes(state.area) ? matchesDomain(item,state.area) : itemBuckets(item).includes(state.area)));
+
+      if(state.area==='Reports' && state.reportScope)list=list.filter(item=>matchesReportScope(item,state.reportScope));
 
       if (state.area === "Incident Response" && state.incidentSource){
         list = list.filter(item => incidentSource(item) === state.incidentSource);
@@ -2847,7 +2867,7 @@
     const typeKeyItems = document.getElementById('typeKeyItems');
     if (typeKeyItems) typeKeyItems.innerHTML = Object.entries({...CATALOG_ICON_NAMES,...DOMAIN_ICON_NAMES}).map(([kind,label]) => `<span class="type-key-item"><svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICON_PATHS[kind] || CATALOG_ICON_PATHS[kind]}</svg>${esc(label)}</span>`).join('');
     catalogHeading?.classList.toggle('hidden', informational);
-    catalogHeading.textContent = queryActive ? 'Search results' : areaLabel(state.area);
+    catalogHeading.textContent = queryActive ? 'Search results' : state.area==='Reports' && state.reportScope ? 'Reporting · '+({single:'Single User',multi:'Multi User',org:'Org'}[state.reportScope]) : areaLabel(state.area);
     catalogHead?.querySelectorAll('[data-sort]').forEach(button => {
       const active = button.getAttribute('data-sort') === state.sortKey && (!queryActive || state.sortExplicit);
       const label = button.getAttribute('data-sort');
@@ -2934,7 +2954,7 @@
 
     crumb.textContent = areaLabel(state.area).toUpperCase();
     const showCount = queryActive || state.area !== "Full Library";
-    entryCount.textContent = showCount ? `(${list.length})` : "";
+    entryCount.textContent = showCount ? `${list.length} matching results` : "";
     entryCount.classList.toggle("hidden", !showCount);
     entryCount.setAttribute("aria-label", `${list.length} matching catalog entries`);
     clearSearch.classList.toggle("hidden", !state.query);
@@ -3743,6 +3763,13 @@
   });
 
   areaNav.addEventListener("click", event => {
+    const reportButton=event.target.closest('[data-report-scope]');
+    if(reportButton){
+      const scope=reportButton.getAttribute('data-report-scope');
+      if(!['single','multi','org'].includes(scope))return;
+      state.area='Reports';state.reportScope=scope;state.query='';search.value='';
+      renderNav();renderResults();closeNav();return;
+    }
     const incidentSubgroup = event.target.closest("[data-incident-source]");
     if (incidentSubgroup){
       state.area = "Incident Response";
@@ -3775,7 +3802,7 @@
     const nextArea = btn.getAttribute("data-area") || "Full Library";
 
     if(DOMAIN_SECTIONS.includes(nextArea)){
-      state.area=nextArea;state.query='';search.value='';
+      state.area=nextArea;state.reportScope='';state.query='';search.value='';
       state.incidentSource='';state.incidentOpen=false;state.standaloneGroup='';state.standaloneOpen=false;
       renderNav();renderResults();closeNav();return;
     }

@@ -1,3 +1,7 @@
+## Reporting scope views and request sizing — October 23, 2026
+
+Add Single User, Multi User and Org subviews under Reporting using reviewed target scope. Mixed user/mailbox tools appear in both relevant views; group/IP/local reports remain in All reports. All commands becomes All. Remove the leading space after D in the signature, retaining / / separator. Tighten Home/About gap. Request button widens to 340px maximum with left-aligned text. Search result count is screen-reader-only.
+
 ## Reporting labels and impact wording — October 23, 2026
 
 Reporting and Quick Commands have explicit section headings with All reports / All commands links. Main reports heading is Reporting. About follows Home. Use Modifies for catalog change flags and stronger destructive red with a separate light-mode value. Reduce signature type one pixel.
