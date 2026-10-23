@@ -1,3 +1,7 @@
+## Approved Sexy PowerShell branding — October 23, 2026
+
+Use a large stacked SEXY / POWERSHELL title and a smaller By BURNSID// signature aligned beneath it. THE FIELD // KIT heads the sidebar; the centered PowerShell prompt sits in a thin rectangular box at its foot. The sidebar wordmark, signature and prompt share muted sage ink and matching monospaced tracking. Keep the author slashes tight, omit the URL beneath the title, and omit the lower sidebar divider. Fit the live title to the available width; retain readable light and dark themes, mobile navigation, and the original search prompt. This approval supersedes earlier wordmark, footer and browser-title treatments. Catalog behavior and operational labels retain their existing rules.
+
 ## Remaining card issues — October 21, 2026
 
 Working-library search and counts include only available scripts, commands and references. Keep source-less concepts under About → Planned Tools. Every quick command requires three explicit related destinations bound to its reviewed command text; task-family guessing is not a release fallback. Search matches must describe the actual task rather than incidental code, setup notes or broad subareas. Define BEC and explain sign-in/customer terms plainly while retaining required module names and versions.
