@@ -19,7 +19,9 @@
       "GET-STALE-SIGNIN-REVIEW.ps1",
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
     "name": "Review Stale Sign-ins",
@@ -41,7 +43,9 @@
       "GET-ACCOUNT-STATUS.ps1",
       "GET-GUEST-USER-AUDIT.ps1",
       "INVOKE-DISABLE-ACCOUNTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
     "name": "Disable User Accounts",
@@ -70,7 +74,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "name": "Delete User Accounts",
@@ -99,7 +104,9 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "name": "Assign User Licenses",
@@ -128,7 +135,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "name": "Remove User Licenses",
@@ -157,7 +165,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "name": "Find User UPNs",
@@ -185,7 +194,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "name": "Get User Account Status",
@@ -213,12 +223,14 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "name": "Get Distribution Group Members",
     "scope": "SINGLE or MULTI-GROUP",
-    "input": "Group / CSV / TXT",
+    "input": "Group name / email / CSV / TXT",
     "details": [
       "For distribution groups in Exchange Online.",
       "Nested groups are not a complete access review."
@@ -229,7 +241,7 @@
     "releaseVersion": "1.0.2",
     "objective": "List direct members of selected Exchange distribution groups.",
     "preparation": [
-      "Requires Microsoft Graph PowerShell and authorized access to the target tenant."
+      "Requires ExchangeOnlineManagement and an account authorized to read the selected distribution groups."
     ],
     "related": [
       "GET-GROUP-MEMBERS.ps1",
@@ -242,7 +254,8 @@
         "Finance",
         "Support"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GROUP-MEMBERS.ps1": {
     "name": "Get Group Members",
@@ -271,7 +284,9 @@
         "Finance",
         "Support"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-USER-GROUPS.ps1": {
     "name": "Get User Groups",
@@ -301,7 +316,9 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
     "name": "Remove User Groups",
@@ -330,7 +347,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "name": "Create Dynamic License Group",
@@ -352,7 +370,8 @@
       "GET-TENANT-LICENSING-AUDIT.ps1",
       "GET-GROUP-MEMBERS.ps1",
       "INVOKE-ASSIGN-LICENSES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
     "name": "Get Group Owners",
@@ -373,7 +392,9 @@
       "GET-GROUP-MEMBERS.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-DISTRIBUTION-GROUP-MEMBERS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
     "name": "Get Mailbox Permissions",
@@ -402,7 +423,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Mailbox Security",
@@ -424,7 +446,8 @@
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MAILBOX-FORWARDING.ps1": {
     "name": "Get Mailbox Forwarding",
@@ -452,7 +475,9 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "name": "Set Litigation Hold",
@@ -481,7 +506,8 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session."
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "name": "BEC: Restore Email",
@@ -514,7 +540,9 @@
       "incident response",
       "IR-INVOKE-EMAIL-RECOVERY.ps1",
       "Incident Response: Restore Email"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-RISK-ASSESSMENT.ps1": {
     "name": "BEC: Assess User Risk",
@@ -665,7 +693,9 @@
       "incident response",
       "IR-GET-DATA-EXFIL-ACTIVITY.ps1",
       "Incident Response: Review File Activity"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-IP-TRACE.ps1": {
     "name": "BEC: Trace IP Activity",
@@ -696,7 +726,9 @@
       "incident response",
       "IR-GET-IP-TRACE.ps1",
       "Incident Response: Trace IP Activity"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "name": "BEC: Trace Email Delivery",
@@ -728,7 +760,9 @@
       "incident response",
       "IR-GET-TENANT-EMAIL-SEARCH.ps1",
       "Incident Response: Trace Email Delivery"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "name": "BEC: Check IP Reputation",
@@ -760,7 +794,9 @@
       "incident response",
       "IR-GET-THREAT-INTEL-ACTIVITY.ps1",
       "Incident Response: Check IP Reputation"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TIMELINE-BUILDER.ps1": {
     "name": "BEC: Build Incident Timeline",
@@ -790,7 +826,9 @@
       "incident response",
       "IR-GET-TIMELINE-BUILDER.ps1",
       "Incident Response: Build Incident Timeline"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TOKEN-DECODE.ps1": {
     "name": "BEC: Decode Token",
@@ -820,7 +858,9 @@
       "incident response",
       "IR-GET-TOKEN-DECODE.ps1",
       "Incident Response: Decode Token"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "name": "BEC: Review Token Replay",
@@ -852,7 +892,9 @@
       "incident response",
       "IR-GET-TOKEN-REPLAY-CHECK.ps1",
       "Incident Response: Review Token Replay"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
     "name": "Audit Shared Mailbox Sign-ins",
@@ -873,7 +915,8 @@
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
     "name": "Audit App Registrations",
@@ -894,7 +937,8 @@
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
     "name": "Review Conditional Access",
@@ -916,7 +960,8 @@
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-DEVICE-CODE-EXPOSURE.ps1",
       "GET-SIGNIN-ANOMALIES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
     "name": "Review Device Code Exposure",
@@ -937,7 +982,8 @@
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "name": "Audit Guest App Consent",
@@ -958,7 +1004,8 @@
       "GET-GUEST-USER-AUDIT.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
     "name": "Audit MFA Security",
@@ -981,7 +1028,8 @@
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-ADMIN-ROLE-AUDIT.ps1"
     ],
-    "operationalRevision": true
+    "operationalRevision": true,
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "name": "Get Secure Score",
@@ -1002,7 +1050,8 @@
       "GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
     "name": "Get Enterprise App Owners",
@@ -1023,7 +1072,8 @@
       "GET-APP-REGISTRATION-AUDIT.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
     "name": "Review Sign-in Anomalies",
@@ -1044,7 +1094,8 @@
       "BEC-GET-IP-TRACE.ps1",
       "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
     "name": "Audit Mail Flow Rules",
@@ -1065,7 +1116,8 @@
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "name": "Join Computer to Domain",
@@ -1085,7 +1137,8 @@
       "command:Domain Trust Check",
       "command:DNS Lookup",
       "BACKUP-USER-PROFILE.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
     "name": "Install Network Printer",
@@ -1106,7 +1159,8 @@
       "command:Printer Check",
       "command:Print Jobs",
       "command:Spooler Status"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "BACKUP-USER-PROFILE.ps1": {
     "name": "Back Up User Profile",
@@ -1126,7 +1180,8 @@
       "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1",
       "GET-FOLDER-INVENTORY.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "TEST-POWERSHELL-READINESS.ps1": {
     "name": "Check M365 PowerShell Readiness",
@@ -1145,7 +1200,9 @@
       "INSTALL-M365-MODULES.ps1",
       "RESET-M365-SESSION.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-FOLDER-INVENTORY.ps1": {
     "name": "Review Folder Contents",
@@ -1165,7 +1222,9 @@
       "INVOKE-FILE-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INSTALL-M365-MODULES.ps1": {
     "name": "Install M365 Modules",
@@ -1185,7 +1244,9 @@
       "TEST-POWERSHELL-READINESS.ps1",
       "RESET-M365-SESSION.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "TEST-SENSITIVE-DATA.ps1": {
     "name": "Check Sensitive Data",
@@ -1204,7 +1265,9 @@
       "git-handoff.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "SIGN-FOLDER-SCRIPTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "RESET-M365-SESSION.ps1": {
     "name": "Reset M365 Session",
@@ -1224,7 +1287,9 @@
       "TEST-POWERSHELL-READINESS.ps1",
       "INVOKE-SESSION-RESET.ps1",
       "INSTALL-M365-MODULES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "UPDATE-WINDOWS-APPS.ps1": {
     "name": "Update Windows Apps",
@@ -1243,7 +1308,9 @@
       "command:Show Available WinGet Updates",
       "command:Show WinGet Package Information",
       "command:Update Specific WinGet Package"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "name": "Check User Before Deletion",
@@ -1265,7 +1332,9 @@
       "GET-MAILBOX-PERMISSIONS.ps1",
       "INVOKE-LITIGATION-HOLD.ps1",
       "INVOKE-DELETE-ACCOUNTS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "name": "Set Per-user MFA",
@@ -1294,7 +1363,9 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "name": "Audit Admin Roles",
@@ -1315,7 +1386,8 @@
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
     "name": "Audit App Consent",
@@ -1336,7 +1408,8 @@
       "GET-APP-REGISTRATION-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-GUEST-USER-AUDIT.ps1": {
     "name": "Review Guest Users",
@@ -1358,7 +1431,8 @@
       "GET-GUEST-APP-CONSENT-AUDIT.ps1",
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-GROUPS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
     "name": "Audit Tenant Licenses",
@@ -1379,7 +1453,8 @@
       "INVOKE-ASSIGN-LICENSES.ps1",
       "INVOKE-REMOVE-LICENSES.ps1",
       "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "name": "Audit Tenant Inbox Rules",
@@ -1402,7 +1477,8 @@
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
     "name": "Get User Security",
@@ -1423,7 +1499,8 @@
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1",
       "GET-USER-GROUPS.ps1",
       "GET-ACCOUNT-STATUS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Tenant Security",
@@ -1444,7 +1521,8 @@
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "name": "Get Resource Mailbox Access",
@@ -1466,7 +1544,8 @@
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-GROUP-MEMBERS.ps1",
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
     "name": "Audit Tenant Mailbox Access",
@@ -1487,7 +1566,8 @@
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
     "name": "Remove Disabled User Mailbox Access",
@@ -1509,7 +1589,8 @@
       "GET-ACCOUNT-STATUS.ps1",
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
     "name": "Review Tenant Changes",
@@ -1531,7 +1612,8 @@
       "GET-TENANT-SECURITY-SNAPSHOT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
     "name": "Review Windows Storage",
@@ -1551,7 +1633,9 @@
       "BACKUP-USER-PROFILE.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
     "name": "Reset Cloud User Password",
@@ -1580,7 +1664,9 @@
         "alex@example.com",
         "sam@example.com"
       ]
-    }
+    },
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "BEC-RECOVER-VALIDATE.ps1": {
     "name": "BEC: Restore and Validate",
@@ -1660,7 +1746,8 @@
       "TEST-SENSITIVE-DATA.ps1",
       "git-repo.ps1",
       "git-security.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "git-repo.ps1": {
     "name": "Manage Git Repository",
@@ -1682,7 +1769,8 @@
       "TEST-SENSITIVE-DATA.ps1",
       "git-handoff.ps1",
       "git-security.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "git-security.ps1": {
     "name": "Review GitHub Security",
@@ -1702,7 +1790,8 @@
       "git-repo.ps1",
       "git-handoff.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "set-execution.ps1": {
     "name": "Set Up Script Execution",
@@ -1725,7 +1814,9 @@
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
     ],
-    "operationalRevision": true
+    "operationalRevision": true,
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "attractor.ps1": {
     "name": "Attractor",
@@ -1804,7 +1895,8 @@
       "MANAGE-CERT-SIGNATURES.ps1",
       "TEST-SENSITIVE-DATA.ps1",
       "set-execution.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "name": "Check Toolkit Setup",
@@ -1824,7 +1916,9 @@
       "INVOKE-MAP-KIT.ps1",
       "GET-FOLDER-INVENTORY.ps1",
       "TEST-POWERSHELL-READINESS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-FILE-INVENTORY.ps1": {
     "name": "Compare Script Files",
@@ -1844,7 +1938,9 @@
       "GET-FOLDER-INVENTORY.ps1",
       "INVOKE-MAP-KIT.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "INVOKE-MAP-KIT.ps1": {
     "name": "Map Folder Structure",
@@ -1864,7 +1960,8 @@
       "GET-FOLDER-INVENTORY.ps1",
       "INVOKE-FILE-INVENTORY.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "INVOKE-SESSION-RESET.ps1": {
     "name": "Reset Terminal Session",
@@ -1883,7 +1980,9 @@
       "RESET-M365-SESSION.ps1",
       "TEST-POWERSHELL-READINESS.ps1",
       "INSTALL-M365-MODULES.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-BASIC.ps1": {
     "name": "Preview Plain Output",
@@ -1903,7 +2002,9 @@
       "SET-THEME-COBALT.ps1",
       "SET-THEME-SEAGLASS.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-COBALT.ps1": {
     "name": "Preview Cobalt Theme",
@@ -1923,7 +2024,9 @@
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SEAGLASS.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-SEAGLASS.ps1": {
     "name": "Install Sea Glass Theme",
@@ -1944,7 +2047,9 @@
       "SET-THEME-COBALT.ps1",
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SILICON-VALLEY.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "SET-THEME-SILICON-VALLEY.ps1": {
     "name": "Install Silicon Valley Theme",
@@ -1965,7 +2070,9 @@
       "SET-THEME-COBALT.ps1",
       "SET-THEME-BASIC.ps1",
       "SET-THEME-SEAGLASS.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session.",
+    "runtimeRequirement": "PowerShell 5.1 or later."
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
     "name": "Manage Signing Certificates",
@@ -1985,7 +2092,8 @@
       "SIGN-FOLDER-SCRIPTS.ps1",
       "set-execution.ps1",
       "TEST-SENSITIVE-DATA.ps1"
-    ]
+    ],
+    "finishPrompt": "Press Enter to close session."
   },
   "PREPARE-FIELD-KIT.ps1": {
     "name": "Prepare FIELD KIT",
@@ -2010,6 +2118,7 @@
       "TEST-POWERSHELL-READINESS.ps1",
       "INSTALL-M365-MODULES.ps1",
       "START-HERE.md"
-    ]
+    ],
+    "runtimeRequirement": "PowerShell 5.1 or later."
   }
 }
