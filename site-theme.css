@@ -553,6 +553,12 @@ html[data-theme="light"] .preview-danger{color:#a22e24}
 .operator-purpose{margin-top:10px;margin-bottom:10px}
 .operator-scope{margin-top:10px}
 .operator-scope>div{margin-top:2px}
+.operator-details>.detail-group{margin:0;padding:14px 0;border-bottom:1px solid var(--line)}
+.operator-details>.detail-group h3{margin:0 0 7px;font:500 14px/1.4 var(--ui);color:var(--text)}
+.operator-details>.detail-group p,.permissions-details p{margin:5px 0;font:400 14px/1.6 var(--ui);color:var(--muted);overflow-wrap:anywhere}
+.permissions-details{margin:0;padding:0;border:0}
+.permissions-details>summary{padding:14px 0;font:500 14px/1.4 var(--ui);color:var(--text)}
+.permissions-details p:last-child{margin-bottom:14px}
 .run-steps{margin:8px 0 0;padding-left:20px;color:var(--fk-aed0c8,#aed0c8);font:400 14px/1.7 var(--ui)}
 .run-steps li{padding-left:3px;margin:6px 0}
 .run-close-note{font-size:12px!important}
