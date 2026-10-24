@@ -4709,13 +4709,17 @@
     }
     const permissions=[spec.runtimeRequirement,...connectionInfo(item),...(spec.preparation || []),requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
     const completion=completionInfo(item);
+    const detailNotes=spec.sourceSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? spec.workflowDetails : null;
     const notes=[...spec.details];
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(completion?.next)notes.push(completion.next);
     const copy=values=>[...new Set(values.filter(Boolean))].map(text=>`<p>${esc(text)}</p>`).join('');
     const section=(title,values)=>`<section class="detail-group"><h3>${title}</h3>${copy(values)}</section>`;
-    return `<details class="operator-details"><summary>DETAILS</summary>${section('Results',[completion?.result])}${section('Behavior',notes)}${section('Break/Fix',[completion?.blocked])}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
+    const results=detailNotes?.results?.map(note=>note.text) || [];
+    const issues=detailNotes?.issues || [];
+    const commonIssues=issues.length?`<section class="detail-group"><h3>Common Issues</h3><ul class="common-issues">${issues.map(note=>`<li><strong>${esc(note.issue)}</strong> — ${esc(note.fix)}</li>`).join('')}</ul></section>`:'';
+    return `<details class="operator-details"><summary>DETAILS</summary>${results.length?section('Results',results):''}${section('Behavior',notes)}${commonIssues}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
   }
 
   function connectionInfo(item){

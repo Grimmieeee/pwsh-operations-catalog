@@ -559,6 +559,9 @@ html[data-theme="light"] .preview-danger{color:#a22e24}
 .permissions-details{margin:0;padding:0;border:0}
 .permissions-details>summary{padding:14px 0;font:500 14px/1.4 var(--ui);color:var(--text)}
 .permissions-details p:last-child{margin-bottom:14px}
+.operator-details .common-issues{margin:0;padding:0 0 0 18px;list-style:disc}
+.common-issues li{margin:7px 0;font:400 14px/1.6 var(--ui);color:var(--muted);overflow-wrap:anywhere}
+.common-issues strong{font-weight:500;color:var(--text)}
 .run-steps{margin:8px 0 0;padding-left:20px;color:var(--fk-aed0c8,#aed0c8);font:400 14px/1.7 var(--ui)}
 .run-steps li{padding-left:3px;margin:6px 0}
 .run-close-note{font-size:12px!important}
