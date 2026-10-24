@@ -6,6 +6,52 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {loadCatalog} from './site-test-harness.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const conciseFixes={
+ 'Wrong tenant session':'Open a new PowerShell window and sign in to the intended tenant.',
+ 'Next workflow script is missing':'Extract all three BEC scripts into one folder with their original filenames.',
+ 'BEC files are from different releases':'Replace all three scripts with one matching workflow package.',
+ 'Graph and Exchange tenants differ':'Start a fresh workflow window and connect both services to the same tenant.',
+ 'Baseline belongs to another tenant':'Select this tenant’s saved baseline.',
+ 'More than one group matches':'Resolve duplicate group names before creating another group.',
+ 'No reputation API key':'Enter a valid key for a supported provider.',
+ 'No eligible public IPs':'Enter public IP addresses; private addresses are excluded.',
+ 'Token format is unsupported':'Use a three-part JWT; encrypted JWE tokens are unsupported.',
+ 'Token could not be decoded':'Copy the complete token without extra text.',
+ 'Message-trace command is unavailable':'Update ExchangeOnlineManagement, reopen PowerShell, and reconnect.',
+ 'Audit search is unavailable':'Reconnect with an account that has audit-search access.',
+ 'Case folder was not found':'Enter the full path to the existing evidence folder.',
+ 'Input file was not found':'Check the full filename and path.',
+ 'CSV column was not found':'Choose the column containing the targets.',
+ 'User address is invalid':'Use the full sign-in name: <user@domain.com>.',
+ 'Group was not found':'Check the group’s exact name or email address.',
+ 'User was not found':'Check the full sign-in name and connected tenant.',
+ 'Mailbox lookup failed':'Check the mailbox address.',
+ 'Tenant ID is invalid':'Use the tenant ID (GUID) from Entra Overview.',
+ 'Review is incomplete':'Check the reported API error and required access before retrying the read.',
+ 'No writable domain controller is reachable':'Check domain DNS and connectivity to a writable controller.',
+ 'CSV has no targets':'Add target rows below the correct header.',
+ 'Output folder was not found':'Choose an existing writable folder.',
+ 'Root folder was not found':'Enter the full path to an existing folder.',
+ 'Folder was not found':'Check the folder path and access.',
+ 'Path was not found':'Check that the supplied file or folder exists.',
+ 'Drive was not found':'Choose a mounted drive letter.',
+ 'Module installer is unavailable':'Repair PowerShellGet, then reopen PowerShell.',
+ 'Module repository is not approved':'Correct PSGallery to the official HTTPS source.',
+ 'Security export was not found':'Enter the full path to the security-log export.',
+ 'Security export is invalid':'Use JSON, JSON.GZ, or a ZIP containing one JSON file.',
+ 'Handoff folder is tracked by Git':'Review tracked .handoff files and repository exclusions.',
+ 'No upstream branch':'Configure tracking for the intended remote branch.',
+ 'WinGet review failed':'Check the exit code and configured WinGet sources.',
+ 'Execution policy did not change':'Check Get-ExecutionPolicy -List for an organization policy.',
+ 'Signing certificate is missing':'Select a valid code-signing certificate with its private key.',
+ 'Required Graph access is missing':'Reconnect with the scopes listed in Permissions.',
+ 'Required module is missing':'Install the named module, then reopen PowerShell.',
+ 'Exchange module is missing':'Install ExchangeOnlineManagement, reopen PowerShell, and run the lookup again.',
+ 'Group lookup failed':'Check the group’s exact name or primary email address.',
+ 'Account or tenant could not be verified':'Check the UPN and tenant, then reconnect with the required access.',
+ 'Rule remains after removal':'Recheck the mailbox; keep containment in place before retrying the failed action.',
+ 'Account enablement did not verify':'Check AD/Entra state and pending sync; return to the incident owner before retrying.'
+};
 const rules=[
  ['Existing Graph session is for another tenant.', 'Wrong tenant session', 'Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.'],
  ['Next script not found:', 'Next workflow script is missing', 'Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.'],
@@ -58,7 +104,7 @@ function notesFor(item,source){
  const results=[],issues=[];
  const add=(issue,fix,evidence)=>{if(source.includes(evidence)&&!issues.some(x=>x.issue===issue))issues.push({issue,fix,evidence:[evidence]});};
  if(item.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1'){
-  results.push({text:'Optional CSV export saves member details. Blank output path uses distribution-group-members.csv in the current folder; the script checks the saved row count before confirming export.',evidence:['distribution-group-members.csv','Export member detail to CSV [Y/N]','if ($check.Count -ne $Rows.Count)']});
+  results.push({text:'Optional CSV export saves member details.',evidence:['Export member detail to CSV [Y/N]']});
   add('Exchange module is missing','Install ExchangeOnlineManagement through your approved setup, reopen PowerShell, and run the lookup again.','is required but is not installed');
   add('Group lookup failed','Check the group’s exact name or primary email address, the connected tenant, and the account’s permission to read distribution groups.','Lookup failed:');
   add('CSV export failed or could not be verified','Close the destination file if it is open, choose an existing writable folder, and retry the export. Check the on-screen results before using the CSV.','CSV verification failed.');
@@ -70,11 +116,14 @@ function notesFor(item,source){
    if(issue==='Signing certificate is missing'&&!['SIGN-FOLDER-SCRIPTS.ps1','MANAGE-CERT-SIGNATURES.ps1'].includes(item.file))continue;
    add(issue,fix,evidence);
   }
-  if(source.includes('Save-FKDesktopReport')&&source.includes('Desktop report could not be saved.'))results.push({text:'An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.',evidence:['Save-FKDesktopReport','Desktop report could not be saved.']});
-  if(item.file==='INVOKE-FILE-INVENTORY.ps1')results.push({text:'CSV exports go to the folder you choose (Desktop by default), with separate files for inventory, signatures, duplicates, and cleanup flags.',evidence:['Output folder [Enter for Desktop]','jumpbox-file-inventory-','jumpbox-signatures-','jumpbox-duplicates-','jumpbox-cleanup-flags-']});
+  if(source.includes('Save-FKDesktopReport')&&source.includes('Desktop report could not be saved.'))results.push({text:'Optional HTML report saves the findings.',evidence:['Save-FKDesktopReport']});
+  if(item.file==='INVOKE-FILE-INVENTORY.ps1')results.push({text:'CSV exports save inventory, signatures, duplicates, and cleanup flags.',evidence:['jumpbox-file-inventory-','jumpbox-signatures-','jumpbox-duplicates-','jumpbox-cleanup-flags-']});
  }
  for(const r of [...results,...issues])for(const quote of r.evidence)assert(source.includes(quote),'Detail evidence missing: '+item.file+' / '+quote);
- return {results,issues:issues.slice(0,3)};
+ const secondary=new Set(['HTML report could not be saved','CSV could not be verified','CSV export failed or could not be verified']);
+ const primary=issues.filter(note=>!secondary.has(note.issue)&&!(note.issue==='Output folder was not found'&&item.file!=='INVOKE-FILE-INVENTORY.ps1'));
+ for(const note of primary)assert(conciseFixes[note.issue],'Missing concise fix: '+note.issue);
+ return {results,issues:primary.slice(0,2).map(note=>({...note,fix:conciseFixes[note.issue]}))};
 }
 export function checkWorkflowDetails(base=root){
  const fixture=loadCatalog(base),specs=JSON.parse(fs.readFileSync(path.join(base,'operator-card-specs.json'),'utf8'));
@@ -83,6 +132,8 @@ export function checkWorkflowDetails(base=root){
   const source=fs.readFileSync(path.join(base,item.publishedPath),'utf8'),spec=specs[item.file];
   assert.equal(spec.sourceSha256,crypto.createHash('sha256').update(source).digest('hex'),'Detail source stale: '+item.file);
   const expected=notesFor(item,source);
+  assert(expected.results.length<=1&&expected.results.every(note=>note.text.length<=120),'Results must stay brief: '+item.file);
+  assert(expected.issues.length<=2&&expected.issues.every(note=>note.fix.length<=160),'Common Issues must stay brief: '+item.file);
   assert.deepEqual(spec.workflowDetails,expected,'Authored detail notes stale: '+item.file);
   assert.deepEqual(JSON.parse(JSON.stringify(item.operatorCard.workflowDetails)),expected,'Shipped detail notes stale: '+item.file);
   scripts++;issues+=expected.issues.length;results+=expected.results.length;

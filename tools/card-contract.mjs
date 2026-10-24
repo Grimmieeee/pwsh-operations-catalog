@@ -32,7 +32,7 @@ export function validateCardContract({api,window,document,hashes}){
       const escape=text=>text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
       const scope=/GROUP$/.test(operator.scope)?operator.scope==='SINGLE-GROUP'?'1 group':'1 or more groups':operator.scope;
       const input=operator.input.replace(/\s*\/\s*(?:CSV|TXT)/g,'');
-      for(const text of [operator.objective,scope,input,...operator.preparation,...operator.details])assert(rendered.includes(escape(text)),`Reviewed operator information not displayed: ${label}`);
+      for(const text of [operator.objective,scope,input,...operator.preparation])assert(rendered.includes(escape(text)),`Reviewed operator information not displayed: ${label}`);
       const formats=['CSV','TXT'].filter(format=>operator.input.includes(format)).join(' or ');
       if(formats)assert(rendered.includes(formats),`Reviewed file formats not displayed: ${label}`);
       if(operator.notice){

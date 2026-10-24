@@ -4681,7 +4681,7 @@
       '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click and select <strong>Run with PowerShell.</strong>';
     const services=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath]?.services || [];
     const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an authorized account. Review requested permissions before accepting.' : 'Provide authorized access if prompted.';
-    const operate='The script will prompt for input. Follow prompts, select targets, and review output.'+(actionRank(item)>1?' Review the plan before approving changes.':'');
+    const operate='The script will prompt for input. Follow prompts, select targets, and review output.'+(actionRank(item)>1?' Review the plan before approving changes.':'')+(ir?' '+esc(completionInfo(item)?.next || ''):'');
     const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? 'When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
     const session=ir||terminal ? 'Active connections end when the session window closes. Keep it open until all workflow steps are complete.' : 'Active connections terminate when the session window closes.';
     return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+'</li><li>'+operate+' '+close+'</li><li>'+session+'</li></ol>'+
@@ -4707,19 +4707,15 @@
       const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
       return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
     }
-    const permissions=[spec.runtimeRequirement,...connectionInfo(item),...(spec.preparation || []),requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
-    const completion=completionInfo(item);
+    const technicalWarnings=spec.details.filter(text=>/execution policy|password.*(?:capture|transcript)/i.test(text));
+    const permissions=[spec.runtimeRequirement,...connectionInfo(item),...(spec.preparation || []),requirementInfo(item),...(item.permissionNotes || []),...technicalWarnings].filter(Boolean);
     const detailNotes=spec.sourceSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? spec.workflowDetails : null;
-    const notes=[...spec.details];
-    if(item.reviewNote)notes.push(item.reviewNote);
-    if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
-    if(completion?.next)notes.push(completion.next);
     const copy=values=>[...new Set(values.filter(Boolean))].map(text=>`<p>${esc(text)}</p>`).join('');
     const section=(title,values)=>`<section class="detail-group"><h3>${title}</h3>${copy(values)}</section>`;
     const results=detailNotes?.results?.map(note=>note.text) || [];
     const issues=detailNotes?.issues || [];
     const commonIssues=issues.length?`<section class="detail-group"><h3>Common Issues</h3><ul class="common-issues">${issues.map(note=>`<li><strong>${esc(note.issue)}</strong> — ${esc(note.fix)}</li>`).join('')}</ul></section>`:'';
-    return `<details class="operator-details"><summary>DETAILS</summary>${results.length?section('Results',results):''}${section('Behavior',notes)}${commonIssues}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
+    return `<details class="operator-details"><summary>DETAILS</summary>${results.length?section('Results',results):''}${commonIssues}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
   }
 
   function connectionInfo(item){
