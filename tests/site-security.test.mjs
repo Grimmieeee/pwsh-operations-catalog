@@ -260,8 +260,8 @@ test('quick command examples disclose replacement inputs before preparation or c
   for(const item of examples){
     f.api.openItem(item);
     const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('Replace command examples'),item.name);
-    assert.ok(html.indexOf('>INPUT</div>')<html.indexOf('>COMMAND</div>'),item.name);
+    assert.ok(!html.includes('Replace command examples'),item.name);
+    assert.ok(html.includes('class="command-block"'),item.name);
   }
 });
 
@@ -527,7 +527,7 @@ test('quick-command copy matches its exact example and local commands have no cl
     assert.ok(review,item.name);assert.equal(review.code,item.code,item.name);
     assert.ok(item.useFor?.length>10,item.name);
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.indexOf('USE FOR')<html.indexOf('>INPUT</div>'),item.name);
+    assert.ok(html.includes('USE FOR')&&!html.includes('>INPUT</div>'),item.name);
     assert.ok(html.includes('START') || html.includes('<li>Connect first.'),item.name);
     if(item.platform==='Local Windows'){
       assert.deepEqual([...item.connect],[],item.name);

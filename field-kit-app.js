@@ -3615,7 +3615,7 @@
   function relatedMarkup(item){
     const links=relatedItems(item);
     if(!links.length)return '';
-    return '<section class="related-block"><div class="section-label">RELATED ITEMS</div><div class="related-list">'+links.map(other=>`<button type="button" class="related-item" data-related-file="${esc(other.file)}" ${other.type==='Quick Command'?`data-related-name="${esc(other.name)}"`:''}><span>${esc(other.displayName)}</span>${accessMarkup(other).replaceAll('<div','<span').replaceAll('</div>','</span>')}</button>`).join('')+'</div></section>';
+    return '<section class="related-block"><div class="section-label">RELATED ITEMS</div><div class="related-list">'+links.map(other=>`<button type="button" class="related-item" data-related-file="${esc(other.file)}" ${other.type==='Quick Command'?`data-related-name="${esc(other.name)}"`:''}><span class="related-name">${catalogIconMarkup(other)}<span>${esc(other.displayName)}</span></span>${accessMarkup(other).replaceAll('<div','<span').replaceAll('</div>','</span>')}</button>`).join('')+'</div></section>';
   }
 
   function buildItem(source){
@@ -4680,9 +4680,9 @@
     const launch=ir||terminal ? (ir?'Keep the workflow in the same PowerShell window.':item.startMode==='terminal-admin'?'Open PowerShell as administrator.':'Use the PowerShell window where this tool should run.')+
       '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click and select <strong>Run with PowerShell.</strong>';
     const services=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath]?.services || [];
-    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an authorized account. Review requested permissions before accepting.' : 'Provide authorized access if prompted.';
-    const operate='The script will prompt for input. Follow prompts, select targets, and review output.'+(actionRank(item)>1?' Review the plan before approving changes.':'')+(ir?' '+esc(completionInfo(item)?.next || ''):'');
-    const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? 'When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
+    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an authorized account. Review permissions before accepting.' : 'Provide authorized access if prompted.';
+    const operate='Follow prompts, select targets, and review output.'+(actionRank(item)>1?' Review the plan before approving changes.':'')+(ir?' '+esc(completionInfo(item)?.next || ''):'');
+    const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? '<br>When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
     const session=ir||terminal ? 'Active connections end when the session window closes. Keep it open until all workflow steps are complete.' : 'Active connections terminate when the session window closes.';
     return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+'</li><li>'+operate+' '+close+'</li><li>'+session+'</li></ol>'+
       (ir?'<details class="workflow-guide"><summary>Workflow preparation</summary>'+window.FIELD_KIT_START.preparation.map(text=>'<p>'+esc(text)+'</p>').join('')+'</details>':'')+'</section>';
@@ -4696,7 +4696,7 @@
       const formats=['CSV','TXT'].filter(format=>spec.input.includes(format)).join(' or ');
       return `<div class="operator-scope"><div><span class="scope-label">SCOPE</span><span>${esc(scope)}</span></div><div><span class="scope-label">INPUT</span><span>${esc(input)}</span></div>${formats?'<div><span class="scope-label">FORMAT</span><span>'+esc(formats)+'</span></div>':''}</div>`;
     }
-    if(item.type==='Quick Command')return '<div class="operator-scope">QUICK COMMAND</div>';
+    if(item.type==='Quick Command')return ''; 
     if(isDocument(item))return '';
     return `<div class="operator-scope">${esc(primaryBucket(item).toUpperCase())}</div>`;
   }
@@ -4724,12 +4724,12 @@
     if(!profile)return '';
     const setup=profile.modules.map(name=>'if (-not (Get-Module -ListAvailable -Name '+name+')) {\n    Install-Module '+name+' -Scope CurrentUser -Repository PSGallery\n}').join('\n');
     const ad=profile.ad?'<p>Active Directory: RSAT / ActiveDirectory is required for AD queries.</p>':'';
-    return '<section class="detail-group connector-section"><h3>Connector</h3>'+(setup?'<p>Run once in the PowerShell version you use for this workflow. Installs missing modules.</p>'+connectorCodeMarkup(setup):'')+ad+(item.operatorCard?'<p>The workflow handles sign-in when it runs.</p>':'')+'</section>';
+    return '<section class="detail-group connector-section"><h3>Connector</h3>'+(setup?'<p>Installs missing modules.</p>'+connectorCodeMarkup(setup):'')+ad+'</section>';
   }
   function apiPermissionsMarkup(item,profile){
     if(!profile)return '';
     const scopes=profile.scopes || [];
-    const graph=scopes.length?'<p>Microsoft Graph · delegated</p><ul class="api-scopes">'+scopes.map(scope=>'<li><code>'+esc(scope)+'</code></li>').join('')+'</ul>':'';
+    const graph=scopes.length?'<p>Microsoft Graph · delegated</p>'+connectorCodeMarkup(scopes.join('\n')):'';
     const exchange=profile.exchangeCmdlets?.length?'<p>Exchange / Purview RBAC · access to these cmdlets and their target objects:</p><ul class="api-scopes">'+profile.exchangeCmdlets.map(cmd=>'<li><code>'+esc(cmd)+'</code></li>').join('')+'</ul>':'';
     const ad=profile.ad?'<p>Active Directory · delegated access to the selected AD objects.</p>':'';
     const mailbox=item.file==='BEC-INVOKE-EMAIL-RECOVERY.ps1'?'<p>Mailbox access: the signed-in account must already have access to the target mailbox/folders; an admin role alone is not enough.</p>':'';
@@ -4740,7 +4740,7 @@
   function quickCommandStartMarkup(item){
     const profile=connectorProfile(item);
     if(!profile?.commands?.length)return '<p class="connection-direction">START: open PowerShell on the target computer. Replace example values, then run the command.</p>';
-    return '<section class="quick-command-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>Connect first. Run in the same PowerShell window.'+connectorCodeMarkup(profile.commands.join('\n'))+'</li><li>Replace example values, then run the command below.</li></ol></section>';
+    return '<section class="quick-command-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>Connect first.'+connectorCodeMarkup(profile.commands.join('\n'))+'</li><li>Replace example values.</li></ol></section>';
   }
   function operatorDetailsMarkup(item){
     const spec=item.operatorCard,profile=connectorProfile(item);
@@ -4855,7 +4855,7 @@
     const input = inputs.length ? `<section class="check-block"><div class="section-label">INPUT</div><div class="check-list">${inputs.map(text => `<div class="input-item">${esc(text)}</div>`).join("")}</div></section>` : "";
     const review = `${checks.length ? `<details class="card-disclosure"><summary>CHECKS</summary>${list(checks)}</details>` : ""}
       ${guards.length ? `<details class="card-disclosure"><summary>GUARDS</summary>${list(guards)}</details>` : ""}`;
-    return input + review;
+    return (item.type==='Quick Command'?'':input) + review;
   }
 
   function accessMarkup(item){
@@ -5049,7 +5049,7 @@
     return `
       <section class="command-block">
         ${platform ? `<div><span class="platform-label">${esc(platform)}</span></div>` : ""}
-        <div class="section-label">COMMAND</div>
+        
         <div class="inline-code-box"><div class="source-heading"><button class="copy-mini" type="button" data-copy-source>COPY</button></div><pre class="command">${esc(item.code)}</pre></div>
       </section>
     `;
@@ -5108,6 +5108,8 @@
       ${item.operatorCard ? '' : relatedMarkup(item)}
     `;
 
+    drawerBody.scrollTop=0;
+    drawer.scrollTop=0;
     bindDrawerActions(item);
     drawer.inert = false;
     if (shell) shell.inert = true;

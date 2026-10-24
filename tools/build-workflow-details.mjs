@@ -22,7 +22,7 @@ const conciseFixes={
  'Case folder was not found':'Enter the full path to the existing evidence folder.',
  'Input file was not found':'Check the full filename and path.',
  'CSV column was not found':'Choose the column containing the targets.',
- 'User address is invalid':'Use the full sign-in name: <user@domain.com>.',
+ 'User address is invalid':'Verify UPN.',
  'Group was not found':'Check the group’s exact name or email address.',
  'User was not found':'Check the full sign-in name and connected tenant.',
  'Mailbox lookup failed':'Check the mailbox address.',
