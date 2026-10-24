@@ -496,7 +496,7 @@ test('global search includes every scope regardless of navigation selection',()=
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   if(item.workflow){assert.ok(html.includes('same PowerShell window'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
   else if(/^terminal/.test(item.startMode||'')){assert.ok(html.includes('PowerShell window')||html.includes('PowerShell as administrator'),item.file);assert.ok(!html.includes('Run with PowerShell'),item.file);}
-  else{assert.ok(html.includes('Select <strong>Run with PowerShell.</strong>'),item.file);assert.ok(html.includes(item.operatorCard.finishPrompt || 'Finish using the script’s own close controls.'),item.file);}
+  else{assert.ok(html.includes('select <strong>Run with PowerShell.</strong>'),item.file);assert.ok(html.includes(item.operatorCard.finishPrompt || 'Finish using the script’s own close controls.'),item.file);}
  }
 });
 
@@ -705,7 +705,7 @@ test('search rows show purposes and the same entity scope as opened cards',()=>{
   assert.ok(f.elements.get('results').innerHTML.includes(item.operatorCard.objective));
   assert.ok(f.api.rowTags(item).includes('SINGLE or MULTI-MAILBOX'));
   assert.ok(!f.api.rowTags(item).includes('MULTI USER'));
-  assert.ok(f.api.startMarkup(item).includes('Right-click the downloaded file.'));
+  assert.ok(f.api.startMarkup(item).includes('Right-click and select'));
 });
 
 test('unpublished plans stay out of working searches, counts and cards',()=>{
@@ -971,6 +971,10 @@ test('script card summary stays concise and run steps preserve source-specific l
  f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
  assert(html.includes('1 or more groups'));
  assert(html.indexOf('operator-scope')<html.indexOf('operator-meta'));
+ const preview=html.slice(html.indexOf('class="workflow-preview"'),html.indexOf('class="preview-scroll"'));
+ assert(preview.includes('access-read'));
+ assert(!html.slice(0,html.indexOf('class="workflow-preview"')).includes('class="access-state"'));
+ assert(!preview.includes('<span>Illustrative'));
  assert(html.includes('&lt;name&gt;@domain.com'));
  assert(html.includes('keep the Group header exactly'));
  assert(html.includes('Press Enter to close session.'));

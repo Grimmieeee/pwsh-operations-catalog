@@ -4676,15 +4676,15 @@
     const ir=Boolean(window.FIELD_KIT_START.stages[item.file]);
     const terminal=/^terminal(?:-admin)?$/.test(item.startMode || '');
     const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
-    const download=ir ? 'Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.<br><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : 'Download file to the target workstation or approved client jumpbox.';
+    const download=ir ? 'Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.<br><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : 'Download file to the approved target endpoint.';
     const launch=ir||terminal ? (ir?'Keep the workflow in the same PowerShell window.':item.startMode==='terminal-admin'?'Open PowerShell as administrator.':'Use the PowerShell window where this tool should run.')+
-      '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click the downloaded file. Select <strong>Run with PowerShell.</strong> A temporary PowerShell window opens.';
+      '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click and select <strong>Run with PowerShell.</strong>';
     const services=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath]?.services || [];
-    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'When prompted, sign in with an authorized account to connect in this PowerShell session. Review any requested consent before accepting.' : 'Work in this PowerShell session; provide any required local or service access when prompted.';
-    const operate='Follow the prompts to select targets, run the workflow, and review its output.'+(actionRank(item)>1?' Review the plan before approving any changes.':'');
+    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an authorized account. Review requested permissions before accepting.' : 'Provide authorized access if prompted.';
+    const operate='The script will prompt for input. Follow prompts, select targets, and review output.'+(actionRank(item)>1?' Review the plan before approving changes.':'');
     const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? 'When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
-    const session=ir||terminal ? 'Close the terminal only after all work in this session is complete.' : 'Closing the temporary window ends its PowerShell process and active connections.';
-    return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+'</li><li>'+operate+'</li><li>'+close+' '+session+'</li></ol>'+
+    const session=ir||terminal ? 'Active connections end when the session window closes. Keep it open until all workflow steps are complete.' : 'Active connections terminate when the session window closes.';
+    return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+'</li><li>'+operate+' '+close+'</li><li>'+session+'</li></ol>'+
       (ir?'<details class="workflow-guide"><summary>Workflow preparation</summary>'+window.FIELD_KIT_START.preparation.map(text=>'<p>'+esc(text)+'</p>').join('')+'</details>':'')+'</section>';
   }
   function scopeMarkup(item){
@@ -5031,12 +5031,12 @@
   function workflowPreviewMarkup(item){
     if(!item.operatorCard)return '';
     const record=workflowPreview(item);
-    if(!record)return '<p class="source-note">Example preview unavailable for this source revision.</p>';
+    if(!record)return '<div class="operator-meta">'+accessMarkup(item)+'</div><p class="source-note">Example preview unavailable for this source revision.</p>';
     const lines=record.text.split('\n').map(line=>{
       const tone=/NOT PERFORMED|HIGH RISK|HIGH-RISK|\[XX\]/.test(line)?'danger':/pending|unavailable|not available|incomplete|failed|failure|review required|\[!!\]/i.test(line)?'warning':/^[A-Z][A-Z0-9 &/():+_.-]+$/.test(line.trim())?'heading':'';
       return '<span class="preview-line'+(tone?' preview-'+tone:'')+'">'+esc(line)+'</span>';
     }).join('\n');
-    return `<section class="workflow-preview" aria-labelledby="workflowPreviewHeading"><div class="preview-toolbar"><h3 id="workflowPreviewHeading"><svg class="card-powershell" viewBox="0 0 28 22" aria-hidden="true"><path d="m3 3 9 8-9 8M15 19h10"/></svg>${record.kind==='static-illustration'?'Terminal preview':'Example output'}</h3><span>Illustrative · sample data</span></div><div class="preview-scroll" tabindex="0" role="region" aria-label="Scrollable example output for ${esc(item.displayName)}"><pre>${lines}</pre></div></section>`;
+    return `<section class="workflow-preview" aria-labelledby="workflowPreviewHeading" title="Illustrative · sample data"><div class="preview-toolbar"><h3 id="workflowPreviewHeading"><svg class="card-powershell" viewBox="0 0 28 22" aria-hidden="true"><path d="m3 3 9 8-9 8M15 19h10"/></svg>${record.kind==='static-illustration'?'Terminal preview':'Example output'}</h3><div class="operator-meta">${accessMarkup(item)}</div></div><div class="preview-scroll" tabindex="0" role="region" aria-label="Scrollable illustrative example output for ${esc(item.displayName)}"><pre>${lines}</pre></div></section>`;
   }
 
   function openItem(item){
@@ -5054,7 +5054,7 @@
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
         ${scopeMarkup(item)}
-        <div class="operator-meta">${accessMarkup(item)}</div>
+        ${item.operatorCard ? '' : `<div class="operator-meta">${accessMarkup(item)}</div>`}
         ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}
       </section>
       ${item.operatorCard?.notice ? `<p class="change-note operator-notice">${esc(item.operatorCard.notice)}</p>` : ''}
