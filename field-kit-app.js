@@ -4678,15 +4678,24 @@
     const code=window.FIELD_KIT_START.launch(item.file)+(item.file==='git-repo.ps1' ? ' -Path (Read-Host "Full path to the target Git repository") -Action (Read-Host "Action: Check, Pull, or Push")' : item.launchArgs || '');
     const download=ir ? 'Download the workflow. Extract all three scripts into one folder on your approved Windows support computer.<br><button id="downloadIRWorkflow" class="action primary" type="button">DOWNLOAD BEC WORKFLOW</button><div id="workflowStatus" class="source-note" role="status"></div>' : 'Download file to the target workstation or approved client jumpbox.';
     const launch=ir||terminal ? (ir?'Keep the workflow in the same PowerShell window.':item.startMode==='terminal-admin'?'Open PowerShell as administrator.':'Use the PowerShell window where this tool should run.')+
-      '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click the downloaded file. Select <strong>Run with PowerShell.</strong>';
+      '<div class="connect-line"><details class="connect-command"><summary>Launch command <span class="connect-expand">Show command</span></summary><code>'+esc(code)+'</code></details><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><span>Select <strong>Copy as path</strong> for the downloaded file; paste it when the launch command asks.</span>' : 'Right-click the downloaded file. Select <strong>Run with PowerShell.</strong> A temporary PowerShell window opens.';
     const services=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath]?.services || [];
-    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'Sign in with an account authorized for this customer when prompted. Review any requested consent before accepting.' : 'Enter the requested targets and follow the script prompts.';
+    const signIn=services.some(x=>['GRAPH','EXO'].includes(x)) ? 'When prompted, sign in with an authorized account to connect in this PowerShell session. Review any requested consent before accepting.' : 'Work in this PowerShell session; provide any required local or service access when prompted.';
+    const operate='Follow the prompts to select targets, run the workflow, and review its output.'+(actionRank(item)>1?' Review the plan before approving any changes.':'');
     const close=ir ? 'Use the script handoff to continue. Keep the workflow window open.' : terminal ? 'Use the tool’s own finish controls; the existing PowerShell window stays open.' : item.operatorCard?.finishPrompt ? 'When finished: <q>'+esc(item.operatorCard.finishPrompt)+'</q>' : 'Finish using the script’s own close controls.';
-    return '<section class="guided-start operator-steps"><div class="section-label">HOW TO RUN</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+(actionRank(item)>1?' Review the plan before approving any changes.':'')+'</li><li>'+close+'</li></ol>'+
+    const session=ir||terminal ? 'Close the terminal only after all work in this session is complete.' : 'Closing the temporary window ends its PowerShell process and active connections.';
+    return '<section class="guided-start operator-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>'+download+'</li><li>'+launch+'</li><li>'+signIn+'</li><li>'+operate+'</li><li>'+close+' '+session+'</li></ol>'+
       (ir?'<details class="workflow-guide"><summary>Workflow preparation</summary>'+window.FIELD_KIT_START.preparation.map(text=>'<p>'+esc(text)+'</p>').join('')+'</details>':'')+'</section>';
   }
   function scopeMarkup(item){
-    if(item.operatorCard)return `<div class="operator-scope">${esc(item.operatorCard.scope)}${/GROUP$/.test(item.operatorCard.scope)?actionRank(item)===1?' CHECK':' ACTION':''}<span>${esc(item.operatorCard.input)}</span></div>`;
+    if(item.operatorCard){
+      const spec=item.operatorCard;
+      const group=/GROUP$/.test(spec.scope);
+      const scope=group?spec.scope==='SINGLE-GROUP'?'1 group':'1 or more groups':spec.scope;
+      const input=spec.input.replace(/\s*\/\s*(?:CSV|TXT)/g,'');
+      const formats=['CSV','TXT'].filter(format=>spec.input.includes(format)).join(' or ');
+      return `<div class="operator-scope"><div><span class="scope-label">SCOPE</span><span>${esc(scope)}</span></div><div><span class="scope-label">INPUT</span><span>${esc(input)}</span></div>${formats?'<div><span class="scope-label">FORMAT</span><span>'+esc(formats)+'</span></div>':''}</div>`;
+    }
     if(item.type==='Quick Command')return '<div class="operator-scope">QUICK COMMAND</div>';
     if(isDocument(item))return '';
     return `<div class="operator-scope">${esc(primaryBucket(item).toUpperCase())}</div>`;
@@ -4711,7 +4720,9 @@
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
     if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
     const sample=spec.inputExample;
-    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace these examples with your targets.</p><p>Multiple entries: separate with commas when typing into the script.</p><pre>${esc(sample.values.join(','))}</pre><p>CSV: use a ${esc(sample.header)} column.</p><pre>${esc([sample.header,...sample.values].join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
+    const values=sample?sample.values.map(value=>value.includes('@')?'<name>@domain.com':sample.header==='Group'?'<group name>':'<name>'):[];
+    if(sample?.header==='Group')values.fill('<name>@domain.com');
+    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace bracketed placeholders with your targets; omit the brackets.</p><p>Typed input: separate entries with commas.</p><pre>${esc(values.join(', '))}</pre><p>CSV: keep the ${esc(sample.header)} header exactly as shown.</p><pre>${esc([sample.header,...values].join('\n'))}</pre><p>TXT: one address per line, without a header.</p><pre>${esc(values.join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
     const list=(title,values)=>values.length?`<section class="detail-group"><h3>${title}</h3><ul>${[...new Set(values)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></section>`:'';
     return `<details class="operator-details"><summary>DETAILS</summary>${list('Requires',summary)}<details class="technical-details"><summary>Module &amp; permission details</summary>${list('Requirements',requirements)}${list('Permissions',permissions)}</details>${list('Scope &amp; limits',notes)}${example?`<details class="technical-details"><summary>Input examples</summary>${example}</details>`:''}${evidence.length?`<details class="acceptance-details"><summary>Verification record</summary>${list('Recorded acceptance',evidence)}</details>`:''}${item.workflow ? workflowMarkup(item.workflow) : ''}${relatedMarkup(item)}</details>`;
   }
@@ -5025,7 +5036,7 @@
       const tone=/NOT PERFORMED|HIGH RISK|HIGH-RISK|\[XX\]/.test(line)?'danger':/pending|unavailable|not available|incomplete|failed|failure|review required|\[!!\]/i.test(line)?'warning':/^[A-Z][A-Z0-9 &/():+_.-]+$/.test(line.trim())?'heading':'';
       return '<span class="preview-line'+(tone?' preview-'+tone:'')+'">'+esc(line)+'</span>';
     }).join('\n');
-    return `<section class="workflow-preview" aria-labelledby="workflowPreviewHeading"><div class="preview-toolbar"><h3 id="workflowPreviewHeading">${record.kind==='static-illustration'?'Terminal preview':'Example output'}</h3><span>Illustrative · sample data</span></div><div class="preview-scroll" tabindex="0" role="region" aria-label="Scrollable example output for ${esc(item.displayName)}"><pre>${lines}</pre></div></section>`;
+    return `<section class="workflow-preview" aria-labelledby="workflowPreviewHeading"><div class="preview-toolbar"><h3 id="workflowPreviewHeading"><svg class="card-powershell" viewBox="0 0 28 22" aria-hidden="true"><path d="m3 3 9 8-9 8M15 19h10"/></svg>${record.kind==='static-illustration'?'Terminal preview':'Example output'}</h3><span>Illustrative · sample data</span></div><div class="preview-scroll" tabindex="0" role="region" aria-label="Scrollable example output for ${esc(item.displayName)}"><pre>${lines}</pre></div></section>`;
   }
 
   function openItem(item){
@@ -5042,8 +5053,8 @@
         <div class="item-context">${esc(item.operatorCard ? item.operatorCard.family==='ir-workflow' ? 'BEC' : item.operatorCard.family.startsWith('ir-') ? 'BEC' : item.operatorCard.family : primaryBucket(item))}</div>
         <h2 class="item-title">${itemTitleMarkup(item.displayName)}${releaseTag(item)}</h2>
         ${item.operatorCard ? `<p class="operator-purpose">${esc(item.operatorCard.objective)}</p>` : ''}
-        <div class="operator-meta">${accessMarkup(item)}</div>
         ${scopeMarkup(item)}
+        <div class="operator-meta">${accessMarkup(item)}</div>
         ${item.status==='Source pending'?'<div class="source-note">SOURCE PENDING — download is not available.</div>':''}
       </section>
       ${item.operatorCard?.notice ? `<p class="change-note operator-notice">${esc(item.operatorCard.notice)}</p>` : ''}

@@ -30,7 +30,11 @@ export function validateCardContract({api,window,document,hashes}){
       api.openItem(item);
       const rendered=document.getElementById('drawerBody').innerHTML;
       const escape=text=>text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-      for(const text of [operator.objective,operator.scope,operator.input,...operator.preparation,...operator.details])assert(rendered.includes(escape(text)),`Reviewed operator information not displayed: ${label}`);
+      const scope=/GROUP$/.test(operator.scope)?operator.scope==='SINGLE-GROUP'?'1 group':'1 or more groups':operator.scope;
+      const input=operator.input.replace(/\s*\/\s*(?:CSV|TXT)/g,'');
+      for(const text of [operator.objective,scope,input,...operator.preparation,...operator.details])assert(rendered.includes(escape(text)),`Reviewed operator information not displayed: ${label}`);
+      const formats=['CSV','TXT'].filter(format=>operator.input.includes(format)).join(' or ');
+      if(formats)assert(rendered.includes(formats),`Reviewed file formats not displayed: ${label}`);
       if(operator.notice){
         assert(rendered.includes(escape(operator.notice)),`Operational notice not displayed: ${label}`);
         assert(rendered.indexOf('operator-notice')<rendered.indexOf('guided-start'),`Operational notice must precede launch: ${label}`);
