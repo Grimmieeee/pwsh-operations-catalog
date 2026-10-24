@@ -4700,22 +4700,64 @@
     if(isDocument(item))return '';
     return `<div class="operator-scope">${esc(primaryBucket(item).toUpperCase())}</div>`;
   }
+  function connectorProfile(item){
+    if(item.operatorCard){
+      const record=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
+      return record?.sha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? record.connector : null;
+    }
+    if(item.type!=='Quick Command')return null;
+    const commands=item.connect || [];
+    // Connection commands are already the task; do not ask operators to connect twice.
+    const connecting=/^\s*(?:Connect-|Import-Module)/i.test(item.code || '');
+    const text=commands.join('\n')+(connecting?'\n'+item.code:'');
+    if(!/Connect-MgGraph|Connect-ExchangeOnline|Connect-IPPSSession|Import-Module ActiveDirectory/.test(text))return null;
+    const modules=[...new Set((item.requires.match(/Microsoft\.Graph(?:\.[A-Za-z]+)+|ExchangeOnlineManagement/g) || []))];
+    if(/Connect-MgGraph/.test(text)&&!modules.includes('Microsoft.Graph.Authentication'))modules.unshift('Microsoft.Graph.Authentication');
+    if(/Connect-ExchangeOnline|Connect-IPPSSession/.test(text)&&!modules.includes('ExchangeOnlineManagement'))modules.push('ExchangeOnlineManagement');
+    const scopes=[...new Set([...text.matchAll(/["']([A-Za-z][\w.-]+\.[\w.-]+)["']/g)].map(x=>x[1]))];
+    return {modules,scopes,exchangeCmdlets:/Connect-ExchangeOnline|Connect-IPPSSession/.test(text)?[...new Set((item.code.match(/\b(?:Get|Set|Add|Remove|Search|New|Start)-[A-Za-z0-9]+/g)||[]).filter(x=>!/^Connect-/.test(x)))]:[],ad:/ActiveDirectory/.test(text),commands:connecting?[]:commands};
+  }
+  function connectorCodeMarkup(code){
+    return '<div class="inline-code-box connector-code"><div class="source-heading"><button class="copy-mini" type="button" data-copy="'+esc(code)+'">COPY</button></div><pre class="command">'+esc(code)+'</pre></div>';
+  }
+  function connectorMarkup(item,profile){
+    if(!profile)return '';
+    const setup=profile.modules.map(name=>'if (-not (Get-Module -ListAvailable -Name '+name+')) {\n    Install-Module '+name+' -Scope CurrentUser -Repository PSGallery\n}').join('\n');
+    const ad=profile.ad?'<p>Active Directory: RSAT / ActiveDirectory is required for AD queries.</p>':'';
+    return '<section class="detail-group connector-section"><h3>Connector</h3>'+(setup?'<p>Run once in the PowerShell version you use for this workflow. Installs missing modules.</p>'+connectorCodeMarkup(setup):'')+ad+(item.operatorCard?'<p>The workflow handles sign-in when it runs.</p>':'')+'</section>';
+  }
+  function apiPermissionsMarkup(item,profile){
+    if(!profile)return '';
+    const scopes=profile.scopes || [];
+    const graph=scopes.length?'<p>Microsoft Graph · delegated</p><ul class="api-scopes">'+scopes.map(scope=>'<li><code>'+esc(scope)+'</code></li>').join('')+'</ul>':'';
+    const exchange=profile.exchangeCmdlets?.length?'<p>Exchange / Purview RBAC · access to these cmdlets and their target objects:</p><ul class="api-scopes">'+profile.exchangeCmdlets.map(cmd=>'<li><code>'+esc(cmd)+'</code></li>').join('')+'</ul>':'';
+    const ad=profile.ad?'<p>Active Directory · delegated access to the selected AD objects.</p>':'';
+    const mailbox=item.file==='BEC-INVOKE-EMAIL-RECOVERY.ps1'?'<p>Mailbox access: the signed-in account must already have access to the target mailbox/folders; an admin role alone is not enough.</p>':'';
+    const shared=profile.sharedSession?'<p>Shared BEC session: assessment also requests the response permissions above.</p>':'';
+    const optional=profile.conditionalAccess?'<p>Policy.Read.ConditionalAccess is requested only for Conditional Access review.</p>':'';
+    return graph||exchange||ad?'<details class="permissions-details"><summary>Permissions</summary>'+graph+exchange+ad+mailbox+shared+optional+'</details>':'';
+  }
+  function quickCommandStartMarkup(item){
+    const profile=connectorProfile(item);
+    if(!profile?.commands?.length)return '<p class="connection-direction">START: open PowerShell on the target computer. Replace example values, then run the command.</p>';
+    return '<section class="quick-command-steps"><div class="section-label">STEPS</div><ol class="run-steps"><li>Connect first. Run in the same PowerShell window.'+connectorCodeMarkup(profile.commands.join('\n'))+'</li><li>Replace example values, then run the command below.</li></ol></section>';
+  }
   function operatorDetailsMarkup(item){
-    const spec=item.operatorCard;
+    const spec=item.operatorCard,profile=connectorProfile(item);
     if(!spec){
       if(item.type!=='Quick Command')return shortNote(item);
-      const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
-      return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
+      const requirement=profile?'':requirementInfo(item);
+      const content=connectorMarkup(item,profile)+apiPermissionsMarkup(item,profile)+(requirement?'<p>'+esc(requirement)+'</p>':'');
+      return '<details class="operator-details"><summary>DETAILS</summary>'+content+'</details>';
     }
     const technicalWarnings=spec.details.filter(text=>/execution policy|password.*(?:capture|transcript)/i.test(text));
-    const permissions=[spec.runtimeRequirement,...connectionInfo(item),...(spec.preparation || []),requirementInfo(item),...(item.permissionNotes || []),...technicalWarnings].filter(Boolean);
     const detailNotes=spec.sourceSha256===window.FIELD_KIT_SOURCE_INTEGRITY?.[item.publishedPath] ? spec.workflowDetails : null;
     const copy=values=>[...new Set(values.filter(Boolean))].map(text=>`<p>${esc(text)}</p>`).join('');
-    const section=(title,values)=>`<section class="detail-group"><h3>${title}</h3>${copy(values)}</section>`;
     const results=detailNotes?.results?.map(note=>note.text) || [];
     const issues=detailNotes?.issues || [];
     const commonIssues=issues.length?`<section class="detail-group"><h3>Common Issues</h3><ul class="common-issues">${issues.map(note=>`<li><strong>${esc(note.issue)}</strong> — ${esc(note.fix)}</li>`).join('')}</ul></section>`:'';
-    return `<details class="operator-details"><summary>DETAILS</summary>${results.length?section('Results',results):''}${commonIssues}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
+    const content=connectorMarkup(item,profile)+(results.length?'<section class="detail-group"><h3>Results</h3>'+copy(results)+'</section>':'')+commonIssues+apiPermissionsMarkup(item,profile)+copy(technicalWarnings);
+    return '<details class="operator-details"><summary>DETAILS</summary>'+content+'</details>';
   }
 
   function connectionInfo(item){
@@ -5055,7 +5097,7 @@
       ${optionMarkup(item)}
       ${item.operatorCard ? workflowPreviewMarkup(item) : workflowMarkup(item.workflow)}
       ${item.operatorCard ? '' : factsMarkup(item)}
-      ${item.operatorCard ? '' : item.type==='Quick Command' ? '<p class="connection-direction">START: open PowerShell on the target computer. Check DETAILS for requirements and connection setup before running.</p>' : runInfoMarkup(item)}
+      ${item.operatorCard ? '' : item.type==='Quick Command' ? quickCommandStartMarkup(item) : runInfoMarkup(item)}
       ${startMarkup(item)}
       ${standaloneCommandMarkup(item)}
       <div class="actions operator-actions">${sourceButton(item)}${referenceButtons(item)}</div>

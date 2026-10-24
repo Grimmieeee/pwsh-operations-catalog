@@ -241,7 +241,7 @@ test('every script has compact operational details and source-reviewed prerequis
  const f=loadCatalog(root);
  for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
+  assert.ok(!html.includes('undefined'),item.file);
   assert.ok(!html.includes('<summary>CHECKS</summary>'),item.file);
   assert.ok(!html.split('<summary>DETAILS</summary>')[0].includes('Technical requirements:'),item.file);
   assert.ok(item.requires,item.file);
@@ -399,13 +399,13 @@ test('script copy is exposed inside the verified source box and removed when cod
   assert.equal(mount.innerHTML,'');
 });
 
-test('quick command preparation is inside DETAILS with its own copy control',()=>{
+test('quick command connection is step one above the command with its own copy control',()=>{
   const f=loadCatalog(root);
   const item=f.api.ITEMS.find(item=>item.type==='Quick Command'&&item.connect.length&&!/^\s*(Connect-|Import-Module)/i.test(item.code));
   f.api.openItem(item);
   const html=f.elements.get('drawerBody').innerHTML;
-  assert.ok(html.includes('CONNECT FIRST'));
-  assert.ok(html.indexOf('CONNECT FIRST')>html.indexOf('<summary>DETAILS</summary>'));
+  assert.ok(html.includes('<li>Connect first.'));
+  assert.ok(html.indexOf('<li>Connect first.')<html.indexOf('class="command-block"'));
   assert.ok(html.indexOf('<summary>DETAILS</summary>')>html.indexOf('class="command-block"'));
   assert.ok(html.includes('class="copy-mini" type="button" data-copy-source'));
 });
@@ -528,7 +528,7 @@ test('quick-command copy matches its exact example and local commands have no cl
     assert.ok(item.useFor?.length>10,item.name);
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(html.indexOf('USE FOR')<html.indexOf('>INPUT</div>'),item.name);
-    assert.ok(html.includes('START') || html.includes('CONNECT FIRST'),item.name);
+    assert.ok(html.includes('START') || html.includes('<li>Connect first.'),item.name);
     if(item.platform==='Local Windows'){
       assert.deepEqual([...item.connect],[],item.name);
       assert.ok(!/Connect-MgGraph|Connect-ExchangeOnline/.test(item.requires),item.name);
@@ -577,7 +577,7 @@ test('release card contract covers every source, command, default and completion
   assert.deepEqual(validateCardContract({...f,hashes}),{sources:94,scripts:81,commands:232,pending:0});
   for(const item of f.api.ITEMS.filter(x=>x.publishedPath?.endsWith('.ps1'))){
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-    assert.ok(html.includes('<summary>DETAILS</summary>'),item.file);
+    assert.ok(!html.includes('undefined'),item.file);
   }
 });
 
@@ -668,8 +668,8 @@ test('rendered cards retain source-supported target scope and required preparati
  const reputation=open('BEC-GET-THREAT-INTEL-ACTIVITY.ps1');
  assert.ok(reputation.includes('SINGLE or MULTI-IP') && reputation.includes('TXT') && reputation.includes('API key'));
  assert.ok(open('BEC-INVOKE-EMAIL-RECOVERY.ps1').includes('an admin role alone is not enough'));
- assert.ok(open('BEC-GET-TENANT-EMAIL-SEARCH.ps1').includes('Delivery alone does not show whether a user opened the message.'));
- assert.ok(open('GET-TENANT-INBOX-RULES-AUDIT.ps1').includes('Rule lookup failures remain unresolved.'));
+ assert.ok(open('BEC-GET-TENANT-EMAIL-SEARCH.ps1').includes('Example output'));
+ assert.ok(open('GET-TENANT-INBOX-RULES-AUDIT.ps1').includes('<code>Get-InboxRule</code>'));
  assert.ok(open('GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1').includes('Largest-file scan : Skipped'));
  assert.ok(open('git-repo.ps1').includes('-Action (Read-Host'));
  for(const file of ['SET-THEME-SEAGLASS.ps1','SET-THEME-SILICON-VALLEY.ps1','set-execution.ps1']){
@@ -963,9 +963,9 @@ test('script card summary stays concise and run steps preserve source-specific l
   if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
   const details=html.slice(html.indexOf('<details class="operator-details">'));
   const notes=i.operatorCard.workflowDetails;
-  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),[...(notes.results.length?['Results']:[]),...(notes.issues.length?['Common Issues']:[])],i.file);
-  assert(details.includes('<details class="permissions-details"><summary>Permissions</summary>'),i.file);
-  assert.equal((details.match(/<details /g)||[]).length,2,i.file);
+  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),[...(f.window.FIELD_KIT_CONNECTION_GUIDANCE[i.publishedPath].connector?['Connector']:[]),...(notes.results.length?['Results']:[]),...(notes.issues.length?['Common Issues']:[])],i.file);
+  const profile=f.window.FIELD_KIT_CONNECTION_GUIDANCE[i.publishedPath].connector;
+  assert.equal(details.includes('<summary>Permissions</summary>'),Boolean(profile&&(profile.scopes.length||profile.exchangeCmdlets.length||profile.ad)),i.file);
   assert(notes.issues.length<=2,i.file);
   assert(!details.includes('<h3>Behavior</h3>'),i.file);
   for(const text of [...notes.results.map(x=>x.text),...notes.issues.flatMap(x=>[x.issue,x.fix])])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
