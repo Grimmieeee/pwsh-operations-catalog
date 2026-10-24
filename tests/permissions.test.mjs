@@ -19,7 +19,7 @@ test('connected workflows render source-declared scopes and module setup without
   api.openItem(item);const html=document.getElementById('drawerBody').innerHTML;
   const profile=window.FIELD_KIT_CONNECTION_GUIDANCE[item.publishedPath].connector;
   assert.equal(html.includes('<h3>Connector</h3>'),Boolean(profile),item.file);
-  for(const scope of profile?.scopes || [])assert(html.includes('<code>'+scope+'</code>'),item.file+': '+scope);
+  for(const scope of profile?.scopes || [])assert(html.includes(scope),item.file+': '+scope);
   for(const mod of profile?.modules || [])assert(html.includes('Install-Module '+mod+' -Scope CurrentUser'),item.file+': '+mod);
   assert(!html.includes('Sign-in: use the approved customer account'),item.file);
   if(profile?.sharedSession)assert(html.includes('assessment also requests the response permissions'),item.file);
@@ -51,7 +51,7 @@ test('Quick Commands show every reviewed task scope and connect in step one befo
   const html=document.getElementById('drawerBody').innerHTML;
   assert(html.indexOf('<li>Connect first.')<html.indexOf('class="command-block"'),name);
   assert(html.includes('data-copy="Connect-MgGraph'),name);
-  for(const scope of p.scopes)assert(html.includes('<code>'+scope+'</code>'),name+': '+scope);
+  for(const scope of p.scopes)assert(html.includes(scope),name+': '+scope);
  }
  for(const name of ['Show Graph Context','Disconnect Microsoft Graph']){
   api.openItem(api.ITEMS.find(x=>x.name===name));

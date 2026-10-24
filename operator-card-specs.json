@@ -119,7 +119,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -169,7 +169,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -225,7 +225,7 @@
         },
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -274,7 +274,7 @@
         },
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -364,7 +364,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -569,7 +569,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -2179,7 +2179,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -2705,7 +2705,7 @@
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Every target must be a valid user UPN."
           ]

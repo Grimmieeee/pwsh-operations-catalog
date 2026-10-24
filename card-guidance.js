@@ -6520,7 +6520,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -6570,7 +6570,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -6626,7 +6626,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         },
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -6675,7 +6675,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         },
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -6765,7 +6765,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -6970,7 +6970,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -8580,7 +8580,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Invalid UPN"
           ]
@@ -9106,7 +9106,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use the full sign-in name: <user@domain.com>.",
+          "fix": "Verify UPN.",
           "evidence": [
             "Every target must be a valid user UPN."
           ]

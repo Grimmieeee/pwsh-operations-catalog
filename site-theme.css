@@ -582,3 +582,6 @@ html[data-theme="light"] .preview-danger{color:#a22e24}
 .api-scopes { padding-left: 1.2rem; }
 .api-scopes code { overflow-wrap: anywhere; }
 .quick-command-steps .connector-code { margin-top: .65rem; }
+
+.drawer .item-head .item-title{display:block!important}
+.related-name{display:flex;align-items:center;gap:12px}.related-name svg{width:24px;height:24px;flex:none}
