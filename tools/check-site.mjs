@@ -1,3 +1,4 @@
+import {checkConnectors} from './build-connectors.mjs';
 // Run: node tools/check-site.mjs [--write-integrity]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,6 +18,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const {api,window,document}=loadCatalog(root);
 checkImpactReview(root);
 checkPermissionsReview(root);
+checkConnectors(root);
 checkTaxonomyReview(root);
 checkWorkflowPreviews(root);
 checkWorkflowDetails(root);
