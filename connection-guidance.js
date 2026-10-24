@@ -812,14 +812,7 @@ window.FIELD_KIT_CONNECTION_GUIDANCE = Object.freeze({
     "services": [
       "AD"
     ],
-    "connector": {
-      "modules": [],
-      "scopes": [],
-      "exchangeCmdlets": [],
-      "ad": false,
-      "sharedSession": false,
-      "conditionalAccess": false
-    }
+    "connector": null
   },
   "published-source/endpoint/DEPLOY-TCPIP-PRINTER.ps1": {
     "sha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",

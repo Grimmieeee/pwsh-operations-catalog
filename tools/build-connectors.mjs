@@ -12,6 +12,8 @@ export function connectorFor(item,source,services){
  if(services.includes('EXO')&&!modules.includes('ExchangeOnlineManagement'))modules.push('ExchangeOnlineManagement');
  const code=source.replace(/<#[\s\S]*?#>/g,'').replace(/^\s*#.*$/gm,'');
  const exchangeCmdlets=services.includes('EXO')?[...new Set([...code.matchAll(/\b(?:Get|Set|Add|Remove|Search|New|Start|Restore|Undo|Test)-(?:EXO[A-Za-z]+|Mailbox[A-Za-z]*|InboxRule|Recipient[A-Za-z]*|DistributionGroup[A-Za-z]*|DynamicDistributionGroup[A-Za-z]*|UnifiedGroup[A-Za-z]*|TransportRule|UnifiedAuditLog|MessageTrace[A-Za-z0-9]*|CASMailbox|OrganizationConfig|RemoteDomain|AcceptedDomain|ComplianceSearch[A-Za-z]*|RecoverableItems)\b/g)].map(x=>x[0]))].sort():[];
+ const ad=services.includes('AD')&&/Import-Module\s+(?:-Name\s+)?['"]?ActiveDirectory|Ensure-Module\s+(?:-Name\s+)?['"]ActiveDirectory|Get-ADUser|Get-ADGroup/.test(code);
+ if(!modules.length&&!ad)return null;
  return {modules:[...new Set(modules)],scopes:requestedScopes(source,item.file),exchangeCmdlets,ad:services.includes('AD')&&/Import-Module\s+(?:-Name\s+)?['"]?ActiveDirectory|Ensure-Module\s+(?:-Name\s+)?['"]ActiveDirectory|Get-ADUser|Get-ADGroup/.test(code),sharedSession:/^BEC-(RISK-ASSESSMENT|CONTAIN-ERADICATE|RECOVER-VALIDATE)\.ps1$/.test(item.file),conditionalAccess:item.file==='GET-MFA-SECURITY-AUDIT.ps1'};
 }
 export function checkConnectors(base=root){
