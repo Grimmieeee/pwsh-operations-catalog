@@ -298,12 +298,13 @@ test('compact cards retain change impact, operational warnings and exact source 
  assert.ok(f.elements.get('drawerBody').innerHTML.includes('sets Process execution policy to Bypass'));
 });
 
-test('all script cards lead with scope, then steps, actions, details and related items',()=>{
+test('all script cards lead with scope, then steps, actions and concise details',()=>{
  const f=loadCatalog(root);
  for(const item of f.api.ITEMS.filter(x=>x.operatorCard)){
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
-  const scope=html.indexOf('class="operator-scope"'),steps=html.indexOf('guided-start'),actions=html.indexOf('operator-actions'),details=html.indexOf('class="operator-details"'),related=html.indexOf('class="related-block"');
-  assert.ok(scope>=0&&scope<steps&&steps<actions&&actions<details&&details<related,item.file);
+  const scope=html.indexOf('class="operator-scope"'),steps=html.indexOf('guided-start'),actions=html.indexOf('operator-actions'),details=html.indexOf('class="operator-details"');
+  assert.ok(scope>=0&&scope<steps&&steps<actions&&actions<details,item.file);
+  assert.ok(!html.includes('class="related-block"'),item.file);
   assert.equal(f.api.relatedItems(item).length,3,item.file);
   assert.ok(!/More (?:checks|guards)|>GUARDS<|>REQUIRES</.test(html),item.file);
  }
@@ -756,10 +757,8 @@ test('file input examples use supported columns and resource mailboxes do not ad
     assert.ok(source.includes("'"+sample.header+"'") || source.includes('"'+sample.header+'"'),item.file);
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(!html.includes('TXT: one entry per line.'));
-    assert.ok(html.includes('Typed input: separate entries with commas.'));
-    assert.ok(html.includes('Replace bracketed placeholders'));
-    assert.ok(html.includes('header exactly as shown'));
-    assert.ok(html.includes('&lt;name&gt;')||html.includes('&lt;group name&gt;'));
+    assert.ok(html.includes('CSV or TXT'),item.file);
+    assert.ok(!html.includes('Input examples'),item.file);
   }
   const resource=f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1');
   assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
@@ -804,7 +803,7 @@ test('historical checkmarks remain distinct from exact-release verification and 
  assert.match(f.elements.get('results').innerHTML,/verification-historical/);
  assert.doesNotMatch(f.elements.get('results').innerHTML,/✓\*/);
  assert.match(f.elements.get('results').innerHTML,/Earlier version accepted; current revision not retested/);
- const item=items[0];f.api.openItem(item);assert.match(f.elements.get('drawerBody').innerHTML,/Current revision not retested/);
+ const item=items[0];f.api.renderResults();assert.match(f.elements.get('results').innerHTML,/Earlier version accepted; current revision not retested/);
  item.version='changed';assert.equal(f.api.verificationHistory(item),null);
  const next=items[1];f.window.FIELD_KIT_SOURCE_INTEGRITY={...f.window.FIELD_KIT_SOURCE_INTEGRITY,[next.publishedPath]:'0'.repeat(64)};
  assert.equal(f.api.verificationHistory(next),null);
@@ -923,9 +922,9 @@ test('all 81 script workflows have source-bound illustrative scrollable previews
   assert.match(html,/class="preview-scroll" tabindex="0" role="region"/);
   assert(html.indexOf('workflow-preview')<html.indexOf('guided-start'),i.file);
   const details=html.slice(html.indexOf('<details class="operator-details">'));
-  assert(details.includes('class="related-block"'),i.file);
+  assert(!details.includes('class="related-block"'),i.file);
   assert(!html.includes('<details class="operator-details" open'),i.file);
-  if(i.workflow)assert(details.includes('class="workflow-block"'),i.file);
+  assert(!details.includes('class="workflow-block"'),i.file);
  }
  const css=fs.readFileSync(path.join(root,'site-theme.css'),'utf8');
  assert.match(css,/\.preview-scroll\{[^}]*max-height:290px;overflow:auto/);
@@ -961,9 +960,12 @@ test('script card summary stays concise and run steps preserve source-specific l
   const src=fs.readFileSync(path.join(root,i.publishedPath),'utf8');
   if(i.operatorCard.finishPrompt)assert(src.includes(i.operatorCard.finishPrompt),i.file);
   if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
-  assert(html.includes('Module &amp; permission details'),i.file);
-  assert(!html.includes('<details class="technical-details" open'),i.file);
-  if(f.api.verificationHistory(i))assert(html.includes('<details class="acceptance-details"><summary>Verification record</summary>'),i.file);
+  const details=html.slice(html.indexOf('<details class="operator-details">'));
+  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),['Results','Behavior','Break/Fix'],i.file);
+  assert(details.includes('<details class="permissions-details"><summary>Permissions</summary>'),i.file);
+  assert.equal((details.match(/<details /g)||[]).length,2,i.file);
+  const completion=f.api.completionInfo(i);
+  for(const text of [completion.result,completion.next,completion.blocked])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
  }
  const i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
  assert.equal(i.operatorCard.input,'Group name / email / CSV / TXT');
@@ -975,8 +977,6 @@ test('script card summary stays concise and run steps preserve source-specific l
  assert(preview.includes('access-read'));
  assert(!html.slice(0,html.indexOf('class="workflow-preview"')).includes('class="access-state"'));
  assert(!preview.includes('<span>Illustrative'));
- assert(html.includes('&lt;name&gt;@domain.com'));
- assert(html.includes('keep the Group header exactly'));
  assert(html.includes('Press Enter to close session.'));
  assert(!html.includes('Authenticate with Admin credentials'));
  assert(!html.includes('detect and install necessary'));

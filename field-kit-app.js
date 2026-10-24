@@ -4448,7 +4448,7 @@
           <span class="result-description">${esc(item.operatorCard?.objective || item.objective || item.useFor || item.notes || "")}</span>
         </span>
         <span class="result-flags"><span class="result-risk-flags">${rowTags(item)}</span></span>
-        <span class="result-verification" title="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested. Open Details for tested scope.' : 'No recorded operator acceptance'}" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested' : 'No recorded operator acceptance'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : verificationHistory(item) ? '<span class="verification-check verification-historical" aria-hidden="true">✓</span>' : '<span aria-hidden="true">—</span>'}</span>
+        <span class="result-verification" title="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested.' : 'No recorded operator acceptance'}" aria-label="${isVerifiedRelease(item) ? 'Operator verified for this release' : verificationHistory(item) ? 'Earlier version accepted; current revision not retested' : 'No recorded operator acceptance'}">${isVerifiedRelease(item) ? '<span class="verification-check" aria-hidden="true">✓</span>' : verificationHistory(item) ? '<span class="verification-check verification-historical" aria-hidden="true">✓</span>' : '<span aria-hidden="true">—</span>'}</span>
         <span class="result-arrow" aria-hidden="true">›</span>
       </button>
     `;
@@ -4560,7 +4560,7 @@
           <section class="about-library">
             <div class="section-label">VERIFICATION</div>
             <p><span class="verification-check" aria-hidden="true">✓</span> Operator-tested release accepted by the owner. The mark is tied to this version and its published checksum. Testing may be sampled, simulated, or limited to specific functions; release evidence records its scope and limits. The mark does not imply full live-service validation. A changed script needs testing and acceptance before retaining the mark.</p>
-            <p>✓ Earlier version accepted by the owner. The current script has changed and has not been retested. The original evidence and tested scope remain available in script Details. This is acceptance history, not verification of the current release.</p>
+            <p>✓ Earlier version accepted by the owner. The current script has changed and has not been retested. This is acceptance history, not verification of the current release.</p>
           </section>
 
           <section class="about-library">
@@ -4707,24 +4707,15 @@
       const notes=[requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
       return `<details class="operator-details"><summary>DETAILS</summary><ul>${notes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>${runInfoMarkup(item)}</details>`;
     }
-    const requirements=[...connectionInfo(item),requirementInfo(item),...(spec.preparation || [])].filter(Boolean);
-    const profile=window.FIELD_KIT_CONNECTION_GUIDANCE?.[item.publishedPath];
-    const modules={GRAPH:'Microsoft.Graph.Authentication',EXO:'ExchangeOnlineManagement',AD:'ActiveDirectory / RSAT'};
-    const summary=[spec.runtimeRequirement,...connectionInfo(item),profile?.services?.length?'Modules used: '+profile.services.map(x=>modules[x] || x).join(' + '):''].filter(Boolean);
-    const permissions=item.permissionNotes || [];
+    const permissions=[spec.runtimeRequirement,...connectionInfo(item),...(spec.preparation || []),requirementInfo(item),...(item.permissionNotes || [])].filter(Boolean);
+    const completion=completionInfo(item);
     const notes=[...spec.details];
-    const evidence=[];
-    const historical=verificationHistory(item);
-    if(historical)evidence.push(`✓ Earlier-version acceptance: Version ${historical.version}. Current revision not retested.`, `Recorded scope: ${historical.scope || historical.testMode || 'See the original acceptance evidence for tested scope and limits.'}`, `Evidence: ${historical.evidence}`, `Accepted SHA-256: ${historical.sha256}`);
     if(item.reviewNote)notes.push(item.reviewNote);
     if(item.changeNote && !spec.notice && !notes.includes(item.changeNote))notes.push(item.changeNote);
-    if(item.workflow){const step=completionInfo(item);if(step)notes.push(step.result,step.next,step.blocked);}
-    const sample=spec.inputExample;
-    const values=sample?sample.values.map(value=>value.includes('@')?'<name>@domain.com':sample.header==='Group'?'<group name>':'<name>'):[];
-    if(sample?.header==='Group')values.fill('<name>@domain.com');
-    const example=sample ? `<div class="input-example"><p>${sample.header==='Group' ? 'Use group names or email addresses.' : 'Use the full sign-in address (UPN).'} Replace bracketed placeholders with your targets; omit the brackets.</p><p>Typed input: separate entries with commas.</p><pre>${esc(values.join(', '))}</pre><p>CSV: keep the ${esc(sample.header)} header exactly as shown.</p><pre>${esc([sample.header,...values].join('\n'))}</pre><p>TXT: one address per line, without a header.</p><pre>${esc(values.join('\n'))}</pre><p>Enter the saved file’s full path when prompted. CSV/TXT selects targets; it does not approve changes.</p></div>` : '';
-    const list=(title,values)=>values.length?`<section class="detail-group"><h3>${title}</h3><ul>${[...new Set(values)].map(text=>`<li>${esc(text)}</li>`).join('')}</ul></section>`:'';
-    return `<details class="operator-details"><summary>DETAILS</summary>${list('Requires',summary)}<details class="technical-details"><summary>Module &amp; permission details</summary>${list('Requirements',requirements)}${list('Permissions',permissions)}</details>${list('Scope &amp; limits',notes)}${example?`<details class="technical-details"><summary>Input examples</summary>${example}</details>`:''}${evidence.length?`<details class="acceptance-details"><summary>Verification record</summary>${list('Recorded acceptance',evidence)}</details>`:''}${item.workflow ? workflowMarkup(item.workflow) : ''}${relatedMarkup(item)}</details>`;
+    if(completion?.next)notes.push(completion.next);
+    const copy=values=>[...new Set(values.filter(Boolean))].map(text=>`<p>${esc(text)}</p>`).join('');
+    const section=(title,values)=>`<section class="detail-group"><h3>${title}</h3>${copy(values)}</section>`;
+    return `<details class="operator-details"><summary>DETAILS</summary>${section('Results',[completion?.result])}${section('Behavior',notes)}${section('Break/Fix',[completion?.blocked])}<details class="permissions-details"><summary>Permissions</summary>${copy(permissions)}</details></details>`;
   }
 
   function connectionInfo(item){
