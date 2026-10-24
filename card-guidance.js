@@ -6422,7 +6422,41 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-PREDELETE-CHECK.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "evidence": [
+            "Graph token is missing"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
     "name": "Review Stale Sign-ins",
@@ -6446,7 +6480,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-DISABLE-ACCOUNTS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
     "name": "Disable User Accounts",
@@ -6476,7 +6529,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "CSV has no targets",
+          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "evidence": [
+            "CSV contains no data rows."
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "name": "Delete User Accounts",
@@ -6507,7 +6586,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "No writable domain controller is reachable",
+          "fix": "Check domain connectivity and DNS from the support computer, and confirm the supplied controller is reachable and writable.",
+          "evidence": [
+            "No reachable writable domain controller"
+          ]
+        },
+        {
+          "issue": "CSV has no targets",
+          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "evidence": [
+            "CSV contains no data rows."
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "name": "Assign User Licenses",
@@ -6537,7 +6642,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "name": "Remove User Licenses",
@@ -6567,7 +6698,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        }
+      ]
+    }
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "name": "Find User UPNs",
@@ -6596,7 +6753,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Input file was not found",
+          "fix": "Use the full path to an existing local input file. Check the filename and extension.",
+          "evidence": [
+            "Input file not found:"
+          ]
+        },
+        {
+          "issue": "CSV column was not found",
+          "fix": "Check the CSV header and choose the column containing the intended targets.",
+          "evidence": [
+            "Column not found:"
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        }
+      ]
+    }
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "name": "Get User Account Status",
@@ -6626,15 +6809,40 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "evidence": [
+            "Graph token is missing"
+          ]
+        }
+      ]
+    }
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "name": "Get Distribution Group Members",
     "scope": "SINGLE or MULTI-GROUP",
     "input": "Group name / email / CSV / TXT",
     "details": [
-      "For distribution groups in Exchange Online.",
-      "Nested groups are not a complete access review."
+      "For distribution groups in Exchange Online."
     ],
     "family": "groups",
     "sourceSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
@@ -6656,7 +6864,42 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "Support"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "Optional CSV export saves member details. Blank output path uses distribution-group-members.csv in the current folder; the script checks the saved row count before confirming export.",
+          "evidence": [
+            "distribution-group-members.csv",
+            "Export member detail to CSV [Y/N]",
+            "if ($check.Count -ne $Rows.Count)"
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "Exchange module is missing",
+          "fix": "Install ExchangeOnlineManagement through your approved setup, reopen PowerShell, and run the lookup again.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        },
+        {
+          "issue": "Group lookup failed",
+          "fix": "Check the group’s exact name or primary email address, the connected tenant, and the account’s permission to read distribution groups.",
+          "evidence": [
+            "Lookup failed:"
+          ]
+        },
+        {
+          "issue": "CSV export failed or could not be verified",
+          "fix": "Close the destination file if it is open, choose an existing writable folder, and retry the export. Check the on-screen results before using the CSV.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        }
+      ]
+    }
   },
   "GET-GROUP-MEMBERS.ps1": {
     "name": "Get Group Members",
@@ -6687,7 +6930,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Group was not found",
+          "fix": "Check the exact group name or email address and the connected customer tenant. Confirm access to the directory that owns the group.",
+          "evidence": [
+            "Group was not found in Exchange, Entra ID, or Active Directory."
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-USER-GROUPS.ps1": {
     "name": "Get User Groups",
@@ -6719,7 +6988,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User was not found",
+          "fix": "Check the full sign-in name and that the session is connected to the customer tenant containing that account.",
+          "evidence": [
+            "The user was not found in the connected tenant."
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
     "name": "Remove User Groups",
@@ -6749,7 +7044,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "User was not found",
+          "fix": "Check the full sign-in name and that the session is connected to the customer tenant containing that account.",
+          "evidence": [
+            "The user was not found in the connected tenant."
+          ]
+        },
+        {
+          "issue": "CSV has no targets",
+          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "evidence": [
+            "CSV contains no data rows."
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "name": "Create Dynamic License Group",
@@ -6772,7 +7093,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "INVOKE-ASSIGN-LICENSES.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "More than one group matches",
+          "fix": "Resolve the duplicate names in Entra before creating another group.",
+          "evidence": [
+            "Group lookup is ambiguous."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
     "name": "Get Group Owners",
@@ -6795,7 +7142,34 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-DISTRIBUTION-GROUP-MEMBERS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
     "name": "Get Mailbox Permissions",
@@ -6825,7 +7199,41 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "Mailbox lookup failed",
+          "fix": "Check the mailbox address, connected tenant, and the account’s Exchange read access.",
+          "evidence": [
+            "Mailbox lookup failed:"
+          ]
+        },
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Mailbox Security",
@@ -6848,7 +7256,34 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-SECURITY-SNAPSHOT.ps1",
       "GET-TENANT-INBOX-RULES-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-MAILBOX-FORWARDING.ps1": {
     "name": "Get Mailbox Forwarding",
@@ -6878,7 +7313,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "name": "Set Litigation Hold",
@@ -6908,7 +7362,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
         "sam@example.com"
       ]
     },
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "CSV has no targets",
+          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "evidence": [
+            "CSV contains no data rows."
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "name": "BEC: Restore Email",
@@ -6943,7 +7423,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Restore Email"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "evidence": [
+            "required delegated scopes"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "BEC-RISK-ASSESSMENT.ps1": {
     "name": "BEC: Assess User Risk",
@@ -7002,7 +7508,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "ir-risk-assessment.ps1",
       "BEC: Assess User Risk"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Account or tenant could not be verified",
+          "fix": "Check the exact UPN and tenant, then reconnect with the access listed in Permissions. Unavailable checks must be resolved before clearing the account.",
+          "evidence": [
+            "Graph connection failed. Target user and tenant context could not be resolved."
+          ]
+        },
+        {
+          "issue": "Next workflow script is missing",
+          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "evidence": [
+            "Next script not found:"
+          ]
+        },
+        {
+          "issue": "BEC files are from different releases",
+          "fix": "Replace all three files with one matching workflow package before continuing.",
+          "evidence": [
+            "Next script is from a different release."
+          ]
+        }
+      ]
+    }
   },
   "BEC-CONTAIN-ERADICATE.ps1": {
     "name": "BEC: Contain and Clean Up",
@@ -7062,7 +7594,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "ir-contain-eradicate.ps1",
       "BEC: Contain and Clean Up"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Rule remains after removal",
+          "fix": "Recheck the mailbox’s current rules and the failed action. Keep the account contained and get the incident owner’s approval before retrying the affected action.",
+          "evidence": [
+            "Rule still present after removal."
+          ]
+        },
+        {
+          "issue": "Next workflow script is missing",
+          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "evidence": [
+            "Next script not found:"
+          ]
+        },
+        {
+          "issue": "BEC files are from different releases",
+          "fix": "Replace all three files with one matching workflow package before continuing.",
+          "evidence": [
+            "Next script is from a different release."
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
     "name": "BEC: Review File Activity",
@@ -7096,7 +7654,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Review File Activity"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Audit search is unavailable",
+          "fix": "Check the Exchange connection and the account’s audit-search access. Reconnect with the approved account before retrying the lookup.",
+          "evidence": [
+            "Search-UnifiedAuditLog is unavailable"
+          ]
+        },
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-IP-TRACE.ps1": {
     "name": "BEC: Trace IP Activity",
@@ -7129,7 +7713,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Trace IP Activity"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Audit search is unavailable",
+          "fix": "Check the Exchange connection and the account’s audit-search access. Reconnect with the approved account before retrying the lookup.",
+          "evidence": [
+            "Search-UnifiedAuditLog is unavailable"
+          ]
+        },
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "name": "BEC: Trace Email Delivery",
@@ -7163,7 +7773,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Trace Email Delivery"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Message-trace command is unavailable",
+          "fix": "Update ExchangeOnlineManagement through your approved module setup, then reopen PowerShell and reconnect.",
+          "evidence": [
+            "Get-MessageTraceV2 is unavailable."
+          ]
+        },
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "name": "BEC: Check IP Reputation",
@@ -7197,7 +7833,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Check IP Reputation"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "No reputation API key",
+          "fix": "Supply an authorized key for a supported provider when prompted.",
+          "evidence": [
+            "No reputation provider API key was supplied."
+          ]
+        },
+        {
+          "issue": "No eligible public IPs",
+          "fix": "Use public IP addresses from the incident evidence; private or invalid addresses are excluded.",
+          "evidence": [
+            "No public IP addresses remain"
+          ]
+        },
+        {
+          "issue": "Input file was not found",
+          "fix": "Use the full path to an existing local input file. Check the filename and extension.",
+          "evidence": [
+            "Input file not found:"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-TIMELINE-BUILDER.ps1": {
     "name": "BEC: Build Incident Timeline",
@@ -7229,7 +7891,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Build Incident Timeline"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Case folder was not found",
+          "fix": "Enter the full path to the existing folder containing the incident evidence.",
+          "evidence": [
+            "Case folder not found:"
+          ]
+        },
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-TOKEN-DECODE.ps1": {
     "name": "BEC: Decode Token",
@@ -7261,7 +7942,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Decode Token"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Token format is unsupported",
+          "fix": "Paste only the three-part JWT. Encrypted JWE tokens cannot be decoded by this tool.",
+          "evidence": [
+            "Expected a three-part JWT"
+          ]
+        },
+        {
+          "issue": "Token could not be decoded",
+          "fix": "Copy the complete token again without extra text or whitespace. Do not upload it to an online decoder.",
+          "evidence": [
+            "JWT header or payload could not be base64url-decoded."
+          ]
+        },
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        }
+      ]
+    }
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "name": "BEC: Review Token Replay",
@@ -7295,7 +8002,41 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "Incident Response: Review Token Replay"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "evidence": [
+            "required delegated scopes"
+          ]
+        }
+      ]
+    }
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
     "name": "Audit Shared Mailbox Sign-ins",
@@ -7317,7 +8058,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-MAILBOX-SECURITY-SNAPSHOT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
     "name": "Audit App Registrations",
@@ -7339,7 +8106,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
     "name": "Review Conditional Access",
@@ -7362,7 +8155,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-DEVICE-CODE-EXPOSURE.ps1",
       "GET-SIGNIN-ANOMALIES.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
     "name": "Review Device Code Exposure",
@@ -7384,7 +8203,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-SIGNIN-ANOMALIES.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "name": "Audit Guest App Consent",
@@ -7406,7 +8251,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
     "name": "Audit MFA Security",
@@ -7430,7 +8301,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ADMIN-ROLE-AUDIT.ps1"
     ],
     "operationalRevision": true,
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "name": "Get Secure Score",
@@ -7452,7 +8349,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-MFA-SECURITY-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
     "name": "Get Enterprise App Owners",
@@ -7474,7 +8397,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-OAUTH-CONSENT-AUDIT.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
     "name": "Review Sign-in Anomalies",
@@ -7496,7 +8445,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "BEC-GET-TOKEN-REPLAY-CHECK.ps1",
       "GET-USER-SECURITY-SNAPSHOT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
     "name": "Audit Mail Flow Rules",
@@ -7518,7 +8493,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1",
       "GET-MAILBOX-FORWARDING.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "name": "Join Computer to Domain",
@@ -7539,7 +8533,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:DNS Lookup",
       "BACKUP-USER-PROFILE.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
     "name": "Install Network Printer",
@@ -7561,7 +8559,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:Print Jobs",
       "command:Spooler Status"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "BACKUP-USER-PROFILE.ps1": {
     "name": "Back Up User Profile",
@@ -7582,7 +8584,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-FOLDER-INVENTORY.ps1",
       "TEST-SENSITIVE-DATA.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "TEST-POWERSHELL-READINESS.ps1": {
     "name": "Check M365 PowerShell Readiness",
@@ -7603,7 +8609,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TERMINAL-READINESS-CHECK.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Module installer is unavailable",
+          "fix": "Repair PowerShellGet using the approved workstation setup, then reopen PowerShell.",
+          "evidence": [
+            "Install-Module is unavailable."
+          ]
+        }
+      ]
+    }
   },
   "GET-FOLDER-INVENTORY.ps1": {
     "name": "Review Folder Contents",
@@ -7625,7 +8643,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-SENSITIVE-DATA.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Folder was not found",
+          "fix": "Check the complete folder path and that the running account can open it.",
+          "evidence": [
+            "Folder not found:"
+          ]
+        }
+      ]
+    }
   },
   "INSTALL-M365-MODULES.ps1": {
     "name": "Install M365 Modules",
@@ -7647,7 +8677,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TERMINAL-READINESS-CHECK.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Module installer is unavailable",
+          "fix": "Repair PowerShellGet using the approved workstation setup, then reopen PowerShell.",
+          "evidence": [
+            "Install-Module is unavailable."
+          ]
+        }
+      ]
+    }
   },
   "TEST-SENSITIVE-DATA.ps1": {
     "name": "Check Sensitive Data",
@@ -7668,7 +8710,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SIGN-FOLDER-SCRIPTS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Path was not found",
+          "fix": "Check that the supplied file or folder exists and is accessible to the running account.",
+          "evidence": [
+            "Path not found:"
+          ]
+        }
+      ]
+    }
   },
   "RESET-M365-SESSION.ps1": {
     "name": "Reset M365 Session",
@@ -7690,7 +8744,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INSTALL-M365-MODULES.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "UPDATE-WINDOWS-APPS.ps1": {
     "name": "Update Windows Apps",
@@ -7711,7 +8769,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "command:Update Specific WinGet Package"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "WinGet review failed",
+          "fix": "Read the exit code, check WinGet availability and configured sources, then retry the review before approving updates.",
+          "evidence": [
+            "WinGet review failed with exit code"
+          ]
+        }
+      ]
+    }
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "name": "Check User Before Deletion",
@@ -7735,7 +8805,27 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-DELETE-ACCOUNTS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "name": "Set Per-user MFA",
@@ -7766,7 +8856,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "evidence": [
+            "Invalid UPN"
+          ]
+        },
+        {
+          "issue": "CSV could not be verified",
+          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
+          "evidence": [
+            "CSV verification failed."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "evidence": [
+            "Graph token is missing"
+          ]
+        }
+      ]
+    }
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "name": "Audit Admin Roles",
@@ -7788,7 +8904,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MFA-SECURITY-AUDIT.ps1",
       "GET-CONDITIONAL-ACCESS-GAPS.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
     "name": "Audit App Consent",
@@ -7810,7 +8952,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-SERVICE-PRINCIPAL-OWNERS.ps1",
       "GET-GUEST-APP-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-GUEST-USER-AUDIT.ps1": {
     "name": "Review Guest Users",
@@ -7833,7 +9001,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-ACCOUNT-STATUS.ps1",
       "GET-USER-GROUPS.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
     "name": "Audit Tenant Licenses",
@@ -7855,7 +9049,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-REMOVE-LICENSES.ps1",
       "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Wrong tenant session",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "evidence": [
+            "Existing Graph session is for another tenant."
+          ]
+        },
+        {
+          "issue": "Tenant ID is invalid",
+          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "evidence": [
+            "A valid expected tenant ID is required."
+          ]
+        },
+        {
+          "issue": "Review is incomplete",
+          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
+          "evidence": [
+            "Graph collection data is unavailable"
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "name": "Audit Tenant Inbox Rules",
@@ -7879,7 +9099,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-FORWARDING.ps1",
       "GET-TRANSPORT-RULES-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
     "name": "Get User Security",
@@ -7901,7 +9125,41 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-USER-GROUPS.ps1",
       "GET-ACCOUNT-STATUS.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "evidence": [
+            "Graph token is missing"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
     "name": "Get Tenant Security",
@@ -7923,7 +9181,34 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "evidence": [
+            "Save-FKDesktopReport",
+            "Desktop report could not be saved."
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "HTML report could not be saved",
+          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
+          "evidence": [
+            "Report folder does not exist."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is not installed. Install"
+          ]
+        }
+      ]
+    }
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "name": "Get Resource Mailbox Access",
@@ -7946,7 +9231,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-GROUP-MEMBERS.ps1",
       "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Mailbox lookup failed",
+          "fix": "Check the mailbox address, connected tenant, and the account’s Exchange read access.",
+          "evidence": [
+            "Mailbox lookup failed:"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is not installed. Install"
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
     "name": "Audit Tenant Mailbox Access",
@@ -7968,7 +9272,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-TENANT-INBOX-RULES-AUDIT.ps1",
       "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is not installed. Install"
+          ]
+        }
+      ]
+    }
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
     "name": "Remove Disabled User Mailbox Access",
@@ -7991,7 +9307,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-MAILBOX-PERMISSIONS.ps1",
       "GET-USER-PREDELETE-CHECK.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "evidence": [
+            "Graph token is missing"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
     "name": "Review Tenant Changes",
@@ -8014,7 +9349,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "GET-CONDITIONAL-ACCESS-GAPS.ps1",
       "GET-OAUTH-CONSENT-AUDIT.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Baseline belongs to another tenant",
+          "fix": "Select the saved baseline for this tenant. Do not overwrite another tenant’s baseline to get past the check.",
+          "evidence": [
+            "The baseline belongs to a different Entra tenant."
+          ]
+        },
+        {
+          "issue": "Required Graph access is missing",
+          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "evidence": [
+            "required delegated scopes"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required but is not installed"
+          ]
+        }
+      ]
+    }
   },
   "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
     "name": "Review Windows Storage",
@@ -8036,7 +9397,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-MAP-KIT.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Drive was not found",
+          "fix": "Choose a drive letter mounted on this computer.",
+          "evidence": [
+            "Drive not found:"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
     "name": "Reset Cloud User Password",
@@ -8067,7 +9440,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       ]
     },
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "User address is invalid",
+          "fix": "Use full sign-in names such as <name>@domain.com, one tenant at a time.",
+          "evidence": [
+            "Every target must be a valid user UPN."
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "evidence": [
+            "is required. Install it with:"
+          ]
+        }
+      ]
+    }
   },
   "BEC-RECOVER-VALIDATE.ps1": {
     "name": "BEC: Restore and Validate",
@@ -8126,7 +9518,33 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "incident response",
       "ir-recover-validate.ps1",
       "BEC: Restore and Validate"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Account enablement did not verify",
+          "fix": "Check the current AD/Entra state and any pending synchronization. Stop and return to the incident owner rather than repeatedly enabling the account.",
+          "evidence": [
+            "Entra account enable was not verified."
+          ]
+        },
+        {
+          "issue": "Next workflow script is missing",
+          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "evidence": [
+            "Next script not found:"
+          ]
+        },
+        {
+          "issue": "BEC files are from different releases",
+          "fix": "Replace all three files with one matching workflow package before continuing.",
+          "evidence": [
+            "Next script is from a different release."
+          ]
+        }
+      ]
+    }
   },
   "git-handoff.ps1": {
     "name": "Save Project Handoff",
@@ -8148,7 +9566,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "git-repo.ps1",
       "git-security.ps1"
     ],
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Handoff folder is tracked by Git",
+          "fix": "Review the tracked .handoff files and repository exclusions before trying again. Do not publish a snapshot just to clear the warning.",
+          "evidence": [
+            "Snapshot directory is tracked."
+          ]
+        }
+      ]
+    }
   },
   "git-repo.ps1": {
     "name": "Manage Git Repository",
@@ -8171,7 +9601,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "git-handoff.ps1",
       "git-security.ps1"
     ],
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "No upstream branch",
+          "fix": "Check the intended remote and branch, then configure their tracking relationship before pulling or pushing.",
+          "evidence": [
+            "No upstream branch configured."
+          ]
+        }
+      ]
+    }
   },
   "git-security.ps1": {
     "name": "Review GitHub Security",
@@ -8192,7 +9634,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "git-handoff.ps1",
       "TEST-SENSITIVE-DATA.ps1"
     ],
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Security export was not found",
+          "fix": "Supply the full path to the GitHub security-log export for the account being reviewed.",
+          "evidence": [
+            "No matching GitHub export found"
+          ]
+        },
+        {
+          "issue": "Security export is invalid",
+          "fix": "Download a fresh security-log export. Use JSON, JSON.GZ, or a ZIP containing exactly one JSON file.",
+          "evidence": [
+            "Invalid JSON export;"
+          ]
+        }
+      ]
+    }
   },
   "set-execution.ps1": {
     "name": "Set Up Script Execution",
@@ -8217,7 +9678,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     ],
     "operationalRevision": true,
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Execution policy did not change",
+          "fix": "Inspect Get-ExecutionPolicy -List. If organization policy controls execution, ask its owner to approve the required setup.",
+          "evidence": [
+            "Execution policy remains"
+          ]
+        }
+      ]
+    }
   },
   "attractor.ps1": {
     "name": "Attractor",
@@ -8236,7 +9709,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "rain.ps1",
       "static.ps1",
       "SET-THEME-COBALT.ps1"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "rain.ps1": {
     "name": "Rain",
@@ -8255,7 +9732,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "attractor.ps1",
       "static.ps1",
       "SET-THEME-COBALT.ps1"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "static.ps1": {
     "name": "Static",
@@ -8274,7 +9755,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "attractor.ps1",
       "rain.ps1",
       "SET-THEME-COBALT.ps1"
-    ]
+    ],
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "SIGN-FOLDER-SCRIPTS.ps1": {
     "name": "Sign Scripts",
@@ -8297,7 +9782,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-SENSITIVE-DATA.ps1",
       "set-execution.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Signing certificate is missing",
+          "fix": "Use a valid code-signing certificate in the running user’s certificate store, including its private key.",
+          "evidence": [
+            "Cert:\\CurrentUser\\My"
+          ]
+        }
+      ]
+    }
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "name": "Check Toolkit Setup",
@@ -8319,7 +9816,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-POWERSHELL-READINESS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "INVOKE-FILE-INVENTORY.ps1": {
     "name": "Compare Script Files",
@@ -8341,7 +9842,37 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "TEST-SENSITIVE-DATA.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [
+        {
+          "text": "CSV exports go to the folder you choose (Desktop by default), with separate files for inventory, signatures, duplicates, and cleanup flags.",
+          "evidence": [
+            "Output folder [Enter for Desktop]",
+            "jumpbox-file-inventory-",
+            "jumpbox-signatures-",
+            "jumpbox-duplicates-",
+            "jumpbox-cleanup-flags-"
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "issue": "Output folder was not found",
+          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "evidence": [
+            "Output folder not found:"
+          ]
+        },
+        {
+          "issue": "Root folder was not found",
+          "fix": "Enter the full path to an existing folder on this computer.",
+          "evidence": [
+            "Root not found:"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-MAP-KIT.ps1": {
     "name": "Map Folder Structure",
@@ -8362,7 +9893,26 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INVOKE-FILE-INVENTORY.ps1",
       "GET-TERMINAL-READINESS-CHECK.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Root folder was not found",
+          "fix": "Enter the full path to an existing folder on this computer.",
+          "evidence": [
+            "Root path not found:"
+          ]
+        },
+        {
+          "issue": "Path was not found",
+          "fix": "Check that the supplied file or folder exists and is accessible to the running account.",
+          "evidence": [
+            "Path not found:"
+          ]
+        }
+      ]
+    }
   },
   "INVOKE-SESSION-RESET.ps1": {
     "name": "Reset Terminal Session",
@@ -8383,7 +9933,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INSTALL-M365-MODULES.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "SET-THEME-BASIC.ps1": {
     "name": "Preview Plain Output",
@@ -8405,7 +9959,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-SILICON-VALLEY.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "SET-THEME-COBALT.ps1": {
     "name": "Preview Cobalt Theme",
@@ -8427,7 +9985,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-SILICON-VALLEY.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "SET-THEME-SEAGLASS.ps1": {
     "name": "Install Sea Glass Theme",
@@ -8450,7 +10012,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-SILICON-VALLEY.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "SET-THEME-SILICON-VALLEY.ps1": {
     "name": "Install Silicon Valley Theme",
@@ -8473,7 +10039,11 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "SET-THEME-SEAGLASS.ps1"
     ],
     "finishPrompt": "Press Enter to close session.",
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": []
+    }
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
     "name": "Manage Signing Certificates",
@@ -8494,7 +10064,19 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "set-execution.ps1",
       "TEST-SENSITIVE-DATA.ps1"
     ],
-    "finishPrompt": "Press Enter to close session."
+    "finishPrompt": "Press Enter to close session.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Signing certificate is missing",
+          "fix": "Use a valid code-signing certificate in the running user’s certificate store, including its private key.",
+          "evidence": [
+            "Cert:\\CurrentUser\\My"
+          ]
+        }
+      ]
+    }
   },
   "PREPARE-FIELD-KIT.ps1": {
     "name": "Prepare FIELD KIT",
@@ -8520,6 +10102,18 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "INSTALL-M365-MODULES.ps1",
       "START-HERE.md"
     ],
-    "runtimeRequirement": "PowerShell 5.1 or later."
+    "runtimeRequirement": "PowerShell 5.1 or later.",
+    "workflowDetails": {
+      "results": [],
+      "issues": [
+        {
+          "issue": "Module repository is not approved",
+          "fix": "Have the workstation’s repository configuration corrected to the official HTTPS source. Do not bypass the source check.",
+          "evidence": [
+            "PSGallery does not point to the official HTTPS source."
+          ]
+        }
+      ]
+    }
   }
 });

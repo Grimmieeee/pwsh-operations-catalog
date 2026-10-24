@@ -167,7 +167,8 @@ test('IR cards retain the exact launch, preparation and incident handoff',()=>{
  for(const item of f.api.ITEMS.filter(x=>x.workflow)){
   f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
   for(const text of ['DOWNLOAD BEC WORKFLOW','Workflow preparation','DETAILS','Paste the full path to '+item.file,'same PowerShell window'])assert.ok(html.includes(text),item.file+': '+text);
-  const completion=f.api.completionInfo(item);for(const key of ['result','next','blocked'])assert.ok(html.includes(completion[key].replaceAll('&','&amp;')),item.file+': '+key);
+  const completion=f.api.completionInfo(item);assert.ok(html.includes(completion.next.replaceAll('&','&amp;')),item.file+': handoff');
+  assert.ok(item.operatorCard.workflowDetails.issues.length>0,item.file+': actionable recovery guidance');
   assert.equal(f.api.isVerifiedRelease(item),false);
  }
  for(const item of f.api.ITEMS.filter(x=>x.status==='Source pending')){f.api.openItem(item);assert.ok(!f.elements.get('drawerBody').innerHTML.includes('guided-start'));}
@@ -961,11 +962,13 @@ test('script card summary stays concise and run steps preserve source-specific l
   if(i.operatorCard.finishPrompt)assert(src.includes(i.operatorCard.finishPrompt),i.file);
   if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
   const details=html.slice(html.indexOf('<details class="operator-details">'));
-  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),['Results','Behavior','Break/Fix'],i.file);
+  const notes=i.operatorCard.workflowDetails;
+  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),[...(notes.results.length?['Results']:[]),'Behavior',...(notes.issues.length?['Common Issues']:[])],i.file);
   assert(details.includes('<details class="permissions-details"><summary>Permissions</summary>'),i.file);
   assert.equal((details.match(/<details /g)||[]).length,2,i.file);
   const completion=f.api.completionInfo(i);
-  for(const text of [completion.result,completion.next,completion.blocked])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
+  for(const text of [completion.next,...notes.results.map(x=>x.text),...notes.issues.flatMap(x=>[x.issue,x.fix])])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
+  assert(!details.includes('<h3>Break/Fix</h3>'),i.file);
  }
  const i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
  assert.equal(i.operatorCard.input,'Group name / email / CSV / TXT');
@@ -980,4 +983,17 @@ test('script card summary stays concise and run steps preserve source-specific l
  assert(html.includes('Press Enter to close session.'));
  assert(!html.includes('Authenticate with Admin credentials'));
  assert(!html.includes('detect and install necessary'));
+});
+
+test('workflow troubleshooting is source-bound and Results only adds concrete output details',async()=>{
+ const {checkWorkflowDetails}=await import('../tools/build-workflow-details.mjs');
+ const checked=checkWorkflowDetails(root);assert.equal(checked.scripts,81);assert(checked.issues>0);assert(checked.results>0&&checked.results<81);
+ const f=loadCatalog(root),i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
+ f.api.openItem(i);let html=f.elements.get('drawerBody').innerHTML;
+ assert(html.includes('distribution-group-members.csv'));
+ assert(!html.includes('Nested groups are not a complete access review.'));
+ assert(html.includes('Exchange module is missing')&&html.includes('Group lookup failed')&&html.includes('CSV export failed or could not be verified'));
+ i.operatorCard.workflowDetails.issues[0].fix='<script>bad</script>';
+ f.api.openItem(i);html=f.elements.get('drawerBody').innerHTML;assert(!html.includes('<script>bad'));assert(html.includes('&lt;script&gt;bad'));
+ i.operatorCard.sourceSha256='0'.repeat(64);f.api.openItem(i);html=f.elements.get('drawerBody').innerHTML;assert(!html.includes('<h3>Common Issues</h3>'));assert(!html.includes('<h3>Results</h3>'));
 });

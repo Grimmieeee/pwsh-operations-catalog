@@ -11,12 +11,14 @@ import { checkImpactReview } from './impact-review.mjs';
 import { checkPermissionsReview } from './permissions-review.mjs';
 import { checkTaxonomyReview } from './taxonomy-review.mjs';
 import { checkWorkflowPreviews } from './build-workflow-previews.mjs';
+import { checkWorkflowDetails } from './build-workflow-details.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const {api,window,document}=loadCatalog(root);
 checkImpactReview(root);
 checkPermissionsReview(root);
 checkTaxonomyReview(root);
 checkWorkflowPreviews(root);
+checkWorkflowDetails(root);
 const hashes={};
 for(const item of api.ITEMS){
   if(!item.publishedPath)continue;
