@@ -6,7 +6,13 @@
       "QUARTERLY CLEANUP REVIEW",
       "ACTIVITY NOT AVAILABLE"
     ],
-    "text": "QUARTERLY CLEANUP REVIEW\n\nSTALE ACCOUNTS\nalex@example.com    Last sign-in: 124 days ago\n\nACTIVITY NOT AVAILABLE\nsam@example.com     Review required\n\nGROUP OWNERS\nOperations         No owner assigned\n\nEXTERNAL FORWARDING\nsupport@example.com  Review destination\n\nReview findings before approving cleanup.\nMissing checks remain unresolved."
+    "text": "OPERATOR INPUTS\nTenant domain: <tenant domain>\n\nQUARTERLY CLEANUP REVIEW\n\nSTALE ACCOUNTS\nalex@example.com    Last sign-in: 124 days ago\n\nACTIVITY NOT AVAILABLE\nsam@example.com     Review required\n\nGROUP OWNERS\nOperations         No owner assigned\n\nEXTERNAL FORWARDING\nsupport@example.com  Review destination\n\nReview findings before approving cleanup.\nMissing checks remain unresolved.",
+    "operatorInputs": [
+      {
+        "label": "Tenant domain",
+        "value": "<tenant domain>"
+      }
+    ]
   },
   "GET-STALE-SIGNIN-REVIEW.ps1": {
     "sourceSha256": "27e94610728226f9c43f44631b4c9921fc6412ddf8d79f2e2617a7725c1a4fa6",
@@ -15,7 +21,8 @@
       "STALE LOGIN STATUS",
       "Missing sign-in data was not classified as inactive."
     ],
-    "text": "STALE LOGIN STATUS\n\nSTALE ENABLED USERS (1)\nalex@example.com    124 days\n\nACTIVITY NOT AVAILABLE (1)\nsam@example.com     Not available\n\nSUMMARY\nReview the stale account with its owner.\nMissing sign-in data was not classified as inactive.\n\nRead-only. No changes made."
+    "text": "STALE LOGIN STATUS\n\nSTALE ENABLED USERS (1)\nalex@example.com    124 days\n\nACTIVITY NOT AVAILABLE (1)\nsam@example.com     Not available\n\nSUMMARY\nReview the stale account with its owner.\nMissing sign-in data was not classified as inactive.\n\nRead-only. No changes made.",
+    "operatorInputs": []
   },
   "INVOKE-DISABLE-ACCOUNTS.ps1": {
     "sourceSha256": "a123394ca9a041cb7f49225b334ce6fe02637038c554944d1c222d325fa72287",
@@ -24,7 +31,21 @@
       "DISABLE USER ACCOUNTS",
       "TICKET NOTE"
     ],
-    "text": "DISABLE USER ACCOUNTS\n\nPREVIEW\nalex@example.com\nAuthority : Active Directory\nAction    : Disable account\n\nSUMMARY\nAD        : Disabled\nEntra     : Sync pending\n\nTICKET NOTE\nVerify synchronization before closing the task.\nAn accepted change is not end-to-end verification."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\nSync server (optional): <sync server>\n\nDISABLE USER ACCOUNTS\n\nPREVIEW\n<user@domain.com>\nAuthority : Active Directory\nAction    : Disable account\n\nSUMMARY\nAD        : Disabled\nEntra     : Sync pending\n\nTICKET NOTE\nVerify synchronization before closing the task.\nAn accepted change is not end-to-end verification.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Sync server (optional)",
+        "value": "<sync server>"
+      }
+    ]
   },
   "INVOKE-DELETE-ACCOUNTS.ps1": {
     "sourceSha256": "0831cf439bc477cae85d6b6a4f2e2eb1043d4e61d5d4e65964eaa7de658c0eef",
@@ -35,7 +56,21 @@
       "AD deletion",
       "ENTRA SYNC"
     ],
-    "text": "IDENTITY ACCOUNT DELETION\n\nPLAN\nalex@example.com\nAuthority : Active Directory\nAction    : Delete approved identity\n\nSUMMARY\nAD deletion : Validated\n\nENTRA SYNC\nScheduled sync remains pending.\n\nReview the cloud identity after synchronization.\nDo not repeat deletion solely because sync is pending."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\nSync server (optional): <sync server>\n\nIDENTITY ACCOUNT DELETION\n\nPLAN\n<user@domain.com>\nAuthority : Active Directory\nAction    : Delete approved identity\n\nSUMMARY\nAD deletion : Validated\n\nENTRA SYNC\nScheduled sync remains pending.\n\nReview the cloud identity after synchronization.\nDo not repeat deletion solely because sync is pending.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Sync server (optional)",
+        "value": "<sync server>"
+      }
+    ]
   },
   "INVOKE-ASSIGN-LICENSES.ps1": {
     "sourceSha256": "b41987e2a5912652d1e01a953a7dea402c7c49e24d20fade2fddb9f9696478be",
@@ -44,7 +79,29 @@
       "Unverified",
       "NEXT STEP"
     ],
-    "text": "ASSIGN USER LICENSES\n\nPREVIEW\nalex@example.com\nLicense : Microsoft 365 Business Premium\n\nSUMMARY\nAssigned   : 1\nSkipped    : 1\nFailed     : 0\nUnverified : 0\n\nSTATUS: Completed - requested assignments verified; review skipped users.\nNEXT STEP: Record per-user results."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\nTenant ID: <tenant ID (GUID)>\nLicense: <license selection>\nUsageLocation (if missing): <country code>\n\nASSIGN USER LICENSES\n\nPREVIEW\n<user@domain.com>\nLicense : <license selection>\n\nSUMMARY\nAssigned   : 1\nSkipped    : 1\nFailed     : 0\nUnverified : 0\n\nSTATUS: Completed - requested assignments verified; review skipped users.\nNEXT STEP: Record per-user results.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "License",
+        "value": "<license selection>"
+      },
+      {
+        "label": "UsageLocation (if missing)",
+        "value": "<country code>"
+      }
+    ]
   },
   "INVOKE-REMOVE-LICENSES.ps1": {
     "sourceSha256": "0fb9b390bdc16c4e677661003145ac9ab7718c2abedf0f6b44f303971bee2e2c",
@@ -54,7 +111,25 @@
       "Review per-user results and current license state before retrying.",
       "License removal alone is not offboarding."
     ],
-    "text": "REMOVE USER LICENSES\n\nPREVIEW\nalex@example.com\nSelected license : Microsoft 365 Business Premium\n\nSUMMARY\nRemoved         : 1\nFailed          : 0\nUnverified      : 1\n\nSTATUS: Incomplete - failed or unverified results remain.\nReview per-user results and current license state before retrying.\nLicense removal alone is not offboarding."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\nTenant ID: <tenant ID (GUID)>\nLicense: <license selection>\n\nREMOVE USER LICENSES\n\nPREVIEW\n<user@domain.com>\nSelected license : <license selection>\n\nSUMMARY\nRemoved         : 1\nFailed          : 0\nUnverified      : 1\n\nSTATUS: Incomplete - failed or unverified results remain.\nReview per-user results and current license state before retrying.\nLicense removal alone is not offboarding.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "License",
+        "value": "<license selection>"
+      }
+    ]
   },
   "RESOLVE-NAMES-TO-UPNS.ps1": {
     "sourceSha256": "8b150fd6e093ecf1a4b2b77cc5856f18de47a0f101a8f7257f0eea4742d12f8d",
@@ -62,7 +137,21 @@
     "sourceEvidence": [
       "UPNs exported"
     ],
-    "text": "RESOLVE NAMES TO UPNS\n\nINPUT              RESULT       UPN\nAlex Example       Exact        alex@example.com\nSam                Multiple     Review required\nUnknown Person     No match     Review required\n\nSUMMARY\nFull CSV is for human review only.\nClean UPN TXT contains exact matches only.\n\nUPNs exported: 1\nLikely, multiple, no-match, and search-error entries require manual review."
+    "text": "OPERATOR INPUTS\nName / email: <name or email>\nTXT/CSV alternative: <input file path>\nTenant domain: <tenant domain>\n\nRESOLVE NAMES TO UPNS\n\nINPUT              RESULT       UPN\n<name>             Exact        <user@domain.com>\n<name>             Multiple     Review required\n<name>             No match     Review required\n\nSUMMARY\nFull CSV is for human review only.\nClean UPN TXT contains exact matches only.\n\nUPNs exported: 1\nLikely, multiple, no-match, and search-error entries require manual review.",
+    "operatorInputs": [
+      {
+        "label": "Name / email",
+        "value": "<name or email>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Tenant domain",
+        "value": "<tenant domain>"
+      }
+    ]
   },
   "GET-ACCOUNT-STATUS.ps1": {
     "sourceSha256": "94258427439cc292f33bd76e835b10a407218bc9136537874a9cd267f2e20b75",
@@ -72,7 +161,17 @@
       "READ-ONLY. NO CHANGES MADE.",
       "Missing sign-in data was not classified as inactivity."
     ],
-    "text": "Get User Account Status\n\nUPN               ENABLED   SIGN-IN ACTIVITY\nalex@example.com  Yes       2026-10-20\nsam@example.com   Yes       Not available\n\nSUMMARY\nRequested : 2\nReviewed  : 2\n\nREAD-ONLY. NO CHANGES MADE.\nMissing sign-in data was not classified as inactivity."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nGet User Account Status\n\nUPN               ENABLED   SIGN-IN ACTIVITY\n<user@domain.com>  Yes       2026-10-20\n<another-user@domain.com>   Yes       Not available\n\nSUMMARY\nRequested : 2\nReviewed  : 2\n\nREAD-ONLY. NO CHANGES MADE.\nMissing sign-in data was not classified as inactivity.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "GET-DISTRIBUTION-GROUP-MEMBERS.ps1": {
     "sourceSha256": "c91680865f7bc992c7638f1a5c3e371a281ed52100a2a3fc979b87d8321af676",
@@ -82,7 +181,17 @@
       "Read-only distribution group membership lookup.",
       "No changes were made."
     ],
-    "text": "GROUP\nName    : Service Desk\nAddress : help@example.com\n\nMEMBERS\nAlex Example     alex@example.com\nSam Example      sam@example.com\n\nTICKET SUMMARY\nDirect members returned for the selected group.\n\nRead-only distribution group membership lookup.\nNo changes were made."
+    "text": "OPERATOR INPUTS\nGroup: <group@domain.com>\nTXT/CSV alternative: <input file path>\n\nGROUP\nName    : <group name>\nAddress : <group@domain.com>\n\nMEMBERS\nAlex Example     alex@example.com\nSam Example      sam@example.com\n\nTICKET SUMMARY\nDirect members returned for the selected group.\n\nRead-only distribution group membership lookup.\nNo changes were made.",
+    "operatorInputs": [
+      {
+        "label": "Group",
+        "value": "<group@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "GET-GROUP-MEMBERS.ps1": {
     "sourceSha256": "5c7baa7d0551de2eb0c21650bb8943ca198697c94cef2f556a5ab458f7916d67",
@@ -91,7 +200,17 @@
       "TICKET SUMMARY",
       "READ-ONLY. NO CHANGES MADE."
     ],
-    "text": "GROUP\nName    : Operations\nSource  : Entra ID\nMembers : 2\n\nMEMBERS\nAlex Example     alex@example.com\nSam Example      sam@example.com\n\nTICKET SUMMARY\nDirect members only.\nGroup membership does not prove effective access.\nREAD-ONLY. NO CHANGES MADE."
+    "text": "OPERATOR INPUTS\nGroup: <group@domain.com>\nTXT/CSV alternative: <input file path>\n\nGROUP\nName    : <group name>\nSource  : Entra ID\nMembers : 2\n\nMEMBERS\nAlex Example     alex@example.com\nSam Example      sam@example.com\n\nTICKET SUMMARY\nDirect members only.\nGroup membership does not prove effective access.\nREAD-ONLY. NO CHANGES MADE.",
+    "operatorInputs": [
+      {
+        "label": "Group",
+        "value": "<group@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "GET-USER-GROUPS.ps1": {
     "sourceSha256": "d0b71178ddca2eb793610f21d5f52266d454360ca848d7257ebb3347d6ec9bdd",
@@ -101,7 +220,17 @@
       "ACTIVE DIRECTORY",
       "Read only. Direct membership does not establish effective access."
     ],
-    "text": "Get User Groups\n\nalex@example.com\n\nACTIVE DIRECTORY\nService Desk\nVPN Users\n\nENTRA\nOperations [Cloud]\nStaff [Synced]\nLicensed Users [Dynamic]\n\nRead only. Direct membership does not establish effective access."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nGet User Groups\n\n<user@domain.com>\n\nACTIVE DIRECTORY\nService Desk\nVPN Users\n\nENTRA\nOperations [Cloud]\nStaff [Synced]\nLicensed Users [Dynamic]\n\nRead only. Direct membership does not establish effective access.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "INVOKE-REMOVE-USER-GROUPS.ps1": {
     "sourceSha256": "8bc820639a1d6e1479e0b1c7a2a1f58953fb0eb5396f922628a73855b0e3fc54",
@@ -109,7 +238,21 @@
     "sourceEvidence": [
       "ENTRA SYNC"
     ],
-    "text": "REMOVE USER GROUP MEMBERSHIPS\n\nPREVIEW\nalex@example.com\nService Desk     AD       Eligible\nOperations       Entra    Eligible\nLicensed Users   Entra    Dynamic - skipped\n\nSUMMARY\nReview per-group removal results.\n\nENTRA SYNC\nAD changes remain authoritative.\nVerify synchronization and any needs-attention results."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\nSync server (optional): <sync server>\n\nREMOVE USER GROUP MEMBERSHIPS\n\nPREVIEW\n<user@domain.com>\nService Desk     AD       Eligible\nOperations       Entra    Eligible\nLicensed Users   Entra    Dynamic - skipped\n\nSUMMARY\nReview per-group removal results.\n\nENTRA SYNC\nAD changes remain authoritative.\nVerify synchronization and any needs-attention results.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Sync server (optional)",
+        "value": "<sync server>"
+      }
+    ]
   },
   "INVOKE-CREATE-DYNAMIC-LICENSE-GROUP.ps1": {
     "sourceSha256": "7ed4b8f50be401d4004b6ff4672d19bcad5ab6e7f47cf7bc3d0a3e144290f83d",
@@ -119,7 +262,21 @@
       "Mail nickname",
       "Group created and verified"
     ],
-    "text": "CREATE DYNAMIC LICENSE GROUP\n\nDisplay name : Licensed Users\nMail nickname: licensed-users\nRule         : Enabled users with an active license/service plan\n\nGroup created and verified: Licensed Users\n\nThis creates a dynamic security group.\nIt does not assign licenses.\nMembership evaluation occurs in Entra."
+    "text": "OPERATOR INPUTS\nGroup: <group name>\nTenant ID: <tenant ID (GUID)>\nMail nickname: <mail nickname>\n\nCREATE DYNAMIC LICENSE GROUP\n\nDisplay name : <group name>\nMail nickname: <mail nickname>\nRule         : Enabled users with an active license/service plan\n\nGroup created and verified: <group name>\n\nThis creates a dynamic security group.\nIt does not assign licenses.\nMembership evaluation occurs in Entra.",
+    "operatorInputs": [
+      {
+        "label": "Group",
+        "value": "<group name>"
+      },
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "Mail nickname",
+        "value": "<mail nickname>"
+      }
+    ]
   },
   "GET-TENANT-GROUP-OWNERS.ps1": {
     "sourceSha256": "dc04a5c13230de80a767d325a6739c3df6240618d20e6419315cb96a43f224b0",
@@ -130,7 +287,8 @@
       "SECURITY GROUPS",
       "DISTRIBUTION GROUPS"
     ],
-    "text": "TENANT GROUP OWNERS REVIEW\n\nMICROSOFT 365 GROUPS\nOperations       Alex Example\nProjects         No owner assigned\n\nSECURITY GROUPS\nVPN Users        Sam Example\n\nDISTRIBUTION GROUPS\nService Desk     Owner lookup unavailable\n\nReview ownerless groups and unavailable lookups separately."
+    "text": "TENANT GROUP OWNERS REVIEW\n\nMICROSOFT 365 GROUPS\nOperations       Alex Example\nProjects         No owner assigned\n\nSECURITY GROUPS\nVPN Users        Sam Example\n\nDISTRIBUTION GROUPS\nService Desk     Owner lookup unavailable\n\nReview ownerless groups and unavailable lookups separately.",
+    "operatorInputs": []
   },
   "GET-MAILBOX-PERMISSIONS.ps1": {
     "sourceSha256": "76535edd6d3e922cc44decedba707203716788afa4bdabbf68579549a57752e6",
@@ -141,7 +299,17 @@
       "SEND ON BEHALF",
       "INBOX RULES"
     ],
-    "text": "MAILBOX PERMISSIONS\nalex@example.com\n\nFULL ACCESS\nSam Example\n\nSEND AS\nNone found\n\nSEND ON BEHALF\nNone found\n\nINBOX RULES\nHidden-rule visibility is not available in this session.\n\nRead-only mailbox permissions and forwarding audit.\nNo changes were made."
+    "text": "OPERATOR INPUTS\nMailbox: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nMAILBOX PERMISSIONS\n<user@domain.com>\n\nFULL ACCESS\nSam Example\n\nSEND AS\nNone found\n\nSEND ON BEHALF\nNone found\n\nINBOX RULES\nHidden-rule visibility is not available in this session.\n\nRead-only mailbox permissions and forwarding audit.\nNo changes were made.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "GET-MAILBOX-SECURITY-SNAPSHOT.ps1": {
     "sourceSha256": "e9e75ef77efeb81017c8dcc6f3f05cd5deb4fb8eba90890560808406762f7fda",
@@ -152,7 +320,13 @@
       "INBOX RULES",
       "No changes made."
     ],
-    "text": "MAILBOX SECURITY SNAPSHOT\nalex@example.com\n\nEXTERNAL FORWARDING\nStatus: Yes\nDestination: review@example.net\n\nMAILBOX PERMISSIONS\nStatus: Yes\nFull Access: sam@example.com\n\nINBOX RULES\nStatus: Not available\n\nReview forwarding, delegated access and unavailable checks.\nNo changes made."
+    "text": "OPERATOR INPUTS\nMailbox: <user@domain.com>\n\nMAILBOX SECURITY SNAPSHOT\n<user@domain.com>\n\nEXTERNAL FORWARDING\nStatus: Yes\nDestination: review@example.net\n\nMAILBOX PERMISSIONS\nStatus: Yes\nFull Access: sam@example.com\n\nINBOX RULES\nStatus: Not available\n\nReview forwarding, delegated access and unavailable checks.\nNo changes made.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<user@domain.com>"
+      }
+    ]
   },
   "GET-MAILBOX-FORWARDING.ps1": {
     "sourceSha256": "0e184a41bd351c391985118eb128eaefad0311ec691abe4933868e6af5a88d91",
@@ -163,7 +337,17 @@
       "TICKET SUMMARY",
       "READ-ONLY. NO CHANGES MADE."
     ],
-    "text": "MAILBOX\nalex@example.com\n\nMailbox-level forwarding   : None\n\nINBOX RULE FORWARDING\nExternal redirect          : review@example.net\n\nTICKET SUMMARY\nReview the rule and destination with the mailbox owner.\n\nREAD-ONLY. NO CHANGES MADE."
+    "text": "OPERATOR INPUTS\nMailbox: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nMAILBOX\n<user@domain.com>\n\nMailbox-level forwarding   : None\n\nINBOX RULE FORWARDING\nExternal redirect          : review@example.net\n\nTICKET SUMMARY\nReview the rule and destination with the mailbox owner.\n\nREAD-ONLY. NO CHANGES MADE.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "INVOKE-LITIGATION-HOLD.ps1": {
     "sourceSha256": "1ea2ff740e1f5eb24ba4aafa92636fce025ed90ffbc4050e80ce5aedcb3568fe",
@@ -173,7 +357,25 @@
       "Target state",
       "LITIGATION HOLD SUMMARY"
     ],
-    "text": "ENFORCE LITIGATION HOLD\n\nTarget state: Litigation Hold enabled with Unlimited duration.\n\nPREVIEW\nalex@example.com    Change required\nsam@example.com     Already compliant\n\nLITIGATION HOLD SUMMARY\nReview changed, compliant and failed mailbox results.\nChanged mailboxes are re-read for validation.\n\nEnablement requires approved changes."
+    "text": "OPERATOR INPUTS\nMailbox: <user@domain.com>\nTXT/CSV alternative: <input file path>\nTicket: <ticket number>\nHold owner: <requestor>\n\nENFORCE LITIGATION HOLD\n\nTarget state: Litigation Hold enabled with Unlimited duration.\n\nPREVIEW\n<user@domain.com>    Change required\n<another-user@domain.com>     Already compliant\n\nLITIGATION HOLD SUMMARY\nReview changed, compliant and failed mailbox results.\nChanged mailboxes are re-read for validation.\n\nEnablement requires approved changes.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      },
+      {
+        "label": "Ticket",
+        "value": "<ticket number>"
+      },
+      {
+        "label": "Hold owner",
+        "value": "<requestor>"
+      }
+    ]
   },
   "BEC-INVOKE-EMAIL-RECOVERY.ps1": {
     "sourceSha256": "bbbe2551ba6054995d4caa517e23a32711c0afbd4b7becbf2a5575662409482f",
@@ -184,7 +386,21 @@
       "Still in source",
       "Validated in target"
     ],
-    "text": "BEC EMAIL RECOVERY\n\nTarget mailbox : alex@example.com\nSource folder  : Deleted Items\nTarget folder  : Recovered Mail\n\nMoved                  : 8\nSkipped                : 2\nFailed                 : 1\nStill in source        : 1\nValidated in target    : 8\nValidation unavailable : 0\n\nFailed moves:\n- Example message | Move failed\n\nReview failed and skipped messages before closing recovery."
+    "text": "OPERATOR INPUTS\nMailbox: <user@domain.com>\nSource folder: <source folder>\nTarget folder: <target folder>\n\nBEC EMAIL RECOVERY\n\nTarget mailbox : <user@domain.com>\nSource folder  : <source folder>\nTarget folder  : <target folder>\n\nMoved                  : 8\nSkipped                : 2\nFailed                 : 1\nStill in source        : 1\nValidated in target    : 8\nValidation unavailable : 0\n\nFailed moves:\n- Example message | Move failed\n\nReview failed and skipped messages before closing recovery.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Source folder",
+        "value": "<source folder>"
+      },
+      {
+        "label": "Target folder",
+        "value": "<target folder>"
+      }
+    ]
   },
   "BEC-RISK-ASSESSMENT.ps1": {
     "sourceSha256": "94526ec8ea67e88d9373d1cdb9beadf7ec4992b80cafcd4a97797c2a10c488f4",
@@ -194,7 +410,17 @@
       "REVIEW ITEMS",
       "Document evidence. Review the high-risk findings and approve response if warranted."
     ],
-    "text": "BEC: Assess User Risk\n\nTARGET\nUPN: alex@example.com\n\nSTATUS: HIGH-RISK IOCs\n[!!] Not checked: one evidence source is unavailable.\n\nHIGH-RISK FINDINGS\n- Enabled inbox rule with external forwarding or redirect\n- Mailbox-level forwarding configured\n\nREVIEW ITEMS\n- Mailbox permissions require review\n\nDocument evidence. Review the high-risk findings and approve response if warranted."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTenant: <tenant domain or tenant ID>\n\nBEC: Assess User Risk\n\nTARGET\nUPN: <user@domain.com>\n\nSTATUS: HIGH-RISK IOCs\n[!!] Not checked: one evidence source is unavailable.\n\nHIGH-RISK FINDINGS\n- Enabled inbox rule with external forwarding or redirect\n- Mailbox-level forwarding configured\n\nREVIEW ITEMS\n- Mailbox permissions require review\n\nDocument evidence. Review the high-risk findings and approve response if warranted.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Tenant",
+        "value": "<tenant domain or tenant ID>"
+      }
+    ]
   },
   "BEC-CONTAIN-ERADICATE.ps1": {
     "sourceSha256": "c8b857d6191a6bceecb651413552cad0bbc8a421046bfe2a95390728cb89ce10",
@@ -205,7 +431,17 @@
       "Then run BEC-RECOVER-VALIDATE to complete the response.",
       "Some changes may already be applied. Review the results before retrying."
     ],
-    "text": "BEC: Contain and Clean Up\nalex@example.com\n\nPLANNED ACTIONS\n- Review selected response actions before confirmation\n\nEntra Account: Disabled\nInbox Rules Remaining: 1\nForwarding Remaining: 0\nOAuth Grants Remaining: 1\n\nResolve failed actions and review remaining findings before recovery.\nThen run BEC-RECOVER-VALIDATE to complete the response.\n\nSome changes may already be applied. Review the results before retrying."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTenant: <tenant domain or tenant ID>\n\nBEC: Contain and Clean Up\n<user@domain.com>\n\nPLANNED ACTIONS\n- Review selected response actions before confirmation\n\nEntra Account: Disabled\nInbox Rules Remaining: 1\nForwarding Remaining: 0\nOAuth Grants Remaining: 1\n\nResolve failed actions and review remaining findings before recovery.\nThen run BEC-RECOVER-VALIDATE to complete the response.\n\nSome changes may already be applied. Review the results before retrying.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Tenant",
+        "value": "<tenant domain or tenant ID>"
+      }
+    ]
   },
   "BEC-GET-DATA-EXFIL-ACTIVITY.ps1": {
     "sourceSha256": "1fa5c320ff44327b602d61a94ba5a76b9571b51fdbf36c77be0c59e34795fad1",
@@ -216,7 +452,21 @@
       "Max hourly downloads",
       "Max download hour"
     ],
-    "text": "FILE ACTIVITY / EXFIL REVIEW\nalex@example.com\n\nFiles downloaded     : 48\nUnique IPs           : 2\nMax hourly downloads : 31\nMax download hour    : 2026-10-20 13:00\nData gaps            : 1\n\nData gaps:\n- One audit window could not be read\n\nReview activity against the user's expected work.\nFile activity is not confirmed exfiltration."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nLookback: <days>\nIP filter (optional): <IP address>\n\nFILE ACTIVITY / EXFIL REVIEW\n<user@domain.com>\n\nFiles downloaded     : 48\nUnique IPs           : 2\nMax hourly downloads : 31\nMax download hour    : 2026-10-20 13:00\nData gaps            : 1\n\nData gaps:\n- One audit window could not be read\n\nReview activity against the user's expected work.\nFile activity is not confirmed exfiltration.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<days>"
+      },
+      {
+        "label": "IP filter (optional)",
+        "value": "<IP address>"
+      }
+    ]
   },
   "BEC-GET-IP-TRACE.ps1": {
     "sourceSha256": "a97b049fad9c2a2f7f4344bc90a68689d1e1d5c4f720f2b6533b5106ae69970a",
@@ -227,7 +477,17 @@
       "Top operations",
       "Top workloads"
     ],
-    "text": "IP TRACE / UNIFIED AUDIT LOG\nIP: 203.0.113.24\n\nAffected users:\n- alex@example.com\n\nTop operations:\n- MailItemsAccessed: 12\n\nTop workloads:\n- Exchange: 12\n\nData gaps:\n- One search window is incomplete\n\nCorrelate with the incident evidence before acting."
+    "text": "OPERATOR INPUTS\nTarget IP: <IP address>\nLookback: <days>\n\nIP TRACE / UNIFIED AUDIT LOG\nIP: <IP address>\n\nAffected users:\n- alex@example.com\n\nTop operations:\n- MailItemsAccessed: 12\n\nTop workloads:\n- Exchange: 12\n\nData gaps:\n- One search window is incomplete\n\nCorrelate with the incident evidence before acting.",
+    "operatorInputs": [
+      {
+        "label": "Target IP",
+        "value": "<IP address>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<days>"
+      }
+    ]
   },
   "BEC-GET-TENANT-EMAIL-SEARCH.ps1": {
     "sourceSha256": "3a78895cbec147f408f82929e720c7e527c8bd3f18dad6d86c1e31ee1c868043",
@@ -238,7 +498,25 @@
       "Failed/Filtered",
       "Data gaps"
     ],
-    "text": "TENANT EMAIL SEARCH\nSender: sender@example.net\n\nDelivered      : 6\nFailed/Filtered: 2\nData gaps      : 1\n\nData gaps:\n- A query window reached its row cap\n\nReview delivery records and incomplete windows.\nDelivery alone does not show whether a user opened the message."
+    "text": "OPERATOR INPUTS\nSender (optional): <sender@domain.com>\nRecipient (optional): <recipient@domain.com>\nSource IP (optional): <IP address>\nLookback: <days>\n\nTENANT EMAIL SEARCH\nSender: <sender@domain.com>\n\nDelivered      : 6\nFailed/Filtered: 2\nData gaps      : 1\n\nData gaps:\n- A query window reached its row cap\n\nReview delivery records and incomplete windows.\nDelivery alone does not show whether a user opened the message.",
+    "operatorInputs": [
+      {
+        "label": "Sender (optional)",
+        "value": "<sender@domain.com>"
+      },
+      {
+        "label": "Recipient (optional)",
+        "value": "<recipient@domain.com>"
+      },
+      {
+        "label": "Source IP (optional)",
+        "value": "<IP address>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<days>"
+      }
+    ]
   },
   "BEC-GET-THREAT-INTEL-ACTIVITY.ps1": {
     "sourceSha256": "e0864cdd7dd81324a3b1a71fbf80841c14d3bd86d0ca7abb100416b4a243461e",
@@ -249,7 +527,17 @@
       "High risk IPs",
       "Medium risk IPs"
     ],
-    "text": "THREAT INTEL\n\nPublic IPs      : 2\nHigh risk IPs   : Example indicator\nMedium risk IPs : None\nLookup errors  : 1\n\nNote:\n- Reputation is supporting evidence, not proof of compromise.\n- Correlate with sign-ins, UAL, message trace, endpoint telemetry, and client context.\n\nProvider errors remain unresolved."
+    "text": "OPERATOR INPUTS\nPublic IP / TXT: <public IP or TXT path>\nProvider key: <API key>\n\nTHREAT INTEL\n\nPublic IPs      : 2\nHigh risk IPs   : Example indicator\nMedium risk IPs : None\nLookup errors  : 1\n\nNote:\n- Reputation is supporting evidence, not proof of compromise.\n- Correlate with sign-ins, UAL, message trace, endpoint telemetry, and client context.\n\nProvider errors remain unresolved.",
+    "operatorInputs": [
+      {
+        "label": "Public IP / TXT",
+        "value": "<public IP or TXT path>"
+      },
+      {
+        "label": "Provider key",
+        "value": "<API key>"
+      }
+    ]
   },
   "BEC-GET-TIMELINE-BUILDER.ps1": {
     "sourceSha256": "a80ca2ee465da49ebb7d38b6728265be427d93a4aa7eb129d3e18f202a4b5ecf",
@@ -260,7 +548,17 @@
       "File-modified basis",
       "Manual timestamps"
     ],
-    "text": "TIMELINE BUILDER\n\nTIME              BASIS          EVENT\n2026-10-20 09:12  Parsed         Supplied sign-in record\n2026-10-20 09:18  FILE MODIFIED  Evidence file timestamp\n\nEvents             : 2\nParsed timestamps  : 1\nFile-modified basis: 1\nManual timestamps  : 0\nData gaps          : 1\n\nFILE MODIFIED timestamps are evidence-file timestamps, not asserted incident-event times."
+    "text": "OPERATOR INPUTS\nCase folder: <evidence folder>\nManual event (optional): <event time, phase, action, detail>\n\nTIMELINE BUILDER\n\nTIME              BASIS          EVENT\n2026-10-20 09:12  Parsed         Supplied sign-in record\n2026-10-20 09:18  FILE MODIFIED  Evidence file timestamp\n\nEvents             : 2\nParsed timestamps  : 1\nFile-modified basis: 1\nManual timestamps  : 0\nData gaps          : 1\n\nFILE MODIFIED timestamps are evidence-file timestamps, not asserted incident-event times.",
+    "operatorInputs": [
+      {
+        "label": "Case folder",
+        "value": "<evidence folder>"
+      },
+      {
+        "label": "Manual event (optional)",
+        "value": "<event time, phase, action, detail>"
+      }
+    ]
   },
   "BEC-GET-TOKEN-DECODE.ps1": {
     "sourceSha256": "809933ffd6759b71b20324825887e7d5b1530e1eecce8d8d0cd92c3ce5a57742",
@@ -271,7 +569,13 @@
       "Signature validation",
       "Token exp claim is in the future. This does not prove the token is valid or accepted."
     ],
-    "text": "TOKEN DECODE\n\nHeader : Decoded locally\nPayload: Unverified claims\n\nObject ID               : Present\nApp ID                  : Present\n\nSignature validation: NOT PERFORMED\nToken exp claim is in the future. This does not prove the token is valid or accepted.\n\nTreat bearer tokens as secrets. Do not paste them into tickets, chat, or third-party tools."
+    "text": "OPERATOR INPUTS\nToken: <JWT>\n\nTOKEN DECODE\n\nHeader : Decoded locally\nPayload: Unverified claims\n\nObject ID               : Present\nApp ID                  : Present\n\nSignature validation: NOT PERFORMED\nToken exp claim is in the future. This does not prove the token is valid or accepted.\n\nTreat bearer tokens as secrets. Do not paste them into tickets, chat, or third-party tools.",
+    "operatorInputs": [
+      {
+        "label": "Token",
+        "value": "<JWT>"
+      }
+    ]
   },
   "BEC-GET-TOKEN-REPLAY-CHECK.ps1": {
     "sourceSha256": "aacd5c9a0c91ecbd16ceedaa14b433aba25f882f3752efd903996bfc95dbfbde",
@@ -282,7 +586,17 @@
       "Limitations",
       "Limitations"
     ],
-    "text": "TOKEN REPLAY CHECK\nalex@example.com\n\nDirect token detections:\n- Review the returned risk detections\n\nLimitations               : 1\n\nLimitations:\n- Some sign-in or risk evidence is unavailable\n\nUnexpected geography alone does not establish token replay.\nResolve missing evidence before concluding the account is clear."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nLookback: <hours>\n\nTOKEN REPLAY CHECK\n<user@domain.com>\n\nDirect token detections:\n- Review the returned risk detections\n\nLimitations               : 1\n\nLimitations:\n- Some sign-in or risk evidence is unavailable\n\nUnexpected geography alone does not establish token replay.\nResolve missing evidence before concluding the account is clear.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<hours>"
+      }
+    ]
   },
   "GET-SHARED-MAILBOX-SIGNIN-AUDIT.ps1": {
     "sourceSha256": "3f365d6e8677b2f59f1e3fba81f038c6645dd0e1e3a95b28c95804b161f06009",
@@ -292,7 +606,17 @@
       "Sign-in rows",
       "Successful sign-ins"
     ],
-    "text": "SHARED MAILBOX SIGN-IN AUDIT\n\nShared mailboxes checked : 12\nSign-in rows             : 3\nSuccessful sign-ins      : 1\n\n2026-10-20 | support@example.com | Success\n2026-10-20 | help@example.com    | Failed\n\nReview successful sign-ins to shared mailbox accounts.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\nLookback: <hours>\n\nSHARED MAILBOX SIGN-IN AUDIT\n\nShared mailboxes checked : 12\nSign-in rows             : 3\nSuccessful sign-ins      : 1\n\n2026-10-20 | support@example.com | Success\n2026-10-20 | help@example.com    | Failed\n\nReview successful sign-ins to shared mailbox accounts.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<hours>"
+      }
+    ]
   },
   "GET-APP-REGISTRATION-AUDIT.ps1": {
     "sourceSha256": "76613d8367421f66d7c546b3543168109eadfec80618fa46905ad3a2b3403a5d",
@@ -303,7 +627,13 @@
       "Expiry unavailable",
       "App permissions"
     ],
-    "text": "APP REGISTRATION AUDIT\n\nRows                 : 18\nExpired secrets/certs: 1\nExpiring soon        : 2\nExpiry unavailable   : 1\nNo owner             : 1\nApp permissions      : 3\n\nExample App | Certificate | Expiring soon\nLegacy App  | Owner       | No owner\n\nReview ownership, credentials and application permissions."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nAPP REGISTRATION AUDIT\n\nRows                 : 18\nExpired secrets/certs: 1\nExpiring soon        : 2\nExpiry unavailable   : 1\nNo owner             : 1\nApp permissions      : 3\n\nExample App | Certificate | Expiring soon\nLegacy App  | Owner       | No owner\n\nReview ownership, credentials and application permissions.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-CONDITIONAL-ACCESS-GAPS.ps1": {
     "sourceSha256": "adebcd1ba46cb0e58a7ac4381547d2aa7f501a906b5c521d27ca0ac9121b6555",
@@ -314,7 +644,13 @@
       "Exclusions",
       "Flagged policies"
     ],
-    "text": "CONDITIONAL ACCESS GAPS\n\nDisabled        : 1\nReport-only     : 2\nExclusions      : 3\n\nFlagged policies:\n- Example policy | Report-only | Review coverage\n- Legacy policy  | Disabled    | Review intent\n\nDisabled and report-only policies do not establish enforcement.\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nCONDITIONAL ACCESS GAPS\n\nDisabled        : 1\nReport-only     : 2\nExclusions      : 3\n\nFlagged policies:\n- Example policy | Report-only | Review coverage\n- Legacy policy  | Disabled    | Review intent\n\nDisabled and report-only policies do not establish enforcement.\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-DEVICE-CODE-EXPOSURE.ps1": {
     "sourceSha256": "9595b261ea55f5fc61dd562df2e5297cd8d3fa8bf587d0d61cce5535df93e27b",
@@ -325,7 +661,17 @@
       "Sign-ins reviewed",
       "Device code sign-ins"
     ],
-    "text": "DEVICE CODE EXPOSURE AUDIT\n\nPolicies reviewed      : 12\nDevice policy refs     : 1\nSign-ins reviewed      : 240\nDevice code sign-ins   : 2\n\n2026-10-20 | alex@example.com | Review activity\n\nA policy reference is not proof of effective coverage.\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\nLookback: <hours>\n\nDEVICE CODE EXPOSURE AUDIT\n\nPolicies reviewed      : 12\nDevice policy refs     : 1\nSign-ins reviewed      : 240\nDevice code sign-ins   : 2\n\n2026-10-20 | alex@example.com | Review activity\n\nA policy reference is not proof of effective coverage.\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<hours>"
+      }
+    ]
   },
   "GET-GUEST-APP-CONSENT-AUDIT.ps1": {
     "sourceSha256": "0e9676a036af440268ac33d3007fa34c05505e2765462a7143b2caa208585721",
@@ -336,7 +682,13 @@
       "High-risk",
       "High-risk grants"
     ],
-    "text": "GUEST APP CONSENT AUDIT\n\nGuests checked : 18\nGuest grants   : 3\nHigh-risk      : 1\n\nHigh-risk grants:\n- guest@example.net | Example App | Mail.ReadWrite\n\nReview the grant, application and business need.\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nGUEST APP CONSENT AUDIT\n\nGuests checked : 18\nGuest grants   : 3\nHigh-risk      : 1\n\nHigh-risk grants:\n- guest@example.net | Example App | Mail.ReadWrite\n\nReview the grant, application and business need.\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-MFA-SECURITY-AUDIT.ps1": {
     "sourceSha256": "da69d7308448b31477b9de6ff104257a891562902ec0142a5b053b70482d73a5",
@@ -347,7 +699,13 @@
       "Phishing-resistant present",
       "Review users"
     ],
-    "text": "MFA SECURITY AUDIT\n\nWeak-only MFA                : 8\nNo phishing-resistant MFA    : 12\nPhishing-resistant present   : 24\n\nReview users:\n- alex@example.com | Review registered methods\n\nMFA registration is not proof that sign-ins are protected.\nReview policy coverage and unresolved checks.\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nMFA SECURITY AUDIT\n\nWeak-only MFA                : 8\nNo phishing-resistant MFA    : 12\nPhishing-resistant present   : 24\n\nReview users:\n- alex@example.com | Review registered methods\n\nMFA registration is not proof that sign-ins are protected.\nReview policy coverage and unresolved checks.\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-SECURE-SCORE-SNAPSHOT.ps1": {
     "sourceSha256": "bf4d87b38d221c5e6b86fef69b10a1cb7c4d75e6fe8c5abe64ec5c99993f3e5d",
@@ -357,7 +715,17 @@
       "Percentage",
       "Complete. No changes made."
     ],
-    "text": "SECURE SCORE SNAPSHOT\n\nScore      : 42 / 70\nPercentage : 60%\nControls   : 18\n\nCompare against an approved previous snapshot when available.\nReview individual controls before prioritizing changes.\n\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\nPrevious snapshot (optional): <JSON snapshot path>\n\nSECURE SCORE SNAPSHOT\n\nScore      : 42 / 70\nPercentage : 60%\nControls   : 18\n\nCompare against an approved previous snapshot when available.\nReview individual controls before prioritizing changes.\n\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "Previous snapshot (optional)",
+        "value": "<JSON snapshot path>"
+      }
+    ]
   },
   "GET-SERVICE-PRINCIPAL-OWNERS.ps1": {
     "sourceSha256": "7f300774005a7ba46d354c17b02cec9f09ca34863edaf8b057159cca7bef5885",
@@ -365,7 +733,13 @@
     "sourceEvidence": [
       "Service principals checked"
     ],
-    "text": "Service principals checked : 18\nOwner rows                 : 14\nNo owner                   : 4\n\nSERVICE PRINCIPAL OWNERS AUDIT\n\nExample enterprise app\nOwners : None\nFinding: No owner\n\nAnother enterprise app\nOwner  : alex@example.com\n\nReview ownership and business responsibility.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nService principals checked : 18\nOwner rows                 : 14\nNo owner                   : 4\n\nSERVICE PRINCIPAL OWNERS AUDIT\n\nExample enterprise app\nOwners : None\nFinding: No owner\n\nAnother enterprise app\nOwner  : alex@example.com\n\nReview ownership and business responsibility.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-SIGNIN-ANOMALIES.ps1": {
     "sourceSha256": "dcde2b39589b9c740a7a9c20ff17cc59d8752cc555a9359f9d0210e18fa053b1",
@@ -373,7 +747,25 @@
     "sourceEvidence": [
       "No changes made."
     ],
-    "text": "SIGN-IN ANOMALIES AUDIT\n\n2026-10-20 | alex@example.com\nFinding: Review unfamiliar sign-in activity\n\n2026-10-20 | sam@example.com\nFinding: Review device code activity\n\nCorrelate IP, device, application and user context.\nAn unusual location is not proof of compromise.\nNo changes made."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\nLookback: <hours>\nUser filter (optional): <user@domain.com>\nExpected locations: <country codes>\n\nSIGN-IN ANOMALIES AUDIT\n\n2026-10-20 | alex@example.com\nFinding: Review unfamiliar sign-in activity\n\n2026-10-20 | sam@example.com\nFinding: Review device code activity\n\nCorrelate IP, device, application and user context.\nAn unusual location is not proof of compromise.\nNo changes made.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      },
+      {
+        "label": "Lookback",
+        "value": "<hours>"
+      },
+      {
+        "label": "User filter (optional)",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Expected locations",
+        "value": "<country codes>"
+      }
+    ]
   },
   "GET-TRANSPORT-RULES-AUDIT.ps1": {
     "sourceSha256": "7c4ff63bee17b5669a05a76657f3cca0b5b3674b102ead014df742ae720c62ae",
@@ -381,7 +773,8 @@
     "sourceEvidence": [
       "Audit Mail Flow Rules"
     ],
-    "text": "Audit Mail Flow Rules\n\nTRANSPORT RULES AUDIT\n\nRULE               ACTION      REVIEW\nExample Redirect   Redirect    External recipient\nExample Archive    BCC         Confirm business need\n\nTransport rules apply beyond one mailbox.\nReview rule intent, scope and destinations.\n\nRead-only. No changes made."
+    "text": "Audit Mail Flow Rules\n\nTRANSPORT RULES AUDIT\n\nRULE               ACTION      REVIEW\nExample Redirect   Redirect    External recipient\nExample Archive    BCC         Confirm business need\n\nTransport rules apply beyond one mailbox.\nReview rule intent, scope and destinations.\n\nRead-only. No changes made.",
+    "operatorInputs": []
   },
   "JOIN-COMPUTER-TO-DOMAIN.ps1": {
     "sourceSha256": "231cef1b8c4ca32837fa4ece5cc04162eb1de0371f3fd69a6fd7aa839bd6f147",
@@ -389,7 +782,25 @@
     "sourceEvidence": [
       "Join Computer to Domain"
     ],
-    "text": "Join Computer to Domain\n\nJOIN COMPUTER TO DOMAIN\n\nPLAN\nComputer : EXAMPLE-PC\nDomain   : ad.example.com\n\nReview the target domain and computer before approval.\n\nA domain join can require a restart.\nVerify domain membership after the computer restarts."
+    "text": "OPERATOR INPUTS\nDomain: <AD domain>\nCredentials: <authorized join account>\nOU (optional): <OU distinguished name>\nTicket: <ticket number>\n\nJoin Computer to Domain\n\nJOIN COMPUTER TO DOMAIN\n\nPLAN\nComputer : EXAMPLE-PC\nDomain   : <AD domain>\n\nReview the target domain and computer before approval.\n\nA domain join can require a restart.\nVerify domain membership after the computer restarts.",
+    "operatorInputs": [
+      {
+        "label": "Domain",
+        "value": "<AD domain>"
+      },
+      {
+        "label": "Credentials",
+        "value": "<authorized join account>"
+      },
+      {
+        "label": "OU (optional)",
+        "value": "<OU distinguished name>"
+      },
+      {
+        "label": "Ticket",
+        "value": "<ticket number>"
+      }
+    ]
   },
   "DEPLOY-TCPIP-PRINTER.ps1": {
     "sourceSha256": "adcb0d7445bbc847c2f1d7a22dcf5c12c645a68a81036c38dd510c67bd3821d1",
@@ -397,7 +808,21 @@
     "sourceEvidence": [
       "Install Network Printer"
     ],
-    "text": "Install Network Printer\n\nDEPLOY PRINTER\n\nPLAN\nPrinter : Office Printer\nAddress : 192.0.2.25\nDriver  : Selected installed driver\n\nReview the port, driver and printer name.\n\nVerify the printer and perform a test print.\nDeployment does not prove the physical printer is working."
+    "text": "OPERATOR INPUTS\nPrinter: <printer name>\nAddress: <printer IP or hostname>\nDriver: <installed driver name>\n\nInstall Network Printer\n\nDEPLOY PRINTER\n\nPLAN\nPrinter : <printer name>\nAddress : <printer IP or hostname>\nDriver  : <installed driver name>\n\nReview the port, driver and printer name.\n\nVerify the printer and perform a test print.\nDeployment does not prove the physical printer is working.",
+    "operatorInputs": [
+      {
+        "label": "Printer",
+        "value": "<printer name>"
+      },
+      {
+        "label": "Address",
+        "value": "<printer IP or hostname>"
+      },
+      {
+        "label": "Driver",
+        "value": "<installed driver name>"
+      }
+    ]
   },
   "BACKUP-USER-PROFILE.ps1": {
     "sourceSha256": "dd1d1e62acc1343f0c5010dc93ebd5cf29671ff42d9876580c3f1ef7b285988d",
@@ -405,7 +830,17 @@
     "sourceEvidence": [
       "Back Up User Profile"
     ],
-    "text": "Back Up User Profile\n\nBACK UP USER PROFILE\n\nSOURCE\nC:\\Users\\Example\n\nDESTINATION\nD:\\Backups\\Example\n\nReview copied, skipped and failed files.\nLocked or excluded files may not be included.\n\nValidate the backup before deleting or replacing the source profile."
+    "text": "OPERATOR INPUTS\nSource: <profile path>\nDestination: <backup folder>\n\nBack Up User Profile\n\nBACK UP USER PROFILE\n\nSOURCE\n<profile path>\n\nDESTINATION\n<backup folder>\n\nReview copied, skipped and failed files.\nLocked or excluded files may not be included.\n\nValidate the backup before deleting or replacing the source profile.",
+    "operatorInputs": [
+      {
+        "label": "Source",
+        "value": "<profile path>"
+      },
+      {
+        "label": "Destination",
+        "value": "<backup folder>"
+      }
+    ]
   },
   "TEST-POWERSHELL-READINESS.ps1": {
     "sourceSha256": "fee19c4cac0b5638a8f6515eb4be8734135c997d63c4b21e7f71b33a8a21e314",
@@ -416,7 +851,8 @@
       "Exchange Online",
       "ActiveDirectory"
     ],
-    "text": "POWERSHELL READINESS\n\nPowerShell              : Review installed edition\nMicrosoft Graph         : Available\nExchange Online         : Not installed\nActiveDirectory         : Not available\n\nResolve missing prerequisites for the selected job.\n\nLocal readiness does not confirm customer permissions.\nNo tenant connection is established by this check."
+    "text": "POWERSHELL READINESS\n\nPowerShell              : Review installed edition\nMicrosoft Graph         : Available\nExchange Online         : Not installed\nActiveDirectory         : Not available\n\nResolve missing prerequisites for the selected job.\n\nLocal readiness does not confirm customer permissions.\nNo tenant connection is established by this check.",
+    "operatorInputs": []
   },
   "GET-FOLDER-INVENTORY.ps1": {
     "sourceSha256": "218d4e788913c6a6d8d6578d8b1912cf7f68a8c4687ecaf6d557bbd4ea26cd60",
@@ -426,7 +862,13 @@
       "SIGNATURES",
       "READ ONLY. No files are changed."
     ],
-    "text": "Review Folder Contents\n\nC:\\Example\\FIELD-KIT\n\nFILES\nGET-ACCOUNT-STATUS.ps1\nGET-USER-GROUPS.ps1\n\nSIGNATURES\nReview script signature status\n\nGIT STATUS\nReview tracked and untracked changes\n\nREAD ONLY. No files are changed."
+    "text": "OPERATOR INPUTS\nFolder: <folder path>\n\nReview Folder Contents\n\n<toolkit folder>\n\nFILES\nGET-ACCOUNT-STATUS.ps1\nGET-USER-GROUPS.ps1\n\nSIGNATURES\nReview script signature status\n\nGIT STATUS\nReview tracked and untracked changes\n\nREAD ONLY. No files are changed.",
+    "operatorInputs": [
+      {
+        "label": "Folder",
+        "value": "<folder path>"
+      }
+    ]
   },
   "INSTALL-M365-MODULES.ps1": {
     "sourceSha256": "6c5fb208fea47d9588354590817362336e644bc4887127f317d4816161c0b4a2",
@@ -437,7 +879,13 @@
       "This changes modules installed in your CurrentUser PowerShell scope.",
       "Open a fresh PowerShell window before troubleshooting loaded-module version conflicts."
     ],
-    "text": "INSTALL M365 MODULES\n\n[1] Microsoft Graph\n[2] Exchange Online\n[3] Both\n\nMicrosoft.Graph currently installed: Available\nExchangeOnlineManagement currently installed: No\n\nThis changes modules installed in your CurrentUser PowerShell scope.\n\nOpen a fresh PowerShell window before troubleshooting loaded-module version conflicts."
+    "text": "OPERATOR INPUTS\nSelection: <menu option>\n\nINSTALL M365 MODULES\n\n[1] Microsoft Graph\n[2] Exchange Online\n[3] Both\n\nMicrosoft.Graph currently installed: Available\nExchangeOnlineManagement currently installed: No\n\nThis changes modules installed in your CurrentUser PowerShell scope.\n\nOpen a fresh PowerShell window before troubleshooting loaded-module version conflicts.",
+    "operatorInputs": [
+      {
+        "label": "Selection",
+        "value": "<menu option>"
+      }
+    ]
   },
   "TEST-SENSITIVE-DATA.ps1": {
     "sourceSha256": "594d18150acb832080f13776581f6d8d8d21d3addc7e14aa8aea017b76e9b69e",
@@ -448,7 +896,13 @@
       "Text/source files scanned",
       "High-risk publication findings require review."
     ],
-    "text": "Check Sensitive Data\n\nFiles reviewed: 24\nText/source files scanned: 18\nHigh: 1 | Warn: 2 | Info: 0\n\nExample finding\nFile : settings.example.ps1\nValue: [redacted in this example]\n\nHigh-risk publication findings require review.\nThis is a heuristic check, not proof that a file is safe to publish."
+    "text": "OPERATOR INPUTS\nPath: <file or folder path>\n\nCheck Sensitive Data\n\nFiles reviewed: 24\nText/source files scanned: 18\nHigh: 1 | Warn: 2 | Info: 0\n\nExample finding\nFile : settings.example.ps1\nValue: [redacted in this example]\n\nHigh-risk publication findings require review.\nThis is a heuristic check, not proof that a file is safe to publish.",
+    "operatorInputs": [
+      {
+        "label": "Path",
+        "value": "<file or folder path>"
+      }
+    ]
   },
   "RESET-M365-SESSION.ps1": {
     "sourceSha256": "a08270181dc4ac7ac0cb78fd8f651701a40ce25b668342a4e0a829fb09246809",
@@ -459,7 +913,8 @@
       "- Remove legacy Exchange-related PSSessions",
       "- Clear the current PowerShell error buffer"
     ],
-    "text": "RESET M365 SESSION\n\nPLAN\n- Disconnect Exchange Online\n- Disconnect Microsoft Graph\n- Remove legacy Exchange-related PSSessions\n- Clear the current PowerShell error buffer\n\nReview the selected session reset.\n\nOpen a fresh window when requested.\nOther PowerShell windows keep their own sessions."
+    "text": "RESET M365 SESSION\n\nPLAN\n- Disconnect Exchange Online\n- Disconnect Microsoft Graph\n- Remove legacy Exchange-related PSSessions\n- Clear the current PowerShell error buffer\n\nReview the selected session reset.\n\nOpen a fresh window when requested.\nOther PowerShell windows keep their own sessions.",
+    "operatorInputs": []
   },
   "UPDATE-WINDOWS-APPS.ps1": {
     "sourceSha256": "32fcfc1c298460301dc5fe7841bb5bddb768691e23f7c9f28270c5396349c3c3",
@@ -468,7 +923,8 @@
       "Update command exit",
       "Review command exit"
     ],
-    "text": "UPDATE WINDOWS APPS\n\nReview available WinGet updates.\nApprove the update pass before changes.\n\nUpdate command exit: 0\nReview command exit: 0\n\nSTATUS: Update pass finished; review remaining packages above. This does not prove every application is current."
+    "text": "UPDATE WINDOWS APPS\n\nReview available WinGet updates.\nApprove the update pass before changes.\n\nUpdate command exit: 0\nReview command exit: 0\n\nSTATUS: Update pass finished; review remaining packages above. This does not prove every application is current.",
+    "operatorInputs": []
   },
   "GET-USER-PREDELETE-CHECK.ps1": {
     "sourceSha256": "4ae5545f73829374e5b1500bd3ba8cc029e3f095e700e9ce76bf835d8a034107",
@@ -478,7 +934,13 @@
       "Dependencies found",
       "Checks incomplete"
     ],
-    "text": "PRE-DELETE USER CHECK\nalex@example.com\n\nREVIEW BEFORE DELETE\n\nDependencies found:\n- Group ownership needs review\n- Mailbox delegation needs review\n\nChecks incomplete:\n- One service could not be queried\n\nReview dependencies and missing evidence before approving deletion."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\n\nPRE-DELETE USER CHECK\n<user@domain.com>\n\nREVIEW BEFORE DELETE\n\nDependencies found:\n- Group ownership needs review\n- Mailbox delegation needs review\n\nChecks incomplete:\n- One service could not be queried\n\nReview dependencies and missing evidence before approving deletion.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      }
+    ]
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
     "sourceSha256": "23a9db7bcacb8f388d2e71b3cc54b720a00b9d377af7c10bac263b32f0008b62",
@@ -487,7 +949,17 @@
       "Set Per-user MFA",
       "Change-making. Per-user MFA is separate from Conditional Access."
     ],
-    "text": "Set Per-user MFA\n\nChange-making. Per-user MFA is separate from Conditional Access.\n\nPREVIEW\nalex@example.com    Review current state\nsam@example.com     Review current state\n\nSUMMARY\nReview each user's verified, unchanged or failed result.\n\nDo not assume this replaces Conditional Access or Security Defaults."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nSet Per-user MFA\n\nChange-making. Per-user MFA is separate from Conditional Access.\n\nPREVIEW\n<user@domain.com>    Review current state\n<another-user@domain.com>     Review current state\n\nSUMMARY\nReview each user's verified, unchanged or failed result.\n\nDo not assume this replaces Conditional Access or Security Defaults.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "GET-ADMIN-ROLE-AUDIT.ps1": {
     "sourceSha256": "764cf4825fa98591a0ab0bde803f96568e1a1c2d8ed4585095eda2460a04aa6c",
@@ -498,7 +970,13 @@
       "Disabled admin",
       "Stale admin"
     ],
-    "text": "ADMIN ROLE AUDIT\n\nRoles checked : 12\nAssignments   : 18\nDisabled admin: 1\nStale admin   : 2\n\nExample Role | alex@example.com | Stale admin sign-in\n\nReview role assignments and ownership before removal.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nADMIN ROLE AUDIT\n\nRoles checked : 12\nAssignments   : 18\nDisabled admin: 1\nStale admin   : 2\n\nExample Role | alex@example.com | Stale admin sign-in\n\nReview role assignments and ownership before removal.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-OAUTH-CONSENT-AUDIT.ps1": {
     "sourceSha256": "3f18ee0289321bc6b7cb226c08f33c79c0e4844bc03884ea24a99180699f4251",
@@ -508,7 +986,13 @@
       "OAuth grants checked",
       "High-risk grants"
     ],
-    "text": "Audit App Consent\n\nOAuth grants checked : 28\nHigh-risk grants     : 2\n\nExample App | Mail.ReadWrite | Review scope\n\nConfirm application ownership, consent and business need.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nAudit App Consent\n\nOAuth grants checked : 28\nHigh-risk grants     : 2\n\nExample App | Mail.ReadWrite | Review scope\n\nConfirm application ownership, consent and business need.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-GUEST-USER-AUDIT.ps1": {
     "sourceSha256": "641555328872d02331f3153eb686b48bf4cf5b21f67c7a9919c0bbef0d75da61",
@@ -518,7 +1002,13 @@
       "Stale/no sign-in",
       "Not accepted"
     ],
-    "text": "GUEST USER HYGIENE AUDIT\n\nGuests checked      : 24\nStale/no sign-in    : 4\nNot accepted        : 2\nDisabled            : 1\n\nguest@example.net | Invitation not accepted\n\nMissing sign-in data needs review, not an inactivity assumption.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nGUEST USER HYGIENE AUDIT\n\nGuests checked      : 24\nStale/no sign-in    : 4\nNot accepted        : 2\nDisabled            : 1\n\nguest@example.net | Invitation not accepted\n\nMissing sign-in data needs review, not an inactivity assumption.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-TENANT-LICENSING-AUDIT.ps1": {
     "sourceSha256": "d9d7da1dc4f720953848f56fa4c68ae594c7b183ed3f07f623d511321a2aae07",
@@ -528,7 +1018,13 @@
       "Disabled licensed",
       "Enabled unlicensed"
     ],
-    "text": "TENANT LICENSING AUDIT\n\nEXAMPLE_SKU | Enabled: 30 | Consumed: 24\n\nUsers checked         : 28\nDisabled licensed     : 2\nEnabled unlicensed    : 3\n\nalex@example.com | Disabled licensed user\n\nReview account purpose and license assignments before changes.\nRead-only."
+    "text": "OPERATOR INPUTS\nTenant ID: <tenant ID (GUID)>\n\nTENANT LICENSING AUDIT\n\nEXAMPLE_SKU | Enabled: 30 | Consumed: 24\n\nUsers checked         : 28\nDisabled licensed     : 2\nEnabled unlicensed    : 3\n\nalex@example.com | Disabled licensed user\n\nReview account purpose and license assignments before changes.\nRead-only.",
+    "operatorInputs": [
+      {
+        "label": "Tenant ID",
+        "value": "<tenant ID (GUID)>"
+      }
+    ]
   },
   "GET-TENANT-INBOX-RULES-AUDIT.ps1": {
     "sourceSha256": "c0a1a2459471df298746940de9a997ee60514cbec0bb11a821f4c7e2233c66f6",
@@ -537,7 +1033,8 @@
       "Mailboxes checked",
       "Rules found"
     ],
-    "text": "TENANT INBOX RULES AUDIT\n\nMailboxes checked : 24\nRules found       : 48\nFlagged           : 3\n\nalex@example.com | Example Redirect | Review\nsam@example.com  | Example Delete   | Review\n\nReview rule actions and destinations.\nRule lookup failures remain unresolved.\nRead-only."
+    "text": "TENANT INBOX RULES AUDIT\n\nMailboxes checked : 24\nRules found       : 48\nFlagged           : 3\n\nalex@example.com | Example Redirect | Review\nsam@example.com  | Example Delete   | Review\n\nReview rule actions and destinations.\nRule lookup failures remain unresolved.\nRead-only.",
+    "operatorInputs": []
   },
   "GET-USER-SECURITY-SNAPSHOT.ps1": {
     "sourceSha256": "b9d8d41d6fe83eb0c5b3c8cb6d71989719d8622bc359116fc20618814399cff6",
@@ -546,7 +1043,13 @@
       "USER SECURITY SNAPSHOT",
       "PRIVILEGED ROLES"
     ],
-    "text": "USER SECURITY SNAPSHOT\nalex@example.com\n\nACCOUNT\nStatus: Enabled\n\nMFA\nReview registered authentication methods\n\nPRIVILEGED ROLES\nStatus: Yes\n\nSIGN-INS\nStatus: Not available\n\nReview privileges and unavailable evidence before deciding."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\n\nUSER SECURITY SNAPSHOT\n<user@domain.com>\n\nACCOUNT\nStatus: Enabled\n\nMFA\nReview registered authentication methods\n\nPRIVILEGED ROLES\nStatus: Yes\n\nSIGN-INS\nStatus: Not available\n\nReview privileges and unavailable evidence before deciding.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      }
+    ]
   },
   "GET-TENANT-SECURITY-SNAPSHOT.ps1": {
     "sourceSha256": "342829ae9c8df76225bdee4e0c76776aabb76a43a3c5756363a6add984ca0666",
@@ -557,7 +1060,8 @@
       "ADMIN ROLES",
       "Active assignments"
     ],
-    "text": "TENANT SECURITY SNAPSHOT\n\nCONDITIONAL ACCESS\nReport-only : 2\nDisabled    : 1\n\nADMIN ROLES\nActive assignments: 18\n\nOAUTH CONSENT\nDelegated grants: 28\nAll-principals grants: 4\n\nUse focused audits to investigate the review areas."
+    "text": "TENANT SECURITY SNAPSHOT\n\nCONDITIONAL ACCESS\nReport-only : 2\nDisabled    : 1\n\nADMIN ROLES\nActive assignments: 18\n\nOAUTH CONSENT\nDelegated grants: 28\nAll-principals grants: 4\n\nUse focused audits to investigate the review areas.",
+    "operatorInputs": []
   },
   "GET-ROOM-RESOURCE-ACCESS.ps1": {
     "sourceSha256": "476e8e8458b73432ec3c1e5d90be596b6472cece0e43c79cddc4b1de1693e1ad",
@@ -567,7 +1071,13 @@
       "Book in policy",
       "Resource delegates"
     ],
-    "text": "ROOM & RESOURCE ACCESS REVIEW\nroom@example.com\n\nType              : RoomMailbox\nFull Access       : sam@example.com\nBook in policy    : Operations\nResource delegates: alex@example.com\n\nConfirm booking and delegation requirements.\nReview complete."
+    "text": "OPERATOR INPUTS\nMailbox: <resource@domain.com>\n\nROOM & RESOURCE ACCESS REVIEW\n<resource@domain.com>\n\nType              : RoomMailbox\nFull Access       : sam@example.com\nBook in policy    : Operations\nResource delegates: alex@example.com\n\nConfirm booking and delegation requirements.\nReview complete.",
+    "operatorInputs": [
+      {
+        "label": "Mailbox",
+        "value": "<resource@domain.com>"
+      }
+    ]
   },
   "GET-TENANT-MAILBOX-ACCESS-AUDIT.ps1": {
     "sourceSha256": "90eadb894e2aa8ac36f62047a4c4aadcac67aa468c8bbbf583ec0992e6fc6e9c",
@@ -578,7 +1088,8 @@
       "With findings",
       "Partial/failed"
     ],
-    "text": "Audit Tenant Mailbox Access\n\nMailboxes checked : 24\nWith findings     : 4\nPartial/failed    : 1\n\nReview mailbox forwarding and delegated access.\nResolve partial or failed checks before closure.\n\nREAD-ONLY. NO CHANGES MADE."
+    "text": "Audit Tenant Mailbox Access\n\nMailboxes checked : 24\nWith findings     : 4\nPartial/failed    : 1\n\nReview mailbox forwarding and delegated access.\nResolve partial or failed checks before closure.\n\nREAD-ONLY. NO CHANGES MADE.",
+    "operatorInputs": []
   },
   "CLEANUP-DISABLED-USER-MAILBOX-ACCESS.ps1": {
     "sourceSha256": "c50e6a31dbf37dea44f651d4cfdced99ba4f3ce053a8ec3e75edb1a8f4fb504d",
@@ -589,7 +1100,13 @@
       "[I] Review individually",
       "[N] No changes"
     ],
-    "text": "CLEANUP DISABLED USER MAILBOX ACCESS\nalex@example.com\n\nREVIEW PLAN\nReview delegated access held by the disabled user.\n\n[A] Remove all listed permissions\n[I] Review individually\n[N] No changes\n\nReview verified removals and failed actions separately.\nContinue offboarding/deletion review as needed."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\n\nCLEANUP DISABLED USER MAILBOX ACCESS\n<user@domain.com>\n\nREVIEW PLAN\nReview delegated access held by the disabled user.\n\n[A] Remove all listed permissions\n[I] Review individually\n[N] No changes\n\nReview verified removals and failed actions separately.\nContinue offboarding/deletion review as needed.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      }
+    ]
   },
   "GET-TENANT-DRIFT-REVIEW.ps1": {
     "sourceSha256": "f5f1fdd5b2d6739ecc07989244e5da3f36811d1589109d4e7892609e937abfc2",
@@ -600,7 +1117,13 @@
       "- App registrations and credentials",
       "Baseline unchanged."
     ],
-    "text": "TENANT DRIFT REVIEW\n\nSUMMARY\nTracked tenant drift detected.\n\nChanged areas\n- Conditional Access policies\n- App registrations and credentials\n\nAction: Review the changes before replacing the baseline.\n\nBaseline unchanged.\nNo tenant changes were made."
+    "text": "OPERATOR INPUTS\nBaseline: <baseline path>\n\nTENANT DRIFT REVIEW\n\nSUMMARY\nTracked tenant drift detected.\n\nChanged areas\n- Conditional Access policies\n- App registrations and credentials\n\nAction: Review the changes before replacing the baseline.\n\nBaseline unchanged.\nNo tenant changes were made.",
+    "operatorInputs": [
+      {
+        "label": "Baseline",
+        "value": "<baseline path>"
+      }
+    ]
   },
   "GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1": {
     "sourceSha256": "7af474157506fd00c85b064ec037e09286c7776e4b088b28e8af36d6f3cbc85d",
@@ -611,7 +1134,13 @@
       "Cleanup-candidate sizes are informational; validate before deleting caches or prior Windows data.",
       "Complete. No changes made."
     ],
-    "text": "WINDOWS STORAGE CLEANUP REVIEW\n\nDRIVE\nC:    Review used and available space\n\nCLEANUP CANDIDATES\nWindows caches\nPrevious Windows data\n\nSUMMARY\nLargest-file scan : Skipped\n\nCleanup-candidate sizes are informational; validate before deleting caches or prior Windows data.\nComplete. No changes made."
+    "text": "OPERATOR INPUTS\nDrive: <drive letter>\n\nWINDOWS STORAGE CLEANUP REVIEW\n\nDRIVE\nC:    Review used and available space\n\nCLEANUP CANDIDATES\nWindows caches\nPrevious Windows data\n\nSUMMARY\nLargest-file scan : Skipped\n\nCleanup-candidate sizes are informational; validate before deleting caches or prior Windows data.\nComplete. No changes made.",
+    "operatorInputs": [
+      {
+        "label": "Drive",
+        "value": "<drive letter>"
+      }
+    ]
   },
   "INVOKE-RESET-CLOUD-USER-PASSWORD.ps1": {
     "sourceSha256": "40abec4baa9461a7ce2f60159d747340023985fe505191d1d7e530873d7b674a",
@@ -622,7 +1151,17 @@
       "Generated passwords were not exported by this script.",
       "Terminal capture or PowerShell transcription may record console output."
     ],
-    "text": "RESET CLOUD USER PASSWORD\n\nPREVIEW\nalex@example.com    Cloud-only account\nsam@example.com     Synced account - blocked\n\nRESET REQUEST ACCEPTED\nTemporary password: [omitted from this example]\n\nSUMMARY\nReview per-user verified and not-changed results.\nGenerated passwords were not exported by this script.\n\nTerminal capture or PowerShell transcription may record console output."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTXT/CSV alternative: <input file path>\n\nRESET CLOUD USER PASSWORD\n\nPREVIEW\n<user@domain.com>    Cloud-only account\n<another-user@domain.com>     Synced account - blocked\n\nRESET REQUEST ACCEPTED\nTemporary password: [omitted from this example]\n\nSUMMARY\nReview per-user verified and not-changed results.\nGenerated passwords were not exported by this script.\n\nTerminal capture or PowerShell transcription may record console output.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "TXT/CSV alternative",
+        "value": "<input file path>"
+      }
+    ]
   },
   "BEC-RECOVER-VALIDATE.ps1": {
     "sourceSha256": "1b21a21f15d6618c0964c37ab21e0c167cfba5616efe8d108dbb18ac1aa0ce4e",
@@ -632,7 +1171,17 @@
       "Verify user sign-in with MFA.",
       "Run the final assessment and monitor for new suspicious activity for 48 hours."
     ],
-    "text": "BEC: Restore and Validate\nalex@example.com\n\nRECOVERY CHECKLIST\n- User identity verified through a trusted contact method.\n- Device safety confirmed.\n- Password remediation, scope review, and persistence cleanup complete.\n- Recovery approved by the incident owner.\n\nSTATUS: ACCOUNT ENABLED\nUser sign-in with MFA still needs validation.\nIdentity, remediation, and MFA readiness confirmed by the operator.\n\nVerify user sign-in with MFA.\nRun the final assessment and monitor for new suspicious activity for 48 hours."
+    "text": "OPERATOR INPUTS\nUser: <user@domain.com>\nTenant: <tenant domain or tenant ID>\n\nBEC: Restore and Validate\n<user@domain.com>\n\nRECOVERY CHECKLIST\n- User identity verified through a trusted contact method.\n- Device safety confirmed.\n- Password remediation, scope review, and persistence cleanup complete.\n- Recovery approved by the incident owner.\n\nSTATUS: ACCOUNT ENABLED\nUser sign-in with MFA still needs validation.\nIdentity, remediation, and MFA readiness confirmed by the operator.\n\nVerify user sign-in with MFA.\nRun the final assessment and monitor for new suspicious activity for 48 hours.",
+    "operatorInputs": [
+      {
+        "label": "User",
+        "value": "<user@domain.com>"
+      },
+      {
+        "label": "Tenant",
+        "value": "<tenant domain or tenant ID>"
+      }
+    ]
   },
   "PREPARE-FIELD-KIT.ps1": {
     "sourceSha256": "8b555611dffc223f909b9e13fa158f0daf472703ac9d42dc8d72d161cd430372",
@@ -643,7 +1192,13 @@
       "[3] Both - full Microsoft 365 toolkit",
       "READY covers this Windows account, PowerShell edition and selected local modules only."
     ],
-    "text": "PREPARE FIELD KIT\n\nSELECT LOCAL TOOLKIT\n[1] Microsoft Graph\n[2] Exchange Online\n[3] Both - full Microsoft 365 toolkit\n\nRESULT: READY\nREADY covers this Windows account, PowerShell edition and selected local modules only.\nCustomer access and sign-in are checked when you run the selected job.\n\nNext: close this setup window, choose one tool, and start it in a fresh window."
+    "text": "OPERATOR INPUTS\nProfile: <Graph / Exchange / Both>\n\nPREPARE FIELD KIT\n\nSELECT LOCAL TOOLKIT\n[1] Microsoft Graph\n[2] Exchange Online\n[3] Both - full Microsoft 365 toolkit\n\nRESULT: READY\nREADY covers this Windows account, PowerShell edition and selected local modules only.\nCustomer access and sign-in are checked when you run the selected job.\n\nNext: close this setup window, choose one tool, and start it in a fresh window.",
+    "operatorInputs": [
+      {
+        "label": "Profile",
+        "value": "<Graph / Exchange / Both>"
+      }
+    ]
   },
   "git-handoff.ps1": {
     "sourceSha256": "de09cbd42d120d932969dc229fa5437c7770fcdf6aed331f364acf6bec6c6531",
@@ -653,7 +1208,13 @@
       "REPOSITORY",
       "Recent commits"
     ],
-    "text": "Save Project Handoff\n\nREPOSITORY\nC:\\Example\\Project\n\nSCREENED SNAPSHOT\nWorking changes\nRecent commits\nSelected project context\n\nReview the generated handoff before sharing.\nNo staging, commit or push is performed by this tool."
+    "text": "OPERATOR INPUTS\nRepository: <repository path>\n\nSave Project Handoff\n\nREPOSITORY\n<repository path>\n\nSCREENED SNAPSHOT\nWorking changes\nRecent commits\nSelected project context\n\nReview the generated handoff before sharing.\nNo staging, commit or push is performed by this tool.",
+    "operatorInputs": [
+      {
+        "label": "Repository",
+        "value": "<repository path>"
+      }
+    ]
   },
   "git-repo.ps1": {
     "sourceSha256": "3bcd5f6b61c9b5b24d3d8adcaa22f584e80bdfe0b612c9a53cacf9d03125b78c",
@@ -661,7 +1222,21 @@
     "sourceEvidence": [
       "Manage Git Repository"
     ],
-    "text": "Manage Git Repository\n\nREPOSITORY\nC:\\Example\\Project\n\nCHECK\nReview working tree changes and upstream status.\n\nPULL / PUSH\nReview the selected operation and repository before approval.\n\nResolve conflicts and uncommitted changes before retrying."
+    "text": "OPERATOR INPUTS\nRepository: <repository path>\nAction: <Check / Pull / Push>\nCommit message (send): <commit message>\n\nManage Git Repository\n\nREPOSITORY\n<repository path>\n\nCHECK\nReview working tree changes and upstream status.\n\nPULL / PUSH\nReview the selected operation and repository before approval.\n\nResolve conflicts and uncommitted changes before retrying.",
+    "operatorInputs": [
+      {
+        "label": "Repository",
+        "value": "<repository path>"
+      },
+      {
+        "label": "Action",
+        "value": "<Check / Pull / Push>"
+      },
+      {
+        "label": "Commit message (send)",
+        "value": "<commit message>"
+      }
+    ]
   },
   "git-security.ps1": {
     "sourceSha256": "8082019f51b75c2184dcf74985cc73c80eb31135e8cd2ad3b9aaab5a73ea8352",
@@ -669,7 +1244,17 @@
     "sourceEvidence": [
       "Review GitHub Security"
     ],
-    "text": "Review GitHub Security\n\nINPUT\nSupplied GitHub security-log export\n\nREVIEW\nUnfamiliar access and account activity\nActionable exceptions from the selected export\n\nReview findings against known activity.\nA clean export review is not proof the account is uncompromised.\nLocal checkpoints record reviewed events."
+    "text": "OPERATOR INPUTS\nAccount: <GitHub account>\nExport: <security-log export path>\n\nReview GitHub Security\n\nINPUT\nSupplied GitHub security-log export\n\nREVIEW\nUnfamiliar access and account activity\nActionable exceptions from the selected export\n\nReview findings against known activity.\nA clean export review is not proof the account is uncompromised.\nLocal checkpoints record reviewed events.",
+    "operatorInputs": [
+      {
+        "label": "Account",
+        "value": "<GitHub account>"
+      },
+      {
+        "label": "Export",
+        "value": "<security-log export path>"
+      }
+    ]
   },
   "set-execution.ps1": {
     "sourceSha256": "4379e986662f2a80092938916ac5d2509fc5b01cb391d95e20b58c91b16ad294",
@@ -680,13 +1265,15 @@
       "PLAN // Unblock every .ps1 file directly beside this script",
       "CANCELLED // No execution policy or file unblock changes requested."
     ],
-    "text": "Set Up Script Execution\n\nPLAN // CurrentUser execution policy may change to RemoteSigned.\nPLAN // Unblock every .ps1 file directly beside this script: C:\\Example\\Scripts\n\nReview the folder and policy before approval.\n\nCANCELLED // No execution policy or file unblock changes requested.\nSESSION COMPLETE"
+    "text": "Set Up Script Execution\n\nPLAN // CurrentUser execution policy may change to RemoteSigned.\nPLAN // Unblock every .ps1 file directly beside this script: <script folder>\n\nReview the folder and policy before approval.\n\nCANCELLED // No execution policy or file unblock changes requested.\nSESSION COMPLETE",
+    "operatorInputs": []
   },
   "attractor.ps1": {
     "sourceSha256": "1268680342075976f80599213dd97d25abc2af741a07a7f5de2ceab2c2ba4cc6",
     "kind": "static-illustration",
     "sourceEvidence": [],
-    "text": "                 ·       .\n           .   ·    ·\n        ·       .        ·\n      .   ·       ·   .\n        ·    · .       ·\n           .     ·  .\n        ·      .      ·\n             ·    .\n\n           B U R N S I D //\n                14:32\n\nStatic illustration of the animated terminal."
+    "text": "                 ·       .\n           .   ·    ·\n        ·       .        ·\n      .   ·       ·   .\n        ·    · .       ·\n           .     ·  .\n        ·      .      ·\n             ·    .\n\n           B U R N S I D //\n                14:32\n\nStatic illustration of the animated terminal.",
+    "operatorInputs": []
   },
   "rain.ps1": {
     "sourceSha256": "f793a1a68a8245527597522077f40dda3eeb209bf9c6ad1164f0dde5ef9daf96",
@@ -694,13 +1281,15 @@
     "sourceEvidence": [
       "F I E L D // K I T"
     ],
-    "text": "   .      ·    .      ·\n      ·      .     .\n   ·     .      ·      .\n      .     ·      .\n   .      .     ·      ·\n       ·     .     .\n\n       F I E L D // K I T\n                14:32\n\nStatic illustration of the animated terminal."
+    "text": "   .      ·    .      ·\n      ·      .     .\n   ·     .      ·      .\n      .     ·      .\n   .      .     ·      ·\n       ·     .     .\n\n       F I E L D // K I T\n                14:32\n\nStatic illustration of the animated terminal.",
+    "operatorInputs": []
   },
   "static.ps1": {
     "sourceSha256": "4aa3ae630d9631f11d110f78925c6e112508b3ccc7ba703f833537bb3c9394e0",
     "kind": "static-illustration",
     "sourceEvidence": [],
-    "text": "  . · .  ·   . · .  · .\n   · . · . ·   . · .\n  .  · . · . · .   · .\n   · .  · . · . · .\n  . · .  · .   · . · .\n\n       F I E L D // K I T\n                14:32\n\nStatic illustration of the animated terminal."
+    "text": "  . · .  ·   . · .  · .\n   · . · . ·   . · .\n  .  · . · . · .   · .\n   · .  · . · . · .\n  . · .  · .   · . · .\n\n       F I E L D // K I T\n                14:32\n\nStatic illustration of the animated terminal.",
+    "operatorInputs": []
   },
   "SIGN-FOLDER-SCRIPTS.ps1": {
     "sourceSha256": "2890218ee6951f81e46e0dd5cbc5b4ed38b80ccce031d0b04ad9c3561e654851",
@@ -710,7 +1299,17 @@
       "- Re-run this after editing scripts",
       "- Self-signed trust is local unless the cert is deployed to other machines"
     ],
-    "text": "SIGN FOLDER SCRIPTS\n\nSelected folder: C:\\Example\\Scripts\n\nSigned      : 8\nSkipped     : 2\nFailed      : 1\nTotal       : 11\n\nComplete with failures\n\nReminder:\n- Re-run this after editing scripts\n- Self-signed trust is local unless the cert is deployed to other machines"
+    "text": "OPERATOR INPUTS\nFolder: <script folder>\nCertificate: <certificate selection>\n\nSIGN FOLDER SCRIPTS\n\nSelected folder: <script folder>\n\nSigned      : 8\nSkipped     : 2\nFailed      : 1\nTotal       : 11\n\nComplete with failures\n\nReminder:\n- Re-run this after editing scripts\n- Self-signed trust is local unless the cert is deployed to other machines",
+    "operatorInputs": [
+      {
+        "label": "Folder",
+        "value": "<script folder>"
+      },
+      {
+        "label": "Certificate",
+        "value": "<certificate selection>"
+      }
+    ]
   },
   "GET-TERMINAL-READINESS-CHECK.ps1": {
     "sourceSha256": "0cdf541f4222218c359dddc9e441343d37ee7ad745cfe5588e06a9a45ad42316",
@@ -719,7 +1318,13 @@
       "Exchange session",
       "TICKET SUMMARY"
     ],
-    "text": "TERMINAL READINESS CHECK\n\nMicrosoft Graph   : Review installed module\nExchange session  : Not connected\nExpected scripts  : One file not found\n\nTICKET SUMMARY\nResolve missing files and required modules.\n\nCustomer access must still be checked for the selected job."
+    "text": "OPERATOR INPUTS\nKit root: <toolkit folder>\n\nTERMINAL READINESS CHECK\n\nMicrosoft Graph   : Review installed module\nExchange session  : Not connected\nExpected scripts  : One file not found\n\nTICKET SUMMARY\nResolve missing files and required modules.\n\nCustomer access must still be checked for the selected job.",
+    "operatorInputs": [
+      {
+        "label": "Kit root",
+        "value": "<toolkit folder>"
+      }
+    ]
   },
   "INVOKE-FILE-INVENTORY.ps1": {
     "sourceSha256": "435f354240c3178c5def5a4b2faaaaa013a7ef0d99f07fcf9170e69801b13279",
@@ -730,7 +1335,13 @@
       "Signature gaps",
       "Duplicate rows"
     ],
-    "text": "FILE INVENTORY\n\nInvalid signatures : 1\nSignature gaps     : 2\nDuplicate rows     : 2\nCleanup flags      : 3\n\nDuplicate active filenames found\nReview active cleanup flags before changing files.\n\nComplete. No toolkit changes made"
+    "text": "OPERATOR INPUTS\nRoot: <root folder>\n\nFILE INVENTORY\n\nInvalid signatures : 1\nSignature gaps     : 2\nDuplicate rows     : 2\nCleanup flags      : 3\n\nDuplicate active filenames found\nReview active cleanup flags before changing files.\n\nComplete. No toolkit changes made",
+    "operatorInputs": [
+      {
+        "label": "Root",
+        "value": "<root folder>"
+      }
+    ]
   },
   "INVOKE-MAP-KIT.ps1": {
     "sourceSha256": "ea3b5ee21dbd384d7107ec1458be968d7c7c5c00c9998a4dcc2f89856a8372a4",
@@ -739,7 +1350,13 @@
       "Unsigned or invalid scripts",
       "Complete. No changes made"
     ],
-    "text": "FOLDER MAP\nC:\\Example\\FIELD-KIT\n\nidentity\n  GET-ACCOUNT-STATUS.ps1\nmailbox\n  GET-MAILBOX-FORWARDING.ps1\n\nUnsigned or invalid scripts:\n  Example script requires review\n\nA folder report is not a validation of the toolkit.\nComplete. No changes made"
+    "text": "OPERATOR INPUTS\nRoot: <root folder>\n\nFOLDER MAP\n<toolkit folder>\n\nidentity\n  GET-ACCOUNT-STATUS.ps1\nmailbox\n  GET-MAILBOX-FORWARDING.ps1\n\nUnsigned or invalid scripts:\n  Example script requires review\n\nA folder report is not a validation of the toolkit.\nComplete. No changes made",
+    "operatorInputs": [
+      {
+        "label": "Root",
+        "value": "<root folder>"
+      }
+    ]
   },
   "INVOKE-SESSION-RESET.ps1": {
     "sourceSha256": "2fa5b247f31b2dfe29bbed17ec9ffe576e53dbe3ce3e7ffb03f8328c7843dc07",
@@ -750,7 +1367,8 @@
       "Graph disconnected",
       "PowerShell error buffer cleared"
     ],
-    "text": "SESSION RESET\n\nLegacy Exchange PSSessions: none\nGraph disconnected\nPowerShell error buffer cleared\nJumpbox session password variable cleared\n\nSession reset completed\n\nThe profile will generate a new value when the banner requests it again.\nOther PowerShell windows retain their own context."
+    "text": "SESSION RESET\n\nLegacy Exchange PSSessions: none\nGraph disconnected\nPowerShell error buffer cleared\nJumpbox session password variable cleared\n\nSession reset completed\n\nThe profile will generate a new value when the banner requests it again.\nOther PowerShell windows retain their own context.",
+    "operatorInputs": []
   },
   "SET-THEME-BASIC.ps1": {
     "sourceSha256": "9dc01f2210cf808379be2770450283f0d44be72c4d3cae3f9a0087c2f15e98f2",
@@ -758,7 +1376,8 @@
     "sourceEvidence": [
       "MISSION ACCOMPLISHED. Goodbye."
     ],
-    "text": "SCRIPT TITLE -- EXAMPLE\n\n[--]  Processing 42 items...\n[!!]  3 items need review\n[XX]  1 item failed\n\nPlain output helpers without ANSI color.\n\nMISSION ACCOMPLISHED. Goodbye."
+    "text": "SCRIPT TITLE -- EXAMPLE\n\n[--]  Processing 42 items...\n[!!]  3 items need review\n[XX]  1 item failed\n\nPlain output helpers without ANSI color.\n\nMISSION ACCOMPLISHED. Goodbye.",
+    "operatorInputs": []
   },
   "SET-THEME-COBALT.ps1": {
     "sourceSha256": "602ddcb368e716ca73ced3b799d847262faca237ee43b63a7070596ce37d9d2b",
@@ -769,7 +1388,8 @@
       "ESCALATION TRIGGERS",
       "Notify Leads/InfoSec if X, Y, Z."
     ],
-    "text": "OBJECTIVE\n  What this script does and what to look for.\n\nESCALATION TRIGGERS\n  Notify Leads/InfoSec if X, Y, Z.\n\nPreview blue output helpers and status colors.\nProcess execution policy is set to Bypass.\n\nMISSION ACCOMPLISHED. Goodbye."
+    "text": "OBJECTIVE\n  What this script does and what to look for.\n\nESCALATION TRIGGERS\n  Notify Leads/InfoSec if X, Y, Z.\n\nPreview blue output helpers and status colors.\nProcess execution policy is set to Bypass.\n\nMISSION ACCOMPLISHED. Goodbye.",
+    "operatorInputs": []
   },
   "SET-THEME-SEAGLASS.ps1": {
     "sourceSha256": "629b919cea8aabd890151a2402241e426a4c0c331a9a4d5861bd9aaa340e888e",
@@ -780,7 +1400,8 @@
       "Tidal. Unhurried. Correct.",
       "Restart your terminal to confirm persistence."
     ],
-    "text": "Install Sea Glass Theme\n\nWritten to profile: [current user's PowerShell profile]\n\nTidal. Unhurried. Correct.\nRestart your terminal to confirm persistence.\nTo revert: remove the SEA GLASS THEME block from your profile."
+    "text": "Install Sea Glass Theme\n\nWritten to profile: [current user's PowerShell profile]\n\nTidal. Unhurried. Correct.\nRestart your terminal to confirm persistence.\nTo revert: remove the SEA GLASS THEME block from your profile.",
+    "operatorInputs": []
   },
   "SET-THEME-SILICON-VALLEY.ps1": {
     "sourceSha256": "aab04649707578c0c57a9602b80cdae04465bff529fae0373d46f1aa2bc43739",
@@ -789,7 +1410,8 @@
       "Install Silicon Valley Theme",
       "Install a green PowerShell theme in your startup profile."
     ],
-    "text": "Install Silicon Valley Theme\n\nInstall a green PowerShell theme in your startup profile.\n\nReview the profile update.\nRestart your terminal to check the persistent theme.\n\nBlack / cyan / amber / green output palette."
+    "text": "Install Silicon Valley Theme\n\nInstall a green PowerShell theme in your startup profile.\n\nReview the profile update.\nRestart your terminal to check the persistent theme.\n\nBlack / cyan / amber / green output palette.",
+    "operatorInputs": []
   },
   "MANAGE-CERT-SIGNATURES.ps1": {
     "sourceSha256": "d28176159f671ed1fe1e521f422a89f8de92f5ec032067e16f46156549d683fb",
@@ -799,6 +1421,28 @@
       "[6] Import private .pfx",
       "[7] Check / fix trust status"
     ],
-    "text": "MANAGE SIGNING CERTIFICATES\n\n[1] List code-signing certificates\n[2] Create local self-signed code-signing cert\n[3] Export public .cer trust file\n[4] Trust public .cer for current user\n[5] Export private .pfx\n[6] Import private .pfx\n[7] Check / fix trust status\n[Q] Quit\n\nReview the selected certificate and operation.\nPrivate-key export requires secure handling."
+    "text": "OPERATOR INPUTS\nAction: <menu option>\nCertificate (when requested): <certificate selection>\nName (create): <certificate name>\nFile (import/export): <certificate file path>\nPassword (private key): <certificate password>\n\nMANAGE SIGNING CERTIFICATES\n\n[1] List code-signing certificates\n[2] Create local self-signed code-signing cert\n[3] Export public .cer trust file\n[4] Trust public .cer for current user\n[5] Export private .pfx\n[6] Import private .pfx\n[7] Check / fix trust status\n[Q] Quit\n\nReview the selected certificate and operation.\nPrivate-key export requires secure handling.",
+    "operatorInputs": [
+      {
+        "label": "Action",
+        "value": "<menu option>"
+      },
+      {
+        "label": "Certificate (when requested)",
+        "value": "<certificate selection>"
+      },
+      {
+        "label": "Name (create)",
+        "value": "<certificate name>"
+      },
+      {
+        "label": "File (import/export)",
+        "value": "<certificate file path>"
+      },
+      {
+        "label": "Password (private key)",
+        "value": "<certificate password>"
+      }
+    ]
   }
 }

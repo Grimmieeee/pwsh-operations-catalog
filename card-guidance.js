@@ -6426,31 +6426,23 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "Graph token is missing"
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -6485,15 +6477,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "results": [],
       "issues": [
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -6535,23 +6520,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
           ]
         },
         {
           "issue": "CSV has no targets",
-          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "fix": "Add target rows below the correct header.",
           "evidence": [
             "CSV contains no data rows."
-          ]
-        },
-        {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
           ]
         }
       ]
@@ -6592,23 +6570,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
           ]
         },
         {
           "issue": "No writable domain controller is reachable",
-          "fix": "Check domain connectivity and DNS from the support computer, and confirm the supplied controller is reachable and writable.",
+          "fix": "Check domain DNS and connectivity to a writable controller.",
           "evidence": [
             "No reachable writable domain controller"
-          ]
-        },
-        {
-          "issue": "CSV has no targets",
-          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
-          "evidence": [
-            "CSV contains no data rows."
           ]
         }
       ]
@@ -6648,23 +6619,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
-          ]
-        },
-        {
-          "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
-          "evidence": [
-            "A valid expected tenant ID is required."
           ]
         }
       ]
@@ -6704,23 +6668,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
-          ]
-        },
-        {
-          "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
-          "evidence": [
-            "A valid expected tenant ID is required."
           ]
         }
       ]
@@ -6759,23 +6716,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Input file was not found",
-          "fix": "Use the full path to an existing local input file. Check the filename and extension.",
+          "fix": "Check the full filename and path.",
           "evidence": [
             "Input file not found:"
           ]
         },
         {
           "issue": "CSV column was not found",
-          "fix": "Check the CSV header and choose the column containing the intended targets.",
+          "fix": "Choose the column containing the targets.",
           "evidence": [
             "Column not found:"
-          ]
-        },
-        {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
           ]
         }
       ]
@@ -6815,21 +6765,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
           ]
         },
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "Graph token is missing"
           ]
@@ -6868,34 +6811,25 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "Optional CSV export saves member details. Blank output path uses distribution-group-members.csv in the current folder; the script checks the saved row count before confirming export.",
+          "text": "Optional CSV export saves member details.",
           "evidence": [
-            "distribution-group-members.csv",
-            "Export member detail to CSV [Y/N]",
-            "if ($check.Count -ne $Rows.Count)"
+            "Export member detail to CSV [Y/N]"
           ]
         }
       ],
       "issues": [
         {
           "issue": "Exchange module is missing",
-          "fix": "Install ExchangeOnlineManagement through your approved setup, reopen PowerShell, and run the lookup again.",
+          "fix": "Install ExchangeOnlineManagement, reopen PowerShell, and run the lookup again.",
           "evidence": [
             "is required but is not installed"
           ]
         },
         {
           "issue": "Group lookup failed",
-          "fix": "Check the group’s exact name or primary email address, the connected tenant, and the account’s permission to read distribution groups.",
+          "fix": "Check the group’s exact name or primary email address.",
           "evidence": [
             "Lookup failed:"
-          ]
-        },
-        {
-          "issue": "CSV export failed or could not be verified",
-          "fix": "Close the destination file if it is open, choose an existing writable folder, and retry the export. Check the on-screen results before using the CSV.",
-          "evidence": [
-            "CSV verification failed."
           ]
         }
       ]
@@ -6936,21 +6870,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Group was not found",
-          "fix": "Check the exact group name or email address and the connected customer tenant. Confirm access to the directory that owns the group.",
+          "fix": "Check the group’s exact name or email address.",
           "evidence": [
             "Group was not found in Exchange, Entra ID, or Active Directory."
           ]
         },
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -6994,21 +6921,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User was not found",
-          "fix": "Check the full sign-in name and that the session is connected to the customer tenant containing that account.",
+          "fix": "Check the full sign-in name and connected tenant.",
           "evidence": [
             "The user was not found in the connected tenant."
           ]
         },
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7050,23 +6970,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
           ]
         },
         {
           "issue": "User was not found",
-          "fix": "Check the full sign-in name and that the session is connected to the customer tenant containing that account.",
+          "fix": "Check the full sign-in name and connected tenant.",
           "evidence": [
             "The user was not found in the connected tenant."
-          ]
-        },
-        {
-          "issue": "CSV has no targets",
-          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
-          "evidence": [
-            "CSV contains no data rows."
           ]
         }
       ]
@@ -7099,23 +7012,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "More than one group matches",
-          "fix": "Resolve the duplicate names in Entra before creating another group.",
+          "fix": "Resolve duplicate group names before creating another group.",
           "evidence": [
             "Group lookup is ambiguous."
-          ]
-        },
-        {
-          "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
-          "evidence": [
-            "A valid expected tenant ID is required."
           ]
         }
       ]
@@ -7146,24 +7052,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7203,31 +7101,23 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
           "issue": "Mailbox lookup failed",
-          "fix": "Check the mailbox address, connected tenant, and the account’s Exchange read access.",
+          "fix": "Check the mailbox address.",
           "evidence": [
             "Mailbox lookup failed:"
           ]
         },
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7260,24 +7150,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7318,15 +7200,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "results": [],
       "issues": [
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7368,21 +7243,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "CSV has no targets",
-          "fix": "Keep the header row and add at least one target below it. Check the selected input column.",
+          "fix": "Add target rows below the correct header.",
           "evidence": [
             "CSV contains no data rows."
           ]
         },
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7428,22 +7296,15 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "results": [],
       "issues": [
         {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "required delegated scopes"
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7514,23 +7375,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Account or tenant could not be verified",
-          "fix": "Check the exact UPN and tenant, then reconnect with the access listed in Permissions. Unavailable checks must be resolved before clearing the account.",
+          "fix": "Check the UPN and tenant, then reconnect with the required access.",
           "evidence": [
             "Graph connection failed. Target user and tenant context could not be resolved."
           ]
         },
         {
           "issue": "Next workflow script is missing",
-          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "fix": "Extract all three BEC scripts into one folder with their original filenames.",
           "evidence": [
             "Next script not found:"
-          ]
-        },
-        {
-          "issue": "BEC files are from different releases",
-          "fix": "Replace all three files with one matching workflow package before continuing.",
-          "evidence": [
-            "Next script is from a different release."
           ]
         }
       ]
@@ -7600,23 +7454,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Rule remains after removal",
-          "fix": "Recheck the mailbox’s current rules and the failed action. Keep the account contained and get the incident owner’s approval before retrying the affected action.",
+          "fix": "Recheck the mailbox; keep containment in place before retrying the failed action.",
           "evidence": [
             "Rule still present after removal."
           ]
         },
         {
           "issue": "Next workflow script is missing",
-          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "fix": "Extract all three BEC scripts into one folder with their original filenames.",
           "evidence": [
             "Next script not found:"
-          ]
-        },
-        {
-          "issue": "BEC files are from different releases",
-          "fix": "Replace all three files with one matching workflow package before continuing.",
-          "evidence": [
-            "Next script is from a different release."
           ]
         }
       ]
@@ -7660,21 +7507,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Audit search is unavailable",
-          "fix": "Check the Exchange connection and the account’s audit-search access. Reconnect with the approved account before retrying the lookup.",
+          "fix": "Reconnect with an account that has audit-search access.",
           "evidence": [
             "Search-UnifiedAuditLog is unavailable"
           ]
         },
         {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7719,21 +7559,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Audit search is unavailable",
-          "fix": "Check the Exchange connection and the account’s audit-search access. Reconnect with the approved account before retrying the lookup.",
+          "fix": "Reconnect with an account that has audit-search access.",
           "evidence": [
             "Search-UnifiedAuditLog is unavailable"
           ]
         },
         {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7779,21 +7612,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Message-trace command is unavailable",
-          "fix": "Update ExchangeOnlineManagement through your approved module setup, then reopen PowerShell and reconnect.",
+          "fix": "Update ExchangeOnlineManagement, reopen PowerShell, and reconnect.",
           "evidence": [
             "Get-MessageTraceV2 is unavailable."
           ]
         },
         {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -7839,23 +7665,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "No reputation API key",
-          "fix": "Supply an authorized key for a supported provider when prompted.",
+          "fix": "Enter a valid key for a supported provider.",
           "evidence": [
             "No reputation provider API key was supplied."
           ]
         },
         {
           "issue": "No eligible public IPs",
-          "fix": "Use public IP addresses from the incident evidence; private or invalid addresses are excluded.",
+          "fix": "Enter public IP addresses; private addresses are excluded.",
           "evidence": [
             "No public IP addresses remain"
-          ]
-        },
-        {
-          "issue": "Input file was not found",
-          "fix": "Use the full path to an existing local input file. Check the filename and extension.",
-          "evidence": [
-            "Input file not found:"
           ]
         }
       ]
@@ -7897,16 +7716,9 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Case folder was not found",
-          "fix": "Enter the full path to the existing folder containing the incident evidence.",
+          "fix": "Enter the full path to the existing evidence folder.",
           "evidence": [
             "Case folder not found:"
-          ]
-        },
-        {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
           ]
         }
       ]
@@ -7948,23 +7760,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Token format is unsupported",
-          "fix": "Paste only the three-part JWT. Encrypted JWE tokens cannot be decoded by this tool.",
+          "fix": "Use a three-part JWT; encrypted JWE tokens are unsupported.",
           "evidence": [
             "Expected a three-part JWT"
           ]
         },
         {
           "issue": "Token could not be decoded",
-          "fix": "Copy the complete token again without extra text or whitespace. Do not upload it to an online decoder.",
+          "fix": "Copy the complete token without extra text.",
           "evidence": [
             "JWT header or payload could not be base64url-decoded."
-          ]
-        },
-        {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
           ]
         }
       ]
@@ -8006,33 +7811,25 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
-          "evidence": [
-            "Output folder not found:"
-          ]
-        },
-        {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "required delegated scopes"
+          ]
+        },
+        {
+          "issue": "Required module is missing",
+          "fix": "Install the named module, then reopen PowerShell.",
+          "evidence": [
+            "is required but is not installed"
           ]
         }
       ]
@@ -8064,23 +7861,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8112,23 +7902,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8161,23 +7944,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8209,23 +7985,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8257,23 +8026,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8307,23 +8069,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8355,23 +8110,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8403,23 +8151,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8451,23 +8192,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8498,15 +8232,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "results": [],
       "issues": [
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -8615,7 +8342,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Module installer is unavailable",
-          "fix": "Repair PowerShellGet using the approved workstation setup, then reopen PowerShell.",
+          "fix": "Repair PowerShellGet, then reopen PowerShell.",
           "evidence": [
             "Install-Module is unavailable."
           ]
@@ -8649,7 +8376,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Folder was not found",
-          "fix": "Check the complete folder path and that the running account can open it.",
+          "fix": "Check the folder path and access.",
           "evidence": [
             "Folder not found:"
           ]
@@ -8683,7 +8410,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Module installer is unavailable",
-          "fix": "Repair PowerShellGet using the approved workstation setup, then reopen PowerShell.",
+          "fix": "Repair PowerShellGet, then reopen PowerShell.",
           "evidence": [
             "Install-Module is unavailable."
           ]
@@ -8716,7 +8443,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Path was not found",
-          "fix": "Check that the supplied file or folder exists and is accessible to the running account.",
+          "fix": "Check that the supplied file or folder exists.",
           "evidence": [
             "Path not found:"
           ]
@@ -8775,7 +8502,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "WinGet review failed",
-          "fix": "Read the exit code, check WinGet availability and configured sources, then retry the review before approving updates.",
+          "fix": "Check the exit code and configured WinGet sources.",
           "evidence": [
             "WinGet review failed with exit code"
           ]
@@ -8809,22 +8536,13 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
-      "issues": [
-        {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        }
-      ]
+      "issues": []
     }
   },
   "INVOKE-ENFORCE-PER-USER-MFA.ps1": {
@@ -8862,21 +8580,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Enter the full sign-in name, such as <name>@domain.com. Remove blank entries and display names from the target list.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Invalid UPN"
           ]
         },
         {
-          "issue": "CSV could not be verified",
-          "fix": "Check the displayed export error and output path. Do not use the file as verified evidence; review the on-screen results before retrying.",
-          "evidence": [
-            "CSV verification failed."
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "Graph token is missing"
           ]
@@ -8910,23 +8621,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -8958,23 +8662,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -9007,23 +8704,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -9055,23 +8745,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Wrong tenant session",
-          "fix": "Open a new PowerShell window and sign in to the intended tenant. Confirm its tenant ID before continuing.",
+          "fix": "Open a new PowerShell window and sign in to the intended tenant.",
           "evidence": [
             "Existing Graph session is for another tenant."
           ]
         },
         {
           "issue": "Tenant ID is invalid",
-          "fix": "Copy the tenant ID (GUID) from Entra Overview. A domain name does not replace the ID for this workflow.",
+          "fix": "Use the tenant ID (GUID) from Entra Overview.",
           "evidence": [
             "A valid expected tenant ID is required."
-          ]
-        },
-        {
-          "issue": "Review is incomplete",
-          "fix": "Read the reported API error, check the required access in Permissions, and retry the read after the connection or service issue is resolved.",
-          "evidence": [
-            "Graph collection data is unavailable"
           ]
         }
       ]
@@ -9129,31 +8812,23 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required Graph access is missing",
-          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "Graph token is missing"
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -9185,24 +8860,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "An optional HTML report preserves the captured findings and unavailable checks. The save prompt offers another existing folder if the Desktop export fails.",
+          "text": "Optional HTML report saves the findings.",
           "evidence": [
-            "Save-FKDesktopReport",
-            "Desktop report could not be saved."
+            "Save-FKDesktopReport"
           ]
         }
       ],
       "issues": [
         {
-          "issue": "HTML report could not be saved",
-          "fix": "Choose another existing, writable folder at the save prompt. Cancelling the export does not erase the displayed findings.",
-          "evidence": [
-            "Report folder does not exist."
-          ]
-        },
-        {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is not installed. Install"
           ]
@@ -9237,14 +8904,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Mailbox lookup failed",
-          "fix": "Check the mailbox address, connected tenant, and the account’s Exchange read access.",
+          "fix": "Check the mailbox address.",
           "evidence": [
             "Mailbox lookup failed:"
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is not installed. Install"
           ]
@@ -9278,7 +8945,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is not installed. Install"
           ]
@@ -9313,14 +8980,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Required Graph access is missing",
-          "fix": "Check the scopes listed under Permissions and reconnect using the approved account and consent process.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "Graph token is missing"
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required but is not installed"
           ]
@@ -9355,23 +9022,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Baseline belongs to another tenant",
-          "fix": "Select the saved baseline for this tenant. Do not overwrite another tenant’s baseline to get past the check.",
+          "fix": "Select this tenant’s saved baseline.",
           "evidence": [
             "The baseline belongs to a different Entra tenant."
           ]
         },
         {
           "issue": "Required Graph access is missing",
-          "fix": "Check Permissions and the connection error. Reconnect using the approved account with the required delegated consent.",
+          "fix": "Reconnect with the scopes listed in Permissions.",
           "evidence": [
             "required delegated scopes"
-          ]
-        },
-        {
-          "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
-          "evidence": [
-            "is required but is not installed"
           ]
         }
       ]
@@ -9403,7 +9063,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Drive was not found",
-          "fix": "Choose a drive letter mounted on this computer.",
+          "fix": "Choose a mounted drive letter.",
           "evidence": [
             "Drive not found:"
           ]
@@ -9446,14 +9106,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "User address is invalid",
-          "fix": "Use full sign-in names such as <name>@domain.com, one tenant at a time.",
+          "fix": "Use the full sign-in name: <user@domain.com>.",
           "evidence": [
             "Every target must be a valid user UPN."
           ]
         },
         {
           "issue": "Required module is missing",
-          "fix": "Install the module named in the error through your approved setup. Reopen the same PowerShell version and retry.",
+          "fix": "Install the named module, then reopen PowerShell.",
           "evidence": [
             "is required. Install it with:"
           ]
@@ -9524,23 +9184,16 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Account enablement did not verify",
-          "fix": "Check the current AD/Entra state and any pending synchronization. Stop and return to the incident owner rather than repeatedly enabling the account.",
+          "fix": "Check AD/Entra state and pending sync; return to the incident owner before retrying.",
           "evidence": [
             "Entra account enable was not verified."
           ]
         },
         {
           "issue": "Next workflow script is missing",
-          "fix": "Extract all three BEC files into the same folder with their original filenames. Keep the workflow in one PowerShell window.",
+          "fix": "Extract all three BEC scripts into one folder with their original filenames.",
           "evidence": [
             "Next script not found:"
-          ]
-        },
-        {
-          "issue": "BEC files are from different releases",
-          "fix": "Replace all three files with one matching workflow package before continuing.",
-          "evidence": [
-            "Next script is from a different release."
           ]
         }
       ]
@@ -9572,7 +9225,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Handoff folder is tracked by Git",
-          "fix": "Review the tracked .handoff files and repository exclusions before trying again. Do not publish a snapshot just to clear the warning.",
+          "fix": "Review tracked .handoff files and repository exclusions.",
           "evidence": [
             "Snapshot directory is tracked."
           ]
@@ -9607,7 +9260,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "No upstream branch",
-          "fix": "Check the intended remote and branch, then configure their tracking relationship before pulling or pushing.",
+          "fix": "Configure tracking for the intended remote branch.",
           "evidence": [
             "No upstream branch configured."
           ]
@@ -9640,14 +9293,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Security export was not found",
-          "fix": "Supply the full path to the GitHub security-log export for the account being reviewed.",
+          "fix": "Enter the full path to the security-log export.",
           "evidence": [
             "No matching GitHub export found"
           ]
         },
         {
           "issue": "Security export is invalid",
-          "fix": "Download a fresh security-log export. Use JSON, JSON.GZ, or a ZIP containing exactly one JSON file.",
+          "fix": "Use JSON, JSON.GZ, or a ZIP containing one JSON file.",
           "evidence": [
             "Invalid JSON export;"
           ]
@@ -9684,7 +9337,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Execution policy did not change",
-          "fix": "Inspect Get-ExecutionPolicy -List. If organization policy controls execution, ask its owner to approve the required setup.",
+          "fix": "Check Get-ExecutionPolicy -List for an organization policy.",
           "evidence": [
             "Execution policy remains"
           ]
@@ -9788,7 +9441,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Signing certificate is missing",
-          "fix": "Use a valid code-signing certificate in the running user’s certificate store, including its private key.",
+          "fix": "Select a valid code-signing certificate with its private key.",
           "evidence": [
             "Cert:\\CurrentUser\\My"
           ]
@@ -9846,9 +9499,8 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
     "workflowDetails": {
       "results": [
         {
-          "text": "CSV exports go to the folder you choose (Desktop by default), with separate files for inventory, signatures, duplicates, and cleanup flags.",
+          "text": "CSV exports save inventory, signatures, duplicates, and cleanup flags.",
           "evidence": [
-            "Output folder [Enter for Desktop]",
             "jumpbox-file-inventory-",
             "jumpbox-signatures-",
             "jumpbox-duplicates-",
@@ -9859,14 +9511,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Output folder was not found",
-          "fix": "Choose an existing folder you can write to. Check the saved output path before rerunning any action.",
+          "fix": "Choose an existing writable folder.",
           "evidence": [
             "Output folder not found:"
           ]
         },
         {
           "issue": "Root folder was not found",
-          "fix": "Enter the full path to an existing folder on this computer.",
+          "fix": "Enter the full path to an existing folder.",
           "evidence": [
             "Root not found:"
           ]
@@ -9899,14 +9551,14 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Root folder was not found",
-          "fix": "Enter the full path to an existing folder on this computer.",
+          "fix": "Enter the full path to an existing folder.",
           "evidence": [
             "Root path not found:"
           ]
         },
         {
           "issue": "Path was not found",
-          "fix": "Check that the supplied file or folder exists and is accessible to the running account.",
+          "fix": "Check that the supplied file or folder exists.",
           "evidence": [
             "Path not found:"
           ]
@@ -10070,7 +9722,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Signing certificate is missing",
-          "fix": "Use a valid code-signing certificate in the running user’s certificate store, including its private key.",
+          "fix": "Select a valid code-signing certificate with its private key.",
           "evidence": [
             "Cert:\\CurrentUser\\My"
           ]
@@ -10108,7 +9760,7 @@ window.FIELD_KIT_OPERATOR_CARDS = Object.freeze({
       "issues": [
         {
           "issue": "Module repository is not approved",
-          "fix": "Have the workstation’s repository configuration corrected to the official HTTPS source. Do not bypass the source check.",
+          "fix": "Correct PSGallery to the official HTTPS source.",
           "evidence": [
             "PSGallery does not point to the official HTTPS source."
           ]

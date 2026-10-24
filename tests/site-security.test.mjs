@@ -148,7 +148,7 @@ test('offboarding language leads to read-only preparation without enabling missi
 test('license removal keeps visible impact and the source retains exact target approval',()=>{
  const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');f.api.openItem(item);
  const html=f.elements.get('drawerBody').innerHTML,source=fs.readFileSync(path.join(root,item.publishedPath),'utf8');
- for(const text of ['MAKES CHANGES','SINGLE or MULTI-USER','UPN','CSV or TXT','License removal can affect services'])assert.ok(html.includes(text),text);
+ for(const text of ['MAKES CHANGES','SINGLE or MULTI-USER','UPN','CSV or TXT','License removal alone is not offboarding.'])assert.ok(html.includes(text),text);
  assert.match(source,/ExpectedTenantId/);assert.match(source,/REMOVE/);assert.equal(f.api.isVerifiedRelease(item),false);
 });
 
@@ -247,7 +247,7 @@ test('every script has compact operational details and source-reviewed prerequis
   assert.ok(item.requires,item.file);
  }
  const removal=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-USER-GROUPS.ps1');f.api.openItem(removal);
- const html=f.elements.get('drawerBody').innerHTML;assert.ok(html.includes('Removes memberships, not the groups themselves.'));assert.ok(html.includes('managed or protected'));
+ const html=f.elements.get('drawerBody').innerHTML;assert.ok(html.includes('REMOVE USER GROUP MEMBERSHIPS'));assert.ok(html.includes('Dynamic - skipped'));
  for(const [file,review] of Object.entries(f.window.FIELD_KIT_CARD_GUIDANCE)){
   const item=f.api.ITEMS.find(x=>x.file===file);assert.ok(item,file);assert.equal(review.sourceSha256,digest(fs.readFileSync(path.join(root,item.publishedPath))),file);
  }
@@ -668,9 +668,9 @@ test('rendered cards retain source-supported target scope and required preparati
  const reputation=open('BEC-GET-THREAT-INTEL-ACTIVITY.ps1');
  assert.ok(reputation.includes('SINGLE or MULTI-IP') && reputation.includes('TXT') && reputation.includes('API key'));
  assert.ok(open('BEC-INVOKE-EMAIL-RECOVERY.ps1').includes('an admin role alone is not enough'));
- assert.ok(open('BEC-GET-TENANT-EMAIL-SEARCH.ps1').includes('not message bodies or attachments'));
- assert.ok(open('GET-TENANT-INBOX-RULES-AUDIT.ps1').includes('-IncludeShared'));
- assert.ok(open('GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1').includes('ten largest files'));
+ assert.ok(open('BEC-GET-TENANT-EMAIL-SEARCH.ps1').includes('Delivery alone does not show whether a user opened the message.'));
+ assert.ok(open('GET-TENANT-INBOX-RULES-AUDIT.ps1').includes('Rule lookup failures remain unresolved.'));
+ assert.ok(open('GET-WINDOWS-STORAGE-CLEANUP-REVIEW.ps1').includes('Largest-file scan : Skipped'));
  assert.ok(open('git-repo.ps1').includes('-Action (Read-Host'));
  for(const file of ['SET-THEME-SEAGLASS.ps1','SET-THEME-SILICON-VALLEY.ps1','set-execution.ps1']){
   const html=open(file);assert.ok(html.indexOf('operator-notice')<html.indexOf('guided-start'));
@@ -763,7 +763,7 @@ test('file input examples use supported columns and resource mailboxes do not ad
   }
   const resource=f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1');
   assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
-  f.api.openItem(resource);assert.ok(f.elements.get('drawerBody').innerHTML.includes('File input is not supported.'));
+ f.api.openItem(resource);assert.ok(!f.api.workflowPreview(resource).operatorInputs.some(field=>/CSV|TXT/.test(field.label)));
 });
 
 test('browsing defaults to alphabetical with an expandable type key',()=>{const f=loadCatalog(root);const names=Array.from(f.api.filteredItems(),x=>x.displayName);assert.deepEqual(names,[...names].sort((a,b)=>a.localeCompare(b)));f.api.renderResults();assert.match(f.elements.get('typeKeyItems').innerHTML,/One target/);assert.match(f.elements.get('typeKeyItems').innerHTML,/Organization-wide/);});
@@ -963,11 +963,12 @@ test('script card summary stays concise and run steps preserve source-specific l
   if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
   const details=html.slice(html.indexOf('<details class="operator-details">'));
   const notes=i.operatorCard.workflowDetails;
-  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),[...(notes.results.length?['Results']:[]),'Behavior',...(notes.issues.length?['Common Issues']:[])],i.file);
+  assert.deepEqual([...details.matchAll(/<h3>(.*?)<\/h3>/g)].map(x=>x[1]),[...(notes.results.length?['Results']:[]),...(notes.issues.length?['Common Issues']:[])],i.file);
   assert(details.includes('<details class="permissions-details"><summary>Permissions</summary>'),i.file);
   assert.equal((details.match(/<details /g)||[]).length,2,i.file);
-  const completion=f.api.completionInfo(i);
-  for(const text of [completion.next,...notes.results.map(x=>x.text),...notes.issues.flatMap(x=>[x.issue,x.fix])])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
+  assert(notes.issues.length<=2,i.file);
+  assert(!details.includes('<h3>Behavior</h3>'),i.file);
+  for(const text of [...notes.results.map(x=>x.text),...notes.issues.flatMap(x=>[x.issue,x.fix])])assert(details.includes(text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')),i.file);
   assert(!details.includes('<h3>Break/Fix</h3>'),i.file);
  }
  const i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
@@ -990,10 +991,25 @@ test('workflow troubleshooting is source-bound and Results only adds concrete ou
  const checked=checkWorkflowDetails(root);assert.equal(checked.scripts,81);assert(checked.issues>0);assert(checked.results>0&&checked.results<81);
  const f=loadCatalog(root),i=f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1');
  f.api.openItem(i);let html=f.elements.get('drawerBody').innerHTML;
- assert(html.includes('distribution-group-members.csv'));
+ assert(html.includes('Optional CSV export saves member details.'));
  assert(!html.includes('Nested groups are not a complete access review.'));
- assert(html.includes('Exchange module is missing')&&html.includes('Group lookup failed')&&html.includes('CSV export failed or could not be verified'));
+ assert(html.includes('Exchange module is missing')&&html.includes('Group lookup failed')&&!html.includes('CSV export failed or could not be verified'));
  i.operatorCard.workflowDetails.issues[0].fix='<script>bad</script>';
  f.api.openItem(i);html=f.elements.get('drawerBody').innerHTML;assert(!html.includes('<script>bad'));assert(html.includes('&lt;script&gt;bad'));
  i.operatorCard.sourceSha256='0'.repeat(64);f.api.openItem(i);html=f.elements.get('drawerBody').innerHTML;assert(!html.includes('<h3>Common Issues</h3>'));assert(!html.includes('<h3>Results</h3>'));
+});
+
+test('all workflow previews show bracketed operator inputs without altering returned sample data',async()=>{
+ const {checkPreviewInputs}=await import('../tools/build-preview-inputs.mjs');
+ const checked=checkPreviewInputs(root);assert.equal(checked.scripts,81);assert(checked.inputs>0);assert(checked.implicit>0);
+ const f=loadCatalog(root);
+ for(const item of f.api.ITEMS.filter(i=>i.operatorCard)){
+  const record=f.api.workflowPreview(item),html=f.api.workflowPreviewMarkup(item);
+  for(const field of record.operatorInputs){assert(/^<[^<>]+>$/.test(field.value),item.file);assert(html.includes(field.value.replaceAll('<','&lt;').replaceAll('>','&gt;')),item.file);}
+ }
+ const group=f.api.workflowPreview(f.api.ITEMS.find(i=>i.file==='GET-DISTRIBUTION-GROUP-MEMBERS.ps1'));
+ assert(group.text.includes('<group@domain.com>'));assert(group.text.includes('alex@example.com'));
+ const resource=f.api.workflowPreview(f.api.ITEMS.find(i=>i.file==='GET-ROOM-RESOURCE-ACCESS.ps1'));
+ assert(resource.text.includes('Full Access       : sam@example.com'));assert(resource.text.includes('Resource delegates: alex@example.com'));assert(resource.text.includes('<resource@domain.com>'));
+ for(const file of ['attractor.ps1','rain.ps1','static.ps1'])assert.equal(f.api.workflowPreview(f.api.ITEMS.find(i=>i.file===file)).operatorInputs.length,0);
 });
