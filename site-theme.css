@@ -538,6 +538,10 @@ html[data-theme="light"] .preview-danger{color:#a22e24}
 .card-powershell{width:23px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
 .drawer-head{padding-left:26px;padding-right:26px}
 .operator-scope{margin-top:15px}
+.operator-scope>div{display:flex;align-items:baseline;gap:12px;margin-top:4px;font-family:var(--ui);font-size:13px;line-height:1.5;font-weight:400;color:var(--text)}
+.operator-scope .scope-label{min-width:62px;font:400 11px/1.5 var(--mono);letter-spacing:.08em;color:var(--muted)}
+.preview-toolbar h3{display:flex;align-items:center;gap:10px}
+.preview-toolbar .card-powershell{width:18px;height:15px;color:#8ed8b7}
 .run-steps{margin:8px 0 0;padding-left:20px;color:var(--fk-aed0c8,#aed0c8);font:400 14px/1.7 var(--ui)}
 .run-steps li{padding-left:3px;margin:6px 0}
 .run-close-note{font-size:12px!important}

@@ -148,7 +148,7 @@ test('offboarding language leads to read-only preparation without enabling missi
 test('license removal keeps visible impact and the source retains exact target approval',()=>{
  const f=loadCatalog(root),item=f.api.ITEMS.find(x=>x.file==='INVOKE-REMOVE-LICENSES.ps1');f.api.openItem(item);
  const html=f.elements.get('drawerBody').innerHTML,source=fs.readFileSync(path.join(root,item.publishedPath),'utf8');
- for(const text of ['MAKES CHANGES','SINGLE or MULTI-USER','UPN / CSV / TXT','License removal can affect services'])assert.ok(html.includes(text),text);
+ for(const text of ['MAKES CHANGES','SINGLE or MULTI-USER','UPN','CSV or TXT','License removal can affect services'])assert.ok(html.includes(text),text);
  assert.match(source,/ExpectedTenantId/);assert.match(source,/REMOVE/);assert.equal(f.api.isVerifiedRelease(item),false);
 });
 
@@ -756,8 +756,10 @@ test('file input examples use supported columns and resource mailboxes do not ad
     assert.ok(source.includes("'"+sample.header+"'") || source.includes('"'+sample.header+'"'),item.file);
     f.api.openItem(item);const html=f.elements.get('drawerBody').innerHTML;
     assert.ok(!html.includes('TXT: one entry per line.'));
-    assert.ok(html.includes('Multiple entries: separate with commas when typing into the script.'));
-    assert.ok(html.includes(sample.values.join(',')));
+    assert.ok(html.includes('Typed input: separate entries with commas.'));
+    assert.ok(html.includes('Replace bracketed placeholders'));
+    assert.ok(html.includes('header exactly as shown'));
+    assert.ok(html.includes('&lt;name&gt;')||html.includes('&lt;group name&gt;'));
   }
   const resource=f.api.ITEMS.find(x=>x.file==='GET-ROOM-RESOURCE-ACCESS.ps1');
   assert.ok(!/CSV|TXT/.test(resource.operatorCard.input));
@@ -955,7 +957,7 @@ test('script card summary stays concise and run steps preserve source-specific l
  for(const i of f.api.ITEMS.filter(i=>i.operatorCard)){
   f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
   assert(!html.includes('class="operator-platform"'),i.file);
-  assert(html.includes('HOW TO RUN')&&html.includes('<ol class="run-steps">'),i.file);
+  assert(html.includes('>STEPS</div>')&&html.includes('<ol class="run-steps">'),i.file);
   const src=fs.readFileSync(path.join(root,i.publishedPath),'utf8');
   if(i.operatorCard.finishPrompt)assert(src.includes(i.operatorCard.finishPrompt),i.file);
   if(i.operatorCard.runtimeRequirement){const v=src.match(/#requires\s+-version\s+([\d.]+)/i);assert(v,i.file);assert.equal(i.operatorCard.runtimeRequirement,'PowerShell '+v[1]+' or later.');}
@@ -967,7 +969,10 @@ test('script card summary stays concise and run steps preserve source-specific l
  assert.equal(i.operatorCard.input,'Group name / email / CSV / TXT');
  assert(!i.operatorCard.preparation.some(x=>/Graph/.test(x)));
  f.api.openItem(i);const html=f.elements.get('drawerBody').innerHTML;
- assert(html.includes('SINGLE or MULTI-GROUP CHECK'));
+ assert(html.includes('1 or more groups'));
+ assert(html.indexOf('operator-scope')<html.indexOf('operator-meta'));
+ assert(html.includes('&lt;name&gt;@domain.com'));
+ assert(html.includes('keep the Group header exactly'));
  assert(html.includes('Press Enter to close session.'));
  assert(!html.includes('Authenticate with Admin credentials'));
  assert(!html.includes('detect and install necessary'));
